@@ -1,0 +1,15 @@
+{
+  "default": {},
+  "success": {
+    "variant": "success"
+  },
+  "error": {
+    "variant": "error"
+  },
+  "with action": {
+    "action": true
+  },
+  "stacked": {
+    "stack": 2
+  }
+}

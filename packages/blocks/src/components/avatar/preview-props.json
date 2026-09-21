@@ -1,0 +1,17 @@
+{
+  "default": {
+    "fallback": "SC"
+  },
+  "image": {
+    "img": true
+  },
+  "presence": {
+    "presence": "online"
+  },
+  "ring": {
+    "ring": true
+  },
+  "sizes": {
+    "sizes": true
+  }
+}

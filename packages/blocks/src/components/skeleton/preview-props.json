@@ -1,0 +1,14 @@
+{
+  "default": {
+    "layout": "text"
+  },
+  "avatar": {
+    "layout": "avatar"
+  },
+  "media": {
+    "layout": "media"
+  },
+  "card": {
+    "layout": "card"
+  }
+}

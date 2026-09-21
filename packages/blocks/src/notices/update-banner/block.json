@@ -1,0 +1,32 @@
+{
+  "category": "Notices",
+  "file": "update-banner",
+  "name": "Update Banner",
+  "description": "Top-of-page release banner with changelog link.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "notices/update-banner.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "with action",
+      "propsRaw": "{action:!0}",
+      "size": null,
+      "slug": "001-with-action"
+    }
+  ]
+}

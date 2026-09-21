@@ -1,0 +1,14 @@
+{
+  "default": {
+    "page": 2,
+    "total": 9
+  },
+  "compact": {
+    "compact": true,
+    "page": 4,
+    "total": 12
+  },
+  "rounded": {
+    "rounded": true
+  }
+}

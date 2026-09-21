@@ -1,25 +1,33 @@
 ---
 name: cremona
-description: Build stunning animated UI compositions with Cremona — 115 golden-verified visual blocks (metrics, charts, AI, states, sections…), a 9-theme light/dark design system, React + Stimulus adapters, consumable via MCP tools or direct repo reads. Use when the user asks to use Cremona, add a visual block, build marketing/dashboard UI from Cremona, port new visuals, or work with the cremona repo.
+description: Build stunning animated UI with Cremona — 160 golden-verified visuals in 37 categories (blocks, real-size components, layouts, ecommerce, forms, mobile, notices), a 9-theme light/dark design system, React + Stimulus adapters, consumable via MCP tools or direct repo reads. Use when the user asks to use Cremona, add a visual/component/layout, build marketing/dashboard/app UI from Cremona, port new visuals, or work with the cremona repo.
 ---
 
 # Cremona — animated visual blocks
 
-Cremona is a library of **115 animated UI compositions** ("visuals") with a full
+Cremona is a library of **160 animated UI compositions** ("visuals") with a full
 **design system** (9 themes × light/dark), verified pixel-exact against the
 original POC by golden SSR tests. Blocks exist in two adapters:
 
 - **React** (`@cremona/blocks` + `@cremona/react`) — motion-based animations, the primary adapter.
 - **Stimulus** (`@cremona/stimulus`) — identical static markup + `cremona-visual` controller, for Symfony/Hotwire apps.
 
+## What's inside
+
+- `blocks/*`, `metrics/*`, `charts/*`, `states/*`… — animated product illustrations (miniature mocks)
+- `components/*` — REAL-SIZE UI primitives (button, input, badge, card, tabs, dialog, dropdown-menu, command, tooltip, accordion, progress, skeleton, avatar, breadcrumb, alert, switch, checkbox, select, pagination, kbd, table, toast)
+- `layouts/*` — page shells as miniature mocks (dashboard, docs, marketing, auth, settings, mobile-app)
+- `ecommerce/*` (product-card, cart-drawer, checkout…), `forms/*` (login, signup, wizard…), `mobile/*` (tab-bar, app-bar, action-sheet, list-rows), `notices/*` (cookie-banner, callout, update-banner)
+
 ## Workflow: pick the right entry point
 
 1. **MCP server available?** (`cremona` tools: `list_categories`, `list_blocks`,
    `search_blocks`, `get_block`, `get_golden`, `get_themes`, `get_theme`,
-   `get_design_system`, `add_block`, `add_category`, `validate`, `get_guide`)
+   `get_css`, `get_controller`, `get_design_system`, `add_block`, `add_category`,
+   `validate`, `get_guide`)
    → use the tools, they give exact props + full React source + Stimulus markup.
 2. **No MCP, repo available?** Read the same data from the filesystem:
-   - Catalog: `packages/blocks/catalog.json` (31 categories, names, descriptions)
+   - Catalog: `packages/blocks/catalog.json` (37 categories, names, descriptions)
    - Per block: `packages/blocks/src/<category>/<file>/`
      - `block.json` (metadata + variant labels)
      - `preview-props.json` (exact props per variant; `"lucide:X"` = lucide-react icon)
@@ -62,8 +70,8 @@ import { StatCard } from "@cremona/blocks/src/metrics/stat-card/react.js";
 
 ## Creating new visuals (categories, blocks, variants)
 
-- Read `docs/porting-guide.md` (in-repo) or MCP `get_guide("porting-guide")` —
-  the full contract: anatomy, motion conventions, parity testing.
+- Read `docs/authoring-guide.md` (new visuals) or `docs/porting-guide.md`
+  (POC visuals) — the full contracts: anatomy, motion conventions, parity testing.
 - Scaffold with MCP `add_block`/`add_category`, then implement + test:
   `pnpm vitest run test/<category>-<file>.parity.test.tsx` from `packages/blocks`.
 - Every block MUST pass golden parity (or document a `skip` with a reason).

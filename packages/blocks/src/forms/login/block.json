@@ -1,0 +1,38 @@
+{
+  "category": "Forms",
+  "file": "login",
+  "name": "Login",
+  "description": "Sign-in card with email, password, remember me and social buttons.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "forms/login.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": "lg",
+      "slug": "000-default"
+    },
+    {
+      "label": "error",
+      "propsRaw": "{error:!0}",
+      "size": "lg",
+      "slug": "001-error"
+    },
+    {
+      "label": "loading",
+      "propsRaw": "{loading:!0}",
+      "size": "lg",
+      "slug": "002-loading"
+    }
+  ]
+}

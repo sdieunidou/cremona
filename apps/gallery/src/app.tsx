@@ -44,14 +44,14 @@ export function App() {
 
   const sidebarClass = cn(
     SHELL.sidebar,
-    mobileNav && "!flex fixed inset-y-0 left-0 z-100 bg-sidebar shadow-xl",
+    mobileNav && "max-md:!block max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-100 max-md:w-64 max-md:bg-sidebar max-md:shadow-xl",
   );
 
   return (
-    <div className={SHELL.wrapper}>
+    <div className={SHELL.wrapper} style={{ "--sidebar-width": "16rem", "--sidebar-width-icon": "3rem" } as React.CSSProperties}>
       <div className={sidebarClass} data-state="expanded" data-collapsible="" data-variant="inset" data-side="left" data-slot="sidebar">
         <div className={SHELL.gap} />
-        <div className={cn(SHELL.container, "!flex")} data-side="left">
+        <div className={cn(SHELL.container, mobileNav && "max-md:!flex")} data-slot="sidebar-container" data-side="left">
           <div className={SHELL.inner} data-sidebar="sidebar">
             <SidebarContent {...nav} />
             <div className={SHELL.footer}>
@@ -86,7 +86,6 @@ export function App() {
     </div>
   );
 }
-
 function Footer() {
   return (
     <footer className="mt-auto border-t border-border/50 py-6">

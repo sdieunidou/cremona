@@ -1,0 +1,12 @@
+{
+  "default": {
+    "value": "eu-west-1"
+  },
+  "open": {
+    "open": true
+  },
+  "invalid": {
+    "invalid": true,
+    "value": ""
+  }
+}

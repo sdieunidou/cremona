@@ -1,0 +1,50 @@
+{
+  "category": "Components",
+  "file": "toast",
+  "name": "Toast",
+  "description": "Toast notifications: default, success, error and with action.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/toast.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "success",
+      "propsRaw": "{variant:`success`}",
+      "size": null,
+      "slug": "001-success"
+    },
+    {
+      "label": "error",
+      "propsRaw": "{variant:`error`}",
+      "size": null,
+      "slug": "002-error"
+    },
+    {
+      "label": "with action",
+      "propsRaw": "{action:!0}",
+      "size": null,
+      "slug": "003-with-action"
+    },
+    {
+      "label": "stacked",
+      "propsRaw": "{stack:2}",
+      "size": null,
+      "slug": "004-stacked"
+    }
+  ]
+}

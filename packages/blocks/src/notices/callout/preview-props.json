@@ -1,0 +1,11 @@
+{
+  "default": {
+    "variant": "info"
+  },
+  "warning": {
+    "variant": "warning"
+  },
+  "update": {
+    "variant": "update"
+  }
+}

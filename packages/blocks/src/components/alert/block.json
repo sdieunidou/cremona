@@ -1,0 +1,44 @@
+{
+  "category": "Components",
+  "file": "alert",
+  "name": "Alert",
+  "description": "Inline alerts: info, success, warning and destructive.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/alert.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{variant:`info`}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "success",
+      "propsRaw": "{variant:`success`}",
+      "size": null,
+      "slug": "001-success"
+    },
+    {
+      "label": "warning",
+      "propsRaw": "{variant:`warning`}",
+      "size": null,
+      "slug": "002-warning"
+    },
+    {
+      "label": "destructive",
+      "propsRaw": "{variant:`destructive`}",
+      "size": null,
+      "slug": "003-destructive"
+    }
+  ]
+}

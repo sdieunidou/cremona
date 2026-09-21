@@ -1,0 +1,9 @@
+{
+  "default": {},
+  "strong": {
+    "strength": 4
+  },
+  "weak": {
+    "strength": 1
+  }
+}

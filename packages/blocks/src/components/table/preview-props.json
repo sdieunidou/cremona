@@ -1,0 +1,9 @@
+{
+  "default": {},
+  "with checkboxes": {
+    "checkboxes": true
+  },
+  "loading rows": {
+    "loading": true
+  }
+}

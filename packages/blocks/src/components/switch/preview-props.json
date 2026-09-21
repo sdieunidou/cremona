@@ -1,0 +1,14 @@
+{
+  "default": {
+    "checked": true,
+    "label": "Email notifications"
+  },
+  "off": {
+    "label": "Usage analytics"
+  },
+  "disabled": {
+    "disabled": true,
+    "checked": true,
+    "label": "Required"
+  }
+}

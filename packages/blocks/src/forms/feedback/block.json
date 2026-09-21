@@ -1,0 +1,38 @@
+{
+  "category": "Forms",
+  "file": "feedback",
+  "name": "Feedback",
+  "description": "NPS-style feedback widget with score chips and comment.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "forms/feedback.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{score:9}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "with comment",
+      "propsRaw": "{comment:!0}",
+      "size": null,
+      "slug": "001-with-comment"
+    },
+    {
+      "label": "submitted",
+      "propsRaw": "{submitted:!0}",
+      "size": null,
+      "slug": "002-submitted"
+    }
+  ]
+}

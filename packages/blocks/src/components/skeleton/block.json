@@ -1,0 +1,44 @@
+{
+  "category": "Components",
+  "file": "skeleton",
+  "name": "Skeleton",
+  "description": "Loading placeholders for text, avatar and media.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/skeleton.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{layout:`text`}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "avatar",
+      "propsRaw": "{layout:`avatar`}",
+      "size": null,
+      "slug": "001-avatar"
+    },
+    {
+      "label": "media",
+      "propsRaw": "{layout:`media`}",
+      "size": null,
+      "slug": "002-media"
+    },
+    {
+      "label": "card",
+      "propsRaw": "{layout:`card`}",
+      "size": null,
+      "slug": "003-card"
+    }
+  ]
+}

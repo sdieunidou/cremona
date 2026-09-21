@@ -1,0 +1,44 @@
+{
+  "category": "Mobile",
+  "file": "tab-bar",
+  "name": "Tab Bar",
+  "description": "Floating mobile tab bar with active indicator and badge.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "mobile/tab-bar.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "labels",
+      "propsRaw": "{labels:!0}",
+      "size": null,
+      "slug": "001-labels"
+    },
+    {
+      "label": "with center action",
+      "propsRaw": "{center:!0}",
+      "size": null,
+      "slug": "002-with-center-action"
+    },
+    {
+      "label": "dark",
+      "propsRaw": "{dark:!0}",
+      "size": null,
+      "slug": "003-dark"
+    }
+  ]
+}

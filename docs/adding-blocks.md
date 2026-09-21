@@ -6,10 +6,13 @@
    creates `block.json` (6 core variants), `react.tsx` skeleton and a parity test.
 2. **Implement** — follow `docs/porting-guide.md`:
    scene root, card wrapper, motion variants, exact class strings.
-3. **Prove** — `pnpm vitest run test/<category>-<file>.parity.test.tsx`
+3. **Golden** — for POC ports the golden already exists; for brand-new visuals
+   run `pnpm vitest run test/generate-goldens.test.tsx` first (it renders the
+   component into golden/<slug>.html and locks it).
+4. **Prove** — `pnpm vitest run test/<category>-<file>.parity.test.tsx`
    from `packages/blocks` must be green (golden parity).
    Passing tests also write `preview-props.json`.
-4. **Propagate** — `node tools/generate-stimulus.mjs` (templates),
+5. **Propagate** — `node tools/generate-stimulus.mjs` (templates),
    `node packages/mcp/scripts/validate.mjs` (coherence).
 
 ## Naming rules

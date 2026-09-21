@@ -1,0 +1,32 @@
+{
+  "category": "Ecommerce",
+  "file": "checkout-summary",
+  "name": "Checkout Summary",
+  "description": "Order summary with lines, totals and pay button.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "ecommerce/checkout-summary.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "with promo",
+      "propsRaw": "{promo:!0}",
+      "size": null,
+      "slug": "001-with-promo"
+    }
+  ]
+}

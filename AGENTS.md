@@ -21,14 +21,16 @@ node packages/mcp/bin/cremona-mcp.mjs   # run the MCP server over stdio
 3. **Parity is the product**: a block change that breaks its parity test is a
    regression. The comparator (`packages/blocks/test/helpers/parity.ts`) is
    strict — extend its *semantic* normalizations only with a real justification.
-4. New blocks/categories go through `docs/porting-guide.md` + MCP `add_block`,
-   and must pass parity + `pnpm validate`.
+4. New blocks/categories: POC ports follow `docs/porting-guide.md`; brand-new
+   visuals (components/layouts/ecommerce/forms/mobile/notices) follow
+   `docs/authoring-guide.md` — both via MCP `add_block`, both must pass parity
+   + `pnpm validate`.
 5. Design tokens live ONLY in `packages/tokens` — blocks use semantic tokens
    (`bg-card`, `text-muted-foreground`…), never raw colors.
 
 ## Layout map
 
-- `packages/blocks/src/<category>/<block>/` — source of truth (block.json, react.tsx, preview-props.json, golden/, sources/)
+- `packages/blocks/src/<category>/<block>/` — source of truth (block.json, react.tsx, preview-props.json, golden/, sources/ for POC blocks)
 - `packages/tokens/css/` — cremona.css (complete) + themes.css (tokens only)
 - `packages/stimulus/{src,templates}/` — controllers + generated templates
 - `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS)
@@ -37,8 +39,10 @@ node packages/mcp/bin/cremona-mcp.mjs   # run the MCP server over stdio
 
 ## Conventions
 
-- Tests: `<category>-<file>.parity.test.tsx` when file names collide across
-  categories (e.g. `timeline`, `error`, `simple`).
+- Tests: `<category>-<file>.parity.test.tsx` (always category-prefixed).
+- New visuals: run `pnpm vitest run test/generate-goldens.test.tsx` BEFORE the
+  parity test (it writes the golden). POC-extracted blocks (with sources/) are
+  refused by the generator — their goldens come from the extraction only.
 - Blocks are self-contained: no imports between blocks; shared constants from
   `@cremona/core`; icons from `lucide-react` (1.x); motion from `motion/react`.
 - The POC goldens were `renderToString`-based (React inserts `<!-- -->`

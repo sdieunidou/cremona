@@ -1,0 +1,38 @@
+{
+  "category": "Components",
+  "file": "table",
+  "name": "Data Table",
+  "description": "Table with header, rows, status pills and hover states.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/table.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "with checkboxes",
+      "propsRaw": "{checkboxes:!0}",
+      "size": null,
+      "slug": "001-with-checkboxes"
+    },
+    {
+      "label": "loading rows",
+      "propsRaw": "{loading:!0}",
+      "size": null,
+      "slug": "002-loading-rows"
+    }
+  ]
+}

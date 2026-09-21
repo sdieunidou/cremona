@@ -1,0 +1,21 @@
+{
+  "added": "2026-09-21",
+  "category": "Components",
+  "chunks": { "components": [], "page": null },
+  "description": "Text input with label, hint, validation error, search and password states.",
+  "file": "input",
+  "kind": "component",
+  "name": "Input",
+  "page": { "animated": true, "cols": 3, "trigger": "inViewRepeat" },
+  "sourcePath": "components/input.tsx",
+  "variants": [
+    { "label": "default", "propsRaw": "{}", "size": null, "slug": "000-default" },
+    { "label": "with value", "propsRaw": "{defaultValue:`Acme Inc.`}", "size": null, "slug": "001-with-value" },
+    { "label": "search", "propsRaw": "{type:`search`,label:`Search docs`,placeholder:`Command palette…`}", "size": null, "slug": "002-search" },
+    { "label": "password", "propsRaw": "{type:`password`,label:`Password`,placeholder:`••••••••`,defaultValue:`hunter2`}", "size": null, "slug": "003-password" },
+    { "label": "invalid", "propsRaw": "{invalid:!0,defaultValue:`acme`,label:`Project name`}", "size": null, "slug": "004-invalid" },
+    { "label": "with hint", "propsRaw": "{hint:`Lowercase letters and dashes only.`}", "size": null, "slug": "005-with-hint" },
+    { "label": "disabled", "propsRaw": "{disabled:!0,defaultValue:`Locked`}", "size": null, "slug": "006-disabled" },
+    { "label": "email", "propsRaw": "{type:`email`,label:`Work email`,placeholder:`you@company.com`}", "size": null, "slug": "007-email" }
+  ]
+}

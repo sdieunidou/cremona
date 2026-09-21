@@ -1,0 +1,19 @@
+{
+  "default": {},
+  "no badge": {
+    "badge": ""
+  },
+  "no action": {
+    "action": ""
+  },
+  "custom copy": {
+    "title": "Storage",
+    "description": "Objects and bandwidth across buckets.",
+    "badge": "Team",
+    "footer": "Synced just now",
+    "action": "Upgrade"
+  },
+  "skeleton": {
+    "skeleton": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "default": {},
+  "secondary": {
+    "variant": "secondary"
+  },
+  "destructive": {
+    "variant": "destructive"
+  },
+  "outline": {
+    "variant": "outline"
+  },
+  "ghost": {
+    "variant": "ghost"
+  },
+  "link": {
+    "variant": "link"
+  },
+  "with icon": {
+    "withIcon": true,
+    "label": "Deploy to production"
+  },
+  "icon end": {
+    "withIcon": "end",
+    "label": "Continue"
+  },
+  "small": {
+    "size": "sm",
+    "label": "Small"
+  },
+  "large": {
+    "size": "lg",
+    "label": "Create project"
+  },
+  "loading": {
+    "loading": true
+  },
+  "disabled": {
+    "disabled": true,
+    "label": "Unavailable"
+  }
+}

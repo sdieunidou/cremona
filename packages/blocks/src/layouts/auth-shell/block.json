@@ -1,0 +1,32 @@
+{
+  "category": "Layouts",
+  "file": "auth-shell",
+  "name": "Auth Shell",
+  "description": "Split-screen authentication layout with form and brand panel.",
+  "added": "2026-09-21",
+  "kind": "layout",
+  "sourcePath": "layouts/auth-shell.tsx",
+  "page": {
+    "cols": 1,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "signup",
+      "propsRaw": "{mode:`signup`}",
+      "size": null,
+      "slug": "001-signup"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "category": "Components",
+  "file": "switch",
+  "name": "Switch",
+  "description": "Toggle switch with labels and checked states.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/switch.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{checked:!0,label:`Email notifications`}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "off",
+      "propsRaw": "{label:`Usage analytics`}",
+      "size": null,
+      "slug": "001-off"
+    },
+    {
+      "label": "disabled",
+      "propsRaw": "{disabled:!0,checked:!0,label:`Required`}",
+      "size": null,
+      "slug": "002-disabled"
+    }
+  ]
+}

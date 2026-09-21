@@ -1,0 +1,44 @@
+{
+  "category": "Components",
+  "file": "dialog",
+  "name": "Dialog",
+  "description": "Modal dialog with overlay, title, description and actions.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/dialog.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "form",
+      "propsRaw": "{form:!0,title:`Invite teammate`}",
+      "size": null,
+      "slug": "001-form"
+    },
+    {
+      "label": "danger",
+      "propsRaw": "{variant:`danger`,title:`Delete project`}",
+      "size": null,
+      "slug": "002-danger"
+    },
+    {
+      "label": "wide",
+      "propsRaw": "{width:`wide`}",
+      "size": null,
+      "slug": "003-wide"
+    }
+  ]
+}

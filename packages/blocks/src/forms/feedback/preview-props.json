@@ -1,0 +1,11 @@
+{
+  "default": {
+    "score": 9
+  },
+  "with comment": {
+    "comment": true
+  },
+  "submitted": {
+    "submitted": true
+  }
+}

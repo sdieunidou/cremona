@@ -1,0 +1,44 @@
+{
+  "category": "Components",
+  "file": "progress",
+  "name": "Progress",
+  "description": "Determinate and indeterminate progress bars.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/progress.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{value:64}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "thin",
+      "propsRaw": "{value:32,thin:!0}",
+      "size": null,
+      "slug": "001-thin"
+    },
+    {
+      "label": "colored",
+      "propsRaw": "{value:78,color:`success`}",
+      "size": null,
+      "slug": "002-colored"
+    },
+    {
+      "label": "indeterminate",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "003-indeterminate"
+    }
+  ]
+}

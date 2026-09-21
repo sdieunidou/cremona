@@ -1,0 +1,44 @@
+{
+  "category": "Components",
+  "file": "checkbox",
+  "name": "Checkbox",
+  "description": "Checkbox with labels, mixed state and cards.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/checkbox.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{checked:!0,label:`Accept terms`}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "unchecked",
+      "propsRaw": "{label:`Subscribe`}",
+      "size": null,
+      "slug": "001-unchecked"
+    },
+    {
+      "label": "mixed",
+      "propsRaw": "{mixed:!0,label:`Select all`}",
+      "size": null,
+      "slug": "002-mixed"
+    },
+    {
+      "label": "card",
+      "propsRaw": "{card:!0,checked:!0,label:`Pro plan`}",
+      "size": null,
+      "slug": "003-card"
+    }
+  ]
+}

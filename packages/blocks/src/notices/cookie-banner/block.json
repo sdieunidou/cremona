@@ -1,0 +1,32 @@
+{
+  "category": "Notices",
+  "file": "cookie-banner",
+  "name": "Cookie Banner",
+  "description": "Bottom cookie consent banner with accept and manage.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "notices/cookie-banner.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "minimal",
+      "propsRaw": "{minimal:!0}",
+      "size": null,
+      "slug": "001-minimal"
+    }
+  ]
+}

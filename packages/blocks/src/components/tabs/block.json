@@ -1,0 +1,44 @@
+{
+  "category": "Components",
+  "file": "tabs",
+  "name": "Tabs",
+  "description": "Underlined tabs with animated indicator and panel content.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/tabs.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "three tabs",
+      "propsRaw": "{tabs:[`Overview`,`Activity`,`Settings`],active:1}",
+      "size": null,
+      "slug": "001-three-tabs"
+    },
+    {
+      "label": "panels",
+      "propsRaw": "{panels:!0}",
+      "size": null,
+      "slug": "002-panels"
+    },
+    {
+      "label": "icons",
+      "propsRaw": "{icons:!0}",
+      "size": null,
+      "slug": "003-icons"
+    }
+  ]
+}

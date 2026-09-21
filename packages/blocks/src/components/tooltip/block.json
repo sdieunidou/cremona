@@ -1,0 +1,32 @@
+{
+  "category": "Components",
+  "file": "tooltip",
+  "name": "Tooltip",
+  "description": "Tooltips on the four sides with an arrow.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/tooltip.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "rich",
+      "propsRaw": "{rich:!0,title:`Pro tip`}",
+      "size": null,
+      "slug": "001-rich"
+    }
+  ]
+}

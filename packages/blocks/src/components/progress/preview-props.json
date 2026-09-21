@@ -1,0 +1,14 @@
+{
+  "default": {
+    "value": 64
+  },
+  "thin": {
+    "value": 32,
+    "thin": true
+  },
+  "colored": {
+    "value": 78,
+    "color": "success"
+  },
+  "indeterminate": {}
+}

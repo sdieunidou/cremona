@@ -1,0 +1,38 @@
+{
+  "category": "Ecommerce",
+  "file": "order-row",
+  "name": "Order Row",
+  "description": "Compact order line with status, total and tracking.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "ecommerce/order-row.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "shipped",
+      "propsRaw": "{status:`shipped`}",
+      "size": null,
+      "slug": "001-shipped"
+    },
+    {
+      "label": "refunded",
+      "propsRaw": "{status:`refunded`}",
+      "size": null,
+      "slug": "002-refunded"
+    }
+  ]
+}

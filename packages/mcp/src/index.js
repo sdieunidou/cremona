@@ -180,6 +180,41 @@ server.tool(
 );
 
 server.tool(
+  "get_css",
+  "Get a library stylesheet. kinds: 'full' = @cremona/tokens/css/cremona.css (complete: fonts + tokens + every utility class the blocks use — ship this); 'tokens' = semantic tokens only; 'fonts' = list of font files.",
+  { kind: z.enum(["full", "tokens", "fonts"]).optional() },
+  async ({ kind = "full" }) => {
+    if (kind === "fonts") {
+      const dir = join(store.TOKENS_DIR, "css");
+      const fonts = [];
+      const { readdirSync } = await import("node:fs");
+      for (const f of readdirSync(dir)) if (f.endsWith(".woff2")) fonts.push(f);
+      return text({ fonts, note: "Copy packages/tokens/css/*.woff2 next to cremona.css, or rely on the @font-face urls (relative)." });
+    }
+    const css = kind === "tokens" ? store.themeCss() : store.designSystemCss();
+    return text({ kind, bytes: css.length, note: kind === "full" ? "Ship this file as-is (one <link>), no Tailwind build needed on the host." : undefined, css });
+  },
+);
+
+server.tool(
+  "get_controller",
+  "Get a Stimulus controller source for host apps: 'visual' = entrance animation player, 'theme' = light/dark + 9 themes switcher.",
+  { name: z.enum(["visual", "theme"]).optional() },
+  async ({ name = "visual" }) => {
+    const { readText } = store;
+    const file =
+      name === "theme"
+        ? join(store.REPO_ROOT, "packages", "stimulus", "src", "cremona-theme_controller.js")
+        : join(store.REPO_ROOT, "packages", "stimulus", "src", "cremona-visual_controller.js");
+    return text({
+      name,
+      register: 'import { registerCremona } from "@cremona/stimulus"; registerCremona(app);',
+      source: readText(file),
+    });
+  },
+);
+
+server.tool(
   "add_category",
   "Create a new visual category (folder + catalog entry). Returns the scaffold path.",
   { name: z.string().describe('Human category name, e.g. "Payments"') },

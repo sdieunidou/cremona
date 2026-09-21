@@ -1,0 +1,34 @@
+{
+  "default": {},
+  "with value": {
+    "defaultValue": "Acme Inc."
+  },
+  "search": {
+    "type": "search",
+    "label": "Search docs",
+    "placeholder": "Command palette…"
+  },
+  "password": {
+    "type": "password",
+    "label": "Password",
+    "placeholder": "••••••••",
+    "defaultValue": "hunter2"
+  },
+  "invalid": {
+    "invalid": true,
+    "defaultValue": "acme",
+    "label": "Project name"
+  },
+  "with hint": {
+    "hint": "Lowercase letters and dashes only."
+  },
+  "disabled": {
+    "disabled": true,
+    "defaultValue": "Locked"
+  },
+  "email": {
+    "type": "email",
+    "label": "Work email",
+    "placeholder": "you@company.com"
+  }
+}

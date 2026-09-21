@@ -1,49 +1,5 @@
 [
   {
-    "category": "Activity",
-    "slug": "activity",
-    "items": [
-      {
-        "file": "feed",
-        "name": "Feed",
-        "description": "A live activity feed with avatars, actions, and relative timestamps.",
-        "added": "2026-06-18",
-        "categorySlug": "activity",
-        "kind": "block",
-        "variants": [
-          "default",
-          "fadeOut",
-          "isometric",
-          "isometric · fadeOut",
-          "default · no gradient",
-          "isometric · no gradient",
-          "default · custom items",
-          "isometric · custom items"
-        ],
-        "cols": 2
-      },
-      {
-        "file": "timeline",
-        "name": "Timeline",
-        "description": "A vertical activity timeline of grouped events and status changes.",
-        "added": "2026-06-18",
-        "categorySlug": "activity",
-        "kind": "block",
-        "variants": [
-          "default",
-          "fadeOut",
-          "isometric",
-          "isometric · fadeOut",
-          "default · no gradient",
-          "isometric · no gradient",
-          "default · custom steps",
-          "isometric · custom steps"
-        ],
-        "cols": 2
-      }
-    ]
-  },
-  {
     "category": "AI",
     "slug": "ai",
     "items": [
@@ -236,6 +192,50 @@
           "failed",
           "success · isometric",
           "two attempts · custom copy"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Activity",
+    "slug": "activity",
+    "items": [
+      {
+        "file": "feed",
+        "name": "Feed",
+        "description": "A live activity feed with avatars, actions, and relative timestamps.",
+        "added": "2026-06-18",
+        "categorySlug": "activity",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "default · custom items",
+          "isometric · custom items"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "timeline",
+        "name": "Timeline",
+        "description": "A vertical activity timeline of grouped events and status changes.",
+        "added": "2026-06-18",
+        "categorySlug": "activity",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "default · custom steps",
+          "isometric · custom steps"
         ],
         "cols": 2
       }
@@ -768,6 +768,144 @@
     ]
   },
   {
+    "category": "Components",
+    "slug": "components",
+    "items": [
+      {
+        "file": "button",
+        "name": "Button",
+        "description": "The full button set: variants, sizes, icons, loading and disabled states.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "input",
+        "name": "Input",
+        "description": "Text input with label, hint, validation error, search and password states.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "badge",
+        "name": "Badge",
+        "description": "Status badges with icons: default, secondary, outline, success, warning, destructive.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "card",
+        "name": "Card",
+        "description": "Content card with header, rows, footer action and a loading skeleton state.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "tabs",
+        "name": "Tabs",
+        "description": "Underlined tabs with animated indicator and panel content.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "dialog",
+        "name": "Dialog",
+        "description": "Modal dialog with overlay, title, description and actions.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "dropdown-menu",
+        "name": "Dropdown Menu",
+        "description": "Menu with items, separators, icons, shortcuts and a danger zone.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "command",
+        "name": "Command Palette",
+        "description": "Command menu with search, groups, shortcuts and footer hints.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "tooltip",
+        "name": "Tooltip",
+        "description": "Tooltips on the four sides with an arrow.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "accordion",
+        "name": "Accordion",
+        "description": "Single-open accordion with smooth height animation.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "progress",
+        "name": "Progress",
+        "description": "Determinate and indeterminate progress bars.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "skeleton",
+        "name": "Skeleton",
+        "description": "Loading placeholders for text, avatar and media.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "avatar",
+        "name": "Avatar",
+        "description": "Avatar with image, initials, presence dot and ring.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "breadcrumb",
+        "name": "Breadcrumb",
+        "description": "Breadcrumb trail with separators and ellipsis.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "alert",
+        "name": "Alert",
+        "description": "Inline alerts: info, success, warning and destructive.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "switch",
+        "name": "Switch",
+        "description": "Toggle switch with labels and checked states.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "checkbox",
+        "name": "Checkbox",
+        "description": "Checkbox with labels, mixed state and cards.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "select",
+        "name": "Select",
+        "description": "Native-feel select with chevron and floating options.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "pagination",
+        "name": "Pagination",
+        "description": "Page navigation with numbers, arrows and compact mode.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "kbd",
+        "name": "Keyboard",
+        "description": "Keyboard key chips and combos.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "table",
+        "name": "Data Table",
+        "description": "Table with header, rows, status pills and hover states.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "toast",
+        "name": "Toast",
+        "description": "Toast notifications: default, success, error and with action.",
+        "added": "2026-09-21"
+      }
+    ]
+  },
+  {
     "category": "Connections",
     "slug": "connections",
     "items": [
@@ -839,6 +977,46 @@
           "spike",
           "single pair",
           "four pairs"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Dashboard",
+    "slug": "dashboard",
+    "items": [
+      {
+        "file": "mini-panel",
+        "name": "Mini Panel",
+        "description": "A compact dashboard panel with a metric and mini chart.",
+        "added": "2026-06-18",
+        "categorySlug": "dashboard",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "widget-grid",
+        "name": "Widget Grid",
+        "description": "A grid of dashboard widgets and summary cards.",
+        "added": "2026-06-18",
+        "categorySlug": "dashboard",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
         ],
         "cols": 2
       }
@@ -928,46 +1106,6 @@
     ]
   },
   {
-    "category": "Dashboard",
-    "slug": "dashboard",
-    "items": [
-      {
-        "file": "mini-panel",
-        "name": "Mini Panel",
-        "description": "A compact dashboard panel with a metric and mini chart.",
-        "added": "2026-06-18",
-        "categorySlug": "dashboard",
-        "kind": "block",
-        "variants": [
-          "default",
-          "fadeOut",
-          "isometric",
-          "isometric · fadeOut",
-          "default · no gradient",
-          "isometric · no gradient"
-        ],
-        "cols": 2
-      },
-      {
-        "file": "widget-grid",
-        "name": "Widget Grid",
-        "description": "A grid of dashboard widgets and summary cards.",
-        "added": "2026-06-18",
-        "categorySlug": "dashboard",
-        "kind": "block",
-        "variants": [
-          "default",
-          "fadeOut",
-          "isometric",
-          "isometric · fadeOut",
-          "default · no gradient",
-          "isometric · no gradient"
-        ],
-        "cols": 2
-      }
-    ]
-  },
-  {
     "category": "Devices",
     "slug": "devices",
     "items": [
@@ -1038,6 +1176,42 @@
           "lockscreen · custom copy"
         ],
         "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Ecommerce",
+    "slug": "ecommerce",
+    "items": [
+      {
+        "file": "product-card",
+        "name": "Product Card",
+        "description": "Product card with image, price, rating and add-to-cart.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "product-grid",
+        "name": "Product Grid",
+        "description": "Responsive grid of product cards with filter chips.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "cart-drawer",
+        "name": "Cart Drawer",
+        "description": "Slide-over cart with line items, quantities and checkout summary.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "order-row",
+        "name": "Order Row",
+        "description": "Compact order line with status, total and tracking.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "checkout-summary",
+        "name": "Checkout Summary",
+        "description": "Order summary with lines, totals and pay button.",
+        "added": "2026-09-21"
       }
     ]
   },
@@ -1187,6 +1361,42 @@
           "archive"
         ],
         "cols": 3
+      }
+    ]
+  },
+  {
+    "category": "Forms",
+    "slug": "forms",
+    "items": [
+      {
+        "file": "login",
+        "name": "Login",
+        "description": "Sign-in card with email, password, remember me and social buttons.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "signup",
+        "name": "Signup",
+        "description": "Registration form with password strength meter.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "onboarding-wizard",
+        "name": "Onboarding Wizard",
+        "description": "Multi-step form with progress dots and step transitions.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "settings-form",
+        "name": "Settings Form",
+        "description": "Grouped settings inputs with save bar on change.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "feedback",
+        "name": "Feedback",
+        "description": "NPS-style feedback widget with score chips and comment.",
+        "added": "2026-09-21"
       }
     ]
   },
@@ -1497,6 +1707,48 @@
     ]
   },
   {
+    "category": "Layouts",
+    "slug": "layouts",
+    "items": [
+      {
+        "file": "dashboard-shell",
+        "name": "Dashboard Shell",
+        "description": "A full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "docs-shell",
+        "name": "Docs Shell",
+        "description": "Documentation layout with sidebar nav, article and on-this-page list.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "marketing-shell",
+        "name": "Marketing Shell",
+        "description": "Landing page scaffold: header, hero, feature grid, CTA and footer.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "auth-shell",
+        "name": "Auth Shell",
+        "description": "Split-screen authentication layout with form and brand panel.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "settings-shell",
+        "name": "Settings Shell",
+        "description": "Settings layout with sectioned sidebar nav and form panels.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "mobile-app-shell",
+        "name": "Mobile App Shell",
+        "description": "A phone-framed app: status bar, scrollable feed and floating tab bar.",
+        "added": "2026-09-21"
+      }
+    ]
+  },
+  {
     "category": "Media",
     "slug": "media",
     "items": [
@@ -1617,6 +1869,60 @@
           "errors · warning · custom copy"
         ],
         "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Mobile",
+    "slug": "mobile",
+    "items": [
+      {
+        "file": "tab-bar",
+        "name": "Tab Bar",
+        "description": "Floating mobile tab bar with active indicator and badge.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "app-bar",
+        "name": "App Bar",
+        "description": "Mobile top bar with back, title and trailing actions.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "action-sheet",
+        "name": "Action Sheet",
+        "description": "Bottom action sheet with options and cancel.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "list-rows",
+        "name": "List Rows",
+        "description": "iOS-style grouped list rows with chevrons and values.",
+        "added": "2026-09-21"
+      }
+    ]
+  },
+  {
+    "category": "Notices",
+    "slug": "notices",
+    "items": [
+      {
+        "file": "cookie-banner",
+        "name": "Cookie Banner",
+        "description": "Bottom cookie consent banner with accept and manage.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "callout",
+        "name": "Callout",
+        "description": "Page-level callout banners with icons and actions.",
+        "added": "2026-09-21"
+      },
+      {
+        "file": "update-banner",
+        "name": "Update Banner",
+        "description": "Top-of-page release banner with changelog link.",
+        "added": "2026-09-21"
       }
     ]
   },

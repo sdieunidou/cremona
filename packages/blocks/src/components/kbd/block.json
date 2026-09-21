@@ -1,0 +1,38 @@
+{
+  "category": "Components",
+  "file": "kbd",
+  "name": "Keyboard",
+  "description": "Keyboard key chips and combos.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/kbd.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "single",
+      "propsRaw": "{keys:[`⌘`]}",
+      "size": null,
+      "slug": "000-single"
+    },
+    {
+      "label": "combo",
+      "propsRaw": "{keys:[`⌘`,`Shift`,`P`]}",
+      "size": null,
+      "slug": "001-combo"
+    },
+    {
+      "label": "arrows",
+      "propsRaw": "{keys:[`↑`,`↓`]}",
+      "size": null,
+      "slug": "002-arrows"
+    }
+  ]
+}

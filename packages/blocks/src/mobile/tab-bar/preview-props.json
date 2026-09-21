@@ -1,0 +1,12 @@
+{
+  "default": {},
+  "labels": {
+    "labels": true
+  },
+  "with center action": {
+    "center": true
+  },
+  "dark": {
+    "dark": true
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "@cremona/blocks",
   "version": "0.1.0",
-  "description": "Cremona visual blocks \u2014 source of truth (catalog, React implementations, Stimulus templates, golden references).",
+  "description": "Cremona visual blocks — source of truth (catalog, React implementations, Stimulus templates, golden references).",
   "type": "module",
   "main": "./src/registry.ts",
   "types": "./src/registry.ts",
@@ -30,6 +30,7 @@
     "@vitejs/plugin-react": "^4.7.0",
     "happy-dom": "^20.14.5",
     "htmlparser2": "^12.0.0",
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "vite": "^6.4.3"
   }
 }

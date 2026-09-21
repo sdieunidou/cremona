@@ -1,0 +1,38 @@
+{
+  "category": "Components",
+  "file": "breadcrumb",
+  "name": "Breadcrumb",
+  "description": "Breadcrumb trail with separators and ellipsis.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/breadcrumb.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "slash",
+      "propsRaw": "{separator:`slash`}",
+      "size": null,
+      "slug": "001-slash"
+    },
+    {
+      "label": "ellipsis",
+      "propsRaw": "{ellipsis:!0}",
+      "size": null,
+      "slug": "002-ellipsis"
+    }
+  ]
+}

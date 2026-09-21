@@ -1,0 +1,32 @@
+{
+  "category": "Mobile",
+  "file": "action-sheet",
+  "name": "Action Sheet",
+  "description": "Bottom action sheet with options and cancel.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "mobile/action-sheet.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "destructive",
+      "propsRaw": "{danger:!0}",
+      "size": null,
+      "slug": "001-destructive"
+    }
+  ]
+}

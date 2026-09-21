@@ -71,6 +71,13 @@ containing the card wrapper (`max-w-72|80 rounded-3xl border bg-muted/75 p-1.5`)
 the rainbow glow (`opacity-60 blur-sm`), the bottom veil
 (`bg-background/75 mask-t-from-50%`), and ambient glows + particle fields.
 
+## Scales
+
+- **Real-size components** (`components/*`, parts of `ecommerce/forms/mobile/notices`)
+  render full-size UI centered in the stage — usable directly in an app.
+- **Miniature mocks** (`sections/*`, `layouts/*`, some ecommerce) are scaled-down
+  wireframes of whole pages, in the POC product-illustration style.
+
 ## Motion conventions
 
 - Card entrance: `opacity 0→1, y 8→0, duration .35 easeOut` (or isometric

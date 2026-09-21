@@ -1975,6 +1975,694 @@
       }
     ]
   },
+  "components/accordion": {
+    "name": "Accordion",
+    "description": "Single-open accordion with smooth height animation.",
+    "kind": "component",
+    "category": "components",
+    "file": "accordion",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "multiple",
+        "slug": "001-multiple",
+        "size": null
+      },
+      {
+        "label": "icons",
+        "slug": "002-icons",
+        "size": null
+      }
+    ]
+  },
+  "components/alert": {
+    "name": "Alert",
+    "description": "Inline alerts: info, success, warning and destructive.",
+    "kind": "component",
+    "category": "components",
+    "file": "alert",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "success",
+        "slug": "001-success",
+        "size": null
+      },
+      {
+        "label": "warning",
+        "slug": "002-warning",
+        "size": null
+      },
+      {
+        "label": "destructive",
+        "slug": "003-destructive",
+        "size": null
+      }
+    ]
+  },
+  "components/avatar": {
+    "name": "Avatar",
+    "description": "Avatar with image, initials, presence dot and ring.",
+    "kind": "component",
+    "category": "components",
+    "file": "avatar",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "image",
+        "slug": "001-image",
+        "size": null
+      },
+      {
+        "label": "presence",
+        "slug": "002-presence",
+        "size": null
+      },
+      {
+        "label": "ring",
+        "slug": "003-ring",
+        "size": null
+      },
+      {
+        "label": "sizes",
+        "slug": "004-sizes",
+        "size": null
+      }
+    ]
+  },
+  "components/badge": {
+    "name": "Badge",
+    "description": "Status badges with icons: default, secondary, outline, success, warning, destructive.",
+    "kind": "component",
+    "category": "components",
+    "file": "badge",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "secondary",
+        "slug": "001-secondary",
+        "size": null
+      },
+      {
+        "label": "outline",
+        "slug": "002-outline",
+        "size": null
+      },
+      {
+        "label": "success",
+        "slug": "003-success",
+        "size": null
+      },
+      {
+        "label": "warning",
+        "slug": "004-warning",
+        "size": null
+      },
+      {
+        "label": "destructive",
+        "slug": "005-destructive",
+        "size": null
+      },
+      {
+        "label": "no icon",
+        "slug": "006-no-icon",
+        "size": null
+      },
+      {
+        "label": "sharp",
+        "slug": "007-sharp",
+        "size": null
+      }
+    ]
+  },
+  "components/breadcrumb": {
+    "name": "Breadcrumb",
+    "description": "Breadcrumb trail with separators and ellipsis.",
+    "kind": "component",
+    "category": "components",
+    "file": "breadcrumb",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "slash",
+        "slug": "001-slash",
+        "size": null
+      },
+      {
+        "label": "ellipsis",
+        "slug": "002-ellipsis",
+        "size": null
+      }
+    ]
+  },
+  "components/button": {
+    "name": "Button",
+    "description": "The full button set: variants, sizes, icons, loading and disabled states.",
+    "kind": "component",
+    "category": "components",
+    "file": "button",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "secondary",
+        "slug": "001-secondary",
+        "size": null
+      },
+      {
+        "label": "destructive",
+        "slug": "002-destructive",
+        "size": null
+      },
+      {
+        "label": "outline",
+        "slug": "003-outline",
+        "size": null
+      },
+      {
+        "label": "ghost",
+        "slug": "004-ghost",
+        "size": null
+      },
+      {
+        "label": "link",
+        "slug": "005-link",
+        "size": null
+      },
+      {
+        "label": "with icon",
+        "slug": "006-with-icon",
+        "size": null
+      },
+      {
+        "label": "icon end",
+        "slug": "007-icon-end",
+        "size": null
+      },
+      {
+        "label": "small",
+        "slug": "008-small",
+        "size": null
+      },
+      {
+        "label": "large",
+        "slug": "009-large",
+        "size": null
+      },
+      {
+        "label": "loading",
+        "slug": "010-loading",
+        "size": null
+      },
+      {
+        "label": "disabled",
+        "slug": "011-disabled",
+        "size": null
+      }
+    ]
+  },
+  "components/card": {
+    "name": "Card",
+    "description": "Content card with header, rows, footer action and a loading skeleton state.",
+    "kind": "component",
+    "category": "components",
+    "file": "card",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "no badge",
+        "slug": "001-no-badge",
+        "size": null
+      },
+      {
+        "label": "no action",
+        "slug": "002-no-action",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "003-custom-copy",
+        "size": null
+      },
+      {
+        "label": "skeleton",
+        "slug": "004-skeleton",
+        "size": null
+      }
+    ]
+  },
+  "components/checkbox": {
+    "name": "Checkbox",
+    "description": "Checkbox with labels, mixed state and cards.",
+    "kind": "component",
+    "category": "components",
+    "file": "checkbox",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "unchecked",
+        "slug": "001-unchecked",
+        "size": null
+      },
+      {
+        "label": "mixed",
+        "slug": "002-mixed",
+        "size": null
+      },
+      {
+        "label": "card",
+        "slug": "003-card",
+        "size": null
+      }
+    ]
+  },
+  "components/command": {
+    "name": "Command Palette",
+    "description": "Command menu with search, groups, shortcuts and footer hints.",
+    "kind": "component",
+    "category": "components",
+    "file": "command",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with results",
+        "slug": "001-with-results",
+        "size": null
+      },
+      {
+        "label": "empty",
+        "slug": "002-empty",
+        "size": null
+      },
+      {
+        "label": "nested",
+        "slug": "003-nested",
+        "size": null
+      }
+    ]
+  },
+  "components/dialog": {
+    "name": "Dialog",
+    "description": "Modal dialog with overlay, title, description and actions.",
+    "kind": "component",
+    "category": "components",
+    "file": "dialog",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "form",
+        "slug": "001-form",
+        "size": null
+      },
+      {
+        "label": "danger",
+        "slug": "002-danger",
+        "size": null
+      },
+      {
+        "label": "wide",
+        "slug": "003-wide",
+        "size": null
+      }
+    ]
+  },
+  "components/dropdown-menu": {
+    "name": "Dropdown Menu",
+    "description": "Menu with items, separators, icons, shortcuts and a danger zone.",
+    "kind": "component",
+    "category": "components",
+    "file": "dropdown-menu",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with shortcuts",
+        "slug": "001-with-shortcuts",
+        "size": null
+      },
+      {
+        "label": "danger",
+        "slug": "002-danger",
+        "size": null
+      },
+      {
+        "label": "checkbox items",
+        "slug": "003-checkbox-items",
+        "size": null
+      }
+    ]
+  },
+  "components/input": {
+    "name": "Input",
+    "description": "Text input with label, hint, validation error, search and password states.",
+    "kind": "component",
+    "category": "components",
+    "file": "input",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with value",
+        "slug": "001-with-value",
+        "size": null
+      },
+      {
+        "label": "search",
+        "slug": "002-search",
+        "size": null
+      },
+      {
+        "label": "password",
+        "slug": "003-password",
+        "size": null
+      },
+      {
+        "label": "invalid",
+        "slug": "004-invalid",
+        "size": null
+      },
+      {
+        "label": "with hint",
+        "slug": "005-with-hint",
+        "size": null
+      },
+      {
+        "label": "disabled",
+        "slug": "006-disabled",
+        "size": null
+      },
+      {
+        "label": "email",
+        "slug": "007-email",
+        "size": null
+      }
+    ]
+  },
+  "components/kbd": {
+    "name": "Keyboard",
+    "description": "Keyboard key chips and combos.",
+    "kind": "component",
+    "category": "components",
+    "file": "kbd",
+    "variants": [
+      {
+        "label": "single",
+        "slug": "000-single",
+        "size": null
+      },
+      {
+        "label": "combo",
+        "slug": "001-combo",
+        "size": null
+      },
+      {
+        "label": "arrows",
+        "slug": "002-arrows",
+        "size": null
+      }
+    ]
+  },
+  "components/pagination": {
+    "name": "Pagination",
+    "description": "Page navigation with numbers, arrows and compact mode.",
+    "kind": "component",
+    "category": "components",
+    "file": "pagination",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "compact",
+        "slug": "001-compact",
+        "size": null
+      },
+      {
+        "label": "rounded",
+        "slug": "002-rounded",
+        "size": null
+      }
+    ]
+  },
+  "components/progress": {
+    "name": "Progress",
+    "description": "Determinate and indeterminate progress bars.",
+    "kind": "component",
+    "category": "components",
+    "file": "progress",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "thin",
+        "slug": "001-thin",
+        "size": null
+      },
+      {
+        "label": "colored",
+        "slug": "002-colored",
+        "size": null
+      },
+      {
+        "label": "indeterminate",
+        "slug": "003-indeterminate",
+        "size": null
+      }
+    ]
+  },
+  "components/select": {
+    "name": "Select",
+    "description": "Native-feel select with chevron and floating options.",
+    "kind": "component",
+    "category": "components",
+    "file": "select",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "open",
+        "slug": "001-open",
+        "size": null
+      },
+      {
+        "label": "invalid",
+        "slug": "002-invalid",
+        "size": null
+      }
+    ]
+  },
+  "components/skeleton": {
+    "name": "Skeleton",
+    "description": "Loading placeholders for text, avatar and media.",
+    "kind": "component",
+    "category": "components",
+    "file": "skeleton",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "avatar",
+        "slug": "001-avatar",
+        "size": null
+      },
+      {
+        "label": "media",
+        "slug": "002-media",
+        "size": null
+      },
+      {
+        "label": "card",
+        "slug": "003-card",
+        "size": null
+      }
+    ]
+  },
+  "components/switch": {
+    "name": "Switch",
+    "description": "Toggle switch with labels and checked states.",
+    "kind": "component",
+    "category": "components",
+    "file": "switch",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "off",
+        "slug": "001-off",
+        "size": null
+      },
+      {
+        "label": "disabled",
+        "slug": "002-disabled",
+        "size": null
+      }
+    ]
+  },
+  "components/table": {
+    "name": "Data Table",
+    "description": "Table with header, rows, status pills and hover states.",
+    "kind": "component",
+    "category": "components",
+    "file": "table",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with checkboxes",
+        "slug": "001-with-checkboxes",
+        "size": null
+      },
+      {
+        "label": "loading rows",
+        "slug": "002-loading-rows",
+        "size": null
+      }
+    ]
+  },
+  "components/tabs": {
+    "name": "Tabs",
+    "description": "Underlined tabs with animated indicator and panel content.",
+    "kind": "component",
+    "category": "components",
+    "file": "tabs",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "three tabs",
+        "slug": "001-three-tabs",
+        "size": null
+      },
+      {
+        "label": "panels",
+        "slug": "002-panels",
+        "size": null
+      },
+      {
+        "label": "icons",
+        "slug": "003-icons",
+        "size": null
+      }
+    ]
+  },
+  "components/toast": {
+    "name": "Toast",
+    "description": "Toast notifications: default, success, error and with action.",
+    "kind": "component",
+    "category": "components",
+    "file": "toast",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "success",
+        "slug": "001-success",
+        "size": null
+      },
+      {
+        "label": "error",
+        "slug": "002-error",
+        "size": null
+      },
+      {
+        "label": "with action",
+        "slug": "003-with-action",
+        "size": null
+      },
+      {
+        "label": "stacked",
+        "slug": "004-stacked",
+        "size": null
+      }
+    ]
+  },
+  "components/tooltip": {
+    "name": "Tooltip",
+    "description": "Tooltips on the four sides with an arrow.",
+    "kind": "component",
+    "category": "components",
+    "file": "tooltip",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "rich",
+        "slug": "001-rich",
+        "size": null
+      }
+    ]
+  },
   "connections/converge": {
     "name": "Converge",
     "description": "Multiple sources converging into a single destination node.",
@@ -2627,6 +3315,121 @@
       }
     ]
   },
+  "ecommerce/cart-drawer": {
+    "name": "Cart Drawer",
+    "description": "Slide-over cart with line items, quantities and checkout summary.",
+    "kind": "block",
+    "category": "ecommerce",
+    "file": "cart-drawer",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "discount",
+        "slug": "001-discount",
+        "size": null
+      },
+      {
+        "label": "empty",
+        "slug": "002-empty",
+        "size": null
+      }
+    ]
+  },
+  "ecommerce/checkout-summary": {
+    "name": "Checkout Summary",
+    "description": "Order summary with lines, totals and pay button.",
+    "kind": "block",
+    "category": "ecommerce",
+    "file": "checkout-summary",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with promo",
+        "slug": "001-with-promo",
+        "size": null
+      }
+    ]
+  },
+  "ecommerce/order-row": {
+    "name": "Order Row",
+    "description": "Compact order line with status, total and tracking.",
+    "kind": "block",
+    "category": "ecommerce",
+    "file": "order-row",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "shipped",
+        "slug": "001-shipped",
+        "size": null
+      },
+      {
+        "label": "refunded",
+        "slug": "002-refunded",
+        "size": null
+      }
+    ]
+  },
+  "ecommerce/product-card": {
+    "name": "Product Card",
+    "description": "Product card with image, price, rating and add-to-cart.",
+    "kind": "block",
+    "category": "ecommerce",
+    "file": "product-card",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": "lg"
+      },
+      {
+        "label": "on sale",
+        "slug": "001-on-sale",
+        "size": "lg"
+      },
+      {
+        "label": "out of stock",
+        "slug": "002-out-of-stock",
+        "size": "lg"
+      },
+      {
+        "label": "hover add",
+        "slug": "003-hover-add",
+        "size": "lg"
+      }
+    ]
+  },
+  "ecommerce/product-grid": {
+    "name": "Product Grid",
+    "description": "Responsive grid of product cards with filter chips.",
+    "kind": "block",
+    "category": "ecommerce",
+    "file": "product-grid",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "filtered",
+        "slug": "001-filtered",
+        "size": null
+      }
+    ]
+  },
   "email/compose": {
     "name": "Compose",
     "description": "An email compose window with recipient, subject, and body.",
@@ -3033,6 +3836,126 @@
         "label": "archive",
         "slug": "008-archive",
         "size": "sm"
+      }
+    ]
+  },
+  "forms/feedback": {
+    "name": "Feedback",
+    "description": "NPS-style feedback widget with score chips and comment.",
+    "kind": "block",
+    "category": "forms",
+    "file": "feedback",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with comment",
+        "slug": "001-with-comment",
+        "size": null
+      },
+      {
+        "label": "submitted",
+        "slug": "002-submitted",
+        "size": null
+      }
+    ]
+  },
+  "forms/login": {
+    "name": "Login",
+    "description": "Sign-in card with email, password, remember me and social buttons.",
+    "kind": "block",
+    "category": "forms",
+    "file": "login",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": "lg"
+      },
+      {
+        "label": "error",
+        "slug": "001-error",
+        "size": "lg"
+      },
+      {
+        "label": "loading",
+        "slug": "002-loading",
+        "size": "lg"
+      }
+    ]
+  },
+  "forms/onboarding-wizard": {
+    "name": "Onboarding Wizard",
+    "description": "Multi-step form with progress dots and step transitions.",
+    "kind": "block",
+    "category": "forms",
+    "file": "onboarding-wizard",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "step 2",
+        "slug": "001-step-2",
+        "size": null
+      },
+      {
+        "label": "step 3",
+        "slug": "002-step-3",
+        "size": null
+      }
+    ]
+  },
+  "forms/settings-form": {
+    "name": "Settings Form",
+    "description": "Grouped settings inputs with save bar on change.",
+    "kind": "block",
+    "category": "forms",
+    "file": "settings-form",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "dirty",
+        "slug": "001-dirty",
+        "size": null
+      },
+      {
+        "label": "saved",
+        "slug": "002-saved",
+        "size": null
+      }
+    ]
+  },
+  "forms/signup": {
+    "name": "Signup",
+    "description": "Registration form with password strength meter.",
+    "kind": "block",
+    "category": "forms",
+    "file": "signup",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "strong",
+        "slug": "001-strong",
+        "size": null
+      },
+      {
+        "label": "weak",
+        "slug": "002-weak",
+        "size": null
       }
     ]
   },
@@ -3818,6 +4741,125 @@
       }
     ]
   },
+  "layouts/auth-shell": {
+    "name": "Auth Shell",
+    "description": "Split-screen authentication layout with form and brand panel.",
+    "kind": "layout",
+    "category": "layouts",
+    "file": "auth-shell",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "signup",
+        "slug": "001-signup",
+        "size": null
+      }
+    ]
+  },
+  "layouts/dashboard-shell": {
+    "name": "Dashboard Shell",
+    "description": "A full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
+    "kind": "layout",
+    "category": "layouts",
+    "file": "dashboard-shell",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "collapsed sidebar",
+        "slug": "001-collapsed-sidebar",
+        "size": null
+      },
+      {
+        "label": "mobile",
+        "slug": "002-mobile",
+        "size": null
+      }
+    ]
+  },
+  "layouts/docs-shell": {
+    "name": "Docs Shell",
+    "description": "Documentation layout with sidebar nav, article and on-this-page list.",
+    "kind": "layout",
+    "category": "layouts",
+    "file": "docs-shell",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with code block",
+        "slug": "001-with-code-block",
+        "size": null
+      }
+    ]
+  },
+  "layouts/marketing-shell": {
+    "name": "Marketing Shell",
+    "description": "Landing page scaffold: header, hero, feature grid, CTA and footer.",
+    "kind": "layout",
+    "category": "layouts",
+    "file": "marketing-shell",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": "lg"
+      },
+      {
+        "label": "dark hero",
+        "slug": "001-dark-hero",
+        "size": "lg"
+      }
+    ]
+  },
+  "layouts/mobile-app-shell": {
+    "name": "Mobile App Shell",
+    "description": "A phone-framed app: status bar, scrollable feed and floating tab bar.",
+    "kind": "layout",
+    "category": "layouts",
+    "file": "mobile-app-shell",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "dark",
+        "slug": "001-dark",
+        "size": null
+      }
+    ]
+  },
+  "layouts/settings-shell": {
+    "name": "Settings Shell",
+    "description": "Settings layout with sectioned sidebar nav and form panels.",
+    "kind": "layout",
+    "category": "layouts",
+    "file": "settings-shell",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "danger zone",
+        "slug": "001-danger-zone",
+        "size": null
+      }
+    ]
+  },
   "media/audio-waveform": {
     "name": "Audio Waveform",
     "description": "An audio player with an animated waveform and controls.",
@@ -4144,6 +5186,164 @@
       {
         "label": "errors · warning · custom copy",
         "slug": "011-errors-warning-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "mobile/action-sheet": {
+    "name": "Action Sheet",
+    "description": "Bottom action sheet with options and cancel.",
+    "kind": "block",
+    "category": "mobile",
+    "file": "action-sheet",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "destructive",
+        "slug": "001-destructive",
+        "size": null
+      }
+    ]
+  },
+  "mobile/app-bar": {
+    "name": "App Bar",
+    "description": "Mobile top bar with back, title and trailing actions.",
+    "kind": "block",
+    "category": "mobile",
+    "file": "app-bar",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "large title",
+        "slug": "001-large-title",
+        "size": null
+      },
+      {
+        "label": "scrolled",
+        "slug": "002-scrolled",
+        "size": null
+      }
+    ]
+  },
+  "mobile/list-rows": {
+    "name": "List Rows",
+    "description": "iOS-style grouped list rows with chevrons and values.",
+    "kind": "block",
+    "category": "mobile",
+    "file": "list-rows",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "grouped",
+        "slug": "001-grouped",
+        "size": null
+      },
+      {
+        "label": "with icons",
+        "slug": "002-with-icons",
+        "size": null
+      }
+    ]
+  },
+  "mobile/tab-bar": {
+    "name": "Tab Bar",
+    "description": "Floating mobile tab bar with active indicator and badge.",
+    "kind": "block",
+    "category": "mobile",
+    "file": "tab-bar",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "labels",
+        "slug": "001-labels",
+        "size": null
+      },
+      {
+        "label": "with center action",
+        "slug": "002-with-center-action",
+        "size": null
+      },
+      {
+        "label": "dark",
+        "slug": "003-dark",
+        "size": null
+      }
+    ]
+  },
+  "notices/callout": {
+    "name": "Callout",
+    "description": "Page-level callout banners with icons and actions.",
+    "kind": "block",
+    "category": "notices",
+    "file": "callout",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "warning",
+        "slug": "001-warning",
+        "size": null
+      },
+      {
+        "label": "update",
+        "slug": "002-update",
+        "size": null
+      }
+    ]
+  },
+  "notices/cookie-banner": {
+    "name": "Cookie Banner",
+    "description": "Bottom cookie consent banner with accept and manage.",
+    "kind": "block",
+    "category": "notices",
+    "file": "cookie-banner",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "minimal",
+        "slug": "001-minimal",
+        "size": null
+      }
+    ]
+  },
+  "notices/update-banner": {
+    "name": "Update Banner",
+    "description": "Top-of-page release banner with changelog link.",
+    "kind": "block",
+    "category": "notices",
+    "file": "update-banner",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "with action",
+        "slug": "001-with-action",
         "size": null
       }
     ]

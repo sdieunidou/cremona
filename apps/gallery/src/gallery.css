@@ -1,0 +1,35 @@
+/*
+ * Gallery-only supplementary utilities.
+ * cremona.css is the precompiled POC stylesheet: it contains every class the
+ * POC used, but a few gallery-specific classes are new (mobile overlay, dialog
+ * offset, sidebar collapse chevron). Keep this file minimal.
+ */
+
+.z-100 { z-index: 100; }
+.z-90 { z-index: 90; }
+
+.pt-\[12vh\] { padding-top: 12vh; }
+.top-10 { top: 2.5rem; }
+.max-h-80 { max-height: 20rem; }
+.hover\:text-accent-foreground:hover { color: var(--accent-foreground); }
+.hover\:bg-accent:hover { background-color: var(--accent); }
+
+@media (max-width: 767px) {
+  .max-md\:block { display: block; }
+  .max-md\:fixed { position: fixed; }
+  .max-md\:inset-y-0 { inset-block: 0; }
+  .max-md\:left-0 { left: 0; }
+  .max-md\:z-100 { z-index: 100; }
+  .max-md\:w-64 { width: 16rem; }
+  .max-md\:bg-sidebar { background-color: var(--sidebar); }
+  .max-md\:shadow-xl { box-shadow: var(--shadow-xl); }
+  .max-md\:flex { display: flex; }
+}
+
+/* sidebar category items indent (missing from POC compiled CSS) */
+.gallery-submenu {
+  margin-left: 1rem;
+  padding-left: 0.5rem;
+  padding-block: 0.125rem;
+  border-left: 1px solid var(--sidebar-border);
+}

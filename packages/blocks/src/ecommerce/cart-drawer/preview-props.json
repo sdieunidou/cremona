@@ -1,0 +1,9 @@
+{
+  "default": {},
+  "discount": {
+    "discount": true
+  },
+  "empty": {
+    "empty": true
+  }
+}

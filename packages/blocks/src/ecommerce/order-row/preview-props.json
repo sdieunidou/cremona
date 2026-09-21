@@ -1,0 +1,9 @@
+{
+  "default": {},
+  "shipped": {
+    "status": "shipped"
+  },
+  "refunded": {
+    "status": "refunded"
+  }
+}

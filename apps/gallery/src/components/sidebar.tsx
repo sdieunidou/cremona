@@ -44,8 +44,8 @@ export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
           <ul className={SHELL.menu}>
             <li className={SHELL.menuItem}>
               <a
-                data-active={!current}
-                className={cn(SHELL.menuButton, "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground")}
+                data-active={!current || undefined}
+                className={SHELL.menuButton}
                 href="/"
                 onClick={(e) => {
                   e.preventDefault();
@@ -57,11 +57,11 @@ export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
               </a>
             </li>
             <li className={SHELL.menuItem}>
-              <button
-                type="button"
-                className={cn(SHELL.menuButton, "text-muted-foreground")}
-                onClick={onOpenSearch}
-              >
+                <button
+                  type="button"
+                  className={cn(SHELL.menuButton, "text-muted-foreground")}
+                  onClick={onOpenSearch}
+                >
                 <Search className="opacity-50" />
                 <span>Search…</span>
                 <span className="pointer-events-none ml-auto hidden items-center gap-1 rounded border bg-background/75 px-1 py-0.25 text-[10px] font-semibold uppercase md:inline-flex">
@@ -124,7 +124,7 @@ function CategoryGroup({
         </button>
       </li>
       {open && (
-        <ul className={cn(SHELL.menu, "ml-4 border-l border-sidebar-border pl-2 py-0.5")}>
+        <ul className={cn(SHELL.menu, "gallery-submenu")}>
           {items.map((item) => {
             const href = `/visuals/${slug}/${item.file}`;
             const active = activeKey === `${slug}/${item.file}`;
@@ -138,11 +138,7 @@ function CategoryGroup({
                     e.preventDefault();
                     onNavigate(href);
                   }}
-                  className={cn(
-                    SHELL.menuButton,
-                    "data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground",
-                    !ported && "opacity-50",
-                  )}
+                  className={cn(SHELL.menuButton, !ported && "opacity-50")}
                   title={item.description}
                 >
                   <span className="truncate">{item.name}</span>

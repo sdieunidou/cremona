@@ -1,0 +1,38 @@
+{
+  "category": "Components",
+  "file": "accordion",
+  "name": "Accordion",
+  "description": "Single-open accordion with smooth height animation.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/accordion.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "multiple",
+      "propsRaw": "{count:4}",
+      "size": null,
+      "slug": "001-multiple"
+    },
+    {
+      "label": "icons",
+      "propsRaw": "{icons:!0}",
+      "size": null,
+      "slug": "002-icons"
+    }
+  ]
+}

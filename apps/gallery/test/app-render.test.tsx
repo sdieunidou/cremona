@@ -4,10 +4,10 @@ import { App } from "../src/app.js";
 import { stats, blocks } from "../src/lib/discovery.js";
 
 describe("gallery app", () => {
-  it("discovers all 115 ported blocks", () => {
-    expect(stats.blocks).toBe(115);
-    expect(stats.ported).toBe(115);
-    expect(Object.keys(blocks).length).toBe(115);
+  it("discovers all 160 ported blocks", () => {
+    expect(stats.blocks).toBe(160);
+    expect(stats.ported).toBe(160);
+    expect(Object.keys(blocks).length).toBe(160);
   });
 
   it("renders the home grid with categories", () => {

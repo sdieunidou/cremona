@@ -1,0 +1,38 @@
+{
+  "category": "Mobile",
+  "file": "app-bar",
+  "name": "App Bar",
+  "description": "Mobile top bar with back, title and trailing actions.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "mobile/app-bar.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "large title",
+      "propsRaw": "{large:!0}",
+      "size": null,
+      "slug": "001-large-title"
+    },
+    {
+      "label": "scrolled",
+      "propsRaw": "{scrolled:!0}",
+      "size": null,
+      "slug": "002-scrolled"
+    }
+  ]
+}

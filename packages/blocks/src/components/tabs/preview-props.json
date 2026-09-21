@@ -1,0 +1,17 @@
+{
+  "default": {},
+  "three tabs": {
+    "tabs": [
+      "Overview",
+      "Activity",
+      "Settings"
+    ],
+    "active": 1
+  },
+  "panels": {
+    "panels": true
+  },
+  "icons": {
+    "icons": true
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "default": {},
+  "slash": {
+    "separator": "slash"
+  },
+  "ellipsis": {
+    "ellipsis": true
+  }
+}

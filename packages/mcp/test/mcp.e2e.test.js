@@ -26,11 +26,13 @@ function textOf(result) {
 }
 
 describe("cremona MCP server", () => {
-  it("lists 31 categories", async () => {
+  it("lists 37 categories", async () => {
     const cats = textOf(await client.callTool({ name: "list_categories", arguments: {} }));
-    expect(cats).toHaveLength(31);
+    expect(cats).toHaveLength(37);
     const metrics = cats.find((c) => c.category === "Metrics");
     expect(metrics.blocks).toBe(3);
+    const components = cats.find((c) => c.category === "Components");
+    expect(components.blocks).toBe(22);
   });
 
   it("lists blocks with variants", async () => {

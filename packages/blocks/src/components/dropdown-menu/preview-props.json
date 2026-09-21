@@ -1,0 +1,12 @@
+{
+  "default": {},
+  "with shortcuts": {
+    "shortcuts": true
+  },
+  "danger": {
+    "danger": true
+  },
+  "checkbox items": {
+    "checks": true
+  }
+}

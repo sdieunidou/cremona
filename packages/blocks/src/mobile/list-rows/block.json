@@ -1,0 +1,38 @@
+{
+  "category": "Mobile",
+  "file": "list-rows",
+  "name": "List Rows",
+  "description": "iOS-style grouped list rows with chevrons and values.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "mobile/list-rows.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "grouped",
+      "propsRaw": "{groups:2}",
+      "size": null,
+      "slug": "001-grouped"
+    },
+    {
+      "label": "with icons",
+      "propsRaw": "{icons:!0}",
+      "size": null,
+      "slug": "002-with-icons"
+    }
+  ]
+}

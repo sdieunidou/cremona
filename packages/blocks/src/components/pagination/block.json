@@ -1,0 +1,38 @@
+{
+  "category": "Components",
+  "file": "pagination",
+  "name": "Pagination",
+  "description": "Page navigation with numbers, arrows and compact mode.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/pagination.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{page:2,total:9}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "compact",
+      "propsRaw": "{compact:!0,page:4,total:12}",
+      "size": null,
+      "slug": "001-compact"
+    },
+    {
+      "label": "rounded",
+      "propsRaw": "{rounded:!0}",
+      "size": null,
+      "slug": "002-rounded"
+    }
+  ]
+}

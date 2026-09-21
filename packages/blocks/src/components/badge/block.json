@@ -1,0 +1,21 @@
+{
+  "added": "2026-09-21",
+  "category": "Components",
+  "chunks": { "components": [], "page": null },
+  "description": "Status badges with icons: default, secondary, outline, success, warning, destructive.",
+  "file": "badge",
+  "kind": "component",
+  "name": "Badge",
+  "page": { "animated": true, "cols": 3, "trigger": "inViewRepeat" },
+  "sourcePath": "components/badge.tsx",
+  "variants": [
+    { "label": "default", "propsRaw": "{}", "size": null, "slug": "000-default" },
+    { "label": "secondary", "propsRaw": "{variant:`secondary`,label:`Beta`,withIcon:!1}", "size": null, "slug": "001-secondary" },
+    { "label": "outline", "propsRaw": "{variant:`outline`,label:`v2.4`,withIcon:!1}", "size": null, "slug": "002-outline" },
+    { "label": "success", "propsRaw": "{variant:`success`,label:`Operational`}", "size": null, "slug": "003-success" },
+    { "label": "warning", "propsRaw": "{variant:`warning`,label:`Degraded`}", "size": null, "slug": "004-warning" },
+    { "label": "destructive", "propsRaw": "{variant:`destructive`,label:`Outage`}", "size": null, "slug": "005-destructive" },
+    { "label": "no icon", "propsRaw": "{withIcon:!1,label:`Plain`}", "size": null, "slug": "006-no-icon" },
+    { "label": "sharp", "propsRaw": "{pill:!1,label:`Release 12`}", "size": null, "slug": "007-sharp" }
+  ]
+}

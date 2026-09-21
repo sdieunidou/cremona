@@ -1,0 +1,38 @@
+{
+  "category": "Forms",
+  "file": "signup",
+  "name": "Signup",
+  "description": "Registration form with password strength meter.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "forms/signup.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "strong",
+      "propsRaw": "{strength:4}",
+      "size": null,
+      "slug": "001-strong"
+    },
+    {
+      "label": "weak",
+      "propsRaw": "{strength:1}",
+      "size": null,
+      "slug": "002-weak"
+    }
+  ]
+}

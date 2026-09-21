@@ -1,0 +1,18 @@
+{
+  "default": {
+    "checked": true,
+    "label": "Accept terms"
+  },
+  "unchecked": {
+    "label": "Subscribe"
+  },
+  "mixed": {
+    "mixed": true,
+    "label": "Select all"
+  },
+  "card": {
+    "card": true,
+    "checked": true,
+    "label": "Pro plan"
+  }
+}

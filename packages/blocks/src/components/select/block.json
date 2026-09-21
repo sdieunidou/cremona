@@ -1,0 +1,38 @@
+{
+  "category": "Components",
+  "file": "select",
+  "name": "Select",
+  "description": "Native-feel select with chevron and floating options.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/select.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{value:`eu-west-1`}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "open",
+      "propsRaw": "{open:!0}",
+      "size": null,
+      "slug": "001-open"
+    },
+    {
+      "label": "invalid",
+      "propsRaw": "{invalid:!0,value:``}",
+      "size": null,
+      "slug": "002-invalid"
+    }
+  ]
+}

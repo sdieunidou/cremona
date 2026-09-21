@@ -1,0 +1,44 @@
+{
+  "category": "Components",
+  "file": "dropdown-menu",
+  "name": "Dropdown Menu",
+  "description": "Menu with items, separators, icons, shortcuts and a danger zone.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/dropdown-menu.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "with shortcuts",
+      "propsRaw": "{shortcuts:!0}",
+      "size": null,
+      "slug": "001-with-shortcuts"
+    },
+    {
+      "label": "danger",
+      "propsRaw": "{danger:!0}",
+      "size": null,
+      "slug": "002-danger"
+    },
+    {
+      "label": "checkbox items",
+      "propsRaw": "{checks:!0}",
+      "size": null,
+      "slug": "003-checkbox-items"
+    }
+  ]
+}

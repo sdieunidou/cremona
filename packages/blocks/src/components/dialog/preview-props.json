@@ -1,0 +1,14 @@
+{
+  "default": {},
+  "form": {
+    "form": true,
+    "title": "Invite teammate"
+  },
+  "danger": {
+    "variant": "danger",
+    "title": "Delete project"
+  },
+  "wide": {
+    "width": "wide"
+  }
+}

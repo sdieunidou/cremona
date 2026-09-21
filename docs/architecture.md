@@ -37,6 +37,12 @@ packages/blocks/src/** (block.json + golden + react.tsx)
 3. Every block has generated Stimulus templates.
 4. Every React render matches its golden (parity tests).
 
+Goldens come from two sources, both immutable once committed:
+- **POC blocks** (115): extracted SSR snapshots of the original app.
+- **Authored blocks** (45): rendered by `test/generate-goldens.test.tsx` from
+  the component itself, then locked as the regression reference (refused for
+  POC blocks, which must keep their extracted goldens).
+
 ## Rendering parity
 
 Goldens are **SSR snapshots captured mid-animation** (the "hidden" initial

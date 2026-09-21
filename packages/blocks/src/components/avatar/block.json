@@ -1,0 +1,50 @@
+{
+  "category": "Components",
+  "file": "avatar",
+  "name": "Avatar",
+  "description": "Avatar with image, initials, presence dot and ring.",
+  "added": "2026-09-21",
+  "kind": "component",
+  "sourcePath": "components/avatar.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{fallback:`SC`}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "image",
+      "propsRaw": "{img:!0}",
+      "size": null,
+      "slug": "001-image"
+    },
+    {
+      "label": "presence",
+      "propsRaw": "{presence:`online`}",
+      "size": null,
+      "slug": "002-presence"
+    },
+    {
+      "label": "ring",
+      "propsRaw": "{ring:!0}",
+      "size": null,
+      "slug": "003-ring"
+    },
+    {
+      "label": "sizes",
+      "propsRaw": "{sizes:!0}",
+      "size": null,
+      "slug": "004-sizes"
+    }
+  ]
+}

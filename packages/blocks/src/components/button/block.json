@@ -1,0 +1,25 @@
+{
+  "added": "2026-09-21",
+  "category": "Components",
+  "chunks": { "components": [], "page": null },
+  "description": "The full button set: variants, sizes, icons, loading and disabled states.",
+  "file": "button",
+  "kind": "component",
+  "name": "Button",
+  "page": { "animated": true, "cols": 3, "trigger": "inViewRepeat" },
+  "sourcePath": "components/button.tsx",
+  "variants": [
+    { "label": "default", "propsRaw": "{}", "size": null, "slug": "000-default" },
+    { "label": "secondary", "propsRaw": "{variant:`secondary`}", "size": null, "slug": "001-secondary" },
+    { "label": "destructive", "propsRaw": "{variant:`destructive`}", "size": null, "slug": "002-destructive" },
+    { "label": "outline", "propsRaw": "{variant:`outline`}", "size": null, "slug": "003-outline" },
+    { "label": "ghost", "propsRaw": "{variant:`ghost`}", "size": null, "slug": "004-ghost" },
+    { "label": "link", "propsRaw": "{variant:`link`}", "size": null, "slug": "005-link" },
+    { "label": "with icon", "propsRaw": "{withIcon:!0,label:`Deploy to production`}", "size": null, "slug": "006-with-icon" },
+    { "label": "icon end", "propsRaw": "{withIcon:`end`,label:`Continue`}", "size": null, "slug": "007-icon-end" },
+    { "label": "small", "propsRaw": "{size:`sm`,label:`Small`}", "size": null, "slug": "008-small" },
+    { "label": "large", "propsRaw": "{size:`lg`,label:`Create project`}", "size": null, "slug": "009-large" },
+    { "label": "loading", "propsRaw": "{loading:!0}", "size": null, "slug": "010-loading" },
+    { "label": "disabled", "propsRaw": "{disabled:!0,label:`Unavailable`}", "size": null, "slug": "011-disabled" }
+  ]
+}

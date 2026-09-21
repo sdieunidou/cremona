@@ -1,0 +1,12 @@
+{
+  "default": {},
+  "on sale": {
+    "sale": true
+  },
+  "out of stock": {
+    "stock": "out"
+  },
+  "hover add": {
+    "hoverAdd": true
+  }
+}

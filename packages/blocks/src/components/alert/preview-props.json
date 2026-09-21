@@ -1,0 +1,14 @@
+{
+  "default": {
+    "variant": "info"
+  },
+  "success": {
+    "variant": "success"
+  },
+  "warning": {
+    "variant": "warning"
+  },
+  "destructive": {
+    "variant": "destructive"
+  }
+}

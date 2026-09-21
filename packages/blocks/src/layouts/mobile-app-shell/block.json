@@ -1,0 +1,32 @@
+{
+  "category": "Layouts",
+  "file": "mobile-app-shell",
+  "name": "Mobile App Shell",
+  "description": "A phone-framed app: status bar, scrollable feed and floating tab bar.",
+  "added": "2026-09-21",
+  "kind": "layout",
+  "sourcePath": "layouts/mobile-app-shell.tsx",
+  "page": {
+    "cols": 1,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "dark",
+      "propsRaw": "{dark:!0}",
+      "size": null,
+      "slug": "001-dark"
+    }
+  ]
+}

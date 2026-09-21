@@ -1,0 +1,18 @@
+{
+  "added": "2026-09-21",
+  "category": "Components",
+  "chunks": { "components": [], "page": null },
+  "description": "Content card with header, rows, footer action and a loading skeleton state.",
+  "file": "card",
+  "kind": "component",
+  "name": "Card",
+  "page": { "animated": true, "cols": 2, "trigger": "inViewRepeat" },
+  "sourcePath": "components/card.tsx",
+  "variants": [
+    { "label": "default", "propsRaw": "{}", "size": null, "slug": "000-default" },
+    { "label": "no badge", "propsRaw": "{badge:``}", "size": null, "slug": "001-no-badge" },
+    { "label": "no action", "propsRaw": "{action:``}", "size": null, "slug": "002-no-action" },
+    { "label": "custom copy", "propsRaw": "{title:`Storage`,description:`Objects and bandwidth across buckets.`,badge:`Team`,footer:`Synced just now`,action:`Upgrade`}", "size": null, "slug": "003-custom-copy" },
+    { "label": "skeleton", "propsRaw": "{skeleton:!0}", "size": null, "slug": "004-skeleton" }
+  ]
+}

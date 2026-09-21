@@ -1,0 +1,38 @@
+{
+  "category": "Forms",
+  "file": "settings-form",
+  "name": "Settings Form",
+  "description": "Grouped settings inputs with save bar on change.",
+  "added": "2026-09-21",
+  "kind": "block",
+  "sourcePath": "forms/settings-form.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "propsRaw": "{}",
+      "size": null,
+      "slug": "000-default"
+    },
+    {
+      "label": "dirty",
+      "propsRaw": "{dirty:!0}",
+      "size": null,
+      "slug": "001-dirty"
+    },
+    {
+      "label": "saved",
+      "propsRaw": "{saved:!0}",
+      "size": null,
+      "slug": "002-saved"
+    }
+  ]
+}

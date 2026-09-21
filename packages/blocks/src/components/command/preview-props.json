@@ -1,0 +1,16 @@
+{
+  "default": {},
+  "with results": {
+    "query": "dep"
+  },
+  "empty": {
+    "empty": true
+  },
+  "nested": {
+    "groups": [
+      "Actions",
+      "Navigation",
+      "Deploy"
+    ]
+  }
+}

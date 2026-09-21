@@ -1,0 +1,33 @@
+{
+  "default": {},
+  "secondary": {
+    "variant": "secondary",
+    "label": "Beta",
+    "withIcon": false
+  },
+  "outline": {
+    "variant": "outline",
+    "label": "v2.4",
+    "withIcon": false
+  },
+  "success": {
+    "variant": "success",
+    "label": "Operational"
+  },
+  "warning": {
+    "variant": "warning",
+    "label": "Degraded"
+  },
+  "destructive": {
+    "variant": "destructive",
+    "label": "Outage"
+  },
+  "no icon": {
+    "withIcon": false,
+    "label": "Plain"
+  },
+  "sharp": {
+    "pill": false,
+    "label": "Release 12"
+  }
+}
