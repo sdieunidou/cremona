@@ -1,0 +1,32 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom title · default": {
+    "title": "One platform, every tool"
+  },
+  "custom title · isometric": {
+    "title": "Built for scale",
+    "isometric": true
+  },
+  "custom title · isometric · no gradient": {
+    "title": "All your work, together",
+    "gradient": false,
+    "isometric": true
+  }
+}

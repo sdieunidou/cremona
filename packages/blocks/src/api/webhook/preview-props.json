@@ -1,0 +1,38 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "line pulse": {
+    "pulse": "line"
+  },
+  "hover": {
+    "hover": true
+  },
+  "success": {
+    "variant": "success",
+    "pulse": "line"
+  },
+  "failed": {
+    "variant": "failed"
+  },
+  "success · isometric": {
+    "variant": "success",
+    "isometric": true
+  },
+  "two attempts · custom copy": {
+    "event": "deployment.succeeded",
+    "eventId": "evt_9Kd2Lm",
+    "attempts": [
+      {
+        "status": 503,
+        "label": "Unavailable"
+      },
+      {
+        "status": 200,
+        "label": "OK"
+      }
+    ],
+    "summary": "Delivered after 2 attempts · 1.4s"
+  }
+}

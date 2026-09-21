@@ -1,0 +1,32 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom title · default": {
+    "title": "Build your next project with us."
+  },
+  "custom title · isometric": {
+    "title": "Grow your business today.",
+    "isometric": true
+  },
+  "custom title · isometric · no gradient": {
+    "title": "Get access to our exclusive features now for 50% off.",
+    "gradient": false,
+    "isometric": true
+  }
+}

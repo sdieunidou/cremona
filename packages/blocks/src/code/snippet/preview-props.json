@@ -1,0 +1,189 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "no line numbers": {
+    "lineNumbers": false
+  },
+  "highlighted line": {
+    "lines": [
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 18,
+            "color": "keyword"
+          },
+          {
+            "width": 26,
+            "color": "variable"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          },
+          {
+            "width": 32,
+            "color": "string"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 24,
+            "color": "func"
+          },
+          {
+            "width": 12,
+            "color": "type"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ]
+      },
+      {
+        "indent": 1,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 18,
+            "color": "punct"
+          },
+          {
+            "width": 22,
+            "color": "tag"
+          },
+          {
+            "width": 20,
+            "color": "prop"
+          },
+          {
+            "width": 16,
+            "color": "string"
+          }
+        ],
+        "highlight": true
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ]
+      }
+    ]
+  },
+  "diff": {
+    "lines": [
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 18,
+            "color": "keyword"
+          },
+          {
+            "width": 26,
+            "color": "variable"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          },
+          {
+            "width": 32,
+            "color": "string"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 24,
+            "color": "func"
+          },
+          {
+            "width": 12,
+            "color": "type"
+          }
+        ],
+        "diff": "remove"
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 28,
+            "color": "func"
+          },
+          {
+            "width": 16,
+            "color": "type"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ],
+        "diff": "add"
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ]
+      }
+    ]
+  },
+  "bash": {
+    "language": "bash"
+  },
+  "json": {
+    "language": "json"
+  },
+  "css": {
+    "language": "css"
+  },
+  "sql": {
+    "language": "sql"
+  },
+  "yaml": {
+    "language": "yaml"
+  },
+  "md": {
+    "language": "md"
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "category": "Sections",
+  "file": "backgrounds",
+  "name": "Backgrounds",
+  "description": "A section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
+  "added": "2026-09-17",
+  "kind": "layout",
+  "sourcePath": "sections/backgrounds.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "backgrounds-OLHo_SB_.js",
+    "components": [
+      "backgrounds-C8ZffTDJ.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "002-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "003-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "004-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "005-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "006-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "007-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`One library, every backdrop`}"
+    },
+    {
+      "label": "grid first · isometric",
+      "slug": "008-grid-first-isometric",
+      "size": null,
+      "propsRaw": "{title:`Pick a backdrop`,backgrounds:[`grid`,`dots`,`rays`,`mesh`],isometric:!0}"
+    },
+    {
+      "label": "fast cycle",
+      "slug": "009-fast-cycle",
+      "size": null,
+      "propsRaw": "{interval:1200}"
+    },
+    {
+      "label": "rays only · no picker",
+      "slug": "010-rays-only-no-picker",
+      "size": null,
+      "propsRaw": "{backgrounds:[`rays`],showPicker:!1}"
+    },
+    {
+      "label": "no picker",
+      "slug": "011-no-picker",
+      "size": null,
+      "propsRaw": "{showPicker:!1}"
+    }
+  ]
+}

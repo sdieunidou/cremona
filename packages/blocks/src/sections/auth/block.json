@@ -1,0 +1,76 @@
+{
+  "category": "Sections",
+  "file": "auth",
+  "name": "Auth",
+  "description": "A login section with social buttons, fields, and a sign-in button.",
+  "added": "2026-06-26",
+  "kind": "layout",
+  "sourcePath": "sections/auth.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "auth-BnsdkW1J.js",
+    "components": [
+      "auth-Bs9h5A8z.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom title · default",
+      "slug": "006-custom-title-default",
+      "size": null,
+      "propsRaw": "{title:`Sign in to your account`}"
+    },
+    {
+      "label": "custom title · isometric",
+      "slug": "007-custom-title-isometric",
+      "size": null,
+      "propsRaw": "{title:`Create an account`,isometric:!0}"
+    },
+    {
+      "label": "custom title · isometric · no gradient",
+      "slug": "008-custom-title-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{title:`Log in to continue`,gradient:!1,isometric:!0}"
+    }
+  ]
+}

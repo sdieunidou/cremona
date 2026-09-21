@@ -1,0 +1,26 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "label=\"End-to-end\"": {
+    "label": "End-to-end"
+  },
+  "no label": {
+    "label": ""
+  },
+  "state=\"warning\"": {
+    "state": "warning"
+  },
+  "isometric · state=\"warning\"": {
+    "state": "warning",
+    "isometric": true
+  },
+  "state=\"breached\"": {
+    "state": "breached"
+  },
+  "isometric · state=\"breached\"": {
+    "state": "breached",
+    "isometric": true
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom data · events": {
+    "source": "events",
+    "duration": "8 ms",
+    "conditions": [
+      {
+        "field": "name",
+        "operator": "=",
+        "value": "signup"
+      },
+      {
+        "field": "plan",
+        "operator": "!=",
+        "value": "free"
+      }
+    ],
+    "columns": [
+      "ts",
+      "user",
+      "plan"
+    ],
+    "rows": [
+      [
+        "12:04",
+        "emma@acme.io",
+        "Pro"
+      ],
+      [
+        "11:52",
+        "noah@dune.co",
+        "Team"
+      ],
+      [
+        "11:38",
+        "ivy@northwind.io",
+        "Pro"
+      ]
+    ]
+  },
+  "custom data · sessions · isometric": {
+    "isometric": true,
+    "gradient": false,
+    "source": "sessions",
+    "duration": "112 ms",
+    "conditions": [
+      {
+        "field": "country",
+        "operator": "in",
+        "value": "EU"
+      },
+      {
+        "field": "duration",
+        "operator": ">",
+        "value": "30s"
+      },
+      {
+        "field": "device",
+        "operator": "=",
+        "value": "mobile"
+      }
+    ],
+    "columns": [
+      "id",
+      "country",
+      "duration"
+    ],
+    "rows": [
+      [
+        "a19f",
+        "Germany",
+        "4m 12s"
+      ],
+      [
+        "c74b",
+        "France",
+        "2m 48s"
+      ],
+      [
+        "e02d",
+        "Spain",
+        "1m 09s"
+      ],
+      [
+        "f5a1",
+        "Italy",
+        "52s"
+      ]
+    ]
+  }
+}

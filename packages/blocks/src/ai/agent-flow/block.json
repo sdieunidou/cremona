@@ -1,0 +1,58 @@
+{
+  "category": "AI",
+  "file": "agent-flow",
+  "name": "Agent Flow",
+  "description": "An agent pipeline of stacked isometric cubes that light up in sequence, revealing each step label as it runs.",
+  "added": "2026-07-01",
+  "kind": "block",
+  "sourcePath": "ai/agent-flow.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "agent-flow-CY3bS0kJ.js",
+    "components": [
+      "agent-flow-CeOGC13E.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "no glow",
+      "slug": "002-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "no particles",
+      "slug": "003-no-particles",
+      "size": null,
+      "propsRaw": "{particles:!1}"
+    },
+    {
+      "label": "custom steps",
+      "slug": "004-custom-steps",
+      "size": null,
+      "propsRaw": "{steps:[`Classify`,`Check policy`,`Reply`]}"
+    },
+    {
+      "label": "four steps",
+      "slug": "005-four-steps",
+      "size": null,
+      "propsRaw": "{steps:[`Plan`,`Retrieve`,`Verify`,`Respond`]}"
+    }
+  ]
+}

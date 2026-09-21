@@ -1,0 +1,94 @@
+{
+  "category": "Images",
+  "file": "carousel",
+  "name": "Carousel",
+  "description": "An image carousel with slides and navigation controls.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "images/carousel.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "carousel-CpSTm5nA.js",
+    "components": [
+      "carousel-Q4JFKM1F.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom slides · count",
+      "slug": "006-custom-slides-count",
+      "size": null,
+      "propsRaw": "{slides:[{kind:`aurora`,title:`Tromsø`,caption:`Lights at midnight`},{kind:`blossom`,title:`Kyoto`,caption:`Cherry blossom season`},{kind:`city`,title:`Tokyo`,caption:`Neon after dark`}],count:8,activeIndex:3}"
+    },
+    {
+      "label": "no arrows",
+      "slug": "007-no-arrows",
+      "size": null,
+      "propsRaw": "{arrows:!1}"
+    },
+    {
+      "label": "active: first",
+      "slug": "008-active-first",
+      "size": null,
+      "propsRaw": "{activeIndex:0}"
+    },
+    {
+      "label": "active: last",
+      "slug": "009-active-last",
+      "size": null,
+      "propsRaw": "{activeIndex:4}"
+    },
+    {
+      "label": "real images",
+      "slug": "010-real-images",
+      "size": null,
+      "propsRaw": "{badge:!1,slides:a,count:3}"
+    },
+    {
+      "label": "isometric · real images",
+      "slug": "011-isometric-real-images",
+      "size": null,
+      "propsRaw": "{isometric:!0,badge:!1,slides:a,count:3}"
+    }
+  ]
+}

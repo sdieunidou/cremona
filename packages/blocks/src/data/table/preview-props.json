@@ -1,0 +1,130 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom data · orders": {
+    "title": "Orders",
+    "columns": [
+      {
+        "label": "Customer",
+        "key": "name",
+        "avatar": true
+      },
+      {
+        "label": "Amount",
+        "key": "amount"
+      },
+      {
+        "label": "Status",
+        "key": "status",
+        "badge": true
+      },
+      {
+        "label": "Date",
+        "key": "date",
+        "sort": true
+      }
+    ],
+    "items": [
+      {
+        "name": "Emma Wilson",
+        "initials": "EW",
+        "subtitle": "#ORD-4291",
+        "amount": "$249.00",
+        "status": "active",
+        "date": "May 12"
+      },
+      {
+        "name": "Ryan Torres",
+        "initials": "RT",
+        "subtitle": "#ORD-4290",
+        "amount": "$89.50",
+        "status": "pending",
+        "date": "May 11"
+      },
+      {
+        "name": "Lisa Chang",
+        "initials": "LC",
+        "subtitle": "#ORD-4289",
+        "amount": "$512.00",
+        "status": "active",
+        "date": "May 10"
+      }
+    ]
+  },
+  "custom data · projects · isometric": {
+    "isometric": true,
+    "gradient": false,
+    "title": "Projects",
+    "columns": [
+      {
+        "label": "Project",
+        "key": "name",
+        "avatar": true
+      },
+      {
+        "label": "Status",
+        "key": "status",
+        "badge": true
+      },
+      {
+        "label": "Tasks",
+        "key": "tasks"
+      },
+      {
+        "label": "Due",
+        "key": "due",
+        "sort": true
+      }
+    ],
+    "items": [
+      {
+        "name": "Website Redesign",
+        "initials": "WR",
+        "subtitle": "Marketing",
+        "status": "active",
+        "tasks": "12/20",
+        "due": "Jun 15"
+      },
+      {
+        "name": "Mobile App v2",
+        "initials": "MA",
+        "subtitle": "Engineering",
+        "status": "pending",
+        "tasks": "8/34",
+        "due": "Jul 1"
+      },
+      {
+        "name": "Brand Guidelines",
+        "initials": "BG",
+        "subtitle": "Design",
+        "status": "active",
+        "tasks": "18/18",
+        "due": "May 30"
+      },
+      {
+        "name": "API Migration",
+        "initials": "AM",
+        "subtitle": "Backend",
+        "status": "inactive",
+        "tasks": "5/12",
+        "due": "Jun 22"
+      }
+    ]
+  }
+}

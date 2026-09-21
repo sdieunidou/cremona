@@ -1,0 +1,70 @@
+{
+  "category": "Security",
+  "file": "fingerprint",
+  "name": "Fingerprint",
+  "description": "An animated fingerprint scan with a success state.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "security/fingerprint.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "fingerprint-CwvRl5zu.js",
+    "components": [
+      "fingerprint-nu6kPVMw.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "status=\"Authenticated\"",
+      "slug": "002-status-authenticated",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "no status",
+      "slug": "003-no-status",
+      "size": null,
+      "propsRaw": "{status:``}"
+    },
+    {
+      "label": "state=\"scanning\"",
+      "slug": "004-state-scanning",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "isometric · state=\"scanning\"",
+      "slug": "005-isometric-state-scanning",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "state=\"error\"",
+      "slug": "006-state-error",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "isometric · state=\"error\"",
+      "slug": "007-isometric-state-error",
+      "size": null,
+      "propsRaw": ""
+    }
+  ]
+}

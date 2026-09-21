@@ -1,0 +1,27 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "no glow": {
+    "glow": false
+  },
+  "no particles": {
+    "particles": false
+  },
+  "custom steps": {
+    "steps": [
+      "Classify",
+      "Check policy",
+      "Reply"
+    ]
+  },
+  "four steps": {
+    "steps": [
+      "Plan",
+      "Retrieve",
+      "Verify",
+      "Respond"
+    ]
+  }
+}

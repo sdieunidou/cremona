@@ -1,0 +1,27 @@
+{
+  "document": {},
+  "hover": {
+    "hover": true
+  },
+  "pdf": {
+    "variant": "pdf"
+  },
+  "image": {
+    "variant": "image"
+  },
+  "video": {
+    "variant": "video"
+  },
+  "audio": {
+    "variant": "audio"
+  },
+  "spreadsheet": {
+    "variant": "spreadsheet"
+  },
+  "code": {
+    "variant": "code"
+  },
+  "archive": {
+    "variant": "archive"
+  }
+}

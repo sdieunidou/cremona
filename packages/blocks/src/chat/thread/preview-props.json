@@ -1,0 +1,67 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "fadeOut": true,
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "default · custom thread": {
+    "parentUser": "Jordan Liu",
+    "parentInitials": "JL",
+    "parentTime": "Yesterday",
+    "parentText": "Anyone else loving the new dashboard widgets? They feel so much faster.",
+    "replies": [
+      {
+        "user": "Ada Lovelace",
+        "initials": "AL",
+        "text": "Yes, the optimistic updates make a huge difference.",
+        "time": "9:02"
+      },
+      {
+        "user": "Grace Hopper",
+        "initials": "GH",
+        "text": "Latency is down ~40% on my account.",
+        "time": "9:10"
+      }
+    ]
+  },
+  "isometric · custom thread": {
+    "isometric": true,
+    "parentUser": "Jordan Liu",
+    "parentInitials": "JL",
+    "parentTime": "Yesterday",
+    "parentText": "Anyone else loving the new dashboard widgets? They feel so much faster.",
+    "replies": [
+      {
+        "user": "Ada Lovelace",
+        "initials": "AL",
+        "text": "Yes, the optimistic updates make a huge difference.",
+        "time": "9:02"
+      },
+      {
+        "user": "Grace Hopper",
+        "initials": "GH",
+        "text": "Latency is down ~40% on my account.",
+        "time": "9:10"
+      }
+    ]
+  },
+  "no actions": {
+    "actions": false
+  },
+  "custom likes": {
+    "likes": 142
+  }
+}

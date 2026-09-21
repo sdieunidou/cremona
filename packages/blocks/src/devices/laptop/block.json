@@ -1,0 +1,64 @@
+{
+  "category": "Devices",
+  "file": "laptop",
+  "name": "Laptop",
+  "description": "A laptop device frame for presenting a screenshot or UI.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "devices/laptop.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "laptop-DRhmlExC.js",
+    "components": [
+      "laptop-Bewpauri.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "landing",
+      "slug": "000-landing",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "dashboard",
+      "slug": "001-dashboard",
+      "size": null,
+      "propsRaw": "{variant:`dashboard`}"
+    },
+    {
+      "label": "windows",
+      "slug": "002-windows",
+      "size": null,
+      "propsRaw": "{variant:`windows`}"
+    },
+    {
+      "label": "mac",
+      "slug": "003-mac",
+      "size": null,
+      "propsRaw": "{variant:`mac`}"
+    },
+    {
+      "label": "lockscreen",
+      "slug": "004-lockscreen",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`}"
+    },
+    {
+      "label": "lockscreen · image",
+      "slug": "005-lockscreen-image",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`,image:e(`media/placeholders/photo-04.jpg`),time:`14:08`,date:`Friday, June 6`,name:`Sara Ruiz`}"
+    },
+    {
+      "label": "screenshot",
+      "slug": "006-screenshot",
+      "size": null,
+      "propsRaw": "{variant:`screenshot`,image:e(`media/placeholders/photo-05.jpg`)}"
+    }
+  ]
+}

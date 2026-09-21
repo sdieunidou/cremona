@@ -1,0 +1,123 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "content pipeline · custom": {
+    "title": "Content pipeline",
+    "meta": "Q1 2026",
+    "columns": [
+      {
+        "id": "drafts",
+        "title": "Drafts",
+        "dot": "neutral",
+        "cards": [
+          {
+            "title": "How we designed our pricing page"
+          },
+          {
+            "title": "10 patterns we use for empty states",
+            "comments": 3
+          },
+          {
+            "title": "Behind the scenes · v3 launch"
+          }
+        ]
+      },
+      {
+        "id": "review",
+        "title": "In review",
+        "dot": "active",
+        "cards": [
+          {
+            "title": "Why we rewrote our onboarding",
+            "comments": 5
+          },
+          {
+            "title": "Hiring our first designer",
+            "attachments": 1
+          }
+        ]
+      },
+      {
+        "id": "published",
+        "title": "Published",
+        "dot": "success",
+        "cards": [
+          {
+            "title": "Launching Cremona",
+            "comments": 24
+          },
+          {
+            "title": "From 0 to 1k stars"
+          }
+        ]
+      }
+    ]
+  },
+  "hiring pipeline · custom": {
+    "title": "Hiring · Engineering",
+    "meta": "6 open roles",
+    "columns": [
+      {
+        "id": "applied",
+        "title": "Applied",
+        "dot": "neutral",
+        "cards": [
+          {
+            "title": "Maya Patel · Senior Frontend"
+          },
+          {
+            "title": "Tomás Ruiz · Full-stack",
+            "attachments": 2
+          },
+          {
+            "title": "Lena Köhler · Design Engineer"
+          },
+          {
+            "title": "Owen Hart · Backend"
+          }
+        ]
+      },
+      {
+        "id": "interviewing",
+        "title": "Interviewing",
+        "dot": "active",
+        "cards": [
+          {
+            "title": "Priya Shah · Onsite Thu",
+            "comments": 4
+          },
+          {
+            "title": "Daniel Cho · Tech screen"
+          }
+        ]
+      },
+      {
+        "id": "offer",
+        "title": "Offer sent",
+        "dot": "success",
+        "cards": [
+          {
+            "title": "Iris Müller · Senior Frontend",
+            "comments": 8
+          }
+        ]
+      }
+    ]
+  }
+}

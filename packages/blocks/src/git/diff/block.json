@@ -1,0 +1,94 @@
+{
+  "category": "Git",
+  "file": "diff",
+  "name": "Diff",
+  "description": "A file diff with added and removed lines, in unified or side by side view, swept line by line as the change counters climb.",
+  "added": "2026-08-19",
+  "kind": "block",
+  "sourcePath": "git/diff.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "diff-B7wPtgWR.js",
+    "components": [
+      "diff-Cr3WRVTl.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "006-custom-copy",
+      "size": null,
+      "propsRaw": "{file:`app/Support/Registry.php`,language:`PHP`,hunk:`@@ -82,6 +82,8 @@`,startLine:82}"
+    },
+    {
+      "label": "additions only",
+      "slug": "007-additions-only",
+      "size": null,
+      "propsRaw": "{file:`resources/js/hooks/use-theme.ts`,hunk:`@@ -3,0 +4,4 @@`,startLine:3,lines:[{indent:0,tokens:[{width:16,color:`keyword`},{width:24,color:`func`}]},{type:`add`,indent:1,tokens:[{width:20,color:`variable`},{width:6,color:`punct`},{width:26,color:`string`}]},{type:`add`,indent:1,tokens:[{width:28,color:`func`},{width:6,color:`punct`},{width:18,color:`prop`}]},{indent:0,tokens:[{width:10,color:`punct`}]}]}"
+    },
+    {
+      "label": "split",
+      "slug": "008-split",
+      "size": null,
+      "propsRaw": "{view:`split`}"
+    },
+    {
+      "label": "split · isometric",
+      "slug": "009-split-isometric",
+      "size": null,
+      "propsRaw": "{view:`split`,isometric:!0}"
+    },
+    {
+      "label": "no line numbers",
+      "slug": "010-no-line-numbers",
+      "size": null,
+      "propsRaw": "{lineNumbers:!1}"
+    },
+    {
+      "label": "hover",
+      "slug": "011-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    }
+  ]
+}

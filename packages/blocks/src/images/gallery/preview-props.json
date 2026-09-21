@@ -1,0 +1,138 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom copy": {
+    "title": "Recent shots",
+    "description": "Last 24 hours"
+  },
+  "landscapes only": {
+    "title": "Landscapes",
+    "items": [
+      {
+        "kind": "mountain",
+        "title": "Alpine"
+      },
+      {
+        "kind": "ocean",
+        "title": "Pacific"
+      },
+      {
+        "kind": "forest",
+        "title": "Pines"
+      },
+      {
+        "kind": "desert",
+        "title": "Dunes"
+      },
+      {
+        "kind": "sunset",
+        "title": "Dusk"
+      },
+      {
+        "kind": "aurora",
+        "title": "Aurora"
+      }
+    ]
+  },
+  "real images": {
+    "title": "Photo library",
+    "badge": false,
+    "items": [
+      {
+        "src": "../../media/placeholders/photo-12.jpg",
+        "title": "Alpine"
+      },
+      {
+        "src": "../../media/placeholders/photo-13.jpg",
+        "title": "Dusk"
+      },
+      {
+        "src": "../../media/placeholders/photo-14.jpg",
+        "title": "Pacific"
+      },
+      {
+        "src": "../../media/placeholders/photo-15.jpg",
+        "title": "Pines"
+      },
+      {
+        "src": "../../media/placeholders/photo-16.jpg",
+        "title": "Dunes"
+      },
+      {
+        "src": "../../media/placeholders/photo-17.jpg",
+        "title": "Skyline"
+      },
+      {
+        "src": "../../media/placeholders/photo-18.jpg",
+        "title": "Aurora"
+      },
+      {
+        "src": "../../media/placeholders/photo-19.jpg",
+        "title": "Blossom"
+      },
+      {
+        "src": "../../media/placeholders/photo-20.jpg",
+        "title": "Studio"
+      }
+    ]
+  },
+  "isometric · real images": {
+    "isometric": true,
+    "title": "Photo library",
+    "badge": false,
+    "items": [
+      {
+        "src": "../../media/placeholders/photo-12.jpg",
+        "title": "Alpine"
+      },
+      {
+        "src": "../../media/placeholders/photo-13.jpg",
+        "title": "Dusk"
+      },
+      {
+        "src": "../../media/placeholders/photo-14.jpg",
+        "title": "Pacific"
+      },
+      {
+        "src": "../../media/placeholders/photo-15.jpg",
+        "title": "Pines"
+      },
+      {
+        "src": "../../media/placeholders/photo-16.jpg",
+        "title": "Dunes"
+      },
+      {
+        "src": "../../media/placeholders/photo-17.jpg",
+        "title": "Skyline"
+      },
+      {
+        "src": "../../media/placeholders/photo-18.jpg",
+        "title": "Aurora"
+      },
+      {
+        "src": "../../media/placeholders/photo-19.jpg",
+        "title": "Blossom"
+      },
+      {
+        "src": "../../media/placeholders/photo-20.jpg",
+        "title": "Studio"
+      }
+    ]
+  }
+}

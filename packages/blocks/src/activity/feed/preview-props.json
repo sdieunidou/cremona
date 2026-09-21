@@ -1,0 +1,81 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "fadeOut": true,
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "default · custom items": {
+    "title": "Team activity",
+    "meta": "This week",
+    "items": [
+      {
+        "user": "Ada Lovelace",
+        "initials": "AL",
+        "action": "commit",
+        "title": "pushed to analytics",
+        "detail": "2 commits · lib/metrics.ts",
+        "time": "5m"
+      },
+      {
+        "user": "Grace Hopper",
+        "initials": "GH",
+        "action": "deploy",
+        "title": "deployed v3.0.0",
+        "detail": "staging · 2m 18s",
+        "time": "22m"
+      },
+      {
+        "user": "Linus Torvalds",
+        "initials": "LT",
+        "action": "merge",
+        "title": "merged PR #87",
+        "detail": "fix: kernel scheduler",
+        "time": "1h"
+      }
+    ]
+  },
+  "isometric · custom items": {
+    "isometric": true,
+    "title": "Team activity",
+    "meta": "This week",
+    "items": [
+      {
+        "user": "Ada Lovelace",
+        "initials": "AL",
+        "action": "commit",
+        "title": "pushed to analytics",
+        "detail": "2 commits · lib/metrics.ts",
+        "time": "5m"
+      },
+      {
+        "user": "Grace Hopper",
+        "initials": "GH",
+        "action": "deploy",
+        "title": "deployed v3.0.0",
+        "detail": "staging · 2m 18s",
+        "time": "22m"
+      },
+      {
+        "user": "Linus Torvalds",
+        "initials": "LT",
+        "action": "merge",
+        "title": "merged PR #87",
+        "detail": "fix: kernel scheduler",
+        "time": "1h"
+      }
+    ]
+  }
+}

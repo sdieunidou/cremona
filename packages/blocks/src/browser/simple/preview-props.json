@@ -1,0 +1,43 @@
+{
+  "landing": {},
+  "dashboard": {
+    "variant": "dashboard"
+  },
+  "landing · fadeOut": {
+    "fadeOut": true
+  },
+  "dashboard · fadeOut": {
+    "variant": "dashboard",
+    "fadeOut": true
+  },
+  "landing · isometric": {
+    "isometric": true
+  },
+  "dashboard · isometric": {
+    "variant": "dashboard",
+    "isometric": true
+  },
+  "landing · isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "dashboard · isometric · fadeOut": {
+    "variant": "dashboard",
+    "isometric": true,
+    "fadeOut": true
+  },
+  "landing · no gradient": {
+    "gradient": false
+  },
+  "landing · isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "landing · custom url": {
+    "url": "acme.io"
+  },
+  "dashboard · custom url": {
+    "variant": "dashboard",
+    "url": "app.acme.io/overview"
+  }
+}

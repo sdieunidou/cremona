@@ -1,0 +1,51 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "windows layout": {
+    "layout": "windows"
+  },
+  "⌘ + S · shortcut": {
+    "keys": [
+      "⌘",
+      "S"
+    ]
+  },
+  "⌘ + Shift + A · shortcut": {
+    "keys": [
+      "⌘",
+      "Shift",
+      "A"
+    ]
+  },
+  "⌘ + S · hover": {
+    "keys": [
+      "⌘",
+      "S"
+    ],
+    "hover": true
+  },
+  "⌘ + C · isometric": {
+    "keys": [
+      "⌘",
+      "C"
+    ],
+    "isometric": true
+  },
+  "Ctrl + Z · windows": {
+    "keys": [
+      "Ctrl",
+      "Z"
+    ],
+    "layout": "windows"
+  },
+  "Ctrl + C · windows · isometric": {
+    "keys": [
+      "Ctrl",
+      "C"
+    ],
+    "layout": "windows",
+    "isometric": true
+  }
+}

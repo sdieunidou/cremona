@@ -1,0 +1,124 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "support · custom copy": {
+    "query": "billing",
+    "groups": [
+      {
+        "label": "Billing",
+        "items": [
+          {
+            "icon": {
+              "type": "lucide:CreditCard",
+              "key": null,
+              "props": {
+                "className": "size-3",
+                "strokeWidth": 2.5
+              },
+              "_owner": null,
+              "_store": {}
+            },
+            "label": "Update payment method",
+            "shortcut": [
+              "⌘",
+              "B"
+            ]
+          },
+          {
+            "icon": {
+              "type": "lucide:Users",
+              "key": null,
+              "props": {
+                "className": "size-3",
+                "strokeWidth": 2.5
+              },
+              "_owner": null,
+              "_store": {}
+            },
+            "label": "Manage seats"
+          }
+        ]
+      },
+      {
+        "label": "Help",
+        "items": [
+          {
+            "icon": {
+              "type": "lucide:LifeBuoy",
+              "key": null,
+              "props": {
+                "className": "size-3",
+                "strokeWidth": 2.5
+              },
+              "_owner": null,
+              "_store": {}
+            },
+            "label": "Contact support"
+          }
+        ]
+      }
+    ]
+  },
+  "single group": {
+    "query": "deploy",
+    "groups": [
+      {
+        "label": "Deployments",
+        "items": [
+          {
+            "icon": {
+              "type": "lucide:GitBranch",
+              "key": null,
+              "props": {
+                "className": "size-3",
+                "strokeWidth": 2.5
+              },
+              "_owner": null,
+              "_store": {}
+            },
+            "label": "Deploy to production",
+            "shortcut": [
+              "⌘",
+              "↵"
+            ]
+          },
+          {
+            "icon": {
+              "type": "lucide:GitBranch",
+              "key": null,
+              "props": {
+                "className": "size-3",
+                "strokeWidth": 2.5
+              },
+              "_owner": null,
+              "_store": {}
+            },
+            "label": "Roll back last deploy"
+          }
+        ]
+      }
+    ]
+  },
+  "no caret": {
+    "caret": false
+  },
+  "hover": {
+    "hover": true
+  }
+}

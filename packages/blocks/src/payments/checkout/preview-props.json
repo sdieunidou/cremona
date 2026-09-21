@@ -1,0 +1,57 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom amount": {
+    "amount": "$129.00",
+    "buttonLabel": "Subscribe for"
+  },
+  "card": {
+    "card": true
+  },
+  "card · fadeOut": {
+    "card": true,
+    "fadeOut": true
+  },
+  "card · isometric": {
+    "card": true,
+    "isometric": true
+  },
+  "card · isometric · fadeOut": {
+    "card": true,
+    "isometric": true,
+    "fadeOut": true
+  },
+  "card · no gradient": {
+    "card": true,
+    "gradient": false
+  },
+  "card · isometric · no gradient": {
+    "card": true,
+    "isometric": true,
+    "gradient": false
+  },
+  "card · custom content": {
+    "card": true,
+    "name": "ADA LOVELACE",
+    "cardNumber": "4000 0566 5566 5556",
+    "expiry": "06/30",
+    "cvc": "456",
+    "brand": "GOLD"
+  }
+}

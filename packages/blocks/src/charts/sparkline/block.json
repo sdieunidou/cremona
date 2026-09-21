@@ -1,0 +1,70 @@
+{
+  "category": "Charts",
+  "file": "sparkline",
+  "name": "Sparkline",
+  "description": "A compact inline sparkline for tight spaces and stat cards.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "charts/sparkline.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "sparkline-DrkQ4ty_.js",
+    "components": [
+      "sparkline-BAhp-z2M.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "negative change · custom copy",
+      "slug": "004-negative-change-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Churn rate`,value:`2.4%`,change:`-1.1%`,points:[.85,.78,.82,.7,.72,.58,.6,.45,.42,.3]}"
+    },
+    {
+      "label": "negative change · isometric · custom copy",
+      "slug": "005-negative-change-isometric-custom-copy",
+      "size": null,
+      "propsRaw": "{isometric:!0,title:`Bounce rate`,value:`38.2%`,change:`-4.6%`,points:[.9,.82,.85,.7,.68,.58,.5,.42,.38,.25]}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "006-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`MRR`,value:`$12.4k`,change:`+8.2%`}"
+    },
+    {
+      "label": "isometric · no gradient · custom copy",
+      "slug": "007-isometric-no-gradient-custom-copy",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1,title:`Requests`,value:`842k`,change:`+31.4%`,points:[.15,.28,.22,.4,.38,.55,.52,.7,.68,.88]}"
+    }
+  ]
+}

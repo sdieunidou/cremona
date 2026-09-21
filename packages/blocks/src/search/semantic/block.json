@@ -1,0 +1,64 @@
+{
+  "category": "Search",
+  "file": "semantic",
+  "name": "Semantic",
+  "description": "A query landing in an embedding space, where a radius sweep lights up its nearest matches with similarity scores.",
+  "added": "2026-07-28",
+  "kind": "block",
+  "sourcePath": "search/semantic.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "semantic-1-V-ja-2.js",
+    "components": [
+      "semantic-BkS3RRSx.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "hover",
+      "slug": "002-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "support · custom copy",
+      "slug": "003-support-custom-copy",
+      "size": null,
+      "propsRaw": "{query:`my card was declined`,matches:[{label:`Failed payments`,score:.96},{label:`Update a card`,score:.9},{label:`Dunning emails`,score:.74}]}"
+    },
+    {
+      "label": "docs · isometric",
+      "slug": "004-docs-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,query:`rotate an API key`,spaceLabel:`Docs index`,matches:[{label:`Key rotation`,score:.97},{label:`Scoped tokens`,score:.85},{label:`Revoke access`,score:.8}]}"
+    },
+    {
+      "label": "two matches",
+      "slug": "005-two-matches",
+      "size": null,
+      "propsRaw": "{query:`invite my team`,matches:[{label:`Add teammates`,score:.93},{label:`Roles and access`,score:.81}]}"
+    },
+    {
+      "label": "one match",
+      "slug": "006-one-match",
+      "size": null,
+      "propsRaw": "{query:`export my data`,matches:[{label:`Data export`,score:.98}]}"
+    }
+  ]
+}

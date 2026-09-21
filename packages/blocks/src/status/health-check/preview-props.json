@@ -1,0 +1,112 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "e-commerce · partial degradation": {
+    "title": "Shop Status",
+    "items": [
+      {
+        "icon": "lucide:ShoppingCart",
+        "name": "Checkout",
+        "region": "us-east-1",
+        "status": "operational",
+        "latency": "68 ms"
+      },
+      {
+        "icon": "lucide:CreditCard",
+        "name": "Payments",
+        "region": "Stripe · primary",
+        "status": "operational",
+        "latency": "112 ms"
+      },
+      {
+        "icon": "lucide:Search",
+        "name": "Product Search",
+        "region": "eu-west-1",
+        "status": "degraded",
+        "latency": "640 ms"
+      },
+      {
+        "icon": "lucide:Webhook",
+        "name": "Order Webhooks",
+        "region": "queue · 3 retries",
+        "status": "operational",
+        "latency": "24 ms"
+      }
+    ]
+  },
+  "ai stack · outage": {
+    "title": "Inference Stack",
+    "items": [
+      {
+        "icon": "lucide:Sparkles",
+        "name": "LLM Gateway",
+        "region": "us-east-1",
+        "status": "operational",
+        "latency": "184 ms"
+      },
+      {
+        "icon": "lucide:BrainCircuit",
+        "name": "Embeddings",
+        "region": "us-east-1",
+        "status": "operational",
+        "latency": "92 ms"
+      },
+      {
+        "icon": "lucide:Database",
+        "name": "Vector DB",
+        "region": "Pinecone · prod",
+        "status": "down",
+        "latency": "n/a"
+      },
+      {
+        "icon": "lucide:Server",
+        "name": "Model Server",
+        "region": "gpu-cluster-04",
+        "status": "degraded",
+        "latency": "1.2 s"
+      }
+    ]
+  },
+  "minimal stack · all operational": {
+    "title": "Production",
+    "items": [
+      {
+        "icon": "lucide:Globe",
+        "name": "Web App",
+        "region": "edge · global",
+        "status": "operational",
+        "latency": "38 ms"
+      },
+      {
+        "icon": "lucide:Server",
+        "name": "API",
+        "region": "us-east-1",
+        "status": "operational",
+        "latency": "54 ms"
+      },
+      {
+        "icon": "lucide:Database",
+        "name": "Postgres",
+        "region": "primary",
+        "status": "operational",
+        "latency": "6 ms"
+      }
+    ]
+  }
+}

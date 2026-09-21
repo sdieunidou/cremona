@@ -1,0 +1,20 @@
+{
+  "name": "@cremona/stimulus",
+  "version": "0.1.0",
+  "description": "Cremona Stimulus adapter \u2014 controllers and static templates for Symfony apps.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./templates/*": "./templates/*"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "true"
+  },
+  "dependencies": {
+    "@cremona/core": "workspace:*",
+    "@hotwired/stimulus": "^3.2.2"
+  }
+}

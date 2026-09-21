@@ -1,0 +1,59 @@
+{
+  "category": "Sections",
+  "file": "blog",
+  "name": "Blog",
+  "description": "A blog index section with article cards and metadata.",
+  "added": "2026-06-18",
+  "kind": "layout",
+  "sourcePath": "sections/blog-post.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "blog-post-B0YMq0yW.js",
+    "components": [
+      "blog-CKNwV2a-.js",
+      "blog-post-iJj-65Gt.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    }
+  ]
+}

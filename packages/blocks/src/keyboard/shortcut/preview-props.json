@@ -1,0 +1,33 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "Ctrl + Shift + P · custom keys": {
+    "keys": [
+      "Ctrl",
+      "Shift",
+      "P"
+    ]
+  },
+  "⌘ + Shift + F · custom keys": {
+    "keys": [
+      "⌘",
+      "Shift",
+      "F"
+    ]
+  },
+  "Ctrl + Z · custom keys": {
+    "keys": [
+      "Ctrl",
+      "Z"
+    ]
+  },
+  "Ctrl + Z · custom keys · isometric": {
+    "keys": [
+      "Ctrl",
+      "Z"
+    ],
+    "isometric": true
+  }
+}

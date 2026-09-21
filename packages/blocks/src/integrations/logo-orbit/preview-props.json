@@ -1,0 +1,94 @@
+{
+  "default": {},
+  "hover · orbit": {
+    "hover": true,
+    "orbit": true,
+    "innerRing": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "orbit": {
+    "orbit": true
+  },
+  "orbit · isometric": {
+    "orbit": true,
+    "isometric": true
+  },
+  "hidden logo": {
+    "hiddenLogo": true
+  },
+  "custom logo": {
+    "logo": {
+      "type": "svg",
+      "key": null,
+      "props": {
+        "viewBox": "0 0 24 24",
+        "className": "size-7",
+        "children": [
+          {
+            "type": "circle",
+            "key": null,
+            "props": {
+              "cx": 7.5,
+              "cy": 8,
+              "r": 5,
+              "className": "fill-blue-500",
+              "opacity": 0.9
+            },
+            "_owner": null,
+            "_store": {}
+          },
+          {
+            "type": "circle",
+            "key": null,
+            "props": {
+              "cx": 16.5,
+              "cy": 8,
+              "r": 5,
+              "className": "fill-rose-500",
+              "opacity": 0.9
+            },
+            "_owner": null,
+            "_store": {}
+          },
+          {
+            "type": "circle",
+            "key": null,
+            "props": {
+              "cx": 12,
+              "cy": 15,
+              "r": 5,
+              "className": "fill-amber-500",
+              "opacity": 0.9
+            },
+            "_owner": null,
+            "_store": {}
+          }
+        ]
+      },
+      "_owner": null,
+      "_store": {}
+    }
+  },
+  "inner ring": {
+    "innerRing": true
+  },
+  "orbit · inner ring": {
+    "orbit": true,
+    "innerRing": true
+  },
+  "custom radius": {
+    "orbit": true,
+    "innerRing": true,
+    "radius": 160,
+    "innerRadius": 52
+  },
+  "custom radius · orbit · isometric": {
+    "orbit": true,
+    "innerRing": true,
+    "radius": 140,
+    "innerRadius": 85,
+    "isometric": true
+  }
+}

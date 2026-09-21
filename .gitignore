@@ -1,0 +1,7 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.DS_Store
+/apps/gallery/dist/
+/tools/extract/__pycache__/

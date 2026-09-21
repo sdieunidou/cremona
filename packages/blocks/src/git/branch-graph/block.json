@@ -1,0 +1,70 @@
+{
+  "category": "Git",
+  "file": "branch-graph",
+  "name": "Branch Graph",
+  "description": "A commit rail where feature branches fork off, run their own commits, and merge back, with pulses traveling every path.",
+  "added": "2026-08-19",
+  "kind": "block",
+  "sourcePath": "git/branch-graph.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "branch-graph-B_hnf36e.js",
+    "components": [
+      "branch-graph-CShz4l6b.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "single branch",
+      "slug": "002-single-branch",
+      "size": null,
+      "propsRaw": "{commits:6,branches:[{name:`feat/billing`,from:1,commits:3,merge:!0,color:`text-sky-500`,pulseColor:`text-sky-800 dark:text-sky-200`}]}"
+    },
+    {
+      "label": "release flow · custom copy",
+      "slug": "003-release-flow-custom-copy",
+      "size": null,
+      "propsRaw": "{base:`production`,head:`v2.4`,commits:7,branches:[{name:`release/2.4`,from:0,commits:3,merge:!0,color:`text-emerald-500`,pulseColor:`text-emerald-800 dark:text-emerald-200`},{name:`hotfix/session`,from:4,commits:2,color:`text-rose-500`,pulseColor:`text-rose-800 dark:text-rose-200`}]}"
+    },
+    {
+      "label": "release flow · isometric",
+      "slug": "004-release-flow-isometric",
+      "size": null,
+      "propsRaw": "{base:`production`,head:`v2.4`,pulse:`line`,isometric:!0,branches:[{name:`release/2.4`,from:0,commits:3,merge:!0,color:`text-emerald-500`,pulseColor:`text-emerald-800 dark:text-emerald-200`},{name:`hotfix/session`,from:4,commits:2,color:`text-rose-500`,pulseColor:`text-rose-800 dark:text-rose-200`}]}"
+    },
+    {
+      "label": "short history",
+      "slug": "005-short-history",
+      "size": null,
+      "propsRaw": "{commits:5,head:`main`,branches:[{name:`docs/readme`,from:1,commits:2,merge:!0,color:`text-violet-500`,pulseColor:`text-violet-800 dark:text-violet-200`}]}"
+    },
+    {
+      "label": "line pulse",
+      "slug": "006-line-pulse",
+      "size": null,
+      "propsRaw": "{pulse:`line`}"
+    },
+    {
+      "label": "hover",
+      "slug": "007-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    }
+  ]
+}

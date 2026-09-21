@@ -1,0 +1,81 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "default · custom steps": {
+    "title": "Onboarding",
+    "meta": "Q2",
+    "steps": [
+      {
+        "title": "Account created",
+        "detail": "Workspace provisioned",
+        "time": "3d",
+        "status": "done"
+      },
+      {
+        "title": "Team invited",
+        "detail": "8 members joined",
+        "time": "1d",
+        "status": "done"
+      },
+      {
+        "title": "Integrations setup",
+        "detail": "Slack, GitHub, Linear",
+        "time": "Today",
+        "status": "active"
+      },
+      {
+        "title": "First project shipped",
+        "detail": "Launch with stakeholders",
+        "time": "Next",
+        "status": "pending"
+      }
+    ]
+  },
+  "isometric · custom steps": {
+    "isometric": true,
+    "title": "Onboarding",
+    "meta": "Q2",
+    "steps": [
+      {
+        "title": "Account created",
+        "detail": "Workspace provisioned",
+        "time": "3d",
+        "status": "done"
+      },
+      {
+        "title": "Team invited",
+        "detail": "8 members joined",
+        "time": "1d",
+        "status": "done"
+      },
+      {
+        "title": "Integrations setup",
+        "detail": "Slack, GitHub, Linear",
+        "time": "Today",
+        "status": "active"
+      },
+      {
+        "title": "First project shipped",
+        "detail": "Launch with stakeholders",
+        "time": "Next",
+        "status": "pending"
+      }
+    ]
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "stacked": {
+    "stacked": true
+  },
+  "isometric · stacked": {
+    "isometric": true,
+    "stacked": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "conversions · primary · custom copy": {
+    "label": "Conversions",
+    "value": "1,284",
+    "change": "+22.6%",
+    "direction": "primary",
+    "points": [
+      0.28,
+      0.32,
+      0.4,
+      0.45,
+      0.5,
+      0.58,
+      0.68,
+      0.74,
+      0.82
+    ],
+    "gradient": false
+  },
+  "revenue · up · custom copy": {
+    "label": "MRR",
+    "value": "$24.8k",
+    "change": "+12.4%",
+    "direction": "up",
+    "points": [
+      0.4,
+      0.42,
+      0.38,
+      0.5,
+      0.55,
+      0.62,
+      0.7,
+      0.78,
+      0.85
+    ],
+    "gradient": false
+  },
+  "bounce · down · custom copy": {
+    "label": "Bounce Rate",
+    "value": "24.3%",
+    "change": "-8.4%",
+    "direction": "down",
+    "points": [
+      0.85,
+      0.78,
+      0.82,
+      0.7,
+      0.65,
+      0.58,
+      0.5,
+      0.42,
+      0.38
+    ],
+    "gradient": false
+  },
+  "errors · warning · custom copy": {
+    "label": "Error Rate",
+    "value": "4.2%",
+    "change": "+0.8pt",
+    "direction": "warning",
+    "points": [
+      0.25,
+      0.22,
+      0.3,
+      0.28,
+      0.42,
+      0.5,
+      0.62,
+      0.7,
+      0.78
+    ],
+    "gradient": false
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "billing · custom copy": {
+    "title": "Agent run",
+    "tools": [
+      {
+        "name": "get_subscription",
+        "args": "plan: \"scale\"",
+        "result": "active",
+        "duration": "96ms",
+        "icon": {
+          "type": "lucide:CreditCard",
+          "key": null,
+          "props": {
+            "className": "size-3.5",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      },
+      {
+        "name": "query_usage",
+        "args": "period: \"october\"",
+        "result": "1.2M events",
+        "duration": "244ms",
+        "icon": {
+          "type": "lucide:Database",
+          "key": null,
+          "props": {
+            "className": "size-3.5",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      },
+      {
+        "name": "book_call",
+        "args": "slot: \"tue 14:00\"",
+        "result": "confirmed",
+        "duration": "173ms",
+        "icon": {
+          "type": "lucide:Calendar",
+          "key": null,
+          "props": {
+            "className": "size-3.5",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      }
+    ]
+  },
+  "four tools · isometric": {
+    "isometric": true,
+    "title": "MCP tools",
+    "tools": [
+      {
+        "name": "fetch_page",
+        "args": "url: \"docs/api\"",
+        "result": "12kb",
+        "duration": "210ms",
+        "icon": {
+          "type": "lucide:Globe",
+          "key": null,
+          "props": {
+            "className": "size-3.5",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      },
+      {
+        "name": "read_schema",
+        "args": "table: \"orders\"",
+        "result": "18 columns",
+        "duration": "64ms",
+        "icon": {
+          "type": "lucide:Database",
+          "key": null,
+          "props": {
+            "className": "size-3.5",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      },
+      {
+        "name": "open_pr",
+        "args": "branch: \"fix/tax\"",
+        "result": "#312",
+        "duration": "418ms",
+        "icon": {
+          "type": "lucide:GitBranch",
+          "key": null,
+          "props": {
+            "className": "size-3.5",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      },
+      {
+        "name": "notify_team",
+        "args": "channel: \"#eng\"",
+        "result": "posted",
+        "duration": "77ms",
+        "icon": {
+          "type": "lucide:MessageSquare",
+          "key": null,
+          "props": {
+            "className": "size-3.5",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      }
+    ]
+  },
+  "no glow": {
+    "glow": false
+  },
+  "no particles": {
+    "particles": false
+  },
+  "no glow · no particles": {
+    "glow": false,
+    "particles": false
+  },
+  "hover": {
+    "hover": true
+  }
+}

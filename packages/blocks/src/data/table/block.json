@@ -1,0 +1,70 @@
+{
+  "category": "Data",
+  "file": "table",
+  "name": "Table",
+  "description": "A data table with sortable columns, rows, and status pills.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "data/table.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "table-S3f0Mc6N.js",
+    "components": [
+      "table-BP81FOE5.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom data · orders",
+      "slug": "006-custom-data-orders",
+      "size": null,
+      "propsRaw": "{title:`Orders`,columns:[{label:`Customer`,key:`name`,avatar:!0},{label:`Amount`,key:`amount`},{label:`Status`,key:`status`,badge:!0},{label:`Date`,key:`date`,sort:!0}],items:[{name:`Emma Wilson`,initials:`EW`,subtitle:`#ORD-4291`,amount:`$249.00`,status:`active`,date:`May 12`},{name:`Ryan Torres`,initials:`RT`,subtitle:`#ORD-4290`,amount:`$89.50`,status:`pending`,date:`May 11`},{name:`Lisa Chang`,initials:`LC`,subtitle:`#ORD-4289`,amount:`$512.00`,status:`active`,date:`May 10`}]}"
+    },
+    {
+      "label": "custom data · projects · isometric",
+      "slug": "007-custom-data-projects-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1,title:`Projects`,columns:[{label:`Project`,key:`name`,avatar:!0},{label:`Status`,key:`status`,badge:!0},{label:`Tasks`,key:`tasks`},{label:`Due`,key:`due`,sort:!0}],items:[{name:`Website Redesign`,initials:`WR`,subtitle:`Marketing`,status:`active`,tasks:`12/20`,due:`Jun 15`},{name:`Mobile App v2`,initials:`MA`,subtitle:`Engineering`,status:`pending`,tasks:`8/34`,due:`Jul 1`},{name:`Brand Guidelines`,initials:`BG`,subtitle:`Design`,status:`active`,tasks:`18/18`,due:`May 30`},{name:`API Migration`,initials:`AM`,subtitle:`Backend`,status:`inactive`,tasks:`5/12`,due:`Jun 22`}]}"
+    }
+  ]
+}

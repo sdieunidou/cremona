@@ -1,0 +1,58 @@
+{
+  "category": "Avatars",
+  "file": "grid",
+  "name": "Grid",
+  "description": "A grid of user avatars with subtle staggered reveals.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "avatars/grid.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "grid-QfS4B8Qk.js",
+    "components": [
+      "grid-dJ00t9EV.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "photos · custom members",
+      "slug": "002-photos-custom-members",
+      "size": null,
+      "propsRaw": "{members:a}"
+    },
+    {
+      "label": "photos · isometric · custom members",
+      "slug": "003-photos-isometric-custom-members",
+      "size": null,
+      "propsRaw": "{isometric:!0,members:a}"
+    },
+    {
+      "label": "4 avatars · custom members",
+      "slug": "004-4-avatars-custom-members",
+      "size": null,
+      "propsRaw": "{members:[{initials:`SR`,tint:`bg-amber-200/80 text-amber-700 dark:bg-amber-900 dark:text-amber-300`},{initials:`OB`,tint:`bg-pink-200/80 text-pink-700 dark:bg-pink-900 dark:text-pink-300`},{initials:`MK`,tint:`bg-teal-200/80 text-teal-700 dark:bg-teal-900 dark:text-teal-300`},{initials:`JH`,tint:`bg-indigo-200/80 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300`}]}"
+    },
+    {
+      "label": "4 avatars · isometric · custom members",
+      "slug": "005-4-avatars-isometric-custom-members",
+      "size": null,
+      "propsRaw": "{isometric:!0,members:[{initials:`RA`,tint:`bg-orange-200/80 text-orange-700 dark:bg-orange-900 dark:text-orange-300`},{initials:`LS`,tint:`bg-lime-200/80 text-lime-700 dark:bg-lime-900 dark:text-lime-300`},{initials:`FW`,tint:`bg-red-200/80 text-red-700 dark:bg-red-900 dark:text-red-300`},{initials:`HZ`,tint:`bg-fuchsia-200/80 text-fuchsia-700 dark:bg-fuchsia-900 dark:text-fuchsia-300`}]}"
+    }
+  ]
+}

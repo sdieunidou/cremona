@@ -1,0 +1,82 @@
+{
+  "category": "Avatars",
+  "file": "profile-card",
+  "name": "Profile Card",
+  "description": "A compact profile card with avatar, name, and key stats.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "avatars/profile-card.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "profile-card-SCROjpI4.js",
+    "components": [
+      "profile-card-BWtC0K09.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "online · custom copy",
+      "slug": "004-online-custom-copy",
+      "size": null,
+      "propsRaw": "{initials:`JC`,name:`James Chen`,role:`Engineering Lead`,tint:`bg-sky-200/80 text-sky-700 dark:bg-sky-950/80 dark:text-sky-300`}"
+    },
+    {
+      "label": "online · photo",
+      "slug": "005-online-photo",
+      "size": null,
+      "propsRaw": "{initials:`SR`,image:e(`media/placeholders/avatar-08.jpg`),name:`Sara Ruiz`,role:`Design Lead`}"
+    },
+    {
+      "label": "away",
+      "slug": "006-away",
+      "size": null,
+      "propsRaw": "{status:`away`}"
+    },
+    {
+      "label": "busy",
+      "slug": "007-busy",
+      "size": null,
+      "propsRaw": "{status:`busy`}"
+    },
+    {
+      "label": "offline",
+      "slug": "008-offline",
+      "size": null,
+      "propsRaw": "{status:`offline`}"
+    },
+    {
+      "label": "away · isometric · custom copy",
+      "slug": "009-away-isometric-custom-copy",
+      "size": null,
+      "propsRaw": "{isometric:!0,status:`away`,initials:`OB`,name:`Olivia Bay`,role:`Brand Designer`,tint:`bg-pink-200/80 text-pink-700 dark:bg-pink-950/80 dark:text-pink-300`}"
+    }
+  ]
+}

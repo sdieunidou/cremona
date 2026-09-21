@@ -1,0 +1,76 @@
+{
+  "category": "Status",
+  "file": "health-check",
+  "name": "Health Check",
+  "description": "A service health check with status indicators.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "status/health-check.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "health-check-Bw8xdvx0.js",
+    "components": [
+      "health-check-Br0fTuwR.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "e-commerce · partial degradation",
+      "slug": "006-e-commerce-partial-degradation",
+      "size": null,
+      "propsRaw": "{title:`Shop Status`,items:[{icon:l,name:`Checkout`,region:`us-east-1`,status:`operational`,latency:`68 ms`},{icon:n,name:`Payments`,region:`Stripe · primary`,status:`operational`,latency:`112 ms`},{icon:u,name:`Product Search`,region:`eu-west-1`,status:`degraded`,latency:`640 ms`},{icon:c,name:`Order Webhooks`,region:`queue · 3 retries`,status:`operational`,latency:`24 ms`}]}"
+    },
+    {
+      "label": "ai stack · outage",
+      "slug": "007-ai-stack-outage",
+      "size": null,
+      "propsRaw": "{title:`Inference Stack`,items:[{icon:s,name:`LLM Gateway`,region:`us-east-1`,status:`operational`,latency:`184 ms`},{icon:p,name:`Embeddings`,region:`us-east-1`,status:`operational`,latency:`92 ms`},{icon:r,name:`Vector DB`,region:`Pinecone · prod`,status:`down`,latency:`n/a`},{icon:o,name:`Model Server`,region:`gpu-cluster-04`,status:`degraded`,latency:`1.2 s`}]}"
+    },
+    {
+      "label": "minimal stack · all operational",
+      "slug": "008-minimal-stack-all-operational",
+      "size": null,
+      "propsRaw": "{title:`Production`,items:[{icon:a,name:`Web App`,region:`edge · global`,status:`operational`,latency:`38 ms`},{icon:o,name:`API`,region:`us-east-1`,status:`operational`,latency:`54 ms`},{icon:r,name:`Postgres`,region:`primary`,status:`operational`,latency:`6 ms`}]}"
+    }
+  ]
+}

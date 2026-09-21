@@ -1,0 +1,30 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "two slots": {
+    "slots": 2
+  },
+  "three slots": {
+    "slots": 3
+  },
+  "six slots · hover": {
+    "slots": 6,
+    "hover": true
+  }
+}

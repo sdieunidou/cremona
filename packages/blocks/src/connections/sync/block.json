@@ -1,0 +1,58 @@
+{
+  "category": "Connections",
+  "file": "sync",
+  "name": "Sync",
+  "description": "Two systems syncing with data moving back and forth.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "connections/sync.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "sync-C7_b9KJN.js",
+    "components": [
+      "sync-BmcNcbWe.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "spike",
+      "slug": "003-spike",
+      "size": null,
+      "propsRaw": "{pulse:`spike`}"
+    },
+    {
+      "label": "single pair",
+      "slug": "004-single-pair",
+      "size": null,
+      "propsRaw": "{pairs:[[(0,u.jsx)(o,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(n,{className:`size-4`,strokeWidth:2})]]}"
+    },
+    {
+      "label": "four pairs",
+      "slug": "005-four-pairs",
+      "size": null,
+      "propsRaw": "{pairs:[[(0,u.jsx)(o,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(s,{className:`size-4`,strokeWidth:2})],[(0,u.jsx)(c,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(n,{className:`size-4`,strokeWidth:2})],[(0,u.jsx)(l,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(r,{className:`size-4`,strokeWidth:2})],[(0,u.jsx)(r,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(a,{className:`size-4`,strokeWidth:2})]]}"
+    }
+  ]
+}

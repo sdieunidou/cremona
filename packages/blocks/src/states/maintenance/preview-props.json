@@ -1,0 +1,27 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no glow": {
+    "glow": false
+  },
+  "isometric · no glow": {
+    "isometric": true,
+    "glow": false
+  },
+  "two tiles": {
+    "tiles": 2
+  },
+  "four tiles · isometric": {
+    "tiles": 4,
+    "isometric": true
+  },
+  "hover": {
+    "hover": true
+  },
+  "hover · isometric": {
+    "hover": true,
+    "isometric": true
+  }
+}

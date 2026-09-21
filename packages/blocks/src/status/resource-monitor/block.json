@@ -1,0 +1,94 @@
+{
+  "category": "Status",
+  "file": "resource-monitor",
+  "name": "Resource Monitor",
+  "description": "A live resource monitor streaming CPU and memory usage across a gridded plot, with a legend showing the current reading for each series.",
+  "added": "2026-09-17",
+  "kind": "block",
+  "sourcePath": "status/resource-monitor.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "resource-monitor-DusOfc8B.js",
+    "components": [
+      "resource-monitor-CyN8pEoP.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "002-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "003-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "004-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "005-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "006-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "007-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`api-prod-01`,series:[{label:`DISK`,color:`var(--color-amber-500)`,points:[.3,.34,.31,.38,.35,.33,.37,.34],jitter:.04},{label:`NET`,color:`var(--color-primary)`,points:[.62,.55,.68,.6,.72,.64,.7,.66],jitter:.07}]}"
+    },
+    {
+      "label": "single series · isometric",
+      "slug": "008-single-series-isometric",
+      "size": null,
+      "propsRaw": "{title:`Queue throughput`,isometric:!0,series:[{label:`JOBS`,color:`var(--color-primary)`,points:[.2,.35,.28,.5,.44,.66,.58,.78],jitter:.06}]}"
+    },
+    {
+      "label": "fast · 96 samples",
+      "slug": "009-fast-96-samples",
+      "size": null,
+      "propsRaw": "{samples:96,interval:260}"
+    },
+    {
+      "label": "no grid",
+      "slug": "010-no-grid",
+      "size": null,
+      "propsRaw": "{showGrid:!1}"
+    },
+    {
+      "label": "no axis",
+      "slug": "011-no-axis",
+      "size": null,
+      "propsRaw": "{showAxis:!1}"
+    }
+  ]
+}

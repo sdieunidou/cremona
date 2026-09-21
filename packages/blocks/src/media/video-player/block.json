@@ -1,0 +1,112 @@
+{
+  "category": "Media",
+  "file": "video-player",
+  "name": "Video Player",
+  "description": "A video player frame with controls and a progress bar.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "media/video-player.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "video-player-BXKAv0-U.js",
+    "components": [
+      "video-player-ovfhA0X-.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "004-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Onboarding · 01 Setup`,current:`2:08`,duration:`5:00`,progress:42}"
+    },
+    {
+      "label": "pause state",
+      "slug": "005-pause-state",
+      "size": null,
+      "propsRaw": "{state:`pause`}"
+    },
+    {
+      "label": "no play button",
+      "slug": "006-no-play-button",
+      "size": null,
+      "propsRaw": "{showPlayButton:!1}"
+    },
+    {
+      "label": "no info chip",
+      "slug": "007-no-info-chip",
+      "size": null,
+      "propsRaw": "{showInfo:!1}"
+    },
+    {
+      "label": "minimal · no chrome",
+      "slug": "008-minimal-no-chrome",
+      "size": null,
+      "propsRaw": "{showInfo:!1,showPlayButton:!1}"
+    },
+    {
+      "label": "variant · landscape",
+      "slug": "009-variant-landscape",
+      "size": null,
+      "propsRaw": "{variant:`landscape`}"
+    },
+    {
+      "label": "variant · tutorial",
+      "slug": "010-variant-tutorial",
+      "size": null,
+      "propsRaw": "{variant:`tutorial`,title:`Getting started in 5 minutes`,current:`2:08`,duration:`5:00`,progress:42}"
+    },
+    {
+      "label": "variant · podcast",
+      "slug": "011-variant-podcast",
+      "size": null,
+      "propsRaw": "{variant:`podcast`,title:`Episode 24 · Building in public`,current:`12:30`,duration:`48:15`,progress:26}"
+    },
+    {
+      "label": "variant · livestream",
+      "slug": "012-variant-livestream",
+      "size": null,
+      "propsRaw": "{variant:`livestream`,title:`Studio stream · Q&A`,current:`58:42`,duration:`LIVE`,progress:72}"
+    },
+    {
+      "label": "real image",
+      "slug": "013-real-image",
+      "size": null,
+      "propsRaw": "{image:e(`media/placeholders/photo-06.jpg`),title:`Behind the scenes`}"
+    },
+    {
+      "label": "isometric · real image",
+      "slug": "014-isometric-real-image",
+      "size": null,
+      "propsRaw": "{isometric:!0,image:e(`media/placeholders/photo-06.jpg`),title:`Behind the scenes`}"
+    }
+  ]
+}

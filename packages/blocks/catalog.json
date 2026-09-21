@@ -1,0 +1,2541 @@
+[
+  {
+    "category": "Activity",
+    "slug": "activity",
+    "items": [
+      {
+        "file": "feed",
+        "name": "Feed",
+        "description": "A live activity feed with avatars, actions, and relative timestamps.",
+        "added": "2026-06-18",
+        "categorySlug": "activity",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "default · custom items",
+          "isometric · custom items"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "timeline",
+        "name": "Timeline",
+        "description": "A vertical activity timeline of grouped events and status changes.",
+        "added": "2026-06-18",
+        "categorySlug": "activity",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "default · custom steps",
+          "isometric · custom steps"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "AI",
+    "slug": "ai",
+    "items": [
+      {
+        "file": "agent-flow",
+        "name": "Agent Flow",
+        "description": "An agent pipeline of stacked isometric cubes that light up in sequence, revealing each step label as it runs.",
+        "added": "2026-07-01",
+        "categorySlug": "ai",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "no glow",
+          "no particles",
+          "custom steps",
+          "four steps"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "presence",
+        "name": "Presence",
+        "description": "Live multiplayer cursors roaming a shared canvas, one carrying your avatar and the rest labeled AI agents, over an ambient glow and particle field.",
+        "added": "2026-07-03",
+        "categorySlug": "ai",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "no glow",
+          "no particles",
+          "photo avatar",
+          "custom collaborators",
+          "solo agent team"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "prompt-box",
+        "name": "Prompt Box",
+        "description": "A wide prompt composer with a typing prompt, model picker, token count, and send, over an ambient glow and particle field.",
+        "added": "2026-07-01",
+        "categorySlug": "ai",
+        "kind": "block",
+        "variants": [
+          "default",
+          "default · no gradient",
+          "hover",
+          "no glow",
+          "no particles",
+          "no attachments",
+          "minimal",
+          "custom copy",
+          "no caret"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "retrieval",
+        "name": "Retrieval",
+        "description": "A query fanning out to ranked source cards that light up as each pulse lands, then converging into a streamed answer, over an ambient glow and particle field.",
+        "added": "2026-07-14",
+        "categorySlug": "ai",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "line pulse",
+          "line · isometric",
+          "no glow",
+          "no particles",
+          "no glow · no particles",
+          "hover",
+          "two sources",
+          "support · custom copy",
+          "docs · isometric"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "tools",
+        "name": "Tools",
+        "description": "An agent working through its tool calls one at a time, each row running with a spinner then settling into a result and a duration.",
+        "added": "2026-08-03",
+        "categorySlug": "ai",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "billing · custom copy",
+          "four tools · isometric",
+          "no glow",
+          "no particles",
+          "no glow · no particles",
+          "hover"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "voice",
+        "name": "Voice",
+        "description": "A realtime voice assistant orb that cycles through listening, thinking, and speaking states, with pulsing rings, a live equalizer, a status pill, and a transcript, over an ambient glow and particle field.",
+        "added": "2026-07-07",
+        "categorySlug": "ai",
+        "kind": "block",
+        "variants": [
+          "default · cycles states",
+          "listening",
+          "thinking",
+          "speaking",
+          "hover",
+          "no glow",
+          "no particles",
+          "minimal",
+          "custom copy",
+          "custom copy per state"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "API",
+    "slug": "api",
+    "items": [
+      {
+        "file": "logs",
+        "name": "Logs",
+        "description": "Service nodes streaming into a log console along connected paths, with severity-colored level chips and rows that tail in.",
+        "added": "2026-07-14",
+        "categorySlug": "api",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "line pulse",
+          "hover",
+          "worker",
+          "errors",
+          "worker · isometric",
+          "two sources",
+          "four sources"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "request",
+        "name": "Request",
+        "description": "A request arcing from client to server and a response arcing back, with a method pill, a status code, and a JSON response card.",
+        "added": "2026-07-14",
+        "categorySlug": "api",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "delete · custom copy",
+          "patch · custom copy",
+          "line pulse",
+          "hover",
+          "post",
+          "error",
+          "error · isometric",
+          "post · line"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "webhook",
+        "name": "Webhook",
+        "description": "A webhook event fanning retry arcs at your endpoint, where failed attempts fall short and the successful one delivers.",
+        "added": "2026-07-14",
+        "categorySlug": "api",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "line pulse",
+          "hover",
+          "success",
+          "failed",
+          "success · isometric",
+          "two attempts · custom copy"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Avatars",
+    "slug": "avatars",
+    "items": [
+      {
+        "file": "grid",
+        "name": "Grid",
+        "description": "A grid of user avatars with subtle staggered reveals.",
+        "added": "2026-06-18",
+        "categorySlug": "avatars",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "photos · custom members",
+          "photos · isometric · custom members",
+          "4 avatars · custom members",
+          "4 avatars · isometric · custom members"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "stack",
+        "name": "Stack",
+        "description": "An overlapping avatar stack with a remaining count badge.",
+        "added": "2026-06-18",
+        "categorySlug": "avatars",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "no status",
+          "dot · away",
+          "dot · busy",
+          "no dot",
+          "photos",
+          "photos · isometric",
+          "custom roster",
+          "three avatars · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "profile-card",
+        "name": "Profile Card",
+        "description": "A compact profile card with avatar, name, and key stats.",
+        "added": "2026-06-18",
+        "categorySlug": "avatars",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "online · custom copy",
+          "online · photo",
+          "away",
+          "busy",
+          "offline",
+          "away · isometric · custom copy"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Branding",
+    "slug": "branding",
+    "items": [
+      {
+        "file": "spotlight",
+        "name": "Spotlight",
+        "description": "An app icon spotlit over a fading dock of placeholder apps, with ambient glow and a particle field.",
+        "added": "2026-06-23",
+        "categorySlug": "branding",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "no glow",
+          "no particles",
+          "custom logo",
+          "custom color",
+          "image"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Browser",
+    "slug": "browser",
+    "items": [
+      {
+        "file": "loading",
+        "name": "Loading",
+        "description": "A browser window mockup with an animated page loading state.",
+        "added": "2026-06-18",
+        "categorySlug": "browser",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom url"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "simple",
+        "name": "Simple",
+        "description": "A clean browser window frame for showcasing any screenshot or UI.",
+        "added": "2026-06-18",
+        "categorySlug": "browser",
+        "kind": "block",
+        "variants": [
+          "landing",
+          "dashboard",
+          "landing · fadeOut",
+          "dashboard · fadeOut",
+          "landing · isometric",
+          "dashboard · isometric",
+          "landing · isometric · fadeOut",
+          "dashboard · isometric · fadeOut",
+          "landing · no gradient",
+          "landing · isometric · no gradient",
+          "landing · custom url",
+          "dashboard · custom url"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "tabs",
+        "name": "Tabs",
+        "description": "A browser window with switching tabs and an address bar.",
+        "added": "2026-06-18",
+        "categorySlug": "browser",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom tabs · custom url"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Calendar",
+    "slug": "calendar",
+    "items": [
+      {
+        "file": "date-picker",
+        "name": "Date Picker",
+        "description": "A calendar date picker with a selected day and range highlight.",
+        "added": "2026-06-18",
+        "categorySlug": "calendar",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "range",
+          "range · isometric",
+          "highlighted · selected",
+          "specific month",
+          "Sunday start"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "event-list",
+        "name": "Event List",
+        "description": "An agenda style list of upcoming calendar events.",
+        "added": "2026-06-18",
+        "categorySlug": "calendar",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "single day"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "month-view",
+        "name": "Month View",
+        "description": "A full month calendar grid with events placed on days.",
+        "added": "2026-06-18",
+        "categorySlug": "calendar",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "specific month",
+          "Sunday start"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Charts",
+    "slug": "charts",
+    "items": [
+      {
+        "file": "bar",
+        "name": "Bar",
+        "description": "An animated bar chart with a value, trend badge, and grid.",
+        "added": "2026-06-18",
+        "categorySlug": "charts",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "signups · custom copy",
+          "negative change · custom copy",
+          "quarterly · isometric · custom copy",
+          "many columns · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "donut",
+        "name": "Donut",
+        "description": "An animated donut chart with a center total and legend.",
+        "added": "2026-06-18",
+        "categorySlug": "charts",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "traffic · custom copy",
+          "plans · isometric · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "funnel",
+        "name": "Funnel",
+        "description": "A conversion funnel of tapering stage slabs that pour in one by one, with per stage counts and conversion rates.",
+        "added": "2026-08-25",
+        "categorySlug": "charts",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "checkout · custom copy",
+          "negative change · custom copy",
+          "highlighted stage · isometric · custom copy",
+          "three stages · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "gauge",
+        "name": "Gauge",
+        "description": "A semicircular gauge whose arc sweeps to its value, with an optional zoned track, a center reading, and range labels.",
+        "added": "2026-08-25",
+        "categorySlug": "charts",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "capacity · custom copy",
+          "zones · custom copy",
+          "low value · custom copy",
+          "score · isometric · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "heatmap",
+        "name": "Heatmap",
+        "description": "A grid heatmap of labeled rows and columns whose cells light up in a diagonal sweep, with an intensity legend.",
+        "added": "2026-08-25",
+        "categorySlug": "charts",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "cohort retention · custom copy",
+          "contributions · custom copy",
+          "no legend · custom copy",
+          "compact grid · isometric · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "line",
+        "name": "Line",
+        "description": "An animated line chart with a value, trend badge, and gradient fill.",
+        "added": "2026-06-18",
+        "categorySlug": "charts",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "revenue · custom copy",
+          "negative change · custom copy",
+          "conversions · isometric · custom copy",
+          "isometric · no gradient · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "sparkline",
+        "name": "Sparkline",
+        "description": "A compact inline sparkline for tight spaces and stat cards.",
+        "added": "2026-06-18",
+        "categorySlug": "charts",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "negative change · custom copy",
+          "negative change · isometric · custom copy",
+          "custom copy",
+          "isometric · no gradient · custom copy"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Chat",
+    "slug": "chat",
+    "items": [
+      {
+        "file": "ai-chat",
+        "name": "AI Chat",
+        "description": "An AI chat interface with streaming responses and a prompt box.",
+        "added": "2026-06-18",
+        "categorySlug": "chat",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "default · custom copy",
+          "isometric · custom copy",
+          "paragraph only",
+          "busy status",
+          "offline status",
+          "no caret",
+          "no actions"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "bubbles",
+        "name": "Bubbles",
+        "description": "A conversation of chat bubbles between two people.",
+        "added": "2026-06-18",
+        "categorySlug": "chat",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "default · custom messages",
+          "isometric · custom messages",
+          "typing",
+          "read receipts"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "thread",
+        "name": "Thread",
+        "description": "A threaded message view with replies and reactions.",
+        "added": "2026-06-18",
+        "categorySlug": "chat",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "default · custom thread",
+          "isometric · custom thread",
+          "no actions",
+          "custom likes"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Code",
+    "slug": "code",
+    "items": [
+      {
+        "file": "editor",
+        "name": "Editor",
+        "description": "A code editor mockup with syntax highlighting and a file tab.",
+        "added": "2026-06-18",
+        "categorySlug": "code",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "no line numbers",
+          "no caret",
+          "highlighted line",
+          "diff",
+          "js",
+          "py",
+          "php",
+          "html",
+          "css",
+          "go"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "snippet",
+        "name": "Snippet",
+        "description": "A copyable code snippet card with a language label.",
+        "added": "2026-06-18",
+        "categorySlug": "code",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "no line numbers",
+          "highlighted line",
+          "diff",
+          "bash",
+          "json",
+          "css",
+          "sql",
+          "yaml",
+          "md"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "terminal",
+        "name": "Terminal",
+        "description": "A terminal window with a typing command and output.",
+        "added": "2026-06-18",
+        "categorySlug": "code",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "no caret",
+          "custom prompt",
+          "highlighted line",
+          "deploy",
+          "test",
+          "deploy · isometric",
+          "custom lines"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Connections",
+    "slug": "connections",
+    "items": [
+      {
+        "file": "converge",
+        "name": "Converge",
+        "description": "Multiple sources converging into a single destination node.",
+        "added": "2026-06-18",
+        "categorySlug": "connections",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "isometric",
+          "spike",
+          "custom icons",
+          "4 nodes",
+          "isometric · 2 nodes",
+          "company logos",
+          "company logos · isometric"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "flow",
+        "name": "Flow",
+        "description": "An animated flow of nodes connected by data paths.",
+        "added": "2026-06-18",
+        "categorySlug": "connections",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "isometric",
+          "spike",
+          "custom icons"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "pipeline",
+        "name": "Pipeline",
+        "description": "A linear pipeline of stages with moving progress.",
+        "added": "2026-06-18",
+        "categorySlug": "connections",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "isometric",
+          "spike",
+          "2 in · 4 out",
+          "isometric · 1 in · 2 out",
+          "custom logo"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "sync",
+        "name": "Sync",
+        "description": "Two systems syncing with data moving back and forth.",
+        "added": "2026-06-18",
+        "categorySlug": "connections",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "isometric",
+          "spike",
+          "single pair",
+          "four pairs"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Data",
+    "slug": "data",
+    "items": [
+      {
+        "file": "filters",
+        "name": "Filters",
+        "description": "A filter builder where each rule lands in turn and narrows a running result count and progress bar.",
+        "added": "2026-09-11",
+        "categorySlug": "data",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom data · deals",
+          "custom data · errors · isometric"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "import",
+        "name": "Import",
+        "description": "A CSV import mapper where each source column connects across to its destination field, leaving unmapped columns skipped.",
+        "added": "2026-09-11",
+        "categorySlug": "data",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom data · products",
+          "custom data · contacts · isometric",
+          "all mapped"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "query",
+        "name": "Query",
+        "description": "A visual query builder that assembles its conditions, sweeps as it runs, then streams the matching rows with a timing readout.",
+        "added": "2026-09-11",
+        "categorySlug": "data",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom data · events",
+          "custom data · sessions · isometric"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "table",
+        "name": "Table",
+        "description": "A data table with sortable columns, rows, and status pills.",
+        "added": "2026-06-18",
+        "categorySlug": "data",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom data · orders",
+          "custom data · projects · isometric"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Dashboard",
+    "slug": "dashboard",
+    "items": [
+      {
+        "file": "mini-panel",
+        "name": "Mini Panel",
+        "description": "A compact dashboard panel with a metric and mini chart.",
+        "added": "2026-06-18",
+        "categorySlug": "dashboard",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "widget-grid",
+        "name": "Widget Grid",
+        "description": "A grid of dashboard widgets and summary cards.",
+        "added": "2026-06-18",
+        "categorySlug": "dashboard",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Devices",
+    "slug": "devices",
+    "items": [
+      {
+        "file": "laptop",
+        "name": "Laptop",
+        "description": "A laptop device frame for presenting a screenshot or UI.",
+        "added": "2026-06-18",
+        "categorySlug": "devices",
+        "kind": "block",
+        "variants": [
+          "landing",
+          "dashboard",
+          "windows",
+          "mac",
+          "lockscreen",
+          "lockscreen · image",
+          "screenshot"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "phone",
+        "name": "Phone",
+        "description": "A phone device frame for showcasing a mobile screen.",
+        "added": "2026-06-18",
+        "categorySlug": "devices",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "home",
+          "home · isometric",
+          "lockscreen",
+          "lockscreen · image",
+          "lockscreen · isometric",
+          "lockscreen · isometric · fadeOut",
+          "lockscreen · custom copy",
+          "screenshot",
+          "lockscreen · no notifications"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "tablet",
+        "name": "Tablet",
+        "description": "A tablet device frame for showcasing an app or page.",
+        "added": "2026-06-18",
+        "categorySlug": "devices",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "home",
+          "home · isometric",
+          "lockscreen",
+          "lockscreen · image",
+          "lockscreen · isometric",
+          "screenshot",
+          "lockscreen · custom copy"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Email",
+    "slug": "email",
+    "items": [
+      {
+        "file": "compose",
+        "name": "Compose",
+        "description": "An email compose window with recipient, subject, and body.",
+        "added": "2026-06-18",
+        "categorySlug": "email",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "with cc",
+          "team broadcast · custom",
+          "draft saved · meta"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "inbox",
+        "name": "Inbox",
+        "description": "An email inbox list with senders, previews, and unread states.",
+        "added": "2026-06-18",
+        "categorySlug": "email",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "promotions · custom",
+          "drafts · custom",
+          "support · custom"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Files",
+    "slug": "files",
+    "items": [
+      {
+        "file": "explorer",
+        "name": "Explorer",
+        "description": "A file explorer with a folder tree and file list.",
+        "added": "2026-06-18",
+        "categorySlug": "files",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "simple",
+        "name": "Simple",
+        "description": "A simple file card with name, type, and size.",
+        "added": "2026-06-18",
+        "categorySlug": "files",
+        "kind": "block",
+        "variants": [
+          "pdf",
+          "docx",
+          "pptx",
+          "txt",
+          "md",
+          "xlsx",
+          "csv",
+          "png",
+          "jpg",
+          "webp",
+          "svg",
+          "psd",
+          "fig",
+          "mp4",
+          "mp3",
+          "zip",
+          "json",
+          "sql",
+          "html",
+          "css",
+          "js",
+          "ts",
+          "jsx",
+          "tsx",
+          "py",
+          "php"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "stacked",
+        "name": "Stacked",
+        "description": "A stack of overlapping file cards with depth.",
+        "added": "2026-06-18",
+        "categorySlug": "files",
+        "kind": "block",
+        "variants": [
+          "files",
+          "documents",
+          "spreadsheets",
+          "images",
+          "design",
+          "code",
+          "fonts",
+          "media",
+          "video",
+          "audio",
+          "archives",
+          "mixed"
+        ],
+        "cols": 4
+      },
+      {
+        "file": "upload",
+        "name": "Upload",
+        "description": "A file upload area with progress and drag and drop.",
+        "added": "2026-06-18",
+        "categorySlug": "files",
+        "kind": "block",
+        "variants": [
+          "document",
+          "hover",
+          "pdf",
+          "image",
+          "video",
+          "audio",
+          "spreadsheet",
+          "code",
+          "archive"
+        ],
+        "cols": 3
+      }
+    ]
+  },
+  {
+    "category": "Geo",
+    "slug": "geo",
+    "items": [
+      {
+        "file": "globe",
+        "name": "Globe",
+        "description": "A rotating globe of dotted continents with location markers and connection arcs that draw in.",
+        "added": "2026-06-25",
+        "categorySlug": "geo",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "equator tilt",
+          "bottom tilt",
+          "reverse spin",
+          "half · labels",
+          "start: americas · arc pairs",
+          "dot pulse"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "pin-drop",
+        "name": "Pin Drop",
+        "description": "Location pins dropping onto an abstract radar field with concentric ripple pings.",
+        "added": "2026-06-25",
+        "categorySlug": "geo",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "custom colors",
+          "single pin",
+          "custom pins",
+          "custom pins and colors",
+          "active pin",
+          "custom size"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "world-map",
+        "name": "World Map",
+        "description": "A dotted world map that blooms outward from a chosen city, with pinging location markers, tinted coverage regions, and connection arcs that draw between cities.",
+        "added": "2026-09-11",
+        "categorySlug": "geo",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "labels",
+          "split reveal",
+          "sweep reveal",
+          "bloom from Singapore",
+          "no arcs",
+          "active marker",
+          "regions",
+          "sparse",
+          "dense",
+          "custom markers",
+          "custom colors",
+          "single marker"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Git",
+    "slug": "git",
+    "items": [
+      {
+        "file": "branch-graph",
+        "name": "Branch Graph",
+        "description": "A commit rail where feature branches fork off, run their own commits, and merge back, with pulses traveling every path.",
+        "added": "2026-08-19",
+        "categorySlug": "git",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "single branch",
+          "release flow · custom copy",
+          "release flow · isometric",
+          "short history",
+          "line pulse",
+          "hover"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "diff",
+        "name": "Diff",
+        "description": "A file diff with added and removed lines, in unified or side by side view, swept line by line as the change counters climb.",
+        "added": "2026-08-19",
+        "categorySlug": "git",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "additions only",
+          "split",
+          "split · isometric",
+          "no line numbers",
+          "hover"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "pull-request",
+        "name": "Pull Request",
+        "description": "A pull request card whose CI checks run one by one, then settle into an approval and a merge button that lights up.",
+        "added": "2026-08-19",
+        "categorySlug": "git",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "avatar image",
+          "failing",
+          "failing · custom copy",
+          "hover"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Images",
+    "slug": "images",
+    "items": [
+      {
+        "file": "carousel",
+        "name": "Carousel",
+        "description": "An image carousel with slides and navigation controls.",
+        "added": "2026-06-18",
+        "categorySlug": "images",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom slides · count",
+          "no arrows",
+          "active: first",
+          "active: last",
+          "real images",
+          "isometric · real images"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "gallery",
+        "name": "Gallery",
+        "description": "A responsive image gallery grid with hover states.",
+        "added": "2026-06-18",
+        "categorySlug": "images",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "landscapes only",
+          "real images",
+          "isometric · real images"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Integrations",
+    "slug": "integrations",
+    "items": [
+      {
+        "file": "hub",
+        "name": "Hub",
+        "description": "A central app connected to surrounding integration logos.",
+        "added": "2026-06-18",
+        "categorySlug": "integrations",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "hover",
+          "spin",
+          "spin · hover",
+          "spin · isometric",
+          "beam",
+          "beam · hover",
+          "beam · isometric",
+          "compact",
+          "wide",
+          "beam · wide",
+          "synced · custom label",
+          "no label",
+          "custom icons",
+          "brand logos"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "logo-orbit",
+        "name": "Logo Orbit",
+        "description": "Integration logos orbiting a central brand mark.",
+        "added": "2026-06-18",
+        "categorySlug": "integrations",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover · orbit",
+          "isometric",
+          "orbit",
+          "orbit · isometric",
+          "hidden logo",
+          "custom logo",
+          "inner ring",
+          "orbit · inner ring",
+          "custom radius",
+          "custom radius · orbit · isometric"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "logo-reel",
+        "name": "Logo Reel",
+        "description": "A row of integration logos sliding one by one into a center spotlight, blurring out as they pass.",
+        "added": "2026-09-15",
+        "categorySlug": "integrations",
+        "kind": "block",
+        "variants": [
+          "default",
+          "custom logos",
+          "direction right",
+          "hover",
+          "fast interval",
+          "slow interval",
+          "no glow",
+          "three logos · direction right"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Keyboard",
+    "slug": "keyboard",
+    "items": [
+      {
+        "file": "half",
+        "name": "Half",
+        "description": "A half keyboard showing a key combination press.",
+        "added": "2026-06-18",
+        "categorySlug": "keyboard",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "windows layout",
+          "⌘ + S · shortcut",
+          "⌘ + Shift + A · shortcut",
+          "⌘ + S · hover",
+          "⌘ + C · isometric",
+          "Ctrl + Z · windows",
+          "Ctrl + C · windows · isometric"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "shortcut",
+        "name": "Shortcut",
+        "description": "A keyboard shortcut rendered as labeled keycaps.",
+        "added": "2026-06-18",
+        "categorySlug": "keyboard",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "Ctrl + Shift + P · custom keys",
+          "⌘ + Shift + F · custom keys",
+          "Ctrl + Z · custom keys",
+          "Ctrl + Z · custom keys · isometric"
+        ],
+        "cols": 3
+      }
+    ]
+  },
+  {
+    "category": "Media",
+    "slug": "media",
+    "items": [
+      {
+        "file": "audio-waveform",
+        "name": "Audio Waveform",
+        "description": "An audio player with an animated waveform and controls.",
+        "added": "2026-06-18",
+        "categorySlug": "media",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "pause state",
+          "custom meta",
+          "voice note · custom icon · custom meta",
+          "podcast · pause · isometric",
+          "bars · 26",
+          "bars · 42",
+          "bars · 56"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "video-player",
+        "name": "Video Player",
+        "description": "A video player frame with controls and a progress bar.",
+        "added": "2026-06-18",
+        "categorySlug": "media",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "pause state",
+          "no play button",
+          "no info chip",
+          "minimal · no chrome",
+          "variant · landscape",
+          "variant · tutorial",
+          "variant · podcast",
+          "variant · livestream",
+          "real image",
+          "isometric · real image"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Metrics",
+    "slug": "metrics",
+    "items": [
+      {
+        "file": "comparison",
+        "name": "Comparison",
+        "description": "A before and after metric comparison with deltas.",
+        "added": "2026-06-18",
+        "categorySlug": "metrics",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "speed · custom copy",
+          "cost · custom copy",
+          "latency · custom copy",
+          "churn · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "stat-card",
+        "name": "Stat Card",
+        "description": "A single stat card with a value, label, and trend.",
+        "added": "2026-06-18",
+        "categorySlug": "metrics",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "users · custom copy",
+          "orders · custom copy",
+          "pageviews · custom copy",
+          "conversion · custom copy"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "trend",
+        "name": "Trend",
+        "description": "A metric with a trend line and period over period change.",
+        "added": "2026-06-18",
+        "categorySlug": "metrics",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "stacked",
+          "isometric · stacked",
+          "default · no gradient",
+          "isometric · no gradient",
+          "conversions · primary · custom copy",
+          "revenue · up · custom copy",
+          "bounce · down · custom copy",
+          "errors · warning · custom copy"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Notifications",
+    "slug": "notifications",
+    "items": [
+      {
+        "file": "bell",
+        "name": "Bell",
+        "description": "A notification bell with an unread badge and pop.",
+        "added": "2026-06-18",
+        "categorySlug": "notifications",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "count={0}",
+          "count={12}",
+          "count={150}",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "list",
+        "name": "List",
+        "description": "A list of notifications with icons and timestamps.",
+        "added": "2026-06-18",
+        "categorySlug": "notifications",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "toast",
+        "name": "Toast",
+        "description": "An animated toast notification that slides in.",
+        "added": "2026-06-18",
+        "categorySlug": "notifications",
+        "kind": "block",
+        "variants": [
+          "success",
+          "warning",
+          "info",
+          "success · isometric",
+          "warning · isometric",
+          "info · isometric",
+          "success · custom copy",
+          "warning · isometric · custom copy",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Payments",
+    "slug": "payments",
+    "items": [
+      {
+        "file": "checkout",
+        "name": "Checkout",
+        "description": "A checkout summary with line items and a pay button.",
+        "added": "2026-06-18",
+        "categorySlug": "payments",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom amount",
+          "card",
+          "card · fadeOut",
+          "card · isometric",
+          "card · isometric · fadeOut",
+          "card · no gradient",
+          "card · isometric · no gradient",
+          "card · custom content"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "credit-card",
+        "name": "Credit Card",
+        "description": "A credit card visual with brand, number, and chip.",
+        "added": "2026-06-18",
+        "categorySlug": "payments",
+        "kind": "block",
+        "variants": [
+          "default",
+          "stacked",
+          "isometric",
+          "isometric · stacked",
+          "custom content",
+          "alternate custom content",
+          "flipped",
+          "stacked · flipped",
+          "isometric · flipped",
+          "isometric · stacked · flipped"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "usage-meter",
+        "name": "Usage Meter",
+        "description": "A metered billing summary with a usage bar against quota, itemized metered charges, and an estimated total.",
+        "added": "2026-07-07",
+        "categorySlug": "payments",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "near limit · custom copy"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Search",
+    "slug": "search",
+    "items": [
+      {
+        "file": "command-palette",
+        "name": "Command Palette",
+        "description": "A command palette with a typed query, grouped commands, keyboard hints, and a selection that walks the list.",
+        "added": "2026-07-28",
+        "categorySlug": "search",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "support · custom copy",
+          "single group",
+          "no caret",
+          "hover"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "results",
+        "name": "Results",
+        "description": "A search results panel with filter chips, a result count, and matched terms highlighted in place.",
+        "added": "2026-07-28",
+        "categorySlug": "search",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "people · custom copy",
+          "docs · isometric",
+          "active filter"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "semantic",
+        "name": "Semantic",
+        "description": "A query landing in an embedding space, where a radius sweep lights up its nearest matches with similarity scores.",
+        "added": "2026-07-28",
+        "categorySlug": "search",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "hover",
+          "support · custom copy",
+          "docs · isometric",
+          "two matches",
+          "one match"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Sections",
+    "slug": "sections",
+    "items": [
+      {
+        "file": "auth",
+        "name": "Auth",
+        "description": "A login section with social buttons, fields, and a sign-in button.",
+        "added": "2026-06-26",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "backgrounds",
+        "name": "Backgrounds",
+        "description": "A section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
+        "added": "2026-09-17",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "hover",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "grid first · isometric",
+          "fast cycle",
+          "rays only · no picker",
+          "no picker"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "bento",
+        "name": "Bento",
+        "description": "A bento grid section with a featured tile and mixed-size cards.",
+        "added": "2026-06-26",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "blog",
+        "name": "Blog",
+        "description": "A blog index section with article cards and metadata.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "blog-post",
+        "name": "Blog Post",
+        "description": "A blog post layout with title, meta, and content.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "comments",
+        "name": "Comments",
+        "description": "A comments thread with avatars, replies, and votes.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · custom count",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "components",
+        "name": "Components",
+        "description": "A showcase grid of UI components and building blocks.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "contact",
+        "name": "Contact",
+        "description": "A contact section with a form and details.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "cta",
+        "name": "CTA",
+        "description": "A call to action section with heading and buttons.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "error",
+        "name": "Error",
+        "description": "An error state section with code, message, and action.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "faq",
+        "name": "FAQ",
+        "description": "A frequently asked questions section with expandable items.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "features",
+        "name": "Features",
+        "description": "A features section with icons, titles, and descriptions.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "footers",
+        "name": "Footers",
+        "description": "A marketing footer with brand, links, and socials.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "headers",
+        "name": "Headers",
+        "description": "A marketing header with navigation and actions.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "hero",
+        "name": "Hero",
+        "description": "A marketing hero section with heading, copy, and buttons.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "logos",
+        "name": "Logos",
+        "description": "A logo cloud of customer or partner brands.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "newsletter",
+        "name": "Newsletter",
+        "description": "A newsletter signup section with an email input.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "pricing",
+        "name": "Pricing",
+        "description": "A pricing section with plan cards and features.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "process",
+        "name": "Process",
+        "description": "A step by step process section with numbered stages.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "stats",
+        "name": "Stats",
+        "description": "A stats section highlighting key numbers.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "team",
+        "name": "Team",
+        "description": "A team section with member cards and roles.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom title · default",
+          "custom title · isometric",
+          "custom title · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "testimonials",
+        "name": "Testimonials",
+        "description": "A testimonials section with quotes and authors.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom quote · default",
+          "custom quote · isometric",
+          "custom quote · isometric · no gradient"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "timeline",
+        "name": "Timeline",
+        "description": "A timeline section of milestones and dates.",
+        "added": "2026-06-18",
+        "categorySlug": "sections",
+        "kind": "layout",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Security",
+    "slug": "security",
+    "items": [
+      {
+        "file": "fingerprint",
+        "name": "Fingerprint",
+        "description": "An animated fingerprint scan with a success state.",
+        "added": "2026-06-18",
+        "categorySlug": "security",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "status=\"Authenticated\"",
+          "no status",
+          "state=\"scanning\"",
+          "isometric · state=\"scanning\"",
+          "state=\"error\"",
+          "isometric · state=\"error\""
+        ],
+        "cols": 2
+      },
+      {
+        "file": "lock",
+        "name": "Lock",
+        "description": "A lock visual conveying security and access control.",
+        "added": "2026-06-18",
+        "categorySlug": "security",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "digits={4}",
+          "label=\"Secure\"",
+          "state=\"unlocked\"",
+          "isometric · state=\"unlocked\"",
+          "state=\"error\"",
+          "isometric · state=\"error\""
+        ],
+        "cols": 2
+      },
+      {
+        "file": "shield",
+        "name": "Shield",
+        "description": "A shield visual conveying protection and trust.",
+        "added": "2026-06-18",
+        "categorySlug": "security",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "label=\"End-to-end\"",
+          "no label",
+          "state=\"warning\"",
+          "isometric · state=\"warning\"",
+          "state=\"breached\"",
+          "isometric · state=\"breached\""
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "States",
+    "slug": "states",
+    "items": [
+      {
+        "file": "empty",
+        "name": "Empty",
+        "description": "An empty grid of dashed placeholder slots where an add action ripples out and one slot briefly materializes before dissolving back.",
+        "added": "2026-08-07",
+        "categorySlug": "states",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "two slots",
+          "three slots",
+          "six slots · hover"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "error",
+        "name": "Error",
+        "description": "A request pulse traveling into a service card and breaking it, cascading its service tiles to a fault state under an alert badge.",
+        "added": "2026-08-07",
+        "categorySlug": "states",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no glow",
+          "isometric · no glow",
+          "line pulse",
+          "line pulse · isometric",
+          "two services",
+          "five services · isometric",
+          "hover",
+          "hover · isometric"
+        ],
+        "cols": 3
+      },
+      {
+        "file": "maintenance",
+        "name": "Maintenance",
+        "description": "A stack of service tiles with one lifted out and being worked on, hovering over its empty slot while a progress sweep runs underneath.",
+        "added": "2026-08-07",
+        "categorySlug": "states",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no glow",
+          "isometric · no glow",
+          "two tiles",
+          "four tiles · isometric",
+          "hover",
+          "hover · isometric"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "not-found",
+        "name": "Not Found",
+        "description": "A request spike traveling a route into a barrier at a large status code, ringing out concentric pulses, with the missing page left as a dashed ghost tile.",
+        "added": "2026-08-07",
+        "categorySlug": "states",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no glow",
+          "isometric · no glow",
+          "line pulse",
+          "line pulse · isometric",
+          "410",
+          "410 · isometric",
+          "hover",
+          "hover · isometric"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Status",
+    "slug": "status",
+    "items": [
+      {
+        "file": "health-check",
+        "name": "Health Check",
+        "description": "A service health check with status indicators.",
+        "added": "2026-06-18",
+        "categorySlug": "status",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "e-commerce · partial degradation",
+          "ai stack · outage",
+          "minimal stack · all operational"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "resource-monitor",
+        "name": "Resource Monitor",
+        "description": "A live resource monitor streaming CPU and memory usage across a gridded plot, with a legend showing the current reading for each series.",
+        "added": "2026-09-17",
+        "categorySlug": "status",
+        "kind": "block",
+        "variants": [
+          "default",
+          "hover",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "custom copy",
+          "single series · isometric",
+          "fast · 96 samples",
+          "no grid",
+          "no axis"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "uptime-bar",
+        "name": "Uptime Bar",
+        "description": "An uptime bar showing daily operational status.",
+        "added": "2026-06-18",
+        "categorySlug": "status",
+        "kind": "block",
+        "variants": [
+          "default",
+          "isometric",
+          "default · no gradient",
+          "isometric · no gradient",
+          "degraded · custom copy",
+          "outage · isometric",
+          "45 days · clean",
+          "30 days · incident",
+          "no legend"
+        ],
+        "cols": 2
+      }
+    ]
+  },
+  {
+    "category": "Tasks",
+    "slug": "tasks",
+    "items": [
+      {
+        "file": "checklist",
+        "name": "Checklist",
+        "description": "A checklist with items completing one by one.",
+        "added": "2026-06-18",
+        "categorySlug": "tasks",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "all done · custom items",
+          "all pending · custom items"
+        ],
+        "cols": 2
+      },
+      {
+        "file": "kanban",
+        "name": "Kanban",
+        "description": "A kanban board with columns and draggable cards.",
+        "added": "2026-06-18",
+        "categorySlug": "tasks",
+        "kind": "block",
+        "variants": [
+          "default",
+          "fadeOut",
+          "isometric",
+          "isometric · fadeOut",
+          "default · no gradient",
+          "isometric · no gradient",
+          "content pipeline · custom",
+          "hiring pipeline · custom"
+        ],
+        "cols": 2
+      }
+    ]
+  }
+]

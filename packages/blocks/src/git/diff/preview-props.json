@@ -1,0 +1,104 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom copy": {
+    "file": "app/Support/Registry.php",
+    "language": "PHP",
+    "hunk": "@@ -82,6 +82,8 @@",
+    "startLine": 82
+  },
+  "additions only": {
+    "file": "resources/js/hooks/use-theme.ts",
+    "hunk": "@@ -3,0 +4,4 @@",
+    "startLine": 3,
+    "lines": [
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 16,
+            "color": "keyword"
+          },
+          {
+            "width": 24,
+            "color": "func"
+          }
+        ]
+      },
+      {
+        "type": "add",
+        "indent": 1,
+        "tokens": [
+          {
+            "width": 20,
+            "color": "variable"
+          },
+          {
+            "width": 6,
+            "color": "punct"
+          },
+          {
+            "width": 26,
+            "color": "string"
+          }
+        ]
+      },
+      {
+        "type": "add",
+        "indent": 1,
+        "tokens": [
+          {
+            "width": 28,
+            "color": "func"
+          },
+          {
+            "width": 6,
+            "color": "punct"
+          },
+          {
+            "width": 18,
+            "color": "prop"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ]
+      }
+    ]
+  },
+  "split": {
+    "view": "split"
+  },
+  "split · isometric": {
+    "view": "split",
+    "isometric": true
+  },
+  "no line numbers": {
+    "lineNumbers": false
+  },
+  "hover": {
+    "hover": true
+  }
+}

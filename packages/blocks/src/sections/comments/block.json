@@ -1,0 +1,76 @@
+{
+  "category": "Sections",
+  "file": "comments",
+  "name": "Comments",
+  "description": "A comments thread with avatars, replies, and votes.",
+  "added": "2026-06-18",
+  "kind": "layout",
+  "sourcePath": "sections/comments.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "comments-CUJSSu_o.js",
+    "components": [
+      "comments-2_tY0Fx6.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom title · custom count",
+      "slug": "006-custom-title-custom-count",
+      "size": null,
+      "propsRaw": "{title:`Discussion`,count:48}"
+    },
+    {
+      "label": "custom title · isometric",
+      "slug": "007-custom-title-isometric",
+      "size": null,
+      "propsRaw": "{title:`Replies`,count:7,isometric:!0}"
+    },
+    {
+      "label": "custom title · isometric · no gradient",
+      "slug": "008-custom-title-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{title:`Feedback`,count:120,gradient:!1,isometric:!0}"
+    }
+  ]
+}

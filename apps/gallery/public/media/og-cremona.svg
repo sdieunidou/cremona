@@ -1,0 +1,31 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cube" gradientUnits="userSpaceOnUse" x1="140" y1="140" x2="380" y2="380">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#fafafa"/>
+  <g stroke="#e4e4e7" stroke-width="1">
+    <path d="M150 0 V630 M300 0 V630 M450 0 V630 M600 0 V630 M750 0 V630 M900 0 V630 M1050 0 V630"/>
+    <path d="M0 105 H1200 M0 210 H1200 M0 315 H1200 M0 420 H1200 M0 525 H1200"/>
+  </g>
+  <g transform="translate(150 152) scale(5)">
+    <g stroke="url(#cube)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.25">
+      <path d="M24 1 L24 24"/>
+      <path d="M24 24 L1 35.5"/>
+      <path d="M24 24 L47 35.5"/>
+    </g>
+    <path d="M24 1 L47 12.5 L24 24 L1 12.5 Z" fill="url(#cube)" fill-opacity="0.75"/>
+    <path d="M24 24 L47 12.5 L47 35.5 L24 47 Z" fill="url(#cube)" fill-opacity="0.45"/>
+    <g stroke="url(#cube)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M24 1 L47 12.5 L24 24 L1 12.5 Z"/>
+      <path d="M1 12.5 L1 35.5"/>
+      <path d="M47 12.5 L47 35.5"/>
+      <path d="M24 24 L24 47"/>
+      <path d="M1 35.5 L24 47 L47 35.5"/>
+    </g>
+  </g>
+  <text x="140" y="500" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="120" font-weight="700" letter-spacing="-4" fill="#18181b">Cremona</text>
+  <text x="145" y="555" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="30" font-weight="500" fill="#71717a">Visual components for React &amp; Tailwind</text>
+</svg>

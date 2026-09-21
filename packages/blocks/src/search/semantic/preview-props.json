@@ -1,0 +1,67 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "hover": {
+    "hover": true
+  },
+  "support · custom copy": {
+    "query": "my card was declined",
+    "matches": [
+      {
+        "label": "Failed payments",
+        "score": 0.96
+      },
+      {
+        "label": "Update a card",
+        "score": 0.9
+      },
+      {
+        "label": "Dunning emails",
+        "score": 0.74
+      }
+    ]
+  },
+  "docs · isometric": {
+    "isometric": true,
+    "query": "rotate an API key",
+    "spaceLabel": "Docs index",
+    "matches": [
+      {
+        "label": "Key rotation",
+        "score": 0.97
+      },
+      {
+        "label": "Scoped tokens",
+        "score": 0.85
+      },
+      {
+        "label": "Revoke access",
+        "score": 0.8
+      }
+    ]
+  },
+  "two matches": {
+    "query": "invite my team",
+    "matches": [
+      {
+        "label": "Add teammates",
+        "score": 0.93
+      },
+      {
+        "label": "Roles and access",
+        "score": 0.81
+      }
+    ]
+  },
+  "one match": {
+    "query": "export my data",
+    "matches": [
+      {
+        "label": "Data export",
+        "score": 0.98
+      }
+    ]
+  }
+}

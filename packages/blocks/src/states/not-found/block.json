@@ -1,0 +1,82 @@
+{
+  "category": "States",
+  "file": "not-found",
+  "name": "Not Found",
+  "description": "A request spike traveling a route into a barrier at a large status code, ringing out concentric pulses, with the missing page left as a dashed ghost tile.",
+  "added": "2026-08-07",
+  "kind": "block",
+  "sourcePath": "states/not-found.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "not-found-Cr8AzOPr.js",
+    "components": [
+      "not-found-g-qwq0WL.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no glow",
+      "slug": "002-default-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "isometric · no glow",
+      "slug": "003-isometric-no-glow",
+      "size": null,
+      "propsRaw": "{isometric:!0,glow:!1}"
+    },
+    {
+      "label": "line pulse",
+      "slug": "004-line-pulse",
+      "size": null,
+      "propsRaw": "{pulse:`line`}"
+    },
+    {
+      "label": "line pulse · isometric",
+      "slug": "005-line-pulse-isometric",
+      "size": null,
+      "propsRaw": "{pulse:`line`,isometric:!0}"
+    },
+    {
+      "label": "410",
+      "slug": "006-410",
+      "size": null,
+      "propsRaw": "{code:`410`}"
+    },
+    {
+      "label": "410 · isometric",
+      "slug": "007-410-isometric",
+      "size": null,
+      "propsRaw": "{code:`410`,isometric:!0}"
+    },
+    {
+      "label": "hover",
+      "slug": "008-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "hover · isometric",
+      "slug": "009-hover-isometric",
+      "size": null,
+      "propsRaw": "{hover:!0,isometric:!0}"
+    }
+  ]
+}

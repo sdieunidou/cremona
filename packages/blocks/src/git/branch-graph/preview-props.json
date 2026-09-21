@@ -1,0 +1,84 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "single branch": {
+    "commits": 6,
+    "branches": [
+      {
+        "name": "feat/billing",
+        "from": 1,
+        "commits": 3,
+        "merge": true,
+        "color": "text-sky-500",
+        "pulseColor": "text-sky-800 dark:text-sky-200"
+      }
+    ]
+  },
+  "release flow · custom copy": {
+    "base": "production",
+    "head": "v2.4",
+    "commits": 7,
+    "branches": [
+      {
+        "name": "release/2.4",
+        "from": 0,
+        "commits": 3,
+        "merge": true,
+        "color": "text-emerald-500",
+        "pulseColor": "text-emerald-800 dark:text-emerald-200"
+      },
+      {
+        "name": "hotfix/session",
+        "from": 4,
+        "commits": 2,
+        "color": "text-rose-500",
+        "pulseColor": "text-rose-800 dark:text-rose-200"
+      }
+    ]
+  },
+  "release flow · isometric": {
+    "base": "production",
+    "head": "v2.4",
+    "pulse": "line",
+    "isometric": true,
+    "branches": [
+      {
+        "name": "release/2.4",
+        "from": 0,
+        "commits": 3,
+        "merge": true,
+        "color": "text-emerald-500",
+        "pulseColor": "text-emerald-800 dark:text-emerald-200"
+      },
+      {
+        "name": "hotfix/session",
+        "from": 4,
+        "commits": 2,
+        "color": "text-rose-500",
+        "pulseColor": "text-rose-800 dark:text-rose-200"
+      }
+    ]
+  },
+  "short history": {
+    "commits": 5,
+    "head": "main",
+    "branches": [
+      {
+        "name": "docs/readme",
+        "from": 1,
+        "commits": 2,
+        "merge": true,
+        "color": "text-violet-500",
+        "pulseColor": "text-violet-800 dark:text-violet-200"
+      }
+    ]
+  },
+  "line pulse": {
+    "pulse": "line"
+  },
+  "hover": {
+    "hover": true
+  }
+}

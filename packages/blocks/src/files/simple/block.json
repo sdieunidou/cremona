@@ -1,0 +1,179 @@
+{
+  "category": "Files",
+  "file": "simple",
+  "name": "Simple",
+  "description": "A simple file card with name, type, and size.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "browser/simple.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "simple-DKE4oZxC.js",
+    "components": [
+      "simple-B7rxE8AV.js",
+      "simple-Bbib90GO.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "pdf",
+      "slug": "000-pdf",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "docx",
+      "slug": "001-docx",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "pptx",
+      "slug": "002-pptx",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "txt",
+      "slug": "003-txt",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "md",
+      "slug": "004-md",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "xlsx",
+      "slug": "005-xlsx",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "csv",
+      "slug": "006-csv",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "png",
+      "slug": "007-png",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "jpg",
+      "slug": "008-jpg",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "webp",
+      "slug": "009-webp",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "svg",
+      "slug": "010-svg",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "psd",
+      "slug": "011-psd",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "fig",
+      "slug": "012-fig",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "mp4",
+      "slug": "013-mp4",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "mp3",
+      "slug": "014-mp3",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "zip",
+      "slug": "015-zip",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "json",
+      "slug": "016-json",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "sql",
+      "slug": "017-sql",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "html",
+      "slug": "018-html",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "css",
+      "slug": "019-css",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "js",
+      "slug": "020-js",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "ts",
+      "slug": "021-ts",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "jsx",
+      "slug": "022-jsx",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "tsx",
+      "slug": "023-tsx",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "py",
+      "slug": "024-py",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "php",
+      "slug": "025-php",
+      "size": null,
+      "propsRaw": ""
+    }
+  ]
+}

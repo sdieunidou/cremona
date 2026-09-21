@@ -1,0 +1,82 @@
+{
+  "category": "Chat",
+  "file": "bubbles",
+  "name": "Bubbles",
+  "description": "A conversation of chat bubbles between two people.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "chat/bubbles.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "bubbles-C4Z4uq4t.js",
+    "components": [
+      "bubbles-DWtGxT_N.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0,isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "default · custom messages",
+      "slug": "006-default-custom-messages",
+      "size": null,
+      "propsRaw": "{name:`Mia Lee`,initials:`ML`,status:`Active 2m ago`,messages:i}"
+    },
+    {
+      "label": "isometric · custom messages",
+      "slug": "007-isometric-custom-messages",
+      "size": null,
+      "propsRaw": "{isometric:!0,name:`Mia Lee`,initials:`ML`,status:`Active 2m ago`,messages:i}"
+    },
+    {
+      "label": "typing",
+      "slug": "008-typing",
+      "size": null,
+      "propsRaw": "{status:`Typing…`,messages:[{from:`them`,text:`Want to grab coffee tomorrow?`,time:`08:12`},{from:`me`,text:`Yes! 10am at the usual?`,time:`08:14`}],typing:!0}"
+    },
+    {
+      "label": "read receipts",
+      "slug": "009-read-receipts",
+      "size": null,
+      "propsRaw": "{messages:[{from:`me`,text:`Sending the updated specs now.`},{from:`me`,text:`Let me know what you think.`,time:`14:04`,receipt:`read`},{from:`them`,text:`Got it, reviewing now.`,time:`14:05`},{from:`me`,text:`Let me know if have any questions.`,time:`14:06`,receipt:`delivered`},{from:`me`,text:`Thanks!`,time:`14:07`,receipt:`sent`}]}"
+    }
+  ]
+}

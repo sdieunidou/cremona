@@ -1,0 +1,31 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom tabs · custom url": {
+    "tabs": [
+      "Inbox",
+      "Sent",
+      "Drafts"
+    ],
+    "url": "mail.acme.io"
+  }
+}

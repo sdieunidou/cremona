@@ -1,0 +1,70 @@
+{
+  "category": "Geo",
+  "file": "globe",
+  "name": "Globe",
+  "description": "A rotating globe of dotted continents with location markers and connection arcs that draw in.",
+  "added": "2026-06-25",
+  "kind": "block",
+  "sourcePath": "geo/globe.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "globe-DxW6AqCI.js",
+    "components": [
+      "globe-E8QBzpjn.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "equator tilt",
+      "slug": "002-equator-tilt",
+      "size": null,
+      "propsRaw": "{tilt:`equator`}"
+    },
+    {
+      "label": "bottom tilt",
+      "slug": "003-bottom-tilt",
+      "size": null,
+      "propsRaw": "{tilt:`bottom`}"
+    },
+    {
+      "label": "reverse spin",
+      "slug": "004-reverse-spin",
+      "size": null,
+      "propsRaw": "{spinSpeed:12}"
+    },
+    {
+      "label": "half · labels",
+      "slug": "005-half-labels",
+      "size": null,
+      "propsRaw": "{half:!0,arcs:!1,spinSpeed:-6,wrapperClassName:`max-w-full`,markers:[{lat:37.77,lng:-122.42,label:`San Francisco`},{lat:40.71,lng:-74,label:`New York`},{lat:51.51,lng:-.13,label:`London`},{lat:1.35,lng:103.82,label:`Singapore`},{lat:35.68,lng:139.69,label:`Tokyo`}]}"
+    },
+    {
+      "label": "start: americas · arc pairs",
+      "slug": "006-start-americas-arc-pairs",
+      "size": null,
+      "propsRaw": "{startAt:`americas`,markers:[{lat:40.71,lng:-74,label:`New York`},{lat:51.51,lng:-.13},{lat:35.68,lng:139.69},{lat:-33.87,lng:151.21}],arcPairs:[[0,1],[0,2],[0,3]]}"
+    },
+    {
+      "label": "dot pulse",
+      "slug": "007-dot-pulse",
+      "size": null,
+      "propsRaw": "{arcPulse:`dot`,markers:[{lat:37.77,lng:-122.42},{lat:40.71,lng:-74},{lat:51.51,lng:-.13},{lat:1.35,lng:103.82},{lat:35.68,lng:139.69}]}"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "speed · custom copy": {
+    "title": "Page Load Time",
+    "before": "3.8s",
+    "after": "1.4s",
+    "improvement": "2.7× faster",
+    "beforeBar": 100,
+    "afterBar": 37
+  },
+  "cost · custom copy": {
+    "title": "Cost per Lead",
+    "before": "$24.50",
+    "after": "$8.20",
+    "improvement": "66% cheaper",
+    "beforeBar": 100,
+    "afterBar": 33
+  },
+  "latency · custom copy": {
+    "title": "API Latency",
+    "before": "842ms",
+    "after": "187ms",
+    "improvement": "4.5× faster",
+    "beforeBar": 100,
+    "afterBar": 22
+  },
+  "churn · custom copy": {
+    "title": "Monthly Churn",
+    "before": "5.2%",
+    "after": "1.8%",
+    "improvement": "65% drop",
+    "beforeBar": 100,
+    "afterBar": 35
+  }
+}

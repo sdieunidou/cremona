@@ -1,0 +1,26 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "digits={4}": {
+    "digits": 4
+  },
+  "label=\"Secure\"": {
+    "label": "Secure"
+  },
+  "state=\"unlocked\"": {
+    "state": "unlocked"
+  },
+  "isometric · state=\"unlocked\"": {
+    "state": "unlocked",
+    "isometric": true
+  },
+  "state=\"error\"": {
+    "state": "error"
+  },
+  "isometric · state=\"error\"": {
+    "state": "error",
+    "isometric": true
+  }
+}

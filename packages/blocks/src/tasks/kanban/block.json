@@ -1,0 +1,70 @@
+{
+  "category": "Tasks",
+  "file": "kanban",
+  "name": "Kanban",
+  "description": "A kanban board with columns and draggable cards.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "tasks/kanban.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "kanban-USIRQL3k.js",
+    "components": [
+      "kanban-DHHiKoKU.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "content pipeline · custom",
+      "slug": "006-content-pipeline-custom",
+      "size": null,
+      "propsRaw": "{title:`Content pipeline`,meta:`Q1 2026`,columns:[{id:`drafts`,title:`Drafts`,dot:`neutral`,cards:[{title:`How we designed our pricing page`},{title:`10 patterns we use for empty states`,comments:3},{title:`Behind the scenes · v3 launch`}]},{id:`review`,title:`In review`,dot:`active`,cards:[{title:`Why we rewrote our onboarding`,comments:5},{title:`Hiring our first designer`,attachments:1}]},{id:`published`,title:`Published`,dot:`success`,cards:[{title:`Launching Cremona`,comments:24},{title:`From 0 to 1k stars`}]}]}"
+    },
+    {
+      "label": "hiring pipeline · custom",
+      "slug": "007-hiring-pipeline-custom",
+      "size": null,
+      "propsRaw": "{title:`Hiring · Engineering`,meta:`6 open roles`,columns:[{id:`applied`,title:`Applied`,dot:`neutral`,cards:[{title:`Maya Patel · Senior Frontend`},{title:`Tomás Ruiz · Full-stack`,attachments:2},{title:`Lena Köhler · Design Engineer`},{title:`Owen Hart · Backend`}]},{id:`interviewing`,title:`Interviewing`,dot:`active`,cards:[{title:`Priya Shah · Onsite Thu`,comments:4},{title:`Daniel Cho · Tech screen`}]},{id:`offer`,title:`Offer sent`,dot:`success`,cards:[{title:`Iris Müller · Senior Frontend`,comments:8}]}]}"
+    }
+  ]
+}

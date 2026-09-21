@@ -1,0 +1,100 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "spike": {
+    "pulse": "spike"
+  },
+  "custom icons": {
+    "sources": [
+      {
+        "type": "lucide:Smartphone",
+        "key": null,
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Laptop",
+        "key": null,
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Server",
+        "key": null,
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      }
+    ],
+    "transforms": [
+      {
+        "type": "lucide:Cog",
+        "key": null,
+        "props": {
+          "className": "size-4.5 text-primary-foreground",
+          "strokeWidth": 1.5
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Shuffle",
+        "key": null,
+        "props": {
+          "className": "size-4.5 text-primary-foreground",
+          "strokeWidth": 1.5
+        },
+        "_owner": null,
+        "_store": {}
+      }
+    ],
+    "destinations": [
+      {
+        "type": "lucide:ChartLine",
+        "key": null,
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Send",
+        "key": null,
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Bell",
+        "key": null,
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      }
+    ]
+  }
+}

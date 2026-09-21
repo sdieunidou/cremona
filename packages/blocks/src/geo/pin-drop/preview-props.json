@@ -1,0 +1,105 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "custom colors": {
+    "pins": [
+      {
+        "x": 24,
+        "y": 50,
+        "label": "San Francisco",
+        "color": "text-indigo-700 dark:text-indigo-500"
+      },
+      {
+        "x": 40,
+        "y": 30,
+        "label": "London",
+        "color": "text-purple-700 dark:text-purple-500"
+      },
+      {
+        "x": 63,
+        "y": 52,
+        "label": "Singapore",
+        "color": "text-pink-700 dark:text-pink-500"
+      },
+      {
+        "x": 77,
+        "y": 35,
+        "label": "Tokyo",
+        "color": "text-sky-700 dark:text-sky-500"
+      }
+    ]
+  },
+  "single pin": {
+    "pins": [
+      {
+        "x": 50,
+        "y": 38,
+        "label": "Headquarters"
+      }
+    ]
+  },
+  "custom pins": {
+    "pins": [
+      {
+        "x": 20,
+        "y": 30,
+        "label": "London"
+      },
+      {
+        "x": 38,
+        "y": 40,
+        "label": "Paris"
+      },
+      {
+        "x": 70,
+        "y": 59,
+        "label": "Athens"
+      }
+    ]
+  },
+  "custom pins and colors": {
+    "pins": [
+      {
+        "x": 26,
+        "y": 34,
+        "color": "text-rose-600 dark:text-rose-500",
+        "label": "Rome"
+      },
+      {
+        "x": 50,
+        "y": 52,
+        "color": "text-lime-600 dark:text-lime-500",
+        "label": "Athens"
+      },
+      {
+        "x": 74,
+        "y": 30,
+        "color": "text-orange-600 dark:text-orange-500",
+        "label": "Singapore"
+      }
+    ]
+  },
+  "active pin": {
+    "pins": [
+      {
+        "x": 26,
+        "y": 48
+      },
+      {
+        "x": 50,
+        "y": 30,
+        "label": "Headquarters",
+        "active": true
+      },
+      {
+        "x": 74,
+        "y": 50
+      }
+    ]
+  },
+  "custom size": {
+    "wrapperClassName": "max-w-full"
+  }
+}

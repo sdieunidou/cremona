@@ -1,0 +1,37 @@
+{
+  "default · cycles states": {},
+  "listening": {
+    "state": "listening"
+  },
+  "thinking": {
+    "state": "thinking"
+  },
+  "speaking": {
+    "state": "speaking"
+  },
+  "hover": {
+    "hover": true
+  },
+  "no glow": {
+    "glow": false
+  },
+  "no particles": {
+    "particles": false
+  },
+  "minimal": {
+    "glow": false,
+    "particles": false
+  },
+  "custom copy": {
+    "state": "listening",
+    "transcript": "What's on my calendar for the rest of the week?",
+    "status": "Live"
+  },
+  "custom copy per state": {
+    "listeningStatus": "Live",
+    "thinkingStatus": "Working",
+    "speakingStatus": "Responding",
+    "listeningTranscript": "Draft a reply to the last email from Emma",
+    "speakingTranscript": "Sent. I kept it short and thanked her for the update."
+  }
+}

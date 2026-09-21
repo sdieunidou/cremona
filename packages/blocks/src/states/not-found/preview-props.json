@@ -1,0 +1,34 @@
+{
+  "410": {
+    "code": "410"
+  },
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no glow": {
+    "glow": false
+  },
+  "isometric · no glow": {
+    "isometric": true,
+    "glow": false
+  },
+  "line pulse": {
+    "pulse": "line"
+  },
+  "line pulse · isometric": {
+    "pulse": "line",
+    "isometric": true
+  },
+  "410 · isometric": {
+    "code": "410",
+    "isometric": true
+  },
+  "hover": {
+    "hover": true
+  },
+  "hover · isometric": {
+    "hover": true,
+    "isometric": true
+  }
+}

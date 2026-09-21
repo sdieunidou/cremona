@@ -1,0 +1,70 @@
+{
+  "category": "States",
+  "file": "maintenance",
+  "name": "Maintenance",
+  "description": "A stack of service tiles with one lifted out and being worked on, hovering over its empty slot while a progress sweep runs underneath.",
+  "added": "2026-08-07",
+  "kind": "block",
+  "sourcePath": "states/maintenance.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "maintenance-CVr2y7oR.js",
+    "components": [
+      "maintenance-Cq1Xtv9E.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no glow",
+      "slug": "002-default-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "isometric · no glow",
+      "slug": "003-isometric-no-glow",
+      "size": null,
+      "propsRaw": "{isometric:!0,glow:!1}"
+    },
+    {
+      "label": "two tiles",
+      "slug": "004-two-tiles",
+      "size": null,
+      "propsRaw": "{tiles:2}"
+    },
+    {
+      "label": "four tiles · isometric",
+      "slug": "005-four-tiles-isometric",
+      "size": null,
+      "propsRaw": "{tiles:4,isometric:!0}"
+    },
+    {
+      "label": "hover",
+      "slug": "006-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "hover · isometric",
+      "slug": "007-hover-isometric",
+      "size": null,
+      "propsRaw": "{hover:!0,isometric:!0}"
+    }
+  ]
+}

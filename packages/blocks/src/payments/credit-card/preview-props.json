@@ -1,0 +1,41 @@
+{
+  "default": {},
+  "stacked": {
+    "stacked": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · stacked": {
+    "isometric": true,
+    "stacked": true
+  },
+  "custom content": {
+    "name": "ADA LOVELACE",
+    "number": "•••• •••• •••• 1815",
+    "expiry": "06/30",
+    "brand": "GOLD"
+  },
+  "alternate custom content": {
+    "name": "GRACE HOPPER",
+    "number": "1234 5678 9012 3456",
+    "expiry": "12/52",
+    "brand": "VISA"
+  },
+  "flipped": {
+    "flipped": true
+  },
+  "stacked · flipped": {
+    "stacked": true,
+    "flipped": true
+  },
+  "isometric · flipped": {
+    "isometric": true,
+    "flipped": true
+  },
+  "isometric · stacked · flipped": {
+    "isometric": true,
+    "stacked": true,
+    "flipped": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "range": {
+    "rangeStart": 12,
+    "rangeEnd": 22
+  },
+  "range · isometric": {
+    "rangeStart": 11,
+    "rangeEnd": 18,
+    "isometric": true
+  },
+  "highlighted · selected": {
+    "highlighted": 11,
+    "selected": 18
+  },
+  "specific month": {
+    "month": 6,
+    "year": 2028,
+    "selected": 1
+  },
+  "Sunday start": {
+    "weekStartsOn": 0
+  }
+}

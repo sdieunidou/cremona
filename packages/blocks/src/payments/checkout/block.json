@@ -1,0 +1,106 @@
+{
+  "category": "Payments",
+  "file": "checkout",
+  "name": "Checkout",
+  "description": "A checkout summary with line items and a pay button.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "payments/checkout.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "checkout-CN-hgKmX.js",
+    "components": [
+      "checkout-6jdwsyTY.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom amount",
+      "slug": "006-custom-amount",
+      "size": null,
+      "propsRaw": "{amount:`$129.00`,buttonLabel:`Subscribe for`}"
+    },
+    {
+      "label": "card",
+      "slug": "007-card",
+      "size": null,
+      "propsRaw": "{card:!0}"
+    },
+    {
+      "label": "card · fadeOut",
+      "slug": "008-card-fadeout",
+      "size": null,
+      "propsRaw": "{card:!0,fadeOut:!0}"
+    },
+    {
+      "label": "card · isometric",
+      "slug": "009-card-isometric",
+      "size": null,
+      "propsRaw": "{card:!0,isometric:!0}"
+    },
+    {
+      "label": "card · isometric · fadeOut",
+      "slug": "010-card-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{card:!0,isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "card · no gradient",
+      "slug": "011-card-no-gradient",
+      "size": null,
+      "propsRaw": "{card:!0,gradient:!1}"
+    },
+    {
+      "label": "card · isometric · no gradient",
+      "slug": "012-card-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{card:!0,isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "card · custom content",
+      "slug": "013-card-custom-content",
+      "size": null,
+      "propsRaw": "{card:!0,name:`ADA LOVELACE`,cardNumber:`4000 0566 5566 5556`,expiry:`06/30`,cvc:`456`,brand:`GOLD`}"
+    }
+  ]
+}

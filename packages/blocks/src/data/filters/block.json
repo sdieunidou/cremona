@@ -1,0 +1,70 @@
+{
+  "category": "Data",
+  "file": "filters",
+  "name": "Filters",
+  "description": "A filter builder where each rule lands in turn and narrows a running result count and progress bar.",
+  "added": "2026-09-11",
+  "kind": "block",
+  "sourcePath": "data/filters.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "filters-iSvB-Hwu.js",
+    "components": [
+      "filters-DK6giw_X.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom data · deals",
+      "slug": "006-custom-data-deals",
+      "size": null,
+      "propsRaw": "{title:`Segment`,unit:`deals`,total:1860,rules:[{field:`Stage`,operator:`is`,value:`Negotiation`,matches:940},{field:`Owner`,operator:`is`,value:`Sales`,matches:520},{field:`Value`,operator:`is over`,value:`$10k`,matches:186}],addLabel:`Add condition`}"
+    },
+    {
+      "label": "custom data · errors · isometric",
+      "slug": "007-custom-data-errors-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1,title:`Log filters`,unit:`events`,total:94200,rules:[{field:`Level`,operator:`is`,value:`Error`,matches:8140},{field:`Service`,operator:`is`,value:`checkout`,matches:2310},{field:`Seen`,operator:`after`,value:`12:00`,matches:486},{field:`Region`,operator:`is`,value:`eu-west`,matches:92}]}"
+    }
+  ]
+}

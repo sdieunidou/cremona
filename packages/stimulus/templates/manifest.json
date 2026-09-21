@@ -1,0 +1,6477 @@
+{
+  "activity/feed": {
+    "name": "Feed",
+    "description": "A live activity feed with avatars, actions, and relative timestamps.",
+    "kind": "block",
+    "category": "activity",
+    "file": "feed",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "default · custom items",
+        "slug": "006-default-custom-items",
+        "size": null
+      },
+      {
+        "label": "isometric · custom items",
+        "slug": "007-isometric-custom-items",
+        "size": null
+      }
+    ]
+  },
+  "activity/timeline": {
+    "name": "Timeline",
+    "description": "A vertical activity timeline of grouped events and status changes.",
+    "kind": "block",
+    "category": "activity",
+    "file": "timeline",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "default · custom steps",
+        "slug": "006-default-custom-steps",
+        "size": null
+      },
+      {
+        "label": "isometric · custom steps",
+        "slug": "007-isometric-custom-steps",
+        "size": null
+      }
+    ]
+  },
+  "ai/agent-flow": {
+    "name": "Agent Flow",
+    "description": "An agent pipeline of stacked isometric cubes that light up in sequence, revealing each step label as it runs.",
+    "kind": "block",
+    "category": "ai",
+    "file": "agent-flow",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "002-no-glow",
+        "size": null
+      },
+      {
+        "label": "no particles",
+        "slug": "003-no-particles",
+        "size": null
+      },
+      {
+        "label": "custom steps",
+        "slug": "004-custom-steps",
+        "size": null
+      },
+      {
+        "label": "four steps",
+        "slug": "005-four-steps",
+        "size": null
+      }
+    ]
+  },
+  "ai/presence": {
+    "name": "Presence",
+    "description": "Live multiplayer cursors roaming a shared canvas, one carrying your avatar and the rest labeled AI agents, over an ambient glow and particle field.",
+    "kind": "block",
+    "category": "ai",
+    "file": "presence",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "002-no-glow",
+        "size": null
+      },
+      {
+        "label": "no particles",
+        "slug": "003-no-particles",
+        "size": null
+      },
+      {
+        "label": "photo avatar",
+        "slug": "004-photo-avatar",
+        "size": null
+      },
+      {
+        "label": "custom collaborators",
+        "slug": "005-custom-collaborators",
+        "size": null
+      },
+      {
+        "label": "solo agent team",
+        "slug": "006-solo-agent-team",
+        "size": null
+      }
+    ]
+  },
+  "ai/prompt-box": {
+    "name": "Prompt Box",
+    "description": "A wide prompt composer with a typing prompt, model picker, token count, and send, over an ambient glow and particle field.",
+    "kind": "block",
+    "category": "ai",
+    "file": "prompt-box",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "001-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "002-hover",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "003-no-glow",
+        "size": null
+      },
+      {
+        "label": "no particles",
+        "slug": "004-no-particles",
+        "size": null
+      },
+      {
+        "label": "no attachments",
+        "slug": "005-no-attachments",
+        "size": null
+      },
+      {
+        "label": "minimal",
+        "slug": "006-minimal",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "007-custom-copy",
+        "size": null
+      },
+      {
+        "label": "no caret",
+        "slug": "008-no-caret",
+        "size": null
+      }
+    ]
+  },
+  "ai/retrieval": {
+    "name": "Retrieval",
+    "description": "A query fanning out to ranked source cards that light up as each pulse lands, then converging into a streamed answer, over an ambient glow and particle field.",
+    "kind": "block",
+    "category": "ai",
+    "file": "retrieval",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "line pulse",
+        "slug": "002-line-pulse",
+        "size": null
+      },
+      {
+        "label": "line · isometric",
+        "slug": "003-line-isometric",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "004-no-glow",
+        "size": null
+      },
+      {
+        "label": "no particles",
+        "slug": "005-no-particles",
+        "size": null
+      },
+      {
+        "label": "no glow · no particles",
+        "slug": "006-no-glow-no-particles",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "007-hover",
+        "size": null
+      },
+      {
+        "label": "two sources",
+        "slug": "008-two-sources",
+        "size": null
+      },
+      {
+        "label": "support · custom copy",
+        "slug": "009-support-custom-copy",
+        "size": null
+      },
+      {
+        "label": "docs · isometric",
+        "slug": "010-docs-isometric",
+        "size": null
+      }
+    ]
+  },
+  "ai/tools": {
+    "name": "Tools",
+    "description": "An agent working through its tool calls one at a time, each row running with a spinner then settling into a result and a duration.",
+    "kind": "block",
+    "category": "ai",
+    "file": "tools",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "billing · custom copy",
+        "slug": "006-billing-custom-copy",
+        "size": null
+      },
+      {
+        "label": "four tools · isometric",
+        "slug": "007-four-tools-isometric",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "008-no-glow",
+        "size": null
+      },
+      {
+        "label": "no particles",
+        "slug": "009-no-particles",
+        "size": null
+      },
+      {
+        "label": "no glow · no particles",
+        "slug": "010-no-glow-no-particles",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "011-hover",
+        "size": null
+      }
+    ]
+  },
+  "ai/voice": {
+    "name": "Voice",
+    "description": "A realtime voice assistant orb that cycles through listening, thinking, and speaking states, with pulsing rings, a live equalizer, a status pill, and a transcript, over an ambient glow and particle field.",
+    "kind": "block",
+    "category": "ai",
+    "file": "voice",
+    "variants": [
+      {
+        "label": "default · cycles states",
+        "slug": "000-default-cycles-states",
+        "size": null
+      },
+      {
+        "label": "listening",
+        "slug": "001-listening",
+        "size": null
+      },
+      {
+        "label": "thinking",
+        "slug": "002-thinking",
+        "size": null
+      },
+      {
+        "label": "speaking",
+        "slug": "003-speaking",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "004-hover",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "005-no-glow",
+        "size": null
+      },
+      {
+        "label": "no particles",
+        "slug": "006-no-particles",
+        "size": null
+      },
+      {
+        "label": "minimal",
+        "slug": "007-minimal",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "008-custom-copy",
+        "size": null
+      },
+      {
+        "label": "custom copy per state",
+        "slug": "009-custom-copy-per-state",
+        "size": null
+      }
+    ]
+  },
+  "api/logs": {
+    "name": "Logs",
+    "description": "Service nodes streaming into a log console along connected paths, with severity-colored level chips and rows that tail in.",
+    "kind": "block",
+    "category": "api",
+    "file": "logs",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "004-custom-copy",
+        "size": null
+      },
+      {
+        "label": "line pulse",
+        "slug": "005-line-pulse",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "006-hover",
+        "size": null
+      },
+      {
+        "label": "worker",
+        "slug": "007-worker",
+        "size": null
+      },
+      {
+        "label": "errors",
+        "slug": "008-errors",
+        "size": null
+      },
+      {
+        "label": "worker · isometric",
+        "slug": "009-worker-isometric",
+        "size": null
+      },
+      {
+        "label": "two sources",
+        "slug": "010-two-sources",
+        "size": null
+      },
+      {
+        "label": "four sources",
+        "slug": "011-four-sources",
+        "size": null
+      }
+    ]
+  },
+  "api/request": {
+    "name": "Request",
+    "description": "A request arcing from client to server and a response arcing back, with a method pill, a status code, and a JSON response card.",
+    "kind": "block",
+    "category": "api",
+    "file": "request",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "delete · custom copy",
+        "slug": "004-delete-custom-copy",
+        "size": null
+      },
+      {
+        "label": "patch · custom copy",
+        "slug": "005-patch-custom-copy",
+        "size": null
+      },
+      {
+        "label": "line pulse",
+        "slug": "006-line-pulse",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "007-hover",
+        "size": null
+      },
+      {
+        "label": "post",
+        "slug": "008-post",
+        "size": null
+      },
+      {
+        "label": "error",
+        "slug": "009-error",
+        "size": null
+      },
+      {
+        "label": "error · isometric",
+        "slug": "010-error-isometric",
+        "size": null
+      },
+      {
+        "label": "post · line",
+        "slug": "011-post-line",
+        "size": null
+      }
+    ]
+  },
+  "api/webhook": {
+    "name": "Webhook",
+    "description": "A webhook event fanning retry arcs at your endpoint, where failed attempts fall short and the successful one delivers.",
+    "kind": "block",
+    "category": "api",
+    "file": "webhook",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "line pulse",
+        "slug": "002-line-pulse",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "003-hover",
+        "size": null
+      },
+      {
+        "label": "success",
+        "slug": "004-success",
+        "size": null
+      },
+      {
+        "label": "failed",
+        "slug": "005-failed",
+        "size": null
+      },
+      {
+        "label": "success · isometric",
+        "slug": "006-success-isometric",
+        "size": null
+      },
+      {
+        "label": "two attempts · custom copy",
+        "slug": "007-two-attempts-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "avatars/grid": {
+    "name": "Grid",
+    "description": "A grid of user avatars with subtle staggered reveals.",
+    "kind": "block",
+    "category": "avatars",
+    "file": "grid",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "photos · custom members",
+        "slug": "002-photos-custom-members",
+        "size": null
+      },
+      {
+        "label": "photos · isometric · custom members",
+        "slug": "003-photos-isometric-custom-members",
+        "size": null
+      },
+      {
+        "label": "4 avatars · custom members",
+        "slug": "004-4-avatars-custom-members",
+        "size": null
+      },
+      {
+        "label": "4 avatars · isometric · custom members",
+        "slug": "005-4-avatars-isometric-custom-members",
+        "size": null
+      }
+    ]
+  },
+  "avatars/profile-card": {
+    "name": "Profile Card",
+    "description": "A compact profile card with avatar, name, and key stats.",
+    "kind": "block",
+    "category": "avatars",
+    "file": "profile-card",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "online · custom copy",
+        "slug": "004-online-custom-copy",
+        "size": null
+      },
+      {
+        "label": "online · photo",
+        "slug": "005-online-photo",
+        "size": null
+      },
+      {
+        "label": "away",
+        "slug": "006-away",
+        "size": null
+      },
+      {
+        "label": "busy",
+        "slug": "007-busy",
+        "size": null
+      },
+      {
+        "label": "offline",
+        "slug": "008-offline",
+        "size": null
+      },
+      {
+        "label": "away · isometric · custom copy",
+        "slug": "009-away-isometric-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "avatars/stack": {
+    "name": "Stack",
+    "description": "An overlapping avatar stack with a remaining count badge.",
+    "kind": "block",
+    "category": "avatars",
+    "file": "stack",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "no status",
+        "slug": "004-no-status",
+        "size": null
+      },
+      {
+        "label": "dot · away",
+        "slug": "005-dot-away",
+        "size": null
+      },
+      {
+        "label": "dot · busy",
+        "slug": "006-dot-busy",
+        "size": null
+      },
+      {
+        "label": "no dot",
+        "slug": "007-no-dot",
+        "size": null
+      },
+      {
+        "label": "photos",
+        "slug": "008-photos",
+        "size": null
+      },
+      {
+        "label": "photos · isometric",
+        "slug": "009-photos-isometric",
+        "size": null
+      },
+      {
+        "label": "custom roster",
+        "slug": "010-custom-roster",
+        "size": null
+      },
+      {
+        "label": "three avatars · custom copy",
+        "slug": "011-three-avatars-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "branding/spotlight": {
+    "name": "Spotlight",
+    "description": "An app icon spotlit over a fading dock of placeholder apps, with ambient glow and a particle field.",
+    "kind": "block",
+    "category": "branding",
+    "file": "spotlight",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "002-no-glow",
+        "size": null
+      },
+      {
+        "label": "no particles",
+        "slug": "003-no-particles",
+        "size": null
+      },
+      {
+        "label": "custom logo",
+        "slug": "004-custom-logo",
+        "size": null
+      },
+      {
+        "label": "custom color",
+        "slug": "005-custom-color",
+        "size": null
+      },
+      {
+        "label": "image",
+        "slug": "006-image",
+        "size": null
+      }
+    ]
+  },
+  "browser/loading": {
+    "name": "Loading",
+    "description": "A browser window mockup with an animated page loading state.",
+    "kind": "block",
+    "category": "browser",
+    "file": "loading",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "002-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "003-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "004-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "005-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "006-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom url",
+        "slug": "007-custom-url",
+        "size": null
+      }
+    ]
+  },
+  "browser/simple": {
+    "name": "Simple",
+    "description": "A clean browser window frame for showcasing any screenshot or UI.",
+    "kind": "block",
+    "category": "browser",
+    "file": "simple",
+    "variants": [
+      {
+        "label": "landing",
+        "slug": "000-landing",
+        "size": null
+      },
+      {
+        "label": "dashboard",
+        "slug": "001-dashboard",
+        "size": null
+      },
+      {
+        "label": "landing · fadeOut",
+        "slug": "002-landing-fadeout",
+        "size": null
+      },
+      {
+        "label": "dashboard · fadeOut",
+        "slug": "003-dashboard-fadeout",
+        "size": null
+      },
+      {
+        "label": "landing · isometric",
+        "slug": "004-landing-isometric",
+        "size": null
+      },
+      {
+        "label": "dashboard · isometric",
+        "slug": "005-dashboard-isometric",
+        "size": null
+      },
+      {
+        "label": "landing · isometric · fadeOut",
+        "slug": "006-landing-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "dashboard · isometric · fadeOut",
+        "slug": "007-dashboard-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "landing · no gradient",
+        "slug": "008-landing-no-gradient",
+        "size": null
+      },
+      {
+        "label": "landing · isometric · no gradient",
+        "slug": "009-landing-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "landing · custom url",
+        "slug": "010-landing-custom-url",
+        "size": null
+      },
+      {
+        "label": "dashboard · custom url",
+        "slug": "011-dashboard-custom-url",
+        "size": null
+      }
+    ]
+  },
+  "browser/tabs": {
+    "name": "Tabs",
+    "description": "A browser window with switching tabs and an address bar.",
+    "kind": "block",
+    "category": "browser",
+    "file": "tabs",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "002-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "003-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "004-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "005-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "006-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom tabs · custom url",
+        "slug": "007-custom-tabs-custom-url",
+        "size": null
+      }
+    ]
+  },
+  "calendar/date-picker": {
+    "name": "Date Picker",
+    "description": "A calendar date picker with a selected day and range highlight.",
+    "kind": "block",
+    "category": "calendar",
+    "file": "date-picker",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "range",
+        "slug": "006-range",
+        "size": null
+      },
+      {
+        "label": "range · isometric",
+        "slug": "007-range-isometric",
+        "size": null
+      },
+      {
+        "label": "highlighted · selected",
+        "slug": "008-highlighted-selected",
+        "size": null
+      },
+      {
+        "label": "specific month",
+        "slug": "009-specific-month",
+        "size": null
+      },
+      {
+        "label": "Sunday start",
+        "slug": "010-sunday-start",
+        "size": null
+      }
+    ]
+  },
+  "calendar/event-list": {
+    "name": "Event List",
+    "description": "An agenda style list of upcoming calendar events.",
+    "kind": "block",
+    "category": "calendar",
+    "file": "event-list",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "006-custom-copy",
+        "size": null
+      },
+      {
+        "label": "single day",
+        "slug": "007-single-day",
+        "size": null
+      }
+    ]
+  },
+  "calendar/month-view": {
+    "name": "Month View",
+    "description": "A full month calendar grid with events placed on days.",
+    "kind": "block",
+    "category": "calendar",
+    "file": "month-view",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "specific month",
+        "slug": "006-specific-month",
+        "size": null
+      },
+      {
+        "label": "Sunday start",
+        "slug": "007-sunday-start",
+        "size": null
+      }
+    ]
+  },
+  "charts/bar": {
+    "name": "Bar",
+    "description": "An animated bar chart with a value, trend badge, and grid.",
+    "kind": "block",
+    "category": "charts",
+    "file": "bar",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "signups · custom copy",
+        "slug": "006-signups-custom-copy",
+        "size": null
+      },
+      {
+        "label": "negative change · custom copy",
+        "slug": "007-negative-change-custom-copy",
+        "size": null
+      },
+      {
+        "label": "quarterly · isometric · custom copy",
+        "slug": "008-quarterly-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "many columns · custom copy",
+        "slug": "009-many-columns-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "charts/donut": {
+    "name": "Donut",
+    "description": "An animated donut chart with a center total and legend.",
+    "kind": "block",
+    "category": "charts",
+    "file": "donut",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "traffic · custom copy",
+        "slug": "006-traffic-custom-copy",
+        "size": null
+      },
+      {
+        "label": "plans · isometric · custom copy",
+        "slug": "007-plans-isometric-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "charts/funnel": {
+    "name": "Funnel",
+    "description": "A conversion funnel of tapering stage slabs that pour in one by one, with per stage counts and conversion rates.",
+    "kind": "block",
+    "category": "charts",
+    "file": "funnel",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "checkout · custom copy",
+        "slug": "006-checkout-custom-copy",
+        "size": null
+      },
+      {
+        "label": "negative change · custom copy",
+        "slug": "007-negative-change-custom-copy",
+        "size": null
+      },
+      {
+        "label": "highlighted stage · isometric · custom copy",
+        "slug": "008-highlighted-stage-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "three stages · custom copy",
+        "slug": "009-three-stages-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "charts/gauge": {
+    "name": "Gauge",
+    "description": "A semicircular gauge whose arc sweeps to its value, with an optional zoned track, a center reading, and range labels.",
+    "kind": "block",
+    "category": "charts",
+    "file": "gauge",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "capacity · custom copy",
+        "slug": "006-capacity-custom-copy",
+        "size": null
+      },
+      {
+        "label": "zones · custom copy",
+        "slug": "007-zones-custom-copy",
+        "size": null
+      },
+      {
+        "label": "low value · custom copy",
+        "slug": "008-low-value-custom-copy",
+        "size": null
+      },
+      {
+        "label": "score · isometric · custom copy",
+        "slug": "009-score-isometric-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "charts/heatmap": {
+    "name": "Heatmap",
+    "description": "A grid heatmap of labeled rows and columns whose cells light up in a diagonal sweep, with an intensity legend.",
+    "kind": "block",
+    "category": "charts",
+    "file": "heatmap",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "cohort retention · custom copy",
+        "slug": "006-cohort-retention-custom-copy",
+        "size": null
+      },
+      {
+        "label": "contributions · custom copy",
+        "slug": "007-contributions-custom-copy",
+        "size": null
+      },
+      {
+        "label": "no legend · custom copy",
+        "slug": "008-no-legend-custom-copy",
+        "size": null
+      },
+      {
+        "label": "compact grid · isometric · custom copy",
+        "slug": "009-compact-grid-isometric-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "charts/line": {
+    "name": "Line",
+    "description": "An animated line chart with a value, trend badge, and gradient fill.",
+    "kind": "block",
+    "category": "charts",
+    "file": "line",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "revenue · custom copy",
+        "slug": "006-revenue-custom-copy",
+        "size": null
+      },
+      {
+        "label": "negative change · custom copy",
+        "slug": "007-negative-change-custom-copy",
+        "size": null
+      },
+      {
+        "label": "conversions · isometric · custom copy",
+        "slug": "008-conversions-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient · custom copy",
+        "slug": "009-isometric-no-gradient-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "charts/sparkline": {
+    "name": "Sparkline",
+    "description": "A compact inline sparkline for tight spaces and stat cards.",
+    "kind": "block",
+    "category": "charts",
+    "file": "sparkline",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "negative change · custom copy",
+        "slug": "004-negative-change-custom-copy",
+        "size": null
+      },
+      {
+        "label": "negative change · isometric · custom copy",
+        "slug": "005-negative-change-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "006-custom-copy",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient · custom copy",
+        "slug": "007-isometric-no-gradient-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "chat/ai-chat": {
+    "name": "AI Chat",
+    "description": "An AI chat interface with streaming responses and a prompt box.",
+    "kind": "block",
+    "category": "chat",
+    "file": "ai-chat",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "default · custom copy",
+        "slug": "006-default-custom-copy",
+        "size": null
+      },
+      {
+        "label": "isometric · custom copy",
+        "slug": "007-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "paragraph only",
+        "slug": "008-paragraph-only",
+        "size": null
+      },
+      {
+        "label": "busy status",
+        "slug": "009-busy-status",
+        "size": null
+      },
+      {
+        "label": "offline status",
+        "slug": "010-offline-status",
+        "size": null
+      },
+      {
+        "label": "no caret",
+        "slug": "011-no-caret",
+        "size": null
+      },
+      {
+        "label": "no actions",
+        "slug": "012-no-actions",
+        "size": null
+      }
+    ]
+  },
+  "chat/bubbles": {
+    "name": "Bubbles",
+    "description": "A conversation of chat bubbles between two people.",
+    "kind": "block",
+    "category": "chat",
+    "file": "bubbles",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "default · custom messages",
+        "slug": "006-default-custom-messages",
+        "size": null
+      },
+      {
+        "label": "isometric · custom messages",
+        "slug": "007-isometric-custom-messages",
+        "size": null
+      },
+      {
+        "label": "typing",
+        "slug": "008-typing",
+        "size": null
+      },
+      {
+        "label": "read receipts",
+        "slug": "009-read-receipts",
+        "size": null
+      }
+    ]
+  },
+  "chat/thread": {
+    "name": "Thread",
+    "description": "A threaded message view with replies and reactions.",
+    "kind": "block",
+    "category": "chat",
+    "file": "thread",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "default · custom thread",
+        "slug": "006-default-custom-thread",
+        "size": null
+      },
+      {
+        "label": "isometric · custom thread",
+        "slug": "007-isometric-custom-thread",
+        "size": null
+      },
+      {
+        "label": "no actions",
+        "slug": "008-no-actions",
+        "size": null
+      },
+      {
+        "label": "custom likes",
+        "slug": "009-custom-likes",
+        "size": null
+      }
+    ]
+  },
+  "code/editor": {
+    "name": "Editor",
+    "description": "A code editor mockup with syntax highlighting and a file tab.",
+    "kind": "block",
+    "category": "code",
+    "file": "editor",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "no line numbers",
+        "slug": "006-no-line-numbers",
+        "size": null
+      },
+      {
+        "label": "no caret",
+        "slug": "007-no-caret",
+        "size": null
+      },
+      {
+        "label": "highlighted line",
+        "slug": "008-highlighted-line",
+        "size": null
+      },
+      {
+        "label": "diff",
+        "slug": "009-diff",
+        "size": null
+      },
+      {
+        "label": "js",
+        "slug": "010-js",
+        "size": null
+      },
+      {
+        "label": "py",
+        "slug": "011-py",
+        "size": null
+      },
+      {
+        "label": "php",
+        "slug": "012-php",
+        "size": null
+      },
+      {
+        "label": "html",
+        "slug": "013-html",
+        "size": null
+      },
+      {
+        "label": "css",
+        "slug": "014-css",
+        "size": null
+      },
+      {
+        "label": "go",
+        "slug": "015-go",
+        "size": null
+      }
+    ]
+  },
+  "code/snippet": {
+    "name": "Snippet",
+    "description": "A copyable code snippet card with a language label.",
+    "kind": "block",
+    "category": "code",
+    "file": "snippet",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "no line numbers",
+        "slug": "004-no-line-numbers",
+        "size": null
+      },
+      {
+        "label": "highlighted line",
+        "slug": "005-highlighted-line",
+        "size": null
+      },
+      {
+        "label": "diff",
+        "slug": "006-diff",
+        "size": null
+      },
+      {
+        "label": "bash",
+        "slug": "007-bash",
+        "size": null
+      },
+      {
+        "label": "json",
+        "slug": "008-json",
+        "size": null
+      },
+      {
+        "label": "css",
+        "slug": "009-css",
+        "size": null
+      },
+      {
+        "label": "sql",
+        "slug": "010-sql",
+        "size": null
+      },
+      {
+        "label": "yaml",
+        "slug": "011-yaml",
+        "size": null
+      },
+      {
+        "label": "md",
+        "slug": "012-md",
+        "size": null
+      }
+    ]
+  },
+  "code/terminal": {
+    "name": "Terminal",
+    "description": "A terminal window with a typing command and output.",
+    "kind": "block",
+    "category": "code",
+    "file": "terminal",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "no caret",
+        "slug": "006-no-caret",
+        "size": null
+      },
+      {
+        "label": "custom prompt",
+        "slug": "007-custom-prompt",
+        "size": null
+      },
+      {
+        "label": "highlighted line",
+        "slug": "008-highlighted-line",
+        "size": null
+      },
+      {
+        "label": "deploy",
+        "slug": "009-deploy",
+        "size": null
+      },
+      {
+        "label": "test",
+        "slug": "010-test",
+        "size": null
+      },
+      {
+        "label": "deploy · isometric",
+        "slug": "011-deploy-isometric",
+        "size": null
+      },
+      {
+        "label": "custom lines",
+        "slug": "012-custom-lines",
+        "size": null
+      }
+    ]
+  },
+  "connections/converge": {
+    "name": "Converge",
+    "description": "Multiple sources converging into a single destination node.",
+    "kind": "block",
+    "category": "connections",
+    "file": "converge",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "spike",
+        "slug": "003-spike",
+        "size": null
+      },
+      {
+        "label": "custom icons",
+        "slug": "004-custom-icons",
+        "size": null
+      },
+      {
+        "label": "4 nodes",
+        "slug": "005-4-nodes",
+        "size": null
+      },
+      {
+        "label": "isometric · 2 nodes",
+        "slug": "006-isometric-2-nodes",
+        "size": null
+      },
+      {
+        "label": "company logos",
+        "slug": "007-company-logos",
+        "size": null
+      },
+      {
+        "label": "company logos · isometric",
+        "slug": "008-company-logos-isometric",
+        "size": null
+      }
+    ]
+  },
+  "connections/flow": {
+    "name": "Flow",
+    "description": "An animated flow of nodes connected by data paths.",
+    "kind": "block",
+    "category": "connections",
+    "file": "flow",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "spike",
+        "slug": "003-spike",
+        "size": null
+      },
+      {
+        "label": "custom icons",
+        "slug": "004-custom-icons",
+        "size": null
+      }
+    ]
+  },
+  "connections/pipeline": {
+    "name": "Pipeline",
+    "description": "A linear pipeline of stages with moving progress.",
+    "kind": "block",
+    "category": "connections",
+    "file": "pipeline",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "spike",
+        "slug": "003-spike",
+        "size": null
+      },
+      {
+        "label": "2 in · 4 out",
+        "slug": "004-2-in-4-out",
+        "size": null
+      },
+      {
+        "label": "isometric · 1 in · 2 out",
+        "slug": "005-isometric-1-in-2-out",
+        "size": null
+      },
+      {
+        "label": "custom logo",
+        "slug": "006-custom-logo",
+        "size": null
+      }
+    ]
+  },
+  "connections/sync": {
+    "name": "Sync",
+    "description": "Two systems syncing with data moving back and forth.",
+    "kind": "block",
+    "category": "connections",
+    "file": "sync",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "spike",
+        "slug": "003-spike",
+        "size": null
+      },
+      {
+        "label": "single pair",
+        "slug": "004-single-pair",
+        "size": null
+      },
+      {
+        "label": "four pairs",
+        "slug": "005-four-pairs",
+        "size": null
+      }
+    ]
+  },
+  "dashboard/mini-panel": {
+    "name": "Mini Panel",
+    "description": "A compact dashboard panel with a metric and mini chart.",
+    "kind": "block",
+    "category": "dashboard",
+    "file": "mini-panel",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "dashboard/widget-grid": {
+    "name": "Widget Grid",
+    "description": "A grid of dashboard widgets and summary cards.",
+    "kind": "block",
+    "category": "dashboard",
+    "file": "widget-grid",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "data/filters": {
+    "name": "Filters",
+    "description": "A filter builder where each rule lands in turn and narrows a running result count and progress bar.",
+    "kind": "block",
+    "category": "data",
+    "file": "filters",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom data · deals",
+        "slug": "006-custom-data-deals",
+        "size": null
+      },
+      {
+        "label": "custom data · errors · isometric",
+        "slug": "007-custom-data-errors-isometric",
+        "size": null
+      }
+    ]
+  },
+  "data/import": {
+    "name": "Import",
+    "description": "A CSV import mapper where each source column connects across to its destination field, leaving unmapped columns skipped.",
+    "kind": "block",
+    "category": "data",
+    "file": "import",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom data · products",
+        "slug": "006-custom-data-products",
+        "size": null
+      },
+      {
+        "label": "custom data · contacts · isometric",
+        "slug": "007-custom-data-contacts-isometric",
+        "size": null
+      },
+      {
+        "label": "all mapped",
+        "slug": "008-all-mapped",
+        "size": null
+      }
+    ]
+  },
+  "data/query": {
+    "name": "Query",
+    "description": "A visual query builder that assembles its conditions, sweeps as it runs, then streams the matching rows with a timing readout.",
+    "kind": "block",
+    "category": "data",
+    "file": "query",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom data · events",
+        "slug": "006-custom-data-events",
+        "size": null
+      },
+      {
+        "label": "custom data · sessions · isometric",
+        "slug": "007-custom-data-sessions-isometric",
+        "size": null
+      }
+    ]
+  },
+  "data/table": {
+    "name": "Table",
+    "description": "A data table with sortable columns, rows, and status pills.",
+    "kind": "block",
+    "category": "data",
+    "file": "table",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom data · orders",
+        "slug": "006-custom-data-orders",
+        "size": null
+      },
+      {
+        "label": "custom data · projects · isometric",
+        "slug": "007-custom-data-projects-isometric",
+        "size": null
+      }
+    ]
+  },
+  "devices/laptop": {
+    "name": "Laptop",
+    "description": "A laptop device frame for presenting a screenshot or UI.",
+    "kind": "block",
+    "category": "devices",
+    "file": "laptop",
+    "variants": [
+      {
+        "label": "landing",
+        "slug": "000-landing",
+        "size": null
+      },
+      {
+        "label": "dashboard",
+        "slug": "001-dashboard",
+        "size": null
+      },
+      {
+        "label": "windows",
+        "slug": "002-windows",
+        "size": null
+      },
+      {
+        "label": "mac",
+        "slug": "003-mac",
+        "size": null
+      },
+      {
+        "label": "lockscreen",
+        "slug": "004-lockscreen",
+        "size": null
+      },
+      {
+        "label": "lockscreen · image",
+        "slug": "005-lockscreen-image",
+        "size": null
+      },
+      {
+        "label": "screenshot",
+        "slug": "006-screenshot",
+        "size": null
+      }
+    ]
+  },
+  "devices/phone": {
+    "name": "Phone",
+    "description": "A phone device frame for showcasing a mobile screen.",
+    "kind": "block",
+    "category": "devices",
+    "file": "phone",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "home",
+        "slug": "006-home",
+        "size": null
+      },
+      {
+        "label": "home · isometric",
+        "slug": "007-home-isometric",
+        "size": null
+      },
+      {
+        "label": "lockscreen",
+        "slug": "008-lockscreen",
+        "size": null
+      },
+      {
+        "label": "lockscreen · image",
+        "slug": "009-lockscreen-image",
+        "size": null
+      },
+      {
+        "label": "lockscreen · isometric",
+        "slug": "010-lockscreen-isometric",
+        "size": null
+      },
+      {
+        "label": "lockscreen · isometric · fadeOut",
+        "slug": "011-lockscreen-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "lockscreen · custom copy",
+        "slug": "012-lockscreen-custom-copy",
+        "size": null
+      },
+      {
+        "label": "screenshot",
+        "slug": "013-screenshot",
+        "size": null
+      },
+      {
+        "label": "lockscreen · no notifications",
+        "slug": "014-lockscreen-no-notifications",
+        "size": null
+      }
+    ]
+  },
+  "devices/tablet": {
+    "name": "Tablet",
+    "description": "A tablet device frame for showcasing an app or page.",
+    "kind": "block",
+    "category": "devices",
+    "file": "tablet",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "home",
+        "slug": "006-home",
+        "size": null
+      },
+      {
+        "label": "home · isometric",
+        "slug": "007-home-isometric",
+        "size": null
+      },
+      {
+        "label": "lockscreen",
+        "slug": "008-lockscreen",
+        "size": null
+      },
+      {
+        "label": "lockscreen · image",
+        "slug": "009-lockscreen-image",
+        "size": null
+      },
+      {
+        "label": "lockscreen · isometric",
+        "slug": "010-lockscreen-isometric",
+        "size": null
+      },
+      {
+        "label": "screenshot",
+        "slug": "011-screenshot",
+        "size": null
+      },
+      {
+        "label": "lockscreen · custom copy",
+        "slug": "012-lockscreen-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "email/compose": {
+    "name": "Compose",
+    "description": "An email compose window with recipient, subject, and body.",
+    "kind": "block",
+    "category": "email",
+    "file": "compose",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "with cc",
+        "slug": "006-with-cc",
+        "size": null
+      },
+      {
+        "label": "team broadcast · custom",
+        "slug": "007-team-broadcast-custom",
+        "size": null
+      },
+      {
+        "label": "draft saved · meta",
+        "slug": "008-draft-saved-meta",
+        "size": null
+      }
+    ]
+  },
+  "email/inbox": {
+    "name": "Inbox",
+    "description": "An email inbox list with senders, previews, and unread states.",
+    "kind": "block",
+    "category": "email",
+    "file": "inbox",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": "lg"
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": "lg"
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": "lg"
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": "lg"
+      },
+      {
+        "label": "promotions · custom",
+        "slug": "006-promotions-custom",
+        "size": "lg"
+      },
+      {
+        "label": "drafts · custom",
+        "slug": "007-drafts-custom",
+        "size": "lg"
+      },
+      {
+        "label": "support · custom",
+        "slug": "008-support-custom",
+        "size": "lg"
+      }
+    ]
+  },
+  "files/explorer": {
+    "name": "Explorer",
+    "description": "A file explorer with a folder tree and file list.",
+    "kind": "block",
+    "category": "files",
+    "file": "explorer",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "files/simple": {
+    "name": "Simple",
+    "description": "A simple file card with name, type, and size.",
+    "kind": "block",
+    "category": "files",
+    "file": "simple",
+    "variants": [
+      {
+        "label": "pdf",
+        "slug": "000-pdf",
+        "size": null
+      },
+      {
+        "label": "docx",
+        "slug": "001-docx",
+        "size": null
+      },
+      {
+        "label": "pptx",
+        "slug": "002-pptx",
+        "size": null
+      },
+      {
+        "label": "txt",
+        "slug": "003-txt",
+        "size": null
+      },
+      {
+        "label": "md",
+        "slug": "004-md",
+        "size": null
+      },
+      {
+        "label": "xlsx",
+        "slug": "005-xlsx",
+        "size": null
+      },
+      {
+        "label": "csv",
+        "slug": "006-csv",
+        "size": null
+      },
+      {
+        "label": "png",
+        "slug": "007-png",
+        "size": null
+      },
+      {
+        "label": "jpg",
+        "slug": "008-jpg",
+        "size": null
+      },
+      {
+        "label": "webp",
+        "slug": "009-webp",
+        "size": null
+      },
+      {
+        "label": "svg",
+        "slug": "010-svg",
+        "size": null
+      },
+      {
+        "label": "psd",
+        "slug": "011-psd",
+        "size": null
+      },
+      {
+        "label": "fig",
+        "slug": "012-fig",
+        "size": null
+      },
+      {
+        "label": "mp4",
+        "slug": "013-mp4",
+        "size": null
+      },
+      {
+        "label": "mp3",
+        "slug": "014-mp3",
+        "size": null
+      },
+      {
+        "label": "zip",
+        "slug": "015-zip",
+        "size": null
+      },
+      {
+        "label": "json",
+        "slug": "016-json",
+        "size": null
+      },
+      {
+        "label": "sql",
+        "slug": "017-sql",
+        "size": null
+      },
+      {
+        "label": "html",
+        "slug": "018-html",
+        "size": null
+      },
+      {
+        "label": "css",
+        "slug": "019-css",
+        "size": null
+      },
+      {
+        "label": "js",
+        "slug": "020-js",
+        "size": null
+      },
+      {
+        "label": "ts",
+        "slug": "021-ts",
+        "size": null
+      },
+      {
+        "label": "jsx",
+        "slug": "022-jsx",
+        "size": null
+      },
+      {
+        "label": "tsx",
+        "slug": "023-tsx",
+        "size": null
+      },
+      {
+        "label": "py",
+        "slug": "024-py",
+        "size": null
+      },
+      {
+        "label": "php",
+        "slug": "025-php",
+        "size": null
+      }
+    ]
+  },
+  "files/stacked": {
+    "name": "Stacked",
+    "description": "A stack of overlapping file cards with depth.",
+    "kind": "block",
+    "category": "files",
+    "file": "stacked",
+    "variants": [
+      {
+        "label": "files",
+        "slug": "000-files",
+        "size": "sm"
+      },
+      {
+        "label": "documents",
+        "slug": "001-documents",
+        "size": "sm"
+      },
+      {
+        "label": "spreadsheets",
+        "slug": "002-spreadsheets",
+        "size": "sm"
+      },
+      {
+        "label": "images",
+        "slug": "003-images",
+        "size": "sm"
+      },
+      {
+        "label": "design",
+        "slug": "004-design",
+        "size": "sm"
+      },
+      {
+        "label": "code",
+        "slug": "005-code",
+        "size": "sm"
+      },
+      {
+        "label": "fonts",
+        "slug": "006-fonts",
+        "size": "sm"
+      },
+      {
+        "label": "media",
+        "slug": "007-media",
+        "size": "sm"
+      },
+      {
+        "label": "video",
+        "slug": "008-video",
+        "size": "sm"
+      },
+      {
+        "label": "audio",
+        "slug": "009-audio",
+        "size": "sm"
+      },
+      {
+        "label": "archives",
+        "slug": "010-archives",
+        "size": "sm"
+      },
+      {
+        "label": "mixed",
+        "slug": "011-mixed",
+        "size": "sm"
+      }
+    ]
+  },
+  "files/upload": {
+    "name": "Upload",
+    "description": "A file upload area with progress and drag and drop.",
+    "kind": "block",
+    "category": "files",
+    "file": "upload",
+    "variants": [
+      {
+        "label": "document",
+        "slug": "000-document",
+        "size": "sm"
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": "sm"
+      },
+      {
+        "label": "pdf",
+        "slug": "002-pdf",
+        "size": "sm"
+      },
+      {
+        "label": "image",
+        "slug": "003-image",
+        "size": "sm"
+      },
+      {
+        "label": "video",
+        "slug": "004-video",
+        "size": "sm"
+      },
+      {
+        "label": "audio",
+        "slug": "005-audio",
+        "size": "sm"
+      },
+      {
+        "label": "spreadsheet",
+        "slug": "006-spreadsheet",
+        "size": "sm"
+      },
+      {
+        "label": "code",
+        "slug": "007-code",
+        "size": "sm"
+      },
+      {
+        "label": "archive",
+        "slug": "008-archive",
+        "size": "sm"
+      }
+    ]
+  },
+  "geo/globe": {
+    "name": "Globe",
+    "description": "A rotating globe of dotted continents with location markers and connection arcs that draw in.",
+    "kind": "block",
+    "category": "geo",
+    "file": "globe",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "equator tilt",
+        "slug": "002-equator-tilt",
+        "size": null
+      },
+      {
+        "label": "bottom tilt",
+        "slug": "003-bottom-tilt",
+        "size": null
+      },
+      {
+        "label": "reverse spin",
+        "slug": "004-reverse-spin",
+        "size": null
+      },
+      {
+        "label": "half · labels",
+        "slug": "005-half-labels",
+        "size": null
+      },
+      {
+        "label": "start: americas · arc pairs",
+        "slug": "006-start-americas-arc-pairs",
+        "size": null
+      },
+      {
+        "label": "dot pulse",
+        "slug": "007-dot-pulse",
+        "size": null
+      }
+    ]
+  },
+  "geo/pin-drop": {
+    "name": "Pin Drop",
+    "description": "Location pins dropping onto an abstract radar field with concentric ripple pings.",
+    "kind": "block",
+    "category": "geo",
+    "file": "pin-drop",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "custom colors",
+        "slug": "002-custom-colors",
+        "size": null
+      },
+      {
+        "label": "single pin",
+        "slug": "003-single-pin",
+        "size": null
+      },
+      {
+        "label": "custom pins",
+        "slug": "004-custom-pins",
+        "size": null
+      },
+      {
+        "label": "custom pins and colors",
+        "slug": "005-custom-pins-and-colors",
+        "size": null
+      },
+      {
+        "label": "active pin",
+        "slug": "006-active-pin",
+        "size": null
+      },
+      {
+        "label": "custom size",
+        "slug": "007-custom-size",
+        "size": null
+      }
+    ]
+  },
+  "geo/world-map": {
+    "name": "World Map",
+    "description": "A dotted world map that blooms outward from a chosen city, with pinging location markers, tinted coverage regions, and connection arcs that draw between cities.",
+    "kind": "block",
+    "category": "geo",
+    "file": "world-map",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "labels",
+        "slug": "002-labels",
+        "size": null
+      },
+      {
+        "label": "split reveal",
+        "slug": "003-split-reveal",
+        "size": null
+      },
+      {
+        "label": "sweep reveal",
+        "slug": "004-sweep-reveal",
+        "size": null
+      },
+      {
+        "label": "bloom from Singapore",
+        "slug": "005-bloom-from-singapore",
+        "size": null
+      },
+      {
+        "label": "no arcs",
+        "slug": "006-no-arcs",
+        "size": null
+      },
+      {
+        "label": "active marker",
+        "slug": "007-active-marker",
+        "size": null
+      },
+      {
+        "label": "regions",
+        "slug": "008-regions",
+        "size": null
+      },
+      {
+        "label": "sparse",
+        "slug": "009-sparse",
+        "size": null
+      },
+      {
+        "label": "dense",
+        "slug": "010-dense",
+        "size": null
+      },
+      {
+        "label": "custom markers",
+        "slug": "011-custom-markers",
+        "size": null
+      },
+      {
+        "label": "custom colors",
+        "slug": "012-custom-colors",
+        "size": null
+      },
+      {
+        "label": "single marker",
+        "slug": "013-single-marker",
+        "size": null
+      }
+    ]
+  },
+  "git/branch-graph": {
+    "name": "Branch Graph",
+    "description": "A commit rail where feature branches fork off, run their own commits, and merge back, with pulses traveling every path.",
+    "kind": "block",
+    "category": "git",
+    "file": "branch-graph",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "single branch",
+        "slug": "002-single-branch",
+        "size": null
+      },
+      {
+        "label": "release flow · custom copy",
+        "slug": "003-release-flow-custom-copy",
+        "size": null
+      },
+      {
+        "label": "release flow · isometric",
+        "slug": "004-release-flow-isometric",
+        "size": null
+      },
+      {
+        "label": "short history",
+        "slug": "005-short-history",
+        "size": null
+      },
+      {
+        "label": "line pulse",
+        "slug": "006-line-pulse",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "007-hover",
+        "size": null
+      }
+    ]
+  },
+  "git/diff": {
+    "name": "Diff",
+    "description": "A file diff with added and removed lines, in unified or side by side view, swept line by line as the change counters climb.",
+    "kind": "block",
+    "category": "git",
+    "file": "diff",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "006-custom-copy",
+        "size": null
+      },
+      {
+        "label": "additions only",
+        "slug": "007-additions-only",
+        "size": null
+      },
+      {
+        "label": "split",
+        "slug": "008-split",
+        "size": null
+      },
+      {
+        "label": "split · isometric",
+        "slug": "009-split-isometric",
+        "size": null
+      },
+      {
+        "label": "no line numbers",
+        "slug": "010-no-line-numbers",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "011-hover",
+        "size": null
+      }
+    ]
+  },
+  "git/pull-request": {
+    "name": "Pull Request",
+    "description": "A pull request card whose CI checks run one by one, then settle into an approval and a merge button that lights up.",
+    "kind": "block",
+    "category": "git",
+    "file": "pull-request",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "006-custom-copy",
+        "size": null
+      },
+      {
+        "label": "avatar image",
+        "slug": "007-avatar-image",
+        "size": null
+      },
+      {
+        "label": "failing",
+        "slug": "008-failing",
+        "size": null
+      },
+      {
+        "label": "failing · custom copy",
+        "slug": "009-failing-custom-copy",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "010-hover",
+        "size": null
+      }
+    ]
+  },
+  "images/carousel": {
+    "name": "Carousel",
+    "description": "An image carousel with slides and navigation controls.",
+    "kind": "block",
+    "category": "images",
+    "file": "carousel",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom slides · count",
+        "slug": "006-custom-slides-count",
+        "size": null
+      },
+      {
+        "label": "no arrows",
+        "slug": "007-no-arrows",
+        "size": null
+      },
+      {
+        "label": "active: first",
+        "slug": "008-active-first",
+        "size": null
+      },
+      {
+        "label": "active: last",
+        "slug": "009-active-last",
+        "size": null
+      },
+      {
+        "label": "real images",
+        "slug": "010-real-images",
+        "size": null
+      },
+      {
+        "label": "isometric · real images",
+        "slug": "011-isometric-real-images",
+        "size": null
+      }
+    ]
+  },
+  "images/gallery": {
+    "name": "Gallery",
+    "description": "A responsive image gallery grid with hover states.",
+    "kind": "block",
+    "category": "images",
+    "file": "gallery",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "006-custom-copy",
+        "size": null
+      },
+      {
+        "label": "landscapes only",
+        "slug": "007-landscapes-only",
+        "size": null
+      },
+      {
+        "label": "real images",
+        "slug": "008-real-images",
+        "size": null
+      },
+      {
+        "label": "isometric · real images",
+        "slug": "009-isometric-real-images",
+        "size": null
+      }
+    ]
+  },
+  "integrations/hub": {
+    "name": "Hub",
+    "description": "A central app connected to surrounding integration logos.",
+    "kind": "block",
+    "category": "integrations",
+    "file": "hub",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "002-hover",
+        "size": null
+      },
+      {
+        "label": "spin",
+        "slug": "003-spin",
+        "size": null
+      },
+      {
+        "label": "spin · hover",
+        "slug": "004-spin-hover",
+        "size": null
+      },
+      {
+        "label": "spin · isometric",
+        "slug": "005-spin-isometric",
+        "size": null
+      },
+      {
+        "label": "beam",
+        "slug": "006-beam",
+        "size": null
+      },
+      {
+        "label": "beam · hover",
+        "slug": "007-beam-hover",
+        "size": null
+      },
+      {
+        "label": "beam · isometric",
+        "slug": "008-beam-isometric",
+        "size": null
+      },
+      {
+        "label": "compact",
+        "slug": "009-compact",
+        "size": null
+      },
+      {
+        "label": "wide",
+        "slug": "010-wide",
+        "size": null
+      },
+      {
+        "label": "beam · wide",
+        "slug": "011-beam-wide",
+        "size": null
+      },
+      {
+        "label": "synced · custom label",
+        "slug": "012-synced-custom-label",
+        "size": null
+      },
+      {
+        "label": "no label",
+        "slug": "013-no-label",
+        "size": null
+      },
+      {
+        "label": "custom icons",
+        "slug": "014-custom-icons",
+        "size": null
+      },
+      {
+        "label": "brand logos",
+        "slug": "015-brand-logos",
+        "size": null
+      }
+    ]
+  },
+  "integrations/logo-orbit": {
+    "name": "Logo Orbit",
+    "description": "Integration logos orbiting a central brand mark.",
+    "kind": "block",
+    "category": "integrations",
+    "file": "logo-orbit",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover · orbit",
+        "slug": "001-hover-orbit",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "orbit",
+        "slug": "003-orbit",
+        "size": null
+      },
+      {
+        "label": "orbit · isometric",
+        "slug": "004-orbit-isometric",
+        "size": null
+      },
+      {
+        "label": "hidden logo",
+        "slug": "005-hidden-logo",
+        "size": null
+      },
+      {
+        "label": "custom logo",
+        "slug": "006-custom-logo",
+        "size": null
+      },
+      {
+        "label": "inner ring",
+        "slug": "007-inner-ring",
+        "size": null
+      },
+      {
+        "label": "orbit · inner ring",
+        "slug": "008-orbit-inner-ring",
+        "size": null
+      },
+      {
+        "label": "custom radius",
+        "slug": "009-custom-radius",
+        "size": null
+      },
+      {
+        "label": "custom radius · orbit · isometric",
+        "slug": "010-custom-radius-orbit-isometric",
+        "size": null
+      }
+    ]
+  },
+  "integrations/logo-reel": {
+    "name": "Logo Reel",
+    "description": "A row of integration logos sliding one by one into a center spotlight, blurring out as they pass.",
+    "kind": "block",
+    "category": "integrations",
+    "file": "logo-reel",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "custom logos",
+        "slug": "001-custom-logos",
+        "size": null
+      },
+      {
+        "label": "direction right",
+        "slug": "002-direction-right",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "003-hover",
+        "size": null
+      },
+      {
+        "label": "fast interval",
+        "slug": "004-fast-interval",
+        "size": null
+      },
+      {
+        "label": "slow interval",
+        "slug": "005-slow-interval",
+        "size": null
+      },
+      {
+        "label": "no glow",
+        "slug": "006-no-glow",
+        "size": null
+      },
+      {
+        "label": "three logos · direction right",
+        "slug": "007-three-logos-direction-right",
+        "size": null
+      }
+    ]
+  },
+  "keyboard/half": {
+    "name": "Half",
+    "description": "A half keyboard showing a key combination press.",
+    "kind": "block",
+    "category": "keyboard",
+    "file": "half",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "windows layout",
+        "slug": "002-windows-layout",
+        "size": null
+      },
+      {
+        "label": "⌘ + S · shortcut",
+        "slug": "003-s-shortcut",
+        "size": null
+      },
+      {
+        "label": "⌘ + Shift + A · shortcut",
+        "slug": "004-shift-a-shortcut",
+        "size": null
+      },
+      {
+        "label": "⌘ + S · hover",
+        "slug": "005-s-hover",
+        "size": null
+      },
+      {
+        "label": "⌘ + C · isometric",
+        "slug": "006-c-isometric",
+        "size": null
+      },
+      {
+        "label": "Ctrl + Z · windows",
+        "slug": "007-ctrl-z-windows",
+        "size": null
+      },
+      {
+        "label": "Ctrl + C · windows · isometric",
+        "slug": "008-ctrl-c-windows-isometric",
+        "size": null
+      }
+    ]
+  },
+  "keyboard/shortcut": {
+    "name": "Shortcut",
+    "description": "A keyboard shortcut rendered as labeled keycaps.",
+    "kind": "block",
+    "category": "keyboard",
+    "file": "shortcut",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": "sm"
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": "sm"
+      },
+      {
+        "label": "Ctrl + Shift + P · custom keys",
+        "slug": "002-ctrl-shift-p-custom-keys",
+        "size": "sm"
+      },
+      {
+        "label": "⌘ + Shift + F · custom keys",
+        "slug": "003-shift-f-custom-keys",
+        "size": "sm"
+      },
+      {
+        "label": "Ctrl + Z · custom keys",
+        "slug": "004-ctrl-z-custom-keys",
+        "size": "sm"
+      },
+      {
+        "label": "Ctrl + Z · custom keys · isometric",
+        "slug": "005-ctrl-z-custom-keys-isometric",
+        "size": "sm"
+      }
+    ]
+  },
+  "media/audio-waveform": {
+    "name": "Audio Waveform",
+    "description": "An audio player with an animated waveform and controls.",
+    "kind": "block",
+    "category": "media",
+    "file": "audio-waveform",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "004-custom-copy",
+        "size": null
+      },
+      {
+        "label": "pause state",
+        "slug": "005-pause-state",
+        "size": null
+      },
+      {
+        "label": "custom meta",
+        "slug": "006-custom-meta",
+        "size": null
+      },
+      {
+        "label": "voice note · custom icon · custom meta",
+        "slug": "007-voice-note-custom-icon-custom-meta",
+        "size": null
+      },
+      {
+        "label": "podcast · pause · isometric",
+        "slug": "008-podcast-pause-isometric",
+        "size": null
+      },
+      {
+        "label": "bars · 26",
+        "slug": "009-bars-26",
+        "size": null
+      },
+      {
+        "label": "bars · 42",
+        "slug": "010-bars-42",
+        "size": null
+      },
+      {
+        "label": "bars · 56",
+        "slug": "011-bars-56",
+        "size": null
+      }
+    ]
+  },
+  "media/video-player": {
+    "name": "Video Player",
+    "description": "A video player frame with controls and a progress bar.",
+    "kind": "block",
+    "category": "media",
+    "file": "video-player",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "004-custom-copy",
+        "size": null
+      },
+      {
+        "label": "pause state",
+        "slug": "005-pause-state",
+        "size": null
+      },
+      {
+        "label": "no play button",
+        "slug": "006-no-play-button",
+        "size": null
+      },
+      {
+        "label": "no info chip",
+        "slug": "007-no-info-chip",
+        "size": null
+      },
+      {
+        "label": "minimal · no chrome",
+        "slug": "008-minimal-no-chrome",
+        "size": null
+      },
+      {
+        "label": "variant · landscape",
+        "slug": "009-variant-landscape",
+        "size": null
+      },
+      {
+        "label": "variant · tutorial",
+        "slug": "010-variant-tutorial",
+        "size": null
+      },
+      {
+        "label": "variant · podcast",
+        "slug": "011-variant-podcast",
+        "size": null
+      },
+      {
+        "label": "variant · livestream",
+        "slug": "012-variant-livestream",
+        "size": null
+      },
+      {
+        "label": "real image",
+        "slug": "013-real-image",
+        "size": null
+      },
+      {
+        "label": "isometric · real image",
+        "slug": "014-isometric-real-image",
+        "size": null
+      }
+    ]
+  },
+  "metrics/comparison": {
+    "name": "Comparison",
+    "description": "A before and after metric comparison with deltas.",
+    "kind": "block",
+    "category": "metrics",
+    "file": "comparison",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "speed · custom copy",
+        "slug": "004-speed-custom-copy",
+        "size": null
+      },
+      {
+        "label": "cost · custom copy",
+        "slug": "005-cost-custom-copy",
+        "size": null
+      },
+      {
+        "label": "latency · custom copy",
+        "slug": "006-latency-custom-copy",
+        "size": null
+      },
+      {
+        "label": "churn · custom copy",
+        "slug": "007-churn-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "metrics/stat-card": {
+    "name": "Stat Card",
+    "description": "A single stat card with a value, label, and trend.",
+    "kind": "block",
+    "category": "metrics",
+    "file": "stat-card",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "users · custom copy",
+        "slug": "006-users-custom-copy",
+        "size": null
+      },
+      {
+        "label": "orders · custom copy",
+        "slug": "007-orders-custom-copy",
+        "size": null
+      },
+      {
+        "label": "pageviews · custom copy",
+        "slug": "008-pageviews-custom-copy",
+        "size": null
+      },
+      {
+        "label": "conversion · custom copy",
+        "slug": "009-conversion-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "metrics/trend": {
+    "name": "Trend",
+    "description": "A metric with a trend line and period over period change.",
+    "kind": "block",
+    "category": "metrics",
+    "file": "trend",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "stacked",
+        "slug": "004-stacked",
+        "size": null
+      },
+      {
+        "label": "isometric · stacked",
+        "slug": "005-isometric-stacked",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "006-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "007-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "conversions · primary · custom copy",
+        "slug": "008-conversions-primary-custom-copy",
+        "size": null
+      },
+      {
+        "label": "revenue · up · custom copy",
+        "slug": "009-revenue-up-custom-copy",
+        "size": null
+      },
+      {
+        "label": "bounce · down · custom copy",
+        "slug": "010-bounce-down-custom-copy",
+        "size": null
+      },
+      {
+        "label": "errors · warning · custom copy",
+        "slug": "011-errors-warning-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "notifications/bell": {
+    "name": "Bell",
+    "description": "A notification bell with an unread badge and pop.",
+    "kind": "block",
+    "category": "notifications",
+    "file": "bell",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": "sm"
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": "sm"
+      },
+      {
+        "label": "count={0}",
+        "slug": "002-count-0",
+        "size": "sm"
+      },
+      {
+        "label": "count={12}",
+        "slug": "003-count-12",
+        "size": "sm"
+      },
+      {
+        "label": "count={150}",
+        "slug": "004-count-150",
+        "size": "sm"
+      },
+      {
+        "label": "fadeOut",
+        "slug": "005-fadeout",
+        "size": "sm"
+      },
+      {
+        "label": "isometric",
+        "slug": "006-isometric",
+        "size": "sm"
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "007-isometric-fadeout",
+        "size": "sm"
+      }
+    ]
+  },
+  "notifications/list": {
+    "name": "List",
+    "description": "A list of notifications with icons and timestamps.",
+    "kind": "block",
+    "category": "notifications",
+    "file": "list",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "notifications/toast": {
+    "name": "Toast",
+    "description": "An animated toast notification that slides in.",
+    "kind": "block",
+    "category": "notifications",
+    "file": "toast",
+    "variants": [
+      {
+        "label": "success",
+        "slug": "000-success",
+        "size": null
+      },
+      {
+        "label": "warning",
+        "slug": "001-warning",
+        "size": null
+      },
+      {
+        "label": "info",
+        "slug": "002-info",
+        "size": null
+      },
+      {
+        "label": "success · isometric",
+        "slug": "003-success-isometric",
+        "size": null
+      },
+      {
+        "label": "warning · isometric",
+        "slug": "004-warning-isometric",
+        "size": null
+      },
+      {
+        "label": "info · isometric",
+        "slug": "005-info-isometric",
+        "size": null
+      },
+      {
+        "label": "success · custom copy",
+        "slug": "006-success-custom-copy",
+        "size": null
+      },
+      {
+        "label": "warning · isometric · custom copy",
+        "slug": "007-warning-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "008-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "009-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "payments/checkout": {
+    "name": "Checkout",
+    "description": "A checkout summary with line items and a pay button.",
+    "kind": "block",
+    "category": "payments",
+    "file": "checkout",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom amount",
+        "slug": "006-custom-amount",
+        "size": null
+      },
+      {
+        "label": "card",
+        "slug": "007-card",
+        "size": null
+      },
+      {
+        "label": "card · fadeOut",
+        "slug": "008-card-fadeout",
+        "size": null
+      },
+      {
+        "label": "card · isometric",
+        "slug": "009-card-isometric",
+        "size": null
+      },
+      {
+        "label": "card · isometric · fadeOut",
+        "slug": "010-card-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "card · no gradient",
+        "slug": "011-card-no-gradient",
+        "size": null
+      },
+      {
+        "label": "card · isometric · no gradient",
+        "slug": "012-card-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "card · custom content",
+        "slug": "013-card-custom-content",
+        "size": null
+      }
+    ]
+  },
+  "payments/credit-card": {
+    "name": "Credit Card",
+    "description": "A credit card visual with brand, number, and chip.",
+    "kind": "block",
+    "category": "payments",
+    "file": "credit-card",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "stacked",
+        "slug": "001-stacked",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · stacked",
+        "slug": "003-isometric-stacked",
+        "size": null
+      },
+      {
+        "label": "custom content",
+        "slug": "004-custom-content",
+        "size": null
+      },
+      {
+        "label": "alternate custom content",
+        "slug": "005-alternate-custom-content",
+        "size": null
+      },
+      {
+        "label": "flipped",
+        "slug": "006-flipped",
+        "size": null
+      },
+      {
+        "label": "stacked · flipped",
+        "slug": "007-stacked-flipped",
+        "size": null
+      },
+      {
+        "label": "isometric · flipped",
+        "slug": "008-isometric-flipped",
+        "size": null
+      },
+      {
+        "label": "isometric · stacked · flipped",
+        "slug": "009-isometric-stacked-flipped",
+        "size": null
+      }
+    ]
+  },
+  "payments/usage-meter": {
+    "name": "Usage Meter",
+    "description": "A metered billing summary with a usage bar against quota, itemized metered charges, and an estimated total.",
+    "kind": "block",
+    "category": "payments",
+    "file": "usage-meter",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "near limit · custom copy",
+        "slug": "006-near-limit-custom-copy",
+        "size": null
+      }
+    ]
+  },
+  "search/command-palette": {
+    "name": "Command Palette",
+    "description": "A command palette with a typed query, grouped commands, keyboard hints, and a selection that walks the list.",
+    "kind": "block",
+    "category": "search",
+    "file": "command-palette",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "support · custom copy",
+        "slug": "006-support-custom-copy",
+        "size": null
+      },
+      {
+        "label": "single group",
+        "slug": "007-single-group",
+        "size": null
+      },
+      {
+        "label": "no caret",
+        "slug": "008-no-caret",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "009-hover",
+        "size": null
+      }
+    ]
+  },
+  "search/results": {
+    "name": "Results",
+    "description": "A search results panel with filter chips, a result count, and matched terms highlighted in place.",
+    "kind": "block",
+    "category": "search",
+    "file": "results",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "people · custom copy",
+        "slug": "006-people-custom-copy",
+        "size": null
+      },
+      {
+        "label": "docs · isometric",
+        "slug": "007-docs-isometric",
+        "size": null
+      },
+      {
+        "label": "active filter",
+        "slug": "008-active-filter",
+        "size": null
+      }
+    ]
+  },
+  "search/semantic": {
+    "name": "Semantic",
+    "description": "A query landing in an embedding space, where a radius sweep lights up its nearest matches with similarity scores.",
+    "kind": "block",
+    "category": "search",
+    "file": "semantic",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "002-hover",
+        "size": null
+      },
+      {
+        "label": "support · custom copy",
+        "slug": "003-support-custom-copy",
+        "size": null
+      },
+      {
+        "label": "docs · isometric",
+        "slug": "004-docs-isometric",
+        "size": null
+      },
+      {
+        "label": "two matches",
+        "slug": "005-two-matches",
+        "size": null
+      },
+      {
+        "label": "one match",
+        "slug": "006-one-match",
+        "size": null
+      }
+    ]
+  },
+  "sections/auth": {
+    "name": "Auth",
+    "description": "A login section with social buttons, fields, and a sign-in button.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "auth",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/backgrounds": {
+    "name": "Backgrounds",
+    "description": "A section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "backgrounds",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "002-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "003-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "004-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "005-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "006-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "007-custom-copy",
+        "size": null
+      },
+      {
+        "label": "grid first · isometric",
+        "slug": "008-grid-first-isometric",
+        "size": null
+      },
+      {
+        "label": "fast cycle",
+        "slug": "009-fast-cycle",
+        "size": null
+      },
+      {
+        "label": "rays only · no picker",
+        "slug": "010-rays-only-no-picker",
+        "size": null
+      },
+      {
+        "label": "no picker",
+        "slug": "011-no-picker",
+        "size": null
+      }
+    ]
+  },
+  "sections/bento": {
+    "name": "Bento",
+    "description": "A bento grid section with a featured tile and mixed-size cards.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "bento",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/blog": {
+    "name": "Blog",
+    "description": "A blog index section with article cards and metadata.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "blog",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/blog-post": {
+    "name": "Blog Post",
+    "description": "A blog post layout with title, meta, and content.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "blog-post",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/comments": {
+    "name": "Comments",
+    "description": "A comments thread with avatars, replies, and votes.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "comments",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · custom count",
+        "slug": "006-custom-title-custom-count",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/components": {
+    "name": "Components",
+    "description": "A showcase grid of UI components and building blocks.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "components",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/contact": {
+    "name": "Contact",
+    "description": "A contact section with a form and details.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "contact",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/cta": {
+    "name": "CTA",
+    "description": "A call to action section with heading and buttons.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "cta",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/error": {
+    "name": "Error",
+    "description": "An error state section with code, message, and action.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "error",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/faq": {
+    "name": "FAQ",
+    "description": "A frequently asked questions section with expandable items.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "faq",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/features": {
+    "name": "Features",
+    "description": "A features section with icons, titles, and descriptions.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "features",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/footers": {
+    "name": "Footers",
+    "description": "A marketing footer with brand, links, and socials.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "footers",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/headers": {
+    "name": "Headers",
+    "description": "A marketing header with navigation and actions.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "headers",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/hero": {
+    "name": "Hero",
+    "description": "A marketing hero section with heading, copy, and buttons.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "hero",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/logos": {
+    "name": "Logos",
+    "description": "A logo cloud of customer or partner brands.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "logos",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/newsletter": {
+    "name": "Newsletter",
+    "description": "A newsletter signup section with an email input.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "newsletter",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/pricing": {
+    "name": "Pricing",
+    "description": "A pricing section with plan cards and features.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "pricing",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/process": {
+    "name": "Process",
+    "description": "A step by step process section with numbered stages.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "process",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/stats": {
+    "name": "Stats",
+    "description": "A stats section highlighting key numbers.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "stats",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/team": {
+    "name": "Team",
+    "description": "A team section with member cards and roles.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "team",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom title · default",
+        "slug": "006-custom-title-default",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric",
+        "slug": "007-custom-title-isometric",
+        "size": null
+      },
+      {
+        "label": "custom title · isometric · no gradient",
+        "slug": "008-custom-title-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/testimonials": {
+    "name": "Testimonials",
+    "description": "A testimonials section with quotes and authors.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "testimonials",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom quote · default",
+        "slug": "006-custom-quote-default",
+        "size": null
+      },
+      {
+        "label": "custom quote · isometric",
+        "slug": "007-custom-quote-isometric",
+        "size": null
+      },
+      {
+        "label": "custom quote · isometric · no gradient",
+        "slug": "008-custom-quote-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "sections/timeline": {
+    "name": "Timeline",
+    "description": "A timeline section of milestones and dates.",
+    "kind": "layout",
+    "category": "sections",
+    "file": "timeline",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      }
+    ]
+  },
+  "security/fingerprint": {
+    "name": "Fingerprint",
+    "description": "An animated fingerprint scan with a success state.",
+    "kind": "block",
+    "category": "security",
+    "file": "fingerprint",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "status=\"Authenticated\"",
+        "slug": "002-status-authenticated",
+        "size": null
+      },
+      {
+        "label": "no status",
+        "slug": "003-no-status",
+        "size": null
+      },
+      {
+        "label": "state=\"scanning\"",
+        "slug": "004-state-scanning",
+        "size": null
+      },
+      {
+        "label": "isometric · state=\"scanning\"",
+        "slug": "005-isometric-state-scanning",
+        "size": null
+      },
+      {
+        "label": "state=\"error\"",
+        "slug": "006-state-error",
+        "size": null
+      },
+      {
+        "label": "isometric · state=\"error\"",
+        "slug": "007-isometric-state-error",
+        "size": null
+      }
+    ]
+  },
+  "security/lock": {
+    "name": "Lock",
+    "description": "A lock visual conveying security and access control.",
+    "kind": "block",
+    "category": "security",
+    "file": "lock",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "digits={4}",
+        "slug": "002-digits-4",
+        "size": null
+      },
+      {
+        "label": "label=\"Secure\"",
+        "slug": "003-label-secure",
+        "size": null
+      },
+      {
+        "label": "state=\"unlocked\"",
+        "slug": "004-state-unlocked",
+        "size": null
+      },
+      {
+        "label": "isometric · state=\"unlocked\"",
+        "slug": "005-isometric-state-unlocked",
+        "size": null
+      },
+      {
+        "label": "state=\"error\"",
+        "slug": "006-state-error",
+        "size": null
+      },
+      {
+        "label": "isometric · state=\"error\"",
+        "slug": "007-isometric-state-error",
+        "size": null
+      }
+    ]
+  },
+  "security/shield": {
+    "name": "Shield",
+    "description": "A shield visual conveying protection and trust.",
+    "kind": "block",
+    "category": "security",
+    "file": "shield",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "label=\"End-to-end\"",
+        "slug": "002-label-end-to-end",
+        "size": null
+      },
+      {
+        "label": "no label",
+        "slug": "003-no-label",
+        "size": null
+      },
+      {
+        "label": "state=\"warning\"",
+        "slug": "004-state-warning",
+        "size": null
+      },
+      {
+        "label": "isometric · state=\"warning\"",
+        "slug": "005-isometric-state-warning",
+        "size": null
+      },
+      {
+        "label": "state=\"breached\"",
+        "slug": "006-state-breached",
+        "size": null
+      },
+      {
+        "label": "isometric · state=\"breached\"",
+        "slug": "007-isometric-state-breached",
+        "size": null
+      }
+    ]
+  },
+  "states/empty": {
+    "name": "Empty",
+    "description": "An empty grid of dashed placeholder slots where an add action ripples out and one slot briefly materializes before dissolving back.",
+    "kind": "block",
+    "category": "states",
+    "file": "empty",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "two slots",
+        "slug": "006-two-slots",
+        "size": null
+      },
+      {
+        "label": "three slots",
+        "slug": "007-three-slots",
+        "size": null
+      },
+      {
+        "label": "six slots · hover",
+        "slug": "008-six-slots-hover",
+        "size": null
+      }
+    ]
+  },
+  "states/error": {
+    "name": "Error",
+    "description": "A request pulse traveling into a service card and breaking it, cascading its service tiles to a fault state under an alert badge.",
+    "kind": "block",
+    "category": "states",
+    "file": "error",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no glow",
+        "slug": "002-default-no-glow",
+        "size": null
+      },
+      {
+        "label": "isometric · no glow",
+        "slug": "003-isometric-no-glow",
+        "size": null
+      },
+      {
+        "label": "line pulse",
+        "slug": "004-line-pulse",
+        "size": null
+      },
+      {
+        "label": "line pulse · isometric",
+        "slug": "005-line-pulse-isometric",
+        "size": null
+      },
+      {
+        "label": "two services",
+        "slug": "006-two-services",
+        "size": null
+      },
+      {
+        "label": "five services · isometric",
+        "slug": "007-five-services-isometric",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "008-hover",
+        "size": null
+      },
+      {
+        "label": "hover · isometric",
+        "slug": "009-hover-isometric",
+        "size": null
+      }
+    ]
+  },
+  "states/maintenance": {
+    "name": "Maintenance",
+    "description": "A stack of service tiles with one lifted out and being worked on, hovering over its empty slot while a progress sweep runs underneath.",
+    "kind": "block",
+    "category": "states",
+    "file": "maintenance",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no glow",
+        "slug": "002-default-no-glow",
+        "size": null
+      },
+      {
+        "label": "isometric · no glow",
+        "slug": "003-isometric-no-glow",
+        "size": null
+      },
+      {
+        "label": "two tiles",
+        "slug": "004-two-tiles",
+        "size": null
+      },
+      {
+        "label": "four tiles · isometric",
+        "slug": "005-four-tiles-isometric",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "006-hover",
+        "size": null
+      },
+      {
+        "label": "hover · isometric",
+        "slug": "007-hover-isometric",
+        "size": null
+      }
+    ]
+  },
+  "states/not-found": {
+    "name": "Not Found",
+    "description": "A request spike traveling a route into a barrier at a large status code, ringing out concentric pulses, with the missing page left as a dashed ghost tile.",
+    "kind": "block",
+    "category": "states",
+    "file": "not-found",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no glow",
+        "slug": "002-default-no-glow",
+        "size": null
+      },
+      {
+        "label": "isometric · no glow",
+        "slug": "003-isometric-no-glow",
+        "size": null
+      },
+      {
+        "label": "line pulse",
+        "slug": "004-line-pulse",
+        "size": null
+      },
+      {
+        "label": "line pulse · isometric",
+        "slug": "005-line-pulse-isometric",
+        "size": null
+      },
+      {
+        "label": "410",
+        "slug": "006-410",
+        "size": null
+      },
+      {
+        "label": "410 · isometric",
+        "slug": "007-410-isometric",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "008-hover",
+        "size": null
+      },
+      {
+        "label": "hover · isometric",
+        "slug": "009-hover-isometric",
+        "size": null
+      }
+    ]
+  },
+  "status/health-check": {
+    "name": "Health Check",
+    "description": "A service health check with status indicators.",
+    "kind": "block",
+    "category": "status",
+    "file": "health-check",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "e-commerce · partial degradation",
+        "slug": "006-e-commerce-partial-degradation",
+        "size": null
+      },
+      {
+        "label": "ai stack · outage",
+        "slug": "007-ai-stack-outage",
+        "size": null
+      },
+      {
+        "label": "minimal stack · all operational",
+        "slug": "008-minimal-stack-all-operational",
+        "size": null
+      }
+    ]
+  },
+  "status/resource-monitor": {
+    "name": "Resource Monitor",
+    "description": "A live resource monitor streaming CPU and memory usage across a gridded plot, with a legend showing the current reading for each series.",
+    "kind": "block",
+    "category": "status",
+    "file": "resource-monitor",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "hover",
+        "slug": "001-hover",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "002-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "003-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "004-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "005-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "006-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "custom copy",
+        "slug": "007-custom-copy",
+        "size": null
+      },
+      {
+        "label": "single series · isometric",
+        "slug": "008-single-series-isometric",
+        "size": null
+      },
+      {
+        "label": "fast · 96 samples",
+        "slug": "009-fast-96-samples",
+        "size": null
+      },
+      {
+        "label": "no grid",
+        "slug": "010-no-grid",
+        "size": null
+      },
+      {
+        "label": "no axis",
+        "slug": "011-no-axis",
+        "size": null
+      }
+    ]
+  },
+  "status/uptime-bar": {
+    "name": "Uptime Bar",
+    "description": "An uptime bar showing daily operational status.",
+    "kind": "block",
+    "category": "status",
+    "file": "uptime-bar",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "001-isometric",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "002-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "003-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "degraded · custom copy",
+        "slug": "004-degraded-custom-copy",
+        "size": null
+      },
+      {
+        "label": "outage · isometric",
+        "slug": "005-outage-isometric",
+        "size": null
+      },
+      {
+        "label": "45 days · clean",
+        "slug": "006-45-days-clean",
+        "size": null
+      },
+      {
+        "label": "30 days · incident",
+        "slug": "007-30-days-incident",
+        "size": null
+      },
+      {
+        "label": "no legend",
+        "slug": "008-no-legend",
+        "size": null
+      }
+    ]
+  },
+  "tasks/checklist": {
+    "name": "Checklist",
+    "description": "A checklist with items completing one by one.",
+    "kind": "block",
+    "category": "tasks",
+    "file": "checklist",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "all done · custom items",
+        "slug": "006-all-done-custom-items",
+        "size": null
+      },
+      {
+        "label": "all pending · custom items",
+        "slug": "007-all-pending-custom-items",
+        "size": null
+      }
+    ]
+  },
+  "tasks/kanban": {
+    "name": "Kanban",
+    "description": "A kanban board with columns and draggable cards.",
+    "kind": "block",
+    "category": "tasks",
+    "file": "kanban",
+    "variants": [
+      {
+        "label": "default",
+        "slug": "000-default",
+        "size": null
+      },
+      {
+        "label": "fadeOut",
+        "slug": "001-fadeout",
+        "size": null
+      },
+      {
+        "label": "isometric",
+        "slug": "002-isometric",
+        "size": null
+      },
+      {
+        "label": "isometric · fadeOut",
+        "slug": "003-isometric-fadeout",
+        "size": null
+      },
+      {
+        "label": "default · no gradient",
+        "slug": "004-default-no-gradient",
+        "size": null
+      },
+      {
+        "label": "isometric · no gradient",
+        "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "content pipeline · custom",
+        "slug": "006-content-pipeline-custom",
+        "size": null
+      },
+      {
+        "label": "hiring pipeline · custom",
+        "slug": "007-hiring-pipeline-custom",
+        "size": null
+      }
+    ]
+  }
+}

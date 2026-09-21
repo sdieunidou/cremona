@@ -1,0 +1,90 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom data · products": {
+    "fileName": "products.csv",
+    "rowCount": 18400,
+    "mappings": [
+      {
+        "source": "SKU",
+        "target": "sku"
+      },
+      {
+        "source": "Product Title",
+        "target": "name"
+      },
+      {
+        "source": "Unit Price",
+        "target": "price"
+      },
+      {
+        "source": "Legacy ID"
+      }
+    ]
+  },
+  "custom data · contacts · isometric": {
+    "isometric": true,
+    "gradient": false,
+    "fileName": "contacts.xlsx",
+    "rowCount": 640,
+    "unit": "contacts ready",
+    "sourceLabel": "Sheet column",
+    "targetLabel": "Property",
+    "actionLabel": "Sync",
+    "mappings": [
+      {
+        "source": "Work Email",
+        "target": "email"
+      },
+      {
+        "source": "First Name",
+        "target": "first_name"
+      },
+      {
+        "source": "Last Name",
+        "target": "last_name"
+      },
+      {
+        "source": "Phone",
+        "target": "phone"
+      },
+      {
+        "source": "Notes"
+      }
+    ]
+  },
+  "all mapped": {
+    "fileName": "invoices.csv",
+    "rowCount": 912,
+    "mappings": [
+      {
+        "source": "Invoice No",
+        "target": "number"
+      },
+      {
+        "source": "Billed To",
+        "target": "customer"
+      },
+      {
+        "source": "Amount Due",
+        "target": "amount"
+      }
+    ]
+  }
+}

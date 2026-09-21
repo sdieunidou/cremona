@@ -1,0 +1,35 @@
+{
+  "name": "@cremona/blocks",
+  "version": "0.1.0",
+  "description": "Cremona visual blocks \u2014 source of truth (catalog, React implementations, Stimulus templates, golden references).",
+  "type": "module",
+  "main": "./src/registry.ts",
+  "types": "./src/registry.ts",
+  "exports": {
+    ".": "./src/registry.ts",
+    "./catalog.json": "./catalog.json",
+    "./src/*": "./src/*"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@cremona/core": "workspace:*",
+    "@cremona/react": "workspace:*",
+    "lucide-react": "^1.47.0",
+    "motion": "^12.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "happy-dom": "^20.14.5",
+    "htmlparser2": "^12.0.0",
+    "react": "^19.0.0"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "category": "Browser",
+  "file": "tabs",
+  "name": "Tabs",
+  "description": "A browser window with switching tabs and an address bar.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "browser/tabs.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "tabs-mFkqZgKT.js",
+    "components": [
+      "tabs-B7IlPAHC.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "002-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "003-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "004-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "005-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "006-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom tabs · custom url",
+      "slug": "007-custom-tabs-custom-url",
+      "size": null,
+      "propsRaw": "{tabs:[`Inbox`,`Sent`,`Drafts`],url:`mail.acme.io`}"
+    }
+  ]
+}

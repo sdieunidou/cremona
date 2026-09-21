@@ -1,0 +1,72 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "with cc": {
+    "title": "Reply",
+    "subject": "Re: launch checklist",
+    "to": [
+      {
+        "initials": "AP",
+        "email": "alex@example.dev"
+      },
+      {
+        "initials": "ML",
+        "email": "mia@example.dev"
+      }
+    ],
+    "cc": [
+      {
+        "initials": "BN",
+        "email": "ben@example.dev"
+      }
+    ]
+  },
+  "team broadcast · custom": {
+    "title": "New announcement",
+    "subject": "December all-hands recap",
+    "to": [
+      {
+        "initials": "EN",
+        "email": "engineering@example.dev"
+      },
+      {
+        "initials": "DS",
+        "email": "design@example.dev"
+      }
+    ],
+    "cc": [
+      {
+        "initials": "LD",
+        "email": "leads@example.dev"
+      }
+    ]
+  },
+  "draft saved · meta": {
+    "title": "Reply",
+    "meta": "Draft saved · 2m ago",
+    "subject": "Re: contract revisions",
+    "sendLabel": "Schedule send",
+    "to": [
+      {
+        "initials": "JL",
+        "email": "jordan@example.dev"
+      }
+    ]
+  }
+}

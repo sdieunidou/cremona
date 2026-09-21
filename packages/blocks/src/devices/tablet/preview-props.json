@@ -1,0 +1,49 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "home": {
+    "variant": "home"
+  },
+  "home · isometric": {
+    "variant": "home",
+    "isometric": true
+  },
+  "lockscreen": {
+    "variant": "lockscreen"
+  },
+  "lockscreen · image": {
+    "variant": "lockscreen",
+    "image": "../../media/placeholders/photo-01.jpg"
+  },
+  "lockscreen · isometric": {
+    "variant": "lockscreen",
+    "isometric": true
+  },
+  "screenshot": {
+    "variant": "screenshot",
+    "image": "../../media/placeholders/photo-01.jpg"
+  },
+  "lockscreen · custom copy": {
+    "variant": "lockscreen",
+    "image": "../../media/placeholders/photo-01.jpg",
+    "time": "14:08",
+    "date": "Friday, June 6",
+    "notifications": []
+  }
+}

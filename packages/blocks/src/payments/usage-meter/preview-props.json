@@ -1,0 +1,48 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "near limit · custom copy": {
+    "meterLabel": "Seats",
+    "meterUsage": "19 / 20",
+    "meterCaption": "95% of included seats used",
+    "usedRatio": 0.95,
+    "total": "$1,140.00",
+    "trend": "+8%",
+    "items": [
+      {
+        "label": "Team seats",
+        "detail": "20 members",
+        "amount": "$980.00",
+        "color": "bg-chart-1"
+      },
+      {
+        "label": "Overage",
+        "detail": "3 guests",
+        "amount": "$120.00",
+        "color": "bg-chart-3"
+      },
+      {
+        "label": "Add-ons",
+        "detail": "SSO, audit log",
+        "amount": "$40.00",
+        "color": "bg-chart-4"
+      }
+    ]
+  }
+}

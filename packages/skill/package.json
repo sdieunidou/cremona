@@ -1,0 +1,11 @@
+{
+  "name": "@cremona/skill",
+  "version": "0.1.0",
+  "description": "Cremona skill — lets AI sessions (Claude Code, opencode...) use the library correctly.",
+  "type": "module",
+  "files": ["SKILL.md"],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "true"
+  }
+}

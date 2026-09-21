@@ -1,0 +1,92 @@
+[
+  {
+    "value": "default",
+    "label": "Default",
+    "class": null,
+    "swatches": [
+      "oklch(0.205 0 0)",
+      "oklch(0.556 0 0)",
+      "oklch(0.922 0 0)"
+    ]
+  },
+  {
+    "value": "claude-plus",
+    "label": "Claude+",
+    "class": "theme-claude-plus",
+    "swatches": [
+      "oklch(0.6171 0.1375 39.0427)",
+      "oklch(0.6898 0.1581 290.4107)",
+      "oklch(0.9245 0.0138 92.9892)"
+    ]
+  },
+  {
+    "value": "light-green",
+    "label": "Light Green",
+    "class": "theme-light-green",
+    "swatches": [
+      "oklch(0.72 0.145 145)",
+      "oklch(0.7227 0.192 149.5793)",
+      "oklch(0.3717 0.0392 257.287)"
+    ]
+  },
+  {
+    "value": "zen",
+    "label": "Zen",
+    "class": "theme-zen",
+    "swatches": [
+      "oklch(0.3012 0 0)",
+      "oklch(0.6863 0.1743 34.2614)",
+      "oklch(0.8647 0.0201 87.5232)"
+    ]
+  },
+  {
+    "value": "sakura",
+    "label": "Sakura",
+    "class": "theme-sakura",
+    "swatches": [
+      "oklch(0.7508 0.161 2.6024)",
+      "oklch(0.5367 0.153 7.7575)",
+      "oklch(0.9239 0.0415 1.1045)"
+    ]
+  },
+  {
+    "value": "tiesen",
+    "label": "Tiesen",
+    "class": "theme-tiesen",
+    "swatches": [
+      "oklch(0.2571 0.1161 272.24)",
+      "oklch(0.5144 0.1605 267.44)",
+      "oklch(0.9214 0.0248 257.65)"
+    ]
+  },
+  {
+    "value": "deep-purple",
+    "label": "Deep Purple",
+    "class": "theme-deep-purple",
+    "swatches": [
+      "oklch(0.4865 0.2423 291.8661)",
+      "oklch(0.6192 0.2037 312.7283)",
+      "oklch(0.9546 0.0227 303.2883)"
+    ]
+  },
+  {
+    "value": "indigo-clean",
+    "label": "Indigo Clean",
+    "class": "theme-indigo-clean",
+    "swatches": [
+      "oklch(0.5854 0.2041 277.1173)",
+      "oklch(0.6056 0.2189 292.7172)",
+      "oklch(0.9299 0.0334 272.7879)"
+    ]
+  },
+  {
+    "value": "brutalism",
+    "label": "Brutalism",
+    "class": "theme-brutalism",
+    "swatches": [
+      "hsl(0, 100%, 43%)",
+      "oklch(0.8408 0.1725 84.2008)",
+      "oklch(0 0 0)"
+    ]
+  }
+]

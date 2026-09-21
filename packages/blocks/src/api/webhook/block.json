@@ -1,0 +1,70 @@
+{
+  "category": "API",
+  "file": "webhook",
+  "name": "Webhook",
+  "description": "A webhook event fanning retry arcs at your endpoint, where failed attempts fall short and the successful one delivers.",
+  "added": "2026-07-14",
+  "kind": "block",
+  "sourcePath": "api/webhook.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "webhook-0sjSUWTP.js",
+    "components": [
+      "webhook-DF4gekuo.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "line pulse",
+      "slug": "002-line-pulse",
+      "size": null,
+      "propsRaw": "{pulse:`line`}"
+    },
+    {
+      "label": "hover",
+      "slug": "003-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "success",
+      "slug": "004-success",
+      "size": null,
+      "propsRaw": "{variant:`success`,pulse:`line`}"
+    },
+    {
+      "label": "failed",
+      "slug": "005-failed",
+      "size": null,
+      "propsRaw": "{variant:`failed`}"
+    },
+    {
+      "label": "success · isometric",
+      "slug": "006-success-isometric",
+      "size": null,
+      "propsRaw": "{variant:`success`,isometric:!0}"
+    },
+    {
+      "label": "two attempts · custom copy",
+      "slug": "007-two-attempts-custom-copy",
+      "size": null,
+      "propsRaw": "{event:`deployment.succeeded`,eventId:`evt_9Kd2Lm`,attempts:[{status:503,label:`Unavailable`},{status:200,label:`OK`}],summary:`Delivered after 2 attempts · 1.4s`}"
+    }
+  ]
+}

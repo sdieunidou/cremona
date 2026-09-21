@@ -1,0 +1,89 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom copy": {
+    "title": "api-prod-01",
+    "series": [
+      {
+        "label": "DISK",
+        "color": "var(--color-amber-500)",
+        "points": [
+          0.3,
+          0.34,
+          0.31,
+          0.38,
+          0.35,
+          0.33,
+          0.37,
+          0.34
+        ],
+        "jitter": 0.04
+      },
+      {
+        "label": "NET",
+        "color": "var(--color-primary)",
+        "points": [
+          0.62,
+          0.55,
+          0.68,
+          0.6,
+          0.72,
+          0.64,
+          0.7,
+          0.66
+        ],
+        "jitter": 0.07
+      }
+    ]
+  },
+  "single series · isometric": {
+    "title": "Queue throughput",
+    "isometric": true,
+    "series": [
+      {
+        "label": "JOBS",
+        "color": "var(--color-primary)",
+        "points": [
+          0.2,
+          0.35,
+          0.28,
+          0.5,
+          0.44,
+          0.66,
+          0.58,
+          0.78
+        ],
+        "jitter": 0.06
+      }
+    ]
+  },
+  "fast · 96 samples": {
+    "samples": 96,
+    "interval": 260
+  },
+  "no grid": {
+    "showGrid": false
+  },
+  "no axis": {
+    "showAxis": false
+  }
+}

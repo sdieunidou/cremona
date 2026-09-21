@@ -1,0 +1,76 @@
+{
+  "category": "Files",
+  "file": "upload",
+  "name": "Upload",
+  "description": "A file upload area with progress and drag and drop.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "files/upload.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "upload-BpNmKJZ7.js",
+    "components": [
+      "upload-DNtasbr8.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "document",
+      "slug": "000-document",
+      "size": "sm",
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": "sm",
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "pdf",
+      "slug": "002-pdf",
+      "size": "sm",
+      "propsRaw": "{variant:`pdf`}"
+    },
+    {
+      "label": "image",
+      "slug": "003-image",
+      "size": "sm",
+      "propsRaw": "{variant:`image`}"
+    },
+    {
+      "label": "video",
+      "slug": "004-video",
+      "size": "sm",
+      "propsRaw": "{variant:`video`}"
+    },
+    {
+      "label": "audio",
+      "slug": "005-audio",
+      "size": "sm",
+      "propsRaw": "{variant:`audio`}"
+    },
+    {
+      "label": "spreadsheet",
+      "slug": "006-spreadsheet",
+      "size": "sm",
+      "propsRaw": "{variant:`spreadsheet`}"
+    },
+    {
+      "label": "code",
+      "slug": "007-code",
+      "size": "sm",
+      "propsRaw": "{variant:`code`}"
+    },
+    {
+      "label": "archive",
+      "slug": "008-archive",
+      "size": "sm",
+      "propsRaw": "{variant:`archive`}"
+    }
+  ]
+}

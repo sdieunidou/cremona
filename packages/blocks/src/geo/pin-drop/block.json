@@ -1,0 +1,70 @@
+{
+  "category": "Geo",
+  "file": "pin-drop",
+  "name": "Pin Drop",
+  "description": "Location pins dropping onto an abstract radar field with concentric ripple pings.",
+  "added": "2026-06-25",
+  "kind": "block",
+  "sourcePath": "geo/pin-drop.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "pin-drop-Dh0qN_pj.js",
+    "components": [
+      "pin-drop-DnzPzYsi.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "custom colors",
+      "slug": "002-custom-colors",
+      "size": null,
+      "propsRaw": "{pins:[{x:24,y:50,label:`San Francisco`,color:`text-indigo-700 dark:text-indigo-500`},{x:40,y:30,label:`London`,color:`text-purple-700 dark:text-purple-500`},{x:63,y:52,label:`Singapore`,color:`text-pink-700 dark:text-pink-500`},{x:77,y:35,label:`Tokyo`,color:`text-sky-700 dark:text-sky-500`}]}"
+    },
+    {
+      "label": "single pin",
+      "slug": "003-single-pin",
+      "size": null,
+      "propsRaw": "{pins:[{x:50,y:38,label:`Headquarters`}]}"
+    },
+    {
+      "label": "custom pins",
+      "slug": "004-custom-pins",
+      "size": null,
+      "propsRaw": "{pins:[{x:20,y:30,label:`London`},{x:38,y:40,label:`Paris`},{x:70,y:59,label:`Athens`}]}"
+    },
+    {
+      "label": "custom pins and colors",
+      "slug": "005-custom-pins-and-colors",
+      "size": null,
+      "propsRaw": "{pins:[{x:26,y:34,color:`text-rose-600 dark:text-rose-500`,label:`Rome`},{x:50,y:52,color:`text-lime-600 dark:text-lime-500`,label:`Athens`},{x:74,y:30,color:`text-orange-600 dark:text-orange-500`,label:`Singapore`}]}"
+    },
+    {
+      "label": "active pin",
+      "slug": "006-active-pin",
+      "size": null,
+      "propsRaw": "{pins:[{x:26,y:48},{x:50,y:30,label:`Headquarters`,active:!0},{x:74,y:50}]}"
+    },
+    {
+      "label": "custom size",
+      "slug": "007-custom-size",
+      "size": null,
+      "propsRaw": "{wrapperClassName:`max-w-full`}"
+    }
+  ]
+}

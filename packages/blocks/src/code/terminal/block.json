@@ -1,0 +1,100 @@
+{
+  "category": "Code",
+  "file": "terminal",
+  "name": "Terminal",
+  "description": "A terminal window with a typing command and output.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "code/terminal.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "terminal-AZ3JA7yX.js",
+    "components": [
+      "terminal-5J69mnp_.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0,isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "no caret",
+      "slug": "006-no-caret",
+      "size": null,
+      "propsRaw": "{caret:!1}"
+    },
+    {
+      "label": "custom prompt",
+      "slug": "007-custom-prompt",
+      "size": null,
+      "propsRaw": "{prompt:`>`}"
+    },
+    {
+      "label": "highlighted line",
+      "slug": "008-highlighted-line",
+      "size": null,
+      "propsRaw": "{title:`~/project · git`,lines:[{kind:`command`,text:`git status`},{kind:`muted`,text:`On branch main`},{kind:`info`,text:`Changes to be committed:`},{kind:`success`,text:`  modified:  README.md`,highlight:!0},{kind:`success`,text:`  new file:  hello.txt`},{kind:`command`,text:``}]}"
+    },
+    {
+      "label": "deploy",
+      "slug": "009-deploy",
+      "size": null,
+      "propsRaw": "{variant:`deploy`}"
+    },
+    {
+      "label": "test",
+      "slug": "010-test",
+      "size": null,
+      "propsRaw": "{variant:`test`}"
+    },
+    {
+      "label": "deploy · isometric",
+      "slug": "011-deploy-isometric",
+      "size": null,
+      "propsRaw": "{variant:`deploy`,isometric:!0}"
+    },
+    {
+      "label": "custom lines",
+      "slug": "012-custom-lines",
+      "size": null,
+      "propsRaw": "{title:`~/project · git`,lines:i}"
+    }
+  ]
+}

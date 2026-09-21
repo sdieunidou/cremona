@@ -1,0 +1,80 @@
+{
+  "pdf": {
+    "extension": "pdf"
+  },
+  "docx": {
+    "extension": "docx"
+  },
+  "pptx": {
+    "extension": "pptx"
+  },
+  "txt": {
+    "extension": "txt"
+  },
+  "md": {
+    "extension": "md"
+  },
+  "xlsx": {
+    "extension": "xlsx"
+  },
+  "csv": {
+    "extension": "csv"
+  },
+  "png": {
+    "extension": "png"
+  },
+  "jpg": {
+    "extension": "jpg"
+  },
+  "webp": {
+    "extension": "webp"
+  },
+  "svg": {
+    "extension": "svg"
+  },
+  "psd": {
+    "extension": "psd"
+  },
+  "fig": {
+    "extension": "fig"
+  },
+  "mp4": {
+    "extension": "mp4"
+  },
+  "mp3": {
+    "extension": "mp3"
+  },
+  "zip": {
+    "extension": "zip"
+  },
+  "json": {
+    "extension": "json"
+  },
+  "sql": {
+    "extension": "sql"
+  },
+  "html": {
+    "extension": "html"
+  },
+  "css": {
+    "extension": "css"
+  },
+  "js": {
+    "extension": "js"
+  },
+  "ts": {
+    "extension": "ts"
+  },
+  "jsx": {
+    "extension": "jsx"
+  },
+  "tsx": {
+    "extension": "tsx"
+  },
+  "py": {
+    "extension": "py"
+  },
+  "php": {
+    "extension": "php"
+  }
+}

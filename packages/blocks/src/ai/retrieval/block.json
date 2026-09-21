@@ -1,0 +1,88 @@
+{
+  "category": "AI",
+  "file": "retrieval",
+  "name": "Retrieval",
+  "description": "A query fanning out to ranked source cards that light up as each pulse lands, then converging into a streamed answer, over an ambient glow and particle field.",
+  "added": "2026-07-14",
+  "kind": "block",
+  "sourcePath": "ai/retrieval.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "retrieval-Dx50l8W6.js",
+    "components": [
+      "retrieval-DbXwLjpd.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "line pulse",
+      "slug": "002-line-pulse",
+      "size": null,
+      "propsRaw": "{pulse:`line`}"
+    },
+    {
+      "label": "line · isometric",
+      "slug": "003-line-isometric",
+      "size": null,
+      "propsRaw": "{pulse:`line`,isometric:!0}"
+    },
+    {
+      "label": "no glow",
+      "slug": "004-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "no particles",
+      "slug": "005-no-particles",
+      "size": null,
+      "propsRaw": "{particles:!1}"
+    },
+    {
+      "label": "no glow · no particles",
+      "slug": "006-no-glow-no-particles",
+      "size": null,
+      "propsRaw": "{glow:!1,particles:!1}"
+    },
+    {
+      "label": "hover",
+      "slug": "007-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "two sources",
+      "slug": "008-two-sources",
+      "size": null,
+      "propsRaw": "{query:`What is the SLA on the Scale plan?`,sources:[{name:`sla.mdx`,score:.97},{name:`plans.md`,score:.83}],answer:`Scale includes a 99.9% uptime SLA, measured monthly.`}"
+    },
+    {
+      "label": "support · custom copy",
+      "slug": "009-support-custom-copy",
+      "size": null,
+      "propsRaw": "{query:`Why was my invoice higher?`,sources:[{name:`invoice.pdf`,score:.96},{name:`usage.csv`,score:.82},{name:`pricing.md`,score:.68}],answer:`Usage rose 38%, so 1.2M overage events were billed.`}"
+    },
+    {
+      "label": "docs · isometric",
+      "slug": "010-docs-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,query:`How do I rotate an API key?`,sources:[{name:`api-keys.mdx`,score:.98},{name:`migrate.md`,score:.9},{name:`changelog.md`,score:.64}],answer:`Deploy a second key, then revoke the old one.`}"
+    }
+  ]
+}

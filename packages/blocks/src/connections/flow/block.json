@@ -1,0 +1,52 @@
+{
+  "category": "Connections",
+  "file": "flow",
+  "name": "Flow",
+  "description": "An animated flow of nodes connected by data paths.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "connections/flow.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "flow-sLhto3uP.js",
+    "components": [
+      "flow-5_TmHtMt.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "spike",
+      "slug": "003-spike",
+      "size": null,
+      "propsRaw": "{pulse:`spike`}"
+    },
+    {
+      "label": "custom icons",
+      "slug": "004-custom-icons",
+      "size": null,
+      "propsRaw": "{sources:[(0,m.jsx)(c,{className:`size-4`,strokeWidth:2}),(0,m.jsx)(a,{className:`size-4`,strokeWidth:2}),(0,m.jsx)(s,{className:`size-4`,strokeWidth:2})],transforms:[(0,m.jsx)(d,{className:`size-4.5 text-primary-foreground`,strokeWidth:1.5}),(0,m.jsx)(p,{className:`size-4.5 text-primary-foreground`,strokeWidth:1.5})],destinations:[(0,m.jsx)(r,{className:`size-4`,strokeWidth:2}),(0,m.jsx)(o,{className:`size-4`,strokeWidth:2}),(0,m.jsx)(n,{className:`size-4`,strokeWidth:2})]}"
+    }
+  ]
+}

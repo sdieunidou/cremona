@@ -1,0 +1,72 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "traffic · custom copy": {
+    "title": "Traffic sources",
+    "badge": "30d",
+    "centerValue": "48k",
+    "centerLabel": "visits",
+    "segments": [
+      {
+        "label": "Organic",
+        "value": 52,
+        "color": "var(--color-chart-1)"
+      },
+      {
+        "label": "Direct",
+        "value": 24,
+        "color": "var(--color-chart-2)"
+      },
+      {
+        "label": "Referral",
+        "value": 14,
+        "color": "var(--color-chart-3)"
+      },
+      {
+        "label": "Social",
+        "value": 10,
+        "color": "var(--color-chart-4)"
+      }
+    ]
+  },
+  "plans · isometric · custom copy": {
+    "isometric": true,
+    "title": "Plans",
+    "badge": "1,340+ Accounts",
+    "centerValue": "1,284",
+    "centerLabel": "customers",
+    "segments": [
+      {
+        "label": "Free",
+        "value": 60,
+        "color": "var(--color-muted-foreground)"
+      },
+      {
+        "label": "Pro",
+        "value": 28,
+        "color": "var(--color-chart-1)"
+      },
+      {
+        "label": "Team",
+        "value": 12,
+        "color": "var(--color-chart-2)"
+      }
+    ]
+  }
+}

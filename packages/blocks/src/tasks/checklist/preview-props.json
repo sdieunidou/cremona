@@ -1,0 +1,69 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "all done · custom items": {
+    "title": "Sprint wrap-up",
+    "items": [
+      {
+        "title": "Ship notification center",
+        "detail": "Deployed v2.4",
+        "done": true,
+        "priority": "high"
+      },
+      {
+        "title": "Review onboarding spec",
+        "detail": "v3 · merged",
+        "done": true,
+        "priority": "med"
+      },
+      {
+        "title": "Update changelog",
+        "detail": "Published",
+        "done": true,
+        "priority": "low"
+      },
+      {
+        "title": "Reply to design feedback",
+        "done": true,
+        "priority": "low"
+      }
+    ]
+  },
+  "all pending · custom items": {
+    "title": "This week",
+    "items": [
+      {
+        "title": "Draft Q2 OKRs",
+        "detail": "Due Friday"
+      },
+      {
+        "title": "Refactor billing module",
+        "detail": "Split into 3 PRs"
+      },
+      {
+        "title": "Sync with design on v3 tokens",
+        "detail": "Thursday · 30 min"
+      },
+      {
+        "title": "Audit onboarding metrics",
+        "detail": "Drop-off in step 2"
+      }
+    ]
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "category": "AI",
+  "file": "tools",
+  "name": "Tools",
+  "description": "An agent working through its tool calls one at a time, each row running with a spinner then settling into a result and a duration.",
+  "added": "2026-08-03",
+  "kind": "block",
+  "sourcePath": "ai/tools.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "tools-DlRPvIQR.js",
+    "components": [
+      "tools-Bv-cJKH8.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "billing · custom copy",
+      "slug": "006-billing-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Agent run`,tools:[{name:`get_subscription`,args:`plan: \"scale\"`,result:`active`,duration:`96ms`,icon:(0,l.jsx)(n,{className:`size-3.5`,strokeWidth:2})},{name:`query_usage`,args:`period: \"october\"`,result:`1.2M events`,duration:`244ms`,icon:(0,l.jsx)(r,{className:`size-3.5`,strokeWidth:2})},{name:`book_call`,args:`slot: \"tue 14:00\"`,result:`confirmed`,duration:`173ms`,icon:(0,l.jsx)(t,{className:`size-3.5`,strokeWidth:2})}]}"
+    },
+    {
+      "label": "four tools · isometric",
+      "slug": "007-four-tools-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,title:`MCP tools`,tools:[{name:`fetch_page`,args:`url: \"docs/api\"`,result:`12kb`,duration:`210ms`,icon:(0,l.jsx)(o,{className:`size-3.5`,strokeWidth:2})},{name:`read_schema`,args:`table: \"orders\"`,result:`18 columns`,duration:`64ms`,icon:(0,l.jsx)(r,{className:`size-3.5`,strokeWidth:2})},{name:`open_pr`,args:`branch: \"fix/tax\"`,result:`#312`,duration:`418ms`,icon:(0,l.jsx)(a,{className:`size-3.5`,strokeWidth:2})},{name:`notify_team`,args:`channel: \"#eng\"`,result:`posted`,duration:`77ms`,icon:(0,l.jsx)(s,{className:`size-3.5`,strokeWidth:2})}]}"
+    },
+    {
+      "label": "no glow",
+      "slug": "008-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "no particles",
+      "slug": "009-no-particles",
+      "size": null,
+      "propsRaw": "{particles:!1}"
+    },
+    {
+      "label": "no glow · no particles",
+      "slug": "010-no-glow-no-particles",
+      "size": null,
+      "propsRaw": "{glow:!1,particles:!1}"
+    },
+    {
+      "label": "hover",
+      "slug": "011-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    }
+  ]
+}

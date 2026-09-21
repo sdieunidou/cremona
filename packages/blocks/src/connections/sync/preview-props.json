@@ -1,0 +1,130 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "spike": {
+    "pulse": "spike"
+  },
+  "single pair": {
+    "pairs": [
+      [
+        {
+          "type": "lucide:Laptop",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "lucide:Cloud",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      ]
+    ]
+  },
+  "four pairs": {
+    "pairs": [
+      [
+        {
+          "type": "lucide:Laptop",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "lucide:Server",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      ],
+      [
+        {
+          "type": "lucide:Smartphone",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "lucide:Cloud",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      ],
+      [
+        {
+          "type": "lucide:Monitor",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "lucide:Database",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      ],
+      [
+        {
+          "type": "lucide:Database",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        },
+        {
+          "type": "lucide:HardDrive",
+          "key": null,
+          "props": {
+            "className": "size-4",
+            "strokeWidth": 2
+          },
+          "_owner": null,
+          "_store": {}
+        }
+      ]
+    ]
+  }
+}

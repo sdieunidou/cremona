@@ -1,0 +1,82 @@
+{
+  "category": "Search",
+  "file": "command-palette",
+  "name": "Command Palette",
+  "description": "A command palette with a typed query, grouped commands, keyboard hints, and a selection that walks the list.",
+  "added": "2026-07-28",
+  "kind": "block",
+  "sourcePath": "search/command-palette.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "command-palette-DGyAv0Ug.js",
+    "components": [
+      "command-palette-Bi0nMaiZ.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "support · custom copy",
+      "slug": "006-support-custom-copy",
+      "size": null,
+      "propsRaw": "{query:`billing`,groups:[{label:`Billing`,items:[{icon:(0,l.jsx)(n,{className:`size-3`,strokeWidth:2.5}),label:`Update payment method`,shortcut:[`⌘`,`B`]},{icon:(0,l.jsx)(a,{className:`size-3`,strokeWidth:2.5}),label:`Manage seats`}]},{label:`Help`,items:[{icon:(0,l.jsx)(c,{className:`size-3`,strokeWidth:2.5}),label:`Contact support`}]}]}"
+    },
+    {
+      "label": "single group",
+      "slug": "007-single-group",
+      "size": null,
+      "propsRaw": "{query:`deploy`,groups:[{label:`Deployments`,items:[{icon:(0,l.jsx)(i,{className:`size-3`,strokeWidth:2.5}),label:`Deploy to production`,shortcut:[`⌘`,`↵`]},{icon:(0,l.jsx)(i,{className:`size-3`,strokeWidth:2.5}),label:`Roll back last deploy`}]}]}"
+    },
+    {
+      "label": "no caret",
+      "slug": "008-no-caret",
+      "size": null,
+      "propsRaw": "{caret:!1}"
+    },
+    {
+      "label": "hover",
+      "slug": "009-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    }
+  ]
+}

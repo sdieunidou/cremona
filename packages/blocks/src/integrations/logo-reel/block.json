@@ -1,0 +1,68 @@
+{
+  "category": "Integrations",
+  "file": "logo-reel",
+  "name": "Logo Reel",
+  "description": "A row of integration logos sliding one by one into a center spotlight, blurring out as they pass.",
+  "added": "2026-09-15",
+  "kind": "block",
+  "sourcePath": "components/cremona/integrations/logo-reel.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "custom logos",
+      "slug": "001-custom-logos",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "direction right",
+      "slug": "002-direction-right",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "hover",
+      "slug": "003-hover",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "fast interval",
+      "slug": "004-fast-interval",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "slow interval",
+      "slug": "005-slow-interval",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "no glow",
+      "slug": "006-no-glow",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "three logos · direction right",
+      "slug": "007-three-logos-direction-right",
+      "size": null,
+      "propsRaw": ""
+    }
+  ]
+}

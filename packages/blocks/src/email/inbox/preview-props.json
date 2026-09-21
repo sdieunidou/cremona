@@ -1,0 +1,123 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "promotions · custom": {
+    "title": "Promotions",
+    "meta": "me@johnc.dev",
+    "items": [
+      {
+        "initials": "FG",
+        "sender": "Figma",
+        "subject": "Config 2026, early bird tickets",
+        "preview": "Save 30% if you register before March.",
+        "time": "10:14",
+        "unread": true
+      },
+      {
+        "initials": "VR",
+        "sender": "Vercel",
+        "subject": "Your November invoice",
+        "preview": "$48.20 charged to •••• 4242.",
+        "time": "9:02",
+        "hasAttachment": true
+      },
+      {
+        "initials": "LN",
+        "sender": "Linear",
+        "subject": "Weekly digest · 12 closed issues",
+        "preview": "See what the team shipped this week.",
+        "time": "Yesterday"
+      },
+      {
+        "initials": "ST",
+        "sender": "Stripe",
+        "subject": "New product launch: Issuing",
+        "preview": "Create and manage virtual cards instantly.",
+        "time": "Mon",
+        "starred": true
+      }
+    ]
+  },
+  "drafts · custom": {
+    "title": "Drafts",
+    "meta": "3 drafts",
+    "items": [
+      {
+        "initials": "ME",
+        "sender": "To: design@team.io",
+        "subject": "Sprint kickoff agenda",
+        "preview": "Reviewing the goals for next two weeks…",
+        "time": "11:08"
+      },
+      {
+        "initials": "ME",
+        "sender": "To: hello@partner.co",
+        "subject": "Re: contract revisions",
+        "preview": "Thanks for the updated version, a few notes…",
+        "time": "10:42",
+        "hasAttachment": true
+      },
+      {
+        "initials": "ME",
+        "sender": "To: investors@",
+        "subject": "December update",
+        "preview": "MRR up 18%, hiring two new engineers…",
+        "time": "Yesterday"
+      }
+    ]
+  },
+  "support · custom": {
+    "title": "Support",
+    "meta": "2 unread",
+    "items": [
+      {
+        "initials": "EM",
+        "sender": "Emma Wright",
+        "subject": "Can't access billing portal",
+        "preview": "Getting a 403 when I try to view invoices…",
+        "time": "12:31",
+        "unread": true
+      },
+      {
+        "initials": "RV",
+        "sender": "Raj Verma",
+        "subject": "Feature request: webhooks for refunds",
+        "preview": "Would love to wire this into our CRM…",
+        "time": "11:54",
+        "unread": true,
+        "starred": true
+      },
+      {
+        "initials": "CK",
+        "sender": "Chris Kim",
+        "subject": "Re: API rate limits",
+        "preview": "Thanks, the bump solved it.",
+        "time": "9:20"
+      },
+      {
+        "initials": "NS",
+        "sender": "Nora Singh",
+        "subject": "Onboarding feedback",
+        "preview": "Loved the tour. One suggestion attached.",
+        "time": "Tue",
+        "hasAttachment": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "category": "States",
+  "file": "error",
+  "name": "Error",
+  "description": "A request pulse traveling into a service card and breaking it, cascading its service tiles to a fault state under an alert badge.",
+  "added": "2026-08-07",
+  "kind": "block",
+  "sourcePath": "sections/error.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "error-BABajNfs.js",
+    "components": [
+      "error-CHs6ZTDU.js",
+      "error-Cbr0gsqR.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no glow",
+      "slug": "002-default-no-glow",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "isometric · no glow",
+      "slug": "003-isometric-no-glow",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "line pulse",
+      "slug": "004-line-pulse",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "line pulse · isometric",
+      "slug": "005-line-pulse-isometric",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "two services",
+      "slug": "006-two-services",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "five services · isometric",
+      "slug": "007-five-services-isometric",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "hover",
+      "slug": "008-hover",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "hover · isometric",
+      "slug": "009-hover-isometric",
+      "size": null,
+      "propsRaw": ""
+    }
+  ]
+}

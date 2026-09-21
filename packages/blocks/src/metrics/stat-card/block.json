@@ -1,0 +1,82 @@
+{
+  "category": "Metrics",
+  "file": "stat-card",
+  "name": "Stat Card",
+  "description": "A single stat card with a value, label, and trend.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "metrics/stat-card.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "stat-card-Lmnygxem.js",
+    "components": [
+      "stat-card-BIWtmh7k.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "users · custom copy",
+      "slug": "006-users-custom-copy",
+      "size": null,
+      "propsRaw": "{icon:a,label:`Active Users`,value:`12,481`,change:`+8.1%`,period:`vs last week`,trend:`up`}"
+    },
+    {
+      "label": "orders · custom copy",
+      "slug": "007-orders-custom-copy",
+      "size": null,
+      "propsRaw": "{icon:o,label:`Orders`,value:`1,284`,change:`-3.2%`,period:`vs last month`,trend:`down`}"
+    },
+    {
+      "label": "pageviews · custom copy",
+      "slug": "008-pageviews-custom-copy",
+      "size": null,
+      "propsRaw": "{icon:t,label:`Page Views`,value:`92,418`,change:`+24.7%`,period:`vs last 7d`,trend:`up`}"
+    },
+    {
+      "label": "conversion · custom copy",
+      "slug": "009-conversion-custom-copy",
+      "size": null,
+      "propsRaw": "{icon:i,label:`Conversion`,value:`4.82%`,change:`+0.6pt`,period:`vs last 30d`,trend:`up`}"
+    }
+  ]
+}

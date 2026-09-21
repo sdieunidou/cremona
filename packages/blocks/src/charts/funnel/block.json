@@ -1,0 +1,82 @@
+{
+  "category": "Charts",
+  "file": "funnel",
+  "name": "Funnel",
+  "description": "A conversion funnel of tapering stage slabs that pour in one by one, with per stage counts and conversion rates.",
+  "added": "2026-08-25",
+  "kind": "block",
+  "sourcePath": "charts/funnel.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "funnel-Dy3evZ_z.js",
+    "components": [
+      "funnel-wqWja05q.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "checkout · custom copy",
+      "slug": "006-checkout-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Checkout funnel`,badge:`7d`,change:`+1.6%`,stages:[{label:`Sessions`,value:61400},{label:`Cart`,value:18320},{label:`Checkout`,value:7940},{label:`Purchase`,value:4260}]}"
+    },
+    {
+      "label": "negative change · custom copy",
+      "slug": "007-negative-change-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Onboarding drop-off`,badge:`90d`,change:`-3.1%`,stages:[{label:`Invited`,value:12400},{label:`Accepted`,value:6180},{label:`Profile`,value:3240},{label:`Workspace`,value:1490},{label:`Invites`,value:520}]}"
+    },
+    {
+      "label": "highlighted stage · isometric · custom copy",
+      "slug": "008-highlighted-stage-isometric-custom-copy",
+      "size": null,
+      "propsRaw": "{isometric:!0,title:`Sales pipeline`,badge:`Q3`,value:`$412k`,change:`+11.9%`,stages:[{label:`Leads`,value:1840,color:`var(--color-chart-2)`},{label:`Qualified`,value:780,color:`var(--color-chart-2)`},{label:`Demo`,value:310,color:`var(--color-chart-3)`},{label:`Closed`,value:96,color:`var(--color-primary)`}]}"
+    },
+    {
+      "label": "three stages · custom copy",
+      "slug": "009-three-stages-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Trial conversion`,badge:`14d`,change:`+4.8%`,stages:[{label:`Trials`,value:3620},{label:`Active`,value:2140},{label:`Converted`,value:742}]}"
+    }
+  ]
+}

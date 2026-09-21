@@ -1,0 +1,60 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom copy": {
+    "title": "Migrate auth to passkeys",
+    "number": "#1204",
+    "source": "feat/passkeys",
+    "target": "develop",
+    "files": 14,
+    "additions": 486,
+    "deletions": 92,
+    "reviewer": "Noah Bennett",
+    "checks": [
+      {
+        "name": "typecheck",
+        "duration": "42s"
+      },
+      {
+        "name": "e2e",
+        "duration": "3m 18s"
+      }
+    ]
+  },
+  "avatar image": {
+    "reviewer": "Emma Wallace",
+    "reviewerImage": "../../media/placeholders/avatar-04.jpg"
+  },
+  "failing": {
+    "variant": "failing"
+  },
+  "failing · custom copy": {
+    "variant": "failing",
+    "title": "Refactor billing webhooks",
+    "number": "#973",
+    "source": "chore/webhooks",
+    "files": 5,
+    "additions": 61,
+    "deletions": 148,
+    "reviewer": "Ava Lindqvist"
+  },
+  "hover": {
+    "hover": true
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "category": "Charts",
+  "file": "donut",
+  "name": "Donut",
+  "description": "An animated donut chart with a center total and legend.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "charts/donut.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "donut-Cx2CJNLn.js",
+    "components": [
+      "donut-Dqm08wnK.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "traffic · custom copy",
+      "slug": "006-traffic-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Traffic sources`,badge:`30d`,centerValue:`48k`,centerLabel:`visits`,segments:[{label:`Organic`,value:52,color:`var(--color-chart-1)`},{label:`Direct`,value:24,color:`var(--color-chart-2)`},{label:`Referral`,value:14,color:`var(--color-chart-3)`},{label:`Social`,value:10,color:`var(--color-chart-4)`}]}"
+    },
+    {
+      "label": "plans · isometric · custom copy",
+      "slug": "007-plans-isometric-custom-copy",
+      "size": null,
+      "propsRaw": "{isometric:!0,title:`Plans`,badge:`1,340+ Accounts`,centerValue:`1,284`,centerLabel:`customers`,segments:[{label:`Free`,value:60,color:`var(--color-muted-foreground)`},{label:`Pro`,value:28,color:`var(--color-chart-1)`},{label:`Team`,value:12,color:`var(--color-chart-2)`}]}"
+    }
+  ]
+}

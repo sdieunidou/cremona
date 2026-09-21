@@ -1,0 +1,76 @@
+{
+  "category": "Data",
+  "file": "import",
+  "name": "Import",
+  "description": "A CSV import mapper where each source column connects across to its destination field, leaving unmapped columns skipped.",
+  "added": "2026-09-11",
+  "kind": "block",
+  "sourcePath": "data/import.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "import-BGvFTx7m.js",
+    "components": [
+      "import-uQhkHZ6R.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom data · products",
+      "slug": "006-custom-data-products",
+      "size": null,
+      "propsRaw": "{fileName:`products.csv`,rowCount:18400,mappings:[{source:`SKU`,target:`sku`},{source:`Product Title`,target:`name`},{source:`Unit Price`,target:`price`},{source:`Legacy ID`}]}"
+    },
+    {
+      "label": "custom data · contacts · isometric",
+      "slug": "007-custom-data-contacts-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1,fileName:`contacts.xlsx`,rowCount:640,unit:`contacts ready`,sourceLabel:`Sheet column`,targetLabel:`Property`,actionLabel:`Sync`,mappings:[{source:`Work Email`,target:`email`},{source:`First Name`,target:`first_name`},{source:`Last Name`,target:`last_name`},{source:`Phone`,target:`phone`},{source:`Notes`}]}"
+    },
+    {
+      "label": "all mapped",
+      "slug": "008-all-mapped",
+      "size": null,
+      "propsRaw": "{fileName:`invoices.csv`,rowCount:912,mappings:[{source:`Invoice No`,target:`number`},{source:`Billed To`,target:`customer`},{source:`Amount Due`,target:`amount`}]}"
+    }
+  ]
+}

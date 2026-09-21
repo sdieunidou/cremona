@@ -1,0 +1,65 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom copy": {
+    "title": "Onboarding · 01 Setup",
+    "current": "2:08",
+    "duration": "5:00",
+    "progress": 42
+  },
+  "pause state": {
+    "state": "pause"
+  },
+  "no play button": {
+    "showPlayButton": false
+  },
+  "no info chip": {
+    "showInfo": false
+  },
+  "minimal · no chrome": {
+    "showInfo": false,
+    "showPlayButton": false
+  },
+  "variant · landscape": {
+    "variant": "landscape"
+  },
+  "variant · tutorial": {
+    "variant": "tutorial",
+    "title": "Getting started in 5 minutes",
+    "current": "2:08",
+    "duration": "5:00",
+    "progress": 42
+  },
+  "variant · podcast": {
+    "variant": "podcast",
+    "title": "Episode 24 · Building in public",
+    "current": "12:30",
+    "duration": "48:15",
+    "progress": 26
+  },
+  "variant · livestream": {
+    "variant": "livestream",
+    "title": "Studio stream · Q&A",
+    "current": "58:42",
+    "duration": "LIVE",
+    "progress": 72
+  },
+  "real image": {
+    "image": "../../media/placeholders/photo-06.jpg",
+    "title": "Behind the scenes"
+  },
+  "isometric · real image": {
+    "isometric": true,
+    "image": "../../media/placeholders/photo-06.jpg",
+    "title": "Behind the scenes"
+  }
+}

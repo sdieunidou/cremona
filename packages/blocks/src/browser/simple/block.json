@@ -1,0 +1,94 @@
+{
+  "category": "Browser",
+  "file": "simple",
+  "name": "Simple",
+  "description": "A clean browser window frame for showcasing any screenshot or UI.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "browser/simple.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "simple-DKE4oZxC.js",
+    "components": [
+      "simple-B7rxE8AV.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "landing",
+      "slug": "000-landing",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "dashboard",
+      "slug": "001-dashboard",
+      "size": null,
+      "propsRaw": "{variant:`dashboard`}"
+    },
+    {
+      "label": "landing · fadeOut",
+      "slug": "002-landing-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "dashboard · fadeOut",
+      "slug": "003-dashboard-fadeout",
+      "size": null,
+      "propsRaw": "{variant:`dashboard`,fadeOut:!0}"
+    },
+    {
+      "label": "landing · isometric",
+      "slug": "004-landing-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "dashboard · isometric",
+      "slug": "005-dashboard-isometric",
+      "size": null,
+      "propsRaw": "{variant:`dashboard`,isometric:!0}"
+    },
+    {
+      "label": "landing · isometric · fadeOut",
+      "slug": "006-landing-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "dashboard · isometric · fadeOut",
+      "slug": "007-dashboard-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{variant:`dashboard`,isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "landing · no gradient",
+      "slug": "008-landing-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "landing · isometric · no gradient",
+      "slug": "009-landing-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "landing · custom url",
+      "slug": "010-landing-custom-url",
+      "size": null,
+      "propsRaw": "{url:`acme.io`}"
+    },
+    {
+      "label": "dashboard · custom url",
+      "slug": "011-dashboard-custom-url",
+      "size": null,
+      "propsRaw": "{variant:`dashboard`,url:`app.acme.io/overview`}"
+    }
+  ]
+}

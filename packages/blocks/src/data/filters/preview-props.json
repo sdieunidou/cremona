@@ -1,0 +1,79 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom data · deals": {
+    "title": "Segment",
+    "unit": "deals",
+    "total": 1860,
+    "rules": [
+      {
+        "field": "Stage",
+        "operator": "is",
+        "value": "Negotiation",
+        "matches": 940
+      },
+      {
+        "field": "Owner",
+        "operator": "is",
+        "value": "Sales",
+        "matches": 520
+      },
+      {
+        "field": "Value",
+        "operator": "is over",
+        "value": "$10k",
+        "matches": 186
+      }
+    ],
+    "addLabel": "Add condition"
+  },
+  "custom data · errors · isometric": {
+    "isometric": true,
+    "gradient": false,
+    "title": "Log filters",
+    "unit": "events",
+    "total": 94200,
+    "rules": [
+      {
+        "field": "Level",
+        "operator": "is",
+        "value": "Error",
+        "matches": 8140
+      },
+      {
+        "field": "Service",
+        "operator": "is",
+        "value": "checkout",
+        "matches": 2310
+      },
+      {
+        "field": "Seen",
+        "operator": "after",
+        "value": "12:00",
+        "matches": 486
+      },
+      {
+        "field": "Region",
+        "operator": "is",
+        "value": "eu-west",
+        "matches": 92
+      }
+    ]
+  }
+}

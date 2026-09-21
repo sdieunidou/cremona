@@ -1,0 +1,42 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "online · custom copy": {
+    "initials": "JC",
+    "name": "James Chen",
+    "role": "Engineering Lead",
+    "tint": "bg-sky-200/80 text-sky-700 dark:bg-sky-950/80 dark:text-sky-300"
+  },
+  "online · photo": {
+    "initials": "SR",
+    "image": "../../media/placeholders/avatar-08.jpg",
+    "name": "Sara Ruiz",
+    "role": "Design Lead"
+  },
+  "away": {
+    "status": "away"
+  },
+  "busy": {
+    "status": "busy"
+  },
+  "offline": {
+    "status": "offline"
+  },
+  "away · isometric · custom copy": {
+    "isometric": true,
+    "status": "away",
+    "initials": "OB",
+    "name": "Olivia Bay",
+    "role": "Brand Designer",
+    "tint": "bg-pink-200/80 text-pink-700 dark:bg-pink-950/80 dark:text-pink-300"
+  }
+}

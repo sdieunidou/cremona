@@ -1,0 +1,37 @@
+{
+  "default": {},
+  "default · no gradient": {
+    "gradient": false
+  },
+  "hover": {
+    "hover": true
+  },
+  "no glow": {
+    "glow": false
+  },
+  "no particles": {
+    "particles": false
+  },
+  "no attachments": {
+    "attachments": []
+  },
+  "minimal": {
+    "glow": false,
+    "particles": false,
+    "gradient": false,
+    "attachments": []
+  },
+  "custom copy": {
+    "prompt": "Summarize this thread and list the action items.",
+    "model": "Claude Sonnet",
+    "tokens": "3,920",
+    "contextUsed": 0.52,
+    "attachments": [
+      "thread.eml",
+      "notes.md"
+    ]
+  },
+  "no caret": {
+    "caret": false
+  }
+}

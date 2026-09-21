@@ -1,0 +1,30 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "no glow": {
+    "glow": false
+  },
+  "no particles": {
+    "particles": false
+  },
+  "custom logo": {
+    "logo": {
+      "type": "lucide:Sparkles",
+      "key": null,
+      "props": {
+        "className": "size-6",
+        "strokeWidth": 1.5
+      },
+      "_owner": null,
+      "_store": {}
+    }
+  },
+  "custom color": {
+    "iconClassName": "bg-indigo-700 dark:bg-indigo-400"
+  },
+  "image": {
+    "image": "../../media/placeholders/photo-08.jpg"
+  }
+}

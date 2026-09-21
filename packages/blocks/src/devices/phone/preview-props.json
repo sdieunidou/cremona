@@ -1,0 +1,73 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "home": {
+    "variant": "home"
+  },
+  "home · isometric": {
+    "variant": "home",
+    "isometric": true
+  },
+  "lockscreen": {
+    "variant": "lockscreen"
+  },
+  "lockscreen · image": {
+    "variant": "lockscreen",
+    "image": "../../media/placeholders/photo-01.jpg"
+  },
+  "lockscreen · isometric": {
+    "variant": "lockscreen",
+    "isometric": true
+  },
+  "lockscreen · isometric · fadeOut": {
+    "variant": "lockscreen",
+    "image": "../../media/placeholders/photo-02.jpg",
+    "isometric": true,
+    "fadeOut": true
+  },
+  "lockscreen · custom copy": {
+    "variant": "lockscreen",
+    "image": "../../media/placeholders/photo-01.jpg",
+    "time": "14:08",
+    "date": "Friday, June 6",
+    "notifications": [
+      {
+        "app": "Slack",
+        "title": "#design",
+        "body": "New mockups uploaded to Figma"
+      },
+      {
+        "app": "Calendar",
+        "title": "Standup in 5 min",
+        "body": "Daily sync with the engineering team"
+      }
+    ]
+  },
+  "screenshot": {
+    "variant": "screenshot",
+    "image": "../../media/placeholders/photo-01.jpg"
+  },
+  "lockscreen · no notifications": {
+    "variant": "lockscreen",
+    "image": "../../media/placeholders/photo-03.jpg",
+    "time": "7:30",
+    "date": "Saturday, March 15",
+    "notifications": []
+  }
+}

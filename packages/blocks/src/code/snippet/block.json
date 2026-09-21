@@ -1,0 +1,100 @@
+{
+  "category": "Code",
+  "file": "snippet",
+  "name": "Snippet",
+  "description": "A copyable code snippet card with a language label.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "code/snippet.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "snippet-BRWxfTFk.js",
+    "components": [
+      "snippet-D-8P0HaE.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "no line numbers",
+      "slug": "004-no-line-numbers",
+      "size": null,
+      "propsRaw": "{lineNumbers:!1}"
+    },
+    {
+      "label": "highlighted line",
+      "slug": "005-highlighted-line",
+      "size": null,
+      "propsRaw": "{lines:[{indent:0,tokens:[{width:18,color:`keyword`},{width:26,color:`variable`},{width:10,color:`punct`},{width:32,color:`string`}]},{indent:0,tokens:[{width:14,color:`keyword`},{width:24,color:`func`},{width:12,color:`type`},{width:10,color:`punct`}]},{indent:1,tokens:[{width:14,color:`keyword`},{width:18,color:`punct`},{width:22,color:`tag`},{width:20,color:`prop`},{width:16,color:`string`}],highlight:!0},{indent:0,tokens:[{width:10,color:`punct`}]}]}"
+    },
+    {
+      "label": "diff",
+      "slug": "006-diff",
+      "size": null,
+      "propsRaw": "{lines:[{indent:0,tokens:[{width:18,color:`keyword`},{width:26,color:`variable`},{width:10,color:`punct`},{width:32,color:`string`}]},{indent:0,tokens:[{width:14,color:`keyword`},{width:24,color:`func`},{width:12,color:`type`}],diff:`remove`},{indent:0,tokens:[{width:14,color:`keyword`},{width:28,color:`func`},{width:16,color:`type`},{width:10,color:`punct`}],diff:`add`},{indent:0,tokens:[{width:10,color:`punct`}]}]}"
+    },
+    {
+      "label": "bash",
+      "slug": "007-bash",
+      "size": null,
+      "propsRaw": "{language:`bash`}"
+    },
+    {
+      "label": "json",
+      "slug": "008-json",
+      "size": null,
+      "propsRaw": "{language:`json`}"
+    },
+    {
+      "label": "css",
+      "slug": "009-css",
+      "size": null,
+      "propsRaw": "{language:`css`}"
+    },
+    {
+      "label": "sql",
+      "slug": "010-sql",
+      "size": null,
+      "propsRaw": "{language:`sql`}"
+    },
+    {
+      "label": "yaml",
+      "slug": "011-yaml",
+      "size": null,
+      "propsRaw": "{language:`yaml`}"
+    },
+    {
+      "label": "md",
+      "slug": "012-md",
+      "size": null,
+      "propsRaw": "{language:`md`}"
+    }
+  ]
+}

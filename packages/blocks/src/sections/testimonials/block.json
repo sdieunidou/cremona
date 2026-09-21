@@ -1,0 +1,76 @@
+{
+  "category": "Sections",
+  "file": "testimonials",
+  "name": "Testimonials",
+  "description": "A testimonials section with quotes and authors.",
+  "added": "2026-06-18",
+  "kind": "layout",
+  "sourcePath": "sections/testimonials.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "testimonials-Dyfnyu1I.js",
+    "components": [
+      "testimonials-BaO0AL7f.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom quote · default",
+      "slug": "006-custom-quote-default",
+      "size": null,
+      "propsRaw": "{quote:`An excellent service that exceeded all of my expectations.`}"
+    },
+    {
+      "label": "custom quote · isometric",
+      "slug": "007-custom-quote-isometric",
+      "size": null,
+      "propsRaw": "{quote:`The attention to detail and support was outstanding.`,isometric:!0}"
+    },
+    {
+      "label": "custom quote · isometric · no gradient",
+      "slug": "008-custom-quote-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{quote:`A seamless experience from start to finish, truly impressive.`,gradient:!1,isometric:!0}"
+    }
+  ]
+}

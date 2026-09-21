@@ -1,0 +1,109 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "equator tilt": {
+    "tilt": "equator"
+  },
+  "bottom tilt": {
+    "tilt": "bottom"
+  },
+  "reverse spin": {
+    "spinSpeed": 12
+  },
+  "half · labels": {
+    "half": true,
+    "arcs": false,
+    "spinSpeed": -6,
+    "wrapperClassName": "max-w-full",
+    "markers": [
+      {
+        "lat": 37.77,
+        "lng": -122.42,
+        "label": "San Francisco"
+      },
+      {
+        "lat": 40.71,
+        "lng": -74,
+        "label": "New York"
+      },
+      {
+        "lat": 51.51,
+        "lng": -0.13,
+        "label": "London"
+      },
+      {
+        "lat": 1.35,
+        "lng": 103.82,
+        "label": "Singapore"
+      },
+      {
+        "lat": 35.68,
+        "lng": 139.69,
+        "label": "Tokyo"
+      }
+    ]
+  },
+  "start: americas · arc pairs": {
+    "startAt": "americas",
+    "markers": [
+      {
+        "lat": 40.71,
+        "lng": -74,
+        "label": "New York"
+      },
+      {
+        "lat": 51.51,
+        "lng": -0.13
+      },
+      {
+        "lat": 35.68,
+        "lng": 139.69
+      },
+      {
+        "lat": -33.87,
+        "lng": 151.21
+      }
+    ],
+    "arcPairs": [
+      [
+        0,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ]
+    ]
+  },
+  "dot pulse": {
+    "arcPulse": "dot",
+    "markers": [
+      {
+        "lat": 37.77,
+        "lng": -122.42
+      },
+      {
+        "lat": 40.71,
+        "lng": -74
+      },
+      {
+        "lat": 51.51,
+        "lng": -0.13
+      },
+      {
+        "lat": 1.35,
+        "lng": 103.82
+      },
+      {
+        "lat": 35.68,
+        "lng": 139.69
+      }
+    ]
+  }
+}

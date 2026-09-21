@@ -1,0 +1,77 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "line pulse": {
+    "pulse": "line"
+  },
+  "line · isometric": {
+    "pulse": "line",
+    "isometric": true
+  },
+  "no glow": {
+    "glow": false
+  },
+  "no particles": {
+    "particles": false
+  },
+  "no glow · no particles": {
+    "glow": false,
+    "particles": false
+  },
+  "hover": {
+    "hover": true
+  },
+  "two sources": {
+    "query": "What is the SLA on the Scale plan?",
+    "sources": [
+      {
+        "name": "sla.mdx",
+        "score": 0.97
+      },
+      {
+        "name": "plans.md",
+        "score": 0.83
+      }
+    ],
+    "answer": "Scale includes a 99.9% uptime SLA, measured monthly."
+  },
+  "support · custom copy": {
+    "query": "Why was my invoice higher?",
+    "sources": [
+      {
+        "name": "invoice.pdf",
+        "score": 0.96
+      },
+      {
+        "name": "usage.csv",
+        "score": 0.82
+      },
+      {
+        "name": "pricing.md",
+        "score": 0.68
+      }
+    ],
+    "answer": "Usage rose 38%, so 1.2M overage events were billed."
+  },
+  "docs · isometric": {
+    "isometric": true,
+    "query": "How do I rotate an API key?",
+    "sources": [
+      {
+        "name": "api-keys.mdx",
+        "score": 0.98
+      },
+      {
+        "name": "migrate.md",
+        "score": 0.9
+      },
+      {
+        "name": "changelog.md",
+        "score": 0.64
+      }
+    ],
+    "answer": "Deploy a second key, then revoke the old one."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "delete · custom copy": {
+    "method": "DELETE",
+    "endpoint": "/v1/api-keys/key_2Xf8",
+    "status": 204,
+    "statusText": "No Content",
+    "latency": "38ms",
+    "response": [
+      "{ \"deleted\": true, \"id\": \"key_2Xf8\" }"
+    ]
+  },
+  "patch · custom copy": {
+    "method": "PATCH",
+    "endpoint": "/v1/workspaces/ws_71Ka",
+    "status": 200,
+    "statusText": "OK",
+    "latency": "112ms",
+    "response": [
+      "{ \"id\": \"ws_71Ka\", \"name\": \"Acme Labs\", \"members\": 12 }"
+    ]
+  },
+  "line pulse": {
+    "pulse": "line"
+  },
+  "hover": {
+    "hover": true
+  },
+  "post": {
+    "variant": "post"
+  },
+  "error": {
+    "variant": "error"
+  },
+  "error · isometric": {
+    "variant": "error",
+    "isometric": true
+  },
+  "post · line": {
+    "variant": "post",
+    "pulse": "line"
+  }
+}

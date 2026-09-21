@@ -1,0 +1,76 @@
+{
+  "category": "Status",
+  "file": "uptime-bar",
+  "name": "Uptime Bar",
+  "description": "An uptime bar showing daily operational status.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "status/uptime-bar.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "uptime-bar-BnSBoQby.js",
+    "components": [
+      "uptime-bar-DCGUwLmZ.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "degraded · custom copy",
+      "slug": "004-degraded-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`API`,status:`degraded`,incidents:[42,51,57],outages:[]}"
+    },
+    {
+      "label": "outage · isometric",
+      "slug": "005-outage-isometric",
+      "size": null,
+      "propsRaw": "{title:`Checkout`,status:`outage`,incidents:[39],outages:[55,58],isometric:!0}"
+    },
+    {
+      "label": "45 days · clean",
+      "slug": "006-45-days-clean",
+      "size": null,
+      "propsRaw": "{days:45,incidents:[],outages:[],uptime:`100.00%`}"
+    },
+    {
+      "label": "30 days · incident",
+      "slug": "007-30-days-incident",
+      "size": null,
+      "propsRaw": "{days:30,incidents:[7,8,19],outages:[14]}"
+    },
+    {
+      "label": "no legend",
+      "slug": "008-no-legend",
+      "size": null,
+      "propsRaw": "{showLegend:!1}"
+    }
+  ]
+}

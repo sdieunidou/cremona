@@ -1,0 +1,70 @@
+{
+  "category": "Activity",
+  "file": "timeline",
+  "name": "Timeline",
+  "description": "A vertical activity timeline of grouped events and status changes.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "activity/timeline.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "timeline-YSAtHSuB.js",
+    "components": [
+      "timeline-4dO4Try3.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "default · custom steps",
+      "slug": "006-default-custom-steps",
+      "size": null,
+      "propsRaw": "{title:`Onboarding`,meta:`Q2`,steps:i}"
+    },
+    {
+      "label": "isometric · custom steps",
+      "slug": "007-isometric-custom-steps",
+      "size": null,
+      "propsRaw": "{isometric:!0,title:`Onboarding`,meta:`Q2`,steps:i}"
+    }
+  ]
+}

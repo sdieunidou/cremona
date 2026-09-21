@@ -1,0 +1,70 @@
+{
+  "category": "Metrics",
+  "file": "comparison",
+  "name": "Comparison",
+  "description": "A before and after metric comparison with deltas.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "metrics/comparison.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "comparison-DnznXeuD.js",
+    "components": [
+      "comparison-CyBwMEpA.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "speed · custom copy",
+      "slug": "004-speed-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Page Load Time`,before:`3.8s`,after:`1.4s`,improvement:`2.7× faster`,beforeBar:100,afterBar:37}"
+    },
+    {
+      "label": "cost · custom copy",
+      "slug": "005-cost-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Cost per Lead`,before:`$24.50`,after:`$8.20`,improvement:`66% cheaper`,beforeBar:100,afterBar:33}"
+    },
+    {
+      "label": "latency · custom copy",
+      "slug": "006-latency-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`API Latency`,before:`842ms`,after:`187ms`,improvement:`4.5× faster`,beforeBar:100,afterBar:22}"
+    },
+    {
+      "label": "churn · custom copy",
+      "slug": "007-churn-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Monthly Churn`,before:`5.2%`,after:`1.8%`,improvement:`65% drop`,beforeBar:100,afterBar:35}"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "category": "Metrics",
+  "file": "trend",
+  "name": "Trend",
+  "description": "A metric with a trend line and period over period change.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "metrics/trend.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "trend-BGxdLa8l.js",
+    "components": [
+      "trend-C0-0nDnz.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "stacked",
+      "slug": "004-stacked",
+      "size": null,
+      "propsRaw": "{stacked:!0}"
+    },
+    {
+      "label": "isometric · stacked",
+      "slug": "005-isometric-stacked",
+      "size": null,
+      "propsRaw": "{isometric:!0,stacked:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "006-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "007-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "conversions · primary · custom copy",
+      "slug": "008-conversions-primary-custom-copy",
+      "size": null,
+      "propsRaw": "{label:`Conversions`,value:`1,284`,change:`+22.6%`,direction:`primary`,points:[.28,.32,.4,.45,.5,.58,.68,.74,.82],gradient:!1}"
+    },
+    {
+      "label": "revenue · up · custom copy",
+      "slug": "009-revenue-up-custom-copy",
+      "size": null,
+      "propsRaw": "{label:`MRR`,value:`$24.8k`,change:`+12.4%`,direction:`up`,points:[.4,.42,.38,.5,.55,.62,.7,.78,.85],gradient:!1}"
+    },
+    {
+      "label": "bounce · down · custom copy",
+      "slug": "010-bounce-down-custom-copy",
+      "size": null,
+      "propsRaw": "{label:`Bounce Rate`,value:`24.3%`,change:`-8.4%`,direction:`down`,points:[.85,.78,.82,.7,.65,.58,.5,.42,.38],gradient:!1}"
+    },
+    {
+      "label": "errors · warning · custom copy",
+      "slug": "011-errors-warning-custom-copy",
+      "size": null,
+      "propsRaw": "{label:`Error Rate`,value:`4.2%`,change:`+0.8pt`,direction:`warning`,points:[.25,.22,.3,.28,.42,.5,.62,.7,.78],gradient:!1}"
+    }
+  ]
+}

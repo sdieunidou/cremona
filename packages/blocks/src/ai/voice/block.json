@@ -1,0 +1,82 @@
+{
+  "category": "AI",
+  "file": "voice",
+  "name": "Voice",
+  "description": "A realtime voice assistant orb that cycles through listening, thinking, and speaking states, with pulsing rings, a live equalizer, a status pill, and a transcript, over an ambient glow and particle field.",
+  "added": "2026-07-07",
+  "kind": "block",
+  "sourcePath": "ai/voice.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "voice-B5jkRWhK.js",
+    "components": [
+      "voice-BdQ3896w.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default · cycles states",
+      "slug": "000-default-cycles-states",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "listening",
+      "slug": "001-listening",
+      "size": null,
+      "propsRaw": "{state:`listening`}"
+    },
+    {
+      "label": "thinking",
+      "slug": "002-thinking",
+      "size": null,
+      "propsRaw": "{state:`thinking`}"
+    },
+    {
+      "label": "speaking",
+      "slug": "003-speaking",
+      "size": null,
+      "propsRaw": "{state:`speaking`}"
+    },
+    {
+      "label": "hover",
+      "slug": "004-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "no glow",
+      "slug": "005-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "no particles",
+      "slug": "006-no-particles",
+      "size": null,
+      "propsRaw": "{particles:!1}"
+    },
+    {
+      "label": "minimal",
+      "slug": "007-minimal",
+      "size": null,
+      "propsRaw": "{glow:!1,particles:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "008-custom-copy",
+      "size": null,
+      "propsRaw": "{state:`listening`,transcript:`What's on my calendar for the rest of the week?`,status:`Live`}"
+    },
+    {
+      "label": "custom copy per state",
+      "slug": "009-custom-copy-per-state",
+      "size": null,
+      "propsRaw": "{listeningStatus:`Live`,thinkingStatus:`Working`,speakingStatus:`Responding`,listeningTranscript:`Draft a reply to the last email from Emma`,speakingTranscript:`Sent. I kept it short and thanked her for the update.`}"
+    }
+  ]
+}

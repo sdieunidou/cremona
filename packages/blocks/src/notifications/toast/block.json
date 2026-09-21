@@ -1,0 +1,82 @@
+{
+  "category": "Notifications",
+  "file": "toast",
+  "name": "Toast",
+  "description": "An animated toast notification that slides in.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "notifications/toast.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "toast-_4kHH8nV.js",
+    "components": [
+      "toast-dXN134e9.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "success",
+      "slug": "000-success",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "warning",
+      "slug": "001-warning",
+      "size": null,
+      "propsRaw": "{variant:`warning`}"
+    },
+    {
+      "label": "info",
+      "slug": "002-info",
+      "size": null,
+      "propsRaw": "{variant:`info`}"
+    },
+    {
+      "label": "success · isometric",
+      "slug": "003-success-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "warning · isometric",
+      "slug": "004-warning-isometric",
+      "size": null,
+      "propsRaw": "{variant:`warning`,isometric:!0}"
+    },
+    {
+      "label": "info · isometric",
+      "slug": "005-info-isometric",
+      "size": null,
+      "propsRaw": "{variant:`info`,isometric:!0}"
+    },
+    {
+      "label": "success · custom copy",
+      "slug": "006-success-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Payment received`,description:`$240.00 from Acme Inc. has cleared and was added to your balance.`}"
+    },
+    {
+      "label": "warning · isometric · custom copy",
+      "slug": "007-warning-isometric-custom-copy",
+      "size": null,
+      "propsRaw": "{variant:`warning`,isometric:!0,title:`API limit nearing`,description:`You've used 4,820 of 5,000 monthly requests. Upgrade to avoid throttling.`}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "008-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "009-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    }
+  ]
+}

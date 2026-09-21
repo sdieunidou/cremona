@@ -1,0 +1,70 @@
+{
+  "category": "Calendar",
+  "file": "event-list",
+  "name": "Event List",
+  "description": "An agenda style list of upcoming calendar events.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "calendar/event-list.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "event-list-CJPycH9w.js",
+    "components": [
+      "event-list-DAQ-byxl.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "006-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`This week`,items:[{category:`focus`,title:`Ship onboarding flow`,detail:`Final polish pass`,time:`9:00`,duration:`3h`,group:`Monday`},{category:`meeting`,title:`Customer interview`,detail:`Acme Co. discovery`,time:`14:00`,duration:`30m`,group:`Tuesday`},{category:`team`,title:`Sprint retro`,detail:`Whole engineering`,time:`11:00`,duration:`1h`,group:`Wednesday`},{category:`personal`,title:`Yoga class`,detail:`Studio · 5th Ave`,time:`18:30`,duration:`1h`,group:`Wednesday`}]}"
+    },
+    {
+      "label": "single day",
+      "slug": "007-single-day",
+      "size": null,
+      "propsRaw": "{title:`Today`,items:[{category:`meeting`,title:`Standup`,detail:`Engineering sync`,time:`9:00`,duration:`15m`,group:`Today`},{category:`focus`,title:`Spec review`,detail:`Calendar v2`,time:`10:00`,duration:`1h 30m`,group:`Today`},{category:`personal`,title:`Lunch with Maya`,detail:`Café Lumen`,time:`12:30`,duration:`1h`,group:`Today`},{category:`team`,title:`Roadmap review`,detail:`Product + design`,time:`15:00`,duration:`45m`,group:`Today`}]}"
+    }
+  ]
+}

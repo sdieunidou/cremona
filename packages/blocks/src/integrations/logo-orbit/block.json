@@ -1,0 +1,86 @@
+{
+  "category": "Integrations",
+  "file": "logo-orbit",
+  "name": "Logo Orbit",
+  "description": "Integration logos orbiting a central brand mark.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "components/cremona/integrations/logo-orbit.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": null,
+    "components": []
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "hover · orbit",
+      "slug": "001-hover-orbit",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "orbit",
+      "slug": "003-orbit",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "orbit · isometric",
+      "slug": "004-orbit-isometric",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "hidden logo",
+      "slug": "005-hidden-logo",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "custom logo",
+      "slug": "006-custom-logo",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "inner ring",
+      "slug": "007-inner-ring",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "orbit · inner ring",
+      "slug": "008-orbit-inner-ring",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "custom radius",
+      "slug": "009-custom-radius",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "custom radius · orbit · isometric",
+      "slug": "010-custom-radius-orbit-isometric",
+      "size": null,
+      "propsRaw": ""
+    }
+  ]
+}

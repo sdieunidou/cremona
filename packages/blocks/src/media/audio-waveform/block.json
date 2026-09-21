@@ -1,0 +1,94 @@
+{
+  "category": "Media",
+  "file": "audio-waveform",
+  "name": "Audio Waveform",
+  "description": "An audio player with an animated waveform and controls.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "media/audio-waveform.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "audio-waveform-Bg6173dn.js",
+    "components": [
+      "audio-waveform-B2pMMLKz.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "004-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Sunset drive`,subtitle:`Ada Lovelace · EP`,current:`2:14`,duration:`4:08`,progress:54}"
+    },
+    {
+      "label": "pause state",
+      "slug": "005-pause-state",
+      "size": null,
+      "propsRaw": "{state:`pause`}"
+    },
+    {
+      "label": "custom meta",
+      "slug": "006-custom-meta",
+      "size": null,
+      "propsRaw": "{meta:`Lossless · 24-bit`}"
+    },
+    {
+      "label": "voice note · custom icon · custom meta",
+      "slug": "007-voice-note-custom-icon-custom-meta",
+      "size": null,
+      "propsRaw": "{icon:r,title:`Voice memo · Tuesday`,subtitle:`Recording`,current:`0:18`,duration:`0:42`,progress:42,meta:`Mono · 96kbps`}"
+    },
+    {
+      "label": "podcast · pause · isometric",
+      "slug": "008-podcast-pause-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,state:`pause`,icon:o,title:`On building in public`,subtitle:`Highlight · 10:35`,current:`2:03`,duration:`10:35`,progress:20,meta:`Episode 47`}"
+    },
+    {
+      "label": "bars · 26",
+      "slug": "009-bars-26",
+      "size": null,
+      "propsRaw": "{bars:26}"
+    },
+    {
+      "label": "bars · 42",
+      "slug": "010-bars-42",
+      "size": null,
+      "propsRaw": "{bars:42}"
+    },
+    {
+      "label": "bars · 56",
+      "slug": "011-bars-56",
+      "size": null,
+      "propsRaw": "{bars:56}"
+    }
+  ]
+}

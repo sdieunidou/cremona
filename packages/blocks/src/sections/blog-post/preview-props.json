@@ -1,0 +1,32 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom title · default": {
+    "title": "Inspiring stories from our customers"
+  },
+  "custom title · isometric": {
+    "title": "Working from home is the new normal",
+    "isometric": true
+  },
+  "custom title · isometric · no gradient": {
+    "title": "These are the 10 best AI tools for developers",
+    "gradient": false,
+    "isometric": true
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "category": "API",
+  "file": "request",
+  "name": "Request",
+  "description": "A request arcing from client to server and a response arcing back, with a method pill, a status code, and a JSON response card.",
+  "added": "2026-07-14",
+  "kind": "block",
+  "sourcePath": "api/request.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "request-BSEiHhkF.js",
+    "components": [
+      "request-BmwOIbId.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "delete · custom copy",
+      "slug": "004-delete-custom-copy",
+      "size": null,
+      "propsRaw": "{method:`DELETE`,endpoint:`/v1/api-keys/key_2Xf8`,status:204,statusText:`No Content`,latency:`38ms`,response:[`{ \"deleted\": true, \"id\": \"key_2Xf8\" }`]}"
+    },
+    {
+      "label": "patch · custom copy",
+      "slug": "005-patch-custom-copy",
+      "size": null,
+      "propsRaw": "{method:`PATCH`,endpoint:`/v1/workspaces/ws_71Ka`,status:200,statusText:`OK`,latency:`112ms`,response:[`{ \"id\": \"ws_71Ka\", \"name\": \"Acme Labs\", \"members\": 12 }`]}"
+    },
+    {
+      "label": "line pulse",
+      "slug": "006-line-pulse",
+      "size": null,
+      "propsRaw": "{pulse:`line`}"
+    },
+    {
+      "label": "hover",
+      "slug": "007-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "post",
+      "slug": "008-post",
+      "size": null,
+      "propsRaw": "{variant:`post`}"
+    },
+    {
+      "label": "error",
+      "slug": "009-error",
+      "size": null,
+      "propsRaw": "{variant:`error`}"
+    },
+    {
+      "label": "error · isometric",
+      "slug": "010-error-isometric",
+      "size": null,
+      "propsRaw": "{variant:`error`,isometric:!0}"
+    },
+    {
+      "label": "post · line",
+      "slug": "011-post-line",
+      "size": null,
+      "propsRaw": "{variant:`post`,pulse:`line`}"
+    }
+  ]
+}

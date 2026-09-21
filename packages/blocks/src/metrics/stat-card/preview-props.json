@@ -1,0 +1,52 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "users · custom copy": {
+    "icon": "lucide:Users",
+    "label": "Active Users",
+    "value": "12,481",
+    "change": "+8.1%",
+    "period": "vs last week",
+    "trend": "up"
+  },
+  "orders · custom copy": {
+    "icon": "lucide:ShoppingCart",
+    "label": "Orders",
+    "value": "1,284",
+    "change": "-3.2%",
+    "period": "vs last month",
+    "trend": "down"
+  },
+  "pageviews · custom copy": {
+    "icon": "lucide:Activity",
+    "label": "Page Views",
+    "value": "92,418",
+    "change": "+24.7%",
+    "period": "vs last 7d",
+    "trend": "up"
+  },
+  "conversion · custom copy": {
+    "icon": "lucide:Target",
+    "label": "Conversion",
+    "value": "4.82%",
+    "change": "+0.6pt",
+    "period": "vs last 30d",
+    "trend": "up"
+  }
+}

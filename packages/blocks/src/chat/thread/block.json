@@ -1,0 +1,82 @@
+{
+  "category": "Chat",
+  "file": "thread",
+  "name": "Thread",
+  "description": "A threaded message view with replies and reactions.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "chat/thread.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "thread-DoLtSjTc.js",
+    "components": [
+      "thread-B5jF7tyo.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0,isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "default · custom thread",
+      "slug": "006-default-custom-thread",
+      "size": null,
+      "propsRaw": "{...i}"
+    },
+    {
+      "label": "isometric · custom thread",
+      "slug": "007-isometric-custom-thread",
+      "size": null,
+      "propsRaw": "{isometric:!0,...i}"
+    },
+    {
+      "label": "no actions",
+      "slug": "008-no-actions",
+      "size": null,
+      "propsRaw": "{actions:!1}"
+    },
+    {
+      "label": "custom likes",
+      "slug": "009-custom-likes",
+      "size": null,
+      "propsRaw": "{likes:142}"
+    }
+  ]
+}

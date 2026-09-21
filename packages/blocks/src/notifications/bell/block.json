@@ -1,0 +1,70 @@
+{
+  "category": "Notifications",
+  "file": "bell",
+  "name": "Bell",
+  "description": "A notification bell with an unread badge and pop.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "notifications/bell.tsx",
+  "page": {
+    "cols": 3,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "bell-BPO0cqRe.js",
+    "components": [
+      "bell-rTKZwYVC.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": "sm",
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": "sm",
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "count={0}",
+      "slug": "002-count-0",
+      "size": "sm",
+      "propsRaw": "{count:0}"
+    },
+    {
+      "label": "count={12}",
+      "slug": "003-count-12",
+      "size": "sm",
+      "propsRaw": "{count:12}"
+    },
+    {
+      "label": "count={150}",
+      "slug": "004-count-150",
+      "size": "sm",
+      "propsRaw": "{count:150}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "005-fadeout",
+      "size": "sm",
+      "propsRaw": "{count:15,fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "006-isometric",
+      "size": "sm",
+      "propsRaw": "{count:15,fadeOut:!0,isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "007-isometric-fadeout",
+      "size": "sm",
+      "propsRaw": "{count:15,fadeOut:!0,isometric:!0}"
+    }
+  ]
+}

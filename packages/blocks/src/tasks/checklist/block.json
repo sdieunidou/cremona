@@ -1,0 +1,70 @@
+{
+  "category": "Tasks",
+  "file": "checklist",
+  "name": "Checklist",
+  "description": "A checklist with items completing one by one.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "tasks/checklist.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "checklist-DseW17pi.js",
+    "components": [
+      "checklist-B3GWnnzG.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "all done · custom items",
+      "slug": "006-all-done-custom-items",
+      "size": null,
+      "propsRaw": "{title:`Sprint wrap-up`,items:[{title:`Ship notification center`,detail:`Deployed v2.4`,done:!0,priority:`high`},{title:`Review onboarding spec`,detail:`v3 · merged`,done:!0,priority:`med`},{title:`Update changelog`,detail:`Published`,done:!0,priority:`low`},{title:`Reply to design feedback`,done:!0,priority:`low`}]}"
+    },
+    {
+      "label": "all pending · custom items",
+      "slug": "007-all-pending-custom-items",
+      "size": null,
+      "propsRaw": "{title:`This week`,items:[{title:`Draft Q2 OKRs`,detail:`Due Friday`},{title:`Refactor billing module`,detail:`Split into 3 PRs`},{title:`Sync with design on v3 tokens`,detail:`Thursday · 30 min`},{title:`Audit onboarding metrics`,detail:`Drop-off in step 2`}]}"
+    }
+  ]
+}

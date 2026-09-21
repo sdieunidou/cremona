@@ -1,0 +1,55 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "degraded · custom copy": {
+    "title": "API",
+    "status": "degraded",
+    "incidents": [
+      42,
+      51,
+      57
+    ],
+    "outages": []
+  },
+  "outage · isometric": {
+    "title": "Checkout",
+    "status": "outage",
+    "incidents": [
+      39
+    ],
+    "outages": [
+      55,
+      58
+    ],
+    "isometric": true
+  },
+  "45 days · clean": {
+    "days": 45,
+    "incidents": [],
+    "outages": [],
+    "uptime": "100.00%"
+  },
+  "30 days · incident": {
+    "days": 30,
+    "incidents": [
+      7,
+      8,
+      19
+    ],
+    "outages": [
+      14
+    ]
+  },
+  "no legend": {
+    "showLegend": false
+  }
+}

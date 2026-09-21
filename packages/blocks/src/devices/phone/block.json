@@ -1,0 +1,112 @@
+{
+  "category": "Devices",
+  "file": "phone",
+  "name": "Phone",
+  "description": "A phone device frame for showcasing a mobile screen.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "devices/phone.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "phone-7Ot-yR7B.js",
+    "components": [
+      "phone-ChmtE26D.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "home",
+      "slug": "006-home",
+      "size": null,
+      "propsRaw": "{variant:`home`}"
+    },
+    {
+      "label": "home · isometric",
+      "slug": "007-home-isometric",
+      "size": null,
+      "propsRaw": "{variant:`home`,isometric:!0}"
+    },
+    {
+      "label": "lockscreen",
+      "slug": "008-lockscreen",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`}"
+    },
+    {
+      "label": "lockscreen · image",
+      "slug": "009-lockscreen-image",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`,image:e(`media/placeholders/photo-01.jpg`)}"
+    },
+    {
+      "label": "lockscreen · isometric",
+      "slug": "010-lockscreen-isometric",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`,isometric:!0}"
+    },
+    {
+      "label": "lockscreen · isometric · fadeOut",
+      "slug": "011-lockscreen-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`,image:e(`media/placeholders/photo-02.jpg`),isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "lockscreen · custom copy",
+      "slug": "012-lockscreen-custom-copy",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`,image:e(`media/placeholders/photo-01.jpg`),time:`14:08`,date:`Friday, June 6`,notifications:[{app:`Slack`,title:`#design`,body:`New mockups uploaded to Figma`},{app:`Calendar`,title:`Standup in 5 min`,body:`Daily sync with the engineering team`}]}"
+    },
+    {
+      "label": "screenshot",
+      "slug": "013-screenshot",
+      "size": null,
+      "propsRaw": "{variant:`screenshot`,image:e(`media/placeholders/photo-01.jpg`)}"
+    },
+    {
+      "label": "lockscreen · no notifications",
+      "slug": "014-lockscreen-no-notifications",
+      "size": null,
+      "propsRaw": "{variant:`lockscreen`,image:e(`media/placeholders/photo-03.jpg`),time:`7:30`,date:`Saturday, March 15`,notifications:[]}"
+    }
+  ]
+}

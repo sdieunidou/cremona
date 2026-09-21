@@ -1,0 +1,64 @@
+{
+  "category": "Connections",
+  "file": "pipeline",
+  "name": "Pipeline",
+  "description": "A linear pipeline of stages with moving progress.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "connections/pipeline.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "pipeline-C4_uFiPb.js",
+    "components": [
+      "pipeline-C0d80R6v.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "spike",
+      "slug": "003-spike",
+      "size": null,
+      "propsRaw": "{pulse:`spike`}"
+    },
+    {
+      "label": "2 in · 4 out",
+      "slug": "004-2-in-4-out",
+      "size": null,
+      "propsRaw": "{inputs:[(0,u.jsx)(a,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(s,{className:`size-4`,strokeWidth:2})],outputs:[(0,u.jsx)(n,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(o,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(t,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(r,{className:`size-4`,strokeWidth:2})]}"
+    },
+    {
+      "label": "isometric · 1 in · 2 out",
+      "slug": "005-isometric-1-in-2-out",
+      "size": null,
+      "propsRaw": "{inputs:[(0,u.jsx)(a,{className:`size-4`,strokeWidth:2})],outputs:[(0,u.jsx)(n,{className:`size-4`,strokeWidth:2}),(0,u.jsx)(t,{className:`size-4`,strokeWidth:2})],isometric:!0}"
+    },
+    {
+      "label": "custom logo",
+      "slug": "006-custom-logo",
+      "size": null,
+      "propsRaw": "{logo:(0,u.jsx)(c,{className:`size-5 text-primary-foreground`,strokeWidth:1.5})}"
+    }
+  ]
+}

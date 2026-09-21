@@ -1,0 +1,94 @@
+{
+  "category": "API",
+  "file": "logs",
+  "name": "Logs",
+  "description": "Service nodes streaming into a log console along connected paths, with severity-colored level chips and rows that tail in.",
+  "added": "2026-07-14",
+  "kind": "block",
+  "sourcePath": "api/logs.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "logs-B0k4yWl8.js",
+    "components": [
+      "logs-DXvb2YWn.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "004-custom-copy",
+      "size": null,
+      "propsRaw": "{service:`edge-router`,lines:[{time:`03:11:02`,level:`info`,message:`cold start eu-west`},{time:`03:11:02`,level:`debug`,message:`warming isolates`},{time:`03:11:03`,level:`success`,message:`ready in 412ms`},{time:`03:11:08`,level:`info`,message:`GET /health 200`}]}"
+    },
+    {
+      "label": "line pulse",
+      "slug": "005-line-pulse",
+      "size": null,
+      "propsRaw": "{pulse:`line`}"
+    },
+    {
+      "label": "hover",
+      "slug": "006-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "worker",
+      "slug": "007-worker",
+      "size": null,
+      "propsRaw": "{variant:`worker`}"
+    },
+    {
+      "label": "errors",
+      "slug": "008-errors",
+      "size": null,
+      "propsRaw": "{variant:`errors`}"
+    },
+    {
+      "label": "worker · isometric",
+      "slug": "009-worker-isometric",
+      "size": null,
+      "propsRaw": "{variant:`worker`,isometric:!0}"
+    },
+    {
+      "label": "two sources",
+      "slug": "010-two-sources",
+      "size": null,
+      "propsRaw": "{sources:[(0,c.jsx)(a,{className:`size-3.5`,strokeWidth:2}),(0,c.jsx)(r,{className:`size-3.5`,strokeWidth:2})]}"
+    },
+    {
+      "label": "four sources",
+      "slug": "011-four-sources",
+      "size": null,
+      "propsRaw": "{sources:[(0,c.jsx)(a,{className:`size-3.5`,strokeWidth:2}),(0,c.jsx)(o,{className:`size-3.5`,strokeWidth:2}),(0,c.jsx)(n,{className:`size-3.5`,strokeWidth:2}),(0,c.jsx)(t,{className:`size-3.5`,strokeWidth:2})]}"
+    }
+  ]
+}

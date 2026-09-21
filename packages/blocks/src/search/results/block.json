@@ -1,0 +1,76 @@
+{
+  "category": "Search",
+  "file": "results",
+  "name": "Results",
+  "description": "A search results panel with filter chips, a result count, and matched terms highlighted in place.",
+  "added": "2026-07-28",
+  "kind": "block",
+  "sourcePath": "search/results.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "results-B4kA4W8q.js",
+    "components": [
+      "results-jXOWVDrw.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "people · custom copy",
+      "slug": "006-people-custom-copy",
+      "size": null,
+      "propsRaw": "{query:`chen`,stats:`24 results in 0.04s`,filters:[`All`,`People`,`Teams`],activeFilter:1,results:[{icon:(0,c.jsx)(i,{className:`size-3`,strokeWidth:2.5}),title:`Sarah Chen`,path:`Design › Product`,snippet:`Chen leads the design system and motion guidelines.`,meta:`Person`},{icon:(0,c.jsx)(s,{className:`size-3`,strokeWidth:2.5}),title:`Chen Labs`,path:`Accounts › Enterprise`,snippet:`Renewal scheduled for March, 240 seats active.`,meta:`Account`}]}"
+    },
+    {
+      "label": "docs · isometric",
+      "slug": "007-docs-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,query:`rate limit`,stats:`62 results in 0.05s`,results:[{icon:(0,c.jsx)(r,{className:`size-3`,strokeWidth:2.5}),title:`Rate limits by plan`,path:`docs.acme.com › limits`,snippet:`Every plan has a rate limit measured per minute.`,meta:`Docs`},{icon:(0,c.jsx)(r,{className:`size-3`,strokeWidth:2.5}),title:`Handling 429 responses`,path:`docs.acme.com › api › errors`,snippet:`Back off and retry when a rate limit is returned.`,meta:`API`}]}"
+    },
+    {
+      "label": "active filter",
+      "slug": "008-active-filter",
+      "size": null,
+      "propsRaw": "{activeFilter:2}"
+    }
+  ]
+}

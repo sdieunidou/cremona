@@ -1,0 +1,52 @@
+{
+  "files": {
+    "count": 9
+  },
+  "documents": {
+    "category": "documents",
+    "label": "7 documents",
+    "count": 7
+  },
+  "spreadsheets": {
+    "category": "spreadsheets",
+    "label": "5 sheets",
+    "count": 5
+  },
+  "images": {
+    "category": "images",
+    "label": "3 images",
+    "count": 3
+  },
+  "design": {
+    "category": "design",
+    "label": "Design"
+  },
+  "code": {
+    "category": "code",
+    "label": "Code"
+  },
+  "fonts": {
+    "category": "fonts",
+    "label": "Fonts"
+  },
+  "media": {
+    "category": "media",
+    "label": "Media"
+  },
+  "video": {
+    "category": "video",
+    "label": "Video"
+  },
+  "audio": {
+    "category": "audio",
+    "label": "Audio"
+  },
+  "archives": {
+    "category": "archives",
+    "label": "Archives"
+  },
+  "mixed": {
+    "category": "mixed",
+    "label": "Mixed"
+  }
+}

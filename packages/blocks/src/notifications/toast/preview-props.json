@@ -1,0 +1,37 @@
+{
+  "success": {},
+  "warning": {
+    "variant": "warning"
+  },
+  "info": {
+    "variant": "info"
+  },
+  "success · isometric": {
+    "isometric": true
+  },
+  "warning · isometric": {
+    "variant": "warning",
+    "isometric": true
+  },
+  "info · isometric": {
+    "variant": "info",
+    "isometric": true
+  },
+  "success · custom copy": {
+    "title": "Payment received",
+    "description": "$240.00 from Acme Inc. has cleared and was added to your balance."
+  },
+  "warning · isometric · custom copy": {
+    "variant": "warning",
+    "isometric": true,
+    "title": "API limit nearing",
+    "description": "You've used 4,820 of 5,000 monthly requests. Upgrade to avoid throttling."
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  }
+}

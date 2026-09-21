@@ -1,0 +1,94 @@
+{
+  "category": "Avatars",
+  "file": "stack",
+  "name": "Stack",
+  "description": "An overlapping avatar stack with a remaining count badge.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "avatars/stack.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "stack-Bl7TgiBY.js",
+    "components": [
+      "stack-HwdRoZO9.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "002-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "003-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "no status",
+      "slug": "004-no-status",
+      "size": null,
+      "propsRaw": "{status:!1}"
+    },
+    {
+      "label": "dot · away",
+      "slug": "005-dot-away",
+      "size": null,
+      "propsRaw": "{status:{count:37,label:`users away`,dot:`away`}}"
+    },
+    {
+      "label": "dot · busy",
+      "slug": "006-dot-busy",
+      "size": null,
+      "propsRaw": "{status:{count:5,label:`in a meeting`,dot:`busy`}}"
+    },
+    {
+      "label": "no dot",
+      "slug": "007-no-dot",
+      "size": null,
+      "propsRaw": "{status:{count:0,label:`Trusted by 1200+ founders`,dot:!1}}"
+    },
+    {
+      "label": "photos",
+      "slug": "008-photos",
+      "size": null,
+      "propsRaw": "{avatars:a}"
+    },
+    {
+      "label": "photos · isometric",
+      "slug": "009-photos-isometric",
+      "size": null,
+      "propsRaw": "{avatars:a,isometric:!0}"
+    },
+    {
+      "label": "custom roster",
+      "slug": "010-custom-roster",
+      "size": null,
+      "propsRaw": "{avatars:[{initials:`MK`,tint:`bg-pink-200/80 text-pink-700 dark:bg-pink-950/80 dark:text-pink-300`},{initials:`RA`,tint:`bg-orange-200/80 text-orange-700 dark:bg-orange-950/80 dark:text-orange-300`},{initials:`LS`,tint:`bg-indigo-200/80 text-indigo-700 dark:bg-indigo-950/80 dark:text-indigo-300`},{initials:`FW`,tint:`bg-teal-200/80 text-teal-700 dark:bg-teal-950/80 dark:text-teal-300`}],status:{count:48,label:`reviewers`}}"
+    },
+    {
+      "label": "three avatars · custom copy",
+      "slug": "011-three-avatars-custom-copy",
+      "size": null,
+      "propsRaw": "{avatars:[{initials:`HZ`,tint:`bg-cyan-200/80 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-300`},{initials:`OB`,tint:`bg-fuchsia-200/80 text-fuchsia-700 dark:bg-fuchsia-950/80 dark:text-fuchsia-300`},{initials:`TN`,tint:`bg-lime-200/80 text-lime-700 dark:bg-lime-950/80 dark:text-lime-300`}],status:{count:3,label:`founding designers`}}"
+    }
+  ]
+}

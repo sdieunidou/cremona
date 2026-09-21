@@ -1,0 +1,65 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "no glow": {
+    "glow": false
+  },
+  "no particles": {
+    "particles": false
+  },
+  "photo avatar": {
+    "collaborators": [
+      {
+        "name": "You",
+        "kind": "user",
+        "initials": "JC",
+        "avatar": "../../media/placeholders/avatar-01.jpg"
+      },
+      {
+        "name": "Research Agent",
+        "kind": "agent",
+        "color": "text-purple-600 dark:text-purple-500"
+      },
+      {
+        "name": "Coding Agent",
+        "kind": "agent",
+        "color": "text-sky-600 dark:text-sky-500"
+      }
+    ]
+  },
+  "custom collaborators": {
+    "collaborators": [
+      {
+        "name": "Sarah",
+        "kind": "user",
+        "initials": "SR"
+      },
+      {
+        "name": "Planner",
+        "kind": "agent",
+        "color": "text-violet-600 dark:text-violet-500"
+      },
+      {
+        "name": "Builder",
+        "kind": "agent",
+        "color": "text-teal-600 dark:text-teal-500"
+      }
+    ]
+  },
+  "solo agent team": {
+    "collaborators": [
+      {
+        "name": "You",
+        "kind": "user",
+        "initials": "JC"
+      },
+      {
+        "name": "Support Agent",
+        "kind": "agent",
+        "color": "text-sky-600 dark:text-sky-500"
+      }
+    ]
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom copy": {
+    "service": "edge-router",
+    "lines": [
+      {
+        "time": "03:11:02",
+        "level": "info",
+        "message": "cold start eu-west"
+      },
+      {
+        "time": "03:11:02",
+        "level": "debug",
+        "message": "warming isolates"
+      },
+      {
+        "time": "03:11:03",
+        "level": "success",
+        "message": "ready in 412ms"
+      },
+      {
+        "time": "03:11:08",
+        "level": "info",
+        "message": "GET /health 200"
+      }
+    ]
+  },
+  "line pulse": {
+    "pulse": "line"
+  },
+  "hover": {
+    "hover": true
+  },
+  "worker": {
+    "variant": "worker"
+  },
+  "errors": {
+    "variant": "errors"
+  },
+  "worker · isometric": {
+    "variant": "worker",
+    "isometric": true
+  },
+  "two sources": {
+    "sources": [
+      {
+        "type": "lucide:Globe",
+        "key": null,
+        "props": {
+          "className": "size-3.5",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Database",
+        "key": null,
+        "props": {
+          "className": "size-3.5",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      }
+    ]
+  },
+  "four sources": {
+    "sources": [
+      {
+        "type": "lucide:Globe",
+        "key": null,
+        "props": {
+          "className": "size-3.5",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Server",
+        "key": null,
+        "props": {
+          "className": "size-3.5",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Cpu",
+        "key": null,
+        "props": {
+          "className": "size-3.5",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      },
+      {
+        "type": "lucide:Cloud",
+        "key": null,
+        "props": {
+          "className": "size-3.5",
+          "strokeWidth": 2
+        },
+        "_owner": null,
+        "_store": {}
+      }
+    ]
+  }
+}

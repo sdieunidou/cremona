@@ -1,0 +1,98 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "fadeOut": true,
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "default · custom copy": {
+    "title": "Acme Copilot",
+    "prompt": "Draft a launch email for our new pricing",
+    "response": [
+      {
+        "kind": "paragraph",
+        "text": "Sure, here's a draft you can tune:"
+      },
+      {
+        "kind": "bullet",
+        "text": "Subject: A simpler way to scale with Acme"
+      },
+      {
+        "kind": "bullet",
+        "text": "Opens with the customer pain point you mentioned"
+      },
+      {
+        "kind": "bullet",
+        "text": "Closes with a soft CTA to upgrade in one click"
+      }
+    ]
+  },
+  "isometric · custom copy": {
+    "isometric": true,
+    "title": "Acme Copilot",
+    "prompt": "Draft a launch email for our new pricing",
+    "response": [
+      {
+        "kind": "paragraph",
+        "text": "Sure, here's a draft you can tune:"
+      },
+      {
+        "kind": "bullet",
+        "text": "Subject: A simpler way to scale with Acme"
+      },
+      {
+        "kind": "bullet",
+        "text": "Opens with the customer pain point you mentioned"
+      },
+      {
+        "kind": "bullet",
+        "text": "Closes with a soft CTA to upgrade in one click"
+      }
+    ]
+  },
+  "paragraph only": {
+    "prompt": "What is product-led growth?",
+    "response": [
+      {
+        "kind": "paragraph",
+        "text": "Product-led growth is a strategy where the product drives acquisition, expansion, and retention."
+      },
+      {
+        "kind": "paragraph",
+        "text": "Users experience value before talking to sales, and the product itself becomes the primary growth channel."
+      }
+    ]
+  },
+  "busy status": {
+    "status": "Thinking…",
+    "statusKind": "busy",
+    "response": [
+      {
+        "kind": "paragraph",
+        "text": "Thinking…"
+      }
+    ]
+  },
+  "offline status": {
+    "status": "Offline",
+    "statusKind": "offline"
+  },
+  "no caret": {
+    "caret": false
+  },
+  "no actions": {
+    "actions": false
+  }
+}

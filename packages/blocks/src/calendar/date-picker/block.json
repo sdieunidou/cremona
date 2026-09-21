@@ -1,0 +1,88 @@
+{
+  "category": "Calendar",
+  "file": "date-picker",
+  "name": "Date Picker",
+  "description": "A calendar date picker with a selected day and range highlight.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "calendar/date-picker.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "date-picker-CwG8R8N8.js",
+    "components": [
+      "date-picker-C60GfG4A.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "range",
+      "slug": "006-range",
+      "size": null,
+      "propsRaw": "{selected:null,rangeStart:12,rangeEnd:22}"
+    },
+    {
+      "label": "range · isometric",
+      "slug": "007-range-isometric",
+      "size": null,
+      "propsRaw": "{selected:null,rangeStart:11,rangeEnd:18,isometric:!0}"
+    },
+    {
+      "label": "highlighted · selected",
+      "slug": "008-highlighted-selected",
+      "size": null,
+      "propsRaw": "{highlighted:11,selected:18}"
+    },
+    {
+      "label": "specific month",
+      "slug": "009-specific-month",
+      "size": null,
+      "propsRaw": "{month:6,year:2028,selected:1}"
+    },
+    {
+      "label": "Sunday start",
+      "slug": "010-sunday-start",
+      "size": null,
+      "propsRaw": "{weekStartsOn:0}"
+    }
+  ]
+}

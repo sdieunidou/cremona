@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "types": ["vite/client"],
+    "paths": {
+      "@cremona/core": ["../../packages/core/src/index.ts"],
+      "@cremona/react": ["../../packages/react/src/index.ts"],
+      "@cremona/blocks": ["../../packages/blocks/src/registry.ts"],
+      "@cremona/tokens/css/cremona.css": ["../../packages/tokens/css/cremona.css"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite.config.ts"]
+}

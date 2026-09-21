@@ -1,0 +1,32 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom quote · default": {
+    "quote": "An excellent service that exceeded all of my expectations."
+  },
+  "custom quote · isometric": {
+    "quote": "The attention to detail and support was outstanding.",
+    "isometric": true
+  },
+  "custom quote · isometric · no gradient": {
+    "quote": "A seamless experience from start to finish, truly impressive.",
+    "gradient": false,
+    "isometric": true
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "category": "Images",
+  "file": "gallery",
+  "name": "Gallery",
+  "description": "A responsive image gallery grid with hover states.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "images/gallery.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "gallery-CrwXKkJD.js",
+    "components": [
+      "gallery-tjg9ZY08.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "006-custom-copy",
+      "size": null,
+      "propsRaw": "{title:`Recent shots`,description:`Last 24 hours`}"
+    },
+    {
+      "label": "landscapes only",
+      "slug": "007-landscapes-only",
+      "size": null,
+      "propsRaw": "{title:`Landscapes`,items:[{kind:`mountain`,title:`Alpine`},{kind:`ocean`,title:`Pacific`},{kind:`forest`,title:`Pines`},{kind:`desert`,title:`Dunes`},{kind:`sunset`,title:`Dusk`},{kind:`aurora`,title:`Aurora`}]}"
+    },
+    {
+      "label": "real images",
+      "slug": "008-real-images",
+      "size": null,
+      "propsRaw": "{title:`Photo library`,badge:!1,items:a}"
+    },
+    {
+      "label": "isometric · real images",
+      "slug": "009-isometric-real-images",
+      "size": null,
+      "propsRaw": "{isometric:!0,title:`Photo library`,badge:!1,items:a}"
+    }
+  ]
+}

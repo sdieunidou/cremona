@@ -1,0 +1,16 @@
+{
+  "name": "@cremona/tokens",
+  "version": "0.1.0",
+  "description": "Cremona design tokens — themes (light/dark), palette, fonts, keyframes.",
+  "type": "module",
+  "exports": {
+    "./css": "./css/cremona.css",
+    "./css/tokens.css": "./css/tokens.css",
+    "./themes.json": "./themes.json"
+  },
+  "files": ["css", "assets", "themes.json"],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "true"
+  }
+}

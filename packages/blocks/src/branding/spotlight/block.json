@@ -1,0 +1,64 @@
+{
+  "category": "Branding",
+  "file": "spotlight",
+  "name": "Spotlight",
+  "description": "An app icon spotlit over a fading dock of placeholder apps, with ambient glow and a particle field.",
+  "added": "2026-06-23",
+  "kind": "block",
+  "sourcePath": "branding/spotlight.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "spotlight-o4oIC4k2.js",
+    "components": [
+      "spotlight-Hbh8UhbL.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "no glow",
+      "slug": "002-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "no particles",
+      "slug": "003-no-particles",
+      "size": null,
+      "propsRaw": "{particles:!1}"
+    },
+    {
+      "label": "custom logo",
+      "slug": "004-custom-logo",
+      "size": null,
+      "propsRaw": "{logo:(0,a.jsx)(n,{className:`size-6`,strokeWidth:1.5})}"
+    },
+    {
+      "label": "custom color",
+      "slug": "005-custom-color",
+      "size": null,
+      "propsRaw": "{iconClassName:`bg-indigo-700 dark:bg-indigo-400`}"
+    },
+    {
+      "label": "image",
+      "slug": "006-image",
+      "size": null,
+      "propsRaw": "{image:e(`media/placeholders/photo-08.jpg`)}"
+    }
+  ]
+}

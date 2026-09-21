@@ -1,0 +1,71 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom copy": {
+    "title": "Sunset drive",
+    "subtitle": "Ada Lovelace · EP",
+    "current": "2:14",
+    "duration": "4:08",
+    "progress": 54
+  },
+  "pause state": {
+    "state": "pause"
+  },
+  "custom meta": {
+    "meta": "Lossless · 24-bit"
+  },
+  "voice note · custom icon · custom meta": {
+    "icon": {
+      "type": "lucide:Mic",
+      "key": null,
+      "props": {
+        "className": "size-4"
+      },
+      "_owner": null,
+      "_store": {}
+    },
+    "title": "Voice memo · Tuesday",
+    "subtitle": "Recording",
+    "current": "0:18",
+    "duration": "0:42",
+    "progress": 42,
+    "meta": "Mono · 96kbps"
+  },
+  "podcast · pause · isometric": {
+    "isometric": true,
+    "state": "pause",
+    "icon": {
+      "type": "lucide:Headphones",
+      "key": null,
+      "props": {
+        "className": "size-4"
+      },
+      "_owner": null,
+      "_store": {}
+    },
+    "title": "On building in public",
+    "subtitle": "Highlight · 10:35",
+    "current": "2:03",
+    "duration": "10:35",
+    "progress": 20,
+    "meta": "Episode 47"
+  },
+  "bars · 26": {
+    "bars": 26
+  },
+  "bars · 42": {
+    "bars": 42
+  },
+  "bars · 56": {
+    "bars": 56
+  }
+}

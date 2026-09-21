@@ -1,0 +1,204 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "labels": {
+    "labels": true
+  },
+  "split reveal": {
+    "reveal": "split"
+  },
+  "sweep reveal": {
+    "reveal": "sweep"
+  },
+  "bloom from Singapore": {
+    "revealFrom": 4,
+    "labels": true
+  },
+  "no arcs": {
+    "arcs": false
+  },
+  "active marker": {
+    "markers": [
+      {
+        "lat": 37.77,
+        "lng": -122.42,
+        "label": "San Francisco"
+      },
+      {
+        "lat": 51.51,
+        "lng": -0.13,
+        "label": "London",
+        "active": true
+      },
+      {
+        "lat": 1.35,
+        "lng": 103.82,
+        "label": "Singapore"
+      },
+      {
+        "lat": -33.87,
+        "lng": 151.21,
+        "label": "Sydney"
+      }
+    ],
+    "arcPairs": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ]
+    ],
+    "labels": true
+  },
+  "regions": {
+    "arcs": false,
+    "regions": [
+      {
+        "lat": [
+          -56,
+          78
+        ],
+        "lng": [
+          -170,
+          -28
+        ],
+        "color": "text-indigo-600 dark:text-indigo-500"
+      },
+      {
+        "lat": [
+          -40,
+          78
+        ],
+        "lng": [
+          -28,
+          62
+        ],
+        "color": "text-emerald-600 dark:text-emerald-500"
+      },
+      {
+        "lat": [
+          -50,
+          78
+        ],
+        "lng": [
+          62,
+          180
+        ],
+        "color": "text-amber-600 dark:text-amber-500"
+      }
+    ]
+  },
+  "sparse": {
+    "density": "sparse"
+  },
+  "dense": {
+    "density": "dense"
+  },
+  "custom markers": {
+    "markers": [
+      {
+        "lat": 43.65,
+        "lng": -79.38,
+        "label": "Toronto"
+      },
+      {
+        "lat": 50.11,
+        "lng": 8.68,
+        "label": "Frankfurt"
+      },
+      {
+        "lat": 19.08,
+        "lng": 72.88,
+        "label": "Mumbai"
+      },
+      {
+        "lat": 37.57,
+        "lng": 126.98,
+        "label": "Seoul"
+      },
+      {
+        "lat": -26.2,
+        "lng": 28.05,
+        "label": "Johannesburg"
+      },
+      {
+        "lat": -33.45,
+        "lng": -70.67,
+        "label": "Santiago"
+      }
+    ],
+    "arcPairs": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        1,
+        4
+      ],
+      [
+        0,
+        5
+      ]
+    ]
+  },
+  "custom colors": {
+    "arcs": false,
+    "markers": [
+      {
+        "lat": 37.77,
+        "lng": -122.42,
+        "color": "text-sky-600 dark:text-sky-500"
+      },
+      {
+        "lat": 51.51,
+        "lng": -0.13,
+        "color": "text-violet-600 dark:text-violet-500"
+      },
+      {
+        "lat": -23.55,
+        "lng": -46.63,
+        "color": "text-rose-600 dark:text-rose-500"
+      },
+      {
+        "lat": 1.35,
+        "lng": 103.82,
+        "color": "text-emerald-600 dark:text-emerald-500"
+      },
+      {
+        "lat": -33.87,
+        "lng": 151.21,
+        "color": "text-orange-600 dark:text-orange-500"
+      }
+    ]
+  },
+  "single marker": {
+    "arcs": false,
+    "labels": true,
+    "markers": [
+      {
+        "lat": 38.72,
+        "lng": -9.14,
+        "label": "Headquarters",
+        "active": true
+      }
+    ]
+  }
+}

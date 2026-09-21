@@ -1,0 +1,106 @@
+{
+  "category": "Geo",
+  "file": "world-map",
+  "name": "World Map",
+  "description": "A dotted world map that blooms outward from a chosen city, with pinging location markers, tinted coverage regions, and connection arcs that draw between cities.",
+  "added": "2026-09-11",
+  "kind": "block",
+  "sourcePath": "geo/world-map.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "world-map-D_kdBtqw.js",
+    "components": [
+      "world-map-C9v8gvhr.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "labels",
+      "slug": "002-labels",
+      "size": null,
+      "propsRaw": "{labels:!0}"
+    },
+    {
+      "label": "split reveal",
+      "slug": "003-split-reveal",
+      "size": null,
+      "propsRaw": "{reveal:`split`}"
+    },
+    {
+      "label": "sweep reveal",
+      "slug": "004-sweep-reveal",
+      "size": null,
+      "propsRaw": "{reveal:`sweep`}"
+    },
+    {
+      "label": "bloom from Singapore",
+      "slug": "005-bloom-from-singapore",
+      "size": null,
+      "propsRaw": "{revealFrom:4,labels:!0}"
+    },
+    {
+      "label": "no arcs",
+      "slug": "006-no-arcs",
+      "size": null,
+      "propsRaw": "{arcs:!1}"
+    },
+    {
+      "label": "active marker",
+      "slug": "007-active-marker",
+      "size": null,
+      "propsRaw": "{markers:[{lat:37.77,lng:-122.42,label:`San Francisco`},{lat:51.51,lng:-.13,label:`London`,active:!0},{lat:1.35,lng:103.82,label:`Singapore`},{lat:-33.87,lng:151.21,label:`Sydney`}],arcPairs:[[0,1],[1,2],[2,3]],labels:!0}"
+    },
+    {
+      "label": "regions",
+      "slug": "008-regions",
+      "size": null,
+      "propsRaw": "{arcs:!1,regions:[{lat:[-56,78],lng:[-170,-28],color:`text-indigo-600 dark:text-indigo-500`},{lat:[-40,78],lng:[-28,62],color:`text-emerald-600 dark:text-emerald-500`},{lat:[-50,78],lng:[62,180],color:`text-amber-600 dark:text-amber-500`}]}"
+    },
+    {
+      "label": "sparse",
+      "slug": "009-sparse",
+      "size": null,
+      "propsRaw": "{density:`sparse`}"
+    },
+    {
+      "label": "dense",
+      "slug": "010-dense",
+      "size": null,
+      "propsRaw": "{density:`dense`}"
+    },
+    {
+      "label": "custom markers",
+      "slug": "011-custom-markers",
+      "size": null,
+      "propsRaw": "{markers:[{lat:43.65,lng:-79.38,label:`Toronto`},{lat:50.11,lng:8.68,label:`Frankfurt`},{lat:19.08,lng:72.88,label:`Mumbai`},{lat:37.57,lng:126.98,label:`Seoul`},{lat:-26.2,lng:28.05,label:`Johannesburg`},{lat:-33.45,lng:-70.67,label:`Santiago`}],arcPairs:[[0,1],[1,2],[2,3],[1,4],[0,5]]}"
+    },
+    {
+      "label": "custom colors",
+      "slug": "012-custom-colors",
+      "size": null,
+      "propsRaw": "{arcs:!1,markers:[{lat:37.77,lng:-122.42,color:`text-sky-600 dark:text-sky-500`},{lat:51.51,lng:-.13,color:`text-violet-600 dark:text-violet-500`},{lat:-23.55,lng:-46.63,color:`text-rose-600 dark:text-rose-500`},{lat:1.35,lng:103.82,color:`text-emerald-600 dark:text-emerald-500`},{lat:-33.87,lng:151.21,color:`text-orange-600 dark:text-orange-500`}]}"
+    },
+    {
+      "label": "single marker",
+      "slug": "013-single-marker",
+      "size": null,
+      "propsRaw": "{arcs:!1,labels:!0,markers:[{lat:38.72,lng:-9.14,label:`Headquarters`,active:!0}]}"
+    }
+  ]
+}

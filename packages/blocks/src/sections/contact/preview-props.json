@@ -1,0 +1,32 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom title · default": {
+    "title": "Contact us"
+  },
+  "custom title · isometric": {
+    "title": "We reply within 24 hours",
+    "isometric": true
+  },
+  "custom title · isometric · no gradient": {
+    "title": "We really care about your feedback",
+    "gradient": false,
+    "isometric": true
+  }
+}

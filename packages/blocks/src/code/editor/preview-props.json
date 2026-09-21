@@ -1,0 +1,239 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "fadeOut": true,
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "no line numbers": {
+    "lineNumbers": false
+  },
+  "no caret": {
+    "caret": false
+  },
+  "highlighted line": {
+    "lines": [
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 18,
+            "color": "keyword"
+          },
+          {
+            "width": 24,
+            "color": "variable"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          },
+          {
+            "width": 32,
+            "color": "string"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 18,
+            "color": "keyword"
+          },
+          {
+            "width": 30,
+            "color": "func"
+          },
+          {
+            "width": 24,
+            "color": "variable"
+          },
+          {
+            "width": 14,
+            "color": "type"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [],
+        "blank": true
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 22,
+            "color": "keyword"
+          },
+          {
+            "width": 32,
+            "color": "func"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ],
+        "highlight": true
+      },
+      {
+        "indent": 1,
+        "tokens": [
+          {
+            "width": 12,
+            "color": "keyword"
+          },
+          {
+            "width": 14,
+            "color": "punct"
+          },
+          {
+            "width": 18,
+            "color": "tag"
+          },
+          {
+            "width": 22,
+            "color": "prop"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ]
+      }
+    ]
+  },
+  "diff": {
+    "lines": [
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 18,
+            "color": "keyword"
+          },
+          {
+            "width": 24,
+            "color": "variable"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          },
+          {
+            "width": 32,
+            "color": "string"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [],
+        "blank": true
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 22,
+            "color": "func"
+          },
+          {
+            "width": 16,
+            "color": "type"
+          }
+        ],
+        "diff": "remove"
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 28,
+            "color": "func"
+          },
+          {
+            "width": 20,
+            "color": "type"
+          },
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ],
+        "diff": "add"
+      },
+      {
+        "indent": 1,
+        "tokens": [
+          {
+            "width": 14,
+            "color": "keyword"
+          },
+          {
+            "width": 22,
+            "color": "variable"
+          }
+        ]
+      },
+      {
+        "indent": 0,
+        "tokens": [
+          {
+            "width": 10,
+            "color": "punct"
+          }
+        ]
+      }
+    ]
+  },
+  "js": {
+    "language": "js"
+  },
+  "py": {
+    "language": "py"
+  },
+  "php": {
+    "language": "php"
+  },
+  "html": {
+    "language": "html"
+  },
+  "css": {
+    "language": "css"
+  },
+  "go": {
+    "language": "go"
+  }
+}

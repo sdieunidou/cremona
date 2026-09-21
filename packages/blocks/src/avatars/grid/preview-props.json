@@ -1,0 +1,104 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "photos · custom members": {
+    "members": [
+      {
+        "initials": "JC",
+        "image": "../../media/placeholders/avatar-01.jpg"
+      },
+      {
+        "initials": "AM",
+        "image": "../../media/placeholders/avatar-02.jpg"
+      },
+      {
+        "initials": "KL",
+        "image": "../../media/placeholders/avatar-06.jpg"
+      },
+      {
+        "initials": "DP",
+        "image": "../../media/placeholders/avatar-03.jpg"
+      },
+      {
+        "initials": "SR",
+        "image": "../../media/placeholders/avatar-04.jpg"
+      },
+      {
+        "initials": "TN",
+        "image": "../../media/placeholders/avatar-05.jpg"
+      }
+    ]
+  },
+  "photos · isometric · custom members": {
+    "isometric": true,
+    "members": [
+      {
+        "initials": "JC",
+        "image": "../../media/placeholders/avatar-01.jpg"
+      },
+      {
+        "initials": "AM",
+        "image": "../../media/placeholders/avatar-02.jpg"
+      },
+      {
+        "initials": "KL",
+        "image": "../../media/placeholders/avatar-06.jpg"
+      },
+      {
+        "initials": "DP",
+        "image": "../../media/placeholders/avatar-03.jpg"
+      },
+      {
+        "initials": "SR",
+        "image": "../../media/placeholders/avatar-04.jpg"
+      },
+      {
+        "initials": "TN",
+        "image": "../../media/placeholders/avatar-05.jpg"
+      }
+    ]
+  },
+  "4 avatars · custom members": {
+    "members": [
+      {
+        "initials": "SR",
+        "tint": "bg-amber-200/80 text-amber-700 dark:bg-amber-900 dark:text-amber-300"
+      },
+      {
+        "initials": "OB",
+        "tint": "bg-pink-200/80 text-pink-700 dark:bg-pink-900 dark:text-pink-300"
+      },
+      {
+        "initials": "MK",
+        "tint": "bg-teal-200/80 text-teal-700 dark:bg-teal-900 dark:text-teal-300"
+      },
+      {
+        "initials": "JH",
+        "tint": "bg-indigo-200/80 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300"
+      }
+    ]
+  },
+  "4 avatars · isometric · custom members": {
+    "isometric": true,
+    "members": [
+      {
+        "initials": "RA",
+        "tint": "bg-orange-200/80 text-orange-700 dark:bg-orange-900 dark:text-orange-300"
+      },
+      {
+        "initials": "LS",
+        "tint": "bg-lime-200/80 text-lime-700 dark:bg-lime-900 dark:text-lime-300"
+      },
+      {
+        "initials": "FW",
+        "tint": "bg-red-200/80 text-red-700 dark:bg-red-900 dark:text-red-300"
+      },
+      {
+        "initials": "HZ",
+        "tint": "bg-fuchsia-200/80 text-fuchsia-700 dark:bg-fuchsia-900 dark:text-fuchsia-300"
+      }
+    ]
+  }
+}

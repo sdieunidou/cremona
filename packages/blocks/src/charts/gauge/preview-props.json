@@ -1,0 +1,76 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "capacity · custom copy": {
+    "title": "Storage used",
+    "badge": "Pro",
+    "percent": 68,
+    "value": "68%",
+    "label": "of 100 GB",
+    "minLabel": "0",
+    "maxLabel": "100 GB",
+    "change": "+12.4%"
+  },
+  "zones · custom copy": {
+    "title": "Error budget",
+    "badge": "30d",
+    "percent": 76,
+    "value": "76%",
+    "label": "budget remaining",
+    "minLabel": "0",
+    "maxLabel": "100%",
+    "change": "-6.2%",
+    "zones": [
+      {
+        "to": 40,
+        "color": "text-red-300 dark:text-red-400/30"
+      },
+      {
+        "to": 70,
+        "color": "text-amber-300 dark:text-amber-400/30"
+      },
+      {
+        "to": 100,
+        "color": "text-emerald-300 dark:text-emerald-400/30"
+      }
+    ]
+  },
+  "low value · custom copy": {
+    "title": "Monthly credits",
+    "badge": "Team",
+    "percent": 24,
+    "value": "24%",
+    "label": "of 50k credits used",
+    "minLabel": "0",
+    "maxLabel": "50k",
+    "change": "+3.1%",
+    "color": "var(--color-chart-2)"
+  },
+  "score · isometric · custom copy": {
+    "isometric": true,
+    "title": "NPS",
+    "badge": "Q3",
+    "percent": 81,
+    "value": "+62",
+    "label": "promoters minus detractors",
+    "minLabel": "-100",
+    "maxLabel": "100",
+    "change": "+8.0"
+  }
+}

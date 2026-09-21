@@ -1,0 +1,32 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom title · default": {
+    "title": "Sign in to your account"
+  },
+  "custom title · isometric": {
+    "title": "Create an account",
+    "isometric": true
+  },
+  "custom title · isometric · no gradient": {
+    "title": "Log in to continue",
+    "gradient": false,
+    "isometric": true
+  }
+}

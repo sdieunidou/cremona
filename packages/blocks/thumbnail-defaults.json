@@ -1,0 +1,333 @@
+{
+ "activity/feed": {
+  "isometric": true
+ },
+ "activity/timeline": {
+  "isometric": true
+ },
+ "ai/agent-flow": {},
+ "ai/presence": {},
+ "ai/prompt-box": {},
+ "ai/retrieval": {},
+ "ai/tools": {
+  "isometric": true
+ },
+ "ai/voice": {
+  "listeningStatus": "Live",
+  "thinkingStatus": "Working",
+  "speakingStatus": "Responding",
+  "listeningTranscript": "Draft a reply to the last email from Emma",
+  "speakingTranscript": "Sent. I kept it short and thanked her for the update."
+ },
+ "api/logs": {
+  "isometric": true
+ },
+ "api/request": {
+  "isometric": true
+ },
+ "api/webhook": {
+  "isometric": true
+ },
+ "avatars/grid": {
+  "isometric": true
+ },
+ "avatars/stack": {
+  "isometric": true
+ },
+ "avatars/profile-card": {
+  "isometric": true
+ },
+ "branding/spotlight": {},
+ "browser/loading": {
+  "isometric": true
+ },
+ "browser/simple": {
+  "isometric": true
+ },
+ "browser/tabs": {
+  "isometric": true
+ },
+ "calendar/date-picker": {
+  "isometric": true
+ },
+ "calendar/event-list": {
+  "isometric": true
+ },
+ "calendar/month-view": {
+  "isometric": true
+ },
+ "charts/bar": {
+  "isometric": true
+ },
+ "charts/donut": {
+  "isometric": true
+ },
+ "charts/funnel": {
+  "isometric": true
+ },
+ "charts/gauge": {
+  "isometric": true
+ },
+ "charts/heatmap": {
+  "isometric": true
+ },
+ "charts/line": {
+  "isometric": true
+ },
+ "charts/sparkline": {
+  "isometric": true
+ },
+ "chat/ai-chat": {
+  "isometric": true
+ },
+ "chat/bubbles": {
+  "isometric": true
+ },
+ "chat/thread": {
+  "isometric": true
+ },
+ "code/editor": {
+  "isometric": true
+ },
+ "code/snippet": {
+  "isometric": true
+ },
+ "code/terminal": {
+  "isometric": true
+ },
+ "connections/converge": {
+  "isometric": true
+ },
+ "connections/flow": {
+  "isometric": true
+ },
+ "connections/pipeline": {
+  "isometric": true
+ },
+ "connections/sync": {
+  "isometric": true
+ },
+ "data/filters": {
+  "isometric": true
+ },
+ "data/import": {
+  "isometric": true
+ },
+ "data/query": {
+  "isometric": true
+ },
+ "data/table": {
+  "isometric": true
+ },
+ "dashboard/mini-panel": {
+  "isometric": true
+ },
+ "dashboard/widget-grid": {
+  "isometric": true
+ },
+ "devices/laptop": {},
+ "devices/phone": {
+  "isometric": true
+ },
+ "devices/tablet": {
+  "isometric": true
+ },
+ "email/compose": {
+  "isometric": true
+ },
+ "email/inbox": {
+  "isometric": true
+ },
+ "files/explorer": {
+  "isometric": true
+ },
+ "files/simple": {},
+ "files/stacked": {},
+ "files/upload": {},
+ "geo/globe": {},
+ "geo/pin-drop": {},
+ "geo/world-map": {
+  "labels": true
+ },
+ "git/branch-graph": {
+  "isometric": true
+ },
+ "git/diff": {
+  "isometric": true,
+  "view": "split"
+ },
+ "git/pull-request": {
+  "isometric": true
+ },
+ "images/carousel": {
+  "isometric": true
+ },
+ "images/gallery": {
+  "isometric": true
+ },
+ "integrations/hub": {
+  "isometric": true
+ },
+ "integrations/logo-orbit": {
+  "isometric": true,
+  "orbit": true
+ },
+ "integrations/logo-reel": {},
+ "keyboard/half": {
+  "isometric": true,
+  "keys": [
+   "ctrl",
+   "shift",
+   "S"
+  ]
+ },
+ "keyboard/shortcut": {
+  "isometric": true,
+  "keys": [
+   "ctrl",
+   "shift",
+   "S"
+  ]
+ },
+ "media/audio-waveform": {
+  "isometric": true
+ },
+ "media/video-player": {
+  "isometric": true
+ },
+ "metrics/comparison": {
+  "isometric": true
+ },
+ "metrics/stat-card": {
+  "isometric": true
+ },
+ "metrics/trend": {
+  "isometric": true,
+  "gradient": false
+ },
+ "notifications/bell": {},
+ "notifications/list": {
+  "isometric": true
+ },
+ "notifications/toast": {
+  "isometric": true
+ },
+ "payments/checkout": {
+  "isometric": true
+ },
+ "payments/credit-card": {
+  "isometric": true,
+  "stacked": true
+ },
+ "payments/usage-meter": {
+  "isometric": true
+ },
+ "search/command-palette": {
+  "isometric": true
+ },
+ "search/results": {
+  "isometric": true
+ },
+ "search/semantic": {
+  "isometric": true
+ },
+ "sections/auth": {
+  "isometric": true
+ },
+ "sections/backgrounds": {
+  "isometric": true
+ },
+ "sections/bento": {
+  "isometric": true
+ },
+ "sections/blog": {
+  "isometric": true
+ },
+ "sections/blog-post": {
+  "isometric": true
+ },
+ "sections/comments": {
+  "isometric": true
+ },
+ "sections/components": {
+  "isometric": true
+ },
+ "sections/contact": {
+  "isometric": true
+ },
+ "sections/cta": {
+  "isometric": true
+ },
+ "sections/error": {
+  "isometric": true
+ },
+ "sections/faq": {
+  "isometric": true
+ },
+ "sections/features": {
+  "isometric": true
+ },
+ "sections/footers": {
+  "isometric": true
+ },
+ "sections/headers": {
+  "isometric": true
+ },
+ "sections/hero": {
+  "isometric": true
+ },
+ "sections/logos": {
+  "isometric": true
+ },
+ "sections/newsletter": {
+  "isometric": true
+ },
+ "sections/pricing": {
+  "isometric": true
+ },
+ "sections/process": {
+  "isometric": true
+ },
+ "sections/stats": {
+  "isometric": true
+ },
+ "sections/team": {
+  "isometric": true
+ },
+ "sections/testimonials": {
+  "isometric": true
+ },
+ "sections/timeline": {
+  "isometric": true
+ },
+ "security/fingerprint": {},
+ "security/lock": {},
+ "security/shield": {},
+ "states/empty": {
+  "isometric": true
+ },
+ "states/error": {
+  "isometric": true
+ },
+ "states/maintenance": {
+  "isometric": true
+ },
+ "states/not-found": {
+  "isometric": true
+ },
+ "status/health-check": {
+  "isometric": true
+ },
+ "status/resource-monitor": {
+  "isometric": true
+ },
+ "status/uptime-bar": {
+  "isometric": true
+ },
+ "tasks/checklist": {
+  "isometric": true
+ },
+ "tasks/kanban": {
+  "isometric": true
+ }
+}

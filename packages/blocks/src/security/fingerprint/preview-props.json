@@ -1,0 +1,26 @@
+{
+  "default": {},
+  "isometric": {
+    "isometric": true
+  },
+  "status=\"Authenticated\"": {
+    "status": "Authenticated"
+  },
+  "no status": {
+    "status": ""
+  },
+  "state=\"scanning\"": {
+    "state": "scanning"
+  },
+  "isometric · state=\"scanning\"": {
+    "state": "scanning",
+    "isometric": true
+  },
+  "state=\"error\"": {
+    "state": "error"
+  },
+  "isometric · state=\"error\"": {
+    "state": "error",
+    "isometric": true
+  }
+}

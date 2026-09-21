@@ -1,0 +1,70 @@
+{
+  "category": "Browser",
+  "file": "loading",
+  "name": "Loading",
+  "description": "A browser window mockup with an animated page loading state.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "browser/loading.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "loading-BYDLjxrp.js",
+    "components": [
+      "loading-DweH2BEB.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "hover",
+      "slug": "001-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "002-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "003-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "004-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0,isometric:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "005-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "006-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom url",
+      "slug": "007-custom-url",
+      "size": null,
+      "propsRaw": "{url:`app.acme.io/dashboard`}"
+    }
+  ]
+}

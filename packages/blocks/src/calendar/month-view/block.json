@@ -1,0 +1,70 @@
+{
+  "category": "Calendar",
+  "file": "month-view",
+  "name": "Month View",
+  "description": "A full month calendar grid with events placed on days.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "calendar/month-view.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "month-view-CRBrvy6w.js",
+    "components": [
+      "month-view-BBv_hnZY.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "specific month",
+      "slug": "006-specific-month",
+      "size": null,
+      "propsRaw": "{month:3,year:2028,highlighted:9,events:[{day:2,tone:`violet`},{day:7,tone:`sky`},{day:14,tone:`emerald`},{day:18,tone:`rose`},{day:24,tone:`amber`}]}"
+    },
+    {
+      "label": "Sunday start",
+      "slug": "007-sunday-start",
+      "size": null,
+      "propsRaw": "{weekStartsOn:0}"
+    }
+  ]
+}

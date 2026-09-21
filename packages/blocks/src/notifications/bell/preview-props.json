@@ -1,0 +1,29 @@
+{
+  "default": {},
+  "hover": {
+    "hover": true
+  },
+  "count={0}": {
+    "count": 0
+  },
+  "count={12}": {
+    "count": 12
+  },
+  "count={150}": {
+    "count": 150
+  },
+  "fadeOut": {
+    "count": 15,
+    "fadeOut": true
+  },
+  "isometric": {
+    "count": 15,
+    "fadeOut": true,
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "count": 15,
+    "fadeOut": true,
+    "isometric": true
+  }
+}

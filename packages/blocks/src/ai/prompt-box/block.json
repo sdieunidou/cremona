@@ -1,0 +1,76 @@
+{
+  "category": "AI",
+  "file": "prompt-box",
+  "name": "Prompt Box",
+  "description": "A wide prompt composer with a typing prompt, model picker, token count, and send, over an ambient glow and particle field.",
+  "added": "2026-07-01",
+  "kind": "block",
+  "sourcePath": "ai/prompt-box.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "prompt-box-_izl-PmH.js",
+    "components": [
+      "prompt-box-D73m-14k.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "001-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "hover",
+      "slug": "002-hover",
+      "size": null,
+      "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "no glow",
+      "slug": "003-no-glow",
+      "size": null,
+      "propsRaw": "{glow:!1}"
+    },
+    {
+      "label": "no particles",
+      "slug": "004-no-particles",
+      "size": null,
+      "propsRaw": "{particles:!1}"
+    },
+    {
+      "label": "no attachments",
+      "slug": "005-no-attachments",
+      "size": null,
+      "propsRaw": "{attachments:[]}"
+    },
+    {
+      "label": "minimal",
+      "slug": "006-minimal",
+      "size": null,
+      "propsRaw": "{glow:!1,particles:!1,gradient:!1,attachments:[]}"
+    },
+    {
+      "label": "custom copy",
+      "slug": "007-custom-copy",
+      "size": null,
+      "propsRaw": "{prompt:`Summarize this thread and list the action items.`,model:`Claude Sonnet`,tokens:`3,920`,contextUsed:.52,attachments:[`thread.eml`,`notes.md`]}"
+    },
+    {
+      "label": "no caret",
+      "slug": "008-no-caret",
+      "size": null,
+      "propsRaw": "{caret:!1}"
+    }
+  ]
+}

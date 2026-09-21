@@ -1,0 +1,70 @@
+{
+  "category": "Data",
+  "file": "query",
+  "name": "Query",
+  "description": "A visual query builder that assembles its conditions, sweeps as it runs, then streams the matching rows with a timing readout.",
+  "added": "2026-09-11",
+  "kind": "block",
+  "sourcePath": "data/query.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "query-DSZr4IvU.js",
+    "components": [
+      "query-CPzPfMnK.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "fadeOut",
+      "slug": "001-fadeout",
+      "size": null,
+      "propsRaw": "{fadeOut:!0}"
+    },
+    {
+      "label": "isometric",
+      "slug": "002-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "isometric · fadeOut",
+      "slug": "003-isometric-fadeout",
+      "size": null,
+      "propsRaw": "{isometric:!0,fadeOut:!0}"
+    },
+    {
+      "label": "default · no gradient",
+      "slug": "004-default-no-gradient",
+      "size": null,
+      "propsRaw": "{gradient:!1}"
+    },
+    {
+      "label": "isometric · no gradient",
+      "slug": "005-isometric-no-gradient",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "custom data · events",
+      "slug": "006-custom-data-events",
+      "size": null,
+      "propsRaw": "{source:`events`,duration:`8 ms`,conditions:[{field:`name`,operator:`=`,value:`signup`},{field:`plan`,operator:`!=`,value:`free`}],columns:[`ts`,`user`,`plan`],rows:[[`12:04`,`emma@acme.io`,`Pro`],[`11:52`,`noah@dune.co`,`Team`],[`11:38`,`ivy@northwind.io`,`Pro`]]}"
+    },
+    {
+      "label": "custom data · sessions · isometric",
+      "slug": "007-custom-data-sessions-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0,gradient:!1,source:`sessions`,duration:`112 ms`,conditions:[{field:`country`,operator:`in`,value:`EU`},{field:`duration`,operator:`>`,value:`30s`},{field:`device`,operator:`=`,value:`mobile`}],columns:[`id`,`country`,`duration`],rows:[[`a19f`,`Germany`,`4m 12s`],[`c74b`,`France`,`2m 48s`],[`e02d`,`Spain`,`1m 09s`],[`f5a1`,`Italy`,`52s`]]}"
+    }
+  ]
+}

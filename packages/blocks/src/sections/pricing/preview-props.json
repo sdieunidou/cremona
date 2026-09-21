@@ -1,0 +1,32 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom title · default": {
+    "title": "Best value for your money"
+  },
+  "custom title · isometric": {
+    "title": "Simple pricing",
+    "isometric": true
+  },
+  "custom title · isometric · no gradient": {
+    "title": "Get access to all features",
+    "gradient": false,
+    "isometric": true
+  }
+}

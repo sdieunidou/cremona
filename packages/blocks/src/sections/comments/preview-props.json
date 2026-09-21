@@ -1,0 +1,35 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom title · custom count": {
+    "title": "Discussion",
+    "count": 48
+  },
+  "custom title · isometric": {
+    "title": "Replies",
+    "count": 7,
+    "isometric": true
+  },
+  "custom title · isometric · no gradient": {
+    "title": "Feedback",
+    "count": 120,
+    "gradient": false,
+    "isometric": true
+  }
+}

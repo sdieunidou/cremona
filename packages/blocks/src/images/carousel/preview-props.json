@@ -1,0 +1,93 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "isometric": true,
+    "fadeOut": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "custom slides · count": {
+    "slides": [
+      {
+        "kind": "aurora",
+        "title": "Tromsø",
+        "caption": "Lights at midnight"
+      },
+      {
+        "kind": "blossom",
+        "title": "Kyoto",
+        "caption": "Cherry blossom season"
+      },
+      {
+        "kind": "city",
+        "title": "Tokyo",
+        "caption": "Neon after dark"
+      }
+    ],
+    "count": 8,
+    "activeIndex": 3
+  },
+  "no arrows": {
+    "arrows": false
+  },
+  "active: first": {
+    "activeIndex": 0
+  },
+  "active: last": {
+    "activeIndex": 4
+  },
+  "real images": {
+    "badge": false,
+    "slides": [
+      {
+        "src": "../../media/placeholders/photo-07.jpg",
+        "title": "Beach",
+        "caption": "A beautiful tropical beach"
+      },
+      {
+        "src": "../../media/placeholders/photo-08.jpg",
+        "title": "City",
+        "caption": "Train station in the city"
+      },
+      {
+        "src": "../../media/placeholders/photo-09.jpg",
+        "title": "Paris",
+        "caption": "The capital of France"
+      }
+    ],
+    "count": 3
+  },
+  "isometric · real images": {
+    "isometric": true,
+    "badge": false,
+    "slides": [
+      {
+        "src": "../../media/placeholders/photo-07.jpg",
+        "title": "Beach",
+        "caption": "A beautiful tropical beach"
+      },
+      {
+        "src": "../../media/placeholders/photo-08.jpg",
+        "title": "City",
+        "caption": "Train station in the city"
+      },
+      {
+        "src": "../../media/placeholders/photo-09.jpg",
+        "title": "Paris",
+        "caption": "The capital of France"
+      }
+    ],
+    "count": 3
+  }
+}

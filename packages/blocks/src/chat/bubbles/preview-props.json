@@ -1,0 +1,112 @@
+{
+  "default": {},
+  "fadeOut": {
+    "fadeOut": true
+  },
+  "isometric": {
+    "isometric": true
+  },
+  "isometric · fadeOut": {
+    "fadeOut": true,
+    "isometric": true
+  },
+  "default · no gradient": {
+    "gradient": false
+  },
+  "isometric · no gradient": {
+    "isometric": true,
+    "gradient": false
+  },
+  "default · custom messages": {
+    "name": "Mia Lee",
+    "initials": "ML",
+    "status": "Active 2m ago",
+    "messages": [
+      {
+        "from": "them",
+        "text": "Want to grab coffee tomorrow?",
+        "time": "08:12"
+      },
+      {
+        "from": "me",
+        "text": "Yes! 10am at the usual?",
+        "time": "08:14"
+      },
+      {
+        "from": "them",
+        "text": "See you there ☕",
+        "time": "08:15"
+      }
+    ]
+  },
+  "isometric · custom messages": {
+    "isometric": true,
+    "name": "Mia Lee",
+    "initials": "ML",
+    "status": "Active 2m ago",
+    "messages": [
+      {
+        "from": "them",
+        "text": "Want to grab coffee tomorrow?",
+        "time": "08:12"
+      },
+      {
+        "from": "me",
+        "text": "Yes! 10am at the usual?",
+        "time": "08:14"
+      },
+      {
+        "from": "them",
+        "text": "See you there ☕",
+        "time": "08:15"
+      }
+    ]
+  },
+  "typing": {
+    "status": "Typing…",
+    "messages": [
+      {
+        "from": "them",
+        "text": "Want to grab coffee tomorrow?",
+        "time": "08:12"
+      },
+      {
+        "from": "me",
+        "text": "Yes! 10am at the usual?",
+        "time": "08:14"
+      }
+    ],
+    "typing": true
+  },
+  "read receipts": {
+    "messages": [
+      {
+        "from": "me",
+        "text": "Sending the updated specs now."
+      },
+      {
+        "from": "me",
+        "text": "Let me know what you think.",
+        "time": "14:04",
+        "receipt": "read"
+      },
+      {
+        "from": "them",
+        "text": "Got it, reviewing now.",
+        "time": "14:05"
+      },
+      {
+        "from": "me",
+        "text": "Let me know if have any questions.",
+        "time": "14:06",
+        "receipt": "delivered"
+      },
+      {
+        "from": "me",
+        "text": "Thanks!",
+        "time": "14:07",
+        "receipt": "sent"
+      }
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "category": "Security",
+  "file": "lock",
+  "name": "Lock",
+  "description": "A lock visual conveying security and access control.",
+  "added": "2026-06-18",
+  "kind": "block",
+  "sourcePath": "security/lock.tsx",
+  "page": {
+    "cols": 2,
+    "animated": true,
+    "trigger": "inViewRepeat"
+  },
+  "chunks": {
+    "page": "lock-DlowGhnK.js",
+    "components": [
+      "lock-BRQ5MMhK.js"
+    ]
+  },
+  "variants": [
+    {
+      "label": "default",
+      "slug": "000-default",
+      "size": null,
+      "propsRaw": "{}"
+    },
+    {
+      "label": "isometric",
+      "slug": "001-isometric",
+      "size": null,
+      "propsRaw": "{isometric:!0}"
+    },
+    {
+      "label": "digits={4}",
+      "slug": "002-digits-4",
+      "size": null,
+      "propsRaw": "{digits:4}"
+    },
+    {
+      "label": "label=\"Secure\"",
+      "slug": "003-label-secure",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "state=\"unlocked\"",
+      "slug": "004-state-unlocked",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "isometric · state=\"unlocked\"",
+      "slug": "005-isometric-state-unlocked",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "state=\"error\"",
+      "slug": "006-state-error",
+      "size": null,
+      "propsRaw": ""
+    },
+    {
+      "label": "isometric · state=\"error\"",
+      "slug": "007-isometric-state-error",
+      "size": null,
+      "propsRaw": ""
+    }
+  ]
+}
