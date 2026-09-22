@@ -28,8 +28,32 @@ function needle(percent: number): { x: number; y: number } {
 }
 
 export interface GaugeZone {
+  /** Upper bound of the band, 0–100. */
   to: number;
-  color: string;
+  /**
+   * Class applied to the band. The arc strokes `currentColor`, so this is a
+   * **text** colour: `text-amber-300 dark:text-amber-400/30`.
+   */
+  className?: string;
+  /**
+   * @deprecated Use `className`. Kept for the same meaning — a class, not a
+   * CSS value. A CSS colour (`var(--color-red-500)`, `#f00`, `oklch(...)`) is
+   * also accepted and applied as a stroke.
+   */
+  color?: string;
+}
+
+/** CSS colour forms that can never be a class name. */
+const CSS_COLOR = /^(var\(|#|rgba?\(|hsla?\(|okl(ch|ab)\(|l(ab|ch)\(|color(-mix)?\()/;
+
+/**
+ * A zone's paint is a class, not a CSS value — `color` was easy to read the
+ * other way round, and passing `var(--color-red-500)` silently produced an
+ * unstyled band. Resolve both rather than dropping the value on the floor.
+ */
+function zonePaint(zone: GaugeZone): { className?: string; style?: { stroke: string } } {
+  const paint = zone.className ?? zone.color ?? "";
+  return CSS_COLOR.test(paint) ? { style: { stroke: paint } } : { className: paint };
 }
 
 interface ZoneSpan extends GaugeZone {
@@ -235,7 +259,9 @@ export function Gauge({
                 variants={animated ? trackAnim : undefined}
                 {...state}
               />
-              {zoneSpans.map((zone, i) => (
+              {zoneSpans.map((zone, i) => {
+                const paint = zonePaint(zone);
+                return (
                 <motion.path
                   key={i}
                   d={ARC}
@@ -243,14 +269,16 @@ export function Gauge({
                   stroke="currentColor"
                   strokeWidth={STROKE}
                   strokeLinecap="round"
-                  className={cn("opacity-30", zone.color)}
+                  className={cn("opacity-30", paint.className)}
+                  style={paint.style}
                   pathLength={1}
                   strokeDasharray={`${zone.span} 1`}
                   strokeDashoffset={zone.offset}
                   variants={animated ? trackAnim : undefined}
                   {...state}
                 />
-              ))}
+                );
+              })}
               <motion.path
                 d={ARC}
                 fill="none"
