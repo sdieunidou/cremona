@@ -32,6 +32,14 @@ describe("cremona skill", () => {
     }
   });
 
+  it("warns that blocks are preview compositions", () => {
+    expect(skill).toContain("preview compositions, not production components");
+    expect(skill).toContain('aria-hidden="true"');
+    // the derivation recipe, not just the caveat
+    expect(skill).toMatch(/remove the preview frame wrapper/);
+    expect(skill).toMatch(/keep\*\* the class strings and the/);
+  });
+
   it("documents both adapters + authoring workflow", () => {
     expect(skill).toContain("@cremona/stimulus");
     expect(skill).toContain("@cremona/blocks");

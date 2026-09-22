@@ -50,8 +50,26 @@ import { StatCard } from "@cremona/blocks/src/metrics/stat-card/react.js";
    - `animated` (default false = static final state), `trigger`: `"mount" | "inView" | "inViewRepeat"`
    - `fadeOut`, `isometric`, `gradient` — the three cross-block style props
    - per-block copy props (see `preview-props.json` for exact shapes)
-4. Blocks are `aria-hidden` decorations — use them in dashboards, marketing
-   pages, empty states, feature illustrations. Icons come from `lucide-react`.
+4. Icons come from `lucide-react`.
+
+### Blocks are preview compositions, not production components
+
+Every block has `aria-hidden="true"` on its root, sits in the gallery's preview
+frame (which centres a `max-w-*` card in whatever box you give it), and takes
+content props — no `onClick`, no `ref`, no `children`. `components/button`
+renders one button with one label.
+
+- **As-is**, for illustration (charts, stat cards, empty states): give it a
+  sized box, pass real data instead of the demo defaults, and add a text
+  equivalent next to it since the root is `aria-hidden`.
+- **Derived**, for anything interactive: take the source (`get_block` with
+  `include: ["react"]`, or `packages/blocks/src/<category>/<block>/react.tsx`),
+  remove the preview frame wrapper and the `useInView` plumbing, add
+  children/handlers/ref/ARIA/keyboard, and **keep** the class strings and the
+  `motion` variants. Rewriting from the class strings silently drops every
+  entrance animation in the library.
+
+`docs/react.md` has the full recipe, the props contract and the gotchas.
 
 ## Using blocks in a Symfony app (Stimulus)
 
