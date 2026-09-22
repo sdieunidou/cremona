@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ArrowRight, Check, GitPullRequest, X } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface PullRequestCheck {
   name: string;
@@ -248,6 +248,7 @@ export function PullRequest({
   gradient = true,
   fadeOut = false,
   isometric = false,
+  fill = false,
   className,
 }: PullRequestProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -315,7 +316,7 @@ export function PullRequest({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={
@@ -330,7 +331,7 @@ export function PullRequest({
     >
       <motion.div
         className={cn(
-          "relative w-full max-w-96 rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full", !fill && "max-w-96", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

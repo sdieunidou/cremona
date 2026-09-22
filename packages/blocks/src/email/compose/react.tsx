@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Image, Paperclip, Smile, X } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ComposeRecipient {
   initials: string;
@@ -144,6 +144,7 @@ export function Compose({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: ComposeProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -170,12 +171,12 @@ export function Compose({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className={`relative w-full max-w-80 rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, ChevronDown } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SelectProps extends VisualProps {
   value?: string;
@@ -33,6 +33,7 @@ export function Select({
   invalid = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: SelectProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -53,12 +54,12 @@ export function Select({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="flex w-full max-w-64 flex-col gap-1.5"
+        className={cn("flex w-full", !fill && "max-w-64", "flex-col gap-1.5")}
         variants={animated ? entrance : undefined}
         {...state}
       >

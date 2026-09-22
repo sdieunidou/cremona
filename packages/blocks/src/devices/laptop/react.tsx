@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronRight } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type LaptopVariant = "landing" | "dashboard" | "windows" | "mac" | "lockscreen" | "screenshot";
 
@@ -181,6 +181,7 @@ export function Laptop({
   time = "9:41",
   date = "Monday, May 25",
   name = "Alex Morgan",
+  fill = false,
   className,
 }: LaptopProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -205,12 +206,12 @@ export function Laptop({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-80 perspective-distant"
+        className={cn("w-full", !fill && "max-w-80", "perspective-distant")}
         variants={animated ? container : undefined}
         {...state}
       >

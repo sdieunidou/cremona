@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronDown, CreditCard, Users, Code, LifeBuoy } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AccordionProps extends VisualProps {
   /** Number of items (3 or 4). */
@@ -44,6 +44,7 @@ export function Accordion({
   icons = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: AccordionProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -67,12 +68,12 @@ export function Accordion({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-sm divide-y divide-border rounded-lg border bg-card text-card-foreground shadow-xs"
+        className={cn("w-full", !fill && "max-w-sm", "divide-y divide-border rounded-lg border bg-card text-card-foreground shadow-xs")}
         variants={animated ? entrance : undefined}
         {...state}
       >

@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { CheckCircle2, Info, OctagonX } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ToastProps extends VisualProps {
   variant?: "info" | "success" | "error";
@@ -54,6 +54,7 @@ export function Toast({
   stack = 1,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: ToastProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -80,7 +81,7 @@ export function Toast({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

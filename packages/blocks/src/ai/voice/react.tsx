@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const voiceDefaultCopy = {
   listeningStatus: "Listening",
@@ -231,6 +231,7 @@ export function Voice({
   hover = false,
   glow = true,
   particles = true,
+  fill = false,
   className,
 }: VoiceProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -283,7 +284,7 @@ export function Voice({
     return (
       <div
         aria-hidden="true"
-        className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+        className={cn(frameClasses(fill), className)}
       >
         {glow && (
           <div className="absolute inset-0 -z-10">
@@ -325,7 +326,7 @@ export function Voice({
             <span className="size-1.5 rounded-full bg-primary" />
             <span className="text-[11px] font-medium text-foreground">{statusLabel}</span>
           </div>
-          <div className="relative z-10 flex min-h-12 w-full max-w-xs items-start justify-center">
+          <div className={cn("relative z-10 flex min-h-12 w-full", !fill && "max-w-xs", "items-start justify-center")}>
             {isThinking ? (
               <Shimmer animated={false} loopActive={false} />
             ) : (
@@ -349,7 +350,7 @@ export function Voice({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={hover ? () => setHovered(true) : undefined}
       onMouseLeave={hover ? () => setHovered(false) : undefined}
     >
@@ -485,7 +486,7 @@ export function Voice({
             </motion.span>
           </AnimatePresence>
         </motion.div>
-        <div className="relative z-10 flex min-h-12 w-full max-w-xs items-start justify-center">
+        <div className={cn("relative z-10 flex min-h-12 w-full", !fill && "max-w-xs", "items-start justify-center")}>
           {isThinking ? (
             <Shimmer key={current} animated loopActive={active} />
           ) : (

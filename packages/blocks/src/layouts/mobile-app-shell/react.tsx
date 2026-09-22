@@ -13,7 +13,7 @@ import {
   Wifi,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface MobileAppShellProps extends VisualProps {
   /** Render an explicit dark, zinc-based mock regardless of the ambient theme. */
@@ -278,6 +278,7 @@ export function MobileAppShell({
   dark = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: MobileAppShellProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -298,13 +299,13 @@ export function MobileAppShell({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
         className={cn(
-          "w-full max-w-44 rounded-3xl border-8 shadow-xs",
+          "w-full", !fill && "max-w-44", "rounded-3xl border-8 shadow-xs",
           dark ? "border-zinc-800 bg-zinc-950" : "border-foreground/10 bg-background",
         )}
         variants={animated ? shell : undefined}

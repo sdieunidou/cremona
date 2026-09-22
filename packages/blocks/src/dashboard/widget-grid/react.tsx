@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ShoppingCart, TrendingUp, Users, Zap } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface WidgetGridProps extends VisualProps {
   fadeOut?: boolean;
@@ -86,6 +86,7 @@ export function WidgetGrid({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: WidgetGridProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -106,12 +107,12 @@ export function WidgetGrid({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className={`relative w-full max-w-90 rounded-2xl border border-border/50 bg-muted/75 p-1.5 will-change-transform ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 will-change-transform ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, Copy } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SnippetToken {
   width: number;
@@ -230,6 +230,7 @@ export function Snippet({
   trigger = "inView",
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: SnippetProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -255,12 +256,12 @@ export function Snippet({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="relative flex w-full max-w-72 flex-col"
+        className={cn("relative flex w-full", !fill && "max-w-72", "flex-col")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

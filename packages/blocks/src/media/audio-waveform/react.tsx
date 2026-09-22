@@ -2,7 +2,7 @@ import { useRef, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Headphones, Mic, Music, Pause, Play } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AudioWaveformProps extends VisualProps {
   icon?: ReactNode;
@@ -129,6 +129,7 @@ export function AudioWaveform({
   trigger = "inView",
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: AudioWaveformProps) {
   const paused = state === "pause";
@@ -154,12 +155,12 @@ export function AudioWaveform({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="relative flex w-full max-w-80 flex-col"
+        className={cn("relative flex w-full", !fill && "max-w-80", "flex-col")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...motionState}

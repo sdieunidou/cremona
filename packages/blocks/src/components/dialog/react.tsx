@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { X, Trash2 } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface DialogProps extends VisualProps {
   title?: string;
@@ -46,6 +46,7 @@ export function Dialog({
   width = "default",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: DialogProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -77,7 +78,7 @@ export function Dialog({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

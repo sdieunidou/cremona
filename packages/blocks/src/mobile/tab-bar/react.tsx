@@ -3,7 +3,7 @@ import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Bell, House, Plus, Search, User } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface TabBarProps extends VisualProps {
   labels?: boolean;
@@ -59,6 +59,7 @@ export function TabBar({
   dark = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: TabBarProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -92,7 +93,7 @@ export function TabBar({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

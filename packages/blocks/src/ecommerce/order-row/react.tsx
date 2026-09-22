@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Truck, ChevronRight } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface OrderRowProps extends VisualProps {
   order?: string;
@@ -48,6 +48,7 @@ export function OrderRow({
   status = "processing",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: OrderRowProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -70,14 +71,14 @@ export function OrderRow({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
         variants={animated ? entrance : undefined}
         {...state}
-        className="w-full max-w-96"
+        className={cn("w-full", !fill && "max-w-96")}
       >
         <motion.button
           type="button"

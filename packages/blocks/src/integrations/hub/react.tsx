@@ -2,7 +2,7 @@ import { useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Boxes, Cloud, CodeXml, Database, Globe, Mail, MessageSquare } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 type HubVariant = "orbit" | "beam";
 type HubSpread = "compact" | "default" | "wide";
@@ -133,6 +133,7 @@ export function Hub({
   trigger = "inView",
   hover = false,
   isometric = false,
+  fill = false,
   className,
 }: HubProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -156,7 +157,7 @@ export function Hub({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}

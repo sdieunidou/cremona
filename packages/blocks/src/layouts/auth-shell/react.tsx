@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { EyeOff, Globe, KeyRound } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AuthShellProps extends VisualProps {
   /** "signin" shows email + password, "signup" adds a name field and strength bar. */
@@ -66,6 +66,7 @@ export function AuthShell({
   mode = "signin",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: AuthShellProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -87,12 +88,12 @@ export function AuthShell({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="flex h-72 w-full max-w-80 overflow-hidden rounded-xl border bg-background shadow-xs"
+        className={cn("flex h-72 w-full", !fill && "max-w-80", "overflow-hidden rounded-xl border bg-background shadow-xs")}
         variants={animated ? shell : undefined}
         {...state}
       >

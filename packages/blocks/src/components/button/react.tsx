@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { LoaderCircle } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ButtonProps extends VisualProps {
   /** Visual intent. */
@@ -54,6 +54,7 @@ export function Button({
   disabled = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: ButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -94,7 +95,7 @@ export function Button({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

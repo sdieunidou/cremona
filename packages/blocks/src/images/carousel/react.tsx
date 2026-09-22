@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CarouselSlide {
   kind?: keyof typeof scenes;
@@ -272,6 +272,7 @@ export function Carousel({
   gradient = true,
   arrows = true,
   badge = true,
+  fill = false,
   className,
 }: CarouselProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -296,12 +297,12 @@ export function Carousel({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="relative w-full max-w-80"
+        className={cn("relative w-full", !fill && "max-w-80")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...motionState}

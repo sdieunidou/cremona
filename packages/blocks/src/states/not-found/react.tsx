@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, type Transition, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { FileQuestionMark, MousePointerClick } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const notFoundDefaultCopy = {
   code: "404",
@@ -192,6 +192,7 @@ export function NotFound({
   hover = false,
   glow: glowOn = true,
   isometric = false,
+  fill = false,
   className,
 }: NotFoundProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -212,7 +213,7 @@ export function NotFound({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}

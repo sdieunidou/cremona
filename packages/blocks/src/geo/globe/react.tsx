@@ -7,7 +7,7 @@ import {
   frame,
 } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 import { LAND_MASK_BASE64 } from "./land-mask.js";
 
 type Vec3 = { x: number; y: number; z: number };
@@ -213,6 +213,7 @@ export function Globe({
   animated = false,
   trigger = "inView",
   hover = false,
+  fill = false,
   className,
   wrapperClassName,
 }: GlobeProps) {
@@ -559,7 +560,7 @@ export function Globe({
       ref={rootRef}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}

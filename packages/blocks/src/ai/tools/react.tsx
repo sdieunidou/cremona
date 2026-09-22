@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, Mail, Search, Sparkles, Ticket } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ToolCall {
   name: string;
@@ -290,6 +290,7 @@ export function Tools({
   gradient = true,
   fadeOut = false,
   isometric = false,
+  fill = false,
   className,
 }: ToolsProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -336,7 +337,7 @@ export function Tools({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={
         animated && hover
           ? () => {
@@ -414,7 +415,7 @@ export function Tools({
           </div>
         ))}
       <motion.div
-        className={`relative w-full max-w-96 rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? "" : " max-w-96"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

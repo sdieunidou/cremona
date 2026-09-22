@@ -11,7 +11,7 @@ import {
   MessageCircle,
   Music,
 } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const DOCK_PER_SIDE = 4;
 const DOCK_STAGGER = 0.08;
@@ -174,6 +174,7 @@ export function Spotlight({
   hover = false,
   glow = true,
   particles = true,
+  fill = false,
   className,
 }: SpotlightProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -190,11 +191,11 @@ export function Spotlight({
       <div
         aria-hidden="true"
         className={cn(
-          "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+          frameClasses(fill),
           className,
         )}
       >
-        <div className="relative flex h-full w-full max-w-140 items-center justify-center mask-r-from-75% mask-l-from-75%">
+        <div className={cn("relative flex h-full w-full", !fill && "max-w-140", "items-center justify-center mask-r-from-75% mask-l-from-75%")}>
           {glow && (
             <div className="absolute inset-x-0 top-1/6 bottom-0">
               <Glow />
@@ -255,14 +256,14 @@ export function Spotlight({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={hover ? () => setHovered(true) : undefined}
       onMouseLeave={hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative flex h-full w-full max-w-140 items-center justify-center mask-r-from-75% mask-l-from-75%"
+        className={cn("relative flex h-full w-full", !fill && "max-w-140", "items-center justify-center mask-r-from-75% mask-l-from-75%")}
         variants={scene}
         {...state}
       >

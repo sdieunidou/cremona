@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Cloud, Cpu, Database, Globe, Server } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type LogLevel = "info" | "warn" | "error" | "debug" | "success";
 
@@ -221,6 +221,7 @@ export function Logs({
   hover = false,
   gradient = true,
   isometric = false,
+  fill = false,
   className,
 }: LogsProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -244,7 +245,7 @@ export function Logs({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >

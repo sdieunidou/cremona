@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, FingerprintPattern, X } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface FingerprintProps extends VisualProps {
   state?: "success" | "scanning" | "error";
@@ -162,6 +162,7 @@ export function Fingerprint({
   animated = false,
   trigger = "inView",
   isometric = false,
+  fill = false,
   className,
 }: FingerprintProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -186,7 +187,7 @@ export function Fingerprint({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

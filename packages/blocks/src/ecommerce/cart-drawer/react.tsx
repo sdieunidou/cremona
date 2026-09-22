@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { X, Lock, Tag, ShoppingBag } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CartDrawerProps extends VisualProps {
   items?: { name: string; qty: number; price: string; img: string }[];
@@ -50,6 +50,7 @@ export function CartDrawer({
   empty = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: CartDrawerProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -70,12 +71,12 @@ export function CartDrawer({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="relative h-80 w-full max-w-96"
+        className={cn("relative h-80 w-full", !fill && "max-w-96")}
         variants={animated ? entrance : undefined}
         {...state}
       >

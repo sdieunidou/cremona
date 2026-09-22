@@ -48,6 +48,8 @@ import { StatCard } from "@cremona/blocks/src/metrics/stat-card/react.js";
 2. Dark mode: toggle `.dark` on `<html>`; theme: add `.theme-<name>` (see `themes.json`).
 3. Render `<StatCard animated trigger="inView" />`. Props:
    - `animated` (default false = static final state), `trigger`: `"mount" | "inView" | "inViewRepeat"`
+   - `fill` (default false): fill the box instead of centring a capped-width
+     card — use it for any block that is a panel in a layout
    - `fadeOut`, `isometric`, `gradient` — the three cross-block style props
    - per-block copy props (see `preview-props.json` for exact shapes)
 4. Icons come from `lucide-react`.

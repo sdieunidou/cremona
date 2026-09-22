@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type FileType =
   | "docx" | "psd" | "pdf" | "xlsx" | "png" | "jpg" | "webp" | "fig" | "csv"
@@ -556,6 +556,7 @@ export function SimpleFile({
   extension = "docx",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: SimpleFileProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -579,7 +580,7 @@ export function SimpleFile({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

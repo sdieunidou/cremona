@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, type ValueTransition, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { FileText, Search, Sparkles } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const retrievalDefaultCopy = {
   query: "How do refunds work?",
@@ -343,6 +343,7 @@ export function Retrieval({
   glow = true,
   particles = true,
   isometric = false,
+  fill = false,
   className,
 }: RetrievalProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -412,7 +413,7 @@ export function Retrieval({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={
         animated && hover

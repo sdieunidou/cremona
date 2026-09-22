@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Sparkles, Check, X, ArrowUpRight, CircleAlert } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface BadgeProps extends VisualProps {
   variant?: "default" | "secondary" | "outline" | "destructive" | "success" | "warning";
@@ -43,6 +43,7 @@ export function Badge({
   pill = true,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: BadgeProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -64,7 +65,7 @@ export function Badge({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

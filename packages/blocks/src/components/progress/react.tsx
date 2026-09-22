@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ProgressProps extends VisualProps {
   /** 0–100. Omit for an indeterminate bar. */
@@ -28,6 +28,7 @@ export function Progress({
   color = "primary",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: ProgressProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -52,12 +53,12 @@ export function Progress({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-64"
+        className={cn("w-full", !fill && "max-w-64")}
         variants={animated ? entrance : undefined}
         {...state}
       >

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const shortcutDefaultCopy: { keys: string[] } = {
   keys: ["⌘", "K"],
@@ -40,6 +40,7 @@ export function Shortcut({
   animated = false,
   trigger = "inView",
   isometric = false,
+  fill = false,
   className,
 }: ShortcutProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -60,7 +61,7 @@ export function Shortcut({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

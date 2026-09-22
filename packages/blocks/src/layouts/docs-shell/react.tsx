@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface DocsShellProps extends VisualProps {
   /** Replace the article code card with a highlighted, line-numbered listing. */
@@ -191,6 +191,7 @@ export function DocsShell({
   code = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: DocsShellProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -211,12 +212,12 @@ export function DocsShell({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-96 overflow-hidden rounded-xl border bg-background shadow-xs"
+        className={cn("w-full", !fill && "max-w-96", "overflow-hidden rounded-xl border bg-background shadow-xs")}
         variants={animated ? shell : undefined}
         {...state}
       >

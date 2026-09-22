@@ -10,7 +10,7 @@ import {
   ChevronDown,
   Check,
 } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface DropdownMenuProps extends VisualProps {
   /** Trigger label. */
@@ -60,6 +60,7 @@ export function DropdownMenu({
   checks = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: DropdownMenuProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -111,7 +112,7 @@ export function DropdownMenu({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

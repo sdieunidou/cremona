@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, LoaderCircle } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const agentFlowDefaultCopy = {
   steps: ["Planning", "Retrieving", "Respond"],
@@ -159,6 +159,7 @@ export function AgentFlow({
   hover = false,
   glow = true,
   particles = true,
+  fill = false,
   className,
 }: AgentFlowProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -210,7 +211,7 @@ export function AgentFlow({
     return (
       <div
         aria-hidden="true"
-        className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+        className={cn(frameClasses(fill), className)}
       >
         {glow && (
           <div className="absolute inset-0 -z-10">
@@ -268,7 +269,7 @@ export function AgentFlow({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={hover ? () => setHovered(true) : undefined}
       onMouseLeave={hover ? () => setHovered(false) : undefined}
     >

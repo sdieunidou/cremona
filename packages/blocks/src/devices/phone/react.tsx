@@ -13,7 +13,7 @@ import {
   Wifi,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type PhoneVariant = "app" | "home" | "lockscreen" | "screenshot";
 
@@ -248,6 +248,7 @@ export function Phone({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: PhoneProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -268,7 +269,7 @@ export function Phone({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

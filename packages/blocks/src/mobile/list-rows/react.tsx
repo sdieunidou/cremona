@@ -13,7 +13,7 @@ import {
   Type,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ListRowsProps extends VisualProps {
   groups?: number;
@@ -154,6 +154,7 @@ export function ListRows({
   icons = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: ListRowsProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -179,13 +180,13 @@ export function ListRows({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <div
         className={cn(
-          "flex w-full max-w-72 flex-col",
+          "flex w-full", !fill && "max-w-72", "flex-col",
           groups >= 2 ? "gap-3" : "gap-0",
         )}
       >

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChartColumn, Cloud, Cpu, Database, FileText, Image, Mail } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const pipelineDefaultCopy = {
   logo: <Cpu className="size-5" strokeWidth={1.5} />,
@@ -130,6 +130,7 @@ export function Pipeline({
   trigger = "inView",
   hover = false,
   isometric = false,
+  fill = false,
   className,
 }: PipelineProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -155,7 +156,7 @@ export function Pipeline({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >

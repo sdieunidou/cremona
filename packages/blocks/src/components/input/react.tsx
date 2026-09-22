@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Search, Eye, EyeOff } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface InputProps extends VisualProps {
   type?: "text" | "email" | "password" | "search";
@@ -31,6 +31,7 @@ export function Input({
   defaultValue = "",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: InputProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,12 +57,12 @@ export function Input({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="flex w-full max-w-64 flex-col gap-1.5"
+        className={cn("flex w-full", !fill && "max-w-64", "flex-col gap-1.5")}
         variants={animated ? entrance : undefined}
         {...state}
       >

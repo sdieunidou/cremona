@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const stackDefaultCopy: { avatars: StackAvatar[]; status: StackStatus } = {
   avatars: [
@@ -89,6 +89,7 @@ export function Stack({
   trigger = "inView",
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: StackProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -113,7 +114,7 @@ export function Stack({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

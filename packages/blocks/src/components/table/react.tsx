@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, Minus } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface TableProps extends VisualProps {
   checkboxes?: boolean;
@@ -105,6 +105,7 @@ export function Table({
   loading = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: TableProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -128,12 +129,12 @@ export function Table({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-sm overflow-hidden rounded-lg border bg-card shadow-xs"
+        className={cn("w-full", !fill && "max-w-sm", "overflow-hidden rounded-lg border bg-card shadow-xs")}
         variants={animated ? entrance : undefined}
         {...state}
       >

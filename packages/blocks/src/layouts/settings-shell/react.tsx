@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Bell, ChevronDown, CreditCard, Settings, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SettingsShellProps extends VisualProps {
   /** Append a destructive "Delete account" card above the save bar. */
@@ -157,6 +157,7 @@ export function SettingsShell({
   danger = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: SettingsShellProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -177,12 +178,12 @@ export function SettingsShell({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="flex h-72 w-full max-w-90 overflow-hidden rounded-xl border bg-background shadow-xs"
+        className={cn("flex h-72 w-full", !fill && "max-w-90", "overflow-hidden rounded-xl border bg-background shadow-xs")}
         variants={animated ? shell : undefined}
         {...state}
       >
