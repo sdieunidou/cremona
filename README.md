@@ -34,7 +34,7 @@ cremona/
 │   ├── mcp/         MCP server + CLI — @cremona/mcp
 │   └── skill/       SKILL.md for AI sessions — @cremona/skill
 ├── apps/
-│   └── gallery/     browsable docs app (sidebar, themes, live previews, e2e)
+│   └── gallery/     docs app: live previews + one-click React/Stimulus code
 ├── tools/           extraction + generation scripts (POC → library)
 └── docs/            guides (start here: docs/architecture.md)
 ```
@@ -47,7 +47,7 @@ pnpm install
 # run every test (blocks golden parity, mcp e2e, tokens, stimulus…)
 pnpm test
 
-# browse the gallery
+# browse the gallery (hover any preview → View code / Copy React / Stimulus)
 pnpm dev            # → http://localhost:5173
 
 # use the MCP server (Claude Code / opencode)

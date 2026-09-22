@@ -182,6 +182,12 @@ cremona_get_design_system conventions: do the variant names follow the
 Report a table.
 ```
 
+## Gallery parity
+
+The gallery (docs app) exposes the same data visually: every preview has a
+**View code** panel (Usage / React source / Stimulus template) and one-click
+copy — convenient for humans, same source of truth as the MCP.
+
 ## Notes
 
 - Icon props arrive as `"lucide:Users"` strings — import the icon from

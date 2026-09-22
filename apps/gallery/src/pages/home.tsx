@@ -1,5 +1,6 @@
 import type { ComponentType } from "react";
-import { BlockCard, PreviewFrame, PreviewGrid } from "../components/preview-frame.js";
+import { BlockCard, PreviewGrid } from "../components/preview-frame.js";
+import { PreviewWithCode } from "../components/preview-with-code.js";
 import { SHELL, BADGE_OUTLINE_MONO } from "../lib/shell-classes.js";
 import { blocks, categories, findBlock, stats, thumbnails, type BlockEntry } from "../lib/discovery.js";
 import { hydrateProps } from "../lib/icons.js";
@@ -113,9 +114,9 @@ export function BlockPage({
           {meta.variants.map((variant) => {
             const props = hydrateProps(previewProps[variant.label] ?? {});
             return (
-              <PreviewFrame key={variant.slug} label={variant.label} size={variant.size}>
+              <PreviewWithCode key={variant.slug} entry={entry} label={variant.label} size={variant.size}>
                 <AnimatedVisual entry={entry} props={props} />
-              </PreviewFrame>
+              </PreviewWithCode>
             );
           })}
         </PreviewGrid>

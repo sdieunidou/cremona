@@ -85,3 +85,13 @@ Vite + React, zero extra UI deps: the shell reuses the POC's own class strings
 (`packages/tokens/css/cremona.css` contains them). Discovers all blocks through
 `import.meta.glob`, renders live previews in faithful frames, theme picker +
 light/dark + Ctrl+K search.
+
+**Code access** — every preview frame carries a hover toolbar:
+- **View code** opens a panel with three tabs: *Usage* (import + exact JSX for
+  that variant, icons resolved to lucide imports), *React source* (the raw
+  `react.tsx`), *Stimulus* (the generated static template) — plus copy.
+- **Copy React** copies the usage snippet in one click.
+
+Sources/templates are lazy-loaded (`import.meta.glob` without `eager`, via
+Vite `?raw`), so nothing bloats the main bundle. E2E-covered
+(`apps/gallery/e2e/code.spec.ts`).
