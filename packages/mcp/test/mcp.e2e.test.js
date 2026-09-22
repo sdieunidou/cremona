@@ -50,6 +50,26 @@ describe("cremona MCP server", () => {
     expect(results[0].key).toBe("tasks/kanban");
   });
 
+  it("searches on every term, not on the raw query", async () => {
+    const search = async (query) =>
+      textOf(await client.callTool({ name: "search_blocks", arguments: { query } }));
+
+    // "empty state" appears nowhere as a contiguous string, but each term
+    // matches states/empty — the block must still be found.
+    const spaced = await search("empty state");
+    expect(spaced.map((b) => b.key)).toContain("states/empty");
+
+    // Word order must not matter.
+    expect((await search("state empty")).map((b) => b.key)).toContain("states/empty");
+
+    // Terms are ANDed: a block matching only one of them is excluded.
+    const kanban = await search("kanban checklist");
+    expect(kanban).toHaveLength(0);
+
+    // A contiguous match still outranks a scattered one.
+    expect((await search("stat card"))[0].key).toBe("metrics/stat-card");
+  });
+
   it("returns a block with react source + stimulus sample + props", async () => {
     const block = textOf(
       await client.callTool({ name: "get_block", arguments: { key: "metrics/stat-card" } }),

@@ -128,20 +128,40 @@ export function blockIndex() {
   return out;
 }
 
+/** Score of one search term against one block. 0 = no match. */
+function scoreTerm(block, term) {
+  let score = 0;
+  if (block.name.toLowerCase().includes(term)) score += 10;
+  if (block.file.includes(term)) score += 6;
+  if (block.description.toLowerCase().includes(term)) score += 4;
+  if (block.variants.some((v) => v.toLowerCase().includes(term))) score += 3;
+  if (block.category.toLowerCase().includes(term)) score += 1;
+  return score;
+}
+
 export function searchBlocks(query, { category, kind, limit = 30 } = {}) {
   const q = query.trim().toLowerCase();
   let items = blockIndex();
   if (category) items = items.filter((b) => b.categorySlug === category || b.category.toLowerCase() === category.toLowerCase());
   if (kind) items = items.filter((b) => b.kind === kind);
   if (q) {
+    // Terms are matched individually and ANDed. Matching the raw query as one
+    // substring made natural multi-word queries fail whenever the words are not
+    // adjacent in that exact order: "empty state" returned nothing even though
+    // "empty" and "state" each match states/empty.
+    const terms = q.split(/\s+/).filter(Boolean);
     items = items
       .map((b) => {
         let score = 0;
-        if (b.name.toLowerCase().includes(q)) score += 10;
-        if (b.file.includes(q)) score += 6;
-        if (b.description.toLowerCase().includes(q)) score += 4;
-        if (b.variants.some((v) => v.toLowerCase().includes(q))) score += 3;
-        if (b.category.toLowerCase().includes(q)) score += 1;
+        for (const term of terms) {
+          const termScore = scoreTerm(b, term);
+          if (termScore === 0) return { ...b, score: 0 };
+          score += termScore;
+        }
+        // The whole query as a contiguous substring stays the strongest signal,
+        // so "stat card" still ranks metrics/stat-card above blocks that merely
+        // mention both words.
+        if (terms.length > 1 && scoreTerm(b, q) > 0) score += 10;
         return { ...b, score };
       })
       .filter((b) => b.score > 0)
