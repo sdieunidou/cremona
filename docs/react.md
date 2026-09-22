@@ -23,6 +23,7 @@ Every visual extends `VisualProps`:
 |---|---|---|
 | `animated` | `false` | play the entrance timeline. `false` = static final state |
 | `trigger` | `"inView"` | `"mount"` (immediately), `"inView"` (once at 50% visible), `"inViewRepeat"` (replays) |
+| `fill` | `false` | fill the box instead of sitting in the preview frame — see [Using a block as a panel](#using-a-block-as-a-panel) |
 | `className` | — | merged onto the scene root |
 
 Cross-block style props (when present in the POC): `fadeOut` (mask fade at the
@@ -124,6 +125,33 @@ Then apply the same three edits every time:
 Keep a header comment naming the source block and what you changed: the
 derivation stays auditable, and you can re-sync when the block moves.
 
+## Using a block as a panel
+
+By default a visual renders for the gallery: the preview frame centres it
+(`flex items-center justify-center … px-2`) and the card inside caps at a
+`max-w-*` — 10 different values across the 118 blocks that cap. Drop three in a
+grid and you get three widths, three left edges and three top edges.
+
+`fill` turns the frame into a plain box the visual occupies entirely: no side
+padding, stretched on the cross axis, no module cap.
+
+```tsx
+<div className="grid gap-3 lg:grid-cols-3">
+  <div className="h-72"><Gauge fill gradient={false} percent={43} /></div>
+  <div className="h-72"><Donut fill gradient={false} segments={segments} /></div>
+  <div className="h-72"><YourOwnCard /></div>
+</div>
+```
+
+Three panels, one width, one top edge, one bottom edge.
+
+`fill` only lifts the **module** cap. Caps that shape content stay —
+`charts/gauge` keeps the `max-w-56` on its arc, so a filled gauge is a wider
+card around the same dial, not a stretched one.
+
+Pair it with `gradient={false}`: the glow is drawn outside the card, in the gap
+`fill` removes (see Gotchas).
+
 ## Gotchas
 
 - **`gradient` is a gallery effect. Turn it off in an app.** It does two things,
@@ -140,26 +168,8 @@ derivation stays auditable, and you can re-sync when the block moves.
   `gradient={false}` on anything that is a panel rather than an illustration.
   Keeping it on "just one hero card" does not work either: the leak is then the
   only thing that differs between otherwise identical tiles.
-- **A block centres a capped-width card in your box.** The preview frame is
-  `flex items-center justify-center … px-2`, and the card inside caps at a
-  `max-w-*` — 10 different values across the 118 blocks that do it (`max-w-72`
-  for `metrics/stat-card`, `max-w-80` for most charts, `max-w-64` for
-  `charts/sparkline`…). Drop three of them in a grid and you get three widths,
-  three left edges and three top edges.
-
-  Either size the cell to the block, or neutralise it from the host. The block
-  markup is locked by the goldens, so child selectors are stable:
-
-  ```tsx
-  // fills the cell, and lines its top edge up with the cards next to it
-  <div className="h-72 [&>div]:px-0 [&>div>div]:max-w-none
-                  [&>div]:items-stretch [&>div>div>*]:h-full">
-    <Donut gradient={false} segments={segments} />
-  </div>
-  ```
-
-  `[&>div>div>*]:h-full` only works with `gradient={false}` — with the glow on,
-  the tray has three children and the rule would blow up the glow too.
+- **A block centres a capped-width card in your box** — unless you pass `fill`.
+  See [Using a block as a panel](#using-a-block-as-a-panel).
 - **`trigger="mount"` replays on every remount.** In a filtered list that
   re-keys its children, the entrance runs again on each change. Prefer
   `"inView"` (the default, once) unless the panel really is mounted once.

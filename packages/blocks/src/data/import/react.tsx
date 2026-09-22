@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ArrowRight, FileSpreadsheet } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ImportMapping {
   source: string;
@@ -86,6 +86,7 @@ export function Import({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: ImportProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -108,12 +109,12 @@ export function Import({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className={`relative w-full max-w-88 rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? "" : " max-w-88"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

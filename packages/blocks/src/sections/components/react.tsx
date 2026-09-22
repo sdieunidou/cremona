@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const componentsDefaultCopy = {
   title: "Components",
@@ -71,6 +71,7 @@ export function Components({
   gradient = true,
   fadeOut = false,
   isometric = false,
+  fill = false,
   className,
 }: ComponentsProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -91,12 +92,12 @@ export function Components({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className={cn("w-full max-w-72 p-8.5 will-change-transform", fadeOut && "mask-b-from-60%")}
+        className={cn("w-full", !fill && "max-w-72", "p-8.5 will-change-transform", fadeOut && "mask-b-from-60%")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

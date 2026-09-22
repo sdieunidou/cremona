@@ -1,7 +1,7 @@
 import { useId, useMemo, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 import { LAND_MASK_BASE64 } from "../globe/land-mask.js";
 
 export interface WorldMapMarker {
@@ -343,6 +343,7 @@ export function WorldMap({
   animated = false,
   trigger = "inView",
   hover = false,
+  fill = false,
   className,
   wrapperClassName,
 }: WorldMapProps) {
@@ -408,7 +409,7 @@ export function WorldMap({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}

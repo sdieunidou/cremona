@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Star, ShoppingCart } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ProductCardProps extends VisualProps {
   title?: string;
@@ -52,6 +52,7 @@ export function ProductCard({
   hoverAdd = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: ProductCardProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -92,12 +93,12 @@ export function ProductCard({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="group/product w-full max-w-64 overflow-hidden rounded-xl border bg-card text-card-foreground shadow-xs"
+        className={cn("group/product w-full", !fill && "max-w-64", "overflow-hidden rounded-xl border bg-card text-card-foreground shadow-xs")}
         variants={animated ? entrance : undefined}
         {...state}
       >

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type StackCategory =
   | "default" | "documents" | "spreadsheets" | "images" | "design" | "code"
@@ -250,6 +250,7 @@ export function Stacked({
   count = 5,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: StackedProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -275,7 +276,7 @@ export function Stacked({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

@@ -3,7 +3,7 @@ import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Info, Sparkles, TriangleAlert } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CalloutProps extends VisualProps {
   variant?: "info" | "warning" | "update";
@@ -63,6 +63,7 @@ export function Callout({
   variant = "info",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: CalloutProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -86,13 +87,13 @@ export function Callout({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
         role="status"
-        className={cn("flex w-full max-w-80 items-start gap-3 rounded-lg border p-4", box)}
+        className={cn("flex w-full", !fill && "max-w-80", "items-start gap-3 rounded-lg border p-4", box)}
         variants={animated ? entrance : undefined}
         {...state}
       >

@@ -2,7 +2,7 @@ import { Fragment, useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronRight } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface BreadcrumbProps extends VisualProps {
   separator?: "chevron" | "slash";
@@ -22,6 +22,7 @@ export function Breadcrumb({
   ellipsis = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: BreadcrumbProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -44,7 +45,7 @@ export function Breadcrumb({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

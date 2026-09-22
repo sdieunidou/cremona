@@ -13,7 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface DashboardShellProps extends VisualProps {
   /** Collapse the sidebar rail to icon-only width. */
@@ -339,6 +339,7 @@ export function DashboardShell({
   viewport = "desktop",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: DashboardShellProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -360,12 +361,12 @@ export function DashboardShell({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-96 overflow-hidden rounded-xl border bg-background shadow-xs"
+        className={cn("w-full", !fill && "max-w-96", "overflow-hidden rounded-xl border bg-background shadow-xs")}
         variants={animated ? shell : undefined}
         {...state}
       >

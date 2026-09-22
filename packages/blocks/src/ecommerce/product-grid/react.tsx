@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ProductGridProps extends VisualProps {
   filter?: "All" | "Shoes" | "Apparel";
@@ -50,6 +50,7 @@ export function ProductGrid({
   filter = "All",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: ProductGridProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -73,12 +74,12 @@ export function ProductGrid({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-96 rounded-lg border bg-card shadow-xs"
+        className={cn("w-full", !fill && "max-w-96", "rounded-lg border bg-card shadow-xs")}
         variants={animated ? entrance : undefined}
         {...state}
       >

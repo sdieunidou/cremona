@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Search, SearchX, FilePlus, Rocket, LayoutDashboard, Settings, CloudUpload, Undo2 } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CommandProps extends VisualProps {
   /** Initial search query; only matching items are rendered. */
@@ -71,6 +71,7 @@ export function Command({
   groups = ["Actions", "Navigation"],
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: CommandProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -115,7 +116,7 @@ export function Command({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

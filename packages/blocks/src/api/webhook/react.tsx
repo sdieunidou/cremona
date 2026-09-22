@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, Webhook as WebhookIcon, X, Zap } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type WebhookVariant = "retry" | "success" | "failed";
 
@@ -183,6 +183,7 @@ export function Webhook({
   trigger = "inView",
   hover = false,
   isometric = false,
+  fill = false,
   className,
 }: WebhookProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -207,7 +208,7 @@ export function Webhook({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >

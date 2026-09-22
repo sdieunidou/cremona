@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { CheckCircle2, Info, OctagonX, TriangleAlert } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AlertProps extends VisualProps {
   variant?: "info" | "success" | "warning" | "destructive";
@@ -67,6 +67,7 @@ export function Alert({
   description,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: AlertProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -90,13 +91,13 @@ export function Alert({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
         role="alert"
-        className={cn("flex w-full max-w-80 gap-3 rounded-lg border p-4", box)}
+        className={cn("flex w-full", !fill && "max-w-80", "gap-3 rounded-lg border p-4", box)}
         variants={animated ? entrance : undefined}
         {...state}
       >

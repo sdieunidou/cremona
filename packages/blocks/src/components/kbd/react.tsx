@@ -1,7 +1,7 @@
 import { Fragment, useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface KbdProps extends VisualProps {
   keys?: string[];
@@ -19,6 +19,7 @@ export function Kbd({
   keys = ["⌘"],
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: KbdProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -41,7 +42,7 @@ export function Kbd({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

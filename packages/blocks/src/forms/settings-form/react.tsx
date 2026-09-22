@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronDown, Check } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SettingsFormProps extends VisualProps {
   dirty?: boolean;
@@ -29,6 +29,7 @@ export function SettingsForm({
   saved = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: SettingsFormProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -49,12 +50,12 @@ export function SettingsForm({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-80 rounded-xl border bg-card p-4 text-card-foreground shadow-xs"
+        className={cn("w-full", !fill && "max-w-80", "rounded-xl border bg-card p-4 text-card-foreground shadow-xs")}
         variants={animated ? entrance : undefined}
         {...state}
       >

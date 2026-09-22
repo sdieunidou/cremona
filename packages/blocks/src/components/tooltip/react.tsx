@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface TooltipProps extends VisualProps {
   /** Rich bubbles with a title and body. */
@@ -85,6 +85,7 @@ export function Tooltip({
   title = "Pro tip",
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: TooltipProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -108,7 +109,7 @@ export function Tooltip({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

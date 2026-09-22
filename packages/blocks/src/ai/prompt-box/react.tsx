@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ArrowUp, ChevronDown, FileText, Paperclip, X } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const promptBoxDefaultCopy = {
   prompt: "Summarize the key wins from the Q3 report and suggest improvements for next quarter",
@@ -167,6 +167,7 @@ export function PromptBox({
   glow = true,
   particles = true,
   gradient = true,
+  fill = false,
   className,
 }: PromptBoxProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -307,7 +308,7 @@ export function PromptBox({
     return (
       <div
         aria-hidden="true"
-        className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+        className={cn(frameClasses(fill), className)}
       >
         {glow && (
           <div className="absolute inset-0 -z-10">
@@ -330,7 +331,7 @@ export function PromptBox({
             ))}
           </div>
         )}
-        <div className="relative w-full max-w-md">
+        <div className={cn("relative w-full", !fill && "max-w-md")}>
           {gradient && (
             <>
               <div className="absolute inset-x-1 bottom-0 h-6 origin-center rounded-full bg-[linear-gradient(to_right,var(--color-red-500),var(--color-orange-500),var(--color-yellow-500),var(--color-green-500),var(--color-blue-500),var(--color-indigo-500),var(--color-violet-500))] opacity-60 blur-sm" />
@@ -347,7 +348,7 @@ export function PromptBox({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={hover ? () => setHovered(true) : undefined}
       onMouseLeave={hover ? () => setHovered(false) : undefined}
     >
@@ -396,7 +397,7 @@ export function PromptBox({
           </motion.div>
         </motion.div>
       )}
-      <motion.div className="relative w-full max-w-md" variants={column} {...state}>
+      <motion.div className={cn("relative w-full", !fill && "max-w-md")} variants={column} {...state}>
         {gradient && (
           <>
             <motion.div

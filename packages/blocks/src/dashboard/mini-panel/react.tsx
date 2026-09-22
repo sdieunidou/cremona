@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Activity, TrendingDown, TrendingUp } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface MiniPanelProps extends VisualProps {
   fadeOut?: boolean;
@@ -78,6 +78,7 @@ export function MiniPanel({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: MiniPanelProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -98,12 +99,12 @@ export function MiniPanel({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className={`relative w-full max-w-80 rounded-2xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? "" : " max-w-80"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

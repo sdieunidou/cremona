@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AvatarProps extends VisualProps {
   /** Initials shown when there is no image. */
@@ -86,6 +86,7 @@ export function Avatar({
   sizes = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: AvatarProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -106,7 +107,7 @@ export function Avatar({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

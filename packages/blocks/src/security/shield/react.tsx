@@ -10,7 +10,7 @@ import {
   ShieldCheck,
   ShieldOff,
 } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ShieldProps extends VisualProps {
   state?: "secure" | "warning" | "breached";
@@ -167,6 +167,7 @@ export function Shield({
   animated = false,
   trigger = "inView",
   isometric = false,
+  fill = false,
   className,
 }: ShieldProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -190,7 +191,7 @@ export function Shield({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

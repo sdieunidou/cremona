@@ -2,7 +2,7 @@ import { useRef, useSyncExternalStore } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const noopSubscribe = () => () => {};
 
@@ -127,6 +127,7 @@ export function DatePicker({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: DatePickerProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -173,12 +174,12 @@ export function DatePicker({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className={`relative flex w-full max-w-72 flex-col ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative flex w-full${fill ? "" : " max-w-72"} flex-col ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated && isometric ? containerIso : undefined}
         {...state}

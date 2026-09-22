@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useAnimate } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ArrowUp, Check, LoaderCircle } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type UploadVariant =
   | "document" | "pdf" | "image" | "video" | "audio" | "spreadsheet" | "code" | "archive";
@@ -166,6 +166,7 @@ export function Upload({
   animated = false,
   trigger = "inView",
   hover = false,
+  fill = false,
   className,
 }: UploadProps) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -266,7 +267,7 @@ export function Upload({
       ref={rootRef}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setIsHovering(true) : undefined}

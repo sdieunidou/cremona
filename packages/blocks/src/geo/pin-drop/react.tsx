@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { MapPin } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface PinDropPin {
   x: number;
@@ -94,6 +94,7 @@ export function PinDrop({
   animated = false,
   trigger = "inView",
   hover = false,
+  fill = false,
   className,
   wrapperClassName,
 }: PinDropProps) {
@@ -115,7 +116,7 @@ export function PinDrop({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}

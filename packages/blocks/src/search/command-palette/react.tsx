@@ -10,7 +10,7 @@ import {
   Settings,
   UserPlus,
 } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CommandItem {
   icon?: ReactNode;
@@ -158,6 +158,7 @@ export function CommandPalette({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: CommandPaletteProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -207,7 +208,7 @@ export function CommandPalette({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
@@ -221,7 +222,7 @@ export function CommandPalette({
       }
     >
       <motion.div
-        className={`relative flex w-full max-w-84 flex-col gap-1.5 rounded-[22px] border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative flex w-full${fill ? "" : " max-w-84"} flex-col gap-1.5 rounded-[22px] border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

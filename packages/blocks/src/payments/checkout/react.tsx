@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Lock, CreditCard, Wifi } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 /**
  * The POC SSR emitted `<Lock/>Pay<!-- --> <!-- -->$42.00` inside the pay
@@ -126,6 +126,7 @@ export function Checkout({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: CheckoutProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -146,13 +147,13 @@ export function Checkout({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
         className={cn(
-          "relative w-full max-w-80 rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
+          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

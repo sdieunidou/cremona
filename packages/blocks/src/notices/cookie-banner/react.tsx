@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, Cookie } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CookieBannerProps extends VisualProps {
   minimal?: boolean;
@@ -21,6 +21,7 @@ export function CookieBanner({
   minimal = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: CookieBannerProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -41,7 +42,7 @@ export function CookieBanner({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

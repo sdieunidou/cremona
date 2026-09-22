@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface PaginationProps extends VisualProps {
   page?: number;
@@ -32,6 +32,7 @@ export function Pagination({
   rounded = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: PaginationProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -66,7 +67,7 @@ export function Pagination({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

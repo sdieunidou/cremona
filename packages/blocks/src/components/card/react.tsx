@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CardProps extends VisualProps {
   title?: string;
@@ -36,6 +36,7 @@ export function Card({
   skeleton = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: CardProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,12 +57,12 @@ export function Card({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-80 rounded-xl border bg-card text-card-foreground shadow-xs"
+        className={cn("w-full", !fill && "max-w-80", "rounded-xl border bg-card text-card-foreground shadow-xs")}
         variants={animated ? entrance : undefined}
         {...state}
       >

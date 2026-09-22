@@ -2,7 +2,7 @@ import { useId, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { LayoutGrid, Activity, Settings } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface TabsProps extends VisualProps {
   /** Trigger labels. */
@@ -58,6 +58,7 @@ export function Tabs({
   icons = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: TabsProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -85,12 +86,12 @@ export function Tabs({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="w-full max-w-sm"
+        className={cn("w-full", !fill && "max-w-sm")}
         variants={animated ? entrance : undefined}
         {...state}
       >

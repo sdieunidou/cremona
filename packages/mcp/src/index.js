@@ -28,7 +28,9 @@ Two correct ways to use one:
 
 1. AS-IS, for illustration (charts, stat cards, empty states): give it a sized
    box, pass real data instead of the demo defaults, and put a text equivalent
-   next to it, since the root is aria-hidden.
+   next to it, since the root is aria-hidden. In a layout, add \`fill\` so the
+   block occupies its cell instead of centring a capped-width card — otherwise
+   panels side by side get different widths and edges.
 
 2. DERIVED, for anything interactive: take the source from
    get_block(include:["react"]), then remove the preview frame wrapper and the

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const donutDefault = {
   title: "Storage",
@@ -145,6 +145,7 @@ export function Donut({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: DonutProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -166,13 +167,13 @@ export function Donut({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
         className={cn(
-          "relative w-full max-w-80 rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

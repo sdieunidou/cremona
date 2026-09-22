@@ -3,7 +3,7 @@ import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { CircleCheck, Info, TriangleAlert, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const toastDefaultCopy = {
   variant: "success",
@@ -94,6 +94,7 @@ export function Toast({
   trigger = "inView",
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: ToastProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -118,12 +119,12 @@ export function Toast({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="relative flex w-full max-w-72 flex-col items-center gap-2"
+        className={cn("relative flex w-full", !fill && "max-w-72", "flex-col items-center gap-2")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated && isometric ? cardIso : undefined}
         {...state}

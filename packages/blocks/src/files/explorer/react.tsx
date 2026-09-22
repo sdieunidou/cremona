@@ -11,7 +11,7 @@ import {
   Star,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 interface ExplorerFile {
   name: string;
@@ -100,6 +100,7 @@ export function Explorer({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: ExplorerProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -120,12 +121,12 @@ export function Explorer({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className={`relative w-full max-w-90 rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}

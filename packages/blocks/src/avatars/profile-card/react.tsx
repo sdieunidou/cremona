@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const profileCardDefaultCopy = {
   initials: "SR",
@@ -117,6 +117,7 @@ export function ProfileCard({
   trigger = "inView",
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: ProfileCardProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -138,12 +139,12 @@ export function ProfileCard({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="relative flex w-full max-w-56 flex-col items-center gap-3"
+        className={cn("relative flex w-full", !fill && "max-w-56", "flex-col items-center gap-3")}
         style={
           !animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined
         }

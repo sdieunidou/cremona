@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { motion, type Transition, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { MousePointerClick, TriangleAlert } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const errorDefaultCopy = {
   services: 4,
@@ -160,6 +160,7 @@ export function Error({
   hover = false,
   glow: glowOn = true,
   isometric = false,
+  fill = false,
   className,
 }: ErrorProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -180,7 +181,7 @@ export function Error({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}

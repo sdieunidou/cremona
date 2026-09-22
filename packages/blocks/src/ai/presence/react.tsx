@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Bot } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const presenceDefaultCopy = {
   collaborators: [
@@ -218,6 +218,7 @@ export function Presence({
   hover = false,
   glow = true,
   particles = true,
+  fill = false,
   className,
 }: PresenceProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -246,7 +247,7 @@ export function Presence({
     return (
       <div
         aria-hidden="true"
-        className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+        className={cn(frameClasses(fill), className)}
       >
         {glow && (
           <div className="absolute inset-0 -z-10">
@@ -269,7 +270,7 @@ export function Presence({
             ))}
           </div>
         )}
-        <div className="relative z-10 aspect-video w-full max-w-md">
+        <div className={cn("relative z-10 aspect-video w-full", !fill && "max-w-md")}>
           <div className="absolute inset-0 flex items-center justify-center gap-3">
             {WINDOWS.map((win, i) => (
               <Cursor key={i} win={win} index={i} animated={false} state={{}} />
@@ -301,7 +302,7 @@ export function Presence({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={hover ? () => setHovered(true) : undefined}
       onMouseLeave={hover ? () => setHovered(false) : undefined}
     >
@@ -350,7 +351,7 @@ export function Presence({
           </motion.div>
         </motion.div>
       )}
-      <div className="relative z-10 aspect-video w-full max-w-md">
+      <div className={cn("relative z-10 aspect-video w-full", !fill && "max-w-md")}>
         <div className="absolute inset-0 flex items-center justify-center gap-3">
           {WINDOWS.map((win, i) => (
             <Cursor key={i} win={win} index={i} animated state={state} />

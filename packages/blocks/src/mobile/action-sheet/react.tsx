@@ -3,7 +3,7 @@ import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Copy, Mail, MessageCircle, Share2, Trash2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface ActionSheetProps extends VisualProps {
   danger?: boolean;
@@ -51,6 +51,7 @@ export function ActionSheet({
   danger = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: ActionSheetProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -73,7 +74,7 @@ export function ActionSheet({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

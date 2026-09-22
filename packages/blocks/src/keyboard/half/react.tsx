@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useAnimate, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const KEY_UNIT = 46;
 const GAP = 4;
@@ -153,6 +153,7 @@ export function Half({
   trigger = "inView",
   hover = false,
   isometric = false,
+  fill = false,
   className,
 }: HalfProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -246,7 +247,7 @@ export function Half({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover && hasKeys ? () => setHovered(true) : undefined}

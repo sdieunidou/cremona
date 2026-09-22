@@ -3,7 +3,7 @@ import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronLeft, MoreVertical, Search } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AppBarProps extends VisualProps {
   title?: string;
@@ -33,6 +33,7 @@ export function AppBar({
   scrolled = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: AppBarProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -53,7 +54,7 @@ export function AppBar({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >

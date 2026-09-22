@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ArrowRight, X } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const container = {
   hidden: { opacity: 0 },
@@ -151,6 +151,7 @@ export function Tabs({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: TabsProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -182,14 +183,14 @@ export function Tabs({
       aria-hidden="true"
       inert={!animated}
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setIsHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setIsHovering(false) : undefined}
     >
       <motion.div
-        className={`relative w-full max-w-90 rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}

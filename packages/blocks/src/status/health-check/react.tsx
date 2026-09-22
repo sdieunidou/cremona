@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Globe, Database, KeyRound, HardDrive, Cloud } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 type ServiceStatus = "operational" | "degraded" | "down";
 
@@ -121,6 +121,7 @@ export function HealthCheck({
   fadeOut = false,
   isometric = false,
   gradient = true,
+  fill = false,
   className,
 }: HealthCheckProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -152,13 +153,13 @@ export function HealthCheck({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
         className={cn(
-          "relative w-full max-w-80 rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
+          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

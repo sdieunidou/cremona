@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Check, Minus } from "lucide-react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CheckboxProps extends VisualProps {
   checked?: boolean;
@@ -25,6 +25,7 @@ export function Checkbox({
   card = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: CheckboxProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -68,7 +69,7 @@ export function Checkbox({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
@@ -82,7 +83,7 @@ export function Checkbox({
             role="checkbox"
             aria-checked={mixed ? "mixed" : checked}
             className={cn(
-              "flex w-full max-w-64 items-center gap-3 rounded-lg border p-3 text-left transition-all duration-200",
+              "flex w-full", !fill && "max-w-64", "items-center gap-3 rounded-lg border p-3 text-left transition-all duration-200",
               on
                 ? "border-primary bg-primary/10"
                 : "border-border bg-background hover:bg-muted/40",

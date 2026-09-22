@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const orbitMarkPath =
   "M6 2l6 3.75L6 9.5 0 5.75zm12 0l6 3.75-6 3.75-6-3.75zM0 13.25L6 9.5l6 3.75L6 17zm12 0L18 9.5l6 3.75L18 17zM6 18.25l6-3.75 6 3.75L12 22z";
@@ -108,6 +108,7 @@ export function LogoReel({
   hover = false,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: LogoReelProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -132,7 +133,7 @@ export function LogoReel({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}

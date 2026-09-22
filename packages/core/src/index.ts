@@ -12,6 +12,16 @@ export interface VisualProps {
   animated?: boolean;
   /** How the entrance is triggered. */
   trigger?: TriggerMode;
+  /**
+   * Make the visual fill the box it is given instead of sitting in the gallery
+   * preview frame: drops the frame's side padding, stretches on the cross axis
+   * and removes the module's `max-w-*` cap. Off by default, so the preview
+   * rendering — and every golden — is unchanged.
+   *
+   * Turn it on to use a visual as a panel in an app layout, where a centred,
+   * capped card gives mismatched widths and edges from one cell to the next.
+   */
+  fill?: boolean;
   className?: string;
 }
 
@@ -72,6 +82,16 @@ export function gridCols(cols: number): string {
     default:
       return "lg:grid-cols-2";
   }
+}
+
+/**
+ * The preview frame every visual sits in. `fill` turns it into a plain box
+ * that the visual occupies entirely — see `VisualProps.fill`.
+ */
+export function frameClasses(fill?: boolean): string {
+  return fill
+    ? "relative isolate flex size-full items-stretch justify-center overflow-hidden"
+    : "relative isolate flex size-full items-center justify-center overflow-hidden px-2";
 }
 
 /** Tiny classname combiner (no dependency). */

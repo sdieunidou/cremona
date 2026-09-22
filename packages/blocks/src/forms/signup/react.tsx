@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { cn, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SignupProps extends VisualProps {
   name?: string;
@@ -45,6 +45,7 @@ export function Signup({
   strength = 3,
   animated = false,
   trigger = "inView",
+  fill = false,
   className,
 }: SignupProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -67,12 +68,12 @@ export function Signup({
       ref={ref}
       aria-hidden="true"
       className={cn(
-        "relative isolate flex size-full items-center justify-center overflow-hidden px-2",
+        frameClasses(fill),
         className,
       )}
     >
       <motion.div
-        className="flex w-full max-w-72 flex-col gap-2.5 rounded-xl border bg-card p-4 text-card-foreground shadow-xs"
+        className={cn("flex w-full", !fill && "max-w-72", "flex-col gap-2.5 rounded-xl border bg-card p-4 text-card-foreground shadow-xs")}
         variants={animated ? entrance : undefined}
         {...state}
       >
