@@ -7,10 +7,49 @@ import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { REPO_ROOT } from "./store.js";
 
-const server = new McpServer({
-  name: "cremona",
-  version: "0.1.0",
-});
+/**
+ * Sent back on `initialize`; MCP clients put it in the model's context. This is
+ * the one place a session is guaranteed to read — it never calls
+ * `get_guide("react")` on its own — so the preview-vs-production warning lives
+ * here, not only in the docs.
+ */
+const INSTRUCTIONS = `Cremona — 160 animated visual blocks (37 categories, 1247 variants), a design
+system (9 themes x light/dark) and authoring tools.
+
+BLOCKS ARE PREVIEW COMPOSITIONS, NOT PRODUCTION COMPONENTS. Every block:
+- has aria-hidden="true" on its root, so its content does not exist for a
+  screen reader;
+- sits in the gallery's preview frame, which centres a max-w-* card inside
+  whatever box you give it;
+- takes content props (label, value, items…) and no onClick, no ref, no
+  children — components/button renders one button with one label.
+
+Two correct ways to use one:
+
+1. AS-IS, for illustration (charts, stat cards, empty states): give it a sized
+   box, pass real data instead of the demo defaults, and put a text equivalent
+   next to it, since the root is aria-hidden.
+
+2. DERIVED, for anything interactive: take the source from
+   get_block(include:["react"]), then remove the preview frame wrapper and the
+   useInView plumbing, add children/handlers/ref/ARIA/keyboard, and KEEP the
+   class strings and the motion variants. Rewriting a block from its class
+   strings silently drops every entrance animation in the library.
+
+Call get_guide("react") for the derivation recipe, the props contract and the
+gotchas — the \`gradient\` veil hides the bottom 64px of a card, and entrance
+chains run ~1.3s, which screenshot tests must wait out. Before adding blocks,
+read get_guide("porting-guide") or get_guide("authoring-guide").
+
+Ship @cremona/tokens/css/cremona.css once; no Tailwind build required.`;
+
+const server = new McpServer(
+  {
+    name: "cremona",
+    version: "0.1.0",
+  },
+  { instructions: INSTRUCTIONS },
+);
 
 const text = (data) => ({ content: [{ type: "text", text: typeof data === "string" ? data : JSON.stringify(data, null, 2) }] });
 
@@ -48,7 +87,7 @@ server.tool(
 
 server.tool(
   "get_block",
-  "Get everything about a visual block: metadata, exact variant props, React source, Stimulus template and golden references.",
+  "Get everything about a visual block: metadata, exact variant props, React source, Stimulus template and golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
   {
     key: z.string().describe("block key as '<category>/<file>', e.g. 'metrics/stat-card'"),
     variant: z.string().optional().describe("variant label to scope props/template/golden to"),
@@ -83,6 +122,20 @@ server.tool(
     }
     if (wanted.has("react")) {
       out.reactSource = store.blockReactSource(categorySlug, file);
+      // Travels with the source: a session that copies `reactSource` gets the
+      // caveat in the same payload, not in a guide it will not open.
+      out.reactSourceNote = {
+        kind: "preview composition",
+        why: 'Root is aria-hidden="true" and wrapped in the gallery preview frame (relative isolate flex size-full … px-2); props are content only — no handlers, no children, no ref.',
+        asIs: "Illustration only: size the box, pass real data instead of the demo defaults, and add a text equivalent next to it.",
+        derive: [
+          "remove the preview frame wrapper and its aria-hidden",
+          "remove the useInView plumbing (inViewOnce / inViewRepeat / state)",
+          "add children, handlers, forwarded ref, ARIA and keyboard",
+          "keep the class strings and the motion variants untouched",
+        ],
+        guide: 'get_guide("react")',
+      };
     }
     if (wanted.has("stimulus")) {
       const variants = store.stimulusTemplates(categorySlug, file);

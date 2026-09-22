@@ -116,4 +116,29 @@ describe("cremona MCP server", () => {
     const guide = await client.callTool({ name: "get_guide", arguments: { name: "porting-guide" } });
     expect(guide.content[0].text).toContain("# Porting Guide");
   });
+
+  it("tells a connecting session that blocks are preview compositions", () => {
+    // `initialize` instructions are the one thing a client puts in the model's
+    // context without being asked; the caveat has to be there, not only in a
+    // guide the session will never open.
+    const instructions = client.getInstructions();
+    expect(instructions).toBeTruthy();
+    expect(instructions).toContain("PREVIEW COMPOSITIONS, NOT PRODUCTION COMPONENTS");
+    expect(instructions).toContain('aria-hidden="true"');
+    expect(instructions).toContain("get_guide(\"react\")");
+  });
+
+  it("attaches the caveat to the React source itself", async () => {
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "components/button", include: ["react"] },
+      }),
+    );
+    expect(block.reactSource).toContain("export function Button");
+    expect(block.reactSourceNote.kind).toBe("preview composition");
+    expect(block.reactSourceNote.derive).toContain(
+      "keep the class strings and the motion variants untouched",
+    );
+  });
 });
