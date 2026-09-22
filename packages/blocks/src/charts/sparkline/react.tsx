@@ -111,6 +111,14 @@ export interface SparklineProps extends VisualProps {
   points?: readonly number[];
   isometric?: boolean;
   gradient?: boolean;
+  /**
+   * Wrap the card in the tray the other data blocks carry
+   * (`rounded-3xl border-border/50 bg-muted/75 p-1.5`). Off by default so the
+   * flat card stays the block's own look; turn it on to line this block up
+   * with `charts/bar`, `charts/donut`, `charts/gauge`, `charts/heatmap`,
+   * `metrics/stat-card` and `states/empty` on the same screen.
+   */
+  framed?: boolean;
 }
 
 export function Sparkline({
@@ -122,6 +130,7 @@ export function Sparkline({
   trigger = "inView",
   isometric = false,
   gradient = true,
+  framed = false,
   className,
 }: SparklineProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -154,7 +163,11 @@ export function Sparkline({
       )}
     >
       <motion.div
-        className="relative w-full max-w-64"
+        className={
+          framed
+            ? "relative w-full max-w-64 rounded-3xl border border-border/50 bg-muted/75 p-1.5"
+            : "relative w-full max-w-64"
+        }
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
         {...state}
@@ -162,18 +175,32 @@ export function Sparkline({
         {gradient && (
           <>
             <motion.div
-              className="absolute inset-x-1 bottom-0 h-6 origin-center rounded-full bg-[linear-gradient(to_right,var(--color-red-500),var(--color-orange-500),var(--color-yellow-500),var(--color-green-500),var(--color-blue-500),var(--color-indigo-500),var(--color-violet-500))] opacity-60 blur-sm"
+              className={
+                framed
+                  ? "absolute inset-x-1.25 bottom-0 h-20 origin-center rounded-t-full rounded-b-xl bg-[linear-gradient(to_right,var(--color-red-500),var(--color-orange-500),var(--color-yellow-500),var(--color-green-500),var(--color-blue-500),var(--color-indigo-500),var(--color-violet-500))] opacity-60 blur-sm"
+                  : "absolute inset-x-1 bottom-0 h-6 origin-center rounded-full bg-[linear-gradient(to_right,var(--color-red-500),var(--color-orange-500),var(--color-yellow-500),var(--color-green-500),var(--color-blue-500),var(--color-indigo-500),var(--color-violet-500))] opacity-60 blur-sm"
+              }
               variants={animated ? glowAnim : undefined}
               {...state}
             />
             <motion.div
-              className="absolute -inset-x-0.5 -bottom-0.5 h-12 rounded-b-xl bg-background/95 mask-t-from-50%"
+              className={
+                framed
+                  ? "absolute inset-x-0 bottom-0 h-16 rounded-b-3xl bg-background/75 mask-t-from-50%"
+                  : "absolute -inset-x-0.5 -bottom-0.5 h-12 rounded-b-xl bg-background/95 mask-t-from-50%"
+              }
               variants={animated ? veilAnim : undefined}
               {...state}
             />
           </>
         )}
-        <div className="relative flex items-center gap-3 rounded-xl border bg-card px-3.5 py-3 shadow-xs">
+        <div
+          className={
+            framed
+              ? "relative flex items-center gap-3 rounded-2xl border bg-card px-3.5 py-3 shadow-xs"
+              : "relative flex items-center gap-3 rounded-xl border bg-card px-3.5 py-3 shadow-xs"
+          }
+        >
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <motion.span
               className="truncate text-[10px] font-medium tracking-wide text-muted-foreground"
