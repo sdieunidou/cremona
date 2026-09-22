@@ -126,10 +126,40 @@ derivation stays auditable, and you can re-sync when the block moves.
 
 ## Gotchas
 
-- **`gradient` veils the bottom of the card.** The rainbow glow ships with a
-  `bg-background/75 mask-t-from-50%` veil over the bottom 64 px, which fades
-  anything sitting there — the donut's legend, the bar chart's axis labels.
-  Pass `gradient={false}` on data panels and keep the glow for one hero card.
+- **`gradient` is a gallery effect. Turn it off in an app.** It does two things,
+  and both assume the card is floating on the gallery's preview background:
+  - the rainbow glow sits at `bottom-0` with a `blur-sm`, so it is drawn
+    **outside the card**, in the gap between the card and the edge of the
+    block's box. In a preview stage that gap is generous and it reads as a
+    halo; in a panel sized to its content it escapes the frame and reads as a
+    colour leak;
+  - a `bg-background/75 mask-t-from-50%` veil over the bottom 64 px fades the
+    card into that glow — and with it the donut's legend and the bar chart's
+    axis labels.
+
+  `gradient={false}` on anything that is a panel rather than an illustration.
+  Keeping it on "just one hero card" does not work either: the leak is then the
+  only thing that differs between otherwise identical tiles.
+- **A block centres a capped-width card in your box.** The preview frame is
+  `flex items-center justify-center … px-2`, and the card inside caps at a
+  `max-w-*` — 10 different values across the 118 blocks that do it (`max-w-72`
+  for `metrics/stat-card`, `max-w-80` for most charts, `max-w-64` for
+  `charts/sparkline`…). Drop three of them in a grid and you get three widths,
+  three left edges and three top edges.
+
+  Either size the cell to the block, or neutralise it from the host. The block
+  markup is locked by the goldens, so child selectors are stable:
+
+  ```tsx
+  // fills the cell, and lines its top edge up with the cards next to it
+  <div className="h-72 [&>div]:px-0 [&>div>div]:max-w-none
+                  [&>div]:items-stretch [&>div>div>*]:h-full">
+    <Donut gradient={false} segments={segments} />
+  </div>
+  ```
+
+  `[&>div>div>*]:h-full` only works with `gradient={false}` — with the glow on,
+  the tray has three children and the rule would blow up the glow too.
 - **`trigger="mount"` replays on every remount.** In a filtered list that
   re-keys its children, the entrance runs again on each change. Prefer
   `"inView"` (the default, once) unless the panel really is mounted once.
