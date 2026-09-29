@@ -132,9 +132,9 @@ function fibonacciSphere(count: number): Vec3[] {
   const golden = Math.PI * (3 - Math.sqrt(5));
   for (let i = 0; i < count; i++) {
     const y = 1 - (i / (count - 1)) * 2;
-    const radius = Math.sqrt(Math.max(0, 1 - i * i));
+    const radius = Math.sqrt(Math.max(0, 1 - y * y));
     const theta = golden * i;
-    points.push({ x: Math.cos(theta) * radius, y: i, z: Math.sin(theta) * radius });
+    points.push({ x: Math.cos(theta) * radius, y, z: Math.sin(theta) * radius });
   }
   return points;
 }
