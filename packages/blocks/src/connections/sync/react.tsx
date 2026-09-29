@@ -8,8 +8,14 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 export const syncDefaultCopy = {
   pairs: [
     [<Cloud className="size-4" strokeWidth={2} />, <Server className="size-4" strokeWidth={2} />],
-    [<Database className="size-4" strokeWidth={2} />, <HardDrive className="size-4" strokeWidth={2} />],
-    [<FileText className="size-4" strokeWidth={2} />, <Archive className="size-4" strokeWidth={2} />],
+    [
+      <Database className="size-4" strokeWidth={2} />,
+      <HardDrive className="size-4" strokeWidth={2} />,
+    ],
+    [
+      <FileText className="size-4" strokeWidth={2} />,
+      <Archive className="size-4" strokeWidth={2} />,
+    ],
   ],
 } as const;
 
@@ -27,7 +33,7 @@ function pairY(i: number, n: number): number {
 
 function pairPaths(i: number, n: number): { forward: string; reverse: string } {
   const y = pairY(i, n);
-  const r = y + ((i - (n - 1) / 2) * 18);
+  const r = y + (i - (n - 1) / 2) * 18;
   return {
     forward: `M ${LEFT_X},${y} Q 130,${r} ${RIGHT_X},${y}`,
     reverse: `M ${RIGHT_X},${y} Q 130,${r} ${LEFT_X},${y}`,
@@ -82,7 +88,15 @@ function SyncPulse({
     return (
       <g>
         <animateMotion dur={dur} repeatCount="indefinite" begin={begin} path={d} rotate="auto" />
-        <line x1={-18} y1={0} x2={0} y2={0} stroke={`url(#${gradientId})`} strokeWidth={1.4} strokeLinecap="round" />
+        <line
+          x1={-18}
+          y1={0}
+          x2={0}
+          y2={0}
+          stroke={`url(#${gradientId})`}
+          strokeWidth={1.4}
+          strokeLinecap="round"
+        />
         <circle r={2} fill="currentColor" className="text-primary" />
       </g>
     );
@@ -121,13 +135,16 @@ export function Sync({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
 
-  const pairList = (pairs.length ? pairs : syncDefaultCopy.pairs) as readonly (readonly ReactNode[])[];
+  const pairList = (
+    pairs.length ? pairs : syncDefaultCopy.pairs
+  ) as readonly (readonly ReactNode[])[];
   const list = pairList.slice(0, MAX_PAIRS);
   const n = list.length;
   const nodeDelay = (i: number) => DELAY_BASE + i * DELAY_UNIT;
@@ -155,7 +172,14 @@ export function Sync({
         >
           {pulse === "spike" && (
             <defs>
-              <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1={-18} y1={0} x2={0} y2={0}>
+              <linearGradient
+                id={gradientId}
+                gradientUnits="userSpaceOnUse"
+                x1={-18}
+                y1={0}
+                x2={0}
+                y2={0}
+              >
                 <stop offset="0" stopColor="var(--color-primary)" stopOpacity={0} />
                 <stop offset="1" stopColor="var(--color-primary)" stopOpacity={0.9} />
               </linearGradient>
@@ -179,11 +203,21 @@ export function Sync({
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: pulseVisible && !hover ? pulseDelay : 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: pulseVisible && !hover ? pulseDelay : 0,
+              }}
             >
               {curves.map((pair, i) => (
                 <g key={`sd${i}`}>
-                  <SyncPulse d={pair.forward} dur="3s" begin={`${-i * 0.8}s`} pulse={pulse} gradientId={gradientId} />
+                  <SyncPulse
+                    d={pair.forward}
+                    dur="3s"
+                    begin={`${-i * 0.8}s`}
+                    pulse={pulse}
+                    gradientId={gradientId}
+                  />
                   <SyncPulse
                     d={pair.reverse}
                     dur="3s"
@@ -200,7 +234,10 @@ export function Sync({
           <div
             key={`ln${t}`}
             className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${(LEFT_X / CANVAS.w) * 100}%`, top: `${(pairY(t, n) / CANVAS.h) * 100}%` }}
+            style={{
+              left: `${(LEFT_X / CANVAS.w) * 100}%`,
+              top: `${(pairY(t, n) / CANVAS.h) * 100}%`,
+            }}
           >
             <motion.div
               className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
@@ -216,7 +253,10 @@ export function Sync({
           <div
             key={`rn${t}`}
             className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${(RIGHT_X / CANVAS.w) * 100}%`, top: `${(pairY(t, n) / CANVAS.h) * 100}%` }}
+            style={{
+              left: `${(RIGHT_X / CANVAS.w) * 100}%`,
+              top: `${(pairY(t, n) / CANVAS.h) * 100}%`,
+            }}
           >
             <motion.div
               className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"

@@ -65,28 +65,18 @@ export function Checkbox({
   );
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
-      <motion.div
-        variants={animated ? entrance : undefined}
-        {...state}
-      >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
+      <motion.div variants={animated ? entrance : undefined} {...state}>
         {card ? (
           <button
             type="button"
             role="checkbox"
             aria-checked={mixed ? "mixed" : checked}
             className={cn(
-              "flex w-full", !fill && "max-w-64", "items-center gap-3 rounded-lg border p-3 text-left transition-all duration-200",
-              on
-                ? "border-primary bg-primary/10"
-                : "border-border bg-background hover:bg-muted/40",
+              "flex w-full",
+              !fill && "max-w-64",
+              "items-center gap-3 rounded-lg border p-3 text-left transition-all duration-200",
+              on ? "border-primary bg-primary/10" : "border-border bg-background hover:bg-muted/40",
             )}
           >
             <span className="flex flex-1 flex-col gap-0.5">

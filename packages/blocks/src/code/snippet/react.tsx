@@ -6,16 +6,7 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SnippetToken {
   width: number;
-  color:
-    | "keyword"
-    | "func"
-    | "string"
-    | "variable"
-    | "type"
-    | "punct"
-    | "tag"
-    | "prop"
-    | "comment";
+  color: "keyword" | "func" | "string" | "variable" | "type" | "punct" | "tag" | "prop" | "comment";
 }
 
 export interface SnippetLine {
@@ -62,49 +53,222 @@ const tokenColors: Record<SnippetToken["color"], string> = {
 
 const snippetDefaultLines: Record<SnippetLanguage, SnippetLine[]> = {
   tsx: [
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 26, color: "variable" }, { width: 10, color: "punct" }, { width: 32, color: "string" }] },
-    { indent: 0, tokens: [{ width: 14, color: "keyword" }, { width: 24, color: "func" }, { width: 12, color: "type" }, { width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 14, color: "keyword" }, { width: 18, color: "punct" }, { width: 22, color: "tag" }, { width: 20, color: "prop" }, { width: 16, color: "string" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 26, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 32, color: "string" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 24, color: "func" },
+        { width: 12, color: "type" },
+        { width: 10, color: "punct" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 18, color: "punct" },
+        { width: 22, color: "tag" },
+        { width: 20, color: "prop" },
+        { width: 16, color: "string" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
   bash: [
-    { indent: 0, tokens: [{ width: 30, color: "comment" }, { width: 40, color: "comment" }] },
-    { indent: 0, tokens: [{ width: 16, color: "func" }, { width: 14, color: "keyword" }, { width: 38, color: "string" }] },
-    { indent: 0, tokens: [{ width: 16, color: "func" }, { width: 24, color: "variable" }, { width: 18, color: "string" }] },
-    { indent: 0, tokens: [{ width: 16, color: "func" }, { width: 22, color: "keyword" }] },
-    { indent: 0, tokens: [{ width: 16, color: "func" }, { width: 20, color: "variable" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 30, color: "comment" },
+        { width: 40, color: "comment" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 16, color: "func" },
+        { width: 14, color: "keyword" },
+        { width: 38, color: "string" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 16, color: "func" },
+        { width: 24, color: "variable" },
+        { width: 18, color: "string" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 16, color: "func" },
+        { width: 22, color: "keyword" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 16, color: "func" },
+        { width: 20, color: "variable" },
+      ],
+    },
   ],
   json: [
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 22, color: "prop" }, { width: 30, color: "string" }] },
-    { indent: 1, tokens: [{ width: 26, color: "prop" }, { width: 18, color: "string" }] },
-    { indent: 1, tokens: [{ width: 30, color: "prop" }, { width: 10, color: "punct" }] },
+    {
+      indent: 1,
+      tokens: [
+        { width: 22, color: "prop" },
+        { width: 30, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 26, color: "prop" },
+        { width: 18, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 30, color: "prop" },
+        { width: 10, color: "punct" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
   css: [
-    { indent: 0, tokens: [{ width: 30, color: "tag" }, { width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 24, color: "prop" }, { width: 32, color: "string" }] },
-    { indent: 1, tokens: [{ width: 30, color: "prop" }, { width: 20, color: "variable" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 30, color: "tag" },
+        { width: 10, color: "punct" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 24, color: "prop" },
+        { width: 32, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 30, color: "prop" },
+        { width: 20, color: "variable" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
   sql: [
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 14, color: "variable" }, { width: 18, color: "variable" }, { width: 14, color: "keyword" }, { width: 20, color: "tag" }] },
-    { indent: 1, tokens: [{ width: 16, color: "keyword" }, { width: 26, color: "variable" }, { width: 10, color: "punct" }, { width: 28, color: "string" }] },
-    { indent: 1, tokens: [{ width: 20, color: "keyword" }, { width: 24, color: "variable" }, { width: 14, color: "keyword" }] },
-    { indent: 1, tokens: [{ width: 14, color: "keyword" }, { width: 12, color: "type" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 14, color: "variable" },
+        { width: 18, color: "variable" },
+        { width: 14, color: "keyword" },
+        { width: 20, color: "tag" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 16, color: "keyword" },
+        { width: 26, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 28, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 20, color: "keyword" },
+        { width: 24, color: "variable" },
+        { width: 14, color: "keyword" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 12, color: "type" },
+      ],
+    },
   ],
   yaml: [
-    { indent: 0, tokens: [{ width: 18, color: "prop" }, { width: 24, color: "string" }] },
-    { indent: 0, tokens: [{ width: 22, color: "prop" }, { width: 18, color: "keyword" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "prop" },
+        { width: 24, color: "string" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 22, color: "prop" },
+        { width: 18, color: "keyword" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 30, color: "prop" }] },
-    { indent: 1, tokens: [{ width: 10, color: "punct" }, { width: 24, color: "string" }] },
-    { indent: 1, tokens: [{ width: 10, color: "punct" }, { width: 20, color: "string" }] },
+    {
+      indent: 1,
+      tokens: [
+        { width: 10, color: "punct" },
+        { width: 24, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 10, color: "punct" },
+        { width: 20, color: "string" },
+      ],
+    },
   ],
   md: [
-    { indent: 0, tokens: [{ width: 12, color: "tag" }, { width: 32, color: "keyword" }] },
-    { indent: 0, tokens: [{ width: 22, color: "comment" }, { width: 18, color: "comment" }, { width: 14, color: "string" }, { width: 20, color: "func" }] },
-    { indent: 0, tokens: [{ width: 10, color: "punct" }, { width: 26, color: "comment" }] },
-    { indent: 0, tokens: [{ width: 10, color: "punct" }, { width: 24, color: "comment" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 12, color: "tag" },
+        { width: 32, color: "keyword" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 22, color: "comment" },
+        { width: 18, color: "comment" },
+        { width: 14, color: "string" },
+        { width: 20, color: "func" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 10, color: "punct" },
+        { width: 26, color: "comment" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 10, color: "punct" },
+        { width: 24, color: "comment" },
+      ],
+    },
   ],
 };
 
@@ -170,34 +334,43 @@ function SnippetCodeLine({
   showGutter: boolean;
   lineNumbers: boolean;
 }) {
-  const bg = line.diff === "add"
-    ? "bg-emerald-500/8 dark:bg-emerald-500/10"
-    : line.diff === "remove"
-      ? "bg-rose-500/8 dark:bg-rose-500/10"
-      : line.highlight
-        ? "bg-primary/8"
-        : "";
-  const border = line.diff === "add"
-    ? "border-emerald-500/60"
-    : line.diff === "remove"
-      ? "border-rose-500/60"
-      : line.highlight
-        ? "border-primary"
-        : "border-transparent";
-  const gutterColor = line.diff === "add"
-    ? "text-emerald-600 dark:text-emerald-400"
-    : line.diff === "remove"
-      ? "text-rose-600 dark:text-rose-400"
-      : "text-muted-foreground/60";
-  const gutterText = line.diff === "add" ? "+" : line.diff === "remove" ? "−" : lineNumbers ? index + 1 : "";
+  const bg =
+    line.diff === "add"
+      ? "bg-emerald-500/8 dark:bg-emerald-500/10"
+      : line.diff === "remove"
+        ? "bg-rose-500/8 dark:bg-rose-500/10"
+        : line.highlight
+          ? "bg-primary/8"
+          : "";
+  const border =
+    line.diff === "add"
+      ? "border-emerald-500/60"
+      : line.diff === "remove"
+        ? "border-rose-500/60"
+        : line.highlight
+          ? "border-primary"
+          : "border-transparent";
+  const gutterColor =
+    line.diff === "add"
+      ? "text-emerald-600 dark:text-emerald-400"
+      : line.diff === "remove"
+        ? "text-rose-600 dark:text-rose-400"
+        : "text-muted-foreground/60";
+  const gutterText =
+    line.diff === "add" ? "+" : line.diff === "remove" ? "−" : lineNumbers ? index + 1 : "";
   return (
     <div className={`flex items-center gap-1.5 border-l-2 px-3 ${border} ${bg}`}>
       {showGutter && (
-        <span className={`w-3 shrink-0 text-right text-[8px] font-semibold tabular-nums ${gutterColor}`}>
+        <span
+          className={`w-3 shrink-0 text-right text-[8px] font-semibold tabular-nums ${gutterColor}`}
+        >
           {gutterText}
         </span>
       )}
-      <div className="flex flex-1 items-center gap-1" style={{ paddingLeft: `${line.indent * 10}px` }}>
+      <div
+        className="flex flex-1 items-center gap-1"
+        style={{ paddingLeft: `${line.indent * 10}px` }}
+      >
         {line.tokens.map((token, i) => (
           <div
             key={i}
@@ -252,14 +425,7 @@ export function Snippet({
   const showGutter = lineNumbers || hasDiff;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("relative flex w-full", !fill && "max-w-72", "flex-col")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

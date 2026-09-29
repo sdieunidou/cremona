@@ -96,7 +96,11 @@ const stripAnim = {
   hidden: { clipPath: "inset(0 100% 0 0)" },
   visible: {
     clipPath: "inset(0 0% 0 0)",
-    transition: { duration: 0.5, delay: 0.12, ease: [0.65, 0, 0.35, 1] as [number, number, number, number] },
+    transition: {
+      duration: 0.5,
+      delay: 0.12,
+      ease: [0.65, 0, 0.35, 1] as [number, number, number, number],
+    },
   },
 } as const;
 
@@ -154,14 +158,7 @@ export function CreditCard({
   const groups = number.split(" ");
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="relative w-72 will-change-transform"
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

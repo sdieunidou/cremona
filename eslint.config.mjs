@@ -32,7 +32,11 @@ export default defineConfig(
     },
   },
   {
-    files: ["packages/{blocks,react,core}/src/**/*.{ts,tsx}", "packages/stimulus/src/**/*.js", "apps/gallery/src/**/*.{ts,tsx}"],
+    files: [
+      "packages/{blocks,react,core}/src/**/*.{ts,tsx}",
+      "packages/stimulus/src/**/*.js",
+      "apps/gallery/src/**/*.{ts,tsx}",
+    ],
     languageOptions: { globals: { ...globals.browser } },
   },
   {
@@ -50,7 +54,10 @@ export default defineConfig(
     rules: Object.fromEntries(
       Object.entries(jsxA11y.flatConfigs.recommended.rules)
         .filter(([, level]) => (Array.isArray(level) ? level[0] : level) !== "off")
-        .map(([rule, level]) => [rule, Array.isArray(level) ? ["warn", ...level.slice(1)] : "warn"]),
+        .map(([rule, level]) => [
+          rule,
+          Array.isArray(level) ? ["warn", ...level.slice(1)] : "warn",
+        ]),
     ),
   },
   {

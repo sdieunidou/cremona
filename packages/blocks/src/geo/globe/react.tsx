@@ -1,10 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import {
-  motion,
-  MotionConfigContext,
-  cancelFrame,
-  frame,
-} from "motion/react";
+import { motion, MotionConfigContext, cancelFrame, frame } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 import { LAND_MASK_BASE64 } from "./land-mask.js";
@@ -237,7 +232,8 @@ export function Globe({
   const inViewOnce = useInView(rootRef, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(rootRef, { once: false, amount: 0.5 });
   const [hovering, setHovering] = useState(false);
-  const visible = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const visible =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulsing = (hover ? hovering : visible) && inViewRepeat;
   const state = animated ? { initial: "hidden", animate: visible ? "visible" : "hidden" } : {};
   const resolvedMarkers = markers ?? defaultMarkers;
@@ -251,9 +247,14 @@ export function Globe({
     [resolvedMarkers],
   );
   const pairs = useMemo(
-    () => arcPairs || (markers ? markers.map((_, i) => [i, (i + 1) % markers.length] as [number, number]) : defaultArcPairs),
+    () =>
+      arcPairs ||
+      (markers
+        ? markers.map((_, i) => [i, (i + 1) % markers.length] as [number, number])
+        : defaultArcPairs),
     [arcPairs, markers],
-  );  const arcsGeometry = useMemo<ArcGeometry[]>(() => {
+  );
+  const arcsGeometry = useMemo<ArcGeometry[]>(() => {
     return pairs.map(([from, to]) => {
       const a = markerVectors[from]!;
       const b = markerVectors[to]!;
@@ -292,7 +293,8 @@ export function Globe({
     if (recolorRef.current || !dotColorRef.current) {
       dotColorRef.current = getComputedStyle(probe).color || "rgb(99, 102, 241)";
       const cardProbe = cardProbeRef.current;
-      cardColorRef.current = (cardProbe && getComputedStyle(cardProbe).color) || dotColorRef.current;
+      cardColorRef.current =
+        (cardProbe && getComputedStyle(cardProbe).color) || dotColorRef.current;
       recolorRef.current = false;
     }
     const dotColor = dotColorRef.current;
@@ -367,7 +369,11 @@ export function Globe({
           if (capped) {
             surfacePoint = slerp(arc.a, arc.b, grow, arc.omega, arc.sinOmega);
             const scale = 1 + CONFIG.arcHeight * Math.sin(Math.PI * grow);
-            liftedPoint = { x: surfacePoint.x * scale, y: surfacePoint.y * scale, z: surfacePoint.z * scale };
+            liftedPoint = {
+              x: surfacePoint.x * scale,
+              y: surfacePoint.y * scale,
+              z: surfacePoint.z * scale,
+            };
           }
           const surfaceDepth = project(surfacePoint).depth;
           const projected = project(liftedPoint);
@@ -500,7 +506,8 @@ export function Globe({
   });
   useGlobeFrame((_, delta) => {
     if (!animated) return;
-    activityRef.current += (+!!pulsing - activityRef.current) * Math.min(1, delta / CONFIG.activityEase);
+    activityRef.current +=
+      (+!!pulsing - activityRef.current) * Math.min(1, delta / CONFIG.activityEase);
     rotationRef.current += ((spinSpeed * Math.PI) / 180) * (delta / 1000) * activityRef.current;
     clockRef.current += delta * activityRef.current;
     if (visible) drawStartRef.current += delta;
@@ -553,10 +560,7 @@ export function Globe({
     <div
       ref={rootRef}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >

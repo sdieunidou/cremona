@@ -83,17 +83,15 @@ export function Callout({
   const text = copy[variant] ?? copy.info!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         role="status"
-        className={cn("flex w-full", !fill && "max-w-80", "items-start gap-3 rounded-lg border p-4", box)}
+        className={cn(
+          "flex w-full",
+          !fill && "max-w-80",
+          "items-start gap-3 rounded-lg border p-4",
+          box,
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >

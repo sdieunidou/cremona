@@ -57,11 +57,11 @@ export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
               </a>
             </li>
             <li className={SHELL.menuItem}>
-                <button
-                  type="button"
-                  className={cn(SHELL.menuButton, "text-muted-foreground")}
-                  onClick={onOpenSearch}
-                >
+              <button
+                type="button"
+                className={cn(SHELL.menuButton, "text-muted-foreground")}
+                onClick={onOpenSearch}
+              >
                 <Search className="opacity-50" />
                 <span>Search…</span>
                 <span className="pointer-events-none ml-auto hidden items-center gap-1 rounded border bg-background/75 px-1 py-0.25 text-[10px] font-semibold uppercase md:inline-flex">
@@ -111,7 +111,11 @@ function CategoryGroup({
   }
 
   return (
-    <div data-open={open || undefined} data-closed={!open || undefined} className="group/collapsible">
+    <div
+      data-open={open || undefined}
+      data-closed={!open || undefined}
+      className="group/collapsible"
+    >
       <li className={SHELL.menuItem}>
         <button
           type="button"
@@ -155,10 +159,24 @@ function CategoryGroup({
 }
 
 /** The isometric cube mark (favicon.svg inline, POC-faithful). */
-export function CremonaMark({ className = "text-foreground will-change-transform size-6 shrink-0" }: { className?: string }) {
+export function CremonaMark({
+  className = "text-foreground will-change-transform size-6 shrink-0",
+}: {
+  className?: string;
+}) {
   const id = `mark-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   return (
-    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className={className} fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
+    <svg
+      viewBox="0 0 48 48"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      fill="none"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
       <defs>
         <linearGradient id={id} gradientUnits="userSpaceOnUse" x1="1" y1="1" x2="47" y2="47">
           <stop offset="0%" stopColor="#3b82f6" />
@@ -170,8 +188,18 @@ export function CremonaMark({ className = "text-foreground will-change-transform
         <path d="M24 24 L1 35.5" />
         <path d="M24 24 L47 35.5" />
       </g>
-      <path d="M24 1 L47 12.5 L24 24 L1 12.5 Z" fill={`url(#${id})`} fillOpacity="0.75" stroke="none" />
-      <path d="M24 24 L47 12.5 L47 35.5 L24 47 Z" fill={`url(#${id})`} fillOpacity="0.45" stroke="none" />
+      <path
+        d="M24 1 L47 12.5 L24 24 L1 12.5 Z"
+        fill={`url(#${id})`}
+        fillOpacity="0.75"
+        stroke="none"
+      />
+      <path
+        d="M24 24 L47 12.5 L47 35.5 L24 47 Z"
+        fill={`url(#${id})`}
+        fillOpacity="0.45"
+        stroke="none"
+      />
       <g stroke={`url(#${id})`} strokeOpacity="1">
         <path d="M24 1 L47 12.5 L24 24 L1 12.5 Z" />
         <path d="M1 12.5 L1 35.5" />

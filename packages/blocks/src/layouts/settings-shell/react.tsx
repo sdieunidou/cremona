@@ -23,8 +23,18 @@ type FormRow =
   | { label: string; hint: string; control: "switch"; on: boolean };
 
 const rows: FormRow[] = [
-  { label: "Workspace name", hint: "Shown across your workspace.", control: "input", value: "Acme Inc." },
-  { label: "Time zone", hint: "Used for digests and reports.", control: "select", value: "(GMT+01:00) Berlin" },
+  {
+    label: "Workspace name",
+    hint: "Shown across your workspace.",
+    control: "input",
+    value: "Acme Inc.",
+  },
+  {
+    label: "Time zone",
+    hint: "Used for digests and reports.",
+    control: "select",
+    value: "(GMT+01:00) Berlin",
+  },
   { label: "Email digests", hint: "A weekly summary every Monday.", control: "switch", on: true },
   { label: "Public profile", hint: "Let anyone see your workspace.", control: "switch", on: false },
 ];
@@ -118,9 +128,7 @@ function FormRows() {
           variants={region}
         >
           <div className="flex min-w-0 flex-col gap-0.5">
-            <span className="text-[9px] leading-none font-medium text-foreground">
-              {row.label}
-            </span>
+            <span className="text-[9px] leading-none font-medium text-foreground">{row.label}</span>
             <span className="truncate text-[7px] leading-tight text-muted-foreground">
               {row.hint}
             </span>
@@ -174,25 +182,18 @@ export function SettingsShell({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("flex h-72 w-full", !fill && "max-w-90", "overflow-hidden rounded-xl border bg-background shadow-xs")}
+        className={cn(
+          "flex h-72 w-full",
+          !fill && "max-w-90",
+          "overflow-hidden rounded-xl border bg-background shadow-xs",
+        )}
         variants={animated ? shell : undefined}
         {...state}
       >
         <SettingsNav />
-        <motion.div
-          className="flex min-w-0 flex-1 flex-col p-2.5"
-          variants={regions}
-          {...state}
-        >
+        <motion.div className="flex min-w-0 flex-1 flex-col p-2.5" variants={regions} {...state}>
           <motion.div className="flex flex-col gap-1" variants={region}>
             <span className="text-[11px] leading-tight font-semibold tracking-tight text-foreground">
               General

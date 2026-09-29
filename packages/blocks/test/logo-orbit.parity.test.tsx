@@ -26,7 +26,10 @@ runGoldenParity("integrations/logo-orbit", {
     { label: "custom logo", props: { logo: customLogo } },
     { label: "inner ring", props: { innerRing: true } },
     { label: "orbit · inner ring", props: { orbit: true, innerRing: true } },
-    { label: "custom radius", props: { orbit: true, innerRing: true, radius: 160, innerRadius: 52 } },
+    {
+      label: "custom radius",
+      props: { orbit: true, innerRing: true, radius: 160, innerRadius: 52 },
+    },
     {
       label: "custom radius · orbit · isometric",
       props: { orbit: true, innerRing: true, radius: 140, innerRadius: 85, isometric: true },

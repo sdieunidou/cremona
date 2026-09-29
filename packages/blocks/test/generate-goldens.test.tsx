@@ -17,14 +17,19 @@ import type { ComponentType } from "react";
 const here = dirname(fileURLToPath(import.meta.url));
 const blocksRoot = join(here, "../src");
 
-const reactModules = import.meta.glob<Record<string, unknown>>(
-  "../src/*/*/react.tsx",
-  { eager: true },
-);
-const metaModules = import.meta.glob<{ default: {
-  category: string; file: string; name: string; description: string; kind: string;
-  variants: { label: string; slug: string; size?: string | null; propsRaw: string }[];
-} }>("../src/*/*/block.json", { eager: true });
+const reactModules = import.meta.glob<Record<string, unknown>>("../src/*/*/react.tsx", {
+  eager: true,
+});
+const metaModules = import.meta.glob<{
+  default: {
+    category: string;
+    file: string;
+    name: string;
+    description: string;
+    kind: string;
+    variants: { label: string; slug: string; size?: string | null; propsRaw: string }[];
+  };
+}>("../src/*/*/block.json", { eager: true });
 const propsModules = import.meta.glob<{ default: Record<string, Record<string, unknown>> }>(
   "../src/*/*/preview-props.json",
   { eager: true },
@@ -32,7 +37,10 @@ const propsModules = import.meta.glob<{ default: Record<string, Record<string, u
 
 function parsePropsRaw(raw: string): Record<string, unknown> {
   if (!raw || raw === "{}") return {};
-  let s = raw.replace(/`/g, '"').replace(/!0\b/g, "true").replace(/!1\b/g, "false")
+  let s = raw
+    .replace(/`/g, '"')
+    .replace(/!0\b/g, "true")
+    .replace(/!1\b/g, "false")
     .replace(/([[,:]\s*)\.(\d)/g, "$10.$2");
   s = s.replace(/([{,]\s*)([A-Za-z_$][\w$]*)(\s*:)/g, '$1"$2"$3');
   try {
@@ -45,11 +53,16 @@ function parsePropsRaw(raw: string): Record<string, unknown> {
   }
 }
 
-const FRAME = 'group/preview relative flex flex-col overflow-hidden rounded-lg border border-border/50 bg-muted/20 dark:bg-muted/15 ';
+const FRAME =
+  "group/preview relative flex flex-col overflow-hidden rounded-lg border border-border/50 bg-muted/20 dark:bg-muted/15 ";
 const STAGE_BASE = "flex grow items-center gap-2";
 const FOOTER = "bg-muted/25 px-2 py-2.25 text-center text-xs font-medium text-muted-foreground";
 const HEIGHTS: Record<string, string> = {
-  xs: "h-48", sm: "h-64", md: "h-96", lg: "h-[28rem]", xl: "h-[32rem]",
+  xs: "h-48",
+  sm: "h-64",
+  md: "h-96",
+  lg: "h-[28rem]",
+  xl: "h-[32rem]",
 };
 
 function frame(content: string, label: string, size?: string | null): string {
@@ -75,17 +88,24 @@ describe("generate goldens for new blocks", () => {
         ([name, value]) => typeof value === "function" && /^[A-Z]/.test(name),
       );
       if (candidates.length === 0) continue;
-      const pascal = m.file.split("-").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join("");
+      const pascal = m.file
+        .split("-")
+        .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+        .join("");
       const named = candidates.find(([n]) => n === pascal);
-      const Component = (named ?? candidates[candidates.length - 1]!)[1] as unknown as ComponentType<Record<string, unknown>>;
+      const Component = (named ??
+        candidates[candidates.length - 1]!)[1] as unknown as ComponentType<Record<string, unknown>>;
 
-      const propsAll = propsModules[path.replace("block.json", "preview-props.json")]?.default ?? {};
+      const propsAll =
+        propsModules[path.replace("block.json", "preview-props.json")]?.default ?? {};
       const needsAny = m.variants.some((v) => !existsSync(join(goldenDir, `${v.slug}.html`)));
       if (!needsAny) continue;
       if (!existsSync(goldenDir)) {
         // only synthesize for blocks that are NOT POC-extracted (no sources dir)
         if (existsSync(join(dir, "sources"))) {
-          throw new Error(`POC block ${m.category}/${m.file} missing goldens — extraction bug, refusing to synthesize`);
+          throw new Error(
+            `POC block ${m.category}/${m.file} missing goldens — extraction bug, refusing to synthesize`,
+          );
         }
         mkdirSync(goldenDir, { recursive: true });
       }

@@ -26,7 +26,10 @@ runGoldenParity("media/video-player", {
   Component: VideoPlayer,
   variants: [
     // propsRaw contains an identifier (image path via e(...)); resolved manually
-    { label: "real image", props: { image: "../../media/placeholders/photo-06.jpg", title: "Behind the scenes" } },
+    {
+      label: "real image",
+      props: { image: "../../media/placeholders/photo-06.jpg", title: "Behind the scenes" },
+    },
     {
       label: "isometric · real image",
       props: {

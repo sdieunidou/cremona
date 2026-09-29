@@ -19,11 +19,56 @@ interface CursorPath {
 }
 
 const CURSOR_PATHS: CursorPath[] = [
-  { points: [{ x: 30, y: 58 }, { x: 48, y: 40 }, { x: 40, y: 66 }, { x: 22, y: 52 }, { x: 30, y: 58 }], duration: 16 },
-  { points: [{ x: 56, y: 26 }, { x: 62, y: 50 }, { x: 50, y: 60 }, { x: 60, y: 32 }, { x: 56, y: 26 }], duration: 19 },
-  { points: [{ x: 18, y: 24 }, { x: 34, y: 44 }, { x: 22, y: 58 }, { x: 12, y: 36 }, { x: 18, y: 24 }], duration: 21 },
-  { points: [{ x: 58, y: 62 }, { x: 63, y: 38 }, { x: 52, y: 28 }, { x: 46, y: 54 }, { x: 58, y: 62 }], duration: 18 },
-  { points: [{ x: 42, y: 18 }, { x: 54, y: 34 }, { x: 38, y: 46 }, { x: 30, y: 26 }, { x: 42, y: 18 }], duration: 20 },
+  {
+    points: [
+      { x: 30, y: 58 },
+      { x: 48, y: 40 },
+      { x: 40, y: 66 },
+      { x: 22, y: 52 },
+      { x: 30, y: 58 },
+    ],
+    duration: 16,
+  },
+  {
+    points: [
+      { x: 56, y: 26 },
+      { x: 62, y: 50 },
+      { x: 50, y: 60 },
+      { x: 60, y: 32 },
+      { x: 56, y: 26 },
+    ],
+    duration: 19,
+  },
+  {
+    points: [
+      { x: 18, y: 24 },
+      { x: 34, y: 44 },
+      { x: 22, y: 58 },
+      { x: 12, y: 36 },
+      { x: 18, y: 24 },
+    ],
+    duration: 21,
+  },
+  {
+    points: [
+      { x: 58, y: 62 },
+      { x: 63, y: 38 },
+      { x: 52, y: 28 },
+      { x: 46, y: 54 },
+      { x: 58, y: 62 },
+    ],
+    duration: 18,
+  },
+  {
+    points: [
+      { x: 42, y: 18 },
+      { x: 54, y: 34 },
+      { x: 38, y: 46 },
+      { x: 30, y: 26 },
+      { x: 42, y: 18 },
+    ],
+    duration: 20,
+  },
 ];
 
 const CURSOR_LOOP_DELAY = 0.6;
@@ -52,27 +97,190 @@ interface Particle {
 }
 
 const PARTICLES: Particle[] = [
-  { x: 14.2, y: 24.6, size: 3, color: "bg-primary", duration: 4.82, delay: -5.22, driftX: 4.87, driftY: 14.97, opacity: 0.6 },
-  { x: 86.7, y: 32.1, size: 3, color: "bg-chart-1", duration: 6.16, delay: -2.68, driftX: -3.11, driftY: 12.52, opacity: 0.6 },
-  { x: 24.1, y: 72.3, size: 2, color: "bg-chart-2", duration: 6.41, delay: -1.19, driftX: -2.04, driftY: 16.24, opacity: 0.48 },
-  { x: 78.6, y: 66.2, size: 3, color: "bg-chart-3", duration: 4.09, delay: -3.47, driftX: 5.93, driftY: 13.39, opacity: 0.62 },
-  { x: 8.8, y: 54.5, size: 2, color: "bg-chart-4", duration: 4.41, delay: -5.43, driftX: 6.64, driftY: 15.95, opacity: 0.52 },
-  { x: 91.2, y: 54.4, size: 3, color: "bg-primary", duration: 4.22, delay: -1.23, driftX: -3.05, driftY: 14.75, opacity: 0.45 },
-  { x: 18.3, y: 16.2, size: 2, color: "bg-chart-1", duration: 4.72, delay: -5.81, driftX: 4.22, driftY: 9.62, opacity: 0.5 },
-  { x: 72.5, y: 20.7, size: 3, color: "bg-chart-4", duration: 7.66, delay: -5.45, driftX: 6.82, driftY: 13.1, opacity: 0.55 },
-  { x: 32.6, y: 82.6, size: 3, color: "bg-primary", duration: 5.43, delay: -2.72, driftX: -2.28, driftY: 10, opacity: 0.6 },
-  { x: 65.4, y: 80.3, size: 2, color: "bg-chart-3", duration: 4.75, delay: -1.01, driftX: 5.27, driftY: 8.7, opacity: 0.5 },
-  { x: 6.9, y: 40.4, size: 3, color: "bg-primary", duration: 4.94, delay: -5.65, driftX: 4.64, driftY: 13.44, opacity: 0.46 },
-  { x: 93.3, y: 42.8, size: 2, color: "bg-chart-2", duration: 4.69, delay: -2.39, driftX: -3.07, driftY: 15.9, opacity: 0.5 },
-  { x: 46.5, y: 10.6, size: 3, color: "bg-chart-4", duration: 6.13, delay: -5.07, driftX: -2.6, driftY: 9.3, opacity: 0.5 },
-  { x: 53.2, y: 90.1, size: 2, color: "bg-primary", duration: 6.39, delay: -5.57, driftX: 1.33, driftY: 9.13, opacity: 0.52 },
-  { x: 38.8, y: 86.9, size: 3, color: "bg-chart-1", duration: 7.31, delay: -5.08, driftX: -4.42, driftY: 14.91, opacity: 0.5 },
-  { x: 84.1, y: 86.4, size: 2, color: "bg-chart-4", duration: 5.23, delay: -2.49, driftX: 3.29, driftY: 7.84, opacity: 0.48 },
+  {
+    x: 14.2,
+    y: 24.6,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.82,
+    delay: -5.22,
+    driftX: 4.87,
+    driftY: 14.97,
+    opacity: 0.6,
+  },
+  {
+    x: 86.7,
+    y: 32.1,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 6.16,
+    delay: -2.68,
+    driftX: -3.11,
+    driftY: 12.52,
+    opacity: 0.6,
+  },
+  {
+    x: 24.1,
+    y: 72.3,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 6.41,
+    delay: -1.19,
+    driftX: -2.04,
+    driftY: 16.24,
+    opacity: 0.48,
+  },
+  {
+    x: 78.6,
+    y: 66.2,
+    size: 3,
+    color: "bg-chart-3",
+    duration: 4.09,
+    delay: -3.47,
+    driftX: 5.93,
+    driftY: 13.39,
+    opacity: 0.62,
+  },
+  {
+    x: 8.8,
+    y: 54.5,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 4.41,
+    delay: -5.43,
+    driftX: 6.64,
+    driftY: 15.95,
+    opacity: 0.52,
+  },
+  {
+    x: 91.2,
+    y: 54.4,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.22,
+    delay: -1.23,
+    driftX: -3.05,
+    driftY: 14.75,
+    opacity: 0.45,
+  },
+  {
+    x: 18.3,
+    y: 16.2,
+    size: 2,
+    color: "bg-chart-1",
+    duration: 4.72,
+    delay: -5.81,
+    driftX: 4.22,
+    driftY: 9.62,
+    opacity: 0.5,
+  },
+  {
+    x: 72.5,
+    y: 20.7,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 7.66,
+    delay: -5.45,
+    driftX: 6.82,
+    driftY: 13.1,
+    opacity: 0.55,
+  },
+  {
+    x: 32.6,
+    y: 82.6,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.43,
+    delay: -2.72,
+    driftX: -2.28,
+    driftY: 10,
+    opacity: 0.6,
+  },
+  {
+    x: 65.4,
+    y: 80.3,
+    size: 2,
+    color: "bg-chart-3",
+    duration: 4.75,
+    delay: -1.01,
+    driftX: 5.27,
+    driftY: 8.7,
+    opacity: 0.5,
+  },
+  {
+    x: 6.9,
+    y: 40.4,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.94,
+    delay: -5.65,
+    driftX: 4.64,
+    driftY: 13.44,
+    opacity: 0.46,
+  },
+  {
+    x: 93.3,
+    y: 42.8,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 4.69,
+    delay: -2.39,
+    driftX: -3.07,
+    driftY: 15.9,
+    opacity: 0.5,
+  },
+  {
+    x: 46.5,
+    y: 10.6,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 6.13,
+    delay: -5.07,
+    driftX: -2.6,
+    driftY: 9.3,
+    opacity: 0.5,
+  },
+  {
+    x: 53.2,
+    y: 90.1,
+    size: 2,
+    color: "bg-primary",
+    duration: 6.39,
+    delay: -5.57,
+    driftX: 1.33,
+    driftY: 9.13,
+    opacity: 0.52,
+  },
+  {
+    x: 38.8,
+    y: 86.9,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 7.31,
+    delay: -5.08,
+    driftX: -4.42,
+    driftY: 14.91,
+    opacity: 0.5,
+  },
+  {
+    x: 84.1,
+    y: 86.4,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 5.23,
+    delay: -2.49,
+    driftX: 3.29,
+    driftY: 7.84,
+    opacity: 0.48,
+  },
 ];
 
 const glowVariant = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 const particlesVariant = {
@@ -172,7 +380,13 @@ function DocumentWindow({ lines }: { lines: number }) {
       </div>
       <div className="flex-1 space-y-1.5 p-2">
         {Array.from({ length: lines }).map((_, i) => (
-          <div key={i} className={cn("h-1.5 rounded-full bg-muted-foreground/15", LINE_WIDTHS[i % LINE_WIDTHS.length])} />
+          <div
+            key={i}
+            className={cn(
+              "h-1.5 rounded-full bg-muted-foreground/15",
+              LINE_WIDTHS[i % LINE_WIDTHS.length],
+            )}
+          />
         ))}
       </div>
     </div>
@@ -230,7 +444,8 @@ export function Presence({
     const id = requestAnimationFrame(() => setTicked(true));
     return () => cancelAnimationFrame(id);
   }, []);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = (hover ? hovered : inView) && ticked;
   const drifting = inView && ticked;
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" } as const;
@@ -239,16 +454,14 @@ export function Presence({
   const cursors = collaborators.slice(0, CURSOR_PATHS.length).map((c) => {
     const kind = c.kind ?? "agent";
     const color =
-      c.color ?? (kind === "user" ? "text-primary" : AGENT_COLORS[colorSeed++ % AGENT_COLORS.length]);
+      c.color ??
+      (kind === "user" ? "text-primary" : AGENT_COLORS[colorSeed++ % AGENT_COLORS.length]);
     return { ...c, kind, color };
   });
 
   if (!animated) {
     return (
-      <div
-        aria-hidden="true"
-        className={cn(frameClasses(fill), className)}
-      >
+      <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
         {glow && (
           <div className="absolute inset-0 -z-10">
             <GlowScene />
@@ -310,9 +523,15 @@ export function Presence({
         <motion.div className="absolute inset-0 -z-10" variants={glowVariant} {...state}>
           <motion.div
             className="absolute inset-0"
-            animate={active ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 0.85 }}
+            animate={
+              active
+                ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
+                : { scale: 1, opacity: 0.85 }
+            }
             transition={
-              active ? { duration: 4.5, ease: "easeInOut", repeat: Infinity } : { duration: 0.6, ease: "easeOut" }
+              active
+                ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
+                : { duration: 0.6, ease: "easeOut" }
             }
           >
             <GlowScene />
@@ -335,16 +554,28 @@ export function Presence({
                 <motion.div
                   animate={
                     drifting
-                      ? { x: [0, p.driftX, 0], y: [0, -p.driftY, 0], opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5] }
+                      ? {
+                          x: [0, p.driftX, 0],
+                          y: [0, -p.driftY, 0],
+                          opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
+                        }
                       : { x: 0, y: 0, opacity: 0 }
                   }
                   transition={
                     drifting
-                      ? { duration: p.duration, delay: p.delay, ease: "easeInOut", repeat: Infinity }
+                      ? {
+                          duration: p.duration,
+                          delay: p.delay,
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                        }
                       : { duration: 0.3 }
                   }
                 >
-                  <div className={`rotate-45 rounded-[1px] ${p.color}`} style={{ width: p.size, height: p.size }} />
+                  <div
+                    className={`rotate-45 rounded-[1px] ${p.color}`}
+                    style={{ width: p.size, height: p.size }}
+                  />
                 </motion.div>
               </div>
             ))}
@@ -369,22 +600,40 @@ export function Presence({
               animate={active ? { x: xs, y: ys } : { x: xs[0], y: ys[0] }}
               transition={
                 active
-                  ? { duration: path.duration, ease: "easeInOut", repeat: Infinity, delay: hover ? 0 : CURSOR_LOOP_DELAY }
+                  ? {
+                      duration: path.duration,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      delay: hover ? 0 : CURSOR_LOOP_DELAY,
+                    }
                   : { duration: 0.25, ease: "easeOut" }
               }
             >
-              <motion.div className={cn("relative origin-top-left", c.color)} variants={chip} custom={i} {...state}>
+              <motion.div
+                className={cn("relative origin-top-left", c.color)}
+                variants={chip}
+                custom={i}
+                {...state}
+              >
                 {c.kind === "user" && (
                   <span className="absolute top-[3px] left-[3px] -translate-x-1/2 -translate-y-1/2">
                     <motion.span
                       className="block size-5 rounded-full border-2 border-current"
                       initial={{ scale: 0.3, opacity: 0 }}
                       animate={
-                        active ? { scale: [0.3, 1.1, 1.9], opacity: [0, 0.55, 0] } : { scale: 0.3, opacity: 0 }
+                        active
+                          ? { scale: [0.3, 1.1, 1.9], opacity: [0, 0.55, 0] }
+                          : { scale: 0.3, opacity: 0 }
                       }
                       transition={
                         active
-                          ? { duration: 2.2, delay: hover ? 0.3 : 1, repeat: Infinity, repeatDelay: 1.6, ease: "easeOut" }
+                          ? {
+                              duration: 2.2,
+                              delay: hover ? 0.3 : 1,
+                              repeat: Infinity,
+                              repeatDelay: 1.6,
+                              ease: "easeOut",
+                            }
                           : { duration: 0.3 }
                       }
                     />

@@ -50,8 +50,7 @@ const rows: RowDef[] = [
     name: "Noah Williams",
     email: "noah@acme.co",
     status: "Inactive",
-    statusClasses:
-      "bg-red-500/10 text-red-600 ring-1 ring-inset ring-red-500/15 dark:text-red-400",
+    statusClasses: "bg-red-500/10 text-red-600 ring-1 ring-inset ring-red-500/15 dark:text-red-400",
     amount: "$2,150.00",
     checked: false,
   },
@@ -93,11 +92,7 @@ function RowCheckbox({ checked }: { checked: boolean }) {
 }
 
 function SkeletonBar({ width }: { width: string }) {
-  return (
-    <div
-      className={cn("h-2.5 animate-pulse rounded-full bg-muted-foreground/10", width)}
-    />
-  );
+  return <div className={cn("h-2.5 animate-pulse rounded-full bg-muted-foreground/10", width)} />;
 }
 
 export function Table({
@@ -125,16 +120,13 @@ export function Table({
   const headPad = "px-3 py-2";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-sm", "overflow-hidden rounded-lg border bg-card shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-sm",
+          "overflow-hidden rounded-lg border bg-card shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
@@ -157,10 +149,7 @@ export function Table({
               </th>
             </tr>
           </thead>
-          <motion.tbody
-            variants={animated ? rowsIn : undefined}
-            {...state}
-          >
+          <motion.tbody variants={animated ? rowsIn : undefined} {...state}>
             {loading
               ? [0, 1, 2].map((i) => (
                   <tr key={i} className="border-b border-border/50 last:border-b-0">
@@ -180,36 +169,38 @@ export function Table({
                     </td>
                   </tr>
                 ))
-                : rows.map((row) => (
-                    <tr
-                      key={row.email}
-                      className="border-b border-border/50 transition-colors last:border-b-0 hover:bg-muted/40"
+              : rows.map((row) => (
+                  <tr
+                    key={row.email}
+                    className="border-b border-border/50 transition-colors last:border-b-0 hover:bg-muted/40"
+                  >
+                    {checkboxes && (
+                      <td className="pl-3 pr-0 py-2.5">
+                        <RowCheckbox checked={row.checked} />
+                      </td>
+                    )}
+                    <td className={cellPad}>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="font-medium text-foreground">{row.name}</span>
+                        <span className="text-xs text-muted-foreground">{row.email}</span>
+                      </div>
+                    </td>
+                    <td className={cellPad}>
+                      <span
+                        className={cn(
+                          "inline-flex h-4.5 items-center whitespace-nowrap rounded-full px-2 text-[10px] font-semibold",
+                          row.statusClasses,
+                        )}
+                      >
+                        {row.status}
+                      </span>
+                    </td>
+                    <td
+                      className={cn(cellPad, "text-right font-medium tabular-nums text-foreground")}
                     >
-                      {checkboxes && (
-                        <td className="pl-3 pr-0 py-2.5">
-                          <RowCheckbox checked={row.checked} />
-                        </td>
-                      )}
-                     <td className={cellPad}>
-                       <div className="flex flex-col gap-0.5">
-                         <span className="font-medium text-foreground">{row.name}</span>
-                         <span className="text-xs text-muted-foreground">{row.email}</span>
-                       </div>
-                     </td>
-                     <td className={cellPad}>
-                       <span
-                         className={cn(
-                           "inline-flex h-4.5 items-center whitespace-nowrap rounded-full px-2 text-[10px] font-semibold",
-                           row.statusClasses,
-                         )}
-                       >
-                         {row.status}
-                       </span>
-                     </td>
-                     <td className={cn(cellPad, "text-right font-medium tabular-nums text-foreground")}>
-                       {row.amount}
-                     </td>
-                   </tr>
+                      {row.amount}
+                    </td>
+                  </tr>
                 ))}
           </motion.tbody>
         </table>

@@ -61,15 +61,28 @@ function verticalLine(x: number): string {
   return `M ${x},${LINE_TOP} L ${x},${LINE_BOTTOM}`;
 }
 
-function bezier(x: number): { p0: [number, number]; p1: [number, number]; p2: [number, number]; p3: [number, number] } {
-  return { p0: [x, CONVERGE_START_Y], p1: [x, 205], p2: [CENTER_X, 205], p3: [CENTER_X, CONVERGE_END_Y] };
+function bezier(x: number): {
+  p0: [number, number];
+  p1: [number, number];
+  p2: [number, number];
+  p3: [number, number];
+} {
+  return {
+    p0: [x, CONVERGE_START_Y],
+    p1: [x, 205],
+    p2: [CENTER_X, 205],
+    p3: [CENTER_X, CONVERGE_END_Y],
+  };
 }
 
 function bezierPath({ p0, p1, p2, p3 }: ReturnType<typeof bezier>): string {
   return `M ${p0[0]},${p0[1]} C ${p1[0]},${p1[1]} ${p2[0]},${p2[1]} ${p3[0]},${p3[1]}`;
 }
 
-function sampleBezier({ p0, p1, p2, p3 }: ReturnType<typeof bezier>): { xs: number[]; ys: number[] } {
+function sampleBezier({ p0, p1, p2, p3 }: ReturnType<typeof bezier>): {
+  xs: number[];
+  ys: number[];
+} {
   const xs: number[] = [];
   const ys: number[] = [];
   for (let i = 0; i <= BEZIER_STEPS; i++) {
@@ -98,18 +111,138 @@ interface Particle {
 }
 
 const PARTICLES: Particle[] = [
-  { x: 8.4, y: 22.6, size: 3, color: "bg-primary", duration: 5.12, delay: -4.82, driftX: 4.4, driftY: 13.6, opacity: 0.55 },
-  { x: 92.4, y: 30.8, size: 3, color: "bg-chart-1", duration: 6.44, delay: -2.15, driftX: -3.6, driftY: 11.9, opacity: 0.6 },
-  { x: 14.6, y: 74.1, size: 2, color: "bg-chart-2", duration: 6.02, delay: -1.44, driftX: -2.3, driftY: 15.4, opacity: 0.45 },
-  { x: 86.3, y: 68.7, size: 3, color: "bg-chart-3", duration: 4.38, delay: -3.71, driftX: 5.5, driftY: 12.8, opacity: 0.62 },
-  { x: 3.4, y: 48.2, size: 2, color: "bg-chart-4", duration: 4.66, delay: -5.11, driftX: 6.2, driftY: 15.1, opacity: 0.5 },
-  { x: 96.1, y: 55.3, size: 3, color: "bg-primary", duration: 4.47, delay: -1.62, driftX: -3.4, driftY: 14.2, opacity: 0.42 },
-  { x: 20.8, y: 9.9, size: 2, color: "bg-chart-1", duration: 5.03, delay: -5.64, driftX: 3.9, driftY: 9.1, opacity: 0.48 },
-  { x: 79.2, y: 12.4, size: 3, color: "bg-chart-4", duration: 7.24, delay: -5.19, driftX: 6.4, driftY: 12.6, opacity: 0.54 },
-  { x: 26.9, y: 92.3, size: 3, color: "bg-primary", duration: 5.71, delay: -2.94, driftX: -2.7, driftY: 10.4, opacity: 0.58 },
-  { x: 73.1, y: 94.8, size: 2, color: "bg-chart-3", duration: 4.92, delay: -1.33, driftX: 4.9, driftY: 8.2, opacity: 0.47 },
-  { x: 1.8, y: 86.1, size: 3, color: "bg-primary", duration: 5.28, delay: -5.38, driftX: 4.1, driftY: 13.9, opacity: 0.43 },
-  { x: 97.2, y: 84.6, size: 2, color: "bg-chart-2", duration: 4.83, delay: -2.71, driftX: -3.3, driftY: 15.2, opacity: 0.5 },
+  {
+    x: 8.4,
+    y: 22.6,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.12,
+    delay: -4.82,
+    driftX: 4.4,
+    driftY: 13.6,
+    opacity: 0.55,
+  },
+  {
+    x: 92.4,
+    y: 30.8,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 6.44,
+    delay: -2.15,
+    driftX: -3.6,
+    driftY: 11.9,
+    opacity: 0.6,
+  },
+  {
+    x: 14.6,
+    y: 74.1,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 6.02,
+    delay: -1.44,
+    driftX: -2.3,
+    driftY: 15.4,
+    opacity: 0.45,
+  },
+  {
+    x: 86.3,
+    y: 68.7,
+    size: 3,
+    color: "bg-chart-3",
+    duration: 4.38,
+    delay: -3.71,
+    driftX: 5.5,
+    driftY: 12.8,
+    opacity: 0.62,
+  },
+  {
+    x: 3.4,
+    y: 48.2,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 4.66,
+    delay: -5.11,
+    driftX: 6.2,
+    driftY: 15.1,
+    opacity: 0.5,
+  },
+  {
+    x: 96.1,
+    y: 55.3,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.47,
+    delay: -1.62,
+    driftX: -3.4,
+    driftY: 14.2,
+    opacity: 0.42,
+  },
+  {
+    x: 20.8,
+    y: 9.9,
+    size: 2,
+    color: "bg-chart-1",
+    duration: 5.03,
+    delay: -5.64,
+    driftX: 3.9,
+    driftY: 9.1,
+    opacity: 0.48,
+  },
+  {
+    x: 79.2,
+    y: 12.4,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 7.24,
+    delay: -5.19,
+    driftX: 6.4,
+    driftY: 12.6,
+    opacity: 0.54,
+  },
+  {
+    x: 26.9,
+    y: 92.3,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.71,
+    delay: -2.94,
+    driftX: -2.7,
+    driftY: 10.4,
+    opacity: 0.58,
+  },
+  {
+    x: 73.1,
+    y: 94.8,
+    size: 2,
+    color: "bg-chart-3",
+    duration: 4.92,
+    delay: -1.33,
+    driftX: 4.9,
+    driftY: 8.2,
+    opacity: 0.47,
+  },
+  {
+    x: 1.8,
+    y: 86.1,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.28,
+    delay: -5.38,
+    driftX: 4.1,
+    driftY: 13.9,
+    opacity: 0.43,
+  },
+  {
+    x: 97.2,
+    y: 84.6,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 4.83,
+    delay: -2.71,
+    driftX: -3.3,
+    driftY: 15.2,
+    opacity: 0.5,
+  },
 ];
 
 const stage = {
@@ -128,7 +261,10 @@ const stageIso = {
 
 const glowVariant = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 const particlesVariant = {
@@ -160,7 +296,12 @@ const sourceCard: Variants = {
   visible: (i: number) => ({
     scale: 1,
     opacity: 1,
-    transition: { type: "spring", stiffness: 380, damping: 18, delay: SOURCE_DELAY + i * SOURCE_DELAY_UNIT },
+    transition: {
+      type: "spring",
+      stiffness: 380,
+      damping: 18,
+      delay: SOURCE_DELAY + i * SOURCE_DELAY_UNIT,
+    },
   }),
 };
 
@@ -168,7 +309,11 @@ const meter: Variants = {
   hidden: { scaleX: 0 },
   visible: (i: number) => ({
     scaleX: 1,
-    transition: { duration: 0.5, delay: SOURCE_DELAY + i * SOURCE_DELAY_UNIT + 0.15, ease: "easeOut" },
+    transition: {
+      duration: 0.5,
+      delay: SOURCE_DELAY + i * SOURCE_DELAY_UNIT + 0.15,
+      ease: "easeOut",
+    },
   }),
 };
 
@@ -187,7 +332,11 @@ const answerWord: Variants = {
   visible: (i: number) => ({
     opacity: 1,
     filter: "blur(0px)",
-    transition: { duration: ANSWER_WORD_DURATION, delay: ANSWER_WORD_DELAY + i * ANSWER_WORD_UNIT, ease: "easeOut" },
+    transition: {
+      duration: ANSWER_WORD_DURATION,
+      delay: ANSWER_WORD_DELAY + i * ANSWER_WORD_UNIT,
+      ease: "easeOut",
+    },
   }),
 };
 
@@ -315,7 +464,9 @@ function SourceCard({
             {...state}
           />
         </span>
-        <span className="text-[9px] font-medium text-muted-foreground tabular-nums">{source.score.toFixed(2)}</span>
+        <span className="text-[9px] font-medium text-muted-foreground tabular-nums">
+          {source.score.toFixed(2)}
+        </span>
       </span>
     </motion.div>
   );
@@ -357,17 +508,17 @@ export function Retrieval({
     const id = requestAnimationFrame(() => setTicked(true));
     return () => cancelAnimationFrame(id);
   }, []);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = (hover ? hovered : inView) && ticked;
   const drifting = inView && ticked;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
 
-  const sourceList = ((sources.length ? sources : retrievalDefaultCopy.sources) as readonly Source[]).slice(
-    0,
-    MAX_SOURCES,
-  );
+  const sourceList = (
+    (sources.length ? sources : retrievalDefaultCopy.sources) as readonly Source[]
+  ).slice(0, MAX_SOURCES);
   const n = sourceList.length;
   const words = tokenize(answer);
   const fanLines = sourceList.map((_, t) => verticalLine(sourceX(t, n)));
@@ -430,9 +581,15 @@ export function Retrieval({
           <motion.div className="absolute inset-0 -z-10" variants={glowVariant} {...state}>
             <motion.div
               className="absolute inset-0"
-              animate={active ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 0.85 }}
+              animate={
+                active
+                  ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
+                  : { scale: 1, opacity: 0.85 }
+              }
               transition={
-                active ? { duration: 4.5, ease: "easeInOut", repeat: Infinity } : { duration: 0.6, ease: "easeOut" }
+                active
+                  ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
+                  : { duration: 0.6, ease: "easeOut" }
               }
             >
               <GlowScene />
@@ -460,16 +617,28 @@ export function Retrieval({
                   <motion.div
                     animate={
                       drifting
-                        ? { x: [0, p.driftX, 0], y: [0, -p.driftY, 0], opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5] }
+                        ? {
+                            x: [0, p.driftX, 0],
+                            y: [0, -p.driftY, 0],
+                            opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
+                          }
                         : { x: 0, y: 0, opacity: 0 }
                     }
                     transition={
                       drifting
-                        ? { duration: p.duration, delay: p.delay, ease: "easeInOut", repeat: Infinity }
+                        ? {
+                            duration: p.duration,
+                            delay: p.delay,
+                            ease: "easeInOut",
+                            repeat: Infinity,
+                          }
                         : { duration: 0.3 }
                     }
                   >
-                    <div className={`rotate-45 rounded-[1px] ${p.color}`} style={{ width: p.size, height: p.size }} />
+                    <div
+                      className={`rotate-45 rounded-[1px] ${p.color}`}
+                      style={{ width: p.size, height: p.size }}
+                    />
                   </motion.div>
                 </div>
               ))}
@@ -571,7 +740,9 @@ export function Retrieval({
             variants={animated ? queryPill : undefined}
             {...state}
           >
-            <span className="flex-1 truncate text-[11px]/5 font-medium text-foreground">{query}</span>
+            <span className="flex-1 truncate text-[11px]/5 font-medium text-foreground">
+              {query}
+            </span>
             <Search className="size-3.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />
           </motion.div>
         </div>
@@ -584,12 +755,21 @@ export function Retrieval({
               top: `${(SOURCES_Y / CANVAS.h) * 100}%`,
             }}
           >
-            <SourceCard source={source} lit={active && litCount > t} animated={animated} index={t} state={state} />
+            <SourceCard
+              source={source}
+              lit={active && litCount > t}
+              animated={animated}
+              index={t}
+              state={state}
+            />
           </div>
         ))}
         <div
           className="absolute -translate-x-1/2 -translate-y-1/2"
-          style={{ left: `${(CENTER_X / CANVAS.w) * 100}%`, top: `${(ANSWER_Y / CANVAS.h) * 100}%` }}
+          style={{
+            left: `${(CENTER_X / CANVAS.w) * 100}%`,
+            top: `${(ANSWER_Y / CANVAS.h) * 100}%`,
+          }}
         >
           <motion.div
             className="flex w-84 flex-col gap-1.5 rounded-xl border bg-card px-3 py-2.5 shadow-md ring-2 ring-background"
@@ -598,7 +778,9 @@ export function Retrieval({
           >
             <span className="flex items-center gap-1.5">
               <Sparkles className="size-3 text-primary" strokeWidth={2.5} />
-              <span className="text-[9px] font-medium tracking-wide text-muted-foreground uppercase">Answer</span>
+              <span className="text-[9px] font-medium tracking-wide text-muted-foreground uppercase">
+                Answer
+              </span>
             </span>
             <p className="text-[11px] leading-relaxed text-foreground">
               {words.map((token, t) =>

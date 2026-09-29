@@ -18,18 +18,15 @@ export function useTheme() {
   const [appearance, setAppearance] = useState<Appearance>(readAppearance);
   const [theme, setTheme] = useState<string>(readTheme);
 
-  const apply = useCallback(
-    (appearance: Appearance, theme: string) => {
-      const root = document.documentElement;
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      const dark = appearance === "dark" || (appearance === "system" && prefersDark);
-      root.classList.toggle("dark", dark);
-      for (const c of [...root.classList]) if (c.startsWith("theme-")) root.classList.remove(c);
-      if (theme !== "default") root.classList.add(`theme-${theme}`);
-      root.style.colorScheme = dark ? "dark" : "light";
-    },
-    [],
-  );
+  const apply = useCallback((appearance: Appearance, theme: string) => {
+    const root = document.documentElement;
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const dark = appearance === "dark" || (appearance === "system" && prefersDark);
+    root.classList.toggle("dark", dark);
+    for (const c of [...root.classList]) if (c.startsWith("theme-")) root.classList.remove(c);
+    if (theme !== "default") root.classList.add(`theme-${theme}`);
+    root.style.colorScheme = dark ? "dark" : "light";
+  }, []);
 
   useEffect(() => {
     apply(appearance, theme);

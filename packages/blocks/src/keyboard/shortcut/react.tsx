@@ -57,19 +57,10 @@ export function Shortcut({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="flex items-center gap-2.5"
-        style={
-          !animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined
-        }
+        style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
       >

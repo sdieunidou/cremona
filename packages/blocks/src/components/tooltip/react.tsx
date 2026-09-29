@@ -42,32 +42,22 @@ const bubbleIn = (i: number): Variants => ({
   },
 });
 
-function Bubble({
-  side,
-  rich,
-  title,
-  i,
-}: {
-  side: Side;
-  rich: boolean;
-  title: string;
-  i: number;
-}) {
+function Bubble({ side, rich, title, i }: { side: Side; rich: boolean; title: string; i: number }) {
   return (
     <motion.div
       variants={bubbleIn(i)}
       role="tooltip"
       className={cn(
         "relative bg-primary text-primary-foreground shadow-md",
-        rich ? "w-32 rounded-lg p-3" : "rounded-md px-2.5 py-1 text-xs font-medium whitespace-nowrap",
+        rich
+          ? "w-32 rounded-lg p-3"
+          : "rounded-md px-2.5 py-1 text-xs font-medium whitespace-nowrap",
       )}
     >
       {rich ? (
         <>
           <p className="text-xs font-semibold">{title}</p>
-          <p className="mt-0.5 text-[11px] leading-4 text-primary-foreground/70">
-            {richBody}
-          </p>
+          <p className="mt-0.5 text-[11px] leading-4 text-primary-foreground/70">{richBody}</p>
         </>
       ) : (
         sideText[side]
@@ -105,14 +95,7 @@ export function Tooltip({
     "inline-flex h-8 shrink-0 items-center justify-center rounded-md px-3 text-xs font-medium whitespace-nowrap transition-all outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="grid max-w-md grid-cols-2 gap-x-8 gap-y-7"
         variants={animated ? entrance : undefined}

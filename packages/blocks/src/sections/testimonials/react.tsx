@@ -77,14 +77,7 @@ export function Testimonials({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-72", "p-8.5", fadeOut && "mask-b-from-60%")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -144,7 +137,10 @@ export function Testimonials({
                 {[0, 1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className={cn("size-1.5 rounded-full", i === 1 ? "bg-primary" : "bg-muted-foreground/20")}
+                    className={cn(
+                      "size-1.5 rounded-full",
+                      i === 1 ? "bg-primary" : "bg-muted-foreground/20",
+                    )}
                   />
                 ))}
               </motion.div>

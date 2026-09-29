@@ -16,7 +16,19 @@ runGoldenParity("chat/bubbles", {
   blockDir,
   Component: Bubbles,
   variants: [
-    { label: "default · custom messages", props: { name: "Mia Lee", initials: "ML", status: "Active 2m ago", messages: customMessages } },
-    { label: "isometric · custom messages", props: { isometric: true, name: "Mia Lee", initials: "ML", status: "Active 2m ago", messages: customMessages } },
+    {
+      label: "default · custom messages",
+      props: { name: "Mia Lee", initials: "ML", status: "Active 2m ago", messages: customMessages },
+    },
+    {
+      label: "isometric · custom messages",
+      props: {
+        isometric: true,
+        name: "Mia Lee",
+        initials: "ML",
+        status: "Active 2m ago",
+        messages: customMessages,
+      },
+    },
   ],
 });

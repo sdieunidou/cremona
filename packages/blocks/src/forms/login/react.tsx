@@ -55,23 +55,17 @@ export function Login({
     : "border-input focus:border-ring focus:ring-3 focus:ring-ring/50";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("flex w-full", !fill && "max-w-72", "flex-col gap-2.5 rounded-xl border bg-card p-4 text-card-foreground shadow-xs")}
+        className={cn(
+          "flex w-full",
+          !fill && "max-w-72",
+          "flex-col gap-2.5 rounded-xl border bg-card p-4 text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
-        <motion.div
-          className="flex flex-col gap-1.5"
-          variants={animated ? field : undefined}
-        >
+        <motion.div className="flex flex-col gap-1.5" variants={animated ? field : undefined}>
           <span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
             <Sparkles className="size-4" strokeWidth={2.25} />
           </span>
@@ -96,10 +90,7 @@ export function Login({
             />
           </motion.div>
           <motion.div className="flex flex-col gap-1.5" variants={animated ? field : undefined}>
-            <label
-              htmlFor="cremona-login-password"
-              className="text-xs font-medium text-foreground"
-            >
+            <label htmlFor="cremona-login-password" className="text-xs font-medium text-foreground">
               Password
             </label>
             <input
@@ -151,10 +142,7 @@ export function Login({
           {loading && <LoaderCircle className="size-3.5 animate-spin" strokeWidth={2.5} />}
           {loading ? "Signing in…" : "Sign in"}
         </motion.button>
-        <motion.div
-          className="flex items-center gap-3"
-          variants={animated ? field : undefined}
-        >
+        <motion.div className="flex items-center gap-3" variants={animated ? field : undefined}>
           <span className="h-px flex-1 bg-border" />
           <span className="text-[10px] text-muted-foreground">or</span>
           <span className="h-px flex-1 bg-border" />

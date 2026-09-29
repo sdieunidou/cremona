@@ -52,7 +52,9 @@ export function blockReactSource(categorySlug, file) {
 export function blockGoldenSlugs(categorySlug, file) {
   const dir = join(blockDir(categorySlug, file), "golden");
   if (!existsSync(dir)) return [];
-  return readdirSync(dir).filter((f) => f.endsWith(".html")).sort();
+  return readdirSync(dir)
+    .filter((f) => f.endsWith(".html"))
+    .sort();
 }
 
 export function goldenContent(categorySlug, file, slug) {
@@ -142,7 +144,10 @@ function scoreTerm(block, term) {
 export function searchBlocks(query, { category, kind, limit = 30 } = {}) {
   const q = query.trim().toLowerCase();
   let items = blockIndex();
-  if (category) items = items.filter((b) => b.categorySlug === category || b.category.toLowerCase() === category.toLowerCase());
+  if (category)
+    items = items.filter(
+      (b) => b.categorySlug === category || b.category.toLowerCase() === category.toLowerCase(),
+    );
   if (kind) items = items.filter((b) => b.kind === kind);
   if (q) {
     // Terms are matched individually and ANDed. Matching the raw query as one
@@ -202,7 +207,8 @@ export function validate() {
     if (!stim) issues.push(`MISSING_STIMULUS: ${b.key} (run node tools/generate-stimulus.mjs)`);
   }
   const reactBlocks = listBlockDirs().filter((k) => !index.some((b) => b.key === k));
-  for (const k of reactBlocks) issues.push(`ORPHAN_BLOCK: ${k} exists on disk but not in catalog.json`);
+  for (const k of reactBlocks)
+    issues.push(`ORPHAN_BLOCK: ${k} exists on disk but not in catalog.json`);
   return {
     blocks: index.length,
     ported: index.filter((b) => b.ported).length,

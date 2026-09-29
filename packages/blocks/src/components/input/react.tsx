@@ -53,14 +53,7 @@ export function Input({
   const effectiveType = isPassword && show ? "text" : type;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("flex w-full", !fill && "max-w-64", "flex-col gap-1.5")}
         variants={animated ? entrance : undefined}
@@ -75,7 +68,8 @@ export function Input({
           className={cn(
             "flex h-9 w-full min-w-0 items-center gap-2 rounded-md border bg-transparent px-2.5 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none",
             "border-input focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50",
-            invalid && "border-destructive ring-3 ring-destructive/20 focus-within:border-destructive",
+            invalid &&
+              "border-destructive ring-3 ring-destructive/20 focus-within:border-destructive",
             disabled && "cursor-not-allowed opacity-50",
           )}
         >

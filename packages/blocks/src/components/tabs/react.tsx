@@ -62,9 +62,7 @@ export function Tabs({
   className,
 }: TabsProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [current, setCurrent] = useState(() =>
-    Math.min(Math.max(active, 0), tabs.length - 1),
-  );
+  const [current, setCurrent] = useState(() => Math.min(Math.max(active, 0), tabs.length - 1));
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const state = animated
@@ -82,14 +80,7 @@ export function Tabs({
   const panelId = `cremona-tab-panel-${current}`;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-sm")}
         variants={animated ? entrance : undefined}
@@ -144,9 +135,7 @@ export function Tabs({
             <div className="grid grid-cols-3 gap-2">
               {stats.map(([value, label]) => (
                 <div key={label} className="rounded-lg border bg-card px-3 py-2.5">
-                  <p className="text-base font-semibold tabular-nums text-foreground">
-                    {value}
-                  </p>
+                  <p className="text-base font-semibold tabular-nums text-foreground">{value}</p>
                   <p className="text-[11px] text-muted-foreground">{label}</p>
                 </div>
               ))}

@@ -67,9 +67,21 @@ const veilAnim = {
 } as const;
 
 const skeletonRows = [
-  { dot: "size-1.5 shrink-0 rounded-full bg-muted-foreground/40", line: "h-1 flex-1 rounded-full bg-muted-foreground/15", tail: "h-1 w-10 rounded-full bg-muted-foreground/25" },
-  { dot: "size-1.5 shrink-0 rounded-full bg-muted-foreground/40", line: "h-1 flex-1 rounded-full bg-muted-foreground/15", tail: "h-1 w-8 rounded-full bg-muted-foreground/25" },
-  { dot: "size-1.5 shrink-0 rounded-full bg-muted-foreground/40", line: "h-1 flex-1 rounded-full bg-muted-foreground/15", tail: "h-1 w-12 rounded-full bg-muted-foreground/25" },
+  {
+    dot: "size-1.5 shrink-0 rounded-full bg-muted-foreground/40",
+    line: "h-1 flex-1 rounded-full bg-muted-foreground/15",
+    tail: "h-1 w-10 rounded-full bg-muted-foreground/25",
+  },
+  {
+    dot: "size-1.5 shrink-0 rounded-full bg-muted-foreground/40",
+    line: "h-1 flex-1 rounded-full bg-muted-foreground/15",
+    tail: "h-1 w-8 rounded-full bg-muted-foreground/25",
+  },
+  {
+    dot: "size-1.5 shrink-0 rounded-full bg-muted-foreground/40",
+    line: "h-1 flex-1 rounded-full bg-muted-foreground/15",
+    tail: "h-1 w-12 rounded-full bg-muted-foreground/25",
+  },
 ] as const;
 
 export function MiniPanel({
@@ -95,14 +107,7 @@ export function MiniPanel({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -156,7 +161,9 @@ export function MiniPanel({
                       {stat.label}
                     </span>
                     <span className="text-sm font-semibold text-foreground">{stat.value}</span>
-                    <span className={cn("flex items-center gap-0.5 text-[9px] font-medium", trendColor)}>
+                    <span
+                      className={cn("flex items-center gap-0.5 text-[9px] font-medium", trendColor)}
+                    >
                       <TrendIcon className="size-2" strokeWidth={3} />
                       {stat.change}
                     </span>

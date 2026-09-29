@@ -73,14 +73,7 @@ export function Timeline({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-72", "p-8.5", fadeOut && "mask-b-from-60%")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -124,7 +117,10 @@ export function Timeline({
                 <motion.div key={i} className="flex gap-3" variants={animated ? item : undefined}>
                   <div className="flex flex-col items-center">
                     <div
-                      className={cn("size-2.75 rounded-full", i === 0 ? "bg-primary" : "bg-muted-foreground/20")}
+                      className={cn(
+                        "size-2.75 rounded-full",
+                        i === 0 ? "bg-primary" : "bg-muted-foreground/20",
+                      )}
                     />
                     {i < items.length - 1 && <div className="h-4.5 w-px bg-border" />}
                   </div>

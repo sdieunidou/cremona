@@ -154,17 +154,12 @@ export function Line({
   const last = pts[pts.length - 1]!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -231,7 +226,12 @@ export function Line({
                   <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity="0" />
                 </linearGradient>
               </defs>
-              <motion.path d={area} fill={`url(#${gradientId})`} variants={animated ? areaAnim : undefined} {...state} />
+              <motion.path
+                d={area}
+                fill={`url(#${gradientId})`}
+                variants={animated ? areaAnim : undefined}
+                {...state}
+              />
               <motion.path
                 d={line}
                 fill="none"

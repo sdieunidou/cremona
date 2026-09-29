@@ -7,9 +7,18 @@ export const stackDefaultCopy: { avatars: StackAvatar[]; status: StackStatus } =
   avatars: [
     { initials: "JC", tint: "bg-sky-200/80 text-sky-700 dark:bg-sky-950/80 dark:text-sky-300" },
     { initials: "AM", tint: "bg-rose-200/80 text-rose-700 dark:bg-rose-950/80 dark:text-rose-300" },
-    { initials: "KL", tint: "bg-emerald-200/80 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-300" },
-    { initials: "DP", tint: "bg-violet-200/80 text-violet-700 dark:bg-violet-950/80 dark:text-violet-300" },
-    { initials: "SR", tint: "bg-amber-200/80 text-amber-700 dark:bg-amber-950/80 dark:text-amber-300" },
+    {
+      initials: "KL",
+      tint: "bg-emerald-200/80 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-300",
+    },
+    {
+      initials: "DP",
+      tint: "bg-violet-200/80 text-violet-700 dark:bg-violet-950/80 dark:text-violet-300",
+    },
+    {
+      initials: "SR",
+      tint: "bg-amber-200/80 text-amber-700 dark:bg-amber-950/80 dark:text-amber-300",
+    },
   ],
   status: { count: 1284, label: "members online" },
 };
@@ -75,7 +84,8 @@ export interface StackStatus {
   count: number;
   label: string;
   dot?: "online" | "away" | "busy" | false;
-}export interface StackProps extends VisualProps {
+}
+export interface StackProps extends VisualProps {
   avatars?: StackAvatar[];
   status?: StackStatus | false;
   isometric?: boolean;
@@ -105,24 +115,14 @@ export function Stack({
       }
     : {};
   const visible = avatars.slice(0, MAX_VISIBLE);
-  const dot =
-    status && status.dot !== false ? (status.dot ?? "online") : null;
+  const dot = status && status.dot !== false ? (status.dot ?? "online") : null;
   const dotStyle = dot ? dotStyles[dot] : null;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="relative flex flex-col items-center gap-3"
-        style={
-          !animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined
-        }
+        style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
       >

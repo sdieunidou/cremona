@@ -95,10 +95,7 @@ function SidebarNav() {
 
 function Article({ code }: { code: boolean }) {
   return (
-    <motion.article
-      className="flex min-w-0 flex-1 flex-col gap-1.5 p-2.5"
-      variants={subRegions}
-    >
+    <motion.article className="flex min-w-0 flex-1 flex-col gap-1.5 p-2.5" variants={subRegions}>
       <motion.p
         className="text-[11px] leading-tight font-semibold tracking-tight text-foreground"
         variants={region}
@@ -106,8 +103,8 @@ function Article({ code }: { code: boolean }) {
         Installation
       </motion.p>
       <motion.p className="text-[9px] leading-snug text-muted-foreground" variants={region}>
-        Cremona ships as a single stylesheet plus per-framework adapters. Install the
-        package, then import the tokens once at the root of your app.
+        Cremona ships as a single stylesheet plus per-framework adapters. Install the package, then
+        import the tokens once at the root of your app.
       </motion.p>
       <motion.div className="flex flex-col gap-1" variants={region}>
         <div className="h-1.5 w-full rounded-full bg-muted-foreground/10" />
@@ -206,16 +203,13 @@ export function DocsShell({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-96", "overflow-hidden rounded-xl border bg-background shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-96",
+          "overflow-hidden rounded-xl border bg-background shadow-xs",
+        )}
         variants={animated ? shell : undefined}
         {...state}
       >

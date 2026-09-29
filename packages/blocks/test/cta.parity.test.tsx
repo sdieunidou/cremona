@@ -3,10 +3,7 @@ import { fileURLToPath } from "node:url";
 import { Cta } from "../src/sections/cta/react.js";
 import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/sections/cta",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/sections/cta");
 
 runGoldenParity("sections/cta", {
   blockDir,

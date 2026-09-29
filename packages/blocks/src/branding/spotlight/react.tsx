@@ -59,26 +59,226 @@ const defaultLogo = (
 );
 
 const PARTICLES = [
-  { x: 26.25, y: 49.96, size: 3, color: "bg-chart-2", duration: 4.82, delay: -5.22, driftX: 4.87, driftY: 14.97, opacity: 0.6 },
-  { x: 63.69, y: 60.66, size: 3, color: "bg-chart-1", duration: 6.16, delay: -2.68, driftX: 2.11, driftY: 12.52, opacity: 0.63 },
-  { x: 52.56, y: 30.75, size: 3, color: "bg-chart-2", duration: 6.41, delay: -1.19, driftX: -2.04, driftY: 16.24, opacity: 0.48 },
-  { x: 61.79, y: 50.16, size: 2, color: "bg-chart-3", duration: 4.09, delay: -3.47, driftX: 7.93, driftY: 13.39, opacity: 0.65 },
-  { x: 50.59, y: 67.29, size: 2, color: "bg-chart-4", duration: 4.41, delay: -5.43, driftX: 7.64, driftY: 15.95, opacity: 0.63 },
-  { x: 85.31, y: 52.45, size: 3, color: "bg-primary", duration: 4.22, delay: -1.23, driftX: 3.05, driftY: 14.75, opacity: 0.45 },
-  { x: 76.54, y: 57.29, size: 2, color: "bg-chart-1", duration: 4.72, delay: -5.81, driftX: -5.22, driftY: 9.62, opacity: 0.63 },
-  { x: 65.79, y: 51.31, size: 3, color: "bg-chart-4", duration: 7.66, delay: -5.45, driftX: 6.82, driftY: 13.1, opacity: 0.57 },
-  { x: 80.61, y: 61.63, size: 3, color: "bg-primary", duration: 5.43, delay: -2.72, driftX: 1.28, driftY: 10, opacity: 0.65 },
-  { x: 59.48, y: 26, size: 3, color: "bg-chart-3", duration: 4.75, delay: -1.01, driftX: 5.27, driftY: 8.7, opacity: 0.41 },
-  { x: 53.4, y: 66.65, size: 3, color: "bg-primary", duration: 4.94, delay: -5.65, driftX: -4.64, driftY: 13.44, opacity: 0.66 },
-  { x: 36.84, y: 49.8, size: 4, color: "bg-chart-4", duration: 4.69, delay: -2.39, driftX: -2.07, driftY: 15.9, opacity: 0.42 },
-  { x: 78.87, y: 60.08, size: 3, color: "bg-chart-3", duration: 6.13, delay: -5.07, driftX: -2.6, driftY: 7.3, opacity: 0.83 },
-  { x: 28.13, y: 38.14, size: 2, color: "bg-primary", duration: 6.39, delay: -5.57, driftX: -0.33, driftY: 9.13, opacity: 0.57 },
-  { x: 66.59, y: 17.26, size: 3, color: "bg-chart-4", duration: 7.31, delay: -5.08, driftX: -4.42, driftY: 14.91, opacity: 0.64 },
-  { x: 33.78, y: 52.03, size: 3, color: "bg-chart-4", duration: 5.23, delay: -2.49, driftX: -3.29, driftY: 7.84, opacity: 0.5 },
-  { x: 21.54, y: 22.79, size: 2, color: "bg-primary", duration: 4.29, delay: -5.83, driftX: 1.4, driftY: 15.41, opacity: 0.63 },
-  { x: 80.13, y: 50.12, size: 3, color: "bg-chart-2", duration: 5.95, delay: -2.63, driftX: -3.52, driftY: 11.93, opacity: 0.5 },
-  { x: 36.24, y: 79.02, size: 3, color: "bg-chart-2", duration: 4.7, delay: -2.21, driftX: 3.87, driftY: 14.06, opacity: 0.67 },
-  { x: 57.91, y: 49.85, size: 4, color: "bg-chart-2", duration: 4.44, delay: -3.78, driftX: 5.73, driftY: 6.62, opacity: 0.8 },
+  {
+    x: 26.25,
+    y: 49.96,
+    size: 3,
+    color: "bg-chart-2",
+    duration: 4.82,
+    delay: -5.22,
+    driftX: 4.87,
+    driftY: 14.97,
+    opacity: 0.6,
+  },
+  {
+    x: 63.69,
+    y: 60.66,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 6.16,
+    delay: -2.68,
+    driftX: 2.11,
+    driftY: 12.52,
+    opacity: 0.63,
+  },
+  {
+    x: 52.56,
+    y: 30.75,
+    size: 3,
+    color: "bg-chart-2",
+    duration: 6.41,
+    delay: -1.19,
+    driftX: -2.04,
+    driftY: 16.24,
+    opacity: 0.48,
+  },
+  {
+    x: 61.79,
+    y: 50.16,
+    size: 2,
+    color: "bg-chart-3",
+    duration: 4.09,
+    delay: -3.47,
+    driftX: 7.93,
+    driftY: 13.39,
+    opacity: 0.65,
+  },
+  {
+    x: 50.59,
+    y: 67.29,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 4.41,
+    delay: -5.43,
+    driftX: 7.64,
+    driftY: 15.95,
+    opacity: 0.63,
+  },
+  {
+    x: 85.31,
+    y: 52.45,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.22,
+    delay: -1.23,
+    driftX: 3.05,
+    driftY: 14.75,
+    opacity: 0.45,
+  },
+  {
+    x: 76.54,
+    y: 57.29,
+    size: 2,
+    color: "bg-chart-1",
+    duration: 4.72,
+    delay: -5.81,
+    driftX: -5.22,
+    driftY: 9.62,
+    opacity: 0.63,
+  },
+  {
+    x: 65.79,
+    y: 51.31,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 7.66,
+    delay: -5.45,
+    driftX: 6.82,
+    driftY: 13.1,
+    opacity: 0.57,
+  },
+  {
+    x: 80.61,
+    y: 61.63,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.43,
+    delay: -2.72,
+    driftX: 1.28,
+    driftY: 10,
+    opacity: 0.65,
+  },
+  {
+    x: 59.48,
+    y: 26,
+    size: 3,
+    color: "bg-chart-3",
+    duration: 4.75,
+    delay: -1.01,
+    driftX: 5.27,
+    driftY: 8.7,
+    opacity: 0.41,
+  },
+  {
+    x: 53.4,
+    y: 66.65,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.94,
+    delay: -5.65,
+    driftX: -4.64,
+    driftY: 13.44,
+    opacity: 0.66,
+  },
+  {
+    x: 36.84,
+    y: 49.8,
+    size: 4,
+    color: "bg-chart-4",
+    duration: 4.69,
+    delay: -2.39,
+    driftX: -2.07,
+    driftY: 15.9,
+    opacity: 0.42,
+  },
+  {
+    x: 78.87,
+    y: 60.08,
+    size: 3,
+    color: "bg-chart-3",
+    duration: 6.13,
+    delay: -5.07,
+    driftX: -2.6,
+    driftY: 7.3,
+    opacity: 0.83,
+  },
+  {
+    x: 28.13,
+    y: 38.14,
+    size: 2,
+    color: "bg-primary",
+    duration: 6.39,
+    delay: -5.57,
+    driftX: -0.33,
+    driftY: 9.13,
+    opacity: 0.57,
+  },
+  {
+    x: 66.59,
+    y: 17.26,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 7.31,
+    delay: -5.08,
+    driftX: -4.42,
+    driftY: 14.91,
+    opacity: 0.64,
+  },
+  {
+    x: 33.78,
+    y: 52.03,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 5.23,
+    delay: -2.49,
+    driftX: -3.29,
+    driftY: 7.84,
+    opacity: 0.5,
+  },
+  {
+    x: 21.54,
+    y: 22.79,
+    size: 2,
+    color: "bg-primary",
+    duration: 4.29,
+    delay: -5.83,
+    driftX: 1.4,
+    driftY: 15.41,
+    opacity: 0.63,
+  },
+  {
+    x: 80.13,
+    y: 50.12,
+    size: 3,
+    color: "bg-chart-2",
+    duration: 5.95,
+    delay: -2.63,
+    driftX: -3.52,
+    driftY: 11.93,
+    opacity: 0.5,
+  },
+  {
+    x: 36.24,
+    y: 79.02,
+    size: 3,
+    color: "bg-chart-2",
+    duration: 4.7,
+    delay: -2.21,
+    driftX: 3.87,
+    driftY: 14.06,
+    opacity: 0.67,
+  },
+  {
+    x: 57.91,
+    y: 49.85,
+    size: 4,
+    color: "bg-chart-2",
+    duration: 4.44,
+    delay: -3.78,
+    driftX: 5.73,
+    driftY: 6.62,
+    opacity: 0.8,
+  },
 ];
 
 const dockIconClass = "size-1/3 text-muted-foreground/40";
@@ -183,19 +383,20 @@ export function Spotlight({
   const [hovered, setHovered] = useState(false);
   const logoEl = logo ?? defaultLogo;
   // the POC merges classes with twMerge: an icon bg-* override drops bg-primary
-  const bgOverride = !!iconClassName && iconClassName.split(/\s+/).some((cls) => cls.startsWith("bg-"));
+  const bgOverride =
+    !!iconClassName && iconClassName.split(/\s+/).some((cls) => cls.startsWith("bg-"));
   const heroTile = bgOverride ? HERO_TILE.replace(/\s*\bbg-primary\b/, "") : HERO_TILE;
 
   if (!animated) {
     return (
-      <div
-        aria-hidden="true"
-        className={cn(
-          frameClasses(fill),
-          className,
-        )}
-      >
-        <div className={cn("relative flex h-full w-full", !fill && "max-w-140", "items-center justify-center mask-r-from-75% mask-l-from-75%")}>
+      <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
+        <div
+          className={cn(
+            "relative flex h-full w-full",
+            !fill && "max-w-140",
+            "items-center justify-center mask-r-from-75% mask-l-from-75%",
+          )}
+        >
           {glow && (
             <div className="absolute inset-x-0 top-1/6 bottom-0">
               <Glow />
@@ -255,15 +456,16 @@ export function Spotlight({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={hover ? () => setHovered(true) : undefined}
       onMouseLeave={hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className={cn("relative flex h-full w-full", !fill && "max-w-140", "items-center justify-center mask-r-from-75% mask-l-from-75%")}
+        className={cn(
+          "relative flex h-full w-full",
+          !fill && "max-w-140",
+          "items-center justify-center mask-r-from-75% mask-l-from-75%",
+        )}
         variants={scene}
         {...state}
       >
@@ -276,7 +478,9 @@ export function Spotlight({
             <motion.div
               className="absolute inset-0"
               animate={
-                active ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 0.85 }
+                active
+                  ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
+                  : { scale: 1, opacity: 0.85 }
               }
               transition={
                 active
@@ -289,11 +493,7 @@ export function Spotlight({
           </motion.div>
         )}
         {particles && (
-          <motion.div
-            className="absolute inset-x-0 inset-y-10"
-            variants={particlesWrap}
-            {...state}
-          >
+          <motion.div className="absolute inset-x-0 inset-y-10" variants={particlesWrap} {...state}>
             <motion.div
               className="absolute inset-0"
               animate={{ opacity: +!!active }}
@@ -311,7 +511,11 @@ export function Spotlight({
                         ? {
                             x: [0, particle.driftX, 0],
                             y: [0, -particle.driftY, 0],
-                            opacity: [particle.opacity * 0.5, particle.opacity, particle.opacity * 0.5],
+                            opacity: [
+                              particle.opacity * 0.5,
+                              particle.opacity,
+                              particle.opacity * 0.5,
+                            ],
                           }
                         : { x: 0, y: 0, opacity: 0 }
                     }

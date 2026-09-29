@@ -32,10 +32,30 @@ const statusStyles: Record<StepStatus, { dot: string; ring: string; time: string
 };
 
 export const timelineDefaultSteps: TimelineStep[] = [
-  { title: "Design spec approved", detail: "Tokens, typography, motion", time: "2w", status: "done" },
-  { title: "Frontend implementation", detail: "React + Motion components", time: "4d", status: "done" },
-  { title: "QA & accessibility", detail: "ARIA audit, keyboard nav", time: "In progress", status: "active" },
-  { title: "Staging deployment", detail: "Preview environment rollout", time: "Up next", status: "pending" },
+  {
+    title: "Design spec approved",
+    detail: "Tokens, typography, motion",
+    time: "2w",
+    status: "done",
+  },
+  {
+    title: "Frontend implementation",
+    detail: "React + Motion components",
+    time: "4d",
+    status: "done",
+  },
+  {
+    title: "QA & accessibility",
+    detail: "ARIA audit, keyboard nav",
+    time: "In progress",
+    status: "active",
+  },
+  {
+    title: "Staging deployment",
+    detail: "Preview environment rollout",
+    time: "Up next",
+    status: "pending",
+  },
   { title: "Production launch", detail: "Public release v3.0", time: "Fri", status: "pending" },
 ];
 
@@ -145,17 +165,12 @@ export function Timeline({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

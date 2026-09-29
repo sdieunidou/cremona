@@ -20,10 +20,7 @@ vi.mock("react-dom/server", async (importOriginal) => {
   };
 });
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/branding/spotlight",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/branding/spotlight");
 
 runGoldenParity("branding/spotlight", {
   blockDir,

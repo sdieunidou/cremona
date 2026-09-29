@@ -11,14 +11,25 @@ const onboardingSteps = [
   { title: "Account created", detail: "Workspace provisioned", time: "3d", status: "done" },
   { title: "Team invited", detail: "8 members joined", time: "1d", status: "done" },
   { title: "Integrations setup", detail: "Slack, GitHub, Linear", time: "Today", status: "active" },
-  { title: "First project shipped", detail: "Launch with stakeholders", time: "Next", status: "pending" },
+  {
+    title: "First project shipped",
+    detail: "Launch with stakeholders",
+    time: "Next",
+    status: "pending",
+  },
 ];
 
 runGoldenParity("activity/timeline", {
   blockDir,
   Component: Timeline,
   variants: [
-    { label: "default · custom steps", props: { title: "Onboarding", meta: "Q2", steps: onboardingSteps } },
-    { label: "isometric · custom steps", props: { isometric: true, title: "Onboarding", meta: "Q2", steps: onboardingSteps } },
+    {
+      label: "default · custom steps",
+      props: { title: "Onboarding", meta: "Q2", steps: onboardingSteps },
+    },
+    {
+      label: "isometric · custom steps",
+      props: { isometric: true, title: "Onboarding", meta: "Q2", steps: onboardingSteps },
+    },
   ],
 });

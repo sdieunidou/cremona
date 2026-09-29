@@ -40,6 +40,9 @@ runGoldenParity("integrations/hub", {
   Component: Hub,
   variants: [
     { label: "custom icons", props: { logo: zapLogo, satellites: customSatellites } },
-    { label: "brand logos", props: { variant: "beam", logo: zapLogo, satellites: brandSatellites } },
+    {
+      label: "brand logos",
+      props: { variant: "beam", logo: zapLogo, satellites: brandSatellites },
+    },
   ],
 });

@@ -69,7 +69,11 @@ const veilAnim = {
 
 const sourceAnim = {
   hidden: { opacity: 0, y: -6 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3, delay: timing.sourceDelay, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3, delay: timing.sourceDelay, ease: "easeOut" },
+  },
 } as const;
 
 const conditionAnim: Variants = {
@@ -124,7 +128,10 @@ const sweepVariants = (index: number): Variants => ({
 
 const headAnim = (index: number): Variants => ({
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.25, delay: resultsStart(index), ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.25, delay: resultsStart(index), ease: "easeOut" },
+  },
 });
 
 const resultRowVariants = (index: number): Variants => ({
@@ -218,14 +225,7 @@ export function Query({
   const footer = footerVariants(conditionCount, activeRows.length);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative flex w-full${fill ? "" : " max-w-88"} flex-col gap-1.5 rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

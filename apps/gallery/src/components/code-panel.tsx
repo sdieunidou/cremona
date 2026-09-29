@@ -33,7 +33,9 @@ export function CodePanel({ open, onClose, entry, label }: CodePanelProps) {
     }
     if (tab === "stimulus" && stimulus === undefined) {
       const variant = entry.meta.variants.find((v) => v.label === label);
-      loadStimulusTemplate(entry.key, variant?.slug ?? entry.meta.variants[0]?.slug ?? "").then(setStimulus);
+      loadStimulusTemplate(entry.key, variant?.slug ?? entry.meta.variants[0]?.slug ?? "").then(
+        setStimulus,
+      );
     }
   }, [open, tab, entry, label, source, stimulus]);
 

@@ -15,7 +15,10 @@ export interface HealthCheckItem {
   latency: string;
 }
 
-const statusMeta: Record<ServiceStatus, { dot: string; ping: string; label: string; text: string }> = {
+const statusMeta: Record<
+  ServiceStatus,
+  { dot: string; ping: string; label: string; text: string }
+> = {
   operational: {
     dot: "bg-emerald-500",
     ping: "bg-emerald-500/60",
@@ -44,10 +47,34 @@ const latencyColor = (status: ServiceStatus): string =>
       : "text-muted-foreground";
 
 export const healthCheckDefaultItems: HealthCheckItem[] = [
-  { icon: Globe, name: "API Gateway", region: "us-east-1", status: "operational", latency: "42 ms" },
-  { icon: Database, name: "Database", region: "primary · replica", status: "operational", latency: "8 ms" },
-  { icon: KeyRound, name: "Auth Service", region: "us-east-1", status: "operational", latency: "31 ms" },
-  { icon: HardDrive, name: "File Storage", region: "us-west-2", status: "degraded", latency: "412 ms" },
+  {
+    icon: Globe,
+    name: "API Gateway",
+    region: "us-east-1",
+    status: "operational",
+    latency: "42 ms",
+  },
+  {
+    icon: Database,
+    name: "Database",
+    region: "primary · replica",
+    status: "operational",
+    latency: "8 ms",
+  },
+  {
+    icon: KeyRound,
+    name: "Auth Service",
+    region: "us-east-1",
+    status: "operational",
+    latency: "31 ms",
+  },
+  {
+    icon: HardDrive,
+    name: "File Storage",
+    region: "us-west-2",
+    status: "degraded",
+    latency: "412 ms",
+  },
   { icon: Cloud, name: "CDN", region: "edge · 218 PoPs", status: "operational", latency: "12 ms" },
 ];
 
@@ -149,17 +176,12 @@ export function HealthCheck({
       : statusMeta.degraded;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -209,11 +231,20 @@ export function HealthCheck({
                     <Icon className="size-3.5" strokeWidth={2} />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="truncate text-xs font-medium text-foreground">{item.name}</span>
-                    <span className="truncate text-[10px] text-muted-foreground">{item.region}</span>
+                    <span className="truncate text-xs font-medium text-foreground">
+                      {item.name}
+                    </span>
+                    <span className="truncate text-[10px] text-muted-foreground">
+                      {item.region}
+                    </span>
                   </div>
                   <div className="flex shrink-0 items-center gap-2.5">
-                    <span className={cn("w-10 text-right font-mono text-[9px]", latencyColor(item.status))}>
+                    <span
+                      className={cn(
+                        "w-10 text-right font-mono text-[9px]",
+                        latencyColor(item.status),
+                      )}
+                    >
                       {item.latency}
                     </span>
                     <motion.div

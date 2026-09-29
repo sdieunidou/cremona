@@ -41,14 +41,7 @@ export function Breadcrumb({
   const items = ellipsis ? ellipsisCrumbs : baseCrumbs;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.nav
         aria-label="Breadcrumb"
         className="text-sm"
@@ -59,10 +52,7 @@ export function Breadcrumb({
           {items.map((item, i) => (
             <Fragment key={`${item}-${i}`}>
               {i > 0 && (
-                <li
-                  aria-hidden="true"
-                  className="flex items-center text-muted-foreground/60"
-                >
+                <li aria-hidden="true" className="flex items-center text-muted-foreground/60">
                   {separator === "slash" ? (
                     <span className="text-xs">/</span>
                   ) : (

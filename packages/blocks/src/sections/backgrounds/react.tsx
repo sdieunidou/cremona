@@ -170,11 +170,7 @@ export function Backgrounds({
 
   useEffect(() => {
     if (!playing || count < 2) return;
-    const delay = hasCycledRef.current
-      ? period
-      : hover
-        ? timing.hoverStart
-        : timing.loopStart;
+    const delay = hasCycledRef.current ? period : hover ? timing.hoverStart : timing.loopStart;
     const t = setTimeout(() => {
       hasCycledRef.current = true;
       setIndex((i) => (i + 1) % count);
@@ -186,10 +182,7 @@ export function Backgrounds({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >

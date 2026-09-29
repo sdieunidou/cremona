@@ -18,7 +18,11 @@ export interface ShieldProps extends VisualProps {
   isometric?: boolean;
 }
 
-const stateLabels = { secure: "Protected", warning: "Vulnerable", breached: "Compromised" } as const;
+const stateLabels = {
+  secure: "Protected",
+  warning: "Vulnerable",
+  breached: "Compromised",
+} as const;
 
 const stateIcons = {
   secure: ShieldCheck,
@@ -113,16 +117,17 @@ const iconAnim = {
   },
 } as const;
 
-const connectorAnim = (delay: number, fromX: number, fromY: number) => ({
-  hidden: { scale: 0.4, opacity: 0, x: fromX, y: fromY },
-  visible: {
-    scale: 1,
-    opacity: 1,
-    x: 0,
-    y: 0,
-    transition: { type: "spring", stiffness: 320, damping: 22, delay },
-  },
-}) as const;
+const connectorAnim = (delay: number, fromX: number, fromY: number) =>
+  ({
+    hidden: { scale: 0.4, opacity: 0, x: fromX, y: fromY },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      x: 0,
+      y: 0,
+      transition: { type: "spring", stiffness: 320, damping: 22, delay },
+    },
+  }) as const;
 
 const outerRingAnim = {
   hidden: { opacity: 0, scale: 1.08, rotate: 0 },
@@ -187,14 +192,7 @@ export function Shield({
   const ShieldIcon = stateIcons[state];
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="relative flex size-64 flex-col items-center justify-center gap-4"
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -228,7 +226,9 @@ export function Shield({
                 <motion.div
                   className="flex size-8 items-center justify-center rounded-full border bg-card text-foreground shadow-xs ring-2 ring-background"
                   variants={
-                    animated ? connectorAnim(connector.delay, connector.fromX, connector.fromY) : undefined
+                    animated
+                      ? connectorAnim(connector.delay, connector.fromX, connector.fromY)
+                      : undefined
                   }
                   {...motionState}
                 >
@@ -242,7 +242,12 @@ export function Shield({
             variants={animated ? scannerAnim : undefined}
             {...motionState}
           >
-            <div className={cn("pointer-events-none absolute size-20 rounded-full blur-2xl", styles.glow)} />
+            <div
+              className={cn(
+                "pointer-events-none absolute size-20 rounded-full blur-2xl",
+                styles.glow,
+              )}
+            />
             <div className="relative flex size-20 items-center justify-center overflow-hidden rounded-full border bg-card/75">
               <motion.div variants={animated ? iconAnim : undefined} {...motionState}>
                 <ShieldIcon className={cn("size-9", styles.icon)} strokeWidth={1.5} />

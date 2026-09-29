@@ -16,8 +16,7 @@ export interface ButtonProps extends VisualProps {
 }
 
 const variantClasses: Record<string, string> = {
-  default:
-    "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+  default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
   secondary: "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
   destructive: "bg-destructive text-white shadow-xs hover:bg-destructive/90",
   outline:
@@ -91,14 +90,7 @@ export function Button({
   ) : null;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div variants={animated ? entrance : undefined} {...state}>
         <button
           type="button"

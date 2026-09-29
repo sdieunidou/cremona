@@ -60,7 +60,10 @@ const veilAnim = {
 
 const headerAnim = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.3, delay: timing.headerDelay, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.3, delay: timing.headerDelay, ease: "easeOut" },
+  },
 } as const;
 
 const rowAnim: Variants = {
@@ -92,7 +95,10 @@ const chipAnim: Variants = {
 
 const footerAnim = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.3, delay: timing.footerDelay, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.3, delay: timing.footerDelay, ease: "easeOut" },
+  },
 } as const;
 
 const countAnim = {
@@ -131,9 +137,7 @@ export function Filters({
   const [landed, setLanded] = useState(0);
   const active =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const state = animated
-    ? { initial: "hidden", animate: active ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: active ? "visible" : "hidden" } : {};
   const activeRules = rules.length ? rules : filtersDefaultRules;
   const ruleCount = activeRules.length;
   const shownRules = animated ? Math.min(landed, ruleCount) : ruleCount;
@@ -155,14 +159,7 @@ export function Filters({
   }, [animated, active, ruleCount]);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-84"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -218,7 +215,9 @@ export function Filters({
                   <span className="truncate text-[10px] font-medium text-foreground">
                     {rule.field}
                   </span>
-                  <span className="shrink-0 text-[10px] text-muted-foreground">{rule.operator}</span>
+                  <span className="shrink-0 text-[10px] text-muted-foreground">
+                    {rule.operator}
+                  </span>
                   <motion.span
                     className="truncate rounded-md bg-primary/10 px-1.5 py-0.5 text-[10px] font-medium text-primary ring-1 ring-primary/15 ring-inset"
                     variants={animated ? chipAnim : undefined}

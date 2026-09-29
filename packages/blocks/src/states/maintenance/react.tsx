@@ -105,27 +105,27 @@ export function Maintenance({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
   const loopDelay = hover ? 0 : HOVER_DELAY;
-  const state = animated
-    ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const count = Math.min(Math.max(tiles, MIN_TILES), MAX_TILES);
-  const sweep: Transition = animated && active
-    ? { duration: 2.6, times: SWEEP_TIMES, ease: SWEEP_EASE, repeat: Infinity, delay: loopDelay }
-    : still;
+  const sweep: Transition =
+    animated && active
+      ? { duration: 2.6, times: SWEEP_TIMES, ease: SWEEP_EASE, repeat: Infinity, delay: loopDelay }
+      : still;
 
   return (
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       {glowOn && (
-        <motion.div className="absolute inset-0 -z-10" variants={animated ? glow : undefined} {...state}>
+        <motion.div
+          className="absolute inset-0 -z-10"
+          variants={animated ? glow : undefined}
+          {...state}
+        >
           <div className="absolute top-1/2 left-1/2 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--color-primary),transparent_68%)] opacity-20 blur-3xl dark:opacity-25" />
           <motion.div
             className="absolute top-[30%] left-[62%] size-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--color-chart-1),transparent_65%)] opacity-15 blur-3xl dark:opacity-20"
@@ -167,8 +167,12 @@ export function Maintenance({
                   />
                   <div className="size-6 shrink-0 rounded-lg border border-dashed border-muted-foreground/30" />
                   <div className="flex flex-1 flex-col gap-1.5">
-                    <div className={cn("h-1.5 rounded-full bg-muted-foreground/10", bars[n]!.title)} />
-                    <div className={cn("h-1.5 rounded-full bg-muted-foreground/10", bars[n]!.meta)} />
+                    <div
+                      className={cn("h-1.5 rounded-full bg-muted-foreground/10", bars[n]!.title)}
+                    />
+                    <div
+                      className={cn("h-1.5 rounded-full bg-muted-foreground/10", bars[n]!.meta)}
+                    />
                   </div>
                   <div className="h-2.5 w-6 shrink-0 rounded-full border border-dashed border-muted-foreground/25" />
                   {animated && (
@@ -192,8 +196,12 @@ export function Maintenance({
                     <div className="size-2.5 rounded-[3px] bg-muted-foreground/25" />
                   </div>
                   <div className="flex flex-1 flex-col gap-1.5">
-                    <div className={cn("h-1.5 rounded-full bg-muted-foreground/20", bars[n]!.title)} />
-                    <div className={cn("h-1.5 rounded-full bg-muted-foreground/15", bars[n]!.meta)} />
+                    <div
+                      className={cn("h-1.5 rounded-full bg-muted-foreground/20", bars[n]!.title)}
+                    />
+                    <div
+                      className={cn("h-1.5 rounded-full bg-muted-foreground/15", bars[n]!.meta)}
+                    />
                   </div>
                   <div className="flex shrink-0 items-center gap-1.5">
                     <span className="size-1.5 rounded-full bg-primary/45" />
@@ -204,7 +212,11 @@ export function Maintenance({
             )}
           </div>
           <div className="mt-4 flex transform-gpu justify-center">
-            <motion.div className="relative h-1 w-28" variants={animated ? progress : undefined} {...state}>
+            <motion.div
+              className="relative h-1 w-28"
+              variants={animated ? progress : undefined}
+              {...state}
+            >
               <motion.div
                 className="absolute inset-y-0 left-1/2 -ml-5 w-10 rounded-full bg-primary will-change-transform backface-hidden"
                 initial={{ x: 0, scaleX: 1 }}
@@ -216,8 +228,20 @@ export function Maintenance({
                 transition={
                   animated && active
                     ? {
-                        x: { duration: 2.6, times: BAR_TIMES, ease: "easeInOut", repeat: Infinity, delay: loopDelay },
-                        scaleX: { duration: 2.6, times: SCALE_TIMES, ease: "easeInOut", repeat: Infinity, delay: loopDelay },
+                        x: {
+                          duration: 2.6,
+                          times: BAR_TIMES,
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                          delay: loopDelay,
+                        },
+                        scaleX: {
+                          duration: 2.6,
+                          times: SCALE_TIMES,
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                          delay: loopDelay,
+                        },
                       }
                     : still
                 }

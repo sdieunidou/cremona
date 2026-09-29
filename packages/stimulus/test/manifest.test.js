@@ -28,10 +28,7 @@ describe("stimulus manifest", () => {
   });
 
   it("templates carry controller + anim data on the stat-card default", () => {
-    const html = readFileSync(
-      join(root, "templates/metrics/stat-card/000-default.html"),
-      "utf8",
-    );
+    const html = readFileSync(join(root, "templates/metrics/stat-card/000-default.html"), "utf8");
     expect(html).toContain('data-controller="cremona-visual"');
     expect(html).toContain('data-anim-order="0"');
     expect(html).toContain("data-anim-to=");

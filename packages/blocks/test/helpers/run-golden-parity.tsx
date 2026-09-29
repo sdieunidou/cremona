@@ -9,12 +9,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import type { ComponentType } from "react";
 import { readFileSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import {
-  compare,
-  findDivEnd,
-  goldenVisual,
-  parseHtmlFragment,
-} from "./parity.js";
+import { compare, findDivEnd, goldenVisual, parseHtmlFragment } from "./parity.js";
 
 export interface VariantSpec {
   label: string;
@@ -99,7 +94,10 @@ function componentDisplayName(v: unknown): string | null {
 }
 
 /** Write resolved variant props next to block.json (consumed by gallery + MCP). */
-function writePreviewProps(blockDir: string, entries: { label: string; props: Record<string, unknown> }[]): void {
+function writePreviewProps(
+  blockDir: string,
+  entries: { label: string; props: Record<string, unknown> }[],
+): void {
   try {
     const byLabel: Record<string, Record<string, unknown>> = {};
     for (const e of entries) byLabel[e.label] = e.props;
@@ -131,7 +129,9 @@ export function runGoldenParity(name: string, opts: RunParityOptions): void {
     ignoreAttrs = [],
   } = opts;
   const goldenDir = join(blockDir, "golden");
-  const meta: BlockGoldenInfo["meta"] = JSON.parse(readFileSync(join(blockDir, "block.json"), "utf8"));
+  const meta: BlockGoldenInfo["meta"] = JSON.parse(
+    readFileSync(join(blockDir, "block.json"), "utf8"),
+  );
 
   describe(`golden parity: ${name}`, () => {
     const goldens = meta.variants.filter((v) => existsSync(join(goldenDir, `${v.slug}.html`)));
@@ -157,10 +157,9 @@ export function runGoldenParity(name: string, opts: RunParityOptions): void {
         const props = resolveProps(g, spec);
         resolved.push({ label: g.label, props });
         const ours = renderToStaticMarkup(<Component animated trigger="inViewRepeat" {...props} />);
-        const diffs = compare(
-          parseHtmlFragment(goldenInner),
-          parseHtmlFragment(ours),
-        ).filter((d) => !ignoreAttrs.some((a) => d.message.includes(`attr ${a}`)));
+        const diffs = compare(parseHtmlFragment(goldenInner), parseHtmlFragment(ours)).filter(
+          (d) => !ignoreAttrs.some((a) => d.message.includes(`attr ${a}`)),
+        );
         if (diffs.length) {
           const shown = diffs
             .slice(0, opts.maxDiffs ?? 10)

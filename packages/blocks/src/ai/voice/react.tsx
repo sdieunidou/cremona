@@ -53,22 +53,182 @@ interface Particle {
 }
 
 const PARTICLES: Particle[] = [
-  { x: 14.2, y: 24.6, size: 3, color: "bg-primary", duration: 4.82, delay: -5.22, driftX: 4.87, driftY: 14.97, opacity: 0.6 },
-  { x: 86.7, y: 30.1, size: 3, color: "bg-chart-1", duration: 6.16, delay: -2.68, driftX: -3.11, driftY: 12.52, opacity: 0.63 },
-  { x: 20.1, y: 72.3, size: 2, color: "bg-chart-2", duration: 6.41, delay: -1.19, driftX: -2.04, driftY: 16.24, opacity: 0.48 },
-  { x: 82.6, y: 66.2, size: 3, color: "bg-chart-3", duration: 4.09, delay: -3.47, driftX: 5.93, driftY: 13.39, opacity: 0.65 },
-  { x: 6.8, y: 50.5, size: 2, color: "bg-chart-4", duration: 4.41, delay: -5.43, driftX: 6.64, driftY: 15.95, opacity: 0.55 },
-  { x: 93.2, y: 54.4, size: 3, color: "bg-primary", duration: 4.22, delay: -1.23, driftX: -3.05, driftY: 14.75, opacity: 0.45 },
-  { x: 17.3, y: 15.2, size: 2, color: "bg-chart-1", duration: 4.72, delay: -5.81, driftX: 4.22, driftY: 9.62, opacity: 0.5 },
-  { x: 76.5, y: 19.7, size: 3, color: "bg-chart-4", duration: 7.66, delay: -5.45, driftX: 6.82, driftY: 13.1, opacity: 0.57 },
-  { x: 28.6, y: 82.6, size: 3, color: "bg-primary", duration: 5.43, delay: -2.72, driftX: -2.28, driftY: 10, opacity: 0.62 },
-  { x: 69.4, y: 80.3, size: 2, color: "bg-chart-3", duration: 4.75, delay: -1.01, driftX: 5.27, driftY: 8.7, opacity: 0.5 },
-  { x: 4.9, y: 40.4, size: 3, color: "bg-primary", duration: 4.94, delay: -5.65, driftX: 4.64, driftY: 13.44, opacity: 0.46 },
-  { x: 95.3, y: 42.8, size: 2, color: "bg-chart-2", duration: 4.69, delay: -2.39, driftX: -3.07, driftY: 15.9, opacity: 0.52 },
-  { x: 48.5, y: 10.6, size: 3, color: "bg-chart-4", duration: 6.13, delay: -5.07, driftX: -2.6, driftY: 9.3, opacity: 0.5 },
-  { x: 55.2, y: 90.1, size: 2, color: "bg-primary", duration: 6.39, delay: -5.57, driftX: 1.33, driftY: 9.13, opacity: 0.55 },
-  { x: 38.8, y: 86.9, size: 3, color: "bg-chart-1", duration: 7.31, delay: -5.08, driftX: -4.42, driftY: 14.91, opacity: 0.5 },
-  { x: 88.1, y: 86.4, size: 2, color: "bg-chart-4", duration: 5.23, delay: -2.49, driftX: 3.29, driftY: 7.84, opacity: 0.48 },
+  {
+    x: 14.2,
+    y: 24.6,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.82,
+    delay: -5.22,
+    driftX: 4.87,
+    driftY: 14.97,
+    opacity: 0.6,
+  },
+  {
+    x: 86.7,
+    y: 30.1,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 6.16,
+    delay: -2.68,
+    driftX: -3.11,
+    driftY: 12.52,
+    opacity: 0.63,
+  },
+  {
+    x: 20.1,
+    y: 72.3,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 6.41,
+    delay: -1.19,
+    driftX: -2.04,
+    driftY: 16.24,
+    opacity: 0.48,
+  },
+  {
+    x: 82.6,
+    y: 66.2,
+    size: 3,
+    color: "bg-chart-3",
+    duration: 4.09,
+    delay: -3.47,
+    driftX: 5.93,
+    driftY: 13.39,
+    opacity: 0.65,
+  },
+  {
+    x: 6.8,
+    y: 50.5,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 4.41,
+    delay: -5.43,
+    driftX: 6.64,
+    driftY: 15.95,
+    opacity: 0.55,
+  },
+  {
+    x: 93.2,
+    y: 54.4,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.22,
+    delay: -1.23,
+    driftX: -3.05,
+    driftY: 14.75,
+    opacity: 0.45,
+  },
+  {
+    x: 17.3,
+    y: 15.2,
+    size: 2,
+    color: "bg-chart-1",
+    duration: 4.72,
+    delay: -5.81,
+    driftX: 4.22,
+    driftY: 9.62,
+    opacity: 0.5,
+  },
+  {
+    x: 76.5,
+    y: 19.7,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 7.66,
+    delay: -5.45,
+    driftX: 6.82,
+    driftY: 13.1,
+    opacity: 0.57,
+  },
+  {
+    x: 28.6,
+    y: 82.6,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.43,
+    delay: -2.72,
+    driftX: -2.28,
+    driftY: 10,
+    opacity: 0.62,
+  },
+  {
+    x: 69.4,
+    y: 80.3,
+    size: 2,
+    color: "bg-chart-3",
+    duration: 4.75,
+    delay: -1.01,
+    driftX: 5.27,
+    driftY: 8.7,
+    opacity: 0.5,
+  },
+  {
+    x: 4.9,
+    y: 40.4,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.94,
+    delay: -5.65,
+    driftX: 4.64,
+    driftY: 13.44,
+    opacity: 0.46,
+  },
+  {
+    x: 95.3,
+    y: 42.8,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 4.69,
+    delay: -2.39,
+    driftX: -3.07,
+    driftY: 15.9,
+    opacity: 0.52,
+  },
+  {
+    x: 48.5,
+    y: 10.6,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 6.13,
+    delay: -5.07,
+    driftX: -2.6,
+    driftY: 9.3,
+    opacity: 0.5,
+  },
+  {
+    x: 55.2,
+    y: 90.1,
+    size: 2,
+    color: "bg-primary",
+    duration: 6.39,
+    delay: -5.57,
+    driftX: 1.33,
+    driftY: 9.13,
+    opacity: 0.55,
+  },
+  {
+    x: 38.8,
+    y: 86.9,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 7.31,
+    delay: -5.08,
+    driftX: -4.42,
+    driftY: 14.91,
+    opacity: 0.5,
+  },
+  {
+    x: 88.1,
+    y: 86.4,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 5.23,
+    delay: -2.49,
+    driftX: 3.29,
+    driftY: 7.84,
+    opacity: 0.48,
+  },
 ];
 
 const content = {
@@ -78,12 +238,19 @@ const content = {
 
 const orb = {
   hidden: { opacity: 0, scale: 0.4 },
-  visible: { opacity: 1, scale: 1, transition: { type: "spring", stiffness: 260, damping: 18, delay: 0.1 } },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { type: "spring", stiffness: 260, damping: 18, delay: 0.1 },
+  },
 } as const;
 
 const glowVariant = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 const particlesVariant = {
@@ -101,7 +268,11 @@ const word: Variants = {
   visible: (index: number) => ({
     opacity: 1,
     filter: "blur(0px)",
-    transition: { duration: WORD_DURATION, delay: WORD_DELAY + index * WORD_DELAY_UNIT, ease: "easeOut" },
+    transition: {
+      duration: WORD_DURATION,
+      delay: WORD_DELAY + index * WORD_DELAY_UNIT,
+      ease: "easeOut",
+    },
   }),
 };
 
@@ -162,7 +333,11 @@ function ThinkingDots({ animated, loopActive }: { animated: boolean; loopActive:
             key={n}
             className="size-2 rounded-full bg-primary-foreground"
             initial={{ scale: 0.85, opacity: 0.8 }}
-            animate={loopActive ? { scale: [0.6, 1, 0.6], opacity: [0.4, 1, 0.4] } : { scale: 0.85, opacity: 0.8 }}
+            animate={
+              loopActive
+                ? { scale: [0.6, 1, 0.6], opacity: [0.4, 1, 0.4] }
+                : { scale: 0.85, opacity: 0.8 }
+            }
             transition={
               loopActive
                 ? { duration: 1.1, delay: n * 0.16, ease: "easeInOut", repeat: Infinity }
@@ -185,14 +360,23 @@ function Shimmer({ animated, loopActive }: { animated: boolean; loopActive: bool
   return (
     <div className="relative z-10 flex flex-col items-center gap-2">
       {["w-40", "w-28"].map((w, r) => (
-        <div key={r} className={`relative h-2 ${w} overflow-hidden rounded-full border border-border/75 bg-muted`}>
+        <div
+          key={r}
+          className={`relative h-2 ${w} overflow-hidden rounded-full border border-border/75 bg-muted`}
+        >
           {animated && (
             <motion.div
               className="absolute inset-y-px w-1/2 bg-linear-to-r from-transparent via-primary/25 to-transparent"
               animate={loopActive ? { x: ["-120%", "320%"] } : { x: "-120%" }}
               transition={
                 loopActive
-                  ? { duration: 1.4, delay: r * 0.2, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.2 }
+                  ? {
+                      duration: 1.4,
+                      delay: r * 0.2,
+                      ease: "easeInOut",
+                      repeat: Infinity,
+                      repeatDelay: 0.2,
+                    }
                   : { duration: 0.3 }
               }
             />
@@ -244,7 +428,9 @@ export function Voice({
     const id = requestAnimationFrame(() => setTicked(true));
     return () => cancelAnimationFrame(id);
   }, []);
-  const gate = animated && (trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const gate =
+    animated &&
+    (trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
   const active = (hover ? hovered : gate) && ticked;
   const drifting = gate && ticked;
   const noExplicitState = !stateProp;
@@ -271,20 +457,21 @@ export function Voice({
   const isThinking = current === "thinking";
   const isListening = current === "listening";
   const statusLabel =
-    ({ listening: listeningStatus, thinking: thinkingStatus, speaking: speakingStatus } as const)[current] ??
+    ({ listening: listeningStatus, thinking: thinkingStatus, speaking: speakingStatus } as const)[
+      current
+    ] ??
     status ??
     voiceDefaultCopy[`${current}Status` as const];
   const transcriptLabel =
-    ({ listening: listeningTranscript, thinking: undefined, speaking: speakingTranscript } as const)[current] ??
+    (
+      { listening: listeningTranscript, thinking: undefined, speaking: speakingTranscript } as const
+    )[current] ??
     transcript ??
     voiceDefaultCopy[`${current}Transcript` as const];
 
   if (!animated) {
     return (
-      <div
-        aria-hidden="true"
-        className={cn(frameClasses(fill), className)}
-      >
+      <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
         {glow && (
           <div className="absolute inset-0 -z-10">
             <GlowScene />
@@ -318,18 +505,30 @@ export function Voice({
               </Fragment>
             )}
             <Orb>
-              {isThinking ? <ThinkingDots animated={false} loopActive={false} /> : <Equalizer animated={false} loopActive={false} />}
+              {isThinking ? (
+                <ThinkingDots animated={false} loopActive={false} />
+              ) : (
+                <Equalizer animated={false} loopActive={false} />
+              )}
             </Orb>
           </div>
           <div className="relative z-10 flex items-center gap-1.5 rounded-full border bg-card px-2.5 py-1">
             <span className="size-1.5 rounded-full bg-primary" />
             <span className="text-[11px] font-medium text-foreground">{statusLabel}</span>
           </div>
-          <div className={cn("relative z-10 flex min-h-12 w-full", !fill && "max-w-xs", "items-start justify-center")}>
+          <div
+            className={cn(
+              "relative z-10 flex min-h-12 w-full",
+              !fill && "max-w-xs",
+              "items-start justify-center",
+            )}
+          >
             {isThinking ? (
               <Shimmer animated={false} loopActive={false} />
             ) : (
-              <p className="text-center text-sm leading-relaxed text-foreground">{transcriptLabel}</p>
+              <p className="text-center text-sm leading-relaxed text-foreground">
+                {transcriptLabel}
+              </p>
             )}
           </div>
         </div>
@@ -357,9 +556,15 @@ export function Voice({
         <motion.div className="absolute inset-0 -z-10" variants={glowVariant} {...state}>
           <motion.div
             className="absolute inset-0"
-            animate={active ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 0.85 }}
+            animate={
+              active
+                ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
+                : { scale: 1, opacity: 0.85 }
+            }
             transition={
-              active ? { duration: 4.5, ease: "easeInOut", repeat: Infinity } : { duration: 0.6, ease: "easeOut" }
+              active
+                ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
+                : { duration: 0.6, ease: "easeOut" }
             }
           >
             <GlowScene />
@@ -382,23 +587,39 @@ export function Voice({
                 <motion.div
                   animate={
                     drifting
-                      ? { x: [0, p.driftX, 0], y: [0, -p.driftY, 0], opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5] }
+                      ? {
+                          x: [0, p.driftX, 0],
+                          y: [0, -p.driftY, 0],
+                          opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
+                        }
                       : { x: 0, y: 0, opacity: 0 }
                   }
                   transition={
                     drifting
-                      ? { duration: p.duration, delay: p.delay, ease: "easeInOut", repeat: Infinity }
+                      ? {
+                          duration: p.duration,
+                          delay: p.delay,
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                        }
                       : { duration: 0.3 }
                   }
                 >
-                  <div className={`rotate-45 rounded-[1px] ${p.color}`} style={{ width: p.size, height: p.size }} />
+                  <div
+                    className={`rotate-45 rounded-[1px] ${p.color}`}
+                    style={{ width: p.size, height: p.size }}
+                  />
                 </motion.div>
               </div>
             ))}
           </motion.div>
         </motion.div>
       )}
-      <motion.div className="relative z-10 flex flex-col items-center gap-5" variants={content} {...state}>
+      <motion.div
+        className="relative z-10 flex flex-col items-center gap-5"
+        variants={content}
+        {...state}
+      >
         <motion.div className="relative flex items-center justify-center" variants={orb} {...state}>
           <div className="absolute size-24 rounded-full border border-primary/20" />
           <AnimatePresence initial={false}>
@@ -415,10 +636,14 @@ export function Voice({
                   className="absolute size-28 rounded-full border border-primary/30"
                   initial={{ scale: 1, opacity: 0.28 }}
                   animate={
-                    active ? { scale: [1, 1.12, 1], opacity: [0.3, 0.12, 0.3] } : { scale: 1, opacity: 0.28 }
+                    active
+                      ? { scale: [1, 1.12, 1], opacity: [0.3, 0.12, 0.3] }
+                      : { scale: 1, opacity: 0.28 }
                   }
                   transition={
-                    active ? { duration: 2, ease: "easeInOut", repeat: Infinity } : { duration: 0.4, ease: "easeOut" }
+                    active
+                      ? { duration: 2, ease: "easeInOut", repeat: Infinity }
+                      : { duration: 0.4, ease: "easeOut" }
                   }
                 />
               ) : (
@@ -434,7 +659,12 @@ export function Voice({
                     }
                     transition={
                       active
-                        ? { duration: ring.duration, delay: ring.delay, ease: "easeOut", repeat: Infinity }
+                        ? {
+                            duration: ring.duration,
+                            delay: ring.delay,
+                            ease: "easeOut",
+                            repeat: Infinity,
+                          }
                         : { duration: 0.4, ease: "easeOut" }
                     }
                   />
@@ -469,8 +699,12 @@ export function Voice({
         >
           <motion.span
             className="size-1.5 shrink-0 rounded-full bg-primary"
-            animate={active ? { opacity: [1, 0.3, 1], scale: [1, 0.8, 1] } : { opacity: 1, scale: 1 }}
-            transition={active ? { duration: 1.4, ease: "easeInOut", repeat: Infinity } : { duration: 0.4 }}
+            animate={
+              active ? { opacity: [1, 0.3, 1], scale: [1, 0.8, 1] } : { opacity: 1, scale: 1 }
+            }
+            transition={
+              active ? { duration: 1.4, ease: "easeInOut", repeat: Infinity } : { duration: 0.4 }
+            }
           />
           <AnimatePresence initial={false} mode="popLayout">
             <motion.span
@@ -485,7 +719,13 @@ export function Voice({
             </motion.span>
           </AnimatePresence>
         </motion.div>
-        <div className={cn("relative z-10 flex min-h-12 w-full", !fill && "max-w-xs", "items-start justify-center")}>
+        <div
+          className={cn(
+            "relative z-10 flex min-h-12 w-full",
+            !fill && "max-w-xs",
+            "items-start justify-center",
+          )}
+        >
           {isThinking ? (
             <Shimmer key={current} animated loopActive={active} />
           ) : (

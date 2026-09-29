@@ -29,15 +29,7 @@ const region = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
-function Field({
-  label,
-  value,
-  trailing,
-}: {
-  label: string;
-  value: string;
-  trailing?: boolean;
-}) {
+function Field({ label, value, trailing }: { label: string; value: string; trailing?: boolean }) {
   return (
     <motion.label className="flex flex-col gap-1" variants={region}>
       <span className="text-[8px] leading-none font-medium text-foreground">{label}</span>
@@ -84,16 +76,13 @@ export function AuthShell({
   const signup = mode === "signup";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("flex h-72 w-full", !fill && "max-w-80", "overflow-hidden rounded-xl border bg-background shadow-xs")}
+        className={cn(
+          "flex h-72 w-full",
+          !fill && "max-w-80",
+          "overflow-hidden rounded-xl border bg-background shadow-xs",
+        )}
         variants={animated ? shell : undefined}
         {...state}
       >

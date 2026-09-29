@@ -14,9 +14,7 @@ export function PreviewFrame({ label, size = "md", className, children }: Previe
   const height = FRAME_HEIGHTS[size ?? "md"] ?? FRAME_HEIGHTS.md!;
   return (
     <div className={cn(PREVIEW_FRAME, className)}>
-      <div className={cn(PREVIEW_STAGE, height)}>
-        {children}
-      </div>
+      <div className={cn(PREVIEW_STAGE, height)}>{children}</div>
       {label != null && <div className={PREVIEW_FOOTER}>{label}</div>}
     </div>
   );

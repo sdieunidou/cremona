@@ -88,16 +88,14 @@ export function Pricing({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-72", "p-8.5 will-change-transform", fadeOut && "mask-b-from-60%")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-72",
+          "p-8.5 will-change-transform",
+          fadeOut && "mask-b-from-60%",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -158,7 +156,9 @@ export function Pricing({
                   key={i}
                   className={cn(
                     "flex flex-1 flex-col items-center gap-1.5 rounded-lg border px-1.5 py-2",
-                    plan.featured ? "border-primary bg-card shadow-sm" : "border-border/50 bg-muted/35",
+                    plan.featured
+                      ? "border-primary bg-card shadow-sm"
+                      : "border-border/50 bg-muted/35",
                   )}
                 >
                   <div className="h-0.75 w-3/5 rounded-full bg-muted-foreground/15" />

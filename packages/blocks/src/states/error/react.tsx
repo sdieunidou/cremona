@@ -115,7 +115,9 @@ function Pulse({ pulse, active, delay }: { pulse: string; active: boolean; delay
         strokeLinecap="round"
         strokeDasharray={`${DASH_GAP} 200`}
         initial={{ strokeDashoffset: DASH_GAP, opacity: 0 }}
-        animate={active ? { strokeDashoffset: [DASH_GAP, -100], opacity: OPACITY_ON } : { opacity: 0 }}
+        animate={
+          active ? { strokeDashoffset: [DASH_GAP, -100], opacity: OPACITY_ON } : { opacity: 0 }
+        }
         transition={active ? { strokeDashoffset: move, opacity: blink } : still}
       />
     );
@@ -171,24 +173,23 @@ export function Error({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
   const loopDelay = hover ? 0 : HOVER_DELAY;
-  const state = animated
-    ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const count = Math.min(Math.max(services, MIN_SERVICES), MAX_SERVICES);
 
   return (
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       {glowOn && (
-        <motion.div className="absolute inset-0 -z-10" variants={animated ? glow : undefined} {...state}>
+        <motion.div
+          className="absolute inset-0 -z-10"
+          variants={animated ? glow : undefined}
+          {...state}
+        >
           <div className="absolute top-1/2 left-1/2 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--color-primary),transparent_68%)] opacity-20 blur-3xl dark:opacity-25" />
           <motion.div
             className="absolute top-1/2 left-[68%] size-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--color-destructive),transparent_65%)] opacity-15 blur-3xl dark:opacity-20"
@@ -279,7 +280,13 @@ export function Error({
                         active
                           ? {
                               duration: LOOP,
-                              times: [0, BREAK_AT + t * TILE_STEP, BREAK_AT + t * TILE_STEP + 0.03, FADE_A, FADE_B],
+                              times: [
+                                0,
+                                BREAK_AT + t * TILE_STEP,
+                                BREAK_AT + t * TILE_STEP + 0.03,
+                                FADE_A,
+                                FADE_B,
+                              ],
                               ease: ["linear", "easeOut", "linear", "easeIn"],
                               repeat: Infinity,
                               delay: loopDelay,
@@ -298,7 +305,9 @@ export function Error({
                 </motion.div>
               ))}
             </div>
-            {!animated && <div className="absolute -inset-px rounded-xl border border-destructive/70" />}
+            {!animated && (
+              <div className="absolute -inset-px rounded-xl border border-destructive/70" />
+            )}
             {animated && (
               <motion.div
                 className="absolute -inset-px rounded-xl border border-destructive/70"

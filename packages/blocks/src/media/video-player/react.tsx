@@ -247,16 +247,13 @@ export function VideoPlayer({
   const Scene = scenes[variant];
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("relative w-full", !fill && "max-w-90", "rounded-3xl border border-border/50 bg-muted/75 p-1.5")}
+        className={cn(
+          "relative w-full",
+          !fill && "max-w-90",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...motionState}
@@ -282,11 +279,7 @@ export function VideoPlayer({
               variants={animated ? mediaAnim : undefined}
               {...motionState}
             >
-              {image ? (
-                <img src={image} alt="" className="size-full object-cover" />
-              ) : (
-                <Scene />
-              )}
+              {image ? <img src={image} alt="" className="size-full object-cover" /> : <Scene />}
             </motion.div>
             {showInfo && (
               <motion.div

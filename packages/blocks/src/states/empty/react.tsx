@@ -98,18 +98,13 @@ export function Empty({
   const plusDelay = BASE_DELAY + count * STAGGER;
   const active = hover ? hovered : inView;
   const loopDelay = hover ? 0 : plusDelay;
-  const state = animated
-    ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
 
   return (
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
@@ -201,9 +196,7 @@ export function Empty({
                     className="absolute size-8 rounded-full border border-primary"
                     initial={{ scale: 1, opacity: 0 }}
                     animate={
-                      active
-                        ? { scale: [1, 1, 1.9], opacity: [0, r.opacity, 0] }
-                        : { opacity: 0 }
+                      active ? { scale: [1, 1, 1.9], opacity: [0, r.opacity, 0] } : { opacity: 0 }
                     }
                     transition={
                       active
@@ -226,7 +219,9 @@ export function Empty({
               >
                 <motion.div
                   className="flex size-8 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-xs"
-                  animate={animated && active ? { scale: [1, 1, PRESS_IN, PRESS_OUT, 1] } : { scale: 1 }}
+                  animate={
+                    animated && active ? { scale: [1, 1, PRESS_IN, PRESS_OUT, 1] } : { scale: 1 }
+                  }
                   transition={
                     animated && active
                       ? {

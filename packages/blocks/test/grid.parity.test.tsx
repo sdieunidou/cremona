@@ -19,10 +19,7 @@ vi.mock("react-dom/server", async (importOriginal) => {
   };
 });
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/avatars/grid",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/avatars/grid");
 
 // photo roster from the POC page chunk (`members:a` identifier)
 const photoMembers = [

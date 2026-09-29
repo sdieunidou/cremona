@@ -207,17 +207,12 @@ export function Gauge({
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -263,21 +258,21 @@ export function Gauge({
               {zoneSpans.map((zone, i) => {
                 const paint = zonePaint(zone);
                 return (
-                <motion.path
-                  key={i}
-                  d={ARC}
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={STROKE}
-                  strokeLinecap="round"
-                  className={cn("opacity-30", paint.className)}
-                  style={paint.style}
-                  pathLength={1}
-                  strokeDasharray={`${zone.span} 1`}
-                  strokeDashoffset={zone.offset}
-                  variants={animated ? trackAnim : undefined}
-                  {...state}
-                />
+                  <motion.path
+                    key={i}
+                    d={ARC}
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={STROKE}
+                    strokeLinecap="round"
+                    className={cn("opacity-30", paint.className)}
+                    style={paint.style}
+                    pathLength={1}
+                    strokeDasharray={`${zone.span} 1`}
+                    strokeDashoffset={zone.offset}
+                    variants={animated ? trackAnim : undefined}
+                    {...state}
+                  />
                 );
               })}
               <motion.path

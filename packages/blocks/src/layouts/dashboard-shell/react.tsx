@@ -49,8 +49,7 @@ const invoices = [
   { name: "Orbit AI", plan: "Pro", status: "Overdue", tone: "bad", amount: "$220.00" },
 ] as const;
 
-const sparkPath =
-  "M0 22 L10 18 L20 20 L30 14 L40 16 L50 10 L60 12 L70 7 L80 9 L90 5 L100 6";
+const sparkPath = "M0 22 L10 18 L20 20 L30 14 L40 16 L50 10 L60 12 L70 7 L80 9 L90 5 L100 6";
 
 /* Staged entrance: the shell fades in, regions follow in .07s steps. */
 const shell = {
@@ -125,9 +124,7 @@ function Rail({ collapsed }: { collapsed: boolean }) {
         >
           <div className="size-4 shrink-0 rounded-md bg-sidebar-primary" />
           {!collapsed && (
-            <span className="text-[10px] leading-none font-semibold tracking-tight">
-              Pulse
-            </span>
+            <span className="text-[10px] leading-none font-semibold tracking-tight">Pulse</span>
           )}
         </motion.div>
         {!collapsed && <div className="mt-1.5 mb-1.5 h-px w-full bg-sidebar-border" />}
@@ -147,13 +144,8 @@ function Rail({ collapsed }: { collapsed: boolean }) {
               )}
               variants={tile}
             >
-              <Icon
-                className={cn("shrink-0", collapsed ? "size-2.5" : "size-3")}
-                strokeWidth={2}
-              />
-              {!collapsed && (
-                <span className="text-[9px] leading-none font-medium">{label}</span>
-              )}
+              <Icon className={cn("shrink-0", collapsed ? "size-2.5" : "size-3")} strokeWidth={2} />
+              {!collapsed && <span className="text-[9px] leading-none font-medium">{label}</span>}
             </motion.div>
           ))}
         </motion.div>
@@ -170,9 +162,7 @@ function Rail({ collapsed }: { collapsed: boolean }) {
           {!collapsed && (
             <div className="flex min-w-0 flex-col gap-px">
               <span className="truncate text-[9px] leading-tight font-medium">Ana Kova</span>
-              <span className="truncate text-[8px] leading-tight text-muted-foreground">
-                Admin
-              </span>
+              <span className="truncate text-[8px] leading-tight text-muted-foreground">Admin</span>
             </div>
           )}
         </motion.div>
@@ -186,9 +176,7 @@ function Topbar({ mobile }: { mobile: boolean }) {
     <motion.div className="flex h-9 shrink-0 items-center gap-2 border-b px-2.5" variants={region}>
       {mobile ? (
         <>
-          <span className="text-[11px] font-semibold tracking-tight text-foreground">
-            Overview
-          </span>
+          <span className="text-[11px] font-semibold tracking-tight text-foreground">Overview</span>
           <div className="ml-auto flex items-center gap-1.5">
             <Bell className="size-3 text-muted-foreground" strokeWidth={2} />
             <div className="flex size-5 items-center justify-center rounded-full bg-primary/15 text-[8px] font-semibold text-primary">
@@ -287,10 +275,7 @@ function TableCard() {
 
 function KpiRow({ stacked }: { stacked: boolean }) {
   return (
-    <motion.div
-      className={cn("flex gap-1.5", stacked && "flex-col")}
-      variants={tiles}
-    >
+    <motion.div className={cn("flex gap-1.5", stacked && "flex-col")} variants={tiles}>
       {kpis.map((kpi) => (
         <motion.div
           key={kpi.label}
@@ -357,16 +342,13 @@ export function DashboardShell({
   const mobile = viewport === "mobile";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-96", "overflow-hidden rounded-xl border bg-background shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-96",
+          "overflow-hidden rounded-xl border bg-background shadow-xs",
+        )}
         variants={animated ? shell : undefined}
         {...state}
       >
@@ -378,10 +360,7 @@ export function DashboardShell({
           {!mobile && <Rail collapsed={collapsed} />}
           <motion.div className="flex min-w-0 flex-1 flex-col" variants={subRegions}>
             <Topbar mobile={mobile} />
-            <motion.div
-              className="flex min-h-0 flex-1 flex-col gap-2 p-2"
-              variants={subRegions}
-            >
+            <motion.div className="flex min-h-0 flex-1 flex-col gap-2 p-2" variants={subRegions}>
               <KpiRow stacked={mobile} />
               <ChartCard className="min-h-0 flex-1" />
               {!mobile && <TableCard />}

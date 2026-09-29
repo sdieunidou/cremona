@@ -265,14 +265,7 @@ export function Phone({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-44 rounded-[1.5rem] border border-border/50 bg-muted/75 p-1 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -326,7 +319,9 @@ export function Phone({
                   <span className="text-2xl font-light tracking-tight text-white drop-shadow-sm">
                     {time}
                   </span>
-                  <span className="text-[8px] font-medium text-white/80 drop-shadow-sm">{date}</span>
+                  <span className="text-[8px] font-medium text-white/80 drop-shadow-sm">
+                    {date}
+                  </span>
                 </div>
                 <div className="mt-auto flex flex-col gap-1 pb-5">
                   {notifications.map((item, i) => (
@@ -340,7 +335,9 @@ export function Phone({
                       <span className="text-[7px] font-semibold tracking-wide text-white/70 uppercase">
                         {item.app}
                       </span>
-                      <p className="text-[8px] leading-tight font-semibold text-white">{item.title}</p>
+                      <p className="text-[8px] leading-tight font-semibold text-white">
+                        {item.title}
+                      </p>
                       <p className="mt-1 text-[7px] leading-tight text-white/70">{item.body}</p>
                     </motion.div>
                   ))}

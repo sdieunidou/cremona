@@ -53,7 +53,11 @@ const server = new McpServer(
   { instructions: INSTRUCTIONS },
 );
 
-const text = (data) => ({ content: [{ type: "text", text: typeof data === "string" ? data : JSON.stringify(data, null, 2) }] });
+const text = (data) => ({
+  content: [
+    { type: "text", text: typeof data === "string" ? data : JSON.stringify(data, null, 2) },
+  ],
+});
 
 server.tool(
   "list_categories",
@@ -73,7 +77,12 @@ server.tool(
   async ({ category, kind, limit }) => {
     const items = store
       .blockIndex()
-      .filter((b) => !category || b.categorySlug === category || b.category.toLowerCase() === category.toLowerCase())
+      .filter(
+        (b) =>
+          !category ||
+          b.categorySlug === category ||
+          b.category.toLowerCase() === category.toLowerCase(),
+      )
       .filter((b) => !kind || b.kind === kind)
       .slice(0, limit ?? 200);
     return text(items);
@@ -113,7 +122,11 @@ server.tool(
         sourcePath: meta.sourcePath,
         added: meta.added,
         page: meta.page,
-        variants: meta.variants.map((v) => ({ label: v.label, slug: v.slug, size: v.size ?? "md" })),
+        variants: meta.variants.map((v) => ({
+          label: v.label,
+          slug: v.slug,
+          size: v.size ?? "md",
+        })),
       };
     }
     if (wanted.has("props")) {
@@ -143,9 +156,15 @@ server.tool(
       const variants = store.stimulusTemplates(categorySlug, file);
       out.stimulus = {
         templates: variants.map((v) => ({ label: v.label, slug: v.slug })),
-        sample: store.stimulusTemplate(categorySlug, file, variant ? variants.find((v) => v.label === variant)?.slug ?? variants[0]?.slug : variants[0]?.slug),
+        sample: store.stimulusTemplate(
+          categorySlug,
+          file,
+          variant
+            ? (variants.find((v) => v.label === variant)?.slug ?? variants[0]?.slug)
+            : variants[0]?.slug,
+        ),
         manifestNote:
-          "All templates live in @cremona/stimulus/templates/<category>/<file>/<slug>.html (data-controller=\"cremona-visual\").",
+          'All templates live in @cremona/stimulus/templates/<category>/<file>/<slug>.html (data-controller="cremona-visual").',
       };
     }
     if (wanted.has("golden")) {
@@ -182,7 +201,12 @@ server.tool(
 server.tool(
   "get_theme",
   "Get the full CSS token block of one theme (light + dark) plus usage notes.",
-  { theme: z.string().optional().describe("theme value, e.g. 'claude-plus'. Omit for all + default light/dark.") },
+  {
+    theme: z
+      .string()
+      .optional()
+      .describe("theme value, e.g. 'claude-plus'. Omit for all + default light/dark."),
+  },
   async ({ theme }) => {
     const css = store.themeCss();
     if (!theme) {
@@ -194,11 +218,14 @@ server.tool(
       });
     }
     const wanted = [`:root{--background`, `.dark{--background`];
-    if (theme !== "default") wanted.push(`.theme-${theme}:not(.dark){--background`, `.theme-${theme}.dark{--background`);
-    const lines = css
-      .split("\n\n")
-      .filter((block) => wanted.some((w) => block.startsWith(w)));
-    return text({ theme, css: lines.join("\n\n"), themes: store.themes().find((t) => t.value === theme) ?? null });
+    if (theme !== "default")
+      wanted.push(`.theme-${theme}:not(.dark){--background`, `.theme-${theme}.dark{--background`);
+    const lines = css.split("\n\n").filter((block) => wanted.some((w) => block.startsWith(w)));
+    return text({
+      theme,
+      css: lines.join("\n\n"),
+      themes: store.themes().find((t) => t.value === theme) ?? null,
+    });
   },
 );
 
@@ -209,22 +236,55 @@ server.tool(
   async () => {
     const css = store.designSystemCss();
     const tokenNames = [
-      "--background", "--foreground", "--card", "--card-foreground", "--popover", "--popover-foreground",
-      "--primary", "--primary-foreground", "--secondary", "--secondary-foreground", "--muted",
-      "--muted-foreground", "--accent", "--accent-foreground", "--destructive", "--border", "--input",
-      "--ring", "--chart-1", "--chart-2", "--chart-3", "--chart-4", "--chart-5", "--radius",
-      "--sidebar", "--sidebar-foreground", "--sidebar-primary", "--sidebar-primary-foreground",
-      "--sidebar-accent", "--sidebar-accent-foreground", "--sidebar-border", "--sidebar-ring",
+      "--background",
+      "--foreground",
+      "--card",
+      "--card-foreground",
+      "--popover",
+      "--popover-foreground",
+      "--primary",
+      "--primary-foreground",
+      "--secondary",
+      "--secondary-foreground",
+      "--muted",
+      "--muted-foreground",
+      "--accent",
+      "--accent-foreground",
+      "--destructive",
+      "--border",
+      "--input",
+      "--ring",
+      "--chart-1",
+      "--chart-2",
+      "--chart-3",
+      "--chart-4",
+      "--chart-5",
+      "--radius",
+      "--sidebar",
+      "--sidebar-foreground",
+      "--sidebar-primary",
+      "--sidebar-primary-foreground",
+      "--sidebar-accent",
+      "--sidebar-accent-foreground",
+      "--sidebar-border",
+      "--sidebar-ring",
     ];
     return text({
       tokens: tokenNames,
       darkMode: "class-based (.dark on <html>), default dark = warm 'Claude-like' palette",
       themes: store.themes().map((t) => t.value),
       font: "Inter Variable (--font-sans), weights 100-900",
-      keyframes: ["tw-shimmer", "caret-blink", "scroll-fade-reveal-*", "enter/exit (tw-animate-css)"],
+      keyframes: [
+        "tw-shimmer",
+        "caret-blink",
+        "scroll-fade-reveal-*",
+        "enter/exit (tw-animate-css)",
+      ],
       previewFrame: {
-        frame: "group/preview relative flex flex-col overflow-hidden rounded-lg border border-border/50 bg-muted/20 dark:bg-muted/15",
-        stage: "flex grow items-center gap-2 h-96 (xs h-48 | sm h-64 | md h-96 | lg h-[28rem] | xl h-[32rem])",
+        frame:
+          "group/preview relative flex flex-col overflow-hidden rounded-lg border border-border/50 bg-muted/20 dark:bg-muted/15",
+        stage:
+          "flex grow items-center gap-2 h-96 (xs h-48 | sm h-64 | md h-96 | lg h-[28rem] | xl h-[32rem])",
         footer: "bg-muted/25 px-2 py-2.25 text-center text-xs font-medium text-muted-foreground",
         grid: "grid grid-cols-1 gap-2 lg:grid-cols-2 (+ xl:grid-cols-3 for 3 cols)",
       },
@@ -244,10 +304,21 @@ server.tool(
       const fonts = [];
       const { readdirSync } = await import("node:fs");
       for (const f of readdirSync(dir)) if (f.endsWith(".woff2")) fonts.push(f);
-      return text({ fonts, note: "Copy packages/tokens/css/*.woff2 next to cremona.css, or rely on the @font-face urls (relative)." });
+      return text({
+        fonts,
+        note: "Copy packages/tokens/css/*.woff2 next to cremona.css, or rely on the @font-face urls (relative).",
+      });
     }
     const css = kind === "tokens" ? store.themeCss() : store.designSystemCss();
-    return text({ kind, bytes: css.length, note: kind === "full" ? "Ship this file as-is (one <link>), no Tailwind build needed on the host." : undefined, css });
+    return text({
+      kind,
+      bytes: css.length,
+      note:
+        kind === "full"
+          ? "Ship this file as-is (one <link>), no Tailwind build needed on the host."
+          : undefined,
+      css,
+    });
   },
 );
 
@@ -274,12 +345,16 @@ server.tool(
   "Create a new visual category (folder + catalog entry). Returns the scaffold path.",
   { name: z.string().describe('Human category name, e.g. "Payments"') },
   async ({ name }) => {
-    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const slug = name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
     const dir = join(store.BLOCKS_DIR, slug);
     await mkdir(dir, { recursive: true });
     const catalogPath = join(REPO_ROOT, "packages", "blocks", "catalog.json");
     const current = JSON.parse(await readFile(catalogPath, "utf8"));
-    if (current.some((g) => g.slug === slug)) return text({ ok: true, slug, note: "category already exists" });
+    if (current.some((g) => g.slug === slug))
+      return text({ ok: true, slug, note: "category already exists" });
     current.push({ category: name, slug, items: [] });
     current.sort((a, b) => a.category.localeCompare(b.category));
     await writeFile(catalogPath, JSON.stringify(current, null, 2) + "\n");
@@ -310,9 +385,24 @@ server.tool(
       { label: "default", slug: "000-default", size: null, propsRaw: "{}" },
       { label: "fadeOut", slug: "001-fadeout", size: null, propsRaw: "{fadeOut:!0}" },
       { label: "isometric", slug: "002-isometric", size: null, propsRaw: "{isometric:!0}" },
-      { label: "isometric · fadeOut", slug: "003-isometric-fadeout", size: null, propsRaw: "{isometric:!0,fadeOut:!0}" },
-      { label: "default · no gradient", slug: "004-default-no-gradient", size: null, propsRaw: "{gradient:!1}" },
-      { label: "isometric · no gradient", slug: "005-isometric-no-gradient", size: null, propsRaw: "{isometric:!0,gradient:!1}" },
+      {
+        label: "isometric · fadeOut",
+        slug: "003-isometric-fadeout",
+        size: null,
+        propsRaw: "{isometric:!0,fadeOut:!0}",
+      },
+      {
+        label: "default · no gradient",
+        slug: "004-default-no-gradient",
+        size: null,
+        propsRaw: "{gradient:!1}",
+      },
+      {
+        label: "isometric · no gradient",
+        slug: "005-isometric-no-gradient",
+        size: null,
+        propsRaw: "{isometric:!0,gradient:!1}",
+      },
     ];
     const meta = {
       category: category.charAt(0).toUpperCase() + category.slice(1),
@@ -383,7 +473,10 @@ runGoldenParity("${slug}/${file}", {
 });
 `;
     const testName = `${slug}-${file}`.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-    await writeFile(join(REPO_ROOT, "packages", "blocks", "test", `${testName}.parity.test.tsx`), testSkeleton);
+    await writeFile(
+      join(REPO_ROOT, "packages", "blocks", "test", `${testName}.parity.test.tsx`),
+      testSkeleton,
+    );
 
     const catalogPath = join(REPO_ROOT, "packages", "blocks", "catalog.json");
     const current = JSON.parse(await readFile(catalogPath, "utf8"));
@@ -409,7 +502,12 @@ runGoldenParity("${slug}/${file}", {
   },
 );
 
-server.tool("validate", "Validate library coherence: catalog ↔ blocks ↔ goldens ↔ stimulus templates.", {}, async () => text(store.validate()));
+server.tool(
+  "validate",
+  "Validate library coherence: catalog ↔ blocks ↔ goldens ↔ stimulus templates.",
+  {},
+  async () => text(store.validate()),
+);
 
 server.tool(
   "get_guide",

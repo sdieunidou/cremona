@@ -74,14 +74,7 @@ export function Dialog({
     "h-9 w-full rounded-md border border-input bg-transparent px-2.5 text-sm shadow-xs outline-none transition-[color,box-shadow] placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         variants={animated ? scrim : undefined}
         {...state}
@@ -112,20 +105,13 @@ export function Dialog({
           </div>
         )}
         <div className="flex flex-col gap-1.5">
-          <h2 className="pr-6 text-base font-semibold text-foreground">
-            {title}
-          </h2>
-          <p className="text-xs leading-5 text-muted-foreground">
-            {resolvedDescription}
-          </p>
+          <h2 className="pr-6 text-base font-semibold text-foreground">{title}</h2>
+          <p className="text-xs leading-5 text-muted-foreground">{resolvedDescription}</p>
         </div>
         {form && (
           <div className="mt-4 flex flex-col gap-3">
             <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="cremona-dialog-email"
-                className="text-xs font-medium text-foreground"
-              >
+              <label htmlFor="cremona-dialog-email" className="text-xs font-medium text-foreground">
                 Email
               </label>
               <input
@@ -136,10 +122,7 @@ export function Dialog({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label
-                htmlFor="cremona-dialog-role"
-                className="text-xs font-medium text-foreground"
-              >
+              <label htmlFor="cremona-dialog-role" className="text-xs font-medium text-foreground">
                 Role
               </label>
               <select id="cremona-dialog-role" className={fieldClasses} defaultValue="Developer">

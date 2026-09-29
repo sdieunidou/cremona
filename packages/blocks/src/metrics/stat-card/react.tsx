@@ -1,12 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import {
-  DollarSign,
-  Minus,
-  ArrowUpRight,
-  ArrowDownRight,
-} from "lucide-react";
+import { DollarSign, Minus, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -132,17 +127,12 @@ export function StatCard({
   const Icon = icon;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-72", "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
+          "relative w-full",
+          !fill && "max-w-72",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

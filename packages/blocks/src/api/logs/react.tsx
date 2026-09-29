@@ -183,7 +183,13 @@ function LogPulse({
         strokeLinecap="round"
         strokeDasharray={`${PULSE_DASH} 200`}
       >
-        <animate attributeName="stroke-dashoffset" values={`${PULSE_DASH};-100`} dur={dur} repeatCount="indefinite" begin={begin} />
+        <animate
+          attributeName="stroke-dashoffset"
+          values={`${PULSE_DASH};-100`}
+          dur={dur}
+          repeatCount="indefinite"
+          begin={begin}
+        />
       </path>
     );
   }
@@ -228,7 +234,8 @@ export function Logs({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
@@ -281,7 +288,11 @@ export function Logs({
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: pulseVisible && !hover ? PULSE_DELAY : 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+              }}
             >
               {paths.map((d, t) => (
                 <LogPulse key={`ld${t}`} d={d} dur="2s" begin={`${-t * 0.65}s`} pulse={pulse} />
@@ -293,7 +304,10 @@ export function Logs({
           <div
             key={`sn${t}`}
             className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${(SOURCE_X / CANVAS.w) * 100}%`, top: `${(sourceY(t, count) / CANVAS.h) * 100}%` }}
+            style={{
+              left: `${(SOURCE_X / CANVAS.w) * 100}%`,
+              top: `${(sourceY(t, count) / CANVAS.h) * 100}%`,
+            }}
           >
             <motion.div
               className="flex size-11 items-center justify-center rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
@@ -353,13 +367,20 @@ export function Logs({
                       animate={pulseVisible ? { opacity: [0, 1, 0] } : { opacity: 0 }}
                       transition={
                         pulseVisible
-                          ? { duration: 2.4, ease: "easeInOut", repeat: Infinity, delay: PULSE_DELAY }
+                          ? {
+                              duration: 2.4,
+                              ease: "easeInOut",
+                              repeat: Infinity,
+                              delay: PULSE_DELAY,
+                            }
                           : { duration: 0.4, ease: "easeOut" }
                       }
                     />
                   )}
                   <span className="relative flex items-center gap-1.5 px-2 py-1.5">
-                    <span className="shrink-0 text-muted-foreground/80 tabular-nums">{line2.time}</span>
+                    <span className="shrink-0 text-muted-foreground/80 tabular-nums">
+                      {line2.time}
+                    </span>
                     <span
                       className={`w-9 shrink-0 rounded px-0.75 py-px text-center text-[8px] font-semibold ring-1 ring-inset ${LEVEL_PILL[line2.level]}`}
                     >

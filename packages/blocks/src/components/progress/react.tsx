@@ -49,14 +49,7 @@ export function Progress({
   const pct = `${clamped}%`;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-64")}
         variants={animated ? entrance : undefined}
@@ -87,10 +80,7 @@ export function Progress({
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             />
           ) : (
-            <div
-              className={cn("h-full rounded-full", fillClasses[color])}
-              style={{ width: pct }}
-            />
+            <div className={cn("h-full rounded-full", fillClasses[color])} style={{ width: pct }} />
           )}
         </div>
       </motion.div>

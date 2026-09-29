@@ -142,7 +142,9 @@ function Pulse({ pulse, active, delay }: { pulse: string; active: boolean; delay
         strokeLinecap="round"
         strokeDasharray={`${DASH_LEN} 200`}
         initial={{ strokeDashoffset: DASH_LEN, opacity: 0 }}
-        animate={active ? { strokeDashoffset: [DASH_LEN, -100], opacity: OPACITY_ON } : { opacity: 0 }}
+        animate={
+          active ? { strokeDashoffset: [DASH_LEN, -100], opacity: OPACITY_ON } : { opacity: 0 }
+        }
         transition={active ? { strokeDashoffset: move, opacity: blink } : still}
       />
     );
@@ -198,24 +200,23 @@ export function NotFound({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
   const loopDelay = hover ? 0 : 1;
-  const state = animated
-    ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const codeText = normalizeCode(code);
 
   return (
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       {glowOn && (
-        <motion.div className="absolute inset-0 -z-10" variants={animated ? glow : undefined} {...state}>
+        <motion.div
+          className="absolute inset-0 -z-10"
+          variants={animated ? glow : undefined}
+          {...state}
+        >
           <div className="absolute top-1/2 left-1/2 size-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--color-primary),transparent_68%)] opacity-20 blur-3xl dark:opacity-25" />
           <motion.div
             className="absolute top-1/2 left-[42%] size-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,var(--color-destructive),transparent_65%)] opacity-15 blur-3xl dark:opacity-20"
@@ -247,7 +248,11 @@ export function NotFound({
           <MousePointerClick className="size-5" strokeWidth={2} />
         </motion.div>
         <div className="relative flex-1" style={{ minWidth: LINE_W }}>
-          <svg className="block h-3 w-full overflow-visible" viewBox={`0 0 ${LINE_W} ${SVG_H}`} fill="none">
+          <svg
+            className="block h-3 w-full overflow-visible"
+            viewBox={`0 0 ${LINE_W} ${SVG_H}`}
+            fill="none"
+          >
             <motion.path
               d={ROUTE}
               stroke="currentColor"
@@ -324,7 +329,12 @@ export function NotFound({
                     active
                       ? {
                           duration: 3,
-                          times: [0, 0.52 + r.offset, 0.52 + r.offset + 0.03, 0.52 + r.offset + 0.3],
+                          times: [
+                            0,
+                            0.52 + r.offset,
+                            0.52 + r.offset + 0.03,
+                            0.52 + r.offset + 0.3,
+                          ],
                           ease: ["linear", "easeOut", "easeOut"],
                           repeat: Infinity,
                           delay: loopDelay,

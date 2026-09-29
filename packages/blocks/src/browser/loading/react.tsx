@@ -117,7 +117,8 @@ export function Loading({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [isHovering, setIsHovering] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const loaded = hover ? isHovering : inView;
   const state = animated
     ? {
@@ -130,10 +131,7 @@ export function Loading({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setIsHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setIsHovering(false) : undefined}
     >
@@ -202,7 +200,12 @@ export function Loading({
                     className="h-full bg-primary"
                     initial={{ width: "0%" }}
                     animate={{ width: ["0%", "70%", "70%", "100%"] }}
-                    transition={{ duration: 3, times: [0, 0.5, 0.7, 1], repeat: Infinity, ease: "easeInOut" }}
+                    transition={{
+                      duration: 3,
+                      times: [0, 0.5, 0.7, 1],
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
                   />
                 </motion.div>
               </>

@@ -4,10 +4,7 @@ import { CreditCard, GitBranch, LifeBuoy, Users } from "lucide-react";
 import { CommandPalette } from "../src/search/command-palette/react.js";
 import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/search/command-palette",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/search/command-palette");
 
 // icon ReactNodes for the custom-copy variants (from the POC page chunk)
 const icon = (Icon: typeof CreditCard) => <Icon className="size-3" strokeWidth={2.5} />;

@@ -19,11 +19,12 @@ function angleAt(index: number, count: number): number {
   return (360 / count) * index;
 }
 
-const spreads: Record<HubSpread, { radius: number; frame: string; staticRings: [string, string] }> = {
-  compact: { radius: 64, frame: "size-52", staticRings: ["size-24", "size-30"] },
-  default: { radius: 78, frame: "size-56", staticRings: ["size-28", "size-36"] },
-  wide: { radius: 90, frame: "size-68", staticRings: ["size-36", "size-44"] },
-};
+const spreads: Record<HubSpread, { radius: number; frame: string; staticRings: [string, string] }> =
+  {
+    compact: { radius: 64, frame: "size-52", staticRings: ["size-24", "size-30"] },
+    default: { radius: 78, frame: "size-56", staticRings: ["size-28", "size-36"] },
+    wide: { radius: 90, frame: "size-68", staticRings: ["size-36", "size-44"] },
+  };
 
 const defaultLogo = <Boxes className="size-6" strokeWidth={1.25} />;
 
@@ -156,10 +157,7 @@ export function Hub({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >

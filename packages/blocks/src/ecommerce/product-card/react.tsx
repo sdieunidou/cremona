@@ -89,16 +89,13 @@ export function ProductCard({
   );
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("group/product w-full", !fill && "max-w-64", "overflow-hidden rounded-xl border bg-card text-card-foreground shadow-xs")}
+        className={cn(
+          "group/product w-full",
+          !fill && "max-w-64",
+          "overflow-hidden rounded-xl border bg-card text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
@@ -135,7 +132,10 @@ export function ProductCard({
           variants={animated ? content : undefined}
           {...state}
         >
-          <motion.p className="text-xs text-muted-foreground" variants={animated ? item : undefined}>
+          <motion.p
+            className="text-xs text-muted-foreground"
+            variants={animated ? item : undefined}
+          >
             {category}
           </motion.p>
           <motion.p
@@ -144,10 +144,7 @@ export function ProductCard({
           >
             {title}
           </motion.p>
-          <motion.div
-            className="flex items-center gap-1"
-            variants={animated ? item : undefined}
-          >
+          <motion.div className="flex items-center gap-1" variants={animated ? item : undefined}>
             <span className="flex items-center gap-0.5">
               {[0, 1, 2, 3].map((i) => (
                 <Star key={i} className="size-3 fill-amber-400 text-amber-400" strokeWidth={2} />

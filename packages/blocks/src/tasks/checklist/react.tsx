@@ -13,8 +13,18 @@ export interface ChecklistItem {
 
 export const checklistDefaultItems: readonly ChecklistItem[] = [
   { title: "Review onboarding spec", detail: "v3 · final pass", done: true, priority: "high" },
-  { title: "Reply to design feedback", detail: "Sarah · #design-review", done: true, priority: "med" },
-  { title: "Ship notification center", detail: "Deploy v2.4 · production", done: false, priority: "high" },
+  {
+    title: "Reply to design feedback",
+    detail: "Sarah · #design-review",
+    done: true,
+    priority: "med",
+  },
+  {
+    title: "Ship notification center",
+    detail: "Deploy v2.4 · production",
+    done: false,
+    priority: "high",
+  },
   { title: "Draft Q2 OKRs", detail: "Due Friday", done: false, priority: "med" },
   { title: "Refactor billing module", detail: "Split into 3 PRs", done: false, priority: "low" },
 ];
@@ -61,7 +71,11 @@ const itemAnim = {
 
 const checkAnim = {
   hidden: { pathLength: 0, opacity: 0 },
-  visible: { pathLength: 1, opacity: 1, transition: { duration: 0.35, delay: 0.2, ease: "easeOut" } },
+  visible: {
+    pathLength: 1,
+    opacity: 1,
+    transition: { duration: 0.35, delay: 0.2, ease: "easeOut" },
+  },
 } as const;
 
 const glowAnim = {
@@ -109,14 +123,7 @@ export function Checklist({
   const progress = items.length > 0 ? doneCount / items.length : 0;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -154,7 +161,10 @@ export function Checklist({
             <div className="relative h-1 w-full overflow-hidden rounded-full bg-muted">
               <motion.div
                 className="h-full origin-left rounded-full bg-primary"
-                style={{ width: `${progress * 100}%`, transform: animated ? undefined : "scaleX(1)" }}
+                style={{
+                  width: `${progress * 100}%`,
+                  transform: animated ? undefined : "scaleX(1)",
+                }}
                 variants={animated ? progressAnim : undefined}
                 {...state}
               />
@@ -184,7 +194,10 @@ export function Checklist({
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     >
-                      <motion.polyline points="20 6 9 17 4 12" variants={animated ? checkAnim : undefined} />
+                      <motion.polyline
+                        points="20 6 9 17 4 12"
+                        variants={animated ? checkAnim : undefined}
+                      />
                     </svg>
                   )}
                 </div>

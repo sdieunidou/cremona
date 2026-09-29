@@ -56,7 +56,8 @@ const headerAnim = {
 const WORD_START = 0.5;
 const WORD_STAGGER = 0.05;
 const WORD_DURATION = 0.22;
-const wordDelay = (index: number) => WORD_START + Math.max(index - 1, 0) * WORD_STAGGER + WORD_DURATION;
+const wordDelay = (index: number) =>
+  WORD_START + Math.max(index - 1, 0) * WORD_STAGGER + WORD_DURATION;
 
 const wordAnim: Variants = {
   hidden: { opacity: 0, filter: "blur(2px)" },
@@ -194,14 +195,7 @@ export function AiChat({
   const actionsVariantsFinal = actionsVariants(totalWords);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -291,15 +285,13 @@ export function AiChat({
                     );
                     return i < words.length - 1 ? [span, " "] : [span];
                   });
-                  const caretEl =
-                    isLast &&
-                    caret && (
-                      <motion.span
-                        className="ml-0.5 inline-block h-2.5 w-[2px] -translate-y-px bg-primary align-middle"
-                        variants={animated ? caretVariantsFinal : undefined}
-                        {...state}
-                      />
-                    );
+                  const caretEl = isLast && caret && (
+                    <motion.span
+                      className="ml-0.5 inline-block h-2.5 w-[2px] -translate-y-px bg-primary align-middle"
+                      variants={animated ? caretVariantsFinal : undefined}
+                      {...state}
+                    />
+                  );
                   return block.kind === "bullet" ? (
                     <div key={blockIndex} className="flex items-start gap-1.5">
                       <motion.span

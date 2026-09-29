@@ -14,7 +14,7 @@ test("code panel: open, switch tabs, copy React usage", async ({ page }) => {
 
   // Usage tab: import + JSX with the animated prop
   const code = dialog.locator("code");
-  await expect(code).toContainText('@cremona/blocks/src/metrics/stat-card/react.js');
+  await expect(code).toContainText("@cremona/blocks/src/metrics/stat-card/react.js");
   await expect(code).toContainText("<StatCard");
   await expect(code).toContainText("animated");
 

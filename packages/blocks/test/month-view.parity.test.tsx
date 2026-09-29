@@ -14,14 +14,13 @@ vi.mock("react-dom/server", async (importOriginal) => {
   return {
     ...actual,
     renderToStaticMarkup: (element: React.ReactElement, options?: unknown) =>
-      actual.renderToString(element, options).replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
+      actual
+        .renderToString(element, options)
+        .replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
   };
 });
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/calendar/month-view",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/calendar/month-view");
 
 // NOTE: the `default` variants rely on `new Date()` for the displayed month —
 // goldens were captured in September 2026, so this test is month-sensitive.

@@ -5,15 +5,7 @@ import { FileDiff } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 type TokenColor =
-  | "keyword"
-  | "func"
-  | "string"
-  | "variable"
-  | "type"
-  | "punct"
-  | "tag"
-  | "prop"
-  | "comment";
+  "keyword" | "func" | "string" | "variable" | "type" | "punct" | "tag" | "prop" | "comment";
 
 export interface DiffToken {
   width: number;
@@ -365,9 +357,7 @@ export function Diff({
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const sweeping = animated && (hover ? hovering : triggered) && ready;
-  const state = animated
-    ? { initial: "hidden", animate: triggered ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const marked = markKinds((lines?.length ? lines : defaultLines).slice(0, MAX_LINES));
   const changed = marked.filter((l) => l.kind !== "context");
   const totalChanged = changed.length;
@@ -402,10 +392,7 @@ export function Diff({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={
         animated && hover
           ? () => {
@@ -418,7 +405,9 @@ export function Diff({
     >
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-96", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full",
+          !fill && "max-w-96",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

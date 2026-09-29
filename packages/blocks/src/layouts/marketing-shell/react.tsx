@@ -47,10 +47,7 @@ const region = {
 
 function Nav() {
   return (
-    <motion.header
-      className="flex h-9 shrink-0 items-center gap-3 border-b px-3"
-      variants={region}
-    >
+    <motion.header className="flex h-9 shrink-0 items-center gap-3 border-b px-3" variants={region}>
       <div className="flex items-center gap-1.5">
         <div className="size-3 rounded-md bg-primary" />
         <span className="text-[10px] leading-none font-semibold tracking-tight text-foreground">
@@ -88,16 +85,19 @@ function Hero({ dark }: { dark: boolean }) {
       >
         Ship beautiful interfaces faster
       </p>
-      <p className={cn("mt-1 text-[9px] leading-snug", dark ? "text-primary-foreground/75" : "text-muted-foreground")}>
+      <p
+        className={cn(
+          "mt-1 text-[9px] leading-snug",
+          dark ? "text-primary-foreground/75" : "text-muted-foreground",
+        )}
+      >
         Animated, themeable blocks for product teams that care about the details.
       </p>
       <div className="mt-2 flex items-center gap-1.5">
         <span
           className={cn(
             "rounded-md px-2 py-1 text-[9px] leading-none font-medium",
-            dark
-              ? "bg-primary-foreground text-primary"
-              : "bg-primary text-primary-foreground",
+            dark ? "bg-primary-foreground text-primary" : "bg-primary text-primary-foreground",
           )}
         >
           Start free
@@ -114,20 +114,57 @@ function Hero({ dark }: { dark: boolean }) {
       <div
         className={cn(
           "mt-2.5 w-4/5 rounded-lg border p-2 text-left",
-          dark ? "border-primary-foreground/20 bg-primary-foreground/10" : "border-border/75 bg-card shadow-xs",
+          dark
+            ? "border-primary-foreground/20 bg-primary-foreground/10"
+            : "border-border/75 bg-card shadow-xs",
         )}
       >
         <div className="flex items-center gap-1">
-          <div className={cn("size-1.5 rounded-full", dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30")} />
-          <div className={cn("size-1.5 rounded-full", dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30")} />
-          <div className={cn("size-1.5 rounded-full", dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30")} />
-          <div className={cn("ml-1 h-1.5 w-10 rounded-full", dark ? "bg-primary-foreground/20" : "bg-muted-foreground/15")} />
+          <div
+            className={cn(
+              "size-1.5 rounded-full",
+              dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30",
+            )}
+          />
+          <div
+            className={cn(
+              "size-1.5 rounded-full",
+              dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30",
+            )}
+          />
+          <div
+            className={cn(
+              "size-1.5 rounded-full",
+              dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30",
+            )}
+          />
+          <div
+            className={cn(
+              "ml-1 h-1.5 w-10 rounded-full",
+              dark ? "bg-primary-foreground/20" : "bg-muted-foreground/15",
+            )}
+          />
         </div>
         <div className="mt-1.5 flex gap-1.5">
           <div className="flex flex-1 flex-col gap-1">
-            <div className={cn("h-1.5 w-3/5 rounded-full", dark ? "bg-primary-foreground/40" : "bg-muted-foreground/25")} />
-            <div className={cn("h-1.5 w-2/5 rounded-full", dark ? "bg-primary-foreground/25" : "bg-muted-foreground/12")} />
-            <div className={cn("mt-0.5 h-3 w-8 rounded", dark ? "bg-primary-foreground/60" : "bg-primary")} />
+            <div
+              className={cn(
+                "h-1.5 w-3/5 rounded-full",
+                dark ? "bg-primary-foreground/40" : "bg-muted-foreground/25",
+              )}
+            />
+            <div
+              className={cn(
+                "h-1.5 w-2/5 rounded-full",
+                dark ? "bg-primary-foreground/25" : "bg-muted-foreground/12",
+              )}
+            />
+            <div
+              className={cn(
+                "mt-0.5 h-3 w-8 rounded",
+                dark ? "bg-primary-foreground/60" : "bg-primary",
+              )}
+            />
           </div>
           <div className="flex h-12 flex-1 items-end justify-between gap-0.5">
             {heroBars.map((h, i) => (
@@ -146,10 +183,7 @@ function Hero({ dark }: { dark: boolean }) {
 
 function FeatureGrid() {
   return (
-    <motion.section
-      className="grid grid-cols-3 gap-2 px-4 py-2.5"
-      variants={subRegions}
-    >
+    <motion.section className="grid grid-cols-3 gap-2 px-4 py-2.5" variants={subRegions}>
       {features.map(({ icon: Icon, title, copy }) => (
         <motion.div key={title} className="flex flex-col gap-1" variants={region}>
           <div className="flex size-5 items-center justify-center rounded-md bg-primary/10">
@@ -255,16 +289,13 @@ export function MarketingShell({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-96", "overflow-hidden rounded-xl border bg-background shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-96",
+          "overflow-hidden rounded-xl border bg-background shadow-xs",
+        )}
         variants={animated ? shell : undefined}
         {...state}
       >

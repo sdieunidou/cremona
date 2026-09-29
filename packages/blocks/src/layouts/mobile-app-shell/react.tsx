@@ -60,12 +60,7 @@ function StatusBar({ dark }: { dark: boolean }) {
       >
         9:41
       </span>
-      <div
-        className={cn(
-          "flex items-center gap-0.75",
-          dark ? "text-zinc-300" : "text-foreground",
-        )}
-      >
+      <div className={cn("flex items-center gap-0.75", dark ? "text-zinc-300" : "text-foreground")}>
         <Signal className="size-2.5" strokeWidth={2} />
         <Wifi className="size-2.5" strokeWidth={2} />
         <BatteryFull className="size-2.5" strokeWidth={2} />
@@ -76,10 +71,7 @@ function StatusBar({ dark }: { dark: boolean }) {
 
 function AppBar({ dark }: { dark: boolean }) {
   return (
-    <motion.div
-      className="flex items-center justify-between px-2 pt-2"
-      variants={region}
-    >
+    <motion.div className="flex items-center justify-between px-2 pt-2" variants={region}>
       <div className="flex flex-col gap-0.5">
         <span
           className={cn(
@@ -104,12 +96,7 @@ function AppBar({ dark }: { dark: boolean }) {
           dark ? "bg-zinc-800" : "bg-primary/15",
         )}
       >
-        <span
-          className={cn(
-            "text-[6px] font-semibold",
-            dark ? "text-zinc-300" : "text-primary",
-          )}
-        >
+        <span className={cn("text-[6px] font-semibold", dark ? "text-zinc-300" : "text-primary")}>
           MO
         </span>
       </div>
@@ -128,7 +115,10 @@ function BalanceCard({ dark }: { dark: boolean }) {
     >
       <div className="flex flex-col gap-0.5">
         <span
-          className={cn("text-[7px] leading-none", dark ? "text-zinc-400" : "text-muted-foreground")}
+          className={cn(
+            "text-[7px] leading-none",
+            dark ? "text-zinc-400" : "text-muted-foreground",
+          )}
         >
           Balance
         </span>
@@ -181,7 +171,10 @@ function TransferCard({ dark }: { dark: boolean }) {
           Jonas Weiss
         </span>
         <span
-          className={cn("text-[7px] leading-none", dark ? "text-zinc-500" : "text-muted-foreground")}
+          className={cn(
+            "text-[7px] leading-none",
+            dark ? "text-zinc-500" : "text-muted-foreground",
+          )}
         >
           Transfer · today, 9:12
         </span>
@@ -295,23 +288,23 @@ export function MobileAppShell({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "w-full", !fill && "max-w-44", "rounded-3xl border-8 shadow-xs",
+          "w-full",
+          !fill && "max-w-44",
+          "rounded-3xl border-8 shadow-xs",
           dark ? "border-zinc-800 bg-zinc-950" : "border-foreground/10 bg-background",
         )}
         variants={animated ? shell : undefined}
         {...state}
       >
-        <div className={cn("aspect-9/19 w-full overflow-hidden", dark ? "bg-zinc-900" : "bg-background")}>
+        <div
+          className={cn(
+            "aspect-9/19 w-full overflow-hidden",
+            dark ? "bg-zinc-900" : "bg-background",
+          )}
+        >
           <motion.div
             className={cn("flex h-full flex-col", dark ? "text-zinc-50" : "text-foreground")}
             variants={animated ? regions : undefined}

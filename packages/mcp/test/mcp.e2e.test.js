@@ -36,7 +36,9 @@ describe("cremona MCP server", () => {
   });
 
   it("lists blocks with variants", async () => {
-    const blocks = textOf(await client.callTool({ name: "list_blocks", arguments: { category: "metrics" } }));
+    const blocks = textOf(
+      await client.callTool({ name: "list_blocks", arguments: { category: "metrics" } }),
+    );
     expect(blocks.map((b) => b.file)).toEqual(["comparison", "stat-card", "trend"]);
     const statCard = blocks.find((b) => b.file === "stat-card");
     expect(statCard.ported).toBe(true);
@@ -95,7 +97,9 @@ describe("cremona MCP server", () => {
   it("returns themes and theme css", async () => {
     const themes = textOf(await client.callTool({ name: "get_themes", arguments: {} }));
     expect(themes.map((t) => t.value)).toContain("claude-plus");
-    const theme = textOf(await client.callTool({ name: "get_theme", arguments: { theme: "claude-plus" } }));
+    const theme = textOf(
+      await client.callTool({ name: "get_theme", arguments: { theme: "claude-plus" } }),
+    );
     expect(theme.css).toContain(".theme-claude-plus:not(.dark)");
     expect(theme.css).toContain(".theme-claude-plus.dark");
   });
@@ -113,7 +117,10 @@ describe("cremona MCP server", () => {
   });
 
   it("serves guides", async () => {
-    const guide = await client.callTool({ name: "get_guide", arguments: { name: "porting-guide" } });
+    const guide = await client.callTool({
+      name: "get_guide",
+      arguments: { name: "porting-guide" },
+    });
     expect(guide.content[0].text).toContain("# Porting Guide");
   });
 
@@ -125,7 +132,7 @@ describe("cremona MCP server", () => {
     expect(instructions).toBeTruthy();
     expect(instructions).toContain("PREVIEW COMPOSITIONS, NOT PRODUCTION COMPONENTS");
     expect(instructions).toContain('aria-hidden="true"');
-    expect(instructions).toContain("get_guide(\"react\")");
+    expect(instructions).toContain('get_guide("react")');
   });
 
   it("attaches the caveat to the React source itself", async () => {

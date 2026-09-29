@@ -1,22 +1,15 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  Bell,
-  ChartLine,
-  Cog,
-  Laptop,
-  Send,
-  Server,
-  Shuffle,
-  Smartphone,
-} from "lucide-react";
+import { Bell, ChartLine, Cog, Laptop, Send, Server, Shuffle, Smartphone } from "lucide-react";
 import { Flow } from "../src/connections/flow/react.js";
 import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/connections/flow");
 
 // icon elements for the custom-icons variant (from the POC page chunk imports)
-const icon = (Icon: typeof Bell, className = "size-4") => <Icon className={className} strokeWidth={2} />;
+const icon = (Icon: typeof Bell, className = "size-4") => (
+  <Icon className={className} strokeWidth={2} />
+);
 
 runGoldenParity("connections/flow", {
   blockDir,

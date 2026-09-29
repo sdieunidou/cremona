@@ -14,22 +14,44 @@ vi.mock("react-dom/server", async (importOriginal) => {
   return {
     ...actual,
     renderToStaticMarkup: (element: React.ReactElement, options?: unknown) =>
-      actual.renderToString(element, options).replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
+      actual
+        .renderToString(element, options)
+        .replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
   };
 });
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/files/simple",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/files/simple");
 
 // The POC page chunk only carried 12 variations (build drift): it generated
 // one preview per file type at runtime. The goldens label each variant with
 // the file type, so we pass `extension` explicitly for every one of them.
 const FILE_TYPES = [
-  "pdf", "docx", "pptx", "txt", "md", "xlsx", "csv", "png", "jpg", "webp",
-  "svg", "psd", "fig", "mp4", "mp3", "zip", "json", "sql", "html", "css",
-  "js", "ts", "jsx", "tsx", "py", "php",
+  "pdf",
+  "docx",
+  "pptx",
+  "txt",
+  "md",
+  "xlsx",
+  "csv",
+  "png",
+  "jpg",
+  "webp",
+  "svg",
+  "psd",
+  "fig",
+  "mp4",
+  "mp3",
+  "zip",
+  "json",
+  "sql",
+  "html",
+  "css",
+  "js",
+  "ts",
+  "jsx",
+  "tsx",
+  "py",
+  "php",
 ] as const;
 
 runGoldenParity("files/simple", {

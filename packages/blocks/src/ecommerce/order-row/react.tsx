@@ -62,14 +62,7 @@ export function OrderRow({
   const s = statusStyles[status] ?? statusStyles.processing!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         variants={animated ? entrance : undefined}
         {...state}
@@ -85,10 +78,7 @@ export function OrderRow({
           )}
         >
           <motion.span
-            className={cn(
-              "flex items-center gap-3",
-              status === "shipped" && "w-full",
-            )}
+            className={cn("flex items-center gap-3", status === "shipped" && "w-full")}
             variants={animated ? item : undefined}
           >
             <span className="relative size-10 shrink-0 overflow-hidden rounded-md bg-muted">

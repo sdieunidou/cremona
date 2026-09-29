@@ -28,7 +28,10 @@ runGoldenParity("connections/converge", {
   Component: Converge,
   variants: [
     { label: "custom icons", props: { nodes: [icon(Palette), icon(CodeXml), icon(Music)] } },
-    { label: "4 nodes", props: { nodes: [icon(FileText), icon(Image), icon(Database), icon(CodeXml)] } },
+    {
+      label: "4 nodes",
+      props: { nodes: [icon(FileText), icon(Image), icon(Database), icon(CodeXml)] },
+    },
     { label: "isometric · 2 nodes", props: { nodes: [icon(Image), icon(Music)], isometric: true } },
     { label: "company logos", props: { nodes: LOGOS.map(logo) } },
     {

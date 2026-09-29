@@ -63,19 +63,8 @@ export function Pagination({
     );
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
-      <motion.nav
-        aria-label="Pagination"
-        variants={animated ? entrance : undefined}
-        {...state}
-      >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
+      <motion.nav aria-label="Pagination" variants={animated ? entrance : undefined} {...state}>
         {compact ? (
           <div className="flex items-center gap-3">
             <button
@@ -87,8 +76,7 @@ export function Pagination({
               <ChevronLeft className="size-4" aria-hidden="true" />
             </button>
             <span className="text-sm text-muted-foreground">
-              Page <span className="font-medium text-foreground">{page}</span> of{" "}
-              {total}
+              Page <span className="font-medium text-foreground">{page}</span> of {total}
             </span>
             <button
               type="button"

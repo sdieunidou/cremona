@@ -29,7 +29,10 @@ const wrapIso = {
 
 const gridAnim = {
   hidden: { clipPath: "inset(0 0 100% 0)" },
-  visible: { clipPath: "inset(0 0 0% 0)", transition: { duration: 0.4, delay: 0.2, ease: "easeOut" } },
+  visible: {
+    clipPath: "inset(0 0 0% 0)",
+    transition: { duration: 0.4, delay: 0.2, ease: "easeOut" },
+  },
 } as const;
 
 const beforeAnim = {
@@ -120,16 +123,13 @@ export function Comparison({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5")}
+        className={cn(
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
         {...state}

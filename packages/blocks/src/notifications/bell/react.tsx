@@ -31,7 +31,13 @@ const swing: Variants = {
   hidden: { rotate: 0 },
   visible: {
     rotate: [0, -14, 12, -10, 8, -5, 0],
-    transition: { duration: 1.2, delay: 0.45, ease: "easeInOut", repeat: Infinity, repeatDelay: 1.35 },
+    transition: {
+      duration: 1.2,
+      delay: 0.45,
+      ease: "easeInOut",
+      repeat: Infinity,
+      repeatDelay: 1.35,
+    },
   },
 };
 
@@ -101,19 +107,14 @@ export function Bell({
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
-  const state = animated
-    ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const label = count > 99 ? "99+" : String(count);
 
   return (
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >

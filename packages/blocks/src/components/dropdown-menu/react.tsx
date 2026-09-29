@@ -1,15 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import {
-  Eye,
-  Pencil,
-  Copy,
-  Trash2,
-  KeyRound,
-  ChevronDown,
-  Check,
-} from "lucide-react";
+import { Eye, Pencil, Copy, Trash2, KeyRound, ChevronDown, Check } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface DropdownMenuProps extends VisualProps {
@@ -108,19 +100,8 @@ export function DropdownMenu({
   ];
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
-      <motion.div
-        className="relative"
-        variants={animated ? entrance : undefined}
-        {...state}
-      >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
+      <motion.div className="relative" variants={animated ? entrance : undefined} {...state}>
         <button
           type="button"
           aria-haspopup="menu"
@@ -162,12 +143,7 @@ export function DropdownMenu({
               </button>
             ))}
           {mainItems.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              role="menuitem"
-              className={itemClasses}
-            >
+            <button key={item.label} type="button" role="menuitem" className={itemClasses}>
               <item.icon className={iconClasses} aria-hidden="true" />
               {item.label}
               {shortcuts && item.kbd && <kbd className={kbdClasses}>{item.kbd}</kbd>}
@@ -179,7 +155,10 @@ export function DropdownMenu({
               key={item.label}
               type="button"
               role="menuitem"
-              className={cn(itemClasses, "text-destructive hover:bg-destructive/10 hover:text-destructive")}
+              className={cn(
+                itemClasses,
+                "text-destructive hover:bg-destructive/10 hover:text-destructive",
+              )}
             >
               <item.icon className="size-4 shrink-0" aria-hidden="true" />
               {item.label}

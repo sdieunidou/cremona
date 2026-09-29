@@ -151,14 +151,7 @@ export function Lock({
   const Icon = unlocked ? LockOpen : LockIcon;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="relative flex size-52 flex-col items-center justify-center gap-4"
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -171,10 +164,19 @@ export function Lock({
           variants={animated ? scannerAnim : undefined}
           {...motionState}
         >
-          <div className={cn("pointer-events-none absolute size-20 rounded-full blur-2xl", styles.glow)} />
+          <div
+            className={cn(
+              "pointer-events-none absolute size-20 rounded-full blur-2xl",
+              styles.glow,
+            )}
+          />
           <div className="relative flex size-20 items-center justify-center overflow-hidden rounded-full border bg-card/75">
             <motion.div variants={animated ? iconVariant : undefined} {...motionState}>
-              <motion.div className={styles.icon} variants={animated ? shakeVariant : undefined} {...motionState}>
+              <motion.div
+                className={styles.icon}
+                variants={animated ? shakeVariant : undefined}
+                {...motionState}
+              >
                 <Icon className="size-9" strokeWidth={1.75} />
               </motion.div>
             </motion.div>

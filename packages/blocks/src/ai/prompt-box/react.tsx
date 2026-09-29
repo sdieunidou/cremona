@@ -31,22 +31,182 @@ interface Particle {
 }
 
 const PARTICLES: Particle[] = [
-  { x: 12.4, y: 28.6, size: 3, color: "bg-primary", duration: 4.82, delay: -5.22, driftX: 4.87, driftY: 14.97, opacity: 0.6 },
-  { x: 88.7, y: 34.1, size: 3, color: "bg-chart-1", duration: 6.16, delay: -2.68, driftX: -3.11, driftY: 12.52, opacity: 0.63 },
-  { x: 22.1, y: 70.3, size: 2, color: "bg-chart-2", duration: 6.41, delay: -1.19, driftX: -2.04, driftY: 16.24, opacity: 0.48 },
-  { x: 80.6, y: 64.2, size: 3, color: "bg-chart-3", duration: 4.09, delay: -3.47, driftX: 5.93, driftY: 13.39, opacity: 0.65 },
-  { x: 6.8, y: 52.5, size: 2, color: "bg-chart-4", duration: 4.41, delay: -5.43, driftX: 6.64, driftY: 15.95, opacity: 0.55 },
-  { x: 93.2, y: 56.4, size: 3, color: "bg-primary", duration: 4.22, delay: -1.23, driftX: -3.05, driftY: 14.75, opacity: 0.45 },
-  { x: 16.3, y: 18.2, size: 2, color: "bg-chart-1", duration: 4.72, delay: -5.81, driftX: 4.22, driftY: 9.62, opacity: 0.5 },
-  { x: 74.5, y: 22.7, size: 3, color: "bg-chart-4", duration: 7.66, delay: -5.45, driftX: 6.82, driftY: 13.1, opacity: 0.57 },
-  { x: 30.6, y: 80.6, size: 3, color: "bg-primary", duration: 5.43, delay: -2.72, driftX: -2.28, driftY: 10, opacity: 0.62 },
-  { x: 67.4, y: 78.3, size: 2, color: "bg-chart-3", duration: 4.75, delay: -1.01, driftX: 5.27, driftY: 8.7, opacity: 0.5 },
-  { x: 4.9, y: 38.4, size: 3, color: "bg-primary", duration: 4.94, delay: -5.65, driftX: 4.64, driftY: 13.44, opacity: 0.46 },
-  { x: 95.3, y: 44.8, size: 2, color: "bg-chart-2", duration: 4.69, delay: -2.39, driftX: -3.07, driftY: 15.9, opacity: 0.52 },
-  { x: 48.5, y: 12.6, size: 3, color: "bg-chart-4", duration: 6.13, delay: -5.07, driftX: -2.6, driftY: 9.3, opacity: 0.5 },
-  { x: 55.2, y: 88.1, size: 2, color: "bg-primary", duration: 6.39, delay: -5.57, driftX: 1.33, driftY: 9.13, opacity: 0.55 },
-  { x: 38.8, y: 84.9, size: 3, color: "bg-chart-1", duration: 7.31, delay: -5.08, driftX: -4.42, driftY: 14.91, opacity: 0.5 },
-  { x: 85.1, y: 84.4, size: 2, color: "bg-chart-4", duration: 5.23, delay: -2.49, driftX: 3.29, driftY: 7.84, opacity: 0.48 },
+  {
+    x: 12.4,
+    y: 28.6,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.82,
+    delay: -5.22,
+    driftX: 4.87,
+    driftY: 14.97,
+    opacity: 0.6,
+  },
+  {
+    x: 88.7,
+    y: 34.1,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 6.16,
+    delay: -2.68,
+    driftX: -3.11,
+    driftY: 12.52,
+    opacity: 0.63,
+  },
+  {
+    x: 22.1,
+    y: 70.3,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 6.41,
+    delay: -1.19,
+    driftX: -2.04,
+    driftY: 16.24,
+    opacity: 0.48,
+  },
+  {
+    x: 80.6,
+    y: 64.2,
+    size: 3,
+    color: "bg-chart-3",
+    duration: 4.09,
+    delay: -3.47,
+    driftX: 5.93,
+    driftY: 13.39,
+    opacity: 0.65,
+  },
+  {
+    x: 6.8,
+    y: 52.5,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 4.41,
+    delay: -5.43,
+    driftX: 6.64,
+    driftY: 15.95,
+    opacity: 0.55,
+  },
+  {
+    x: 93.2,
+    y: 56.4,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.22,
+    delay: -1.23,
+    driftX: -3.05,
+    driftY: 14.75,
+    opacity: 0.45,
+  },
+  {
+    x: 16.3,
+    y: 18.2,
+    size: 2,
+    color: "bg-chart-1",
+    duration: 4.72,
+    delay: -5.81,
+    driftX: 4.22,
+    driftY: 9.62,
+    opacity: 0.5,
+  },
+  {
+    x: 74.5,
+    y: 22.7,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 7.66,
+    delay: -5.45,
+    driftX: 6.82,
+    driftY: 13.1,
+    opacity: 0.57,
+  },
+  {
+    x: 30.6,
+    y: 80.6,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.43,
+    delay: -2.72,
+    driftX: -2.28,
+    driftY: 10,
+    opacity: 0.62,
+  },
+  {
+    x: 67.4,
+    y: 78.3,
+    size: 2,
+    color: "bg-chart-3",
+    duration: 4.75,
+    delay: -1.01,
+    driftX: 5.27,
+    driftY: 8.7,
+    opacity: 0.5,
+  },
+  {
+    x: 4.9,
+    y: 38.4,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.94,
+    delay: -5.65,
+    driftX: 4.64,
+    driftY: 13.44,
+    opacity: 0.46,
+  },
+  {
+    x: 95.3,
+    y: 44.8,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 4.69,
+    delay: -2.39,
+    driftX: -3.07,
+    driftY: 15.9,
+    opacity: 0.52,
+  },
+  {
+    x: 48.5,
+    y: 12.6,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 6.13,
+    delay: -5.07,
+    driftX: -2.6,
+    driftY: 9.3,
+    opacity: 0.5,
+  },
+  {
+    x: 55.2,
+    y: 88.1,
+    size: 2,
+    color: "bg-primary",
+    duration: 6.39,
+    delay: -5.57,
+    driftX: 1.33,
+    driftY: 9.13,
+    opacity: 0.55,
+  },
+  {
+    x: 38.8,
+    y: 84.9,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 7.31,
+    delay: -5.08,
+    driftX: -4.42,
+    driftY: 14.91,
+    opacity: 0.5,
+  },
+  {
+    x: 85.1,
+    y: 84.4,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 5.23,
+    delay: -2.49,
+    driftX: 3.29,
+    driftY: 7.84,
+    opacity: 0.48,
+  },
 ];
 
 const column = {
@@ -66,7 +226,10 @@ const card = {
 
 const glowVariant = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 const particlesVariant = {
@@ -94,7 +257,11 @@ const word: Variants = {
   visible: (index: number) => ({
     opacity: 1,
     filter: "blur(0px)",
-    transition: { duration: WORD_DURATION, delay: WORD_DELAY_BASE + index * WORD_DELAY_UNIT, ease: "easeOut" },
+    transition: {
+      duration: WORD_DURATION,
+      delay: WORD_DELAY_BASE + index * WORD_DELAY_UNIT,
+      ease: "easeOut",
+    },
   }),
 };
 
@@ -177,7 +344,8 @@ export function PromptBox({
     const id = requestAnimationFrame(() => setTicked(true));
     return () => cancelAnimationFrame(id);
   }, []);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = (hover ? hovered : inView) && ticked;
   const drifting = inView && ticked;
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" } as const;
@@ -199,7 +367,13 @@ export function PromptBox({
             token.type === "space" ? (
               <span key={t}>{token.text}</span>
             ) : motionContent ? (
-              <motion.span key={t} className="inline-block" variants={word} custom={token.index} {...innerState}>
+              <motion.span
+                key={t}
+                className="inline-block"
+                variants={word}
+                custom={token.index}
+                {...innerState}
+              >
                 {token.text}
               </motion.span>
             ) : (
@@ -219,7 +393,11 @@ export function PromptBox({
         </p>
       </div>
       {attachments.length > 0 && (
-        <motion.div className="flex flex-wrap gap-1.5 px-4 pb-2" variants={motionContent ? attachmentsAnim : undefined} {...(motionContent ? innerState : {})}>
+        <motion.div
+          className="flex flex-wrap gap-1.5 px-4 pb-2"
+          variants={motionContent ? attachmentsAnim : undefined}
+          {...(motionContent ? innerState : {})}
+        >
           {attachments.map((name, t) => (
             <span
               key={t}
@@ -263,7 +441,10 @@ export function PromptBox({
                 {...innerState}
               />
             ) : (
-              <div className="h-full origin-left rounded-full bg-primary" style={{ width: meterWidth }} />
+              <div
+                className="h-full origin-left rounded-full bg-primary"
+                style={{ width: meterWidth }}
+              />
             )}
           </div>
           <span className="text-xs text-muted-foreground tabular-nums">{tokens}</span>
@@ -303,10 +484,7 @@ export function PromptBox({
 
   if (!animated) {
     return (
-      <div
-        aria-hidden="true"
-        className={cn(frameClasses(fill), className)}
-      >
+      <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
         {glow && (
           <div className="absolute inset-0 -z-10">
             <GlowScene />
@@ -335,7 +513,9 @@ export function PromptBox({
               <div className="absolute -inset-x-0.5 -bottom-0.5 h-12 rounded-b-xl bg-background/95 mask-t-from-50% shadow-xs" />
             </>
           )}
-          <div className="relative z-10 rounded-xl border bg-card shadow-xs">{cardInner(false)}</div>
+          <div className="relative z-10 rounded-xl border bg-card shadow-xs">
+            {cardInner(false)}
+          </div>
         </div>
       </div>
     );
@@ -353,9 +533,15 @@ export function PromptBox({
         <motion.div className="absolute inset-0 -z-10" variants={glowVariant} {...state}>
           <motion.div
             className="absolute inset-0"
-            animate={active ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 0.85 }}
+            animate={
+              active
+                ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
+                : { scale: 1, opacity: 0.85 }
+            }
             transition={
-              active ? { duration: 4.5, ease: "easeInOut", repeat: Infinity } : { duration: 0.6, ease: "easeOut" }
+              active
+                ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
+                : { duration: 0.6, ease: "easeOut" }
             }
           >
             <GlowScene />
@@ -378,23 +564,39 @@ export function PromptBox({
                 <motion.div
                   animate={
                     drifting
-                      ? { x: [0, p.driftX, 0], y: [0, -p.driftY, 0], opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5] }
+                      ? {
+                          x: [0, p.driftX, 0],
+                          y: [0, -p.driftY, 0],
+                          opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
+                        }
                       : { x: 0, y: 0, opacity: 0 }
                   }
                   transition={
                     drifting
-                      ? { duration: p.duration, delay: p.delay, ease: "easeInOut", repeat: Infinity }
+                      ? {
+                          duration: p.duration,
+                          delay: p.delay,
+                          ease: "easeInOut",
+                          repeat: Infinity,
+                        }
                       : { duration: 0.3 }
                   }
                 >
-                  <div className={`rotate-45 rounded-[1px] ${p.color}`} style={{ width: p.size, height: p.size }} />
+                  <div
+                    className={`rotate-45 rounded-[1px] ${p.color}`}
+                    style={{ width: p.size, height: p.size }}
+                  />
                 </motion.div>
               </div>
             ))}
           </motion.div>
         </motion.div>
       )}
-      <motion.div className={cn("relative w-full", !fill && "max-w-md")} variants={column} {...state}>
+      <motion.div
+        className={cn("relative w-full", !fill && "max-w-md")}
+        variants={column}
+        {...state}
+      >
         {gradient && (
           <>
             <motion.div
@@ -409,7 +611,11 @@ export function PromptBox({
             />
           </>
         )}
-        <motion.div className="relative z-10 rounded-xl border bg-card shadow-xs" variants={card} {...state}>
+        <motion.div
+          className="relative z-10 rounded-xl border bg-card shadow-xs"
+          variants={card}
+          {...state}
+        >
           {cardInner(true)}
         </motion.div>
       </motion.div>

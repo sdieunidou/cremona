@@ -10,11 +10,20 @@ const customThread = {
   parentUser: "Jordan Liu",
   parentInitials: "JL",
   parentTime: "Yesterday",
-  parentText:
-    "Anyone else loving the new dashboard widgets? They feel so much faster.",
+  parentText: "Anyone else loving the new dashboard widgets? They feel so much faster.",
   replies: [
-    { user: "Ada Lovelace", initials: "AL", text: "Yes, the optimistic updates make a huge difference.", time: "9:02" },
-    { user: "Grace Hopper", initials: "GH", text: "Latency is down ~40% on my account.", time: "9:10" },
+    {
+      user: "Ada Lovelace",
+      initials: "AL",
+      text: "Yes, the optimistic updates make a huge difference.",
+      time: "9:02",
+    },
+    {
+      user: "Grace Hopper",
+      initials: "GH",
+      text: "Latency is down ~40% on my account.",
+      time: "9:10",
+    },
   ],
 };
 

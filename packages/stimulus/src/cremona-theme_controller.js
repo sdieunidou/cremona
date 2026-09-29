@@ -63,7 +63,8 @@ export default class CremonaThemeController extends Controller {
   apply() {
     const root = document.documentElement;
     const prefersDark = this.media ? this.media.matches : false;
-    const dark = this.appearanceValue === "dark" || (this.appearanceValue === "system" && prefersDark);
+    const dark =
+      this.appearanceValue === "dark" || (this.appearanceValue === "system" && prefersDark);
     root.classList.toggle("dark", dark);
     for (const c of [...root.classList]) {
       if (c.startsWith("theme-")) root.classList.remove(c);
@@ -72,6 +73,8 @@ export default class CremonaThemeController extends Controller {
       root.classList.add(`theme-${this.themeValue}`);
     }
     root.style.colorScheme = dark ? "dark" : "light";
-    this.dispatch("changed", { detail: { appearance: this.appearanceValue, theme: this.themeValue, dark } });
+    this.dispatch("changed", {
+      detail: { appearance: this.appearanceValue, theme: this.themeValue, dark },
+    });
   }
 }

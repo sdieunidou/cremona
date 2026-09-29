@@ -82,16 +82,14 @@ export function Footer({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-72", "p-8.5 will-change-transform", fadeOut && "mask-b-from-60%")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-72",
+          "p-8.5 will-change-transform",
+          fadeOut && "mask-b-from-60%",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

@@ -2,7 +2,14 @@ import type { ComponentType } from "react";
 import { BlockCard, PreviewGrid } from "../components/preview-frame.js";
 import { PreviewWithCode } from "../components/preview-with-code.js";
 import { BADGE_OUTLINE_MONO } from "../lib/shell-classes.js";
-import { blocks, categories, findBlock, stats, thumbnails, type BlockEntry } from "../lib/discovery.js";
+import {
+  blocks,
+  categories,
+  findBlock,
+  stats,
+  thumbnails,
+  type BlockEntry,
+} from "../lib/discovery.js";
 import { hydrateProps } from "../lib/icons.js";
 
 export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
@@ -11,11 +18,13 @@ export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex flex-col gap-8">
         <div className="flex flex-col gap-4 border-b pb-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex flex-col gap-2">
-            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">All visual compositions</h1>
+            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
+              All visual compositions
+            </h1>
             <p className="max-w-3xl text-sm/relaxed text-muted-foreground">
               Search and explore {stats.blocks} animated, copy-paste coded illustrations with{" "}
-              {stats.variants}+ ready made variations across {stats.categories} categories. Click any one
-              to preview all of its variations.
+              {stats.variants}+ ready made variations across {stats.categories} categories. Click
+              any one to preview all of its variations.
             </p>
           </div>
         </div>
@@ -85,7 +94,10 @@ export function BlockPage({
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16">
           <p className="text-sm text-muted-foreground">
             This visual is not ported yet. Its spec and golden references exist in{" "}
-            <code className="font-mono text-xs">packages/blocks/src/{category}/{file}</code>.
+            <code className="font-mono text-xs">
+              packages/blocks/src/{category}/{file}
+            </code>
+            .
           </p>
         </div>
       </section>
@@ -113,7 +125,12 @@ export function BlockPage({
           {meta.variants.map((variant) => {
             const props = hydrateProps(previewProps[variant.label] ?? {});
             return (
-              <PreviewWithCode key={variant.slug} entry={entry} label={variant.label} size={variant.size}>
+              <PreviewWithCode
+                key={variant.slug}
+                entry={entry}
+                label={variant.label}
+                size={variant.size}
+              >
                 <AnimatedVisual entry={entry} props={props} />
               </PreviewWithCode>
             );

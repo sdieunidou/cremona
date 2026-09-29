@@ -183,14 +183,7 @@ export function Fingerprint({
   const styles = stateStyles[state];
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="relative flex size-64 flex-col items-center justify-center gap-4"
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -203,7 +196,12 @@ export function Fingerprint({
           variants={animated ? scannerAnim : undefined}
           {...motionState}
         >
-          <div className={cn("pointer-events-none absolute size-20 rounded-full blur-2xl", styles.glow)} />
+          <div
+            className={cn(
+              "pointer-events-none absolute size-20 rounded-full blur-2xl",
+              styles.glow,
+            )}
+          />
           <svg className="absolute size-full -rotate-90" viewBox="0 0 100 100">
             <circle
               cx="50"
@@ -245,11 +243,7 @@ export function Fingerprint({
               variants={animated ? badgeAnim : undefined}
               {...motionState}
             >
-              {failed ? (
-                <X className="size-4" strokeWidth={2.5} />
-              ) : (
-                <Check className="size-4" />
-              )}
+              {failed ? <X className="size-4" strokeWidth={2.5} /> : <Check className="size-4" />}
             </motion.div>
           )}
         </motion.div>

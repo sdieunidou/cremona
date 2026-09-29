@@ -64,23 +64,17 @@ export function Signup({
   const meta = strengthMeta[strength] ?? strengthMeta[3]!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("flex w-full", !fill && "max-w-72", "flex-col gap-2.5 rounded-xl border bg-card p-4 text-card-foreground shadow-xs")}
+        className={cn(
+          "flex w-full",
+          !fill && "max-w-72",
+          "flex-col gap-2.5 rounded-xl border bg-card p-4 text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
-        <motion.div
-          className="flex flex-col gap-1"
-          variants={animated ? field : undefined}
-        >
+        <motion.div className="flex flex-col gap-1" variants={animated ? field : undefined}>
           <p className="text-lg font-semibold text-foreground">Create your account</p>
           <p className="text-xs text-muted-foreground">Start your 14-day free trial.</p>
         </motion.div>
@@ -143,10 +137,7 @@ export function Signup({
             </div>
           </motion.div>
         </motion.div>
-        <motion.span
-          className="flex items-center gap-1.5"
-          variants={animated ? field : undefined}
-        >
+        <motion.span className="flex items-center gap-1.5" variants={animated ? field : undefined}>
           <span className="size-3 rounded-[4px] border border-input bg-background shadow-xs" />
           <span className="text-[10px] text-muted-foreground">
             I agree to the Terms and Privacy Policy.

@@ -188,17 +188,12 @@ export function Trend({
   const area = areaPath(pts);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-72", "will-change-transform",
+          "relative w-full",
+          !fill && "max-w-72",
+          "will-change-transform",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -283,7 +278,12 @@ export function Trend({
                     <stop offset="100%" stopColor={styles.fillBottom} stopOpacity="0" />
                   </linearGradient>
                 </defs>
-                <motion.path d={area} fill={`url(#${gradientId})`} variants={animated ? areaAnim : undefined} {...state} />
+                <motion.path
+                  d={area}
+                  fill={`url(#${gradientId})`}
+                  variants={animated ? areaAnim : undefined}
+                  {...state}
+                />
                 <motion.path
                   d={line}
                   fill="none"

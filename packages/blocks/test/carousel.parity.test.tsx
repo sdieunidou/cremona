@@ -23,9 +23,21 @@ const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/images/ca
 
 // photo roster from the POC page chunk (`slides:a` identifier)
 const slides = [
-  { src: "../../media/placeholders/photo-07.jpg", title: "Beach", caption: "A beautiful tropical beach" },
-  { src: "../../media/placeholders/photo-08.jpg", title: "City", caption: "Train station in the city" },
-  { src: "../../media/placeholders/photo-09.jpg", title: "Paris", caption: "The capital of France" },
+  {
+    src: "../../media/placeholders/photo-07.jpg",
+    title: "Beach",
+    caption: "A beautiful tropical beach",
+  },
+  {
+    src: "../../media/placeholders/photo-08.jpg",
+    title: "City",
+    caption: "Train station in the city",
+  },
+  {
+    src: "../../media/placeholders/photo-09.jpg",
+    title: "Paris",
+    caption: "The capital of France",
+  },
 ];
 
 runGoldenParity("images/carousel", {
@@ -33,6 +45,9 @@ runGoldenParity("images/carousel", {
   Component: Carousel,
   variants: [
     { label: "real images", props: { badge: false, slides, count: 3 } },
-    { label: "isometric · real images", props: { isometric: true, badge: false, slides, count: 3 } },
+    {
+      label: "isometric · real images",
+      props: { isometric: true, badge: false, slides, count: 3 },
+    },
   ],
 });

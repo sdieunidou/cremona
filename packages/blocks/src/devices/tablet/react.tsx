@@ -112,11 +112,7 @@ const alertCardVariants = alertStyles.map((_, i) => alertCard(i));
 
 function AppContent({ animated, state }: { animated: boolean; state: Record<string, unknown> }) {
   return (
-    <motion.div
-      className="flex h-full"
-      variants={animated ? screen : undefined}
-      {...state}
-    >
+    <motion.div className="flex h-full" variants={animated ? screen : undefined} {...state}>
       <div className="flex w-9 flex-col items-center gap-1.5 border-r border-muted bg-muted/30 py-2.5">
         {sidebarIcons.map(({ icon: Icon, active }, i) => (
           <div
@@ -231,14 +227,7 @@ export function Tablet({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-72"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 shadow-sm ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -291,7 +280,9 @@ export function Tablet({
                   <span className="text-3xl font-light tracking-tight text-white drop-shadow-sm">
                     {time}
                   </span>
-                  <span className="text-[9px] font-medium text-white/80 drop-shadow-sm">{date}</span>
+                  <span className="text-[9px] font-medium text-white/80 drop-shadow-sm">
+                    {date}
+                  </span>
                 </div>
                 <div className="mt-auto flex w-full max-w-48 flex-col gap-1.5 pb-3">
                   {notifications.map((item, i) => (
@@ -305,7 +296,9 @@ export function Tablet({
                       <span className="text-[7px] font-semibold tracking-wide text-white/70 uppercase">
                         {item.app}
                       </span>
-                      <p className="text-[8px] leading-tight font-semibold text-white">{item.title}</p>
+                      <p className="text-[8px] leading-tight font-semibold text-white">
+                        {item.title}
+                      </p>
                       <p className="mt-0.5 text-[7px] leading-tight text-white/70">{item.body}</p>
                     </motion.div>
                   ))}

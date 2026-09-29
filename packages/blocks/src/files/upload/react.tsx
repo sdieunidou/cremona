@@ -5,7 +5,7 @@ import { ArrowUp, Check, LoaderCircle } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type UploadVariant =
-  | "document" | "pdf" | "image" | "video" | "audio" | "spreadsheet" | "code" | "archive";
+  "document" | "pdf" | "image" | "video" | "audio" | "spreadsheet" | "code" | "archive";
 
 function Bar({ width }: { width: number }) {
   return <div className="h-1 rounded-full bg-muted" style={{ width: `${width}%` }} />;
@@ -123,8 +123,12 @@ function ArchivePreview() {
     <div className="flex h-full flex-col items-center gap-px">
       {Array.from({ length: 8 }).map((_, i) => (
         <div key={i} className="flex w-full gap-0.5">
-          <div className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-amber-300/35` : `bg-muted`}`} />
-          <div className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-muted` : `bg-amber-300/35`}`} />
+          <div
+            className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-amber-300/35` : `bg-muted`}`}
+          />
+          <div
+            className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-muted` : `bg-amber-300/35`}`}
+          />
         </div>
       ))}
     </div>
@@ -174,7 +178,8 @@ export function Upload({
   const inViewOnce = useInView(rootRef, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(rootRef, { once: false, amount: 0.5 });
   const [isHovering, setIsHovering] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? isHovering : inView;
   const Preview = previews[variant];
 
@@ -227,14 +232,30 @@ export function Upload({
             { clipPath: "inset(0 0 0% 0)" },
             { duration: 0.4, delay: 0.2, ease: "easeOut" },
           );
-          await animate(".file-card", { y: 0, opacity: 1 }, { duration: TIMING.slideIn, ease: [0, 0, 0.2, 1] });
+          await animate(
+            ".file-card",
+            { y: 0, opacity: 1 },
+            { duration: TIMING.slideIn, ease: [0, 0, 0.2, 1] },
+          );
           if (cancelled) return;
           await wait(TIMING.pauseBeforeSpin);
           if (cancelled) return;
-          animate(".arrow-badge", { scale: 0, opacity: 0 }, { duration: TIMING.badgeSwap, ease: "linear" });
-          await animate(".spinner-badge", { scale: 1, opacity: 1 }, { type: "spring", stiffness: 200, damping: 14 });
+          animate(
+            ".arrow-badge",
+            { scale: 0, opacity: 0 },
+            { duration: TIMING.badgeSwap, ease: "linear" },
+          );
+          await animate(
+            ".spinner-badge",
+            { scale: 1, opacity: 1 },
+            { type: "spring", stiffness: 200, damping: 14 },
+          );
           if (cancelled) return;
-          await animate(".progress-fill", { width: "100%" }, { duration: TIMING.progressFill, ease: [0.4, 0, 0.2, 1] });
+          await animate(
+            ".progress-fill",
+            { width: "100%" },
+            { duration: TIMING.progressFill, ease: [0.4, 0, 0.2, 1] },
+          );
           if (cancelled) return;
           await animate(
             ".progress-fill",
@@ -242,12 +263,24 @@ export function Upload({
             { duration: TIMING.colorChange, ease: "easeOut" },
           );
           if (cancelled) return;
-          animate(".spinner-badge", { scale: 0, opacity: 0 }, { duration: TIMING.badgeSwap, ease: "easeIn" });
-          await animate(".check-badge", { scale: 1, opacity: 1 }, { type: "spring", stiffness: 200, damping: 14 });
+          animate(
+            ".spinner-badge",
+            { scale: 0, opacity: 0 },
+            { duration: TIMING.badgeSwap, ease: "easeIn" },
+          );
+          await animate(
+            ".check-badge",
+            { scale: 1, opacity: 1 },
+            { type: "spring", stiffness: 200, damping: 14 },
+          );
           if (cancelled) return;
           await wait(TIMING.pauseBeforeExit);
           if (cancelled) return;
-          await animate(".file-card", { y: -60, opacity: 0 }, { duration: TIMING.slideOut, ease: [0.4, 0, 1, 1] });
+          await animate(
+            ".file-card",
+            { y: -60, opacity: 0 },
+            { duration: TIMING.slideOut, ease: [0.4, 0, 1, 1] },
+          );
           if (cancelled) return;
           animate(".file-card", { y: 60, opacity: 0 }, { duration: 0 });
           await wait(TIMING.pauseBetweenCycles);
@@ -266,10 +299,7 @@ export function Upload({
     <div
       ref={rootRef}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setIsHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setIsHovering(false) : undefined}
     >
@@ -279,7 +309,9 @@ export function Upload({
             key={side}
             className={`absolute inset-y-0 w-px bg-[repeating-linear-gradient(to_bottom,var(--color-border)_0px,var(--color-border)_4px,transparent_4px,transparent_8px)] ${side === 0 ? `left-0` : `right-0`}`}
             animate={animated && active ? { backgroundPositionY: [0, -8] } : undefined}
-            transition={animated && active ? { duration: 0.5, repeat: Infinity, ease: "linear" } : undefined}
+            transition={
+              animated && active ? { duration: 0.5, repeat: Infinity, ease: "linear" } : undefined
+            }
           />
         ))}
       </div>

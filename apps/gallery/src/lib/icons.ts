@@ -17,7 +17,9 @@ export function isIconRef(value: unknown): value is string {
   return typeof value === "string" && value.startsWith("lucide:");
 }
 
-export function resolveIcon(value: string): ComponentType<{ className?: string; strokeWidth?: number }> | null {
+export function resolveIcon(
+  value: string,
+): ComponentType<{ className?: string; strokeWidth?: number }> | null {
   return registry.get(value) ?? null;
 }
 

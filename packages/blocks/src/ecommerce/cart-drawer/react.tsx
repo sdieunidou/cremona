@@ -67,14 +67,7 @@ export function CartDrawer({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("relative h-80 w-full", !fill && "max-w-96")}
         variants={animated ? entrance : undefined}
