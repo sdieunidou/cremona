@@ -3,7 +3,16 @@ import { readFileSync, existsSync, readdirSync, statSync } from "node:fs";
 import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
-export const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..");
+const here = dirname(fileURLToPath(import.meta.url));
+const monorepoRoot = join(here, "..", "..", "..");
+
+/**
+ * True when the server runs from a cremona checkout. A published package reads the
+ * snapshot that `scripts/bundle-data.mjs` copies into `data/` (same layout) instead,
+ * and the authoring tools, which write into the library, are not registered.
+ */
+export const IN_REPO = existsSync(join(monorepoRoot, "packages", "blocks", "catalog.json"));
+export const REPO_ROOT = IN_REPO ? monorepoRoot : join(here, "..", "data");
 export const BLOCKS_DIR = join(REPO_ROOT, "packages", "blocks", "src");
 export const TOKENS_DIR = join(REPO_ROOT, "packages", "tokens");
 

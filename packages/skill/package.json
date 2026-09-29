@@ -1,6 +1,7 @@
 {
   "name": "@cremona/skill",
   "version": "0.1.0",
+  "private": true,
   "description": "Cremona skill — lets AI sessions (Claude Code, opencode...) use the library correctly.",
   "license": "MIT",
   "author": "Sébastien Dieunidou",

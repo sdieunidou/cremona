@@ -14,18 +14,29 @@
     "url": "https://github.com/sdieunidou/cremona/issues"
   },
   "type": "module",
-  "main": "./src/index.ts",
   "bin": {
     "cremona-mcp": "./bin/cremona-mcp.mjs"
+  },
+  "files": [
+    "bin",
+    "src",
+    "data"
+  ],
+  "engines": {
+    "node": ">=22"
   },
   "scripts": {
     "start": "node bin/cremona-mcp.mjs",
     "test": "vitest run",
     "typecheck": "true",
-    "validate": "node scripts/validate.mjs"
+    "validate": "node scripts/validate.mjs",
+    "prepack": "node scripts/bundle-data.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "zod": "^4.6.5"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

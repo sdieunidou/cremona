@@ -1,6 +1,7 @@
 {
   "name": "@cremona/blocks",
   "version": "0.1.0",
+  "private": true,
   "description": "Cremona visual blocks — source of truth (catalog, React implementations, Stimulus templates, golden references).",
   "license": "MIT",
   "author": "Sébastien Dieunidou",

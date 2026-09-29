@@ -96,6 +96,7 @@ tools `add_category` / `add_block`. Porting a POC visual → `docs/porting-guide
 | [docs/adding-blocks.md](docs/adding-blocks.md) | authoring new visuals |
 | [docs/authoring-guide.md](docs/authoring-guide.md) | full authoring contract (new visuals) |
 | [docs/porting-guide.md](docs/porting-guide.md) | full porting contract (POC visuals) |
+| [docs/releasing.md](docs/releasing.md) | versioning and npm publishing |
 
 ## Provenance
 
