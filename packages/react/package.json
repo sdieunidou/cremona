@@ -2,6 +2,17 @@
   "name": "@cremona/react",
   "version": "0.1.0",
   "description": "Cremona React adapter — hooks and preview infrastructure for visual blocks.",
+  "license": "MIT",
+  "author": "Sébastien Dieunidou",
+  "homepage": "https://github.com/sdieunidou/cremona#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdieunidou/cremona.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/sdieunidou/cremona/issues"
+  },
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",

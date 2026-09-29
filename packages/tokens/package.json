@@ -2,13 +2,28 @@
   "name": "@cremona/tokens",
   "version": "0.1.0",
   "description": "Cremona design tokens — themes (light/dark), palette, fonts, keyframes.",
+  "license": "MIT",
+  "author": "Sébastien Dieunidou",
+  "homepage": "https://github.com/sdieunidou/cremona#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdieunidou/cremona.git",
+    "directory": "packages/tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/sdieunidou/cremona/issues"
+  },
   "type": "module",
   "exports": {
     "./css": "./css/cremona.css",
     "./css/tokens.css": "./css/tokens.css",
     "./themes.json": "./themes.json"
   },
-  "files": ["css", "assets", "themes.json"],
+  "files": [
+    "css",
+    "assets",
+    "themes.json"
+  ],
   "scripts": {
     "test": "vitest run",
     "typecheck": "true"

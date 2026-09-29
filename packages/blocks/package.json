@@ -2,6 +2,17 @@
   "name": "@cremona/blocks",
   "version": "0.1.0",
   "description": "Cremona visual blocks — source of truth (catalog, React implementations, Stimulus templates, golden references).",
+  "license": "MIT",
+  "author": "Sébastien Dieunidou",
+  "homepage": "https://github.com/sdieunidou/cremona#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdieunidou/cremona.git",
+    "directory": "packages/blocks"
+  },
+  "bugs": {
+    "url": "https://github.com/sdieunidou/cremona/issues"
+  },
   "type": "module",
   "main": "./src/registry.ts",
   "types": "./src/registry.ts",

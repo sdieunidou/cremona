@@ -1,7 +1,18 @@
 {
   "name": "@cremona/mcp",
   "version": "0.1.0",
-  "description": "Cremona MCP server \u2014 exposes the block library, design system and authoring tools to AI sessions.",
+  "description": "Cremona MCP server — exposes the block library, design system and authoring tools to AI sessions.",
+  "license": "MIT",
+  "author": "Sébastien Dieunidou",
+  "homepage": "https://github.com/sdieunidou/cremona#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdieunidou/cremona.git",
+    "directory": "packages/mcp"
+  },
+  "bugs": {
+    "url": "https://github.com/sdieunidou/cremona/issues"
+  },
   "type": "module",
   "main": "./src/index.ts",
   "bin": {

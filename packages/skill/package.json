@@ -2,8 +2,21 @@
   "name": "@cremona/skill",
   "version": "0.1.0",
   "description": "Cremona skill — lets AI sessions (Claude Code, opencode...) use the library correctly.",
+  "license": "MIT",
+  "author": "Sébastien Dieunidou",
+  "homepage": "https://github.com/sdieunidou/cremona#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdieunidou/cremona.git",
+    "directory": "packages/skill"
+  },
+  "bugs": {
+    "url": "https://github.com/sdieunidou/cremona/issues"
+  },
   "type": "module",
-  "files": ["SKILL.md"],
+  "files": [
+    "SKILL.md"
+  ],
   "scripts": {
     "test": "vitest run",
     "typecheck": "true"
