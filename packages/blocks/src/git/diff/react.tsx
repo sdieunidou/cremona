@@ -124,7 +124,6 @@ const MAX_LINES = 10;
 const TOKEN_SCALE = 0.75;
 const INDENT_STEP = 8;
 const SWEEP_STEP = 0.22;
-const SWEEP_BASE_DELAY = 0.55;
 const SWEEP_PULSE = 1.6;
 const SWEEP_FIRST_DELAY = 0.9;
 const HOVER_OPACITY_DURATION = 0.3;

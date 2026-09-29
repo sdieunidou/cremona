@@ -1,7 +1,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Headphones, Mic, Music, Pause, Play } from "lucide-react";
+import { Music, Pause, Play } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AudioWaveformProps extends VisualProps {

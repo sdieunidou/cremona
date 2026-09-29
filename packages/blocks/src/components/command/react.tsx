@@ -102,7 +102,6 @@ export function Command({
     }))
     .filter((g) => g.items.length > 0);
   const noResults = rendered.length === 0;
-  let first = true;
 
   const itemClasses =
     "flex h-8 w-full items-center gap-2 rounded-md px-2 text-sm outline-none transition-colors hover:bg-muted hover:text-foreground";
@@ -144,9 +143,8 @@ export function Command({
               <p className="px-2 py-1.5 text-[11px] font-medium text-muted-foreground">
                 {group.label}
               </p>
-              {group.items.map((item) => {
-                const selected = first;
-                first = false;
+              {group.items.map((item, index) => {
+                const selected = group === rendered[0] && index === 0;
                 return (
                   <button
                     key={item.label}

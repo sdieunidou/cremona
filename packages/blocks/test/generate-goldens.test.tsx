@@ -33,7 +33,7 @@ const propsModules = import.meta.glob<{ default: Record<string, Record<string, u
 function parsePropsRaw(raw: string): Record<string, unknown> {
   if (!raw || raw === "{}") return {};
   let s = raw.replace(/`/g, '"').replace(/!0\b/g, "true").replace(/!1\b/g, "false")
-    .replace(/([\[,:]\s*)\.(\d)/g, "$10.$2");
+    .replace(/([[,:]\s*)\.(\d)/g, "$10.$2");
   s = s.replace(/([{,]\s*)([A-Za-z_$][\w$]*)(\s*:)/g, '$1"$2"$3');
   try {
     return JSON.parse(s);

@@ -7,7 +7,7 @@
  */
 import { renderToStaticMarkup } from "react-dom/server";
 import type { ComponentType } from "react";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
   compare,
@@ -36,7 +36,7 @@ export function parsePropsRaw(raw: string): Record<string, unknown> {
     .replace(/!0\b/g, "true")
     .replace(/!1\b/g, "false")
     // leading-dot floats: [.7 -> [0.7, ,.5 -> ,0.5, :.3 -> :0.3
-    .replace(/([\[,:]\s*)\.(\d)/g, "$10.$2");
+    .replace(/([[,:]\s*)\.(\d)/g, "$10.$2");
   // quote unquoted keys
   s = s.replace(/([{,]\s*)([A-Za-z_$][\w$]*)(\s*:)/g, '$1"$2"$3');
   try {
@@ -101,7 +101,6 @@ function componentDisplayName(v: unknown): string | null {
 /** Write resolved variant props next to block.json (consumed by gallery + MCP). */
 function writePreviewProps(blockDir: string, entries: { label: string; props: Record<string, unknown> }[]): void {
   try {
-    const { writeFileSync } = require("node:fs") as typeof import("node:fs");
     const byLabel: Record<string, Record<string, unknown>> = {};
     for (const e of entries) byLabel[e.label] = e.props;
     writeFileSync(join(blockDir, "preview-props.json"), JSON.stringify(byLabel, null, 2) + "\n");

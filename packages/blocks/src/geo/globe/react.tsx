@@ -1,7 +1,6 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   motion,
-  useAnimationFrame,
   MotionConfigContext,
   cancelFrame,
   frame,
@@ -44,7 +43,6 @@ function useGlobeFrame(callback: (time: number, delta: number) => void) {
     };
     frame.update(onFrame, true);
     return () => cancelFrame(onFrame);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callback, isStatic]);
 }
 
@@ -529,7 +527,6 @@ export function Globe({
     observer.observe(wrapper);
     onResize();
     return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [animated]);
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -542,18 +539,15 @@ export function Globe({
       attributeFilter: ["class"],
     });
     return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     rotationRef.current = startAngle;
     dirtyRef.current = true;
     drawRef.current();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startAngle]);
   useEffect(() => {
     dirtyRef.current = true;
     drawRef.current();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tiltAngle, arcs, landSamples, markerVectors, arcsGeometry]);
   return (
     <div

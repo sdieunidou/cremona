@@ -1,10 +1,9 @@
 import type { ComponentType } from "react";
 import { BlockCard, PreviewGrid } from "../components/preview-frame.js";
 import { PreviewWithCode } from "../components/preview-with-code.js";
-import { SHELL, BADGE_OUTLINE_MONO } from "../lib/shell-classes.js";
+import { BADGE_OUTLINE_MONO } from "../lib/shell-classes.js";
 import { blocks, categories, findBlock, stats, thumbnails, type BlockEntry } from "../lib/discovery.js";
 import { hydrateProps } from "../lib/icons.js";
-import { cn } from "@cremona/core";
 
 export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
   return (
@@ -92,7 +91,7 @@ export function BlockPage({
       </section>
     );
   }
-  const { meta, Component, previewProps } = entry;
+  const { meta, previewProps } = entry;
   void onNavigate;
 
   return (

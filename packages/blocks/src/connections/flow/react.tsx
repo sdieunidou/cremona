@@ -33,7 +33,6 @@ export const flowDefaultCopy = {
 
 const CANVAS = { w: 300, h: 180 };
 const PULSE_DELAY = 1.1;
-const PATH_LENGTH = 100;
 const PULSE_STROKE = 1.4;
 
 const SOURCE_POS = [

@@ -1,4 +1,3 @@
-import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { StatCard } from "../src/metrics/stat-card/react.js";
@@ -9,9 +8,6 @@ const blockDir = join(
   dirname(fileURLToPath(import.meta.url)),
   "../src/metrics/stat-card",
 );
-
-// icon identity for the custom-copy variants (from the POC page chunk imports)
-const icons = { Users, ShoppingCart: ShoppingCart, Activity, Target };
 
 runGoldenParity("metrics/stat-card", {
   blockDir,

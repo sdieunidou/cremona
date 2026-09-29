@@ -244,7 +244,6 @@ export function Voice({
     const id = requestAnimationFrame(() => setTicked(true));
     return () => cancelAnimationFrame(id);
   }, []);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const gate = animated && (trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
   const active = (hover ? hovered : gate) && ticked;
   const drifting = gate && ticked;

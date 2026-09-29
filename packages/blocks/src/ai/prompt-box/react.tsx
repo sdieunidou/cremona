@@ -14,8 +14,6 @@ export const promptBoxDefaultCopy = {
 const WORD_DELAY_BASE = 0.4;
 const WORD_DELAY_UNIT = 0.05;
 const WORD_DURATION = 0.22;
-const WORDS_END = (index: number) =>
-  WORD_DELAY_BASE + Math.max(index - 1, 0) * WORD_DELAY_UNIT + WORD_DURATION;
 const GLOW_DELAY = 0.3;
 const GLOW_DURATION = 1.2;
 const PARTICLES_DELAY = 1.02;
@@ -191,7 +189,6 @@ export function PromptBox({
     /^\s+$/.test(text) ? { type: "space", text } : { type: "word", text, index: wordIndex++ },
   );
   const wordCount = wordIndex;
-  const lastWordEnd = WORDS_END(wordCount);
   const meterWidth = `${Math.max(0, Math.min(contextUsed, 1)) * 100}%`;
 
   const cardInner = (motionContent: boolean) => (

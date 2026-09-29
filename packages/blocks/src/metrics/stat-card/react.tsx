@@ -4,10 +4,6 @@ import { useInView } from "@cremona/react";
 import {
   DollarSign,
   Minus,
-  ShoppingCart,
-  Users,
-  Activity,
-  Target,
   ArrowUpRight,
   ArrowDownRight,
 } from "lucide-react";

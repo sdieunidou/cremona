@@ -31,11 +31,6 @@ const entrance = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 } as const;
 
-const content = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-} as const;
-
 const item = {
   hidden: { opacity: 0, x: -6 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },

@@ -1,0 +1,20 @@
+node_modules
+dist
+coverage
+test-results
+playwright-report
+pnpm-lock.yaml
+packages/mcp/data
+# generated or immutable artefacts
+packages/blocks/src/**/golden
+packages/blocks/src/**/sources
+packages/stimulus/templates
+packages/tokens/css
+# JSON written by generators (JSON.stringify) — keep their output byte-stable
+packages/blocks/catalog.json
+packages/blocks/src/**/block.json
+packages/blocks/src/**/preview-props.json
+packages/tokens/themes.json
+# prose and HTML are not formatted
+*.md
+*.html

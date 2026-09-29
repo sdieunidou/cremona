@@ -63,7 +63,13 @@ export function App() {
         </div>
       </div>
       {mobileNav && (
-        <div className="fixed inset-0 z-90 bg-black/40 md:hidden" onClick={() => setMobileNav(false)} />
+        <button
+          type="button"
+          aria-label="Close navigation"
+          tabIndex={-1}
+          className="fixed inset-0 z-90 bg-black/40 md:hidden"
+          onClick={() => setMobileNav(false)}
+        />
       )}
       <main className={SHELL.main} data-slot="sidebar-inset">
         <Header

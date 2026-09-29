@@ -46,7 +46,6 @@ export function CodePanel({ open, onClose, entry, label }: CodePanelProps) {
 
   if (!open) return null;
 
-  const variant = entry.meta.variants.find((v) => v.label === label);
   const usage = reactUsage(entry, label);
   const content =
     tab === "usage" ? usage : tab === "source" ? (source ?? "Loading…") : (stimulus ?? "Loading…");

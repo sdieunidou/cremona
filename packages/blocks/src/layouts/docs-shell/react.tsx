@@ -42,8 +42,6 @@ const codeLines = [
   [{ t: "}", c: "text-foreground" }],
 ] as const;
 
-type CodeLine = (typeof codeLines)[number];
-
 const shell = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.4, ease: "easeOut" } },

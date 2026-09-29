@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, type HTMLMotionProps } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ArrowRight } from "lucide-react";

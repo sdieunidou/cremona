@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Cloud, Cpu, Database, Globe, Server } from "lucide-react";
+import { Database, Globe, Server } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type LogLevel = "info" | "warn" | "error" | "debug" | "success";

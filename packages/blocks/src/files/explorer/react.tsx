@@ -60,15 +60,6 @@ const viewport = {
   visible: { opacity: 1, transition: { duration: 0.25, delay: 0.2, ease: "easeOut" } },
 } as const;
 
-const grid = {
-  hidden: { opacity: 0, y: 6 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.3, delay: 0.6 + i * 0.05, ease: "easeOut" },
-  }),
-};
-
 const glow = {
   hidden: { opacity: 0, scaleX: 0.6 },
   visible: { opacity: 0.6, scaleX: 1, transition: { duration: 0.5, delay: 0.5, ease: "easeOut" } },

@@ -160,13 +160,18 @@ export function SearchDialog({
   onNavigate: (to: string) => void;
 }) {
   const [query, setQuery] = useState("");
+  const [wasOpen, setWasOpen] = useState(open);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (open) setQuery("");
+  }
+
   useEffect(() => {
-    if (open) {
-      setQuery("");
-      setTimeout(() => inputRef.current?.focus(), 10);
-    }
+    if (!open) return;
+    const timer = setTimeout(() => inputRef.current?.focus(), 10);
+    return () => clearTimeout(timer);
   }, [open]);
 
   useEffect(() => {
@@ -191,10 +196,16 @@ export function SearchDialog({
     : [];
 
   return (
-    <div className="fixed inset-0 z-100 flex items-start justify-center bg-background/80 p-4 pt-[12vh] backdrop-blur-xs" onMouseDown={onClose}>
+    <div
+      role="presentation"
+      className="fixed inset-0 z-100 flex items-start justify-center bg-background/80 p-4 pt-[12vh] backdrop-blur-xs"
+      onMouseDown={(e) => e.target === e.currentTarget && onClose()}
+    >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search visuals"
         className="w-full max-w-xl overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-lg"
-        onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2 border-b px-3">
           <Search className="size-4 opacity-50" />

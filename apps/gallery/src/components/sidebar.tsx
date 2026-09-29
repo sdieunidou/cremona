@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useId, useState } from "react";
 import { Search, Shapes, Folder, FolderOpen, ChevronRight } from "lucide-react";
 import { SHELL } from "../lib/shell-classes.js";
 import { categories, findBlock, type CatalogItem } from "../lib/discovery.js";
@@ -104,9 +104,11 @@ function CategoryGroup({
 }) {
   const containsActive = activeKey?.startsWith(`${slug}/`) ?? false;
   const [open, setOpen] = useState(containsActive);
-  useEffect(() => {
+  const [hadActive, setHadActive] = useState(containsActive);
+  if (containsActive !== hadActive) {
+    setHadActive(containsActive);
     if (containsActive) setOpen(true);
-  }, [containsActive]);
+  }
 
   return (
     <div data-open={open || undefined} data-closed={!open || undefined} className="group/collapsible">
@@ -154,7 +156,7 @@ function CategoryGroup({
 
 /** The isometric cube mark (favicon.svg inline, POC-faithful). */
 export function CremonaMark({ className = "text-foreground will-change-transform size-6 shrink-0" }: { className?: string }) {
-  const id = useMemo(() => `mark-${Math.random().toString(36).slice(2, 8)}`, []);
+  const id = `mark-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   return (
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" className={className} fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false">
       <defs>
