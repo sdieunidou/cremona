@@ -21,19 +21,18 @@ export function resolveIcon(value: string): ComponentType<{ className?: string; 
   return registry.get(value) ?? null;
 }
 
-/** Deep-clone props, converting icon refs into components. */
+/** Deep-clone props, converting icon refs into components (arrays stay arrays at every depth). */
 export function hydrateProps(props: Record<string, unknown>): Record<string, unknown> {
-  const out: Record<string, unknown> = {};
-  for (const [k, v] of Object.entries(props)) {
-    if (isIconRef(v)) {
-      out[k] = resolveIcon(v) ?? undefined;
-    } else if (Array.isArray(v)) {
-      out[k] = v.map((item) => (typeof item === "object" && item !== null ? hydrateProps(item) : item));
-    } else if (typeof v === "object" && v !== null) {
-      out[k] = hydrateProps(v as Record<string, unknown>);
-    } else {
-      out[k] = v;
-    }
+  return hydrateValue(props) as Record<string, unknown>;
+}
+
+function hydrateValue(value: unknown): unknown {
+  if (isIconRef(value)) return resolveIcon(value) ?? undefined;
+  if (Array.isArray(value)) return value.map(hydrateValue);
+  if (typeof value === "object" && value !== null) {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(value)) out[k] = hydrateValue(v);
+    return out;
   }
-  return out;
+  return value;
 }
