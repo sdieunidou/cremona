@@ -16,7 +16,7 @@ test("home: sidebar sits beside content, not above", async ({ page }) => {
   // the h1 must be visible (not covered)
   const h1 = page.locator("h1");
   await expect(h1).toBeVisible();
-  await page.screenshot({ path: "/tmp/opencode/home.png", fullPage: false });
+  await page.screenshot({ path: test.info().outputPath("home.png"), fullPage: false });
 });
 
 test("block page renders all variant frames", async ({ page }) => {
@@ -25,7 +25,7 @@ test("block page renders all variant frames", async ({ page }) => {
   await expect(page.locator("h1")).toContainText("Stat Card");
   const frames = page.locator(".group\\/preview");
   expect(await frames.count()).toBe(10);
-  await page.screenshot({ path: "/tmp/opencode/stat-card.png" });
+  await page.screenshot({ path: test.info().outputPath("stat-card.png") });
 });
 
 test("dark mode + theme switch apply classes", async ({ page }) => {
@@ -41,7 +41,7 @@ test("dark mode + theme switch apply classes", async ({ page }) => {
     document.documentElement.classList.contains("theme-claude-plus"),
   );
   expect(theme).toBe(true);
-  await page.screenshot({ path: "/tmp/opencode/dark-claude.png" });
+  await page.screenshot({ path: test.info().outputPath("dark-claude.png") });
 });
 
 test("search palette opens with Ctrl+K and navigates", async ({ page }) => {
@@ -50,7 +50,7 @@ test("search palette opens with Ctrl+K and navigates", async ({ page }) => {
   await page.waitForTimeout(1200);
   await page.keyboard.press("Control+k");
   await page.getByPlaceholder("Search visuals...").fill("kanban");
-  await page.screenshot({ path: "/tmp/opencode/search.png" });
+  await page.screenshot({ path: test.info().outputPath("search.png") });
   await page.keyboard.press("Enter");
   await page.waitForTimeout(800);
   await expect(page.locator("h1")).toContainText("Kanban");

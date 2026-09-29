@@ -5,3 +5,5 @@ coverage/
 .DS_Store
 /apps/gallery/dist/
 /tools/extract/__pycache__/
+test-results/
+playwright-report/

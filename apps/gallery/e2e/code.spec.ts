@@ -29,7 +29,7 @@ test("code panel: open, switch tabs, copy React usage", async ({ page }) => {
   await expect(dialog.getByRole("button", { name: "Copied" })).toBeVisible();
   const clip = await page.evaluate(() => navigator.clipboard.readText());
   expect(clip).toContain("@cremona/blocks/src/metrics/stat-card/react.js");
-  await page.screenshot({ path: "/tmp/opencode/code-panel.png" });
+  await page.screenshot({ path: test.info().outputPath("code-panel.png") });
 
   // Escape closes
   await page.keyboard.press("Escape");
