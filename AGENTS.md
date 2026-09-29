@@ -5,47 +5,69 @@ Instructions for AI sessions (Claude Code, opencode…) contributing to this rep
 ## Commands
 
 ```bash
-pnpm test          # every package's tests (blocks parity, mcp e2e, tokens, stimulus…)
-pnpm typecheck     # tsc --noEmit per package
-pnpm dev           # gallery dev server
-pnpm validate      # library coherence (catalog ↔ blocks ↔ goldens ↔ stimulus)
-pnpm generate:stimulus   # regenerate packages/stimulus/templates/**
-node packages/mcp/bin/cremona-mcp.mjs   # run the MCP server over stdio
+pnpm check              # lint + format check + typecheck + tests + validate — run before finishing
+pnpm test               # every package's tests (block parity, MCP e2e, tokens, stimulus…)
+pnpm typecheck          # tsc --noEmit per package
+pnpm lint               # ESLint (errors fail CI; block a11y findings are warnings)
+pnpm format             # Prettier (a hook formats files you edit in Claude Code)
+pnpm validate           # library coherence (catalog ↔ blocks ↔ goldens ↔ stimulus)
+pnpm generate:stimulus  # regenerate packages/stimulus/templates/**
+pnpm gallery:build && pnpm e2e   # Playwright: every block page must render
+pnpm dev                # gallery dev server
+pnpm mcp                # run the MCP server over stdio
 ```
+
+CI (`.github/workflows/ci.yml`) runs all of the above on Node 22 and 24 and fails
+if generated files are not committed.
 
 ## Non-negotiable invariants
 
-1. **Goldens are immutable**: never edit `packages/blocks/*/golden/**`.
-2. **Stimulus templates are generated**: never hand-edit
-   `packages/stimulus/templates/**` — change the generator or the source blocks.
-3. **Parity is the product**: a block change that breaks its parity test is a
-   regression. The comparator (`packages/blocks/test/helpers/parity.ts`) is
-   strict — extend its *semantic* normalizations only with a real justification.
-4. New blocks/categories: POC ports follow `docs/porting-guide.md`; brand-new
-   visuals (components/layouts/ecommerce/forms/mobile/notices) follow
-   `docs/authoring-guide.md` — both via MCP `add_block`, both must pass parity
-   + `pnpm validate`.
-5. Design tokens live ONLY in `packages/tokens` — blocks use semantic tokens
+1. **Goldens are regression locks**: never hand-edit
+   `packages/blocks/src/*/*/golden/**`. New blocks get theirs from
+   `pnpm vitest run test/generate-goldens.test.tsx` (from `packages/blocks`),
+   which never overwrites an existing golden.
+2. **Generated files are never hand-edited**: `preview-props.json` (rewritten by
+   `pnpm test`) and `packages/stimulus/templates/**` (rewritten by
+   `pnpm generate:stimulus`). Change the source block or the generator, rerun,
+   commit the result.
+3. **Parity is a gate**: a block change that breaks its parity test is a
+   regression unless the golden is deliberately regenerated. The comparator
+   (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
+   normalizations only with a real justification.
+4. **New blocks** follow `docs/authoring-guide.md` and must pass parity +
+   `pnpm validate`. MCP `add_block` scaffolds them — it overwrites the files of
+   an existing block without asking, so only call it with a new key, in an
+   existing category.
+5. **Design tokens live only in `packages/tokens`** — blocks use semantic tokens
    (`bg-card`, `text-muted-foreground`…), never raw colors.
+6. **No HTML from props**: never interpolate a prop into
+   `dangerouslySetInnerHTML`; render text as JSX.
 
 ## Layout map
 
-- `packages/blocks/src/<category>/<block>/` — source of truth (block.json, react.tsx, preview-props.json, golden/, sources/ for POC blocks)
-- `packages/tokens/css/` — cremona.css (complete) + themes.css (tokens only)
-- `packages/stimulus/{src,templates}/` — controllers + generated templates
-- `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS)
-- `apps/gallery/src/` — docs app (POC-faithful shell, live previews)
-- `tools/` — extraction (`extract/`, needs `../cremona-ui` POC snapshot as sibling of the repo root) + generators
+- `packages/blocks/src/<category>/<block>/` — source of truth: `block.json`,
+  `react.tsx`, `preview-props.json`, `golden/`; some blocks also keep a
+  `sources/` directory, which nothing reads at runtime.
+- `packages/tokens/css/` — `cremona.css` (precompiled stylesheet shipped to
+  hosts; it is not rebuilt from the blocks, so a class missing from it renders
+  unstyled) + `themes.css` (tokens only).
+- `packages/stimulus/{src,templates}/` — controllers + generated templates.
+- `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS).
+- `apps/gallery/` — docs app with live previews; Playwright specs in `e2e/`.
+- `tools/generate-stimulus.mjs` — template generator. `tools/extract/` is unused.
 
 ## Conventions
 
-- Tests: `<category>-<file>.parity.test.tsx` (always category-prefixed).
-- New visuals: run `pnpm vitest run test/generate-goldens.test.tsx` BEFORE the
-  parity test (it writes the golden). POC-extracted blocks (with sources/) are
-  refused by the generator — their goldens come from the extraction only.
-- Blocks are self-contained: no imports between blocks; shared constants from
+- New parity tests are named `<category>-<file>.parity.test.tsx`.
+- Blocks are self-contained: no imports between blocks; shared helpers from
   `@cremona/core`; icons from `lucide-react` (1.x); motion from `motion/react`.
-- The POC goldens were `renderToString`-based (React inserts `<!-- -->`
-  separators): reproduce byte-exact text with `dangerouslySetInnerHTML` when
-  required (see `uptime-bar`).
-- Keep prose docs in English; keep code comments minimal.
+- Keep prose docs in English, describing the current state (no history); keep
+  code comments minimal.
+
+## Agent tooling
+
+- `.mcp.json` / `opencode.json` register this repo's MCP server — start the
+  session from the repo root.
+- `.claude/settings.json` pre-approves the commands above and the read-only MCP
+  tools, denies hand edits of goldens, `preview-props.json` and Stimulus
+  templates, and formats every edited file with Prettier.

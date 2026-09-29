@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "cremona": {
+      "command": "node",
+      "args": ["packages/mcp/bin/cremona-mcp.mjs"]
+    }
+  }
+}
