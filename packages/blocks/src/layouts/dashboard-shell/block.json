@@ -2,7 +2,7 @@
   "category": "Layouts",
   "file": "dashboard-shell",
   "name": "Dashboard Shell",
-  "description": "A full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
+  "description": "Wireframe illustration of a full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
   "added": "2026-09-21",
   "kind": "layout",
   "sourcePath": "layouts/dashboard-shell.tsx",

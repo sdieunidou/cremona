@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "hero",
   "name": "Hero",
-  "description": "A marketing hero section with heading, copy, and buttons.",
+  "description": "Wireframe illustration of a marketing hero section with heading, copy, and buttons.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/hero.tsx",

@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "comments",
   "name": "Comments",
-  "description": "A comments thread with avatars, replies, and votes.",
+  "description": "Wireframe illustration of a comments thread with avatars, replies, and votes.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/comments.tsx",

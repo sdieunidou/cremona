@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "testimonials",
   "name": "Testimonials",
-  "description": "A testimonials section with quotes and authors.",
+  "description": "Wireframe illustration of a testimonials section with quotes and authors.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/testimonials.tsx",

@@ -2,7 +2,7 @@
   "category": "Layouts",
   "file": "auth-shell",
   "name": "Auth Shell",
-  "description": "Split-screen authentication layout with form and brand panel.",
+  "description": "Wireframe illustration of a split-screen authentication layout with form and brand panel.",
   "added": "2026-09-21",
   "kind": "layout",
   "sourcePath": "layouts/auth-shell.tsx",

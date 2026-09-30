@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "bento",
   "name": "Bento",
-  "description": "A bento grid section with a featured tile and mixed-size cards.",
+  "description": "Wireframe illustration of a bento grid section with a featured tile and mixed-size cards.",
   "added": "2026-06-26",
   "kind": "layout",
   "sourcePath": "sections/bento.tsx",

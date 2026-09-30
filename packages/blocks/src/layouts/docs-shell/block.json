@@ -2,7 +2,7 @@
   "category": "Layouts",
   "file": "docs-shell",
   "name": "Docs Shell",
-  "description": "Documentation layout with sidebar nav, article and on-this-page list.",
+  "description": "Wireframe illustration of a documentation layout with sidebar nav, article and on-this-page list.",
   "added": "2026-09-21",
   "kind": "layout",
   "sourcePath": "layouts/docs-shell.tsx",

@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "features",
   "name": "Features",
-  "description": "A features section with icons, titles, and descriptions.",
+  "description": "Wireframe illustration of a features section with icons, titles, and descriptions.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/features.tsx",

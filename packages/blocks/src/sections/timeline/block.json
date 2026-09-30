@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "timeline",
   "name": "Timeline",
-  "description": "A timeline section of milestones and dates.",
+  "description": "Wireframe illustration of a timeline section of milestones and dates.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "activity/timeline.tsx",

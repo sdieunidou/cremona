@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "blog",
   "name": "Blog",
-  "description": "A blog index section with article cards and metadata.",
+  "description": "Wireframe illustration of a blog index section with article cards and metadata.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/blog-post.tsx",

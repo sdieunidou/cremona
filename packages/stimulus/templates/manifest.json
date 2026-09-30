@@ -4748,7 +4748,7 @@
   },
   "layouts/auth-shell": {
     "name": "Auth Shell",
-    "description": "Split-screen authentication layout with form and brand panel.",
+    "description": "Wireframe illustration of a split-screen authentication layout with form and brand panel.",
     "kind": "layout",
     "category": "layouts",
     "file": "auth-shell",
@@ -4767,7 +4767,7 @@
   },
   "layouts/dashboard-shell": {
     "name": "Dashboard Shell",
-    "description": "A full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
+    "description": "Wireframe illustration of a full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
     "kind": "layout",
     "category": "layouts",
     "file": "dashboard-shell",
@@ -4791,7 +4791,7 @@
   },
   "layouts/docs-shell": {
     "name": "Docs Shell",
-    "description": "Documentation layout with sidebar nav, article and on-this-page list.",
+    "description": "Wireframe illustration of a documentation layout with sidebar nav, article and on-this-page list.",
     "kind": "layout",
     "category": "layouts",
     "file": "docs-shell",
@@ -4810,7 +4810,7 @@
   },
   "layouts/marketing-shell": {
     "name": "Marketing Shell",
-    "description": "Landing page scaffold: header, hero, feature grid, CTA and footer.",
+    "description": "Wireframe illustration of a landing page scaffold: header, hero, feature grid, CTA and footer.",
     "kind": "layout",
     "category": "layouts",
     "file": "marketing-shell",
@@ -4829,7 +4829,7 @@
   },
   "layouts/mobile-app-shell": {
     "name": "Mobile App Shell",
-    "description": "A phone-framed app: status bar, scrollable feed and floating tab bar.",
+    "description": "Wireframe illustration of a phone-framed app: status bar, scrollable feed and floating tab bar.",
     "kind": "layout",
     "category": "layouts",
     "file": "mobile-app-shell",
@@ -4848,7 +4848,7 @@
   },
   "layouts/settings-shell": {
     "name": "Settings Shell",
-    "description": "Settings layout with sectioned sidebar nav and form panels.",
+    "description": "Wireframe illustration of a settings layout with sectioned sidebar nav and form panels.",
     "kind": "layout",
     "category": "layouts",
     "file": "settings-shell",
@@ -5851,7 +5851,7 @@
   },
   "sections/auth": {
     "name": "Auth",
-    "description": "A login section with social buttons, fields, and a sign-in button.",
+    "description": "Wireframe illustration of a login section with social buttons, fields, and a sign-in button.",
     "kind": "layout",
     "category": "sections",
     "file": "auth",
@@ -5905,7 +5905,7 @@
   },
   "sections/backgrounds": {
     "name": "Backgrounds",
-    "description": "A section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
+    "description": "Wireframe illustration of a section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
     "kind": "layout",
     "category": "sections",
     "file": "backgrounds",
@@ -5974,7 +5974,7 @@
   },
   "sections/bento": {
     "name": "Bento",
-    "description": "A bento grid section with a featured tile and mixed-size cards.",
+    "description": "Wireframe illustration of a bento grid section with a featured tile and mixed-size cards.",
     "kind": "layout",
     "category": "sections",
     "file": "bento",
@@ -6028,7 +6028,7 @@
   },
   "sections/blog": {
     "name": "Blog",
-    "description": "A blog index section with article cards and metadata.",
+    "description": "Wireframe illustration of a blog index section with article cards and metadata.",
     "kind": "layout",
     "category": "sections",
     "file": "blog",
@@ -6067,7 +6067,7 @@
   },
   "sections/blog-post": {
     "name": "Blog Post",
-    "description": "A blog post layout with title, meta, and content.",
+    "description": "Wireframe illustration of a blog post layout with title, meta, and content.",
     "kind": "layout",
     "category": "sections",
     "file": "blog-post",
@@ -6121,7 +6121,7 @@
   },
   "sections/comments": {
     "name": "Comments",
-    "description": "A comments thread with avatars, replies, and votes.",
+    "description": "Wireframe illustration of a comments thread with avatars, replies, and votes.",
     "kind": "layout",
     "category": "sections",
     "file": "comments",
@@ -6175,7 +6175,7 @@
   },
   "sections/components": {
     "name": "Components",
-    "description": "A showcase grid of UI components and building blocks.",
+    "description": "Wireframe illustration of a showcase grid of UI components and building blocks.",
     "kind": "layout",
     "category": "sections",
     "file": "components",
@@ -6229,7 +6229,7 @@
   },
   "sections/contact": {
     "name": "Contact",
-    "description": "A contact section with a form and details.",
+    "description": "Wireframe illustration of a contact section with a form and details.",
     "kind": "layout",
     "category": "sections",
     "file": "contact",
@@ -6283,7 +6283,7 @@
   },
   "sections/cta": {
     "name": "CTA",
-    "description": "A call to action section with heading and buttons.",
+    "description": "Wireframe illustration of a call to action section with heading and buttons.",
     "kind": "layout",
     "category": "sections",
     "file": "cta",
@@ -6337,7 +6337,7 @@
   },
   "sections/error": {
     "name": "Error",
-    "description": "An error state section with code, message, and action.",
+    "description": "Wireframe illustration of an error state section with code, message, and action.",
     "kind": "layout",
     "category": "sections",
     "file": "error",
@@ -6391,7 +6391,7 @@
   },
   "sections/faq": {
     "name": "FAQ",
-    "description": "A frequently asked questions section with expandable items.",
+    "description": "Wireframe illustration of a frequently asked questions section with expandable items.",
     "kind": "layout",
     "category": "sections",
     "file": "faq",
@@ -6445,7 +6445,7 @@
   },
   "sections/features": {
     "name": "Features",
-    "description": "A features section with icons, titles, and descriptions.",
+    "description": "Wireframe illustration of a features section with icons, titles, and descriptions.",
     "kind": "layout",
     "category": "sections",
     "file": "features",
@@ -6499,7 +6499,7 @@
   },
   "sections/footers": {
     "name": "Footers",
-    "description": "A marketing footer with brand, links, and socials.",
+    "description": "Wireframe illustration of a marketing footer with brand, links, and socials.",
     "kind": "layout",
     "category": "sections",
     "file": "footers",
@@ -6553,7 +6553,7 @@
   },
   "sections/headers": {
     "name": "Headers",
-    "description": "A marketing header with navigation and actions.",
+    "description": "Wireframe illustration of a marketing header with navigation and actions.",
     "kind": "layout",
     "category": "sections",
     "file": "headers",
@@ -6607,7 +6607,7 @@
   },
   "sections/hero": {
     "name": "Hero",
-    "description": "A marketing hero section with heading, copy, and buttons.",
+    "description": "Wireframe illustration of a marketing hero section with heading, copy, and buttons.",
     "kind": "layout",
     "category": "sections",
     "file": "hero",
@@ -6661,7 +6661,7 @@
   },
   "sections/logos": {
     "name": "Logos",
-    "description": "A logo cloud of customer or partner brands.",
+    "description": "Wireframe illustration of a logo cloud of customer or partner brands.",
     "kind": "layout",
     "category": "sections",
     "file": "logos",
@@ -6700,7 +6700,7 @@
   },
   "sections/newsletter": {
     "name": "Newsletter",
-    "description": "A newsletter signup section with an email input.",
+    "description": "Wireframe illustration of a newsletter signup section with an email input.",
     "kind": "layout",
     "category": "sections",
     "file": "newsletter",
@@ -6754,7 +6754,7 @@
   },
   "sections/pricing": {
     "name": "Pricing",
-    "description": "A pricing section with plan cards and features.",
+    "description": "Wireframe illustration of a pricing section with plan cards and features.",
     "kind": "layout",
     "category": "sections",
     "file": "pricing",
@@ -6808,7 +6808,7 @@
   },
   "sections/process": {
     "name": "Process",
-    "description": "A step by step process section with numbered stages.",
+    "description": "Wireframe illustration of a step by step process section with numbered stages.",
     "kind": "layout",
     "category": "sections",
     "file": "process",
@@ -6847,7 +6847,7 @@
   },
   "sections/stats": {
     "name": "Stats",
-    "description": "A stats section highlighting key numbers.",
+    "description": "Wireframe illustration of a stats section highlighting key numbers.",
     "kind": "layout",
     "category": "sections",
     "file": "stats",
@@ -6901,7 +6901,7 @@
   },
   "sections/team": {
     "name": "Team",
-    "description": "A team section with member cards and roles.",
+    "description": "Wireframe illustration of a team section with member cards and roles.",
     "kind": "layout",
     "category": "sections",
     "file": "team",
@@ -6955,7 +6955,7 @@
   },
   "sections/testimonials": {
     "name": "Testimonials",
-    "description": "A testimonials section with quotes and authors.",
+    "description": "Wireframe illustration of a testimonials section with quotes and authors.",
     "kind": "layout",
     "category": "sections",
     "file": "testimonials",
@@ -7009,7 +7009,7 @@
   },
   "sections/timeline": {
     "name": "Timeline",
-    "description": "A timeline section of milestones and dates.",
+    "description": "Wireframe illustration of a timeline section of milestones and dates.",
     "kind": "layout",
     "category": "sections",
     "file": "timeline",

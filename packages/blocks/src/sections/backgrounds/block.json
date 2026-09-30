@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "backgrounds",
   "name": "Backgrounds",
-  "description": "A section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
+  "description": "Wireframe illustration of a section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
   "added": "2026-09-17",
   "kind": "layout",
   "sourcePath": "sections/backgrounds.tsx",

@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "team",
   "name": "Team",
-  "description": "A team section with member cards and roles.",
+  "description": "Wireframe illustration of a team section with member cards and roles.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/team.tsx",

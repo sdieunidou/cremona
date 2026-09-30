@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "process",
   "name": "Process",
-  "description": "A step by step process section with numbered stages.",
+  "description": "Wireframe illustration of a step by step process section with numbered stages.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/process.tsx",

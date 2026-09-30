@@ -1713,37 +1713,37 @@
       {
         "file": "dashboard-shell",
         "name": "Dashboard Shell",
-        "description": "A full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
+        "description": "Wireframe illustration of a full analytics dashboard: collapsible sidebar, topbar, KPI row and chart card.",
         "added": "2026-09-21"
       },
       {
         "file": "docs-shell",
         "name": "Docs Shell",
-        "description": "Documentation layout with sidebar nav, article and on-this-page list.",
+        "description": "Wireframe illustration of a documentation layout with sidebar nav, article and on-this-page list.",
         "added": "2026-09-21"
       },
       {
         "file": "marketing-shell",
         "name": "Marketing Shell",
-        "description": "Landing page scaffold: header, hero, feature grid, CTA and footer.",
+        "description": "Wireframe illustration of a landing page scaffold: header, hero, feature grid, CTA and footer.",
         "added": "2026-09-21"
       },
       {
         "file": "auth-shell",
         "name": "Auth Shell",
-        "description": "Split-screen authentication layout with form and brand panel.",
+        "description": "Wireframe illustration of a split-screen authentication layout with form and brand panel.",
         "added": "2026-09-21"
       },
       {
         "file": "settings-shell",
         "name": "Settings Shell",
-        "description": "Settings layout with sectioned sidebar nav and form panels.",
+        "description": "Wireframe illustration of a settings layout with sectioned sidebar nav and form panels.",
         "added": "2026-09-21"
       },
       {
         "file": "mobile-app-shell",
         "name": "Mobile App Shell",
-        "description": "A phone-framed app: status bar, scrollable feed and floating tab bar.",
+        "description": "Wireframe illustration of a phone-framed app: status bar, scrollable feed and floating tab bar.",
         "added": "2026-09-21"
       }
     ]
@@ -2131,7 +2131,7 @@
       {
         "file": "auth",
         "name": "Auth",
-        "description": "A login section with social buttons, fields, and a sign-in button.",
+        "description": "Wireframe illustration of a login section with social buttons, fields, and a sign-in button.",
         "added": "2026-06-26",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2151,7 +2151,7 @@
       {
         "file": "backgrounds",
         "name": "Backgrounds",
-        "description": "A section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
+        "description": "Wireframe illustration of a section preview that cycles through background styles (mesh, grid, dots, rays) with a picker to switch between them.",
         "added": "2026-09-17",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2174,7 +2174,7 @@
       {
         "file": "bento",
         "name": "Bento",
-        "description": "A bento grid section with a featured tile and mixed-size cards.",
+        "description": "Wireframe illustration of a bento grid section with a featured tile and mixed-size cards.",
         "added": "2026-06-26",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2194,7 +2194,7 @@
       {
         "file": "blog",
         "name": "Blog",
-        "description": "A blog index section with article cards and metadata.",
+        "description": "Wireframe illustration of a blog index section with article cards and metadata.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2211,7 +2211,7 @@
       {
         "file": "blog-post",
         "name": "Blog Post",
-        "description": "A blog post layout with title, meta, and content.",
+        "description": "Wireframe illustration of a blog post layout with title, meta, and content.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2231,7 +2231,7 @@
       {
         "file": "comments",
         "name": "Comments",
-        "description": "A comments thread with avatars, replies, and votes.",
+        "description": "Wireframe illustration of a comments thread with avatars, replies, and votes.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2251,7 +2251,7 @@
       {
         "file": "components",
         "name": "Components",
-        "description": "A showcase grid of UI components and building blocks.",
+        "description": "Wireframe illustration of a showcase grid of UI components and building blocks.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2271,7 +2271,7 @@
       {
         "file": "contact",
         "name": "Contact",
-        "description": "A contact section with a form and details.",
+        "description": "Wireframe illustration of a contact section with a form and details.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2291,7 +2291,7 @@
       {
         "file": "cta",
         "name": "CTA",
-        "description": "A call to action section with heading and buttons.",
+        "description": "Wireframe illustration of a call to action section with heading and buttons.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2311,7 +2311,7 @@
       {
         "file": "error",
         "name": "Error",
-        "description": "An error state section with code, message, and action.",
+        "description": "Wireframe illustration of an error state section with code, message, and action.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2331,7 +2331,7 @@
       {
         "file": "faq",
         "name": "FAQ",
-        "description": "A frequently asked questions section with expandable items.",
+        "description": "Wireframe illustration of a frequently asked questions section with expandable items.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2351,7 +2351,7 @@
       {
         "file": "features",
         "name": "Features",
-        "description": "A features section with icons, titles, and descriptions.",
+        "description": "Wireframe illustration of a features section with icons, titles, and descriptions.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2371,7 +2371,7 @@
       {
         "file": "footers",
         "name": "Footers",
-        "description": "A marketing footer with brand, links, and socials.",
+        "description": "Wireframe illustration of a marketing footer with brand, links, and socials.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2391,7 +2391,7 @@
       {
         "file": "headers",
         "name": "Headers",
-        "description": "A marketing header with navigation and actions.",
+        "description": "Wireframe illustration of a marketing header with navigation and actions.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2411,7 +2411,7 @@
       {
         "file": "hero",
         "name": "Hero",
-        "description": "A marketing hero section with heading, copy, and buttons.",
+        "description": "Wireframe illustration of a marketing hero section with heading, copy, and buttons.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2431,7 +2431,7 @@
       {
         "file": "logos",
         "name": "Logos",
-        "description": "A logo cloud of customer or partner brands.",
+        "description": "Wireframe illustration of a logo cloud of customer or partner brands.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2448,7 +2448,7 @@
       {
         "file": "newsletter",
         "name": "Newsletter",
-        "description": "A newsletter signup section with an email input.",
+        "description": "Wireframe illustration of a newsletter signup section with an email input.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2468,7 +2468,7 @@
       {
         "file": "pricing",
         "name": "Pricing",
-        "description": "A pricing section with plan cards and features.",
+        "description": "Wireframe illustration of a pricing section with plan cards and features.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2488,7 +2488,7 @@
       {
         "file": "process",
         "name": "Process",
-        "description": "A step by step process section with numbered stages.",
+        "description": "Wireframe illustration of a step by step process section with numbered stages.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2505,7 +2505,7 @@
       {
         "file": "stats",
         "name": "Stats",
-        "description": "A stats section highlighting key numbers.",
+        "description": "Wireframe illustration of a stats section highlighting key numbers.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2525,7 +2525,7 @@
       {
         "file": "team",
         "name": "Team",
-        "description": "A team section with member cards and roles.",
+        "description": "Wireframe illustration of a team section with member cards and roles.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2545,7 +2545,7 @@
       {
         "file": "testimonials",
         "name": "Testimonials",
-        "description": "A testimonials section with quotes and authors.",
+        "description": "Wireframe illustration of a testimonials section with quotes and authors.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
@@ -2565,7 +2565,7 @@
       {
         "file": "timeline",
         "name": "Timeline",
-        "description": "A timeline section of milestones and dates.",
+        "description": "Wireframe illustration of a timeline section of milestones and dates.",
         "added": "2026-06-18",
         "categorySlug": "sections",
         "kind": "layout",
