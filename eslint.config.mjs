@@ -61,6 +61,20 @@ export default defineConfig(
     ),
   },
   {
+    // Server and client must render the same markup.
+    files: ["packages/blocks/src/**/*.tsx"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "NewExpression[callee.name='Date'][arguments.length=0]",
+          message:
+            "Do not read the clock while rendering: take a prop with a fixed default (server and client must render the same markup).",
+        },
+      ],
+    },
+  },
+  {
     files: ["**/test/**", "**/e2e/**", "**/*.test.*", "**/*.spec.*"],
     languageOptions: { globals: { ...globals.vitest } },
   },
