@@ -34,7 +34,7 @@ export default defineConfig(
   {
     files: [
       "packages/{blocks,react,core}/src/**/*.{ts,tsx}",
-      "packages/stimulus/src/**/*.js",
+      "packages/stimulus/{src,test}/**/*.js",
       "apps/gallery/src/**/*.{ts,tsx}",
     ],
     languageOptions: { globals: { ...globals.browser } },
