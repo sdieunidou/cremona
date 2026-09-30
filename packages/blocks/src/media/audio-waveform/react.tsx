@@ -1,7 +1,7 @@
 import { useRef, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Headphones, Mic, Music, Pause, Play } from "lucide-react";
+import { Music, Pause, Play } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface AudioWaveformProps extends VisualProps {
@@ -26,10 +26,9 @@ const defaultDuration = "3:28";
 const defaultProgress = 48;
 const defaultMeta = "Hi-Fi · 320kbps";
 const WAVEFORM = [
-  0.42, 0.78, 0.55, 0.9, 0.36, 0.62, 0.84, 0.48, 0.7, 0.32, 0.86, 0.58, 0.74,
-  0.45, 0.88, 0.6, 0.34, 0.72, 0.5, 0.92, 0.4, 0.66, 0.82, 0.46, 0.78, 0.3,
-  0.64, 0.88, 0.52, 0.74, 0.38, 0.7, 0.56, 0.92, 0.44, 0.62, 0.8, 0.48, 0.72,
-  0.34,
+  0.42, 0.78, 0.55, 0.9, 0.36, 0.62, 0.84, 0.48, 0.7, 0.32, 0.86, 0.58, 0.74, 0.45, 0.88, 0.6, 0.34,
+  0.72, 0.5, 0.92, 0.4, 0.66, 0.82, 0.46, 0.78, 0.3, 0.64, 0.88, 0.52, 0.74, 0.38, 0.7, 0.56, 0.92,
+  0.44, 0.62, 0.8, 0.48, 0.72, 0.34,
 ];
 
 function waveformBars(count: number): number[] {
@@ -151,14 +150,7 @@ export function AudioWaveform({
   const playedBars = Math.round((progress / 100) * barCount);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("relative flex w-full", !fill && "max-w-80", "flex-col")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -252,4 +244,3 @@ export function AudioWaveform({
     </div>
   );
 }
-

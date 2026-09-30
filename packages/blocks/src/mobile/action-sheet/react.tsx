@@ -70,14 +70,7 @@ export function ActionSheet({
   const options = danger ? dangerOptions : shareOptions;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="w-72 rounded-t-3xl border bg-background p-3 shadow-2xl"
         variants={animated ? sheetIn : undefined}

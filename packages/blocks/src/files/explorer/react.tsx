@@ -1,15 +1,7 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Folder,
-  Image,
-  LayoutGrid,
-  Search,
-  Star,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Folder, Image, LayoutGrid, Search, Star } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -60,15 +52,6 @@ const viewport = {
   visible: { opacity: 1, transition: { duration: 0.25, delay: 0.2, ease: "easeOut" } },
 } as const;
 
-const grid = {
-  hidden: { opacity: 0, y: 6 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.3, delay: 0.6 + i * 0.05, ease: "easeOut" },
-  }),
-};
-
 const glow = {
   hidden: { opacity: 0, scaleX: 0.6 },
   visible: { opacity: 0.6, scaleX: 1, transition: { duration: 0.5, delay: 0.5, ease: "easeOut" } },
@@ -117,14 +100,7 @@ export function Explorer({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

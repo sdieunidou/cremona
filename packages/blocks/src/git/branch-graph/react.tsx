@@ -221,9 +221,7 @@ export function BranchGraph({
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulsing = animated && (hover ? hovering : triggered);
-  const state = animated
-    ? { initial: "hidden", animate: triggered ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const total = Math.min(Math.max(Math.round(commits), 2), MAX_COMMITS);
   const x0 = railStart(total);
   const x = (lane: number) => x0 + lane * LANE_GAP;
@@ -241,10 +239,7 @@ export function BranchGraph({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >
@@ -290,7 +285,11 @@ export function BranchGraph({
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulsing }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: pulsing && !hover ? PULSE_DELAY : 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: pulsing && !hover ? PULSE_DELAY : 0,
+              }}
             >
               <Pulse d={railD} dur="3.4s" begin="0s" pulse={pulse} color="text-primary" />
               {laid.map((branch, i) => (
@@ -306,10 +305,7 @@ export function BranchGraph({
             </motion.g>
           )}
         </svg>
-        <div
-          className="absolute -translate-x-1/2 -translate-y-1/2"
-          style={pos(x(0), baseLabelTop)}
-        >
+        <div className="absolute -translate-x-1/2 -translate-y-1/2" style={pos(x(0), baseLabelTop)}>
           <motion.div
             className="flex h-5.5 items-center gap-1 rounded-full border bg-card px-1.5 shadow-xs ring-2 ring-background"
             variants={animated ? labelAnim : undefined}
@@ -334,9 +330,7 @@ export function BranchGraph({
               custom={LABEL_BASE + i * LABEL_STAGGER}
               {...state}
             >
-              <GitBranch
-                className={cn("size-2.5 shrink-0", branch.color ?? "text-primary")}
-              />
+              <GitBranch className={cn("size-2.5 shrink-0", branch.color ?? "text-primary")} />
               <span className="font-mono text-[10px] leading-none font-medium text-foreground">
                 {branch.name}
               </span>
@@ -404,7 +398,9 @@ export function BranchGraph({
                   branch.color ?? "text-primary",
                 )}
                 variants={animated ? nodeAnim : undefined}
-                custom={BRANCH_BASE + i * BRANCH_STAGGER + BRANCH_COMMIT_OFFSET + r * COMMIT_STAGGER}
+                custom={
+                  BRANCH_BASE + i * BRANCH_STAGGER + BRANCH_COMMIT_OFFSET + r * COMMIT_STAGGER
+                }
                 {...state}
               />
             </div>

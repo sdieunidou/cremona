@@ -135,7 +135,8 @@ function project(lat: number, lng: number): Dot {
 
 function regionIndex(lat: number, lng: number, regions: readonly WorldMapRegion[]): number {
   return regions.findIndex(
-    (region) => lat >= region.lat[0] && lat <= region.lat[1] && lng >= region.lng[0] && lng <= region.lng[1],
+    (region) =>
+      lat >= region.lat[0] && lat <= region.lat[1] && lng >= region.lng[0] && lng <= region.lng[1],
   );
 }
 
@@ -215,7 +216,10 @@ function labelSlots(point: Dot, size: number): Slot[] {
   const belowY = point.y + LABEL_HEIGHT / 2;
   const verticals = SLOT_OFFSETS.map((offset) => ({
     x: point.x,
-    y: offset >= 0 ? point.y - gap - offset * stepY : point.y + gap + LABEL_HEIGHT + (-offset - 1) * stepY,
+    y:
+      offset >= 0
+        ? point.y - gap - offset * stepY
+        : point.y + gap + LABEL_HEIGHT + (-offset - 1) * stepY,
     anchor,
   }));
   return [
@@ -253,7 +257,9 @@ function labelOrder(markers: readonly WorldMapMarker[], points: readonly Dot[]):
 }
 
 function placeLabels(markers: readonly WorldMapMarker[], points: readonly Dot[]): (Slot | null)[] {
-  const taken = markers.map((marker, i) => markerBox(points[i]!, marker.active ? LABEL_ACTIVE_WIDTH : LABEL_HALF_WIDTH));
+  const taken = markers.map((marker, i) =>
+    markerBox(points[i]!, marker.active ? LABEL_ACTIVE_WIDTH : LABEL_HALF_WIDTH),
+  );
   const slots = markers.map(() => null as Slot | null);
   for (const i of labelOrder(markers, points)) {
     const marker = markers[i]!;
@@ -279,17 +285,26 @@ const containerAnim = {
 
 const bloomMaskAnim = {
   hidden: { scale: 0 },
-  visible: { scale: 1, transition: { duration: REVEAL_DURATION, delay: BASE_DELAY, ease: easeOutQuad } },
+  visible: {
+    scale: 1,
+    transition: { duration: REVEAL_DURATION, delay: BASE_DELAY, ease: easeOutQuad },
+  },
 } as const;
 
 const sweepMaskAnim: Variants = {
   hidden: (width: number) => ({ x: -width }),
-  visible: { x: 0, transition: { duration: REVEAL_DURATION, delay: BASE_DELAY, ease: easeOutQuad } },
+  visible: {
+    x: 0,
+    transition: { duration: REVEAL_DURATION, delay: BASE_DELAY, ease: easeOutQuad },
+  },
 };
 
 const splitMaskAnim = {
   hidden: { scaleX: 0 },
-  visible: { scaleX: 1, transition: { duration: REVEAL_DURATION, delay: BASE_DELAY, ease: easeOutQuad } },
+  visible: {
+    scaleX: 1,
+    transition: { duration: REVEAL_DURATION, delay: BASE_DELAY, ease: easeOutQuad },
+  },
 } as const;
 
 const arcAnim: Variants = {
@@ -355,9 +370,7 @@ export function WorldMap({
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pinging = hover ? hovering : triggered;
-  const state = animated
-    ? { initial: "hidden", animate: triggered ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const { landPath, regionPaths } = useMemo(() => {
     const cols = DENSITY[density];
     const rows = Math.round((HEIGHT / WIDTH) * cols);
@@ -375,13 +388,25 @@ export function WorldMap({
         else regionDots[region]!.push(dot);
       }
     }
-    return { landPath: dotsPath(land, spacing), regionPaths: regionDots.map((dots) => dotsPath(dots, spacing)) };
+    return {
+      landPath: dotsPath(land, spacing),
+      regionPaths: regionDots.map((dots) => dotsPath(dots, spacing)),
+    };
   }, [density, regions]);
   const points = useMemo(() => markers.map((marker) => project(marker.lat, marker.lng)), [markers]);
-  const revealCenter = useMemo(() => points[revealFrom] ?? { x: WIDTH / 2, y: HEIGHT / 2 }, [points, revealFrom]);
+  const revealCenter = useMemo(
+    () => points[revealFrom] ?? { x: WIDTH / 2, y: HEIGHT / 2 },
+    [points, revealFrom],
+  );
   const maxDist = useMemo(() => maxDistance(revealCenter), [revealCenter]);
   const markerDelays = useMemo(
-    () => points.map((point) => BASE_DELAY + revealEase(revealProgress(point, reveal, revealCenter, maxDist)) * REVEAL_DURATION + MARKER_DELAY_PAD),
+    () =>
+      points.map(
+        (point) =>
+          BASE_DELAY +
+          revealEase(revealProgress(point, reveal, revealCenter, maxDist)) * REVEAL_DURATION +
+          MARKER_DELAY_PAD,
+      ),
     [points, reveal, revealCenter, maxDist],
   );
   const arcsList = useMemo(
@@ -408,10 +433,7 @@ export function WorldMap({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >
@@ -460,12 +482,7 @@ export function WorldMap({
                 )}
                 {reveal === "split" && (
                   <motion.g variants={splitMaskAnim} {...state}>
-                    <rect
-                      x={-25 / 2}
-                      width={sweepWidth}
-                      height={HEIGHT}
-                      fill={`url(#${fadeId})`}
-                    />
+                    <rect x={-25 / 2} width={sweepWidth} height={HEIGHT} fill={`url(#${fadeId})`} />
                   </motion.g>
                 )}
                 {reveal === "sweep" && (
@@ -515,7 +532,11 @@ export function WorldMap({
               <motion.g
                 initial={{ opacity: 0 }}
                 animate={{ opacity: +!!pinging }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: pinging && !hover ? arcsDoneAt : 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                  delay: pinging && !hover ? arcsDoneAt : 0,
+                }}
               >
                 {arcsList.map((arc, i) => (
                   <path
@@ -572,7 +593,11 @@ export function WorldMap({
                   className="absolute inset-0"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: +!!pinging }}
-                  transition={{ duration: 0.5, ease: "easeOut", delay: pinging && !hover ? markerDoneAt : 0 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: "easeOut",
+                    delay: pinging && !hover ? markerDoneAt : 0,
+                  }}
                 >
                   {PING_DELAYS.map((delay, p) => (
                     <motion.span

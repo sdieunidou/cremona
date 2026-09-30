@@ -37,14 +37,7 @@ export function Switch({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="flex w-fit items-center gap-3"
         variants={animated ? entrance : undefined}
@@ -52,10 +45,7 @@ export function Switch({
       >
         <label
           htmlFor="cremona-switch-demo"
-          className={cn(
-            "text-sm font-medium text-foreground",
-            disabled && "opacity-50",
-          )}
+          className={cn("text-sm font-medium text-foreground", disabled && "opacity-50")}
         >
           {label}
         </label>

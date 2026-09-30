@@ -7,12 +7,7 @@ export const faqDefaultCopy = {
   title: "Frequently asked questions",
 } as const;
 
-const items = [
-  { expanded: false },
-  { expanded: true },
-  { expanded: false },
-  { expanded: false },
-];
+const items = [{ expanded: false }, { expanded: true }, { expanded: false }, { expanded: false }];
 
 const card = {
   hidden: { opacity: 0 },
@@ -89,14 +84,7 @@ export function Faq({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-72", "p-8.5", fadeOut && "mask-b-from-60%")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -149,10 +137,7 @@ export function Faq({
               {...state}
             >
               {items.map((entry, i) => (
-                <div
-                  key={i}
-                  className="rounded-lg border border-border/50 bg-muted/35 px-2 py-1.5"
-                >
+                <div key={i} className="rounded-lg border border-border/50 bg-muted/35 px-2 py-1.5">
                   <div className="flex items-center justify-between">
                     <div className="h-0.75 w-3/4 rounded-full bg-foreground/10" />
                     <span className="text-xs leading-none text-muted-foreground/50">

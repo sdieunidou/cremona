@@ -96,7 +96,8 @@ function normAttrs(tag: string, attrs: Record<string, string>): Record<string, s
       const k = key.toLowerCase();
       if (k === "style") continue;
       if (SVG_PRESENTATIONAL.has(k)) {
-        if (value !== "" && !value.includes(":")) decls.add(`${k}:${value.replace(SVG_ID_RE, "_ID_")}`);
+        if (value !== "" && !value.includes(":"))
+          decls.add(`${k}:${value.replace(SVG_ID_RE, "_ID_")}`);
       } else if (key === "class") {
         out[key] = value.split(/\s+/).filter(Boolean).sort().join(" ");
       } else {

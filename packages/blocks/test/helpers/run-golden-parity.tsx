@@ -7,14 +7,9 @@
  */
 import { renderToStaticMarkup } from "react-dom/server";
 import type { ComponentType } from "react";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import {
-  compare,
-  findDivEnd,
-  goldenVisual,
-  parseHtmlFragment,
-} from "./parity.js";
+import { compare, findDivEnd, goldenVisual, parseHtmlFragment } from "./parity.js";
 
 export interface VariantSpec {
   label: string;
@@ -36,7 +31,7 @@ export function parsePropsRaw(raw: string): Record<string, unknown> {
     .replace(/!0\b/g, "true")
     .replace(/!1\b/g, "false")
     // leading-dot floats: [.7 -> [0.7, ,.5 -> ,0.5, :.3 -> :0.3
-    .replace(/([\[,:]\s*)\.(\d)/g, "$10.$2");
+    .replace(/([[,:]\s*)\.(\d)/g, "$10.$2");
   // quote unquoted keys
   s = s.replace(/([{,]\s*)([A-Za-z_$][\w$]*)(\s*:)/g, '$1"$2"$3');
   try {
@@ -99,9 +94,11 @@ function componentDisplayName(v: unknown): string | null {
 }
 
 /** Write resolved variant props next to block.json (consumed by gallery + MCP). */
-function writePreviewProps(blockDir: string, entries: { label: string; props: Record<string, unknown> }[]): void {
+function writePreviewProps(
+  blockDir: string,
+  entries: { label: string; props: Record<string, unknown> }[],
+): void {
   try {
-    const { writeFileSync } = require("node:fs") as typeof import("node:fs");
     const byLabel: Record<string, Record<string, unknown>> = {};
     for (const e of entries) byLabel[e.label] = e.props;
     writeFileSync(join(blockDir, "preview-props.json"), JSON.stringify(byLabel, null, 2) + "\n");
@@ -132,7 +129,9 @@ export function runGoldenParity(name: string, opts: RunParityOptions): void {
     ignoreAttrs = [],
   } = opts;
   const goldenDir = join(blockDir, "golden");
-  const meta: BlockGoldenInfo["meta"] = JSON.parse(readFileSync(join(blockDir, "block.json"), "utf8"));
+  const meta: BlockGoldenInfo["meta"] = JSON.parse(
+    readFileSync(join(blockDir, "block.json"), "utf8"),
+  );
 
   describe(`golden parity: ${name}`, () => {
     const goldens = meta.variants.filter((v) => existsSync(join(goldenDir, `${v.slug}.html`)));
@@ -158,10 +157,9 @@ export function runGoldenParity(name: string, opts: RunParityOptions): void {
         const props = resolveProps(g, spec);
         resolved.push({ label: g.label, props });
         const ours = renderToStaticMarkup(<Component animated trigger="inViewRepeat" {...props} />);
-        const diffs = compare(
-          parseHtmlFragment(goldenInner),
-          parseHtmlFragment(ours),
-        ).filter((d) => !ignoreAttrs.some((a) => d.message.includes(`attr ${a}`)));
+        const diffs = compare(parseHtmlFragment(goldenInner), parseHtmlFragment(ours)).filter(
+          (d) => !ignoreAttrs.some((a) => d.message.includes(`attr ${a}`)),
+        );
         if (diffs.length) {
           const shown = diffs
             .slice(0, opts.maxDiffs ?? 10)

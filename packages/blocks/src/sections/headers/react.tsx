@@ -82,16 +82,14 @@ export function Header({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-72", "p-8.5 will-change-transform", fadeOut && "mask-b-from-60%")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-72",
+          "p-8.5 will-change-transform",
+          fadeOut && "mask-b-from-60%",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -134,7 +132,9 @@ export function Header({
                 variants={animated ? item : undefined}
               >
                 <div className="size-2.5 rounded-sm bg-primary" />
-                <span className="text-[8px] leading-none font-semibold text-foreground">{title}</span>
+                <span className="text-[8px] leading-none font-semibold text-foreground">
+                  {title}
+                </span>
               </motion.div>
               <motion.div
                 className="flex flex-1 items-center justify-center gap-2"

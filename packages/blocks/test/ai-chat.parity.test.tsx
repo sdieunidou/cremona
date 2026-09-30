@@ -17,7 +17,22 @@ runGoldenParity("chat/ai-chat", {
   blockDir,
   Component: AiChat,
   variants: [
-    { label: "default · custom copy", props: { title: "Acme Copilot", prompt: "Draft a launch email for our new pricing", response: customResponse } },
-    { label: "isometric · custom copy", props: { isometric: true, title: "Acme Copilot", prompt: "Draft a launch email for our new pricing", response: customResponse } },
+    {
+      label: "default · custom copy",
+      props: {
+        title: "Acme Copilot",
+        prompt: "Draft a launch email for our new pricing",
+        response: customResponse,
+      },
+    },
+    {
+      label: "isometric · custom copy",
+      props: {
+        isometric: true,
+        title: "Acme Copilot",
+        prompt: "Draft a launch email for our new pricing",
+        response: customResponse,
+      },
+    },
   ],
 });

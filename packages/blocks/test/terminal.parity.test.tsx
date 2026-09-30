@@ -18,7 +18,5 @@ const customLines = [
 runGoldenParity("code/terminal", {
   blockDir,
   Component: Terminal,
-  variants: [
-    { label: "custom lines", props: { title: "~/project · git", lines: customLines } },
-  ],
+  variants: [{ label: "custom lines", props: { title: "~/project · git", lines: customLines } }],
 });

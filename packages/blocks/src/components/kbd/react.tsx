@@ -38,14 +38,7 @@ export function Kbd({
   const navigates = keys.some((k) => k === "↑" || k === "↓");
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="flex flex-col items-center gap-2"
         variants={animated ? entrance : undefined}

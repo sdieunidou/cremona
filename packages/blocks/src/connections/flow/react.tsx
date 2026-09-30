@@ -2,16 +2,7 @@ import { useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import {
-  Bell,
-  ChartColumn,
-  Database,
-  Funnel,
-  GitMerge,
-  Globe,
-  HardDrive,
-  Rss,
-} from "lucide-react";
+import { Bell, ChartColumn, Database, Funnel, GitMerge, Globe, HardDrive, Rss } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const flowDefaultCopy = {
@@ -33,7 +24,6 @@ export const flowDefaultCopy = {
 
 const CANVAS = { w: 300, h: 180 };
 const PULSE_DELAY = 1.1;
-const PATH_LENGTH = 100;
 const PULSE_STROKE = 1.4;
 
 const SOURCE_POS = [
@@ -115,7 +105,15 @@ function FlowPulse({
     return (
       <g>
         <animateMotion dur={dur} repeatCount="indefinite" begin={begin} path={d} rotate="auto" />
-        <line x1={-18} y1={0} x2={0} y2={0} stroke={`url(#${gradientId})`} strokeWidth={PULSE_STROKE} strokeLinecap="round" />
+        <line
+          x1={-18}
+          y1={0}
+          x2={0}
+          y2={0}
+          stroke={`url(#${gradientId})`}
+          strokeWidth={PULSE_STROKE}
+          strokeLinecap="round"
+        />
         <circle r={2} fill="currentColor" className="text-primary" />
       </g>
     );
@@ -158,7 +156,8 @@ export function Flow({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
@@ -169,9 +168,21 @@ export function Flow({
   const destList = destinations.length ? destinations : flowDefaultCopy.destinations;
 
   const nodes = [
-    ...SOURCE_POS.map((pos, i) => ({ pos, node: sourceList[i] ?? flowDefaultCopy.sources[i], group: "source" })),
-    ...TRANSFORM_POS.map((pos, i) => ({ pos, node: transformList[i] ?? flowDefaultCopy.transforms[i], group: "transform" })),
-    ...DEST_POS.map((pos, i) => ({ pos, node: destList[i] ?? flowDefaultCopy.destinations[i], group: "dest" })),
+    ...SOURCE_POS.map((pos, i) => ({
+      pos,
+      node: sourceList[i] ?? flowDefaultCopy.sources[i],
+      group: "source",
+    })),
+    ...TRANSFORM_POS.map((pos, i) => ({
+      pos,
+      node: transformList[i] ?? flowDefaultCopy.transforms[i],
+      group: "transform",
+    })),
+    ...DEST_POS.map((pos, i) => ({
+      pos,
+      node: destList[i] ?? flowDefaultCopy.destinations[i],
+      group: "dest",
+    })),
   ];
 
   return (
@@ -195,7 +206,14 @@ export function Flow({
         >
           {pulse === "spike" && (
             <defs>
-              <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1={-18} y1={0} x2={0} y2={0}>
+              <linearGradient
+                id={gradientId}
+                gradientUnits="userSpaceOnUse"
+                x1={-18}
+                y1={0}
+                x2={0}
+                y2={0}
+              >
                 <stop offset="0" stopColor="var(--color-primary)" stopOpacity={0} />
                 <stop offset="1" stopColor="var(--color-primary)" stopOpacity={0.9} />
               </linearGradient>
@@ -219,10 +237,21 @@ export function Flow({
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: pulseVisible && !hover ? PULSE_DELAY : 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+              }}
             >
               {EDGES.map((edge, t) => (
-                <FlowPulse key={`fd${t}`} d={edge.d} dur="2s" begin={`${edge.dotBegin}s`} pulse={pulse} gradientId={gradientId} />
+                <FlowPulse
+                  key={`fd${t}`}
+                  d={edge.d}
+                  dur="2s"
+                  begin={`${edge.dotBegin}s`}
+                  pulse={pulse}
+                  gradientId={gradientId}
+                />
               ))}
             </motion.g>
           )}
@@ -231,7 +260,10 @@ export function Flow({
           <div
             key={`fn${t}`}
             className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${(entry.pos.x / CANVAS.w) * 100}%`, top: `${(entry.pos.y / CANVAS.h) * 100}%` }}
+            style={{
+              left: `${(entry.pos.x / CANVAS.w) * 100}%`,
+              top: `${(entry.pos.y / CANVAS.h) * 100}%`,
+            }}
           >
             <motion.div
               className={cn(

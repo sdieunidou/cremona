@@ -65,7 +65,11 @@ const stageIso = {
 
 const gradientGlow = {
   hidden: { opacity: 0, scaleX: 0.6 },
-  visible: { opacity: 0.6, scaleX: 1, transition: { duration: 0.5, delay: GLOW_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 0.6,
+    scaleX: 1,
+    transition: { duration: 0.5, delay: GLOW_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 const veil = {
@@ -151,7 +155,13 @@ function RequestPulse({
         strokeLinecap="round"
         strokeDasharray={`${PULSE_DASH} 200`}
       >
-        <animate attributeName="stroke-dashoffset" values={`${PULSE_DASH};-100`} dur={dur} repeatCount="indefinite" begin={begin} />
+        <animate
+          attributeName="stroke-dashoffset"
+          values={`${PULSE_DASH};-100`}
+          dur={dur}
+          repeatCount="indefinite"
+          begin={begin}
+        />
       </path>
     );
   }
@@ -167,7 +177,8 @@ function RequestPulse({
   );
 }
 
-const JSON_TOKEN_RE = /("(?:[^"\\]|\\.)*"\s*:)|("(?:[^"\\]|\\.)*")|(-?\d+\.?\d*)|(true|false|null)|(\s+)|([^\s])/g;
+const JSON_TOKEN_RE =
+  /("(?:[^"\\]|\\.)*"\s*:)|("(?:[^"\\]|\\.)*")|(-?\d+\.?\d*)|(true|false|null)|(\s+)|([^\s])/g;
 
 function tokenColor(token: string): string {
   if (/^"/.test(token) && /:\s*$/.test(token)) return "text-violet-600 dark:text-violet-400";
@@ -225,7 +236,8 @@ export function Request({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
@@ -289,7 +301,11 @@ export function Request({
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: pulseVisible && !hover ? PULSE_DELAY : 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+              }}
             >
               <RequestPulse d={CURVE_IN} dur="2.6s" begin="0s" pulse={pulse} />
               <RequestPulse d={CURVE_OUT} dur="2.6s" begin="-1.3s" pulse={pulse} />
@@ -331,10 +347,14 @@ export function Request({
             variants={animated ? methodPill : undefined}
             {...state}
           >
-            <span className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] font-bold ring-1 ring-inset ${METHOD_STYLES[methodLabel]}`}>
+            <span
+              className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] font-bold ring-1 ring-inset ${METHOD_STYLES[methodLabel]}`}
+            >
               {methodLabel}
             </span>
-            <span className="max-w-52 truncate text-[11px] font-medium text-foreground">{endpointLabel}</span>
+            <span className="max-w-52 truncate text-[11px] font-medium text-foreground">
+              {endpointLabel}
+            </span>
           </motion.div>
         </div>
         <div

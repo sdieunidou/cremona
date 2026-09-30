@@ -155,14 +155,7 @@ export function Sparkline({
   const last = pts[pts.length - 1]!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         // `cn` réordonnerait si on lui donnait les classes en vrac ; ici
         // l'ordre préfixe / cap / plateau reproduit exactement les deux
@@ -247,7 +240,12 @@ export function Sparkline({
                   <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity="0" />
                 </linearGradient>
               </defs>
-              <motion.path d={area} fill={`url(#${gradientId})`} variants={animated ? areaAnim : undefined} {...state} />
+              <motion.path
+                d={area}
+                fill={`url(#${gradientId})`}
+                variants={animated ? areaAnim : undefined}
+                {...state}
+              />
               <motion.path
                 d={line}
                 fill="none"

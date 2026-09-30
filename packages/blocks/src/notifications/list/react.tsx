@@ -7,10 +7,32 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const listDefaultCopy = {
   items: [
-    { icon: "message", title: "Sarah commented", detail: "Looks great, ready to ship.", time: "2m", unread: true },
-    { icon: "pr", title: "Alex opened a PR", detail: "feat: add notification center", time: "18m", unread: true },
-    { icon: "heart", title: "Mia liked your post", detail: "Building in public update #12", time: "1h" },
-    { icon: "follow", title: "Ben started following you", detail: "Design engineer, Berlin", time: "3h" },
+    {
+      icon: "message",
+      title: "Sarah commented",
+      detail: "Looks great, ready to ship.",
+      time: "2m",
+      unread: true,
+    },
+    {
+      icon: "pr",
+      title: "Alex opened a PR",
+      detail: "feat: add notification center",
+      time: "18m",
+      unread: true,
+    },
+    {
+      icon: "heart",
+      title: "Mia liked your post",
+      detail: "Building in public update #12",
+      time: "1h",
+    },
+    {
+      icon: "follow",
+      title: "Ben started following you",
+      detail: "Design engineer, Berlin",
+      time: "3h",
+    },
     { icon: "star", title: "New star on your repo", detail: "cremona · 1.2k stars", time: "1d" },
   ],
 } as const;
@@ -32,7 +54,8 @@ const iconStyles: Record<IconKind, { icon: LucideIcon; accent: string }> = {
   },
   heart: {
     icon: Heart,
-    accent: "bg-rose-50 border border-rose-500/15 text-rose-600 dark:text-rose-400 dark:bg-rose-950/30",
+    accent:
+      "bg-rose-50 border border-rose-500/15 text-rose-600 dark:text-rose-400 dark:bg-rose-950/30",
   },
   follow: {
     icon: UserPlus,
@@ -126,14 +149,7 @@ export function NotificationList({
   const unread = items.filter((i) => i.unread).length;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -182,12 +198,16 @@ export function NotificationList({
                   className={`flex items-start gap-2.5 px-3 py-2.5 ${i === items.length - 1 ? `` : `border-b`} ${n.unread ? `bg-muted/30` : ``}`}
                   variants={animated ? item : undefined}
                 >
-                  <div className={`flex size-7 shrink-0 items-center justify-center rounded-full ${accent}`}>
+                  <div
+                    className={`flex size-7 shrink-0 items-center justify-center rounded-full ${accent}`}
+                  >
                     <Icon className="size-3.5" />
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="truncate text-xs font-medium text-foreground">{n.title}</span>
+                      <span className="truncate text-xs font-medium text-foreground">
+                        {n.title}
+                      </span>
                       <span className="shrink-0 text-[10px] text-muted-foreground">{n.time}</span>
                     </div>
                     <span className="truncate text-[10px] text-muted-foreground">{n.detail}</span>

@@ -19,10 +19,38 @@ export interface EventItem {
 export const eventListDefaultCopy: { title: string; items: EventItem[] } = {
   title: "Up next",
   items: [
-    { category: "meeting", title: "Design review", detail: "with Sarah, Alex", time: "9:30", duration: "45m", group: "Today" },
-    { category: "focus", title: "Deep work · spec draft", detail: "Notification center", time: "11:00", duration: "2h", group: "Today" },
-    { category: "team", title: "All-hands", detail: "Q2 roadmap update", time: "10:00", duration: "30m", group: "Tomorrow" },
-    { category: "travel", title: "Flight to Berlin", detail: "BER · LH 401", time: "16:20", duration: "2h 5m", group: "Tomorrow" },
+    {
+      category: "meeting",
+      title: "Design review",
+      detail: "with Sarah, Alex",
+      time: "9:30",
+      duration: "45m",
+      group: "Today",
+    },
+    {
+      category: "focus",
+      title: "Deep work · spec draft",
+      detail: "Notification center",
+      time: "11:00",
+      duration: "2h",
+      group: "Today",
+    },
+    {
+      category: "team",
+      title: "All-hands",
+      detail: "Q2 roadmap update",
+      time: "10:00",
+      duration: "30m",
+      group: "Tomorrow",
+    },
+    {
+      category: "travel",
+      title: "Flight to Berlin",
+      detail: "BER · LH 401",
+      time: "16:20",
+      duration: "2h 5m",
+      group: "Tomorrow",
+    },
   ],
 };
 
@@ -34,17 +62,20 @@ const categoryStyles: Record<EventCategory, { icon: LucideIcon; accent: string; 
   },
   team: {
     icon: Users,
-    accent: "bg-violet-50 border-violet-500/20 text-violet-600 dark:bg-violet-950/40 dark:text-violet-400",
+    accent:
+      "bg-violet-50 border-violet-500/20 text-violet-600 dark:bg-violet-950/40 dark:text-violet-400",
     bar: "bg-violet-500",
   },
   personal: {
     icon: Coffee,
-    accent: "bg-amber-50 border-amber-500/20 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
+    accent:
+      "bg-amber-50 border-amber-500/20 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
     bar: "bg-amber-500",
   },
   focus: {
     icon: Sparkles,
-    accent: "bg-emerald-50 border-emerald-500/20 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400",
+    accent:
+      "bg-emerald-50 border-emerald-500/20 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400",
     bar: "bg-emerald-500",
   },
   travel: {
@@ -131,14 +162,7 @@ export function EventList({
   }));
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -166,11 +190,7 @@ export function EventList({
               {items.length}
             </span>
           </div>
-          <motion.div
-            className="flex flex-col"
-            variants={animated ? list : undefined}
-            {...state}
-          >
+          <motion.div className="flex flex-col" variants={animated ? list : undefined} {...state}>
             {rows.flatMap(({ item, showHeader }, i) => {
               const { icon: Icon, accent, bar } = categoryStyles[item.category];
               const isLast = i === rows.length - 1;
@@ -195,17 +215,25 @@ export function EventList({
                   variants={animated ? row : undefined}
                 >
                   <div className="flex w-10 shrink-0 flex-col items-end pt-0.5">
-                    <span className="text-xs font-semibold text-foreground tabular-nums">{item.time}</span>
+                    <span className="text-xs font-semibold text-foreground tabular-nums">
+                      {item.time}
+                    </span>
                     <span className="text-[9px] text-muted-foreground">{item.duration}</span>
                   </div>
                   <div className={`w-0.5 shrink-0 rounded-full ${bar}`} />
                   <div className="flex min-w-0 flex-1 items-start gap-2 pt-0.5">
-                    <div className={`flex size-6 shrink-0 items-center justify-center rounded-md border ${accent}`}>
+                    <div
+                      className={`flex size-6 shrink-0 items-center justify-center rounded-md border ${accent}`}
+                    >
                       <Icon className="size-3" strokeWidth={2} />
                     </div>
                     <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                      <span className="truncate text-xs font-medium text-foreground">{item.title}</span>
-                      <span className="truncate text-[10px] text-muted-foreground">{item.detail}</span>
+                      <span className="truncate text-xs font-medium text-foreground">
+                        {item.title}
+                      </span>
+                      <span className="truncate text-[10px] text-muted-foreground">
+                        {item.detail}
+                      </span>
                     </div>
                   </div>
                 </motion.div>,

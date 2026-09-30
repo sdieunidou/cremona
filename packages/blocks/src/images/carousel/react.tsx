@@ -293,14 +293,7 @@ export function Carousel({
   const rightSlide = slides[Math.min(2, slides.length - 1)]!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("relative w-full", !fill && "max-w-80")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

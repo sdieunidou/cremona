@@ -50,16 +50,13 @@ export function Feedback({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-72", "rounded-xl border bg-card p-5 text-card-foreground shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-72",
+          "rounded-xl border bg-card p-5 text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
@@ -87,10 +84,7 @@ export function Feedback({
             variants={animated ? content : undefined}
             {...state}
           >
-            <motion.div
-              className="flex flex-col gap-0.5"
-              variants={animated ? item : undefined}
-            >
+            <motion.div className="flex flex-col gap-0.5" variants={animated ? item : undefined}>
               <p className="text-sm font-semibold text-foreground">
                 How likely do you recommend us?
               </p>
@@ -98,10 +92,7 @@ export function Feedback({
                 Your feedback helps us improve Cremona.
               </p>
             </motion.div>
-            <motion.div
-              className="flex flex-col gap-1.5"
-              variants={animated ? item : undefined}
-            >
+            <motion.div className="flex flex-col gap-1.5" variants={animated ? item : undefined}>
               <div className="flex gap-0.5" role="radiogroup" aria-label="Score from 0 to 10">
                 {scores.map((n) => (
                   <button
@@ -128,10 +119,7 @@ export function Feedback({
               </div>
             </motion.div>
             {comment && (
-              <motion.div
-                className="flex flex-col gap-1.5"
-                variants={animated ? item : undefined}
-              >
+              <motion.div className="flex flex-col gap-1.5" variants={animated ? item : undefined}>
                 <label
                   htmlFor="cremona-feedback-comment"
                   className="text-xs font-medium text-foreground"

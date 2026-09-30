@@ -63,7 +63,10 @@ function annotate2(html) {
     const style = styleMatch ? styleMatch[1] : "";
     if (!/opacity:0|scale\(0|scaleX\(0|translate|rotateX\(0/.test(style)) return match;
     const target = {};
-    for (const d of style.split(";").map((x) => x.trim()).filter(Boolean)) {
+    for (const d of style
+      .split(";")
+      .map((x) => x.trim())
+      .filter(Boolean)) {
       if (/^opacity:0$/.test(d)) {
         // target opacity comes from the utility class (opacity-60 -> .6) when present
         const om = /(?:^|\s)opacity-(\d+)\b/.exec(cls);
@@ -76,7 +79,10 @@ function annotate2(html) {
           .replace(/translate\([^)]*\)/g, "translate(0px,0px)")
           .replace(/scale\(([\d.]+)\)/g, "scale(1)")
           .replace(/scaleX\(([\d.]+)\)/g, "scaleX(1)")
-          .replace(/rotateX\(([\d.]+)deg\) rotateZ\(([-\d.]+)deg\)/g, "rotateX(45deg) rotateZ(-45deg)")
+          .replace(
+            /rotateX\(([\d.]+)deg\) rotateZ\(([-\d.]+)deg\)/g,
+            "rotateX(45deg) rotateZ(-45deg)",
+          )
           .replace(/rotateX\(0deg\) rotateZ\(0deg\)/g, "rotateX(45deg) rotateZ(-45deg)");
         if (v && v !== "none") target.transform = v;
       }
@@ -144,4 +150,6 @@ for (const bjPath of blockJsons) {
 }
 
 writeFileSync(join(OUT, "manifest.json"), JSON.stringify(manifest, null, 2) + "\n");
-console.log(`stimulus templates: ${templates} variants across ${Object.keys(manifest).length} blocks`);
+console.log(
+  `stimulus templates: ${templates} variants across ${Object.keys(manifest).length} blocks`,
+);

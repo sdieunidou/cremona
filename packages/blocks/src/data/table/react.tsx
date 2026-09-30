@@ -28,10 +28,38 @@ export const tableDefaultColumns: TableColumn[] = [
 ];
 
 export const tableDefaultItems: TableRowItem[] = [
-  { name: "Sarah Chen", initials: "SC", subtitle: "sarah@acme.io", status: "active", role: "Admin", joined: "Jan 12" },
-  { name: "Alex Park", initials: "AP", subtitle: "alex@acme.io", status: "active", role: "Developer", joined: "Mar 4" },
-  { name: "Mia Lee", initials: "ML", subtitle: "mia@acme.io", status: "pending", role: "Designer", joined: "Apr 19" },
-  { name: "Ben Novak", initials: "BN", subtitle: "ben@acme.io", status: "active", role: "Developer", joined: "Jun 1" },
+  {
+    name: "Sarah Chen",
+    initials: "SC",
+    subtitle: "sarah@acme.io",
+    status: "active",
+    role: "Admin",
+    joined: "Jan 12",
+  },
+  {
+    name: "Alex Park",
+    initials: "AP",
+    subtitle: "alex@acme.io",
+    status: "active",
+    role: "Developer",
+    joined: "Mar 4",
+  },
+  {
+    name: "Mia Lee",
+    initials: "ML",
+    subtitle: "mia@acme.io",
+    status: "pending",
+    role: "Designer",
+    joined: "Apr 19",
+  },
+  {
+    name: "Ben Novak",
+    initials: "BN",
+    subtitle: "ben@acme.io",
+    status: "active",
+    role: "Developer",
+    joined: "Jun 1",
+  },
 ];
 
 const badgeStyles: Record<string, string> = {
@@ -140,14 +168,7 @@ export function Table({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-96"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -191,9 +212,7 @@ export function Table({
                   >
                     <div className="flex items-center gap-0.5">
                       {column.label}
-                      {column.sort && (
-                        <ArrowDown className="size-2.5 text-muted-foreground/70" />
-                      )}
+                      {column.sort && <ArrowDown className="size-2.5 text-muted-foreground/70" />}
                     </div>
                   </th>
                 ))}
@@ -243,7 +262,10 @@ export function Table({
                       );
                     }
                     return (
-                      <td key={column.key} className={`py-2 ${pad} text-[10px] text-muted-foreground`}>
+                      <td
+                        key={column.key}
+                        className={`py-2 ${pad} text-[10px] text-muted-foreground`}
+                      >
                         {item[column.key]}
                       </td>
                     );

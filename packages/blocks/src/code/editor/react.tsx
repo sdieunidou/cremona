@@ -11,16 +11,7 @@ export interface EditorTab {
 
 export interface EditorToken {
   width: number;
-  color:
-    | "keyword"
-    | "func"
-    | "string"
-    | "variable"
-    | "type"
-    | "comment"
-    | "punct"
-    | "tag"
-    | "prop";
+  color: "keyword" | "func" | "string" | "variable" | "type" | "comment" | "punct" | "tag" | "prop";
 }
 
 export interface EditorLine {
@@ -104,80 +95,362 @@ const tokenColors: Record<EditorToken["color"], string> = {
 
 const editorDefaultLines: Record<EditorLanguage, EditorLine[]> = {
   tsx: [
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 24, color: "variable" }, { width: 10, color: "punct" }, { width: 32, color: "string" }] },
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 30, color: "func" }, { width: 24, color: "variable" }, { width: 14, color: "type" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 24, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 32, color: "string" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 30, color: "func" },
+        { width: 24, color: "variable" },
+        { width: 14, color: "type" },
+      ],
+    },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 14, color: "keyword" }, { width: 22, color: "keyword" }, { width: 32, color: "func" }, { width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 12, color: "keyword" }, { width: 14, color: "punct" }, { width: 18, color: "tag" }, { width: 22, color: "prop" }, { width: 18, color: "string" }] },
-    { indent: 2, tokens: [{ width: 16, color: "tag" }, { width: 38, color: "string" }, { width: 14, color: "tag" }] },
-    { indent: 2, tokens: [{ width: 16, color: "tag" }, { width: 32, color: "prop" }, { width: 14, color: "string" }, { width: 12, color: "tag" }] },
-    { indent: 1, tokens: [{ width: 14, color: "punct" }, { width: 14, color: "tag" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 22, color: "keyword" },
+        { width: 32, color: "func" },
+        { width: 10, color: "punct" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 12, color: "keyword" },
+        { width: 14, color: "punct" },
+        { width: 18, color: "tag" },
+        { width: 22, color: "prop" },
+        { width: 18, color: "string" },
+      ],
+    },
+    {
+      indent: 2,
+      tokens: [
+        { width: 16, color: "tag" },
+        { width: 38, color: "string" },
+        { width: 14, color: "tag" },
+      ],
+    },
+    {
+      indent: 2,
+      tokens: [
+        { width: 16, color: "tag" },
+        { width: 32, color: "prop" },
+        { width: 14, color: "string" },
+        { width: 12, color: "tag" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 14, color: "punct" },
+        { width: 14, color: "tag" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
   js: [
-    { indent: 0, tokens: [{ width: 26, color: "comment" }, { width: 40, color: "comment" }] },
-    { indent: 0, tokens: [{ width: 14, color: "keyword" }, { width: 28, color: "variable" }, { width: 10, color: "punct" }, { width: 20, color: "func" }, { width: 14, color: "string" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 26, color: "comment" },
+        { width: 40, color: "comment" },
+      ],
+    },
+    {
+      indent: 0,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 28, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 20, color: "func" },
+        { width: 14, color: "string" },
+      ],
+    },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 30, color: "func" }, { width: 22, color: "variable" }] },
-    { indent: 1, tokens: [{ width: 14, color: "keyword" }, { width: 22, color: "variable" }, { width: 10, color: "punct" }, { width: 28, color: "func" }] },
-    { indent: 1, tokens: [{ width: 18, color: "keyword" }, { width: 22, color: "variable" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 30, color: "func" },
+        { width: 22, color: "variable" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 22, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 28, color: "func" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 22, color: "variable" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
   py: [
-    { indent: 0, tokens: [{ width: 16, color: "keyword" }, { width: 26, color: "variable" }, { width: 16, color: "keyword" }, { width: 18, color: "variable" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 16, color: "keyword" },
+        { width: 26, color: "variable" },
+        { width: 16, color: "keyword" },
+        { width: 18, color: "variable" },
+      ],
+    },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 14, color: "keyword" }, { width: 28, color: "func" }, { width: 16, color: "variable" }, { width: 10, color: "type" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 28, color: "func" },
+        { width: 16, color: "variable" },
+        { width: 10, color: "type" },
+      ],
+    },
     { indent: 1, tokens: [{ width: 40, color: "string" }] },
-    { indent: 1, tokens: [{ width: 22, color: "variable" }, { width: 10, color: "punct" }, { width: 28, color: "func" }, { width: 14, color: "string" }] },
-    { indent: 1, tokens: [{ width: 18, color: "keyword" }, { width: 22, color: "variable" }] },
+    {
+      indent: 1,
+      tokens: [
+        { width: 22, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 28, color: "func" },
+        { width: 14, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 22, color: "variable" },
+      ],
+    },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 14, color: "keyword" }, { width: 24, color: "variable" }, { width: 16, color: "punct" }, { width: 26, color: "string" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 24, color: "variable" },
+        { width: 16, color: "punct" },
+        { width: 26, color: "string" },
+      ],
+    },
   ],
   php: [
-    { indent: 0, tokens: [{ width: 14, color: "punct" }, { width: 22, color: "keyword" }, { width: 18, color: "variable" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 14, color: "punct" },
+        { width: 22, color: "keyword" },
+        { width: 18, color: "variable" },
+      ],
+    },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 22, color: "keyword" }, { width: 26, color: "type" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 22, color: "keyword" },
+        { width: 26, color: "type" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 18, color: "keyword" }, { width: 22, color: "func" }, { width: 14, color: "variable" }] },
-    { indent: 2, tokens: [{ width: 18, color: "keyword" }, { width: 22, color: "variable" }, { width: 10, color: "punct" }, { width: 28, color: "func" }] },
+    {
+      indent: 1,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 22, color: "func" },
+        { width: 14, color: "variable" },
+      ],
+    },
+    {
+      indent: 2,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 22, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 28, color: "func" },
+      ],
+    },
     { indent: 1, tokens: [{ width: 10, color: "punct" }] },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
   html: [
-    { indent: 0, tokens: [{ width: 10, color: "punct" }, { width: 22, color: "tag" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 10, color: "punct" },
+        { width: 22, color: "tag" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 18, color: "tag" }] },
     { indent: 1, tokens: [{ width: 16, color: "tag" }] },
-    { indent: 2, tokens: [{ width: 14, color: "tag" }, { width: 24, color: "string" }, { width: 14, color: "tag" }] },
-    { indent: 2, tokens: [{ width: 14, color: "tag" }, { width: 22, color: "prop" }, { width: 26, color: "string" }, { width: 12, color: "tag" }] },
+    {
+      indent: 2,
+      tokens: [
+        { width: 14, color: "tag" },
+        { width: 24, color: "string" },
+        { width: 14, color: "tag" },
+      ],
+    },
+    {
+      indent: 2,
+      tokens: [
+        { width: 14, color: "tag" },
+        { width: 22, color: "prop" },
+        { width: 26, color: "string" },
+        { width: 12, color: "tag" },
+      ],
+    },
     { indent: 1, tokens: [{ width: 18, color: "tag" }] },
     { indent: 1, tokens: [{ width: 16, color: "tag" }] },
-    { indent: 2, tokens: [{ width: 14, color: "tag" }, { width: 32, color: "string" }, { width: 14, color: "tag" }] },
-    { indent: 2, tokens: [{ width: 14, color: "tag" }, { width: 22, color: "prop" }, { width: 14, color: "string" }, { width: 18, color: "string" }, { width: 12, color: "tag" }] },
+    {
+      indent: 2,
+      tokens: [
+        { width: 14, color: "tag" },
+        { width: 32, color: "string" },
+        { width: 14, color: "tag" },
+      ],
+    },
+    {
+      indent: 2,
+      tokens: [
+        { width: 14, color: "tag" },
+        { width: 22, color: "prop" },
+        { width: 14, color: "string" },
+        { width: 18, color: "string" },
+        { width: 12, color: "tag" },
+      ],
+    },
     { indent: 1, tokens: [{ width: 18, color: "tag" }] },
     { indent: 0, tokens: [{ width: 22, color: "tag" }] },
   ],
   css: [
-    { indent: 0, tokens: [{ width: 26, color: "prop" }, { width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 22, color: "prop" }, { width: 20, color: "string" }] },
-    { indent: 1, tokens: [{ width: 26, color: "prop" }, { width: 18, color: "keyword" }] },
-    { indent: 1, tokens: [{ width: 24, color: "prop" }, { width: 22, color: "string" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 26, color: "prop" },
+        { width: 10, color: "punct" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 22, color: "prop" },
+        { width: 20, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 26, color: "prop" },
+        { width: 18, color: "keyword" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 24, color: "prop" },
+        { width: 22, color: "string" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 28, color: "tag" }, { width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 14, color: "tag" }, { width: 10, color: "punct" }] },
-    { indent: 2, tokens: [{ width: 22, color: "prop" }, { width: 14, color: "keyword" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 28, color: "tag" },
+        { width: 10, color: "punct" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 14, color: "tag" },
+        { width: 10, color: "punct" },
+      ],
+    },
+    {
+      indent: 2,
+      tokens: [
+        { width: 22, color: "prop" },
+        { width: 14, color: "keyword" },
+      ],
+    },
     { indent: 1, tokens: [{ width: 10, color: "punct" }] },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
   go: [
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 16, color: "variable" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 16, color: "variable" },
+      ],
+    },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 18, color: "keyword" }, { width: 22, color: "string" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 18, color: "keyword" },
+        { width: 22, color: "string" },
+      ],
+    },
     { indent: 0, tokens: [], blank: true },
-    { indent: 0, tokens: [{ width: 14, color: "keyword" }, { width: 22, color: "func" }, { width: 10, color: "punct" }, { width: 10, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 18, color: "variable" }, { width: 10, color: "punct" }, { width: 26, color: "string" }] },
-    { indent: 1, tokens: [{ width: 14, color: "keyword" }, { width: 22, color: "variable" }, { width: 18, color: "type" }, { width: 10, color: "punct" }, { width: 18, color: "func" }, { width: 14, color: "punct" }] },
-    { indent: 1, tokens: [{ width: 16, color: "variable" }, { width: 10, color: "punct" }, { width: 22, color: "func" }, { width: 14, color: "variable" }] },
+    {
+      indent: 0,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 22, color: "func" },
+        { width: 10, color: "punct" },
+        { width: 10, color: "punct" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 18, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 26, color: "string" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 14, color: "keyword" },
+        { width: 22, color: "variable" },
+        { width: 18, color: "type" },
+        { width: 10, color: "punct" },
+        { width: 18, color: "func" },
+        { width: 14, color: "punct" },
+      ],
+    },
+    {
+      indent: 1,
+      tokens: [
+        { width: 16, color: "variable" },
+        { width: 10, color: "punct" },
+        { width: 22, color: "func" },
+        { width: 14, color: "variable" },
+      ],
+    },
     { indent: 0, tokens: [{ width: 10, color: "punct" }] },
   ],
 };
@@ -193,34 +466,43 @@ function EditorCodeLine({
   showGutter: boolean;
   lineNumbers: boolean;
 }) {
-  const bg = line.diff === "add"
-    ? "bg-emerald-500/8 dark:bg-emerald-500/10"
-    : line.diff === "remove"
-      ? "bg-rose-500/8 dark:bg-rose-500/10"
-      : line.highlight
-        ? "bg-primary/8"
-        : "";
-  const border = line.diff === "add"
-    ? "border-emerald-500/60"
-    : line.diff === "remove"
-      ? "border-rose-500/60"
-      : line.highlight
-        ? "border-primary"
-        : "border-transparent";
-  const gutterColor = line.diff === "add"
-    ? "text-emerald-600 dark:text-emerald-400"
-    : line.diff === "remove"
-      ? "text-rose-600 dark:text-rose-400"
-      : "text-muted-foreground/60";
-  const gutterText = line.diff === "add" ? "+" : line.diff === "remove" ? "−" : lineNumbers ? index + 1 : "";
+  const bg =
+    line.diff === "add"
+      ? "bg-emerald-500/8 dark:bg-emerald-500/10"
+      : line.diff === "remove"
+        ? "bg-rose-500/8 dark:bg-rose-500/10"
+        : line.highlight
+          ? "bg-primary/8"
+          : "";
+  const border =
+    line.diff === "add"
+      ? "border-emerald-500/60"
+      : line.diff === "remove"
+        ? "border-rose-500/60"
+        : line.highlight
+          ? "border-primary"
+          : "border-transparent";
+  const gutterColor =
+    line.diff === "add"
+      ? "text-emerald-600 dark:text-emerald-400"
+      : line.diff === "remove"
+        ? "text-rose-600 dark:text-rose-400"
+        : "text-muted-foreground/60";
+  const gutterText =
+    line.diff === "add" ? "+" : line.diff === "remove" ? "−" : lineNumbers ? index + 1 : "";
   return (
     <div className={`flex items-center gap-1.5 border-l-2 px-2.5 ${border} ${bg}`}>
       {showGutter && (
-        <span className={`w-3 shrink-0 text-right text-[8px] font-medium tabular-nums ${gutterColor}`}>
+        <span
+          className={`w-3 shrink-0 text-right text-[8px] font-medium tabular-nums ${gutterColor}`}
+        >
           {gutterText}
         </span>
       )}
-      <div className="flex flex-1 items-center gap-1" style={{ paddingLeft: `${line.indent * 8}px` }}>
+      <div
+        className="flex flex-1 items-center gap-1"
+        style={{ paddingLeft: `${line.indent * 8}px` }}
+      >
         {line.blank ? (
           <div className="h-1.25" />
         ) : (
@@ -280,14 +562,7 @@ export function Editor({
   const showGutter = lineNumbers || hasDiff;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-90"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

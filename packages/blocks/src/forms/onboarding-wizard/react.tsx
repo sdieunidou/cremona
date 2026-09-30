@@ -59,16 +59,13 @@ export function OnboardingWizard({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("flex w-full", !fill && "max-w-72", "flex-col gap-3 rounded-xl border bg-card p-5 text-card-foreground shadow-xs")}
+        className={cn(
+          "flex w-full",
+          !fill && "max-w-72",
+          "flex-col gap-3 rounded-xl border bg-card p-5 text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
@@ -97,10 +94,7 @@ export function OnboardingWizard({
         >
           {step === 1 && (
             <>
-              <motion.div
-                className="flex flex-col gap-1.5"
-                variants={animated ? item : undefined}
-              >
+              <motion.div className="flex flex-col gap-1.5" variants={animated ? item : undefined}>
                 <label
                   htmlFor="cremona-onboarding-workspace"
                   className="text-xs font-medium text-foreground"
@@ -115,10 +109,7 @@ export function OnboardingWizard({
                   className="h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs outline-none transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus:border-ring focus:ring-3 focus:ring-ring/50"
                 />
               </motion.div>
-              <motion.div
-                className="grid grid-cols-4 gap-2"
-                variants={animated ? item : undefined}
-              >
+              <motion.div className="grid grid-cols-4 gap-2" variants={animated ? item : undefined}>
                 {icons.map((Icon, i) => (
                   <span
                     key={i}

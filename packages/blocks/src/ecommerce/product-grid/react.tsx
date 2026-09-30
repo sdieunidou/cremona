@@ -70,14 +70,7 @@ export function ProductGrid({
     filter === "All" ? products.slice(0, 4) : products.filter((p) => p.cat === filter);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-96", "rounded-lg border bg-card shadow-xs")}
         variants={animated ? entrance : undefined}
@@ -123,10 +116,7 @@ export function ProductGrid({
             ))}
           </motion.div>
           <motion.div
-            className={cn(
-              "mt-2 grid gap-1.5",
-              filter === "All" ? "grid-cols-2" : "grid-cols-3",
-            )}
+            className={cn("mt-2 grid gap-1.5", filter === "All" ? "grid-cols-2" : "grid-cols-3")}
             variants={animated ? cards : undefined}
             {...state}
           >

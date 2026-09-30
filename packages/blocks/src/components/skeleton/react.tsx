@@ -33,18 +33,8 @@ export function Skeleton({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
-      <motion.div
-        variants={animated ? entrance : undefined}
-        {...state}
-      >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
+      <motion.div variants={animated ? entrance : undefined} {...state}>
         {layout === "text" && (
           <div className={cn("flex w-full", !fill && "max-w-56", "flex-col gap-2.5")}>
             <div className="h-2.5 w-full animate-pulse rounded-full bg-muted-foreground/10" />
@@ -70,7 +60,9 @@ export function Skeleton({
           </div>
         )}
         {layout === "card" && (
-          <div className={cn("w-full", !fill && "max-w-56", "rounded-xl border bg-card p-4 shadow-xs")}>
+          <div
+            className={cn("w-full", !fill && "max-w-56", "rounded-xl border bg-card p-4 shadow-xs")}
+          >
             <div className="flex items-center gap-3">
               <div className="size-9 shrink-0 animate-pulse rounded-full bg-muted-foreground/10" />
               <div className="flex flex-1 flex-col gap-1.5">

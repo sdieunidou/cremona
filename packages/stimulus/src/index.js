@@ -8,8 +8,8 @@
  *   const app = Application.start();
  *   registerCremona(app);
  *
- * Then use the templates from templates/ (see templates/manifest.json) and the
- * CSS from @cremona/tokens.
+ * Then use the templates from @cremona/stimulus/templates/<category>/<file>/<slug>.html
+ * (index: @cremona/stimulus/templates/manifest.json) and the CSS from @cremona/tokens.
  */
 import CremonaVisualController from "./cremona-visual_controller.js";
 import CremonaThemeController from "./cremona-theme_controller.js";
@@ -21,6 +21,3 @@ export function registerCremona(application) {
   application.register("cremona-theme", CremonaThemeController);
   return application;
 }
-
-/** Read the generated template manifest (keys: "category/file"). */
-export { default as manifest } from "../templates/manifest.json";

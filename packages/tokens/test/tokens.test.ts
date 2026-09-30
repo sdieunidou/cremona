@@ -9,19 +9,50 @@ const css = readFileSync(join(root, "css", "themes.css"), "utf8");
 const full = readFileSync(join(root, "css", "cremona.css"), "utf8");
 
 const SEMANTIC = [
-  "--background", "--foreground", "--card", "--card-foreground", "--popover",
-  "--popover-foreground", "--primary", "--primary-foreground", "--secondary",
-  "--secondary-foreground", "--muted", "--muted-foreground", "--accent",
-  "--accent-foreground", "--destructive", "--border", "--input", "--ring",
-  "--chart-1", "--chart-2", "--chart-3", "--chart-4", "--chart-5", "--radius",
-  "--sidebar", "--sidebar-foreground", "--sidebar-primary",
-  "--sidebar-primary-foreground", "--sidebar-accent", "--sidebar-accent-foreground",
-  "--sidebar-border", "--sidebar-ring",
+  "--background",
+  "--foreground",
+  "--card",
+  "--card-foreground",
+  "--popover",
+  "--popover-foreground",
+  "--primary",
+  "--primary-foreground",
+  "--secondary",
+  "--secondary-foreground",
+  "--muted",
+  "--muted-foreground",
+  "--accent",
+  "--accent-foreground",
+  "--destructive",
+  "--border",
+  "--input",
+  "--ring",
+  "--chart-1",
+  "--chart-2",
+  "--chart-3",
+  "--chart-4",
+  "--chart-5",
+  "--radius",
+  "--sidebar",
+  "--sidebar-foreground",
+  "--sidebar-primary",
+  "--sidebar-primary-foreground",
+  "--sidebar-accent",
+  "--sidebar-accent-foreground",
+  "--sidebar-border",
+  "--sidebar-ring",
 ];
 
 const THEMES = [
-  "default", "claude-plus", "light-green", "zen", "sakura",
-  "tiesen", "deep-purple", "indigo-clean", "brutalism",
+  "default",
+  "claude-plus",
+  "light-green",
+  "zen",
+  "sakura",
+  "tiesen",
+  "deep-purple",
+  "indigo-clean",
+  "brutalism",
 ];
 
 function blockFor(selectorPrefix: string): string {
@@ -45,7 +76,10 @@ describe("cremona tokens", () => {
 
   for (const theme of THEMES.slice(1)) {
     it(`theme ${theme} defines light + dark with all semantic tokens`, () => {
-      for (const sel of [`.theme-${theme}:not(.dark){--background`, `.theme-${theme}.dark{--background`]) {
+      for (const sel of [
+        `.theme-${theme}:not(.dark){--background`,
+        `.theme-${theme}.dark{--background`,
+      ]) {
         const block = blockFor(sel);
         for (const token of SEMANTIC) {
           expect(block, `${sel} missing ${token}`).toContain(token);
@@ -60,7 +94,7 @@ describe("cremona tokens", () => {
   });
 
   it("the complete stylesheet embeds the tokens + Inter font", () => {
-    expect(full).toContain(':root{--background:');
+    expect(full).toContain(":root{--background:");
     expect(full).toContain("Inter Variable");
     expect(full.length).toBeGreaterThan(300_000);
   });

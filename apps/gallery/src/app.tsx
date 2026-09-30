@@ -44,26 +44,49 @@ export function App() {
 
   const sidebarClass = cn(
     SHELL.sidebar,
-    mobileNav && "max-md:!block max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-100 max-md:w-64 max-md:bg-sidebar max-md:shadow-xl",
+    mobileNav &&
+      "max-md:!block max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-100 max-md:w-64 max-md:bg-sidebar max-md:shadow-xl",
   );
 
   return (
-    <div className={SHELL.wrapper} style={{ "--sidebar-width": "16rem", "--sidebar-width-icon": "3rem" } as React.CSSProperties}>
-      <div className={sidebarClass} data-state="expanded" data-collapsible="" data-variant="inset" data-side="left" data-slot="sidebar">
+    <div
+      className={SHELL.wrapper}
+      style={{ "--sidebar-width": "16rem", "--sidebar-width-icon": "3rem" } as React.CSSProperties}
+    >
+      <div
+        className={sidebarClass}
+        data-state="expanded"
+        data-collapsible=""
+        data-variant="inset"
+        data-side="left"
+        data-slot="sidebar"
+      >
         <div className={SHELL.gap} />
-        <div className={cn(SHELL.container, mobileNav && "max-md:!flex")} data-slot="sidebar-container" data-side="left">
+        <div
+          className={cn(SHELL.container, mobileNav && "max-md:!flex")}
+          data-slot="sidebar-container"
+          data-side="left"
+        >
           <div className={SHELL.inner} data-sidebar="sidebar">
             <SidebarContent {...nav} />
             <div className={SHELL.footer}>
               <p className="px-2 text-xs text-muted-foreground">
-                {route.name === "home" ? "Every render is golden-verified." : "Render verified against the POC goldens."}
+                {route.name === "home"
+                  ? "Every render is golden-verified."
+                  : "Render verified against the POC goldens."}
               </p>
             </div>
           </div>
         </div>
       </div>
       {mobileNav && (
-        <div className="fixed inset-0 z-90 bg-black/40 md:hidden" onClick={() => setMobileNav(false)} />
+        <button
+          type="button"
+          aria-label="Close navigation"
+          tabIndex={-1}
+          className="fixed inset-0 z-90 bg-black/40 md:hidden"
+          onClick={() => setMobileNav(false)}
+        />
       )}
       <main className={SHELL.main} data-slot="sidebar-inset">
         <Header
@@ -81,7 +104,11 @@ export function App() {
         )}
         <Footer />
       </main>
-      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} onNavigate={nav.onNavigate} />
+      <SearchDialog
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onNavigate={nav.onNavigate}
+      />
       <span className="hidden">{String(isDark)}</span>
     </div>
   );
@@ -92,7 +119,14 @@ function Footer() {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex flex-col items-center gap-4 text-center md:flex-row-reverse md:justify-between md:text-left">
         <div className="flex items-center justify-center gap-0.5 text-xs font-semibold text-muted-foreground">
           <span>Crafted with</span>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" className="inline-block size-4 text-rose-600 dark:text-rose-400">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            aria-hidden="true"
+            data-slot="icon"
+            className="inline-block size-4 text-rose-600 dark:text-rose-400"
+          >
             <path d="m9.653 16.915-.005-.003-.019-.01a20.759 20.759 0 0 1-1.162-.682 22.045 22.045 0 0 1-2.582-1.9C4.045 12.733 2 10.352 2 7.5a4.5 4.5 0 0 1 8-2.828A4.5 4.5 0 0 1 18 7.5c0 2.852-2.044 5.233-3.885 6.82a22.049 22.049 0 0 1-3.744 2.582l-.019.01-.006.004h-.002l-.001-.001Z" />
           </svg>
           <span>for interfaces that feel alive.</span>

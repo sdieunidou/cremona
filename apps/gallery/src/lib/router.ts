@@ -20,7 +20,9 @@ export function useRoute(): [string, (to: string) => void] {
 }
 
 /** Route parser: "/" | "/visuals/<category>/<file>". */
-export function parseRoute(path: string): { name: "home" } | { name: "block"; category: string; file: string } {
+export function parseRoute(
+  path: string,
+): { name: "home" } | { name: "block"; category: string; file: string } {
   const m = /^\/visuals\/([\w-]+)\/([\w-]+)\/?$/.exec(path);
   if (m) return { name: "block", category: m[1]!, file: m[2]! };
   return { name: "home" };

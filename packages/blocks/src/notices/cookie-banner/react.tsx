@@ -38,14 +38,7 @@ export function CookieBanner({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       {minimal ? (
         <motion.div
           className="flex w-80 items-center gap-3 rounded-xl border bg-popover p-3 shadow-lg"
@@ -77,12 +70,10 @@ export function CookieBanner({
               <Cookie className="size-4.5 text-foreground" strokeWidth={2} />
             </span>
             <div className="flex min-w-0 flex-col gap-1">
-              <p className="text-sm font-semibold text-foreground">
-                We value your privacy
-              </p>
+              <p className="text-sm font-semibold text-foreground">We value your privacy</p>
               <p className="text-xs leading-snug text-muted-foreground">
-                We use cookies to personalize content and analyze traffic. See our
-                cookie policy for details.
+                We use cookies to personalize content and analyze traffic. See our cookie policy for
+                details.
               </p>
             </div>
           </div>

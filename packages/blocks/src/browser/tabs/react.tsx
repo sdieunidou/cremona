@@ -99,9 +99,15 @@ function PricingContent() {
             key={i}
             className={`flex flex-col gap-1.5 rounded-md p-2 ${featured ? `bg-primary` : `bg-muted/60`}`}
           >
-            <div className={`h-1 w-3/5 rounded-full ${featured ? `bg-background/60` : `bg-muted-foreground/20`}`} />
-            <div className={`h-2.5 w-4/5 rounded-full ${featured ? `bg-background` : `bg-muted-foreground/35`}`} />
-            <div className={`mt-auto h-3 rounded-sm ${featured ? `bg-background` : `bg-muted-foreground/20`}`} />
+            <div
+              className={`h-1 w-3/5 rounded-full ${featured ? `bg-background/60` : `bg-muted-foreground/20`}`}
+            />
+            <div
+              className={`h-2.5 w-4/5 rounded-full ${featured ? `bg-background` : `bg-muted-foreground/35`}`}
+            />
+            <div
+              className={`mt-auto h-3 rounded-sm ${featured ? `bg-background` : `bg-muted-foreground/20`}`}
+            />
           </div>
         ))}
       </div>
@@ -159,7 +165,8 @@ export function Tabs({
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [isHovering, setIsHovering] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const isActive = hover ? isHovering : inView;
 
   useEffect(() => {
@@ -182,10 +189,7 @@ export function Tabs({
       ref={ref}
       aria-hidden="true"
       inert={!animated}
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setIsHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setIsHovering(false) : undefined}
     >
@@ -231,7 +235,9 @@ export function Tabs({
                     onClick={() => setActiveTab(i)}
                     className={`flex h-5 items-center gap-1 rounded-full px-2 text-[9px] font-medium transition-colors ${active ? `bg-background text-foreground` : `text-muted-foreground hover:bg-background/50`}`}
                   >
-                    <span className={`size-1.5 rounded-full ${active ? `bg-primary` : `bg-muted-foreground/40`}`} />
+                    <span
+                      className={`size-1.5 rounded-full ${active ? `bg-primary` : `bg-muted-foreground/40`}`}
+                    />
                     <span>{tab}</span>
                     <X className="size-2 opacity-50" />
                   </button>

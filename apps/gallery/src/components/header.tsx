@@ -14,15 +14,84 @@ interface ThemeMeta {
 }
 
 const THEMES: ThemeMeta[] = [
-  { value: "default", label: "Default", class: null, swatches: ["oklch(0.205 0 0)", "oklch(0.556 0 0)", "oklch(0.922 0 0)"] },
-  { value: "claude-plus", label: "Claude+", class: "theme-claude-plus", swatches: ["oklch(0.6171 0.1375 39.0427)", "oklch(0.6898 0.1581 290.4107)", "oklch(0.9245 0.0138 92.9892)"] },
-  { value: "light-green", label: "Light Green", class: "theme-light-green", swatches: ["oklch(0.72 0.145 145)", "oklch(0.7227 0.192 149.5793)", "oklch(0.3717 0.0392 257.287)"] },
-  { value: "zen", label: "Zen", class: "theme-zen", swatches: ["oklch(0.3012 0 0)", "oklch(0.6863 0.1743 34.2614)", "oklch(0.8647 0.0201 87.5232)"] },
-  { value: "sakura", label: "Sakura", class: "theme-sakura", swatches: ["oklch(0.7508 0.161 2.6024)", "oklch(0.5367 0.153 7.7575)", "oklch(0.9239 0.0415 1.1045)"] },
-  { value: "tiesen", label: "Tiesen", class: "theme-tiesen", swatches: ["oklch(0.2571 0.1161 272.24)", "oklch(0.5144 0.1605 267.44)", "oklch(0.9214 0.0248 257.65)"] },
-  { value: "deep-purple", label: "Deep Purple", class: "theme-deep-purple", swatches: ["oklch(0.4865 0.2423 291.8661)", "oklch(0.6192 0.2037 312.7283)", "oklch(0.9546 0.0227 303.2883)"] },
-  { value: "indigo-clean", label: "Indigo Clean", class: "theme-indigo-clean", swatches: ["oklch(0.5854 0.2041 277.1173)", "oklch(0.6056 0.2189 292.7172)", "oklch(0.9299 0.0334 272.7879)"] },
-  { value: "brutalism", label: "Brutalism", class: "theme-brutalism", swatches: ["hsl(0, 100%, 43%)", "oklch(0.8408 0.1725 84.2008)", "oklch(0 0 0)"] },
+  {
+    value: "default",
+    label: "Default",
+    class: null,
+    swatches: ["oklch(0.205 0 0)", "oklch(0.556 0 0)", "oklch(0.922 0 0)"],
+  },
+  {
+    value: "claude-plus",
+    label: "Claude+",
+    class: "theme-claude-plus",
+    swatches: [
+      "oklch(0.6171 0.1375 39.0427)",
+      "oklch(0.6898 0.1581 290.4107)",
+      "oklch(0.9245 0.0138 92.9892)",
+    ],
+  },
+  {
+    value: "light-green",
+    label: "Light Green",
+    class: "theme-light-green",
+    swatches: [
+      "oklch(0.72 0.145 145)",
+      "oklch(0.7227 0.192 149.5793)",
+      "oklch(0.3717 0.0392 257.287)",
+    ],
+  },
+  {
+    value: "zen",
+    label: "Zen",
+    class: "theme-zen",
+    swatches: ["oklch(0.3012 0 0)", "oklch(0.6863 0.1743 34.2614)", "oklch(0.8647 0.0201 87.5232)"],
+  },
+  {
+    value: "sakura",
+    label: "Sakura",
+    class: "theme-sakura",
+    swatches: [
+      "oklch(0.7508 0.161 2.6024)",
+      "oklch(0.5367 0.153 7.7575)",
+      "oklch(0.9239 0.0415 1.1045)",
+    ],
+  },
+  {
+    value: "tiesen",
+    label: "Tiesen",
+    class: "theme-tiesen",
+    swatches: [
+      "oklch(0.2571 0.1161 272.24)",
+      "oklch(0.5144 0.1605 267.44)",
+      "oklch(0.9214 0.0248 257.65)",
+    ],
+  },
+  {
+    value: "deep-purple",
+    label: "Deep Purple",
+    class: "theme-deep-purple",
+    swatches: [
+      "oklch(0.4865 0.2423 291.8661)",
+      "oklch(0.6192 0.2037 312.7283)",
+      "oklch(0.9546 0.0227 303.2883)",
+    ],
+  },
+  {
+    value: "indigo-clean",
+    label: "Indigo Clean",
+    class: "theme-indigo-clean",
+    swatches: [
+      "oklch(0.5854 0.2041 277.1173)",
+      "oklch(0.6056 0.2189 292.7172)",
+      "oklch(0.9299 0.0334 272.7879)",
+    ],
+  },
+  {
+    value: "brutalism",
+    label: "Brutalism",
+    class: "theme-brutalism",
+    swatches: ["hsl(0, 100%, 43%)", "oklch(0.8408 0.1725 84.2008)", "oklch(0 0 0)"],
+  },
 ];
 
 export interface HeaderProps {
@@ -37,7 +106,14 @@ export interface HeaderProps {
 const BUTTON =
   "group/button inline-flex shrink-0 items-center justify-center rounded-md border bg-clip-padding text-sm font-medium whitespace-nowrap transition-transform outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 border-border bg-background shadow-xs hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4";
 
-export function Header({ appearance, theme, onToggleDark, onTheme, onOpenSearch, onToggleSidebar }: HeaderProps) {
+export function Header({
+  appearance,
+  theme,
+  onToggleDark,
+  onTheme,
+  onOpenSearch,
+  onToggleSidebar,
+}: HeaderProps) {
   return (
     <header className={SHELL.pageHeader}>
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex h-14 items-center gap-2 bg-background/80 backdrop-blur md:gap-2 md:rounded-t-xl">
@@ -48,14 +124,29 @@ export function Header({ appearance, theme, onToggleDark, onTheme, onOpenSearch,
             onClick={onToggleSidebar}
             aria-label="Toggle Sidebar"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-panel-left lucide-sidebar" aria-hidden="true">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-panel-left lucide-sidebar"
+              aria-hidden="true"
+            >
               <rect width="18" height="18" x="3" y="3" rx="2" />
               <path d="M9 3v18" />
             </svg>
           </button>
           <button
             type="button"
-            className={cn(BUTTON, "h-9 px-2.5 gap-2 text-muted-foreground md:w-55 md:justify-start")}
+            className={cn(
+              BUTTON,
+              "h-9 px-2.5 gap-2 text-muted-foreground md:w-55 md:justify-start",
+            )}
             onClick={onOpenSearch}
           >
             <Search data-icon="inline-start" />
@@ -72,7 +163,12 @@ export function Header({ appearance, theme, onToggleDark, onTheme, onOpenSearch,
         </div>
         <div className="ml-auto flex items-center gap-1 md:gap-2">
           <ThemePicker current={theme} onTheme={onTheme} />
-          <button type="button" className={cn(BUTTON, "size-9")} onClick={onToggleDark} aria-label="Toggle theme">
+          <button
+            type="button"
+            className={cn(BUTTON, "size-9")}
+            onClick={onToggleDark}
+            aria-label="Toggle theme"
+          >
             <Sun
               className={cn(
                 "h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90",
@@ -136,7 +232,11 @@ function ThemePicker({ current, onTheme }: { current: string; onTheme: (v: strin
             >
               <span className="flex gap-0.5">
                 {t.swatches.map((s, i) => (
-                  <span key={i} className="size-2.5 rounded-full border border-border/50" style={{ background: s }} />
+                  <span
+                    key={i}
+                    className="size-2.5 rounded-full border border-border/50"
+                    style={{ background: s }}
+                  />
                 ))}
               </span>
               <span className="flex-1 text-left">{t.label}</span>
@@ -160,13 +260,18 @@ export function SearchDialog({
   onNavigate: (to: string) => void;
 }) {
   const [query, setQuery] = useState("");
+  const [wasOpen, setWasOpen] = useState(open);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  if (open !== wasOpen) {
+    setWasOpen(open);
+    if (open) setQuery("");
+  }
+
   useEffect(() => {
-    if (open) {
-      setQuery("");
-      setTimeout(() => inputRef.current?.focus(), 10);
-    }
+    if (!open) return;
+    const timer = setTimeout(() => inputRef.current?.focus(), 10);
+    return () => clearTimeout(timer);
   }, [open]);
 
   useEffect(() => {
@@ -191,10 +296,16 @@ export function SearchDialog({
     : [];
 
   return (
-    <div className="fixed inset-0 z-100 flex items-start justify-center bg-background/80 p-4 pt-[12vh] backdrop-blur-xs" onMouseDown={onClose}>
+    <div
+      role="presentation"
+      className="fixed inset-0 z-100 flex items-start justify-center bg-background/80 p-4 pt-[12vh] backdrop-blur-xs"
+      onMouseDown={(e) => e.target === e.currentTarget && onClose()}
+    >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search visuals"
         className="w-full max-w-xl overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-lg"
-        onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-center gap-2 border-b px-3">
           <Search className="size-4 opacity-50" />
@@ -218,7 +329,9 @@ export function SearchDialog({
               Type to search {categories.reduce((n, c) => n + c.items.length, 0)} visuals…
             </p>
           ) : results.length === 0 ? (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">No results for “{query}”.</p>
+            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
+              No results for “{query}”.
+            </p>
           ) : (
             results.map(({ cat, item }) => (
               <button
@@ -233,7 +346,9 @@ export function SearchDialog({
                 <span className="text-sm font-medium">
                   {highlight(item.name, q)} <span className="opacity-50">· {cat.category}</span>
                 </span>
-                <span className="line-clamp-1 text-xs text-muted-foreground">{item.description}</span>
+                <span className="line-clamp-1 text-xs text-muted-foreground">
+                  {item.description}
+                </span>
               </button>
             ))
           )}

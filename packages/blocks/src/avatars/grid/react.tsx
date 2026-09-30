@@ -108,14 +108,7 @@ export function AvatarGrid({
   const horizontalLines = Array.from({ length: rows }, (_, i) => PADDING + i * 80 + CELL / 2);
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="relative"
         style={{
@@ -133,7 +126,8 @@ export function AvatarGrid({
               className="absolute inset-x-0 border-t border-dashed border-border"
               style={{
                 top: y,
-                maskImage: "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
+                maskImage:
+                  "linear-gradient(to right, transparent, black 12%, black 88%, transparent)",
               }}
             />
           ))}

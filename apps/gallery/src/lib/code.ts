@@ -1,10 +1,10 @@
 /** Code access: lazy raw sources + usage-snippet generation. */
 import type { BlockEntry } from "./discovery.js";
 
-const reactRawModules = import.meta.glob<string>(
-  "../../../../packages/blocks/src/*/*/react.tsx",
-  { query: "?raw", import: "default" },
-);
+const reactRawModules = import.meta.glob<string>("../../../../packages/blocks/src/*/*/react.tsx", {
+  query: "?raw",
+  import: "default",
+});
 const stimRawModules = import.meta.glob<string>(
   "../../../../packages/stimulus/templates/*/*/*.html",
   { query: "?raw", import: "default" },
@@ -33,7 +33,10 @@ export function loadStimulusTemplate(key: string, slug: string): Promise<string 
 }
 
 function pascal(file: string): string {
-  return file.split("-").map((p) => p.charAt(0).toUpperCase() + p.slice(1)).join("");
+  return file
+    .split("-")
+    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
+    .join("");
 }
 
 function jsxValue(value: unknown): string {
@@ -48,7 +51,8 @@ function jsxValue(value: unknown): string {
 /** Build the React usage snippet for a variant (import + JSX with exact props). */
 export function reactUsage(entry: BlockEntry, label: string): string {
   const componentName = pascal(entry.meta.file);
-  const props = entry.previewProps[entry.meta.variants.find((v) => v.label === label) ? label : label] ?? {};
+  const props =
+    entry.previewProps[entry.meta.variants.find((v) => v.label === label) ? label : label] ?? {};
   const icons = new Set<string>();
   const attrs: string[] = [];
   for (const [k, v] of Object.entries(props)) {

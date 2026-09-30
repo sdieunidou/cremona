@@ -50,14 +50,7 @@ export function Select({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("flex w-full", !fill && "max-w-64", "flex-col gap-1.5")}
         variants={animated ? entrance : undefined}
@@ -106,9 +99,7 @@ export function Select({
             </motion.div>
           )}
         </div>
-        {invalid && (
-          <p className="text-xs text-destructive">Please choose a region.</p>
-        )}
+        {invalid && <p className="text-xs text-destructive">Please choose a region.</p>}
       </motion.div>
     </div>
   );

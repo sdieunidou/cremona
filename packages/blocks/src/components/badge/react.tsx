@@ -14,9 +14,11 @@ export interface BadgeProps extends VisualProps {
 const variantClasses: Record<string, string> = {
   default: "bg-primary text-primary-foreground",
   secondary: "bg-secondary text-secondary-foreground",
-  outline: "border border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
+  outline:
+    "border border-border text-foreground [a]:hover:bg-muted [a]:hover:text-muted-foreground",
   destructive: "bg-destructive text-white",
-  success: "bg-emerald-500/10 text-emerald-600 ring-1 ring-inset ring-emerald-500/15 dark:text-emerald-400",
+  success:
+    "bg-emerald-500/10 text-emerald-600 ring-1 ring-inset ring-emerald-500/15 dark:text-emerald-400",
   warning: "bg-amber-500/10 text-amber-600 ring-1 ring-inset ring-amber-500/15 dark:text-amber-400",
 };
 
@@ -61,14 +63,7 @@ export function Badge({
   void ArrowUpRight;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.span
         className={cn(
           "inline-flex h-5 w-fit shrink-0 items-center justify-center gap-1 overflow-hidden whitespace-nowrap px-2 text-xs font-medium transition-all [&>svg]:pointer-events-none [&>svg]:size-3!",

@@ -30,10 +30,7 @@ const copy: Record<string, { title: string; description: string }> = {
   },
 };
 
-const variantClasses: Record<
-  string,
-  { box: string; icon: string; Icon: LucideIcon }
-> = {
+const variantClasses: Record<string, { box: string; icon: string; Icon: LucideIcon }> = {
   info: {
     box: "border-sky-500/20 bg-sky-500/10",
     icon: "text-sky-600 dark:text-sky-400",
@@ -87,14 +84,7 @@ export function Alert({
   const fallback = copy[variant] ?? copy.info!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         role="alert"
         className={cn("flex w-full", !fill && "max-w-80", "gap-3 rounded-lg border p-4", box)}
@@ -104,9 +94,7 @@ export function Alert({
         <Icon className={cn("mt-0.5 size-4.5 shrink-0", icon)} aria-hidden="true" />
         <div className="flex flex-col gap-0.5">
           <p className="text-sm font-medium text-foreground">{title ?? fallback.title}</p>
-          <p className="text-xs text-muted-foreground">
-            {description ?? fallback.description}
-          </p>
+          <p className="text-xs text-muted-foreground">{description ?? fallback.description}</p>
         </div>
       </motion.div>
     </div>

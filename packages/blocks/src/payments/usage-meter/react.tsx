@@ -41,7 +41,11 @@ const meterAnim = {
   hidden: { scaleX: 0 },
   visible: {
     scaleX: 1,
-    transition: { duration: 0.7, delay: 0.3, ease: [0.65, 0, 0.35, 1] as [number, number, number, number] },
+    transition: {
+      duration: 0.7,
+      delay: 0.3,
+      ease: [0.65, 0, 0.35, 1] as [number, number, number, number],
+    },
   },
 } as const;
 
@@ -149,17 +153,12 @@ export function UsageMeter({
     : "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -226,8 +225,12 @@ export function UsageMeter({
                 variants={animated ? itemAnim : undefined}
               >
                 <div className="flex items-center gap-2 overflow-hidden">
-                  <span className={cn("size-2 shrink-0 rounded-full", item.color ?? "bg-primary")} />
-                  <span className="shrink-0 text-[11px] font-medium text-foreground">{item.label}</span>
+                  <span
+                    className={cn("size-2 shrink-0 rounded-full", item.color ?? "bg-primary")}
+                  />
+                  <span className="shrink-0 text-[11px] font-medium text-foreground">
+                    {item.label}
+                  </span>
                   <span className="truncate text-[10px] text-muted-foreground">{item.detail}</span>
                 </div>
                 <span className="shrink-0 text-[11px] font-semibold text-foreground tabular-nums">

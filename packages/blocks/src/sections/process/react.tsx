@@ -73,14 +73,7 @@ export function Process({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-72", "p-8.5", fadeOut && "mask-b-from-60%")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -123,7 +116,10 @@ export function Process({
               {stepNumbers.map((step, i) => (
                 <Fragment key={step}>
                   {i > 0 && (
-                    <motion.div className="h-px flex-1 bg-border" variants={animated ? item : undefined} />
+                    <motion.div
+                      className="h-px flex-1 bg-border"
+                      variants={animated ? item : undefined}
+                    />
                   )}
                   <motion.div
                     className="flex shrink-0 flex-col items-center gap-1 px-1"

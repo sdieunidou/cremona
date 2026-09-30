@@ -64,16 +64,13 @@ export function Accordion({
   const shown = items.slice(0, Math.max(1, Math.min(count, items.length)));
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-sm", "divide-y divide-border rounded-lg border bg-card text-card-foreground shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-sm",
+          "divide-y divide-border rounded-lg border bg-card text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
@@ -91,7 +88,10 @@ export function Accordion({
                   className="flex w-full items-center gap-2 px-4 py-3.5 text-left text-sm font-medium text-foreground transition-colors outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50"
                 >
                   {icons && (
-                    <item.icon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+                    <item.icon
+                      className="size-4 shrink-0 text-muted-foreground"
+                      aria-hidden="true"
+                    />
                   )}
                   <span className="flex-1">{item.title}</span>
                   <motion.span
@@ -113,9 +113,7 @@ export function Accordion({
                 animate={{ height: isOpen ? "auto" : 0 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <p className="px-4 pb-4 text-xs leading-5 text-muted-foreground">
-                  {item.body}
-                </p>
+                <p className="px-4 pb-4 text-xs leading-5 text-muted-foreground">{item.body}</p>
               </motion.div>
             </div>
           );

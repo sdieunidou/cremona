@@ -60,8 +60,8 @@ function keyOf(path: string): string {
 
 export const catalog: CatalogGroup[] = Object.values(catalogModule)[0]?.default ?? [];
 
-export const thumbnails: Record<string, Record<string, unknown>> =
-  Object.values(thumbsModule)[0]?.default ?? {};
+export const thumbnails: Record<string, Record<string, unknown>> = Object.values(thumbsModule)[0]
+  ?.default ?? {};
 
 export interface BlockEntry {
   key: string;

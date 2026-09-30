@@ -160,10 +160,7 @@ export function LogoOrbit({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >

@@ -12,8 +12,18 @@ export interface ThreadReply {
 }
 
 export const threadDefaultCopy: ThreadReply[] = [
-  { user: "Sarah Chen", initials: "SC", text: "Massive. The progress indicator was the move.", time: "10:31" },
-  { user: "Mia Lee", initials: "ML", text: "Can we A/B test the welcome step next?", time: "10:42" },
+  {
+    user: "Sarah Chen",
+    initials: "SC",
+    text: "Massive. The progress indicator was the move.",
+    time: "10:31",
+  },
+  {
+    user: "Mia Lee",
+    initials: "ML",
+    text: "Can we A/B test the welcome step next?",
+    time: "10:42",
+  },
 ];
 
 const card = {
@@ -103,14 +113,7 @@ export function Thread({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

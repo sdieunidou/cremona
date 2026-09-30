@@ -4,22 +4,30 @@ For Symfony / Hotwire apps that want the same visuals without React.
 
 ## Setup
 
+With a bundler (Webpack Encore, Vite), once the packages are published:
+
 ```bash
-pnpm add @cremona/stimulus @cremona/tokens
+npm install @cremona/stimulus @cremona/tokens @hotwired/stimulus
 ```
 
 ```js
 // assets/controllers.js (or any bootstrap file)
 import { Application } from "@hotwired/stimulus";
 import { registerCremona } from "@cremona/stimulus";
+import "@cremona/tokens/css/cremona.css";
 
 const app = Application.start();
 registerCremona(app); // registers cremona-visual + cremona-theme
 ```
 
+With Symfony AssetMapper (no bundler): copy
+`packages/stimulus/src/cremona-{visual,theme}_controller.js` into
+`assets/controllers/` (StimulusBundle registers them as `cremona-visual` and
+`cremona-theme`), and copy `packages/tokens/css/cremona.css` together with its
+`*.woff2` files into `assets/styles/cremona/`.
+
 ```twig
 {# base.html.twig #}
-<link rel="stylesheet" href="/css/cremona.css">  {# or bundled #}
 <html data-controller="cremona-theme">
 ```
 

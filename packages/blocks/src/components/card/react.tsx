@@ -53,16 +53,13 @@ export function Card({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-80", "rounded-xl border bg-card text-card-foreground shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-80",
+          "rounded-xl border bg-card text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >

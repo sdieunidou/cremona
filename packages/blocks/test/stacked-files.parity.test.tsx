@@ -14,14 +14,13 @@ vi.mock("react-dom/server", async (importOriginal) => {
   return {
     ...actual,
     renderToStaticMarkup: (element: React.ReactElement, options?: unknown) =>
-      actual.renderToString(element, options).replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
+      actual
+        .renderToString(element, options)
+        .replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
   };
 });
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/files/stacked",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/files/stacked");
 
 runGoldenParity("files/stacked", {
   blockDir,

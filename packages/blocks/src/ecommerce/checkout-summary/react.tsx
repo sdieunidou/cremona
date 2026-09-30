@@ -60,16 +60,13 @@ export function CheckoutSummary({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-72", "rounded-xl border bg-card p-5 text-card-foreground shadow-xs")}
+        className={cn(
+          "w-full",
+          !fill && "max-w-72",
+          "rounded-xl border bg-card p-5 text-card-foreground shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >

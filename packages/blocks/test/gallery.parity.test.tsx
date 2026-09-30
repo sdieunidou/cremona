@@ -39,6 +39,9 @@ runGoldenParity("images/gallery", {
   Component: Gallery,
   variants: [
     { label: "real images", props: { title: "Photo library", badge: false, items } },
-    { label: "isometric · real images", props: { isometric: true, title: "Photo library", badge: false, items } },
+    {
+      label: "isometric · real images",
+      props: { isometric: true, title: "Photo library", badge: false, items },
+    },
   ],
 });

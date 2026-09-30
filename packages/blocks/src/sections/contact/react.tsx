@@ -82,14 +82,7 @@ export function Contact({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-72", "p-8.5", fadeOut && "mask-b-from-60%")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -142,7 +135,11 @@ export function Contact({
                 <div className="h-0.75 w-1/2 rounded-full bg-muted-foreground/20" />
               </motion.div>
             </motion.div>
-            <motion.div className="mt-3 flex gap-2" variants={animated ? form : undefined} {...state}>
+            <motion.div
+              className="mt-3 flex gap-2"
+              variants={animated ? form : undefined}
+              {...state}
+            >
               <div className="flex flex-1 flex-col gap-1.5">
                 <div className="h-3 rounded-md border bg-muted/20" />
                 <div className="h-3 rounded-md border bg-muted/20" />

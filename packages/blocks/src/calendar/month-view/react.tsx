@@ -164,7 +164,11 @@ export function MonthView({
   className,
 }: MonthViewProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isHydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
+  const isHydrated = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const state = animated
@@ -186,7 +190,7 @@ export function MonthView({
   const weekdayLabels = weekStartsOn === 1 ? weekdaysMon : weekdaysSun;
   const isThisMonth =
     isHydrated && currentMonth === now.getMonth() && currentYear === now.getFullYear();
-  const today = highlighted === null ? null : highlighted ?? (isThisMonth ? now.getDate() : null);
+  const today = highlighted === null ? null : (highlighted ?? (isThisMonth ? now.getDate() : null));
 
   const totalCells = Math.ceil((leadingBlanks + daysInMonth) / 7) * 7;
   const cells: (number | null)[] = [];
@@ -202,14 +206,7 @@ export function MonthView({
   const pillTextVariants = animated ? pillText(daysInMonth) : undefined;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

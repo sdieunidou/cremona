@@ -171,9 +171,7 @@ export function Semantic({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const sweeping = animated && triggered && ready;
   const pinging = sweeping && (!hover || hovering);
-  const state = animated
-    ? { initial: "hidden", animate: triggered ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const resolvedMatches = (matches.length ? matches : defaultMatches).slice(0, MAX_MATCHES);
   const count = resolvedMatches.length;
   const points = resolvedMatches.map((_, i) => MATCH_POINTS[i]!);
@@ -206,10 +204,7 @@ export function Semantic({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >
@@ -327,11 +322,14 @@ export function Semantic({
                 />
               </g>
             ))}
-            <motion.g
-              variants={animated ? originAnim : undefined}
-              {...state}
-            >
-              <circle cx={CENTER_X} cy={CENTER_Y} r={10} fill="currentColor" className="text-background" />
+            <motion.g variants={animated ? originAnim : undefined} {...state}>
+              <circle
+                cx={CENTER_X}
+                cy={CENTER_Y}
+                r={10}
+                fill="currentColor"
+                className="text-background"
+              />
               <circle
                 cx={CENTER_X}
                 cy={CENTER_Y}
@@ -340,7 +338,13 @@ export function Semantic({
                 strokeWidth={1.25}
                 className="text-primary/40"
               />
-              <circle cx={CENTER_X} cy={CENTER_Y} r={4} fill="currentColor" className="text-primary" />
+              <circle
+                cx={CENTER_X}
+                cy={CENTER_Y}
+                r={4}
+                fill="currentColor"
+                className="text-primary"
+              />
             </motion.g>
           </g>
           <motion.path
@@ -363,7 +367,9 @@ export function Semantic({
             variants={animated ? queryAnim : undefined}
             {...state}
           >
-            <span className="flex-1 truncate text-[11px]/5 font-medium text-foreground">{query}</span>
+            <span className="flex-1 truncate text-[11px]/5 font-medium text-foreground">
+              {query}
+            </span>
             <Search className="size-3.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />
           </motion.div>
         </div>

@@ -70,7 +70,10 @@ const cardIso = {
 
 const glowVariant = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    transition: { duration: GLOW_DURATION, delay: GLOW_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 const particlesVariant = {
@@ -90,7 +93,11 @@ const veil = {
 
 const header = {
   hidden: { opacity: 0, y: -4 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3, delay: HEADER_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.3, delay: HEADER_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 const row: Variants = {
@@ -98,7 +105,12 @@ const row: Variants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 320, damping: 26, delay: ROW_DELAY + i * ROW_DELAY_UNIT },
+    transition: {
+      type: "spring",
+      stiffness: 320,
+      damping: 26,
+      delay: ROW_DELAY + i * ROW_DELAY_UNIT,
+    },
   }),
 };
 
@@ -120,20 +132,160 @@ interface Particle {
 }
 
 const PARTICLES: Particle[] = [
-  { x: 10.2, y: 24.8, size: 3, color: "bg-primary", duration: 5.34, delay: -4.61, driftX: 4.6, driftY: 13.2, opacity: 0.58 },
-  { x: 90.6, y: 32.4, size: 3, color: "bg-chart-1", duration: 6.28, delay: -2.37, driftX: -3.4, driftY: 12.1, opacity: 0.62 },
-  { x: 18.4, y: 72.6, size: 2, color: "bg-chart-2", duration: 6.11, delay: -1.28, driftX: -2.5, driftY: 15.8, opacity: 0.46 },
-  { x: 84.1, y: 66.9, size: 3, color: "bg-chart-3", duration: 4.24, delay: -3.55, driftX: 5.7, driftY: 13.1, opacity: 0.64 },
-  { x: 4.6, y: 50.3, size: 2, color: "bg-chart-4", duration: 4.58, delay: -5.27, driftX: 6.4, driftY: 15.6, opacity: 0.52 },
-  { x: 95.2, y: 58.1, size: 3, color: "bg-primary", duration: 4.36, delay: -1.41, driftX: -3.2, driftY: 14.4, opacity: 0.44 },
-  { x: 24.3, y: 11.6, size: 2, color: "bg-chart-1", duration: 4.88, delay: -5.72, driftX: 4.1, driftY: 9.4, opacity: 0.49 },
-  { x: 76.8, y: 15.2, size: 3, color: "bg-chart-4", duration: 7.42, delay: -5.33, driftX: 6.6, driftY: 12.9, opacity: 0.56 },
-  { x: 29.1, y: 88.4, size: 3, color: "bg-primary", duration: 5.57, delay: -2.86, driftX: -2.5, driftY: 10.2, opacity: 0.6 },
-  { x: 70.4, y: 91.2, size: 2, color: "bg-chart-3", duration: 4.97, delay: -1.18, driftX: 5.1, driftY: 8.5, opacity: 0.48 },
-  { x: 2.8, y: 84.7, size: 3, color: "bg-primary", duration: 5.16, delay: -5.44, driftX: 4.3, driftY: 13.7, opacity: 0.45 },
-  { x: 96.4, y: 86.3, size: 2, color: "bg-chart-2", duration: 4.71, delay: -2.58, driftX: -3.1, driftY: 15.5, opacity: 0.51 },
-  { x: 46.2, y: 6.4, size: 3, color: "bg-chart-4", duration: 6.22, delay: -5.02, driftX: -2.8, driftY: 9.6, opacity: 0.5 },
-  { x: 57.6, y: 94.1, size: 2, color: "bg-primary", duration: 6.47, delay: -5.61, driftX: 1.6, driftY: 9.2, opacity: 0.54 },
+  {
+    x: 10.2,
+    y: 24.8,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.34,
+    delay: -4.61,
+    driftX: 4.6,
+    driftY: 13.2,
+    opacity: 0.58,
+  },
+  {
+    x: 90.6,
+    y: 32.4,
+    size: 3,
+    color: "bg-chart-1",
+    duration: 6.28,
+    delay: -2.37,
+    driftX: -3.4,
+    driftY: 12.1,
+    opacity: 0.62,
+  },
+  {
+    x: 18.4,
+    y: 72.6,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 6.11,
+    delay: -1.28,
+    driftX: -2.5,
+    driftY: 15.8,
+    opacity: 0.46,
+  },
+  {
+    x: 84.1,
+    y: 66.9,
+    size: 3,
+    color: "bg-chart-3",
+    duration: 4.24,
+    delay: -3.55,
+    driftX: 5.7,
+    driftY: 13.1,
+    opacity: 0.64,
+  },
+  {
+    x: 4.6,
+    y: 50.3,
+    size: 2,
+    color: "bg-chart-4",
+    duration: 4.58,
+    delay: -5.27,
+    driftX: 6.4,
+    driftY: 15.6,
+    opacity: 0.52,
+  },
+  {
+    x: 95.2,
+    y: 58.1,
+    size: 3,
+    color: "bg-primary",
+    duration: 4.36,
+    delay: -1.41,
+    driftX: -3.2,
+    driftY: 14.4,
+    opacity: 0.44,
+  },
+  {
+    x: 24.3,
+    y: 11.6,
+    size: 2,
+    color: "bg-chart-1",
+    duration: 4.88,
+    delay: -5.72,
+    driftX: 4.1,
+    driftY: 9.4,
+    opacity: 0.49,
+  },
+  {
+    x: 76.8,
+    y: 15.2,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 7.42,
+    delay: -5.33,
+    driftX: 6.6,
+    driftY: 12.9,
+    opacity: 0.56,
+  },
+  {
+    x: 29.1,
+    y: 88.4,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.57,
+    delay: -2.86,
+    driftX: -2.5,
+    driftY: 10.2,
+    opacity: 0.6,
+  },
+  {
+    x: 70.4,
+    y: 91.2,
+    size: 2,
+    color: "bg-chart-3",
+    duration: 4.97,
+    delay: -1.18,
+    driftX: 5.1,
+    driftY: 8.5,
+    opacity: 0.48,
+  },
+  {
+    x: 2.8,
+    y: 84.7,
+    size: 3,
+    color: "bg-primary",
+    duration: 5.16,
+    delay: -5.44,
+    driftX: 4.3,
+    driftY: 13.7,
+    opacity: 0.45,
+  },
+  {
+    x: 96.4,
+    y: 86.3,
+    size: 2,
+    color: "bg-chart-2",
+    duration: 4.71,
+    delay: -2.58,
+    driftX: -3.1,
+    driftY: 15.5,
+    opacity: 0.51,
+  },
+  {
+    x: 46.2,
+    y: 6.4,
+    size: 3,
+    color: "bg-chart-4",
+    duration: 6.22,
+    delay: -5.02,
+    driftX: -2.8,
+    driftY: 9.6,
+    opacity: 0.5,
+  },
+  {
+    x: 57.6,
+    y: 94.1,
+    size: 2,
+    color: "bg-primary",
+    duration: 6.47,
+    delay: -5.61,
+    driftX: 1.6,
+    driftY: 9.2,
+    opacity: 0.54,
+  },
 ];
 
 function GlowScene() {
@@ -210,7 +362,9 @@ function ToolRow({
         </motion.span>
       </span>
       <span className="relative flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="truncate font-mono text-[11px] font-medium text-foreground">{tool.name}</span>
+        <span className="truncate font-mono text-[11px] font-medium text-foreground">
+          {tool.name}
+        </span>
         <span className="flex items-center gap-1 font-mono text-[10px]">
           <span className="min-w-0 truncate text-muted-foreground">
             <span className="text-muted-foreground/50">{"{ "}</span>
@@ -248,7 +402,9 @@ function ToolRow({
             className="block size-3.5 rounded-full border-[1.5px] border-primary/20 border-t-primary"
             animate={{ rotate: spinActive ? 360 : 0 }}
             transition={
-              spinActive ? { duration: SPIN_DURATION, ease: "linear", repeat: Infinity } : { duration: 0 }
+              spinActive
+                ? { duration: SPIN_DURATION, ease: "linear", repeat: Infinity }
+                : { duration: 0 }
             }
           />
         </motion.span>
@@ -297,7 +453,10 @@ export function Tools({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
-  const toolList = ((tools.length ? tools : toolsDefaultCopy.tools) as readonly ToolCall[]).slice(0, MAX_TOOLS);
+  const toolList = ((tools.length ? tools : toolsDefaultCopy.tools) as readonly ToolCall[]).slice(
+    0,
+    MAX_TOOLS,
+  );
   const count = toolList.length;
   const [current, setCurrent] = useState(-1);
   const [ticked, setTicked] = useState(false);
@@ -305,7 +464,8 @@ export function Tools({
     const id = requestAnimationFrame(() => setTicked(true));
     return () => cancelAnimationFrame(id);
   }, []);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = animated && (hover ? hovered : inView) && ticked;
   const drifting = animated && inView && ticked;
   const state = animated
@@ -353,9 +513,15 @@ export function Tools({
           <motion.div className="absolute inset-0 -z-10" variants={glowVariant} {...state}>
             <motion.div
               className="absolute inset-0"
-              animate={active ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 0.85 }}
+              animate={
+                active
+                  ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
+                  : { scale: 1, opacity: 0.85 }
+              }
               transition={
-                active ? { duration: 4.5, ease: "easeInOut", repeat: Infinity } : { duration: 0.6, ease: "easeOut" }
+                active
+                  ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
+                  : { duration: 0.6, ease: "easeOut" }
               }
             >
               <GlowScene />
@@ -383,16 +549,28 @@ export function Tools({
                   <motion.div
                     animate={
                       drifting
-                        ? { x: [0, p.driftX, 0], y: [0, -p.driftY, 0], opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5] }
+                        ? {
+                            x: [0, p.driftX, 0],
+                            y: [0, -p.driftY, 0],
+                            opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
+                          }
                         : { x: 0, y: 0, opacity: 0 }
                     }
                     transition={
                       drifting
-                        ? { duration: p.duration, delay: p.delay, ease: "easeInOut", repeat: Infinity }
+                        ? {
+                            duration: p.duration,
+                            delay: p.delay,
+                            ease: "easeInOut",
+                            repeat: Infinity,
+                          }
                         : { duration: 0.3 }
                     }
                   >
-                    <div className={`rotate-45 rounded-[1px] ${p.color}`} style={{ width: p.size, height: p.size }} />
+                    <div
+                      className={`rotate-45 rounded-[1px] ${p.color}`}
+                      style={{ width: p.size, height: p.size }}
+                    />
                   </motion.div>
                 </div>
               ))}

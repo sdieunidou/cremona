@@ -1,7 +1,16 @@
 import { useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Search, SearchX, FilePlus, Rocket, LayoutDashboard, Settings, CloudUpload, Undo2 } from "lucide-react";
+import {
+  Search,
+  SearchX,
+  FilePlus,
+  Rocket,
+  LayoutDashboard,
+  Settings,
+  CloudUpload,
+  Undo2,
+} from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CommandProps extends VisualProps {
@@ -90,9 +99,7 @@ export function Command({
 
   const needle = (empty ? "\u0000no-match" : value).trim().toLowerCase();
   // A query searches the whole catalog; without one, only the selected groups show.
-  const groupPool = needle
-    ? Object.keys(catalog)
-    : groups.filter((g) => catalog[g]);
+  const groupPool = needle ? Object.keys(catalog) : groups.filter((g) => catalog[g]);
   const rendered = groupPool
     .map((label) => ({
       label,
@@ -102,7 +109,6 @@ export function Command({
     }))
     .filter((g) => g.items.length > 0);
   const noResults = rendered.length === 0;
-  let first = true;
 
   const itemClasses =
     "flex h-8 w-full items-center gap-2 rounded-md px-2 text-sm outline-none transition-colors hover:bg-muted hover:text-foreground";
@@ -112,14 +118,7 @@ export function Command({
     "inline-flex h-4 min-w-4 items-center justify-center rounded border bg-muted font-mono text-[10px] font-medium text-muted-foreground";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         variants={animated ? entrance : undefined}
         {...state}
@@ -144,9 +143,8 @@ export function Command({
               <p className="px-2 py-1.5 text-[11px] font-medium text-muted-foreground">
                 {group.label}
               </p>
-              {group.items.map((item) => {
-                const selected = first;
-                first = false;
+              {group.items.map((item, index) => {
+                const selected = group === rendered[0] && index === 0;
                 return (
                   <button
                     key={item.label}
@@ -155,7 +153,10 @@ export function Command({
                     aria-selected={selected}
                     className={cn(itemClasses, selected && "bg-muted")}
                   >
-                    <item.icon className="size-4 shrink-0 text-muted-foreground" aria-hidden="true" />
+                    <item.icon
+                      className="size-4 shrink-0 text-muted-foreground"
+                      aria-hidden="true"
+                    />
                     {item.label}
                     {item.kbd && <kbd className={kbdClasses}>{item.kbd}</kbd>}
                   </button>

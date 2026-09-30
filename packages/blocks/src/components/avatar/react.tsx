@@ -45,10 +45,7 @@ function Circle({
 }) {
   return (
     <span
-      className={cn(
-        "relative inline-flex shrink-0",
-        ring && "rounded-full ring-2 ring-primary/40",
-      )}
+      className={cn("relative inline-flex shrink-0", ring && "rounded-full ring-2 ring-primary/40")}
     >
       <span
         className={cn(
@@ -103,18 +100,8 @@ export function Avatar({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
-      <motion.div
-        variants={animated ? entrance : undefined}
-        {...state}
-      >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
+      <motion.div variants={animated ? entrance : undefined} {...state}>
         {sizes ? (
           <div className="flex items-end gap-2.5">
             <Circle size="sm" fallback={fallback} />

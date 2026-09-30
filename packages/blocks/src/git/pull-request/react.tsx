@@ -265,9 +265,7 @@ export function PullRequest({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const cycling = animated && (hover ? hovering : triggered) && ready;
   const spinning = animated && triggered && ready;
-  const state = animated
-    ? { initial: "hidden", animate: triggered ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const rows = (checks?.length ? checks : defaultChecks).slice(0, MAX_CHECKS);
   const checkCount = rows.length;
   const failing = variant === "failing";
@@ -315,10 +313,7 @@ export function PullRequest({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={
         animated && hover
           ? () => {
@@ -331,7 +326,9 @@ export function PullRequest({
     >
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-96", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full",
+          !fill && "max-w-96",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

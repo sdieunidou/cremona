@@ -28,10 +28,7 @@ const copy: Record<string, { title: string; description: string }> = {
   },
 };
 
-const variantClasses: Record<
-  string,
-  { icon: string; Icon: LucideIcon }
-> = {
+const variantClasses: Record<string, { icon: string; Icon: LucideIcon }> = {
   info: { icon: "text-sky-600 dark:text-sky-400", Icon: Info },
   success: { icon: "text-emerald-600 dark:text-emerald-400", Icon: CheckCircle2 },
   error: { icon: "text-red-600 dark:text-red-400", Icon: OctagonX },
@@ -73,18 +70,10 @@ export function Toast({
   const { icon, Icon } = variantClasses[variant] ?? variantClasses.info!;
   const fallback = copy[variant] ?? copy.info!;
 
-  const cardClasses =
-    "flex w-64 items-start gap-3 rounded-lg border bg-popover p-4 shadow-lg";
+  const cardClasses = "flex w-64 items-start gap-3 rounded-lg border bg-popover p-4 shadow-lg";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="absolute right-3 bottom-3 w-64"
         variants={animated ? toastIn : undefined}
@@ -99,24 +88,16 @@ export function Toast({
           >
             <Icon className={cn("mt-0.5 size-4 shrink-0", icon)} aria-hidden="true" />
             <div className="flex flex-1 flex-col gap-0.5">
-              <p className="text-sm font-medium text-foreground">
-                {title ?? fallback.title}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {description ?? fallback.description}
-              </p>
+              <p className="text-sm font-medium text-foreground">{title ?? fallback.title}</p>
+              <p className="text-xs text-muted-foreground">{description ?? fallback.description}</p>
             </div>
           </div>
         )}
         <div role="status" className={cn(cardClasses, "relative")}>
           <Icon className={cn("mt-0.5 size-4 shrink-0", icon)} aria-hidden="true" />
           <div className="flex flex-1 flex-col gap-0.5">
-            <p className="text-sm font-medium text-foreground">
-              {title ?? fallback.title}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {description ?? fallback.description}
-            </p>
+            <p className="text-sm font-medium text-foreground">{title ?? fallback.title}</p>
+            <p className="text-xs text-muted-foreground">{description ?? fallback.description}</p>
             {action && (
               <button
                 type="button"

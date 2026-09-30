@@ -14,6 +14,9 @@ runGoldenParity("api/logs", {
   Component: Logs,
   variants: [
     { label: "two sources", props: { sources: [icon(Globe), icon(Database)] } },
-    { label: "four sources", props: { sources: [icon(Globe), icon(Server), icon(Cpu), icon(Cloud)] } },
+    {
+      label: "four sources",
+      props: { sources: [icon(Globe), icon(Server), icon(Cpu), icon(Cloud)] },
+    },
   ],
 });

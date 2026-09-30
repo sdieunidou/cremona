@@ -95,7 +95,15 @@ function PipelinePulse({
     return (
       <g>
         <animateMotion dur={dur} repeatCount="indefinite" begin={begin} path={d} rotate="auto" />
-        <line x1={-18} y1={0} x2={0} y2={0} stroke={`url(#${gradientId})`} strokeWidth={1.4} strokeLinecap="round" />
+        <line
+          x1={-18}
+          y1={0}
+          x2={0}
+          y2={0}
+          stroke={`url(#${gradientId})`}
+          strokeWidth={1.4}
+          strokeLinecap="round"
+        />
         <circle r={2} fill="currentColor" className="text-primary" />
       </g>
     );
@@ -138,18 +146,25 @@ export function Pipeline({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
 
   const inputList = (inputs.length ? inputs : pipelineDefaultCopy.inputs) as readonly ReactNode[];
-  const outputList = (outputs.length ? outputs : pipelineDefaultCopy.outputs) as readonly ReactNode[];
+  const outputList = (
+    outputs.length ? outputs : pipelineDefaultCopy.outputs
+  ) as readonly ReactNode[];
   const inputDelay = (i: number) => INPUT_DELAY + i * DELAY_UNIT;
   const outputDelay = (i: number) => OUTPUT_DELAY + i * DELAY_UNIT;
-  const inputPaths = inputList.map((_, i) => cubic(INPUT_X, nodeY(i, inputList.length), LOGO_X, LOGO_Y));
-  const outputPaths = outputList.map((_, i) => cubic(LOGO_X, LOGO_Y, OUTPUT_X, nodeY(i, outputList.length)));
+  const inputPaths = inputList.map((_, i) =>
+    cubic(INPUT_X, nodeY(i, inputList.length), LOGO_X, LOGO_Y),
+  );
+  const outputPaths = outputList.map((_, i) =>
+    cubic(LOGO_X, LOGO_Y, OUTPUT_X, nodeY(i, outputList.length)),
+  );
   const pulseDelay = OUTPUT_DELAY + (outputList.length - 1) * DELAY_UNIT + 0.45;
 
   return (
@@ -173,7 +188,14 @@ export function Pipeline({
         >
           {pulse === "spike" && (
             <defs>
-              <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1={-18} y1={0} x2={0} y2={0}>
+              <linearGradient
+                id={gradientId}
+                gradientUnits="userSpaceOnUse"
+                x1={-18}
+                y1={0}
+                x2={0}
+                y2={0}
+              >
                 <stop offset="0" stopColor="var(--color-primary)" stopOpacity={0} />
                 <stop offset="1" stopColor="var(--color-primary)" stopOpacity={0.9} />
               </linearGradient>
@@ -211,10 +233,21 @@ export function Pipeline({
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: pulseVisible && !hover ? pulseDelay : 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: pulseVisible && !hover ? pulseDelay : 0,
+              }}
             >
               {inputPaths.map((d, i) => (
-                <PipelinePulse key={`id${i}`} d={d} dur="2s" begin={`${-i * 0.7}s`} pulse={pulse} gradientId={gradientId} />
+                <PipelinePulse
+                  key={`id${i}`}
+                  d={d}
+                  dur="2s"
+                  begin={`${-i * 0.7}s`}
+                  pulse={pulse}
+                  gradientId={gradientId}
+                />
               ))}
               {outputPaths.map((d, i) => (
                 <PipelinePulse
@@ -233,7 +266,10 @@ export function Pipeline({
           <div
             key={`in${i}`}
             className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${(INPUT_X / CANVAS.w) * 100}%`, top: `${(nodeY(i, inputList.length) / CANVAS.h) * 100}%` }}
+            style={{
+              left: `${(INPUT_X / CANVAS.w) * 100}%`,
+              top: `${(nodeY(i, inputList.length) / CANVAS.h) * 100}%`,
+            }}
           >
             <motion.div
               className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
@@ -263,7 +299,10 @@ export function Pipeline({
           <div
             key={`on${i}`}
             className="absolute -translate-x-1/2 -translate-y-1/2"
-            style={{ left: `${(OUTPUT_X / CANVAS.w) * 100}%`, top: `${(nodeY(i, outputList.length) / CANVAS.h) * 100}%` }}
+            style={{
+              left: `${(OUTPUT_X / CANVAS.w) * 100}%`,
+              top: `${(nodeY(i, outputList.length) / CANVAS.h) * 100}%`,
+            }}
           >
             <motion.div
               className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"

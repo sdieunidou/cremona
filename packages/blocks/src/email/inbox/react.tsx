@@ -18,11 +18,47 @@ export interface InboxItem {
 export const inboxDefaultCopy: { title: string; items: InboxItem[] } = {
   title: "Inbox",
   items: [
-    { initials: "SC", sender: "Sarah Chen", subject: "Re: Q4 roadmap review", preview: "Looks great, ready to ship Friday.", time: "9:42", unread: true },
-    { initials: "AP", sender: "Alex Park", subject: "Design system v3 specs", preview: "Tokens, motion, and typography ready.", time: "9:18", unread: true, starred: true, hasAttachment: true },
-    { initials: "ML", sender: "Mia Lee", subject: "Notification center merged", preview: "Tests passed, deploying to staging.", time: "8:34" },
-    { initials: "BN", sender: "Ben Novak", subject: "Release notes draft", preview: "v2.4: what's new in this release.", time: "Yesterday", hasAttachment: true },
-    { initials: "JL", sender: "Jordan Liu", subject: "Onboarding walkthrough", preview: "First cut of the v3 walkthrough video.", time: "Mon", starred: true },
+    {
+      initials: "SC",
+      sender: "Sarah Chen",
+      subject: "Re: Q4 roadmap review",
+      preview: "Looks great, ready to ship Friday.",
+      time: "9:42",
+      unread: true,
+    },
+    {
+      initials: "AP",
+      sender: "Alex Park",
+      subject: "Design system v3 specs",
+      preview: "Tokens, motion, and typography ready.",
+      time: "9:18",
+      unread: true,
+      starred: true,
+      hasAttachment: true,
+    },
+    {
+      initials: "ML",
+      sender: "Mia Lee",
+      subject: "Notification center merged",
+      preview: "Tests passed, deploying to staging.",
+      time: "8:34",
+    },
+    {
+      initials: "BN",
+      sender: "Ben Novak",
+      subject: "Release notes draft",
+      preview: "v2.4: what's new in this release.",
+      time: "Yesterday",
+      hasAttachment: true,
+    },
+    {
+      initials: "JL",
+      sender: "Jordan Liu",
+      subject: "Onboarding walkthrough",
+      preview: "First cut of the v3 walkthrough video.",
+      time: "Mon",
+      starred: true,
+    },
   ],
 };
 
@@ -123,14 +159,7 @@ export function Inbox({
   const unreadCount = items.filter((item) => item.unread).length;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

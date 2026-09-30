@@ -38,14 +38,7 @@ export function UpdateBanner({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         role="status"
         className="relative flex h-9 w-full items-center justify-center gap-2 bg-primary px-4 text-xs font-medium text-primary-foreground"
@@ -53,9 +46,7 @@ export function UpdateBanner({
         {...state}
       >
         <Sparkles className="size-3.5 shrink-0" aria-hidden="true" />
-        <p className="min-w-0 truncate">
-          Cremona 2.4 is out — motion presets & 12 new blocks
-        </p>
+        <p className="min-w-0 truncate">Cremona 2.4 is out — motion presets & 12 new blocks</p>
         {action && (
           <button
             type="button"

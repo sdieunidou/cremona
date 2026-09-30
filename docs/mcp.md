@@ -9,8 +9,21 @@ authoring tools and coherence validation — no human in the loop required.
 ### Claude Code
 
 ```bash
-claude mcp add cremona -- node /absolute/path/to/cremona/packages/mcp/bin/cremona-mcp.mjs
+# every project on this machine (user scope)
+claude mcp add cremona -s user -- node /absolute/path/to/cremona/packages/mcp/bin/cremona-mcp.mjs
 ```
+
+Without `-s user` the server is registered for the current directory only.
+Inside the cremona repo itself, `.mcp.json` already registers it.
+
+Once `@cremona/mcp` is published, no checkout is needed:
+
+```bash
+claude mcp add cremona -s user -- npx -y @cremona/mcp
+```
+
+The published server reads a bundled snapshot of the library and does not
+register the authoring tools (`add_category`, `add_block`).
 
 ### opencode
 
@@ -50,6 +63,10 @@ node packages/mcp/tools/mcp-call.mjs search_blocks '{"query":"kanban"}'
 | `get_guide` | repo guides (porting-guide, authoring-guide…) |
 
 ## Prompt recipes
+
+Tool names depend on the client: Claude Code exposes `mcp__cremona__<tool>`,
+opencode `cremona_<tool>`. The recipes below use the opencode form; both clients
+resolve either spelling from the prompt.
 
 Copy-paste prompts that work well with the MCP server. Adjust the product
 context to your own.

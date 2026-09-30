@@ -4,8 +4,18 @@ import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type StackCategory =
-  | "default" | "documents" | "spreadsheets" | "images" | "design" | "code"
-  | "fonts" | "media" | "video" | "audio" | "archives" | "mixed";
+  | "default"
+  | "documents"
+  | "spreadsheets"
+  | "images"
+  | "design"
+  | "code"
+  | "fonts"
+  | "media"
+  | "video"
+  | "audio"
+  | "archives"
+  | "mixed";
 
 const badgeStyles: Record<StackCategory, string> = {
   default: "border-primary bg-primary text-primary-foreground",
@@ -161,8 +171,12 @@ function ArchivePreview() {
     <div className="flex flex-col items-center gap-px">
       {Array.from({ length: 8 }).map((_, i) => (
         <div key={i} className="flex w-full gap-0.5">
-          <div className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-amber-300/35` : `bg-muted`}`} />
-          <div className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-muted` : `bg-amber-300/35`}`} />
+          <div
+            className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-amber-300/35` : `bg-muted`}`}
+          />
+          <div
+            className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-muted` : `bg-amber-300/35`}`}
+          />
         </div>
       ))}
     </div>
@@ -272,14 +286,7 @@ export function Stacked({
   const text = labelText ?? `${count} files`;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div className="relative" variants={animated ? container : undefined} {...state}>
         {angles.map((angle, i) => (
           <motion.div

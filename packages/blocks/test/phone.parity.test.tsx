@@ -14,14 +14,13 @@ vi.mock("react-dom/server", async (importOriginal) => {
   return {
     ...actual,
     renderToStaticMarkup: (element: React.ReactElement, options?: unknown) =>
-      actual.renderToString(element, options).replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
+      actual
+        .renderToString(element, options)
+        .replace(/<link rel="preload" as="image"[^>]*\/>/g, ""),
   };
 });
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/devices/phone",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/devices/phone");
 
 // image paths resolved from the golden HTML (`use-cdn` helper in the POC page chunk)
 const photos = {
@@ -56,7 +55,11 @@ runGoldenParity("devices/phone", {
         date: "Friday, June 6",
         notifications: [
           { app: "Slack", title: "#design", body: "New mockups uploaded to Figma" },
-          { app: "Calendar", title: "Standup in 5 min", body: "Daily sync with the engineering team" },
+          {
+            app: "Calendar",
+            title: "Standup in 5 min",
+            body: "Daily sync with the engineering team",
+          },
         ],
       },
     },

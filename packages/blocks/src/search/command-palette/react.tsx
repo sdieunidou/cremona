@@ -1,15 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import {
-  CornerDownLeft,
-  FileText,
-  Plus,
-  Rocket,
-  Search,
-  Settings,
-  UserPlus,
-} from "lucide-react";
+import { CornerDownLeft, FileText, Plus, Rocket, Search, Settings, UserPlus } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CommandItem {
@@ -38,9 +30,21 @@ const defaultGroups: CommandGroup[] = [
   {
     label: "Actions",
     items: [
-      { icon: <Plus className="size-3" strokeWidth={2.5} />, label: "New project", shortcut: ["⌘", "N"] },
-      { icon: <FileText className="size-3" strokeWidth={2.5} />, label: "New document", shortcut: ["⌘", "D"] },
-      { icon: <UserPlus className="size-3" strokeWidth={2.5} />, label: "Invite teammate", shortcut: ["⌘", "I"] },
+      {
+        icon: <Plus className="size-3" strokeWidth={2.5} />,
+        label: "New project",
+        shortcut: ["⌘", "N"],
+      },
+      {
+        icon: <FileText className="size-3" strokeWidth={2.5} />,
+        label: "New document",
+        shortcut: ["⌘", "D"],
+      },
+      {
+        icon: <UserPlus className="size-3" strokeWidth={2.5} />,
+        label: "Invite teammate",
+        shortcut: ["⌘", "I"],
+      },
     ],
   },
   {
@@ -61,7 +65,8 @@ const WALK_INTERVAL = 900;
 const FOOTER_PAD = 0.6;
 
 const typeDone = (len: number) => BASE_DELAY + Math.max(len - 1, 0) * CHAR_STAGGER + CHAR_FADE;
-const footerDelay = (len: number, items: number) => typeDone(len) + LIST_DELAY + items * ITEM_STAGGER;
+const footerDelay = (len: number, items: number) =>
+  typeDone(len) + LIST_DELAY + items * ITEM_STAGGER;
 
 const card = {
   hidden: { opacity: 0 },
@@ -111,34 +116,34 @@ const caretAnim = (len: number): Variants => ({
 });
 
 const badgeAnim = (len: number): Variants => ({
-    hidden: { scale: 0, opacity: 0 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      transition: { type: "spring", stiffness: 420, damping: 14, delay: typeDone(len) + 0.1 },
-    },
-  });
+  hidden: { scale: 0, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: { type: "spring", stiffness: 420, damping: 14, delay: typeDone(len) + 0.1 },
+  },
+});
 
 const revealAnim = (len: number): Variants => ({
-    hidden: { opacity: 0, y: 6 },
-    visible: (index: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.3,
-        delay: typeDone(len) + 0.15 + index * ITEM_STAGGER,
-        ease: "easeOut",
-      },
-    }),
-  });
+  hidden: { opacity: 0, y: 6 },
+  visible: (index: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.3,
+      delay: typeDone(len) + 0.15 + index * ITEM_STAGGER,
+      ease: "easeOut",
+    },
+  }),
+});
 
 const footerAnim = (len: number, items: number): Variants => ({
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { duration: 0.3, delay: footerDelay(len, items), ease: "easeOut" },
-    },
-  });
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.3, delay: footerDelay(len, items), ease: "easeOut" },
+  },
+});
 
 function Key({ children }: { children: ReactNode }) {
   return (
@@ -169,9 +174,7 @@ export function CommandPalette({
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const cycling = animated && (hover ? hovering : triggered);
-  const state = animated
-    ? { initial: "hidden", animate: triggered ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const resolvedGroups = groups.length ? groups : defaultGroups;
   const indexed = resolvedGroups.map((group, i) => ({
     group,
@@ -207,10 +210,7 @@ export function CommandPalette({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
       onMouseLeave={
         animated && hover

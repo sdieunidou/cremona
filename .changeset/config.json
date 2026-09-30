@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
+  "baseBranch": "main",
+  "access": "public",
+  "ignore": [],
+  "fixed": [
+    ["@cremona/tokens", "@cremona/core", "@cremona/react", "@cremona/stimulus", "@cremona/mcp"]
+  ],
+  "linked": [],
+  "format": "auto",
+  "updateInternalDependencies": "patch",
+  "privatePackages": { "version": false, "tag": false },
+  "commit": false,
+  "changelog": "@changesets/cli/changelog"
+}

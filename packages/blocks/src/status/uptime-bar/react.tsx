@@ -11,7 +11,10 @@ const barColors: Record<"ok" | "degraded" | "outage", string> = {
   outage: "bg-destructive/85",
 };
 
-const statusMeta: Record<UptimeStatus, { label: string; dot: string; ping: string; badge: string }> = {
+const statusMeta: Record<
+  UptimeStatus,
+  { label: string; dot: string; ping: string; badge: string }
+> = {
   operational: {
     label: "All systems operational",
     dot: "bg-emerald-500",
@@ -130,10 +133,13 @@ export function UptimeBar({
             : "hidden",
       }
     : {};
-  const computedUptime = (((days - incidents.length - outages.length) / days) * 100).toFixed(2) + "%";
+  const computedUptime =
+    (((days - incidents.length - outages.length) / days) * 100).toFixed(2) + "%";
   const uptimeLabel = uptime ?? computedUptime;
   const meta =
-    statusMeta[status ?? (outages.length > 0 ? "outage" : incidents.length > 0 ? "degraded" : "operational")];
+    statusMeta[
+      status ?? (outages.length > 0 ? "outage" : incidents.length > 0 ? "degraded" : "operational")
+    ];
   const incidentSet = new Set(incidents);
   const outageSet = new Set(outages);
   const hasIncidents = incidents.length > 0;
@@ -147,16 +153,13 @@ export function UptimeBar({
   } as const;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5")}
+        className={cn(
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -190,7 +193,10 @@ export function UptimeBar({
               <span className="text-[10px] font-medium text-muted-foreground">{meta.label}</span>
             </div>
             <motion.span
-              className={cn("rounded-full border px-1.75 py-px text-[9px] font-semibold", meta.badge)}
+              className={cn(
+                "rounded-full border px-1.75 py-px text-[9px] font-semibold",
+                meta.badge,
+              )}
               variants={animated ? badgeAnim : undefined}
               {...state}
             >

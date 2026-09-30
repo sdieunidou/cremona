@@ -80,23 +80,14 @@ export function TabBar({
     : items;
   const activeIndex = 0;
 
-  const barClasses = dark
-    ? "border-zinc-800 bg-zinc-900"
-    : "border-border bg-popover/95";
+  const barClasses = dark ? "border-zinc-800 bg-zinc-900" : "border-border bg-popover/95";
   const activeClasses = dark ? "bg-white/10 text-white" : "bg-primary/10 text-primary";
   const idleClasses = dark
     ? "text-zinc-300 hover:text-white"
     : "text-muted-foreground hover:text-foreground";
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
           "mx-auto flex items-center gap-1 rounded-full border px-2 py-1.5 shadow-lg backdrop-blur",
@@ -125,9 +116,7 @@ export function TabBar({
               aria-current={i === activeIndex && !center ? "page" : undefined}
               className={cn(
                 "relative flex items-center justify-center rounded-full transition-colors duration-200",
-                labels
-                  ? "w-14 flex-col gap-0.5 rounded-xl py-1"
-                  : "size-9",
+                labels ? "w-14 flex-col gap-0.5 rounded-xl py-1" : "size-9",
                 i === activeIndex && !center ? activeClasses : idleClasses,
               )}
               variants={animated ? tabIn(i) : undefined}

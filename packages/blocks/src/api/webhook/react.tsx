@@ -12,12 +12,24 @@ export interface Attempt {
 }
 
 export const webhookDefaultCopy = {
-  events: { retry: "charge.succeeded", success: "customer.created", failed: "invoice.payment_failed" },
+  events: {
+    retry: "charge.succeeded",
+    success: "customer.created",
+    failed: "invoice.payment_failed",
+  },
   eventIds: { retry: "evt_1H8kPz", success: "evt_7Qa2Mv", failed: "evt_3Rd9Xb" },
   attempts: {
-    retry: [{ status: 502, label: "Bad Gateway" }, { label: "Timed out" }, { status: 200, label: "OK" }],
+    retry: [
+      { status: 502, label: "Bad Gateway" },
+      { label: "Timed out" },
+      { status: 200, label: "OK" },
+    ],
     success: [{ status: 200, label: "OK" }],
-    failed: [{ status: 500, label: "Server Error" }, { status: 500, label: "Server Error" }, { status: 500, label: "Server Error" }],
+    failed: [
+      { status: 500, label: "Server Error" },
+      { status: 500, label: "Server Error" },
+      { status: 500, label: "Server Error" },
+    ],
   },
   summaries: {
     retry: "Delivered after 3 attempts · 10.2s",
@@ -113,13 +125,22 @@ const attemptChip: Variants = {
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { type: "spring", stiffness: 420, damping: 15, delay: CHIP_DELAY + i * CHIP_DELAY_UNIT },
+    transition: {
+      type: "spring",
+      stiffness: 420,
+      damping: 15,
+      delay: CHIP_DELAY + i * CHIP_DELAY_UNIT,
+    },
   }),
 };
 
 const summary = {
   hidden: { opacity: 0, y: 6 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.35, delay: SUMMARY_DELAY, ease: "easeOut" } },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, delay: SUMMARY_DELAY, ease: "easeOut" },
+  },
 } as const;
 
 function WebhookPulse({
@@ -145,7 +166,13 @@ function WebhookPulse({
         strokeLinecap="round"
         strokeDasharray={`${PULSE_DASH} 200`}
       >
-        <animate attributeName="stroke-dashoffset" values={`${PULSE_DASH};-100`} dur={dur} repeatCount="indefinite" begin={begin} />
+        <animate
+          attributeName="stroke-dashoffset"
+          values={`${PULSE_DASH};-100`}
+          dur={dur}
+          repeatCount="indefinite"
+          begin={begin}
+        />
       </path>
     );
   }
@@ -190,7 +217,8 @@ export function Webhook({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
@@ -199,7 +227,9 @@ export function Webhook({
   const eventLabel = event ?? webhookDefaultCopy.events[variant];
   const eventIdLabel = eventId ?? webhookDefaultCopy.eventIds[variant];
   const summaryLabel = summaryProp ?? webhookDefaultCopy.summaries[variant];
-  const attemptList = (attempts?.length ? attempts : webhookDefaultCopy.attempts[variant]) as readonly Attempt[];
+  const attemptList = (
+    attempts?.length ? attempts : webhookDefaultCopy.attempts[variant]
+  ) as readonly Attempt[];
   const list = attemptList.slice(0, MAX_ATTEMPTS);
   const offsets = attemptOffsets(list.length);
   const paths = offsets.map(arcPath);
@@ -244,7 +274,11 @@ export function Webhook({
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: pulseVisible && !hover ? PULSE_DELAY : 0 }}
+              transition={{
+                duration: 0.5,
+                ease: "easeOut",
+                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+              }}
             >
               {paths.map((d, t) =>
                 isOk(list[t]!) ? (
@@ -302,7 +336,10 @@ export function Webhook({
             <div
               key={`chip${t}`}
               className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: `${(CENTER_X / CANVAS.w) * 100}%`, top: `${(chipY(offsets[t]!) / CANVAS.h) * 100}%` }}
+              style={{
+                left: `${(CENTER_X / CANVAS.w) * 100}%`,
+                top: `${(chipY(offsets[t]!) / CANVAS.h) * 100}%`,
+              }}
             >
               <motion.div
                 className="flex h-6 items-center gap-1.5 rounded-full border bg-card px-1 shadow-xs ring-2 ring-background"
@@ -317,7 +354,11 @@ export function Webhook({
                       : "bg-rose-500/10 text-rose-600 dark:text-rose-400"
                   }`}
                 >
-                  {ok ? <Check className="size-2.5" strokeWidth={3} /> : <X className="size-2.5" strokeWidth={3} />}
+                  {ok ? (
+                    <Check className="size-2.5" strokeWidth={3} />
+                  ) : (
+                    <X className="size-2.5" strokeWidth={3} />
+                  )}
                 </span>
                 {/* exact renderToString bytes: `#<!-- -->1` */}
                 <span
@@ -346,7 +387,10 @@ export function Webhook({
         })}
         <div
           className="absolute -translate-x-1/2 -translate-y-1/2"
-          style={{ left: `${(CENTER_X / CANVAS.w) * 100}%`, top: `${(SUMMARY_Y / CANVAS.h) * 100}%` }}
+          style={{
+            left: `${(CENTER_X / CANVAS.w) * 100}%`,
+            top: `${(SUMMARY_Y / CANVAS.h) * 100}%`,
+          }}
         >
           <motion.span
             className="text-[10px] font-medium text-muted-foreground"

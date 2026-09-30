@@ -167,14 +167,7 @@ export function Compose({
   const sendVariants = animated ? sendButton(hasCc) : undefined;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -205,16 +198,14 @@ export function Compose({
               <X className="size-3.5" />
             </div>
           </div>
-          <motion.div
-            className="flex flex-col"
-            variants={animated ? body : undefined}
-            {...state}
-          >
+          <motion.div className="flex flex-col" variants={animated ? body : undefined} {...state}>
             <motion.div
               className="flex items-center gap-2 border-b px-3 py-2"
               variants={animated ? row : undefined}
             >
-              <span className="w-10 shrink-0 text-[10px] font-medium text-muted-foreground">To</span>
+              <span className="w-10 shrink-0 text-[10px] font-medium text-muted-foreground">
+                To
+              </span>
               <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
                 {to.map((recipient, i) => (
                   <Recipient key={i} recipient={recipient} />
@@ -226,7 +217,9 @@ export function Compose({
                 className="flex items-center gap-2 border-b px-3 py-2"
                 variants={animated ? row : undefined}
               >
-                <span className="w-10 shrink-0 text-[10px] font-medium text-muted-foreground">Cc</span>
+                <span className="w-10 shrink-0 text-[10px] font-medium text-muted-foreground">
+                  Cc
+                </span>
                 <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
                   {cc!.map((recipient, i) => (
                     <Recipient key={i} recipient={recipient} />

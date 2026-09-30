@@ -143,17 +143,12 @@ export function Checkout({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -284,7 +279,9 @@ export function Checkout({
                   <div className="flex flex-col gap-1.5">
                     <label className="text-[10px] font-medium text-muted-foreground">CVC</label>
                     <div className="rounded-md border bg-background px-2.5 py-2 shadow-xs">
-                      <span className="font-mono text-xs tracking-wider text-foreground">{cvc}</span>
+                      <span className="font-mono text-xs tracking-wider text-foreground">
+                        {cvc}
+                      </span>
                     </div>
                   </div>
                 </motion.div>

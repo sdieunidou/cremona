@@ -131,7 +131,11 @@ export function DatePicker({
   className,
 }: DatePickerProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const isHydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
+  const isHydrated = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const state = animated
@@ -153,7 +157,7 @@ export function DatePicker({
   const weekdayLabels = weekStartsOn === 1 ? weekdaysMon : weekdaysSun;
   const isThisMonth =
     isHydrated && currentMonth === now.getMonth() && currentYear === now.getFullYear();
-  const today = highlighted === null ? null : highlighted ?? (isThisMonth ? now.getDate() : null);
+  const today = highlighted === null ? null : (highlighted ?? (isThisMonth ? now.getDate() : null));
   const active = selected === undefined ? today : selected;
 
   const totalCells = Math.ceil((leadingBlanks + daysInMonth) / 7) * 7;
@@ -163,21 +167,18 @@ export function DatePicker({
   while (cells.length < totalCells) cells.push(null);
 
   const range =
-    rangeStart !== null && rangeEnd !== null && rangeStart <= rangeEnd && rangeStart >= 1 && rangeEnd <= daysInMonth
+    rangeStart !== null &&
+    rangeEnd !== null &&
+    rangeStart <= rangeEnd &&
+    rangeStart >= 1 &&
+    rangeEnd <= daysInMonth
       ? { start: rangeStart, end: rangeEnd }
       : null;
   const pillVariants = animated ? pill(daysInMonth) : undefined;
   const pillTextVariants = animated ? pillText(daysInMonth) : undefined;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={`relative flex w-full${fill ? "" : " max-w-72"} flex-col ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -255,8 +256,7 @@ export function DatePicker({
               }
               const isSelected = day === active;
               const isToday = day === today;
-              const inRange =
-                range !== null && day >= range.start && day <= range.end;
+              const inRange = range !== null && day >= range.start && day <= range.end;
               const isStart = range !== null && day === range.start;
               const isEnd = range !== null && day === range.end;
               const isMiddle = inRange && !isStart && !isEnd;

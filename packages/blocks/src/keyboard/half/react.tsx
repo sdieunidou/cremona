@@ -166,9 +166,7 @@ export function Half({
   const pressedKeys = useMemo(() => keys ?? [], [keys]);
   const hasKeys = pressedKeys.length > 0;
   const active = hover && hasKeys ? hovered : inViewActive;
-  const state = animated
-    ? { initial: "hidden", animate: inViewActive ? "visible" : "hidden" }
-    : {};
+  const state = animated ? { initial: "hidden", animate: inViewActive ? "visible" : "hidden" } : {};
   const rows = buildRows(layout);
   const matched = useMemo(() => {
     const available = new Set(
@@ -176,9 +174,7 @@ export function Half({
         .flatMap((rowKeys) => rowKeys.map((key) => normalizeKey(key.label)))
         .filter((label) => label.length > 0),
     );
-    return pressedKeys
-      .map((_, i) => i)
-      .filter((i) => available.has(normalizeKey(pressedKeys[i]!)));
+    return pressedKeys.map((_, i) => i).filter((i) => available.has(normalizeKey(pressedKeys[i]!)));
   }, [layout, pressedKeys]);
 
   function keyIndex(label: string): number {
@@ -246,10 +242,7 @@ export function Half({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover && hasKeys ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover && hasKeys ? () => setHovered(false) : undefined}
     >

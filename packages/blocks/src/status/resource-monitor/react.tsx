@@ -111,7 +111,11 @@ const clipAnim = {
   hidden: { clipPath: "inset(0 100% 0 0)" },
   visible: {
     clipPath: "inset(0 0% 0 0)",
-    transition: { duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: {
+      duration: 1,
+      delay: 0.3,
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+    },
   },
 } as const;
 
@@ -122,7 +126,12 @@ const sweepAnim = {
     opacity: [1, 1, 0] as [number, number, number],
     transition: {
       x: { duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
-      opacity: { duration: 1, delay: 0.3, times: [0, 0.5, 1] as [number, number, number], ease: "easeIn" },
+      opacity: {
+        duration: 1,
+        delay: 0.3,
+        times: [0, 0.5, 1] as [number, number, number],
+        ease: "easeIn",
+      },
     },
   },
 } as const;
@@ -179,10 +188,9 @@ export function ResourceMonitor({
   const lastTickRef = useRef<number | null>(null);
   const [hovered, setHovered] = useState(false);
   const [tick, setTick] = useState(0);
-  const inView = trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const state = animated
-    ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
-    : {};
+  const inView =
+    trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const live = animated && inView && (!hover || hovered);
   const tickMs = Math.max(interval, MIN_INTERVAL);
   const sampleCount = Math.max(Math.round(samples), MIN_SAMPLES);
@@ -228,16 +236,15 @@ export function ResourceMonitor({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
         className={cn(
-          "relative w-full", !fill && "max-w-80", "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          "relative w-full",
+          !fill && "max-w-80",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}

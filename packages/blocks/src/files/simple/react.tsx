@@ -4,9 +4,32 @@ import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export type FileType =
-  | "docx" | "psd" | "pdf" | "xlsx" | "png" | "jpg" | "webp" | "fig" | "csv"
-  | "txt" | "md" | "zip" | "mp4" | "mp3" | "json" | "sql" | "svg" | "pptx"
-  | "php" | "js" | "py" | "html" | "css" | "ts" | "jsx" | "tsx";
+  | "docx"
+  | "psd"
+  | "pdf"
+  | "xlsx"
+  | "png"
+  | "jpg"
+  | "webp"
+  | "fig"
+  | "csv"
+  | "txt"
+  | "md"
+  | "zip"
+  | "mp4"
+  | "mp3"
+  | "json"
+  | "sql"
+  | "svg"
+  | "pptx"
+  | "php"
+  | "js"
+  | "py"
+  | "html"
+  | "css"
+  | "ts"
+  | "jsx"
+  | "tsx";
 
 const badgeStyles: Record<FileType, string> = {
   docx: "border-blue-800/20 bg-blue-500",
@@ -163,9 +186,15 @@ function CsvPreview() {
     <div className="flex flex-col gap-1">
       {Array.from({ length: 8 }).map((_, row) => (
         <div key={row} className="flex items-center gap-0.5">
-          <div className={`h-1 rounded-full ${row === 0 ? `w-2/5 bg-emerald-300/40` : `w-2/5 bg-muted`}`} />
-          <div className={`h-1 rounded-full ${row === 0 ? `w-2/5 bg-emerald-300/40` : `w-2/5 bg-muted`}`} />
-          <div className={`h-1 rounded-full ${row === 0 ? `w-4/5 bg-emerald-300/40` : `w-4/5 bg-muted`}`} />
+          <div
+            className={`h-1 rounded-full ${row === 0 ? `w-2/5 bg-emerald-300/40` : `w-2/5 bg-muted`}`}
+          />
+          <div
+            className={`h-1 rounded-full ${row === 0 ? `w-2/5 bg-emerald-300/40` : `w-2/5 bg-muted`}`}
+          />
+          <div
+            className={`h-1 rounded-full ${row === 0 ? `w-4/5 bg-emerald-300/40` : `w-4/5 bg-muted`}`}
+          />
         </div>
       ))}
     </div>
@@ -209,8 +238,12 @@ function ZipPreview() {
     <div className="flex flex-col items-center gap-px">
       {Array.from({ length: 8 }).map((_, i) => (
         <div key={i} className="flex w-full gap-0.5">
-          <div className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-amber-300/35` : `bg-muted`}`} />
-          <div className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-muted` : `bg-amber-300/35`}`} />
+          <div
+            className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-amber-300/35` : `bg-muted`}`}
+          />
+          <div
+            className={`h-1.5 flex-1 rounded-xs ${i % 2 === 0 ? `bg-muted` : `bg-amber-300/35`}`}
+          />
         </div>
       ))}
     </div>
@@ -576,14 +609,7 @@ export function SimpleFile({
   const Preview = previews[extension];
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className="relative flex flex-col rounded-lg rounded-tr-2xl border border-muted bg-muted p-0.75 shadow-xs dark:shadow-none"
         variants={animated ? container : undefined}

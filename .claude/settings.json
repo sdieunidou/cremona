@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install)",
+      "Bash(pnpm test)",
+      "Bash(pnpm typecheck)",
+      "Bash(pnpm lint)",
+      "Bash(pnpm format)",
+      "Bash(pnpm format:check)",
+      "Bash(pnpm validate)",
+      "Bash(pnpm check)",
+      "Bash(pnpm generate:stimulus)",
+      "Bash(pnpm gallery:build)",
+      "Bash(pnpm e2e)",
+      "Bash(pnpm vitest run *)",
+      "Bash(pnpm exec vitest run *)",
+      "Bash(pnpm exec eslint *)",
+      "Bash(pnpm exec prettier *)",
+      "Bash(pnpm --filter *)",
+      "mcp__cremona__list_categories",
+      "mcp__cremona__list_blocks",
+      "mcp__cremona__search_blocks",
+      "mcp__cremona__get_block",
+      "mcp__cremona__get_golden",
+      "mcp__cremona__get_themes",
+      "mcp__cremona__get_theme",
+      "mcp__cremona__get_design_system",
+      "mcp__cremona__get_css",
+      "mcp__cremona__get_controller",
+      "mcp__cremona__get_guide",
+      "mcp__cremona__validate"
+    ],
+    "deny": [
+      "Edit(**/golden/**)",
+      "Write(**/golden/**)",
+      "Edit(**/preview-props.json)",
+      "Write(**/preview-props.json)",
+      "Edit(**/stimulus/templates/**)",
+      "Write(**/stimulus/templates/**)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/format.mjs\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

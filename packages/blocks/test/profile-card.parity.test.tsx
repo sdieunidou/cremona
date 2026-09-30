@@ -19,10 +19,7 @@ vi.mock("react-dom/server", async (importOriginal) => {
   };
 });
 
-const blockDir = join(
-  dirname(fileURLToPath(import.meta.url)),
-  "../src/avatars/profile-card",
-);
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/avatars/profile-card");
 
 runGoldenParity("avatars/profile-card", {
   blockDir,

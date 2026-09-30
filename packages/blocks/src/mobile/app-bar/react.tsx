@@ -50,19 +50,8 @@ export function AppBar({
     : {};
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
-      <motion.div
-        className="w-full"
-        variants={animated ? barIn : undefined}
-        {...state}
-      >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
+      <motion.div className="w-full" variants={animated ? barIn : undefined} {...state}>
         <div
           className={cn(
             "relative flex h-12 w-full items-center gap-2 border-b bg-background px-3",

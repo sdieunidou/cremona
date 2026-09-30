@@ -132,16 +132,11 @@ function ListCard({
             >
               <row.icon className="size-3.5" strokeWidth={2} />
             </span>
-            <span className="min-w-0 flex-1 truncate text-sm text-foreground">
-              {row.label}
-            </span>
+            <span className="min-w-0 flex-1 truncate text-sm text-foreground">{row.label}</span>
             {row.value && (
               <span className="shrink-0 text-xs text-muted-foreground">{row.value}</span>
             )}
-            <ChevronRight
-              className="size-4 shrink-0 text-muted-foreground/50"
-              strokeWidth={2}
-            />
+            <ChevronRight className="size-4 shrink-0 text-muted-foreground/50" strokeWidth={2} />
           </motion.button>
         ))}
       </motion.div>
@@ -171,33 +166,20 @@ export function ListRows({
     : {};
 
   const sections: GroupData[] =
-    groups >= 2
-      ? groupedGroups
-      : [{ rows: icons ? iconRows : settingsRows }];
+    groups >= 2 ? groupedGroups : [{ rows: icons ? iconRows : settingsRows }];
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <div
         className={cn(
-          "flex w-full", !fill && "max-w-72", "flex-col",
+          "flex w-full",
+          !fill && "max-w-72",
+          "flex-col",
           groups >= 2 ? "gap-3" : "gap-0",
         )}
       >
         {sections.map((group, g) => (
-          <ListCard
-            key={g}
-            group={group}
-            startIndex={g * 2}
-            animated={animated}
-            state={state}
-          />
+          <ListCard key={g} group={group} startIndex={g * 2} animated={animated} state={state} />
         ))}
       </div>
     </div>

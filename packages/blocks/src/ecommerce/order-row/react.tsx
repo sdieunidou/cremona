@@ -31,11 +31,6 @@ const entrance = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 } as const;
 
-const content = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } },
-} as const;
-
 const item = {
   hidden: { opacity: 0, x: -6 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
@@ -67,14 +62,7 @@ export function OrderRow({
   const s = statusStyles[status] ?? statusStyles.processing!;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         variants={animated ? entrance : undefined}
         {...state}
@@ -90,10 +78,7 @@ export function OrderRow({
           )}
         >
           <motion.span
-            className={cn(
-              "flex items-center gap-3",
-              status === "shipped" && "w-full",
-            )}
+            className={cn("flex items-center gap-3", status === "shipped" && "w-full")}
             variants={animated ? item : undefined}
           >
             <span className="relative size-10 shrink-0 overflow-hidden rounded-md bg-muted">

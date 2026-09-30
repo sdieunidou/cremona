@@ -132,10 +132,7 @@ export function LogoReel({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
+      className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
@@ -162,11 +159,23 @@ export function LogoReel({
               d === 0 ? "none" : `translateX(${(slot - CENTER) * STEP}px) scale(${SLOT_SCALE[d]})`,
           };
           return (
-            <div key={slot} className="absolute top-1/2 left-1/2 -mt-10 -ml-10 size-20" style={style}>
+            <div
+              key={slot}
+              className="absolute top-1/2 left-1/2 -mt-10 -ml-10 size-20"
+              style={style}
+            >
               <motion.div
                 key={`${slot}-${(slot + tick) % seq.length}`}
                 className="relative flex size-full items-center justify-center"
-                variants={animated ? (isCenter ? centerPop : slot < CENTER ? slotLeft : slotRight) : undefined}
+                variants={
+                  animated
+                    ? isCenter
+                      ? centerPop
+                      : slot < CENTER
+                        ? slotLeft
+                        : slotRight
+                    : undefined
+                }
                 {...state}
               >
                 {isCenter ? (

@@ -4,7 +4,8 @@ import { useInView } from "@cremona/react";
 import { ChevronRight } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
-export type LaptopVariant = "landing" | "dashboard" | "windows" | "mac" | "lockscreen" | "screenshot";
+export type LaptopVariant =
+  "landing" | "dashboard" | "windows" | "mac" | "lockscreen" | "screenshot";
 
 const DASHBOARD_BARS = [50, 75, 40, 90, 60, 80, 55, 95, 70, 45, 85, 65, 35, 78];
 
@@ -202,14 +203,7 @@ export function Laptop({
     variant === "windows" || variant === "mac" || variant === "lockscreen" || isScreenshot;
 
   return (
-    <div
-      ref={ref}
-      aria-hidden="true"
-      className={cn(
-        frameClasses(fill),
-        className,
-      )}
-    >
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn("w-full", !fill && "max-w-80", "perspective-distant")}
         variants={animated ? container : undefined}
@@ -247,14 +241,18 @@ export function Laptop({
                     <span className="text-xl font-light tracking-tight text-white drop-shadow-sm">
                       {time}
                     </span>
-                    <span className="text-[9px] font-medium text-white/80 drop-shadow-sm">{date}</span>
+                    <span className="text-[9px] font-medium text-white/80 drop-shadow-sm">
+                      {date}
+                    </span>
                   </motion.div>
                   <motion.div
                     className="absolute inset-x-0 bottom-5 flex flex-col items-center gap-1.5"
                     variants={animated ? lockUser : undefined}
                   >
                     <div className="size-6 rounded-full bg-white/20 ring-2 ring-white/30 backdrop-blur-sm" />
-                    <span className="text-[10px] font-semibold text-white drop-shadow-sm">{name}</span>
+                    <span className="text-[10px] font-semibold text-white drop-shadow-sm">
+                      {name}
+                    </span>
                     <div className="mt-0.5 flex h-4 w-28 items-center justify-between rounded-full bg-white/15 pr-1 pl-2 backdrop-blur-sm">
                       <div className="flex gap-0.75">
                         {Array.from({ length: 5 }).map((_, i) => (
