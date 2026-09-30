@@ -64,7 +64,7 @@ interface ZoneSpan extends GaugeZone {
 function computeZones(zones: readonly GaugeZone[]): ZoneSpan[] {
   let acc = 0;
   return zones.map((zone, i) => {
-    const to = Math.max(acc, Math.min(100, zone.to));
+    const to = Math.max(acc, Math.min(100, Number.isFinite(zone.to) ? zone.to : acc));
     const start = acc / 100 + (i === 0 ? 0 : PAD);
     const end = to / 100 - (i === zones.length - 1 ? 0 : PAD);
     acc = to;
@@ -154,6 +154,7 @@ const veilAnim = {
 export interface GaugeProps extends VisualProps {
   title?: string;
   badge?: string;
+  /** 0–100. The arc clamps to that range; a non-finite value draws no arc and reads "—". */
   percent?: number;
   value?: string;
   label?: string;
@@ -198,9 +199,10 @@ export function Gauge({
             : "hidden",
       }
     : {};
-  const clamped = Math.max(0, Math.min(100, percent));
+  const known = Number.isFinite(percent);
+  const clamped = known ? Math.max(0, Math.min(100, percent)) : 0;
   const progress = clamped / 100;
-  const valueText = value ?? String(Math.round(clamped));
+  const valueText = value ?? (known ? String(Math.round(percent)) : "—");
   const zoneSpans = zones ? computeZones(zones) : [];
   const needlePos = needle(progress);
   const down = change.startsWith("-");
@@ -214,6 +216,7 @@ export function Gauge({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -233,7 +236,12 @@ export function Gauge({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-3.5 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-3.5 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between"
             variants={animated ? headAnim : undefined}
@@ -244,7 +252,7 @@ export function Gauge({
               {badge}
             </span>
           </motion.div>
-          <div className="relative mx-auto w-full max-w-56">
+          <div className={cn("relative mx-auto w-full max-w-56", fill && "my-auto")}>
             <svg viewBox={VIEWBOX} className="w-full overflow-visible">
               <motion.path
                 d={ARC}
@@ -275,27 +283,31 @@ export function Gauge({
                   />
                 );
               })}
-              <motion.path
-                d={ARC}
-                fill="none"
-                stroke={color}
-                strokeWidth={STROKE}
-                strokeLinecap="round"
-                custom={progress}
-                variants={animated ? arcAnim : undefined}
-                pathLength={1}
-                strokeDasharray={animated ? undefined : `${progress} 1`}
-              />
-              <motion.circle
-                cx={needlePos.x}
-                cy={needlePos.y}
-                r={4}
-                fill="var(--color-card)"
-                stroke={color}
-                strokeWidth={3}
-                variants={animated ? dotAnim : undefined}
-                {...state}
-              />
+              {known && (
+                <>
+                  <motion.path
+                    d={ARC}
+                    fill="none"
+                    stroke={color}
+                    strokeWidth={STROKE}
+                    strokeLinecap="round"
+                    custom={progress}
+                    variants={animated ? arcAnim : undefined}
+                    pathLength={1}
+                    strokeDasharray={animated ? undefined : `${progress} 1`}
+                  />
+                  <motion.circle
+                    cx={needlePos.x}
+                    cy={needlePos.y}
+                    r={4}
+                    fill="var(--color-card)"
+                    stroke={color}
+                    strokeWidth={3}
+                    variants={animated ? dotAnim : undefined}
+                    {...state}
+                  />
+                </>
+              )}
             </svg>
             <div className="absolute inset-x-0 top-0 bottom-[16%] flex flex-col items-center justify-end gap-0.5">
               <motion.span

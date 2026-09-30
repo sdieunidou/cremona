@@ -15,10 +15,48 @@ export const lineDefault = {
 
 const W = 240;
 const H = 90;
+const MAX_TICKS = 8;
+const TICK_CHARS = 40;
 
-function toPoints(values: readonly number[]): [number, number][] {
+/**
+ * The series as heights between 0 (bottom) and 1 (top), `null` where a value is
+ * missing. `points` already in 0..1 are used as they are; `values` — and
+ * `points` outside 0..1 — are scaled to `min`..`max`, the series' own range by default.
+ */
+function toFractions(
+  points: readonly number[],
+  values?: readonly number[],
+  min?: number,
+  max?: number,
+): (number | null)[] {
+  const raw = values ?? points;
+  const finite = raw.filter((v) => Number.isFinite(v));
+  const fixedMin = typeof min === "number" && Number.isFinite(min);
+  const fixedMax = typeof max === "number" && Number.isFinite(max);
+  if (!values && !fixedMin && !fixedMax && finite.every((v) => v >= 0 && v <= 1))
+    return raw.map((v) => (Number.isFinite(v) ? v : null));
+  const lo = fixedMin ? min! : Math.min(...finite);
+  const hi = fixedMax ? max! : Math.max(...finite);
+  const span = hi - lo;
+  return raw.map((v) =>
+    Number.isFinite(v) ? (span > 0 ? Math.min(1, Math.max(0, (v - lo) / span)) : 0.5) : null,
+  );
+}
+
+function toPoints(values: readonly (number | null)[]): [number, number][] {
+  if (values.length === 1 && values[0] !== null) {
+    const y = (1 - values[0]!) * 84 + 3;
+    return [
+      [0, y],
+      [W, y],
+    ];
+  }
   const step = W / (values.length - 1);
-  return values.map((v, i) => [i * step, (1 - v) * 84 + 3]);
+  const points: [number, number][] = [];
+  values.forEach((v, i) => {
+    if (v !== null) points.push([i * step, (1 - v) * 84 + 3]);
+  });
+  return points;
 }
 
 function toPath(points: [number, number][]): string {
@@ -33,8 +71,20 @@ function toPath(points: [number, number][]): string {
   return d;
 }
 
-function areaPath(points: [number, number][]): string {
-  return `${toPath(points)} L ${W},${H} L 0,${H} Z`;
+function areaPath(points: [number, number][], values: readonly (number | null)[]): string {
+  if (points.length < 2) return "";
+  const right = values[values.length - 1] === null ? points[points.length - 1]![0] : W;
+  const left = values[0] === null ? points[0]![0] : 0;
+  return `${toPath(points)} L ${right},${H} L ${left},${H} Z`;
+}
+
+/** At most MAX_TICKS labels, spread over the whole axis (first and last kept). */
+function pickTicks(ticks: readonly string[]): string[] {
+  if (ticks.length <= MAX_TICKS) return [...ticks];
+  return Array.from(
+    { length: MAX_TICKS },
+    (_, i) => ticks[Math.round((i * (ticks.length - 1)) / (MAX_TICKS - 1))]!,
+  );
 }
 
 const wrap = {
@@ -111,7 +161,19 @@ export interface LineProps extends VisualProps {
   badge?: string;
   value?: string;
   change?: string;
+  /**
+   * The series as heights, 0 (bottom) to 1 (top). Values outside 0..1 are scaled
+   * to the series' own range, like `values`.
+   */
   points?: readonly number[];
+  /** The series in its own unit, scaled to `min`..`max`. Takes precedence over `points`. */
+  values?: readonly number[];
+  /** Value at the bottom of the plot (default: the smallest value). */
+  min?: number;
+  /** Value at the top of the plot (default: the largest value). */
+  max?: number;
+  /** Shown in place of the plot when the series has no finite value. */
+  emptyLabel?: string;
   ticks?: readonly string[];
   fadeOut?: boolean;
   isometric?: boolean;
@@ -124,6 +186,10 @@ export function Line({
   value = lineDefault.value,
   change = lineDefault.change,
   points = lineDefault.points,
+  values,
+  min,
+  max,
+  emptyLabel = "No data",
   ticks = lineDefault.ticks,
   animated = false,
   trigger = "inView",
@@ -148,10 +214,13 @@ export function Line({
   const gradientId = useId();
   const down = change.startsWith("-");
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
-  const pts = toPoints(points);
+  const series = toFractions(points, values, min, max);
+  const pts = toPoints(series);
   const line = toPath(pts);
-  const area = areaPath(pts);
-  const last = pts[pts.length - 1]!;
+  const area = areaPath(pts, series);
+  const last = pts[pts.length - 1];
+  const shownTicks = pickTicks(ticks);
+  const crowdedTicks = shownTicks.join("").length > TICK_CHARS;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -161,6 +230,7 @@ export function Line({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -180,7 +250,12 @@ export function Line({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border bg-card px-4 pt-3.5 pb-3 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3 overflow-hidden rounded-2xl border bg-card px-4 pt-3.5 pb-3 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between"
             variants={animated ? headAnim : undefined}
@@ -213,50 +288,71 @@ export function Line({
               {change}
             </motion.span>
           </div>
-          <div className="relative">
-            <svg
-              viewBox={`0 0 ${W} ${H}`}
-              preserveAspectRatio="none"
-              className="block h-22 w-full"
-              aria-hidden="true"
-            >
-              <defs>
-                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--color-chart-1)" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <motion.path
-                d={area}
-                fill={`url(#${gradientId})`}
-                variants={animated ? areaAnim : undefined}
-                {...state}
-              />
-              <motion.path
-                d={line}
-                fill="none"
-                stroke="var(--color-chart-1)"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={animated ? lineAnim : undefined}
-                {...state}
-              />
-            </svg>
+          {!last ? (
             <motion.div
-              className="absolute size-2.5 -translate-1/2 rounded-full border-2 border-chart-1 bg-card"
-              style={{ left: `${(last[0] / W) * 100}%`, top: `${(last[1] / H) * 100}%` }}
-              variants={animated ? dotAnim : undefined}
+              className={cn(
+                "relative flex items-center justify-center",
+                fill ? "min-h-22 flex-1" : "h-22",
+              )}
+              variants={animated ? areaAnim : undefined}
               {...state}
-            />
-          </div>
+            >
+              <div className="absolute inset-x-0 bottom-0.75 border-t border-dashed border-border" />
+              <span className="text-[10px] font-medium text-muted-foreground">{emptyLabel}</span>
+            </motion.div>
+          ) : (
+            <div className={cn("relative", fill && "min-h-22 flex-1")}>
+              <svg
+                viewBox={`0 0 ${W} ${H}`}
+                preserveAspectRatio="none"
+                className={cn("block w-full", fill ? "h-full" : "h-22")}
+                aria-hidden="true"
+              >
+                <defs>
+                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--color-chart-1)" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <motion.path
+                  d={area}
+                  fill={`url(#${gradientId})`}
+                  variants={animated ? areaAnim : undefined}
+                  {...state}
+                />
+                <motion.path
+                  d={line}
+                  fill="none"
+                  stroke="var(--color-chart-1)"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  vectorEffect={fill ? "non-scaling-stroke" : undefined}
+                  variants={animated ? lineAnim : undefined}
+                  {...state}
+                />
+              </svg>
+              <motion.div
+                className="absolute size-2.5 -translate-1/2 rounded-full border-2 border-chart-1 bg-card"
+                style={{ left: `${(last[0] / W) * 100}%`, top: `${(last[1] / H) * 100}%` }}
+                variants={animated ? dotAnim : undefined}
+                {...state}
+              />
+            </div>
+          )}
           <motion.div
-            className="flex justify-between"
+            className={cn("flex justify-between", crowdedTicks && "gap-2")}
             variants={animated ? headAnim : undefined}
             {...state}
           >
-            {ticks.map((t) => (
-              <span key={t} className="text-[9px] font-medium text-muted-foreground">
+            {shownTicks.map((t, i) => (
+              <span
+                key={i}
+                className={cn(
+                  "text-[9px] font-medium text-muted-foreground",
+                  crowdedTicks && "min-w-0 truncate",
+                )}
+              >
                 {t}
               </span>
             ))}

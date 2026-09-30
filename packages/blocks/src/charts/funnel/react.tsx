@@ -20,32 +20,47 @@ const MIN_WIDTH = 14;
 const MIN_COLOR = 34;
 const COLOR_STEP = 18;
 const numberFormat = new Intl.NumberFormat("en-US");
+const compactFormat = new Intl.NumberFormat("en-US", {
+  notation: "compact",
+  maximumFractionDigits: 1,
+});
 
-function formatPercent(p: number): string {
+function formatCount(value: number): string {
+  return value >= 1e6 ? compactFormat.format(value) : numberFormat.format(value);
+}
+
+function formatPercent(p: number | null): string {
+  if (p === null) return "—";
   return `${p >= 10 ? Math.round(p) : p.toFixed(1)}%`;
 }
 
-interface Stage {
+export interface FunnelStage {
   label: string;
+  /** Count at this stage; negative and non-finite counts read as 0. */
   value: number;
   color?: string;
 }
 
-interface FunnelStage extends Stage {
-  percent: number;
+interface FunnelRow extends FunnelStage {
+  /** Share of the first stage, `null` when the first stage is empty. */
+  percent: number | null;
   fill: string;
   clipPath: string;
 }
 
-function computeStages(stages: readonly Stage[]): FunnelStage[] {
-  const base = stages[0]?.value || 1;
-  const widths = stages.map((s) => Math.max(MIN_WIDTH, Math.min(100, (s.value / base) * 100)));
+function computeStages(stages: readonly FunnelStage[]): FunnelRow[] {
+  const counts = stages.map((s) => (Number.isFinite(s.value) && s.value > 0 ? s.value : 0));
+  const first = counts[0] ?? 0;
+  // widths follow the first stage, or the widest one when the first is empty
+  const base = first > 0 ? first : Math.max(0, ...counts) || 1;
+  const widths = counts.map((v) => Math.max(MIN_WIDTH, Math.min(100, (v / base) * 100)));
   return stages.map((s, i) => {
     const width = widths[i]!;
     const next = widths[i + 1] ?? width;
-    const percent = (s.value / base) * 100;
+    const percent = first > 0 ? (counts[i]! / first) * 100 : null;
     return {
       ...s,
+      value: counts[i]!,
       percent,
       fill:
         s.color ??
@@ -121,7 +136,9 @@ export interface FunnelProps extends VisualProps {
   badge?: string;
   value?: string;
   change?: string;
-  stages?: readonly Stage[];
+  stages?: readonly FunnelStage[];
+  /** Shown in place of the stages when `stages` is empty. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -133,6 +150,7 @@ export function Funnel({
   value,
   change = funnelDefault.change,
   stages = funnelDefault.stages,
+  emptyLabel = "No data",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -154,7 +172,7 @@ export function Funnel({
       }
     : {};
   const rows = computeStages(stages);
-  const valueText = value ?? formatPercent(rows.at(-1)?.percent ?? 0);
+  const valueText = value ?? formatPercent(rows.length ? rows.at(-1)!.percent : null);
   const down = change.startsWith("-");
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
 
@@ -166,6 +184,7 @@ export function Funnel({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -185,7 +204,12 @@ export function Funnel({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-3.5 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-3.5 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between"
             variants={animated ? headAnim : undefined}
@@ -218,38 +242,51 @@ export function Funnel({
               {change}
             </motion.span>
           </div>
-          <motion.div
-            className="flex flex-col gap-1 pt-0.5"
-            variants={animated ? stagesAnim : undefined}
-            {...state}
-          >
-            {rows.map((row, i) => (
-              <motion.div
-                key={i}
-                className="flex h-9 items-center gap-2"
-                variants={animated ? rowAnim : undefined}
-              >
-                <span className="w-14 shrink-0 truncate text-right text-[10px] font-medium text-muted-foreground">
-                  {row.label}
-                </span>
-                <div className="relative h-full flex-1">
-                  <motion.div
-                    className="size-full origin-top"
-                    style={{ backgroundColor: row.fill, clipPath: row.clipPath }}
-                    variants={animated ? barAnim : undefined}
-                  />
-                </div>
-                <div className="flex w-14 shrink-0 flex-col leading-tight">
-                  <span className="text-[10px] font-semibold text-foreground tabular-nums">
-                    {numberFormat.format(row.value)}
+          {rows.length === 0 ? (
+            <motion.div
+              className={cn(
+                "relative flex items-center justify-center rounded-lg border border-dashed",
+                fill ? "min-h-9 flex-1" : "h-9",
+              )}
+              variants={animated ? rowAnim : undefined}
+              {...state}
+            >
+              <span className="text-[10px] font-medium text-muted-foreground">{emptyLabel}</span>
+            </motion.div>
+          ) : (
+            <motion.div
+              className={cn("flex flex-col gap-1 pt-0.5", fill && "flex-1")}
+              variants={animated ? stagesAnim : undefined}
+              {...state}
+            >
+              {rows.map((row, i) => (
+                <motion.div
+                  key={i}
+                  className={cn("flex items-center gap-2", fill ? "min-h-6 flex-1" : "h-9")}
+                  variants={animated ? rowAnim : undefined}
+                >
+                  <span className="w-14 shrink-0 truncate text-right text-[10px] font-medium text-muted-foreground">
+                    {row.label}
                   </span>
-                  <span className="text-[9px] text-muted-foreground tabular-nums">
-                    {formatPercent(row.percent)}
-                  </span>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                  <div className="relative h-full flex-1">
+                    <motion.div
+                      className="size-full origin-top"
+                      style={{ backgroundColor: row.fill, clipPath: row.clipPath }}
+                      variants={animated ? barAnim : undefined}
+                    />
+                  </div>
+                  <div className="flex w-14 shrink-0 flex-col leading-tight">
+                    <span className="text-[10px] font-semibold text-foreground tabular-nums">
+                      {formatCount(row.value)}
+                    </span>
+                    <span className="text-[9px] text-muted-foreground tabular-nums">
+                      {formatPercent(row.percent)}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </motion.div>
     </div>
