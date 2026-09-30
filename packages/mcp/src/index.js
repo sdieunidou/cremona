@@ -42,6 +42,12 @@ Two correct ways to use one:
    class strings and the motion variants. Rewriting a block from its class
    strings silently drops every entrance animation in the library.
 
+Each block has a \`scale\`: "real-size" (components, forms, mobile, notices, most
+ecommerce: templates to derive real UI from), "miniature" (sections/*, layouts/*,
+ecommerce/product-grid and cart-drawer: thumbnail-scale wireframes with 7-10 px
+text — illustrations, never a page or a section) or "illustration" (every other
+category: animated product artwork).
+
 Call get_guide("react") for the derivation recipe, the props contract and the
 gotchas — the \`gradient\` veil hides the bottom 64px of a card, and entrance
 chains run ~1.3s, which screenshot tests must wait out. Before adding blocks,
@@ -98,6 +104,9 @@ function findVariant(meta, variant) {
 }
 
 const KINDS = ["block", "layout", "component"];
+const limitSchema = (max) => z.number().int().min(1).max(max).optional();
+const unknownCategory = (category) =>
+  fail(`unknown category '${category}'`, { categories: store.catalog().map((g) => g.slug) });
 
 const REACT_INSTALL = "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom";
 const STIMULUS_INSTALL = "npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus";
@@ -117,29 +126,25 @@ tool(
   {
     title: "List blocks",
     description:
-      "List blocks, optionally filtered by category slug or kind (block|layout|component). Returns key, name, description, variant labels.",
+      "List blocks, optionally filtered by category, kind (block|layout|component) or scale (real-size|miniature|illustration). Returns key, name, description, kind, scale and variant labels.",
     inputSchema: {
-      category: z.string().optional().describe("category slug (e.g. 'metrics', 'sections')"),
+      category: z
+        .string()
+        .optional()
+        .describe("category slug or name (e.g. 'metrics', 'Sections')"),
       kind: z.enum(KINDS).optional(),
-      limit: z.number().optional(),
+      scale: z.enum(store.SCALES).optional(),
+      limit: limitSchema(200),
     },
   },
-  async ({ category, kind, limit }) => {
-    const known = store.catalog();
-    if (
-      category &&
-      !known.some((g) => g.slug === category || g.category.toLowerCase() === category.toLowerCase())
-    )
-      return fail(`unknown category '${category}'`, { categories: known.map((g) => g.slug) });
+  async ({ category, kind, scale, limit }) => {
+    const group = category ? store.findCategory(category) : null;
+    if (category && !group) return unknownCategory(category);
     const items = store
       .blockIndex()
-      .filter(
-        (b) =>
-          !category ||
-          b.categorySlug === category ||
-          b.category.toLowerCase() === category.toLowerCase(),
-      )
+      .filter((b) => !group || b.categorySlug === group.slug)
       .filter((b) => !kind || b.kind === kind)
+      .filter((b) => !scale || b.scale === scale)
       .slice(0, limit ?? 200);
     return text(items);
   },
@@ -149,10 +154,22 @@ tool(
   "search_blocks",
   {
     title: "Search blocks",
-    description: "Full-text search across block names, descriptions and variant labels.",
-    inputSchema: { query: z.string(), limit: z.number().optional() },
+    description:
+      "Search block names, descriptions and variant labels. Every word must match, in any order; plurals and common synonyms count ('buttons', 'pie chart' → charts/donut, '404' → states/not-found, 'sign in' → forms/login), and filler words like 'page' are ignored. Optional category/kind/scale filters.",
+    inputSchema: {
+      query: z.string().describe("words to look for, e.g. 'settings page' or 'pie chart'"),
+      category: z.string().optional().describe("category slug or name"),
+      kind: z.enum(KINDS).optional(),
+      scale: z.enum(store.SCALES).optional(),
+      limit: limitSchema(200),
+    },
   },
-  async ({ query, limit }) => text(store.searchBlocks(query, { limit: limit ?? 20 })),
+  async ({ query, category, kind, scale, limit }) => {
+    if (category && !store.findCategory(category)) return unknownCategory(category);
+    if (!query.trim() && !category && !kind && !scale)
+      return fail("empty query: pass words to look for, or use list_blocks");
+    return text(store.searchBlocks(query, { category, kind, scale, limit: limit ?? 20 }));
+  },
 );
 
 tool(
@@ -160,7 +177,7 @@ tool(
   {
     title: "Get a block",
     description:
-      "Get a visual block: install line, public import, metadata, exact variant props and the React source. Add 'stimulus' to include for the Stimulus templates and one sample, 'golden' for the golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
+      "Get a visual block: install line, public import, metadata (with scale), exact variant props and the React source. Add 'stimulus' to include for the Stimulus templates and one sample, 'golden' for the golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
     inputSchema: {
       key: z.string().describe("block key as '<category>/<file>', e.g. 'metrics/stat-card'"),
       variant: z
@@ -199,6 +216,7 @@ tool(
         name: meta.name,
         description: meta.description,
         kind: meta.kind,
+        scale: store.blockScale(categorySlug, file),
         sourcePath: meta.sourcePath,
         added: meta.added,
         page: meta.page,

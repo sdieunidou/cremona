@@ -52,6 +52,44 @@ describe("cremona MCP server", () => {
     expect(results[0].key).toBe("tasks/kanban");
   });
 
+  it("finds plurals, synonyms and natural phrasings", async () => {
+    const keys = async (query, extra = {}) =>
+      textOf(await client.callTool({ name: "search_blocks", arguments: { query, ...extra } })).map(
+        (b) => b.key,
+      );
+
+    expect((await keys("buttons"))[0]).toBe("components/button");
+    expect((await keys("pie chart"))[0]).toBe("charts/donut");
+    expect((await keys("404"))[0]).toBe("states/not-found");
+    expect(await keys("settings page")).toEqual(
+      expect.arrayContaining(["forms/settings-form", "layouts/settings-shell"]),
+    );
+    const login = await keys("login");
+    expect(login[0]).toBe("forms/login");
+    expect(login).toEqual(expect.arrayContaining(["sections/auth", "layouts/auth-shell"]));
+    expect((await keys("sign in"))[0]).toBe("forms/login");
+    // a short term matches whole words only: "ai" is not the "ai" in "email"
+    expect(await keys("ai")).not.toContain("email/inbox");
+  });
+
+  it("filters a search by category, kind and scale", async () => {
+    const search = async (args) =>
+      textOf(await client.callTool({ name: "search_blocks", arguments: args }));
+    const metrics = await search({ query: "card", category: "metrics" });
+    expect(metrics.map((b) => b.key)).toEqual(["metrics/stat-card"]);
+    const components = await search({ query: "table", kind: "component" });
+    expect(components.map((b) => b.key)).toEqual(["components/table"]);
+    const real = await search({ query: "login", scale: "real-size" });
+    expect(real.map((b) => b.key)).toEqual(["forms/login"]);
+
+    const unknown = await client.callTool({
+      name: "search_blocks",
+      arguments: { query: "card", category: "nope" },
+    });
+    expect(unknown.isError).toBe(true);
+    expect(textOf(unknown).categories).toContain("metrics");
+  });
+
   it("searches on every term, not on the raw query", async () => {
     const search = async (query) =>
       textOf(await client.callTool({ name: "search_blocks", arguments: { query } }));
@@ -197,6 +235,36 @@ describe("cremona MCP server", () => {
     expect(block.reactSourceNote.derive).toContain(
       "keep the class strings and the motion variants untouched",
     );
+  });
+
+  it("gives every block a scale", async () => {
+    const all = textOf(await client.callTool({ name: "list_blocks", arguments: {} }));
+    const scale = Object.fromEntries(all.map((b) => [b.key, b.scale]));
+    expect(scale["components/button"]).toBe("real-size");
+    expect(scale["forms/login"]).toBe("real-size");
+    expect(scale["ecommerce/product-card"]).toBe("real-size");
+    expect(scale["ecommerce/product-grid"]).toBe("miniature");
+    expect(scale["sections/hero"]).toBe("miniature");
+    expect(scale["layouts/auth-shell"]).toBe("miniature");
+    expect(scale["charts/line"]).toBe("illustration");
+    expect(new Set(Object.values(scale))).toEqual(
+      new Set(["real-size", "miniature", "illustration"]),
+    );
+
+    const miniature = textOf(
+      await client.callTool({ name: "list_blocks", arguments: { scale: "miniature" } }),
+    );
+    expect(miniature.every((b) => b.scale === "miniature")).toBe(true);
+    expect(miniature.map((b) => b.key)).toContain("sections/pricing");
+
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "sections/pricing", include: ["meta"] },
+      }),
+    );
+    expect(block.meta.scale).toBe("miniature");
+    expect(client.getInstructions()).toContain("`scale`");
   });
 
   it("lists the component kind", async () => {
