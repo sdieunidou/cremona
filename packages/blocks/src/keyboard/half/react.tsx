@@ -188,6 +188,11 @@ export interface HalfProps extends VisualProps {
   layout?: HalfLayout;
   /** Letter arrangement of the half (default `qwerty`). */
   keymap?: HalfKeymap;
+  /**
+   * Captions by key name (`{ shift: "maj", "caps lock": "verr. maj", space: "espace" }`);
+   * `keys` still match the key names.
+   */
+  labels?: Partial<Record<string, string>>;
   hover?: boolean;
   isometric?: boolean;
 }
@@ -202,12 +207,11 @@ function useFitScale(
     const box = frame.current;
     const el = stage.current;
     if (!box || !el || typeof ResizeObserver === "undefined") return;
+    const px = (value: string) => parseFloat(value) || 0;
     const fit = () => {
       const style = getComputedStyle(box);
-      const width =
-        box.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-      const height =
-        box.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      const width = box.clientWidth - px(style.paddingLeft) - px(style.paddingRight);
+      const height = box.clientHeight - px(style.paddingTop) - px(style.paddingBottom);
       const ratio = Math.min(1, width / el.offsetWidth, height / el.offsetHeight);
       el.style.scale = ratio > 0 && ratio < 1 ? String(ratio) : "";
     };
@@ -225,6 +229,7 @@ export function Half({
   keys = null,
   layout = "mac",
   keymap = "qwerty",
+  labels,
   animated = false,
   trigger = "inView",
   hover = false,
@@ -355,6 +360,7 @@ export function Half({
                     const isSpace = key.label === "";
                     const isWide =
                       key.label === "tab" || key.label === "shift" || key.label === "caps lock";
+                    const caption = labels?.[key.label] ?? key.label;
                     return (
                       <button
                         key={`${rowIndex}-${keyPos}`}
@@ -370,11 +376,11 @@ export function Half({
                         <span
                           className={cn(
                             "font-medium text-muted-foreground select-none",
-                            key.label.length > 1 ? "text-[10px]" : "text-xs",
+                            caption.length > 1 ? "text-[10px]" : "text-xs",
                             isSpace && "sr-only",
                           )}
                         >
-                          {isSpace ? "Space" : key.label}
+                          {isSpace ? (labels?.space ?? "Space") : caption}
                         </span>
                         {matchedKey && !animated && (
                           <span className="pointer-events-none absolute inset-0 block rounded-[4px] bg-primary/15 ring-1 ring-primary/40 ring-inset" />
