@@ -1,16 +1,31 @@
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+type Side = "top" | "right" | "bottom" | "left";
 
 export interface TooltipProps extends VisualProps {
   /** Rich bubbles with a title and body. */
   rich?: boolean;
   /** Title for rich bubbles. */
   title?: string;
+  /** Bubble text (the body of a rich bubble; default: a demo text per side). */
+  content?: string;
+  /** Show one side only (default: the four sides). */
+  side?: Side;
+  /** Text of the trigger buttons. */
+  triggerLabel?: string;
+  /** The four-side showcase spreads over the box. */
+  fill?: boolean;
 }
 
-type Side = "top" | "right" | "bottom" | "left";
+const NO_REF = { current: null };
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+const SIDES: Side[] = ["top", "right", "bottom", "left"];
 
 const sideText: Record<Side, string> = {
   top: "Deploy to staging",
@@ -38,14 +53,29 @@ const bubbleIn = (i: number): Variants => ({
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { type: "spring", stiffness: 420, damping: 18, delay: i * 0.06 },
+    transition: { type: "spring", stiffness: 420, damping: 18, delay: i * 0.07 },
   },
 });
 
-function Bubble({ side, rich, title, i }: { side: Side; rich: boolean; title: string; i: number }) {
+function Bubble({
+  id,
+  side,
+  rich,
+  title,
+  text,
+  i,
+}: {
+  id: string;
+  side: Side;
+  rich: boolean;
+  title: string;
+  text: string;
+  i: number;
+}) {
   return (
     <motion.div
       variants={bubbleIn(i)}
+      id={id}
       role="tooltip"
       className={cn(
         "relative bg-primary text-primary-foreground shadow-md",
@@ -57,10 +87,10 @@ function Bubble({ side, rich, title, i }: { side: Side; rich: boolean; title: st
       {rich ? (
         <>
           <p className="text-xs font-semibold">{title}</p>
-          <p className="mt-0.5 text-[11px] leading-4 text-primary-foreground/70">{richBody}</p>
+          <p className="mt-0.5 text-[11px] leading-4 text-primary-foreground/70">{text}</p>
         </>
       ) : (
-        sideText[side]
+        text
       )}
       <span
         aria-hidden="true"
@@ -73,14 +103,24 @@ function Bubble({ side, rich, title, i }: { side: Side; rich: boolean; title: st
 export function Tooltip({
   rich = false,
   title = "Pro tip",
+  content,
+  side,
+  triggerLabel = "Hover",
   animated = false,
   trigger = "inView",
   fill = false,
   className,
 }: TooltipProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const id = useId();
+  const inViewOnce = useInView(animated && trigger === "inView" ? ref : NO_REF, {
+    once: true,
+    amount: 0.5,
+  });
+  const inViewRepeat = useInView(animated && trigger === "inViewRepeat" ? ref : NO_REF, {
+    once: false,
+    amount: 0.5,
+  });
   const state = animated
     ? {
         initial: "hidden",
@@ -91,40 +131,63 @@ export function Tooltip({
       }
     : {};
 
-  const buttonClasses =
-    "inline-flex h-8 shrink-0 items-center justify-center rounded-md px-3 text-xs font-medium whitespace-nowrap transition-all outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50";
+  const buttonClasses = cn(
+    "inline-flex h-8 shrink-0 items-center justify-center rounded-md px-3 text-xs font-medium whitespace-nowrap transition-all hover:bg-muted hover:text-foreground",
+    focusRing,
+  );
+  const shown = side ? [side] : SIDES;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className="grid max-w-md grid-cols-2 gap-x-8 gap-y-7"
+        className={cn(
+          "grid gap-x-8 gap-y-7",
+          shown.length > 1 ? "grid-cols-2" : "grid-cols-1",
+          fill ? "w-full self-center" : "max-w-md",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
-        <div className="flex flex-col items-center gap-2">
-          <Bubble side="top" rich={rich} title={title} i={0} />
-          <button type="button" className={buttonClasses}>
-            Hover
-          </button>
-        </div>
-        <div className="flex items-center gap-2">
-          <button type="button" className={buttonClasses}>
-            Hover
-          </button>
-          <Bubble side="right" rich={rich} title={title} i={1} />
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <button type="button" className={buttonClasses}>
-            Hover
-          </button>
-          <Bubble side="bottom" rich={rich} title={title} i={2} />
-        </div>
-        <div className="flex items-center gap-2">
-          <Bubble side="left" rich={rich} title={title} i={3} />
-          <button type="button" className={buttonClasses}>
-            Hover
-          </button>
-        </div>
+        {shown.map((s, i) => {
+          const bubbleId = `${id}-${s}`;
+          const bubble = (
+            <Bubble
+              id={bubbleId}
+              side={s}
+              rich={rich}
+              title={title}
+              text={content ?? (rich ? richBody : sideText[s])}
+              i={i}
+            />
+          );
+          const button = (
+            <button type="button" aria-describedby={bubbleId} className={buttonClasses}>
+              {triggerLabel}
+            </button>
+          );
+          const vertical = s === "top" || s === "bottom";
+          return (
+            <div
+              key={s}
+              className={cn(
+                "flex items-center gap-2",
+                vertical ? "flex-col" : fill && "justify-center",
+              )}
+            >
+              {s === "top" || s === "left" ? (
+                <>
+                  {bubble}
+                  {button}
+                </>
+              ) : (
+                <>
+                  {button}
+                  {bubble}
+                </>
+              )}
+            </div>
+          );
+        })}
       </motion.div>
     </div>
   );
