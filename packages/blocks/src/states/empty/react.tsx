@@ -79,12 +79,11 @@ function useFitScale(
     const box = frame.current;
     const el = stage.current;
     if (!box || !el || typeof ResizeObserver === "undefined") return;
+    const px = (value: string) => parseFloat(value) || 0;
     const fit = () => {
       const style = getComputedStyle(box);
-      const width =
-        box.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-      const height =
-        box.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      const width = box.clientWidth - px(style.paddingLeft) - px(style.paddingRight);
+      const height = box.clientHeight - px(style.paddingTop) - px(style.paddingBottom);
       const ratio = Math.min(1, width / el.offsetWidth, height / el.offsetHeight);
       el.style.scale = ratio > 0 && ratio < 1 ? String(ratio) : "";
     };
