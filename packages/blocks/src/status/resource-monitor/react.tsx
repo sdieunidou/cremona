@@ -292,11 +292,9 @@ export function ResourceMonitor({
                     style={{ backgroundColor: entry.color }}
                   />
                   <span className="font-medium text-muted-foreground">{entry.label}</span>
-                  {/* renderToString emitted `56<!-- -->%`; two text nodes for parity */}
-                  <span
-                    className="min-w-[3ch] text-right font-semibold text-foreground tabular-nums"
-                    dangerouslySetInnerHTML={{ __html: `${reading}<!-- -->%` }}
-                  />
+                  <span className="min-w-[3ch] text-right font-semibold text-foreground tabular-nums">
+                    {reading}%
+                  </span>
                 </motion.span>
               ))}
             </div>

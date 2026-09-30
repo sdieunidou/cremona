@@ -422,8 +422,9 @@ export function Semantic({
           }}
           variants={animated ? footerAnim : undefined}
           {...state}
-          dangerouslySetInnerHTML={{ __html: `k = <!-- -->${count}` }}
-        />
+        >
+          k = {count}
+        </motion.span>
       </motion.div>
     </div>
   );

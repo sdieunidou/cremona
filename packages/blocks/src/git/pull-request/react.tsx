@@ -388,20 +388,15 @@ export function PullRequest({
             custom={FILES_DELAY}
             {...state}
           >
-            <span
-              className="text-[10px] text-muted-foreground"
-              dangerouslySetInnerHTML={{
-                __html: `${files}<!-- --> <!-- -->${files === 1 ? "file" : "files"}`,
-              }}
-            />
-            <span
-              className="text-[10px] font-medium text-emerald-600 tabular-nums dark:text-emerald-400"
-              dangerouslySetInnerHTML={{ __html: `+<!-- -->${additions}` }}
-            />
-            <span
-              className="text-[10px] font-medium text-rose-600 tabular-nums dark:text-rose-400"
-              dangerouslySetInnerHTML={{ __html: `-<!-- -->${deletions}` }}
-            />
+            <span className="text-[10px] text-muted-foreground">
+              {files} {files === 1 ? "file" : "files"}
+            </span>
+            <span className="text-[10px] font-medium text-emerald-600 tabular-nums dark:text-emerald-400">
+              +{additions}
+            </span>
+            <span className="text-[10px] font-medium text-rose-600 tabular-nums dark:text-rose-400">
+              -{deletions}
+            </span>
             <span className="ml-auto flex items-center gap-0.5">
               {Array.from({ length: BAR_UNITS }).map((_, i) => (
                 <span

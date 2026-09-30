@@ -51,11 +51,15 @@ POC). The parity test renders our component with `animated` +
 `trigger="inViewRepeat"` via `renderToStaticMarkup` and compares DOM structure
 (tag tree, class multisets, style declarations, attributes, text).
 
-Two version drifts are normalized semantically (see `test/helpers/parity.ts`):
+Version drifts are normalized semantically (see `test/helpers/parity.ts`):
 
-- React 19 `renderToStaticMarkup` vs older `renderToString` `<!-- -->` text
-  separators — where byte-exactness matters, components reproduce the
-  separators via `dangerouslySetInnerHTML`.
+- `renderToString` separated adjacent text nodes with `<!-- -->` in the POC
+  goldens; React 19 `renderToStaticMarkup` does not. Those comments are
+  hydration markers with no rendering effect, so the comparator reads adjacent
+  text nodes as one run. Blocks render text as JSX and never use
+  `dangerouslySetInnerHTML` (a lint error in `packages/blocks/src`).
+- React 19 hoists `<link rel="preload" as="image">` hints for `<img>`; they are
+  resource hints, not part of the visual, and are ignored.
 - motion writes SVG presentational props as attributes or style depending on
   version — the comparator coalesces them (visually equivalent).
 

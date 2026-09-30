@@ -273,12 +273,9 @@ export function Filters({
                 layout={animated ? "position" : false}
                 transition={{ duration: timing.labelShift, ease: "easeOut" }}
                 className="text-[10px] text-muted-foreground"
-                // renderToString emitted `of <!-- -->N<!-- --> <!-- -->unit`;
-                // four text nodes for parity
-                dangerouslySetInnerHTML={{
-                  __html: `of <!-- -->${formatCount(total)}<!-- --> <!-- -->${unit}`,
-                }}
-              />
+              >
+                of {formatCount(total)} {unit}
+              </motion.span>
             </div>
             <div className="h-1 w-full overflow-hidden rounded-full bg-muted">
               <motion.div

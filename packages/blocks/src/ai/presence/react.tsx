@@ -347,17 +347,17 @@ function CursorChip({ collaborator }: { collaborator: Collaborator }) {
     <div className="relative inline-flex items-center gap-1 overflow-hidden rounded-full rounded-tl-none bg-current py-1 pr-2 pl-1 shadow-sm">
       <span className="absolute inset-0 bg-black/15 dark:bg-black/25" />
       {isUser ? (
-        <span
-          className="relative flex size-5 items-center justify-center overflow-hidden rounded-full bg-white/25 text-[8px] font-semibold text-white ring-1 ring-white/40"
-          /* img via innerHTML: React 19 would emit a <link rel=preload> for <img src>, absent from the goldens */
-          {...(collaborator.avatar
-            ? {
-                dangerouslySetInnerHTML: {
-                  __html: `<img src="${collaborator.avatar}" alt="${collaborator.name}" class="size-full object-cover"/>`,
-                },
-              }
-            : { children: collaborator.initials })}
-        />
+        <span className="relative flex size-5 items-center justify-center overflow-hidden rounded-full bg-white/25 text-[8px] font-semibold text-white ring-1 ring-white/40">
+          {collaborator.avatar ? (
+            <img
+              src={collaborator.avatar}
+              alt={collaborator.name}
+              className="size-full object-cover"
+            />
+          ) : (
+            collaborator.initials
+          )}
+        </span>
       ) : (
         <span className="relative flex size-4 items-center justify-center rounded-full bg-white/20">
           <Bot className="size-2.5 text-white" strokeWidth={2.5} />

@@ -438,14 +438,12 @@ export function Diff({
             <span className="min-w-0 flex-1 truncate font-mono text-[10px] font-medium text-foreground">
               {file}
             </span>
-            <span
-              className="shrink-0 text-[10px] font-medium text-emerald-600 tabular-nums dark:text-emerald-400"
-              dangerouslySetInnerHTML={{ __html: `+<!-- -->${adds}` }}
-            />
-            <span
-              className="shrink-0 text-[10px] font-medium text-rose-600 tabular-nums dark:text-rose-400"
-              dangerouslySetInnerHTML={{ __html: `-<!-- -->${removes}` }}
-            />
+            <span className="shrink-0 text-[10px] font-medium text-emerald-600 tabular-nums dark:text-emerald-400">
+              +{adds}
+            </span>
+            <span className="shrink-0 text-[10px] font-medium text-rose-600 tabular-nums dark:text-rose-400">
+              -{removes}
+            </span>
             <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/10 px-1.25 text-[9px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
               {language}
             </span>

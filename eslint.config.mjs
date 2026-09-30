@@ -61,11 +61,15 @@ export default defineConfig(
     ),
   },
   {
-    // Server and client must render the same markup.
+    // AGENTS.md invariant 6, and deterministic server/client renders.
     files: ["packages/blocks/src/**/*.tsx"],
     rules: {
       "no-restricted-syntax": [
         "error",
+        {
+          selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+          message: "Render text as JSX: blocks never inject HTML (AGENTS.md invariant 6).",
+        },
         {
           selector: "NewExpression[callee.name='Date'][arguments.length=0]",
           message:

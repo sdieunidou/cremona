@@ -352,11 +352,7 @@ export function VideoPlayer({
                   </button>
                   <Volume2 className="size-3" />
                   <span className="text-[9px] font-medium text-white/85 tabular-nums">
-                    {current}{" "}
-                    <span
-                      className="text-white/55"
-                      dangerouslySetInnerHTML={{ __html: `/ <!-- -->${duration}` }}
-                    />
+                    {current} <span className="text-white/55">/ {duration}</span>
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5 text-white/85">

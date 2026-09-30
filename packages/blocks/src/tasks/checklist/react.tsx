@@ -152,11 +152,9 @@ export function Checklist({
           >
             <div className="flex items-center justify-between">
               <span className="text-xs font-semibold text-foreground">{title}</span>
-              {/* renderToString emitted `2<!-- -->/<!-- -->5`; three text nodes for parity */}
-              <span
-                className="text-[10px] font-medium text-muted-foreground tabular-nums"
-                dangerouslySetInnerHTML={{ __html: `${doneCount}<!-- -->/<!-- -->${items.length}` }}
-              />
+              <span className="text-[10px] font-medium text-muted-foreground tabular-nums">
+                {doneCount}/{items.length}
+              </span>
             </div>
             <div className="relative h-1 w-full overflow-hidden rounded-full bg-muted">
               <motion.div
