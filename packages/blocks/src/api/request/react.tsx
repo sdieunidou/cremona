@@ -358,7 +358,7 @@ export function Request({
             {...state}
           >
             <span
-              className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] font-bold ring-1 ring-inset ${METHOD_STYLES[methodLabel]}`}
+              className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] font-bold ring-1 ring-inset ${METHOD_STYLES[methodLabel.toUpperCase()] ?? "bg-muted text-muted-foreground ring-border"}`}
             >
               {methodLabel}
             </span>

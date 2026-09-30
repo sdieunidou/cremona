@@ -1,7 +1,14 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { GitCommitHorizontal, Rocket, GitMerge, FileText, CircleCheck } from "lucide-react";
+import {
+  Activity,
+  GitCommitHorizontal,
+  Rocket,
+  GitMerge,
+  FileText,
+  CircleCheck,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -41,6 +48,9 @@ const actionStyles: Record<FeedAction, { icon: LucideIcon; accent: string }> = {
     accent: "bg-rose-50 border-rose-500/20 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400",
   },
 };
+
+/** Any other action (data outside the union): a neutral badge. */
+const otherAction = { icon: Activity, accent: "bg-muted border-border text-muted-foreground" };
 
 export const feedDefaultItems: FeedItem[] = [
   {
@@ -211,7 +221,7 @@ export function Feed({
             {...state}
           >
             {items.map((item, i) => {
-              const { icon: Icon, accent } = actionStyles[item.action];
+              const { icon: Icon, accent } = actionStyles[item.action] ?? otherAction;
               return (
                 <motion.div
                   key={i}

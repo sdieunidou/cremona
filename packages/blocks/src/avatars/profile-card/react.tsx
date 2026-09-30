@@ -127,7 +127,8 @@ export function ProfileCard({
   const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
   const loop = useLoopActive(ref, animated);
   const pulseState = { initial: "hidden", animate: shown && loop ? "visible" : "hidden" };
-  const style = statusStyles[status];
+  // any other status (data outside the union) reads as offline, with its own label
+  const style = statusStyles[status] ?? { ...statusStyles.offline, label: String(status) };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>

@@ -510,7 +510,7 @@ function EditorCodeLine({
           line.tokens.map((token, i) => (
             <div
               key={i}
-              className={`h-1.25 rounded-sm ${tokenColors[token.color]}`}
+              className={`h-1.25 rounded-sm ${tokenColors[token.color] ?? tokenColors.punct}`}
               style={{ width: `${token.width * 0.75}%` }}
             />
           ))

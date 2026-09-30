@@ -236,7 +236,9 @@ export function AiChat({
                   ))}
                 </motion.span>
               ) : (
-                <span className={`size-1.5 rounded-full ${statusDot[statusKind]}`} />
+                <span
+                  className={`size-1.5 rounded-full ${statusDot[statusKind] ?? statusDot.offline}`}
+                />
               )}
               {status}
             </span>

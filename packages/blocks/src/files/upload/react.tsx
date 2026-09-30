@@ -182,7 +182,7 @@ export function Upload({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const loop = useLoopActive(rootRef, animated);
   const active = (hover ? isHovering : inView) && loop;
-  const Preview = previews[variant];
+  const Preview = previews[variant] ?? previews.document;
 
   useEffect(() => {
     if (!animated) return;

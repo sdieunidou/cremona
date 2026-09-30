@@ -202,7 +202,7 @@ export function Timeline({
           >
             {steps.map((step, i) => {
               const isLast = i === steps.length - 1;
-              const s = statusStyles[step.status];
+              const s = statusStyles[step.status] ?? statusStyles.pending;
               return (
                 <motion.div
                   key={i}

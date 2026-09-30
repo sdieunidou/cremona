@@ -196,7 +196,9 @@ export function Terminal({
                   {isCommand ? (
                     <>
                       <span className="text-primary">{line.prompt ?? prompt}</span>
-                      <span className={`whitespace-pre-wrap ${kindColors[line.kind]}`}>
+                      <span
+                        className={`whitespace-pre-wrap ${kindColors[line.kind] ?? kindColors.output}`}
+                      >
                         {line.text}
                       </span>
                       {isEmptyCommand && caret && (
@@ -208,7 +210,9 @@ export function Terminal({
                       )}
                     </>
                   ) : (
-                    <span className={`pl-3 whitespace-pre-wrap ${kindColors[line.kind]}`}>
+                    <span
+                      className={`pl-3 whitespace-pre-wrap ${kindColors[line.kind] ?? kindColors.output}`}
+                    >
                       {line.text}
                     </span>
                   )}

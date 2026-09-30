@@ -281,8 +281,8 @@ export function Stacked({
     : {};
 
   const { angles, zIndices, frontIndex } = stackLayout(count);
-  const badgeStyle = badgeStyles[category];
-  const Preview = previews[category];
+  const badgeStyle = badgeStyles[category] ?? badgeStyles.default;
+  const Preview = previews[category] ?? previews.default;
   const text = labelText ?? `${count} files`;
 
   return (

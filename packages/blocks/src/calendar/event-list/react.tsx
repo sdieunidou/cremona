@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Coffee, Plane, Sparkles, Users, Video } from "lucide-react";
+import { CalendarDays, Coffee, Plane, Sparkles, Users, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -83,6 +83,13 @@ const categoryStyles: Record<EventCategory, { icon: LucideIcon; accent: string; 
     accent: "bg-rose-50 border-rose-500/20 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400",
     bar: "bg-rose-500",
   },
+};
+
+/** Any other category (data outside the union): a neutral row. */
+const otherCategory = {
+  icon: CalendarDays,
+  accent: "bg-muted border-border text-muted-foreground",
+  bar: "bg-muted-foreground/40",
 };
 
 const container = {
@@ -192,7 +199,7 @@ export function EventList({
           </div>
           <motion.div className="flex flex-col" variants={animated ? list : undefined} {...state}>
             {rows.flatMap(({ item, showHeader }, i) => {
-              const { icon: Icon, accent, bar } = categoryStyles[item.category];
+              const { icon: Icon, accent, bar } = categoryStyles[item.category] ?? otherCategory;
               const isLast = i === rows.length - 1;
               const out = [];
               if (showHeader) {

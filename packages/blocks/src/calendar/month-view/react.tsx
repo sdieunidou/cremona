@@ -319,7 +319,7 @@ export function MonthView({
                       {dayEvents.slice(0, 3).map((tone, j) => (
                         <motion.span
                           key={j}
-                          className={`size-1 rounded-full ${toneStyles[tone]}`}
+                          className={`size-1 rounded-full ${toneStyles[tone] ?? "bg-muted-foreground"}`}
                           variants={animated ? dot : undefined}
                         />
                       ))}

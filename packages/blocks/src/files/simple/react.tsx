@@ -605,8 +605,9 @@ export function SimpleFile({
       }
     : {};
 
-  const badgeStyle = badgeStyles[extension];
-  const Preview = previews[extension];
+  // any other extension renders as a generic document
+  const badgeStyle = badgeStyles[extension] ?? badgeStyles.docx;
+  const Preview = previews[extension] ?? previews.docx;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>

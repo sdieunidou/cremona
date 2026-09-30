@@ -392,11 +392,13 @@ export function Logs({
                       {line2.time}
                     </span>
                     <span
-                      className={`w-9 shrink-0 rounded px-0.75 py-px text-center text-[8px] font-semibold ring-1 ring-inset ${LEVEL_PILL[line2.level]}`}
+                      className={`w-9 shrink-0 rounded px-0.75 py-px text-center text-[8px] font-semibold ring-1 ring-inset ${LEVEL_PILL[line2.level] ?? LEVEL_PILL.debug}`}
                     >
-                      {LEVEL_LABELS[line2.level]}
+                      {LEVEL_LABELS[line2.level] ?? String(line2.level).toUpperCase()}
                     </span>
-                    <span className={`truncate ${LEVEL_TEXT[line2.level]}`}>{line2.message}</span>
+                    <span className={`truncate ${LEVEL_TEXT[line2.level] ?? LEVEL_TEXT.info}`}>
+                      {line2.message}
+                    </span>
                   </span>
                 </motion.div>
               ))}
