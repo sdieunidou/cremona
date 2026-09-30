@@ -117,9 +117,9 @@ export function AppBar({
           {large ? (
             <div className="flex-1" />
           ) : (
-            <h1 className="min-w-0 flex-1 truncate text-base font-semibold text-foreground">
+            <h2 className="min-w-0 flex-1 truncate text-base font-semibold text-foreground">
               {title}
-            </h1>
+            </h2>
           )}
           <div className="flex items-center gap-1">
             {actions.map((action, i) => {
@@ -142,7 +142,7 @@ export function AppBar({
         </div>
         {large && (
           <div className="w-full bg-background px-3 pb-2.5">
-            <h1 className="truncate text-2xl font-bold tracking-tight text-foreground">{title}</h1>
+            <h2 className="truncate text-2xl font-bold tracking-tight text-foreground">{title}</h2>
           </div>
         )}
       </motion.header>
