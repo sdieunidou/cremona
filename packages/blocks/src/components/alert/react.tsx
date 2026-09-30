@@ -9,7 +9,11 @@ export interface AlertProps extends VisualProps {
   variant?: "info" | "success" | "warning" | "destructive";
   title?: string;
   description?: string;
+  /** Full width, at the top of the box. */
+  fill?: boolean;
 }
+
+const NO_REF = { current: null };
 
 const copy: Record<string, { title: string; description: string }> = {
   info: {
@@ -31,21 +35,9 @@ const copy: Record<string, { title: string; description: string }> = {
 };
 
 const variantClasses: Record<string, { box: string; icon: string; Icon: LucideIcon }> = {
-  info: {
-    box: "border-sky-500/20 bg-sky-500/10",
-    icon: "text-sky-600 dark:text-sky-400",
-    Icon: Info,
-  },
-  success: {
-    box: "border-emerald-500/20 bg-emerald-500/10",
-    icon: "text-emerald-600 dark:text-emerald-400",
-    Icon: CheckCircle2,
-  },
-  warning: {
-    box: "border-amber-500/20 bg-amber-500/10",
-    icon: "text-amber-600 dark:text-amber-400",
-    Icon: TriangleAlert,
-  },
+  info: { box: "border-info/20 bg-info/10", icon: "text-info", Icon: Info },
+  success: { box: "border-success/20 bg-success/10", icon: "text-success", Icon: CheckCircle2 },
+  warning: { box: "border-warning/20 bg-warning/10", icon: "text-warning", Icon: TriangleAlert },
   destructive: {
     box: "border-destructive/30 bg-destructive/10",
     icon: "text-destructive",
@@ -68,8 +60,14 @@ export function Alert({
   className,
 }: AlertProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const inViewOnce = useInView(animated && trigger === "inView" ? ref : NO_REF, {
+    once: true,
+    amount: 0.5,
+  });
+  const inViewRepeat = useInView(animated && trigger === "inViewRepeat" ? ref : NO_REF, {
+    once: false,
+    amount: 0.5,
+  });
   const state = animated
     ? {
         initial: "hidden",
@@ -82,16 +80,22 @@ export function Alert({
 
   const { box, icon, Icon } = variantClasses[variant] ?? variantClasses.info!;
   const fallback = copy[variant] ?? copy.info!;
+  const urgent = variant === "destructive" || variant === "warning";
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        role="alert"
-        className={cn("flex w-full", !fill && "max-w-80", "gap-3 rounded-lg border p-4", box)}
+        role={urgent ? "alert" : "status"}
+        className={cn(
+          "flex w-full",
+          fill ? "self-start" : "max-w-80",
+          "gap-3 rounded-lg border p-4",
+          box,
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
-        <Icon className={cn("mt-0.5 size-4.5 shrink-0", icon)} aria-hidden="true" />
+        <Icon className={cn("mt-0.5 size-4.5 shrink-0", icon)} />
         <div className="flex flex-col gap-0.5">
           <p className="text-sm font-medium text-foreground">{title ?? fallback.title}</p>
           <p className="text-xs text-muted-foreground">{description ?? fallback.description}</p>
