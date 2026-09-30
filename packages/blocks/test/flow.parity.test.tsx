@@ -6,6 +6,11 @@ import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/connections/flow");
 
+// icon elements for the custom-icons variant (from the POC page chunk imports)
+const icon = (Icon: typeof Bell, className = "size-4") => (
+  <Icon className={className} strokeWidth={2} />
+);
+
 runGoldenParity("connections/flow", {
   blockDir,
   Component: Flow,
@@ -13,14 +18,12 @@ runGoldenParity("connections/flow", {
     {
       label: "custom icons",
       props: {
-        // icon components are drawn at the node icon size; the transforms keep elements
-        // because the POC colours their icons explicitly
-        sources: [Smartphone, Laptop, Server],
+        sources: [icon(Smartphone), icon(Laptop), icon(Server)],
         transforms: [
           <Cog className="size-4.5 text-primary-foreground" strokeWidth={1.5} />,
           <Shuffle className="size-4.5 text-primary-foreground" strokeWidth={1.5} />,
         ],
-        destinations: [ChartLine, Send, Bell],
+        destinations: [icon(ChartLine), icon(Send), icon(Bell)],
       },
     },
   ],

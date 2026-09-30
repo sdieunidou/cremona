@@ -11,9 +11,27 @@
   },
   "custom icons": {
     "sources": [
-      "lucide:Smartphone",
-      "lucide:Laptop",
-      "lucide:Server"
+      {
+        "$element": "lucide:Smartphone",
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        }
+      },
+      {
+        "$element": "lucide:Laptop",
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        }
+      },
+      {
+        "$element": "lucide:Server",
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        }
+      }
     ],
     "transforms": [
       {
@@ -32,9 +50,27 @@
       }
     ],
     "destinations": [
-      "lucide:ChartLine",
-      "lucide:Send",
-      "lucide:Bell"
+      {
+        "$element": "lucide:ChartLine",
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        }
+      },
+      {
+        "$element": "lucide:Send",
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        }
+      },
+      {
+        "$element": "lucide:Bell",
+        "props": {
+          "className": "size-4",
+          "strokeWidth": 2
+        }
+      }
     ]
   }
 }
