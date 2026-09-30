@@ -4818,12 +4818,12 @@
       {
         "label": "default",
         "slug": "000-default",
-        "size": "lg"
+        "size": "xl"
       },
       {
         "label": "dark hero",
         "slug": "001-dark-hero",
-        "size": "lg"
+        "size": "xl"
       }
     ]
   },
@@ -5311,6 +5311,16 @@
       {
         "label": "update",
         "slug": "002-update",
+        "size": null
+      },
+      {
+        "label": "success",
+        "slug": "003-success",
+        "size": null
+      },
+      {
+        "label": "error",
+        "slug": "004-error",
         "size": null
       }
     ]
