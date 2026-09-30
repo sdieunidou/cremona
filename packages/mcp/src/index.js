@@ -99,6 +99,10 @@ function findVariant(meta, variant) {
 
 const KINDS = ["block", "layout", "component"];
 
+const REACT_INSTALL = "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom";
+const STIMULUS_INSTALL = "npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus";
+const STYLESHEET = "@cremona/tokens/css/cremona.css";
+
 tool(
   "list_categories",
   {
@@ -156,7 +160,7 @@ tool(
   {
     title: "Get a block",
     description:
-      "Get everything about a visual block: metadata, exact variant props, React source, Stimulus template and golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
+      "Get a visual block: install line, public import, metadata, exact variant props and the React source. Add 'stimulus' to include for the Stimulus templates and one sample, 'golden' for the golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
     inputSchema: {
       key: z.string().describe("block key as '<category>/<file>', e.g. 'metrics/stat-card'"),
       variant: z
@@ -166,7 +170,7 @@ tool(
       include: z
         .array(z.enum(["meta", "props", "react", "stimulus", "golden"]))
         .optional()
-        .describe("sections to include (default all except golden)"),
+        .describe('sections to include (default ["meta", "props", "react"])'),
     },
   },
   async ({ key, variant, include }) => {
@@ -180,8 +184,16 @@ tool(
       return fail(`unknown variant '${variant}' for ${key}`, {
         variants: meta.variants.map((v) => v.label),
       });
-    const wanted = new Set(include ?? ["meta", "props", "react", "stimulus"]);
-    const out = { key };
+    const wanted = new Set(include ?? ["meta", "props", "react"]);
+    const exportName = store.blockExportName(categorySlug, file);
+    const out = {
+      key,
+      install: REACT_INSTALL,
+      import: exportName
+        ? `import { ${exportName} } from "${store.blockImportPath(categorySlug, file)}";`
+        : null,
+      stylesheet: `import "${STYLESHEET}"; // once, in the app entry`,
+    };
     if (wanted.has("meta")) {
       out.meta = {
         name: meta.name,
@@ -223,6 +235,7 @@ tool(
     if (wanted.has("stimulus")) {
       const variants = store.stimulusTemplates(categorySlug, file);
       out.stimulus = {
+        install: STIMULUS_INSTALL,
         templates: variants.map((v) => ({ label: v.label, slug: v.slug })),
         sample: store.stimulusTemplate(
           categorySlug,
@@ -376,7 +389,7 @@ tool(
         grid: "grid grid-cols-1 gap-2 lg:grid-cols-2 (+ xl:grid-cols-3 for 3 cols)",
       },
       cssBytes: css.length,
-      cssPath: "@cremona/tokens/css/cremona.css",
+      cssPath: STYLESHEET,
     });
   },
 );
@@ -386,26 +399,33 @@ tool(
   {
     title: "Get the stylesheet",
     description:
-      "Get a library stylesheet. kinds: 'full' = @cremona/tokens/css/cremona.css (complete: fonts + tokens + every utility class the blocks use — ship this); 'tokens' = semantic tokens only; 'fonts' = list of font files.",
-    inputSchema: { kind: z.enum(["full", "tokens", "fonts"]).optional() },
+      "How to load the library stylesheet. kind 'summary' (default): path, size, import snippets and font files of @cremona/tokens/css/cremona.css (fonts + theme tokens + every utility class the blocks use). 'full': the whole minified file (large: prefer reading it from node_modules). 'tokens': css/themes.css only (semantic tokens). 'fonts': the font files.",
+    inputSchema: { kind: z.enum(["summary", "full", "tokens", "fonts"]).optional() },
   },
-  async ({ kind = "full" }) => {
-    if (kind === "fonts") {
-      const fonts = readdirSync(join(store.TOKENS_DIR, "css")).filter((f) => f.endsWith(".woff2"));
-      return text({
-        fonts,
-        note: "Copy packages/tokens/css/*.woff2 next to cremona.css, or rely on the @font-face urls (relative).",
-      });
+  async ({ kind = "summary" }) => {
+    const fonts = readdirSync(join(store.TOKENS_DIR, "css")).filter((f) => f.endsWith(".woff2"));
+    const fontsNote =
+      "The @font-face urls are relative: keep these .woff2 files next to cremona.css (they ship in the same folder of @cremona/tokens).";
+    if (kind === "fonts") return text({ fonts, note: fontsNote });
+    if (kind === "tokens") {
+      const css = store.themeCss();
+      return text({ kind, path: "@cremona/tokens/css/themes.css", bytes: css.length, css });
     }
-    const css = kind === "tokens" ? store.themeCss() : store.designSystemCss();
+    const css = store.designSystemCss();
+    if (kind === "full") return text({ kind, path: STYLESHEET, bytes: css.length, css });
     return text({
       kind,
+      path: STYLESHEET,
       bytes: css.length,
-      note:
-        kind === "full"
-          ? "Ship this file as-is (one <link>), no Tailwind build needed on the host."
-          : undefined,
-      css,
+      approxTokens: Math.round(css.length / 4),
+      import: { js: `import "${STYLESHEET}";`, css: `@import "${STYLESHEET}";` },
+      contains:
+        "Inter @font-face rules, the theme tokens (all themes, light + dark) and every utility class the blocks use, compiled with Tailwind v4 and minified. A utility that no block uses has no rule in it.",
+      usage:
+        "Load it once, at the app root, and toggle .dark / .theme-<name> on <html>. No Tailwind build is needed on the host.",
+      fonts: { files: fonts, note: fontsNote },
+      tokensOnly: "@cremona/tokens/css/themes.css (get_css kind 'tokens')",
+      full: "get_css kind 'full' returns the whole file",
     });
   },
 );
@@ -424,6 +444,7 @@ tool(
         : join(store.REPO_ROOT, "packages", "stimulus", "src", "cremona-visual_controller.js");
     return text({
       name,
+      install: STIMULUS_INSTALL,
       register: 'import { registerCremona } from "@cremona/stimulus"; registerCremona(app);',
       source: store.readText(file),
     });

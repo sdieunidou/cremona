@@ -46,12 +46,17 @@ describe("packaged @cremona/mcp", () => {
   });
 
   it("serves blocks, templates, guides and tokens from the bundled data", async () => {
-    const block = await json("get_block", { key: "metrics/stat-card" });
+    const block = await json("get_block", {
+      key: "metrics/stat-card",
+      include: ["react", "stimulus"],
+    });
     expect(block.reactSource).toContain("export function StatCard");
+    expect(block.import).toBe('import { StatCard } from "@cremona/blocks/metrics/stat-card";');
     expect(block.stimulus.sample).toContain('data-controller="cremona-visual"');
     const guide = await client.callTool({ name: "get_guide", arguments: { name: "react" } });
     expect(guide.content[0].text).toContain("# React adapter");
     expect((await json("get_css", { kind: "tokens" })).css).toContain(":root{--background");
+    expect((await json("get_css")).fonts.files.length).toBeGreaterThan(0);
     expect((await json("validate")).ok).toBe(true);
   });
 });

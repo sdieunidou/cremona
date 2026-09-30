@@ -72,16 +72,43 @@ describe("cremona MCP server", () => {
     expect((await search("stat card"))[0].key).toBe("metrics/stat-card");
   });
 
-  it("returns a block with react source + stimulus sample + props", async () => {
+  it("returns a block with meta, props and react source by default", async () => {
     const block = textOf(
       await client.callTool({ name: "get_block", arguments: { key: "metrics/stat-card" } }),
     );
     expect(block.meta.name).toBe("Stat Card");
     expect(block.reactSource).toContain("export function StatCard");
-    expect(block.stimulus.templates.length).toBeGreaterThan(0);
-    expect(block.stimulus.sample).toContain('data-controller="cremona-visual"');
     expect(block.props["default"]).toEqual({});
     expect(block.props["isometric"]).toEqual({ isometric: true });
+    expect(block.stimulus).toBeUndefined();
+    expect(block.goldenSlugs).toBeUndefined();
+  });
+
+  it("returns the Stimulus templates and goldens on request", async () => {
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "metrics/stat-card", include: ["stimulus", "golden"] },
+      }),
+    );
+    expect(block.reactSource).toBeUndefined();
+    expect(block.stimulus.templates.length).toBeGreaterThan(0);
+    expect(block.stimulus.sample).toContain('data-controller="cremona-visual"');
+    expect(block.goldenSlugs).toContain("000-default.html");
+  });
+
+  it("tells how to install and import a block from its public path", async () => {
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "files/simple", include: ["meta"] },
+      }),
+    );
+    expect(block.install).toBe(
+      "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom",
+    );
+    expect(block.import).toBe('import { SimpleFile } from "@cremona/blocks/files/simple";');
+    expect(block.stylesheet).toContain("@cremona/tokens/css/cremona.css");
   });
 
   it("returns golden html", async () => {
@@ -108,6 +135,18 @@ describe("cremona MCP server", () => {
     const ds = textOf(await client.callTool({ name: "get_design_system", arguments: {} }));
     expect(ds.tokens).toContain("--chart-1");
     expect(ds.themes).toHaveLength(9);
+  });
+
+  it("returns a stylesheet summary by default and the full file on request", async () => {
+    const summary = textOf(await client.callTool({ name: "get_css", arguments: {} }));
+    expect(summary.kind).toBe("summary");
+    expect(summary.path).toBe("@cremona/tokens/css/cremona.css");
+    expect(summary.bytes).toBeGreaterThan(100000);
+    expect(summary.import.js).toBe('import "@cremona/tokens/css/cremona.css";');
+    expect(summary.fonts.files.length).toBeGreaterThan(0);
+    expect(summary.css).toBeUndefined();
+    const full = textOf(await client.callTool({ name: "get_css", arguments: { kind: "full" } }));
+    expect(full.css.length).toBe(summary.bytes);
   });
 
   it("registers every tool with a title and annotations", async () => {

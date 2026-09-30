@@ -126,6 +126,17 @@ export function doc(name) {
   return existsSync(p) ? readText(p) : null;
 }
 
+/** The component a block's react.tsx exports (one PascalCase function per block). */
+export function blockExportName(categorySlug, file) {
+  const source = blockReactSource(categorySlug, file);
+  return source ? (/^export function ([A-Z]\w*)/m.exec(source)?.[1] ?? null) : null;
+}
+
+/** Public package path of a block: `@cremona/blocks/<category>/<file>`. */
+export function blockImportPath(categorySlug, file) {
+  return `@cremona/blocks/${categorySlug}/${file}`;
+}
+
 /** Flattened block index for list/search tools. */
 export function blockIndex() {
   const out = [];
