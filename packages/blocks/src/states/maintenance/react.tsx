@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { motion, type Easing, type Transition, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Settings } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -80,11 +80,96 @@ const progress = {
   visible: { opacity: 1, scaleX: 1, transition: { duration: 0.45, delay: 0.8, ease: "easeOut" } },
 } as const;
 
+/** Scale the fixed-size stage down to the frame's content box (client only). */
+function useFitScale(
+  frame: RefObject<HTMLElement | null>,
+  stage: RefObject<HTMLElement | null>,
+  layout?: unknown,
+) {
+  useEffect(() => {
+    const box = frame.current;
+    const el = stage.current;
+    if (!box || !el || typeof ResizeObserver === "undefined") return;
+    const fit = () => {
+      const style = getComputedStyle(box);
+      const width =
+        box.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const height =
+        box.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      const ratio = Math.min(1, width / el.offsetWidth, height / el.offsetHeight);
+      el.style.scale = ratio > 0 && ratio < 1 ? String(ratio) : "";
+    };
+    const observer = new ResizeObserver(fit);
+    observer.observe(box);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      el.style.scale = "";
+    };
+  }, [frame, stage, layout]);
+}
+
+export interface MaintenanceAction {
+  label: string;
+  /** Renders a link; without it the action is a button. */
+  href?: string;
+  onClick?: () => void;
+}
+
 export interface MaintenanceProps extends VisualProps {
   tiles?: number;
   hover?: boolean;
   glow?: boolean;
   isometric?: boolean;
+  /** Heading under the illustration. */
+  title?: string;
+  description?: string;
+  /** Links or buttons under the text; the first one is the primary action. */
+  actions?: MaintenanceAction[];
+  /** Element of the heading (default `h2`). */
+  titleAs?: "h1" | "h2" | "h3" | "p";
+}
+
+const actionClass =
+  "inline-flex h-9 max-w-full items-center justify-center rounded-md px-4 text-sm font-medium shadow-xs transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const actionVariants = [
+  "bg-primary text-primary-foreground hover:bg-primary/90",
+  "border border-border bg-background text-foreground hover:bg-muted dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
+];
+
+function StateCopy({
+  title,
+  description,
+  actions,
+  titleAs: Title = "h2",
+}: Pick<MaintenanceProps, "title" | "description" | "actions" | "titleAs">) {
+  return (
+    <div className="relative flex max-w-md flex-col items-center gap-2 px-2 text-center">
+      {title && (
+        <Title className="text-lg font-semibold tracking-tight text-balance text-foreground">
+          {title}
+        </Title>
+      )}
+      {description && <p className="text-sm text-pretty text-muted-foreground">{description}</p>}
+      {actions && actions.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+          {actions.map((action, i) => {
+            const className = cn(actionClass, actionVariants[i === 0 ? 0 : 1]);
+            const label = <span className="truncate">{action.label}</span>;
+            return action.href ? (
+              <a key={i} href={action.href} onClick={action.onClick} className={className}>
+                {label}
+              </a>
+            ) : (
+              <button key={i} type="button" onClick={action.onClick} className={className}>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export function Maintenance({
@@ -96,14 +181,22 @@ export function Maintenance({
   isometric = false,
   fill = false,
   className,
+  title,
+  description,
+  actions,
+  titleAs,
 }: MaintenanceProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
   const [hovered, setHovered] = useState(false);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const active = hover ? hovered : inView;
+  const active = (hover ? hovered : inView) && loop;
+  const hasCopy = Boolean(title || description || actions?.length);
+  useFitScale(ref, stageRef, hasCopy);
   const loopDelay = hover ? 0 : HOVER_DELAY;
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const count = Math.min(Math.max(tiles, MIN_TILES), MAX_TILES);
@@ -112,11 +205,15 @@ export function Maintenance({
       ? { duration: 2.6, times: SWEEP_TIMES, ease: SWEEP_EASE, repeat: Infinity, delay: loopDelay }
       : still;
 
-  return (
+  const illustration = (
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(frameClasses(fill), className)}
+      className={
+        hasCopy
+          ? "relative flex w-full shrink-0 items-center justify-center px-2"
+          : cn(frameClasses(fill), className)
+      }
       onMouseEnter={animated && hover ? () => setHovered(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
@@ -139,7 +236,11 @@ export function Maintenance({
         </motion.div>
       )}
       <motion.div
-        className="relative flex shrink-0 items-center justify-center"
+        ref={stageRef}
+        className={cn(
+          "relative flex shrink-0 items-center justify-center",
+          fill && !hasCopy && "self-center",
+        )}
         style={
           !animated && isometric
             ? { width: STAGE.w, height: STAGE.h, transform: "rotateX(45deg) rotateZ(-45deg)" }
@@ -292,6 +393,19 @@ export function Maintenance({
           </motion.div>
         </div>
       </motion.div>
+    </div>
+  );
+
+  if (!hasCopy) return illustration;
+  return (
+    <div
+      className={cn(
+        "relative isolate flex size-full flex-col items-center justify-center gap-6 overflow-hidden px-4 py-10",
+        className,
+      )}
+    >
+      {illustration}
+      <StateCopy title={title} description={description} actions={actions} titleAs={titleAs} />
     </div>
   );
 }
