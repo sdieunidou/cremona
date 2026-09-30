@@ -109,7 +109,7 @@ export function MiniPanel({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -129,7 +129,7 @@ export function MiniPanel({
           </>
         )}
         <motion.div
-          className="relative h-64 rounded-xl border bg-background"
+          className={cn("relative rounded-xl border bg-background", fill ? "flex-1" : "h-64")}
           variants={animated ? panelAnim : undefined}
           {...state}
         >

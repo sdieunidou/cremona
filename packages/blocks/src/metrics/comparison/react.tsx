@@ -84,13 +84,21 @@ const veilAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
+/** A bar length, 0–100; anything else is clamped (non-finite reads 0). */
+const barWidth = (value: number) =>
+  `${Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : 0}%`;
+
 export interface ComparisonProps extends VisualProps {
   title?: string;
   before?: string;
   after?: string;
   improvement?: string;
+  /** Length of the "before" bar, 0–100. */
   beforeBar?: number;
+  /** Length of the "after" bar, 0–100. */
   afterBar?: number;
+  beforeLabel?: string;
+  afterLabel?: string;
   isometric?: boolean;
   gradient?: boolean;
 }
@@ -102,6 +110,8 @@ export function Comparison({
   improvement = comparisonDefault.improvement,
   beforeBar = comparisonDefault.beforeBar,
   afterBar = comparisonDefault.afterBar,
+  beforeLabel = "Before",
+  afterLabel = "After",
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -129,6 +139,7 @@ export function Comparison({
           "relative w-full",
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -148,7 +159,12 @@ export function Comparison({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center justify-between border-b px-3.5 py-2.5">
             <span className="text-xs font-semibold text-foreground">{title}</span>
             <motion.span
@@ -161,13 +177,16 @@ export function Comparison({
             </motion.span>
           </div>
           <motion.div
-            className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-5"
+            className={cn(
+              "grid grid-cols-[1fr_auto_1fr] items-center gap-3 px-4 py-5",
+              fill && "my-auto",
+            )}
             variants={animated ? gridAnim : undefined}
             {...state}
           >
             <div className="flex flex-col gap-2">
               <span className="text-[9px] font-semibold tracking-wider text-muted-foreground uppercase">
-                Before
+                {beforeLabel}
               </span>
               <motion.span
                 className="text-xl font-semibold tracking-tight text-muted-foreground tabular-nums"
@@ -178,7 +197,7 @@ export function Comparison({
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
                 <motion.div
                   className="h-full origin-left rounded-full bg-muted-foreground/40"
-                  style={{ width: `${beforeBar}%` }}
+                  style={{ width: barWidth(beforeBar) }}
                   variants={animated ? beforeBarAnim : undefined}
                 />
               </div>
@@ -192,7 +211,7 @@ export function Comparison({
             </motion.div>
             <div className="flex flex-col gap-2">
               <span className="text-[9px] font-semibold tracking-wider text-primary uppercase">
-                After
+                {afterLabel}
               </span>
               <motion.span
                 className="text-xl font-semibold tracking-tight text-foreground tabular-nums"
@@ -203,7 +222,7 @@ export function Comparison({
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
                 <motion.div
                   className="h-full origin-left rounded-full bg-primary"
-                  style={{ width: `${afterBar}%` }}
+                  style={{ width: barWidth(afterBar) }}
                   variants={animated ? afterBarAnim : undefined}
                 />
               </div>

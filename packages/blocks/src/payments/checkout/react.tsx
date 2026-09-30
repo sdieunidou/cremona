@@ -136,6 +136,7 @@ export function Checkout({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -155,7 +156,7 @@ export function Checkout({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-4 py-3">
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold text-foreground">Pay with card</span>
