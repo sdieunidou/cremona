@@ -22,8 +22,7 @@ vi.mock("react-dom/server", async (importOriginal) => {
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/calendar/month-view");
 
-// NOTE: the `default` variants rely on `new Date()` for the displayed month —
-// goldens were captured in September 2026, so this test is month-sensitive.
+// Without `month`/`year` the block shows its fixed default month (September 2026).
 
 runGoldenParity("calendar/month-view", {
   blockDir,

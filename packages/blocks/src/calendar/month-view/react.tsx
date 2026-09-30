@@ -6,6 +6,10 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const noopSubscribe = () => () => {};
 
+// Shown when no `month`/`year` is passed; fixed so the server and the client render the same grid.
+const DEFAULT_MONTH = 8; // September
+const DEFAULT_YEAR = 2026;
+
 const weekdaysMon = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 const weekdaysSun = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const MONTHS = [
@@ -181,15 +185,16 @@ export function MonthView({
       }
     : {};
 
-  const now = new Date();
-  const currentMonth = month ?? now.getMonth();
-  const currentYear = year ?? now.getFullYear();
+  const currentMonth = month ?? DEFAULT_MONTH;
+  const currentYear = year ?? DEFAULT_YEAR;
   const leadingBlanks = (new Date(currentYear, currentMonth, 1).getDay() - weekStartsOn + 7) % 7;
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const monthName = MONTHS[currentMonth];
   const weekdayLabels = weekStartsOn === 1 ? weekdaysMon : weekdaysSun;
+  // eslint-disable-next-line no-restricted-syntax -- client-only: "today" is read after hydration
+  const now = isHydrated ? new Date() : null;
   const isThisMonth =
-    isHydrated && currentMonth === now.getMonth() && currentYear === now.getFullYear();
+    now !== null && currentMonth === now.getMonth() && currentYear === now.getFullYear();
   const today = highlighted === null ? null : (highlighted ?? (isThisMonth ? now.getDate() : null));
 
   const totalCells = Math.ceil((leadingBlanks + daysInMonth) / 7) * 7;

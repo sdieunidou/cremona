@@ -118,7 +118,7 @@ export function Checkout({
   name = "JOHN T. DOE",
   brand = "PLATINUM",
   cardNumber = "4242 4242 4242 4242",
-  expiry = `12/${((new Date().getFullYear() + 3) % 100).toString().padStart(2, "0")}`,
+  expiry = "12/29",
   cvc = "•••",
   card = false,
   animated = false,

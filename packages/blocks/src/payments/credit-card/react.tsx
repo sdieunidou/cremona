@@ -132,7 +132,7 @@ export interface CreditCardProps extends VisualProps {
 export function CreditCard({
   name = "JOHN T. DOE",
   number = "•••• •••• •••• 4242",
-  expiry = `12/${((new Date().getFullYear() + 3) % 100).toString().padStart(2, "0")}`,
+  expiry = "12/29",
   cvc = "123",
   brand = "PLATINUM",
   stacked = false,
