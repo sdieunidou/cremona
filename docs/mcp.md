@@ -115,7 +115,8 @@ and how the animation initial states are encoded.
 ```text
 I'm building a SaaS overview page in Next.js (App Router). Use the cremona
 MCP to pick and fetch:
-- a stat card (metrics/stat-card, variant "custom copy" with revenue $84k)
+- a stat card (metrics/stat-card, variant "users · custom copy", with my own
+  copy: revenue $84k)
 - a line chart (charts/line)
 - a data table (components/table)
 - buttons and badges for the header (components/button, components/badge)
@@ -168,11 +169,12 @@ the token list. Then show how to register it (class theme-ocean).
 ### Authoring (extending the library)
 
 ```text
-Call cremona_add_block with category "analytics", file "cohort-grid",
-name "Cohort Grid", description "Weekly retention cohort grid with color
-intensity ramp." Then read docs/porting-guide.md via cremona_get_guide and
-implement react.tsx for its variants, run the parity test, and report
-results. Follow the authoring conventions exactly.
+Call cremona_add_category with name "Analytics", then cremona_add_block with
+category "analytics", file "cohort-grid", name "Cohort Grid", description
+"Weekly retention cohort grid with color intensity ramp." Then read
+docs/authoring-guide.md via cremona_get_guide and implement react.tsx for its
+variants, generate its goldens, run the parity test, and report results.
+Follow the authoring conventions exactly.
 ```
 
 ```text
@@ -208,9 +210,14 @@ copy — convenient for humans, same source of truth as the MCP.
 ## Notes
 
 - Icon props arrive as `"lucide:Users"` strings — import the icon from
-  `lucide-react` in your code.
-- `get_block` returns the **complete React source**: copy it into your project
-  directly (blocks are self-contained TSX).
+  `lucide-react` in your code. `{ "$element": "lucide:Users", "props": {…} }` is
+  an element: pass `<Users {...props} />`.
+- An unknown block key, variant, theme or category is an error (`isError`)
+  that lists the valid values. Variants match by label, slug, or label
+  regardless of case and spacing.
+- `get_block` returns the **complete React source**, a preview composition to
+  use as-is or derive from (see docs/react.md). It imports `@cremona/core` and
+  `@cremona/react`.
 - Ship `@cremona/tokens/css/cremona.css` once (or fetch via `get_css`) — no
   Tailwind build required on the host.
 - `validate` exits non-zero via `scripts/validate.mjs` in CI:

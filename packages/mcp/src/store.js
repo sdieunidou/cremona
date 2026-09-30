@@ -24,13 +24,23 @@ export function readText(path) {
   return readFileSync(path, "utf8");
 }
 
+/** Slugs of categories, block files and guide names: lowercase words joined by hyphens. */
+export const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
 let catalogCache = null;
+let manifestCache = null;
+
+/** Forget cached catalog/manifest reads (after the authoring tools write). */
+export function invalidateCaches() {
+  catalogCache = null;
+  manifestCache = null;
+}
+
 export function catalog() {
   if (!catalogCache) catalogCache = readJson(join(REPO_ROOT, "packages", "blocks", "catalog.json"));
   return catalogCache;
 }
 
-let manifestCache = null;
 export function stimulusManifest() {
   if (!manifestCache) {
     const p = join(REPO_ROOT, "packages", "stimulus", "templates", "manifest.json");
@@ -111,6 +121,7 @@ export function docs() {
 }
 
 export function doc(name) {
+  if (!SLUG.test(name)) return null;
   const p = join(REPO_ROOT, "docs", `${name}.md`);
   return existsSync(p) ? readText(p) : null;
 }

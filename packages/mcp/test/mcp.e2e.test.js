@@ -148,4 +148,46 @@ describe("cremona MCP server", () => {
       "keep the class strings and the motion variants untouched",
     );
   });
+
+  it("lists the component kind", async () => {
+    const components = textOf(
+      await client.callTool({ name: "list_blocks", arguments: { kind: "component" } }),
+    );
+    expect(components.length).toBe(22);
+    expect(components.every((b) => b.kind === "component")).toBe(true);
+  });
+
+  it("finds a variant by label, slug or loosely typed label", async () => {
+    for (const variant of [
+      "users · custom copy",
+      "006-users-custom-copy",
+      "Users  ·  Custom Copy",
+    ]) {
+      const block = textOf(
+        await client.callTool({
+          name: "get_block",
+          arguments: { key: "metrics/stat-card", variant, include: ["props"] },
+        }),
+      );
+      expect(Object.keys(block.props)).toEqual(["users · custom copy"]);
+    }
+  });
+
+  it("reports unknown input as an error instead of falling back to defaults", async () => {
+    const variant = await client.callTool({
+      name: "get_block",
+      arguments: { key: "metrics/stat-card", variant: "custom copy" },
+    });
+    expect(variant.isError).toBe(true);
+    expect(textOf(variant).variants).toContain("users · custom copy");
+
+    const calls = [
+      { name: "get_block", arguments: { key: "../../etc/passwd" } },
+      { name: "get_golden", arguments: { key: "metrics/stat-card", variant: "nope" } },
+      { name: "get_theme", arguments: { theme: "ocean" } },
+      { name: "list_blocks", arguments: { category: "nope" } },
+      { name: "get_guide", arguments: { name: "../README" } },
+    ];
+    for (const call of calls) expect((await client.callTool(call)).isError, call.name).toBe(true);
+  });
 });

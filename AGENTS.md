@@ -35,9 +35,8 @@ if generated files are not committed.
    (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
    normalizations only with a real justification.
 4. **New blocks** follow `docs/authoring-guide.md` and must pass parity +
-   `pnpm validate`. MCP `add_block` scaffolds them — it overwrites the files of
-   an existing block without asking, so only call it with a new key, in an
-   existing category.
+   `pnpm validate`. MCP `add_block` scaffolds them, in an existing category
+   (`add_category` first otherwise); it refuses a key that already exists.
 5. **Design tokens live only in `packages/tokens`** — blocks use semantic tokens
    (`bg-card`, `text-muted-foreground`…), never raw colors.
 6. **No HTML from props**: blocks render text as JSX and never use

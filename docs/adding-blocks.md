@@ -4,8 +4,9 @@
 
 1. **Scaffold** — MCP `add_block` (or copy an existing block folder):
    creates `block.json` (6 core variants), `react.tsx` skeleton and a parity test.
-2. **Implement** — follow `docs/porting-guide.md`:
-   scene root, card wrapper, motion variants, exact class strings.
+2. **Implement** — follow `docs/authoring-guide.md` (new visuals) or
+   `docs/porting-guide.md` (POC ports): scene root, card wrapper, motion
+   variants, exact class strings.
 3. **Golden** — for POC ports the golden already exists; for brand-new visuals
    run `pnpm vitest run test/generate-goldens.test.tsx` first (it renders the
    component into golden/<slug>.html and locks it).
@@ -23,14 +24,14 @@
   (`isometric · no gradient · custom copy`). The 6 core variants exist on every
   block: `default`, `fadeOut`, `isometric`, `isometric · fadeOut`,
   `default · no gradient`, `isometric · no gradient`.
-- Test files: `<category>-<file>.parity.test.tsx` when the bare file name is
-  ambiguous (e.g. `timeline`), otherwise `<file>.parity.test.tsx`.
+- Test files: `<category>-<file>.parity.test.tsx` (what `add_block` creates).
+  Some older tests are named `<file>.parity.test.tsx`.
 
 ## Kinds
 
 - `block` — product/dashboard visuals (metrics, charts, states…)
 - `layout` — marketing sections rendered as wireframe mocks (`sections/*`)
-- `component` — reserved for future reusable primitives
+- `component` — real-size UI primitives (`components/*`)
 
 ## What "in coherence" means
 
