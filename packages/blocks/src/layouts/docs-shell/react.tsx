@@ -25,7 +25,7 @@ const codeLines = [
     { t: "import", c: "text-primary" },
     { t: " { Button } ", c: "text-foreground" },
     { t: "from", c: "text-primary" },
-    { t: ' "@cremona/blocks"', c: "text-emerald-600 dark:text-emerald-400" },
+    { t: ' "@cremona/blocks"', c: "text-success" },
   ],
   null,
   [
@@ -35,8 +35,8 @@ const codeLines = [
   [
     { t: "  return", c: "text-primary" },
     { t: " <Button", c: "text-foreground" },
-    { t: " size", c: "text-rose-600 dark:text-rose-400" },
-    { t: '="lg"', c: "text-emerald-600 dark:text-emerald-400" },
+    { t: " size", c: "text-info" },
+    { t: '="lg"', c: "text-success" },
     { t: " />", c: "text-foreground" },
   ],
   [{ t: "}", c: "text-foreground" }],
@@ -71,7 +71,7 @@ function SidebarNav() {
     >
       {navGroups.map((group) => (
         <div key={group.title} className="flex flex-col gap-0.5">
-          <span className="px-1 pb-0.5 text-[7px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
+          <span className="px-1 pb-0.5 text-[7px] font-semibold tracking-wider text-muted-foreground uppercase">
             {group.title}
           </span>
           {group.items.map((item) => (
@@ -111,17 +111,17 @@ function Article({ code }: { code: boolean }) {
         <div className="h-1.5 w-4/5 rounded-full bg-muted-foreground/10" />
       </motion.div>
       <motion.div
-        className="rounded-lg border bg-muted p-2 font-mono text-[8px] leading-relaxed"
+        className="min-w-0 overflow-hidden rounded-lg border bg-muted p-2 font-mono text-[8px] leading-relaxed"
         variants={region}
       >
         {code ? (
           <div className="flex flex-col">
             {codeLines.map((tokens, i) => (
               <div key={i} className="flex gap-2">
-                <span className="w-2 shrink-0 text-right text-muted-foreground/50 tabular-nums">
+                <span className="w-2 shrink-0 text-right text-muted-foreground tabular-nums">
                   {i + 1}
                 </span>
-                <span className="whitespace-pre">
+                <span className="min-w-0 overflow-hidden text-ellipsis whitespace-pre">
                   {tokens &&
                     tokens.map((token, j) => (
                       <span key={j} className={token.c}>
@@ -133,7 +133,7 @@ function Article({ code }: { code: boolean }) {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col">
+          <div className="flex flex-col [&>span]:truncate">
             <span className="text-foreground">$ npm install @cremona/blocks</span>
             <span className="text-foreground">$ npx cremona init --theme</span>
             <span className="text-muted-foreground"># added 2 packages in 1.4s</span>
@@ -213,7 +213,11 @@ export function DocsShell({
         variants={animated ? shell : undefined}
         {...state}
       >
-        <motion.div className="flex h-80" variants={animated ? regions : undefined} {...state}>
+        <motion.div
+          className={cn("flex", fill ? "h-full" : "h-80")}
+          variants={animated ? regions : undefined}
+          {...state}
+        >
           <SidebarNav />
           <Article code={code} />
           <OnThisPage />

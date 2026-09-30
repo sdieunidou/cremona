@@ -5,7 +5,7 @@ import { ArrowRight, ShieldCheck, Sparkles, Zap } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface MarketingShellProps extends VisualProps {
-  /** Render the hero as a dark, brand-filled band. */
+  /** Render the hero band in the dark palette, whatever the page mode. */
   darkHero?: boolean;
 }
 
@@ -68,111 +68,46 @@ function Nav() {
   );
 }
 
+/** `dark` scopes the dark palette to the hero band: the same tokens, flipped. */
 function Hero({ dark }: { dark: boolean }) {
   return (
     <motion.section
       className={cn(
         "flex flex-col items-center px-4 pt-3 pb-3.5 text-center",
-        dark && "bg-primary text-primary-foreground",
+        dark && "dark bg-background text-foreground",
       )}
       variants={region}
     >
-      <p
-        className={cn(
-          "text-[13px] leading-tight font-bold tracking-tight",
-          dark ? "text-primary-foreground" : "text-foreground",
-        )}
-      >
+      <p className="text-[13px] leading-tight font-bold tracking-tight text-foreground">
         Ship beautiful interfaces faster
       </p>
-      <p
-        className={cn(
-          "mt-1 text-[9px] leading-snug",
-          dark ? "text-primary-foreground/75" : "text-muted-foreground",
-        )}
-      >
+      <p className="mt-1 text-[9px] leading-snug text-muted-foreground">
         Animated, themeable blocks for product teams that care about the details.
       </p>
       <div className="mt-2 flex items-center gap-1.5">
-        <span
-          className={cn(
-            "rounded-md px-2 py-1 text-[9px] leading-none font-medium",
-            dark ? "bg-primary-foreground text-primary" : "bg-primary text-primary-foreground",
-          )}
-        >
+        <span className="rounded-md bg-primary px-2 py-1 text-[9px] leading-none font-medium text-primary-foreground">
           Start free
         </span>
-        <span
-          className={cn(
-            "rounded-md px-2 py-1 text-[9px] leading-none font-medium",
-            dark ? "border border-primary-foreground/30" : "border border-border",
-          )}
-        >
+        <span className="rounded-md border border-border px-2 py-1 text-[9px] leading-none font-medium text-foreground">
           Book a demo
         </span>
       </div>
-      <div
-        className={cn(
-          "mt-2.5 w-4/5 rounded-lg border p-2 text-left",
-          dark
-            ? "border-primary-foreground/20 bg-primary-foreground/10"
-            : "border-border/75 bg-card shadow-xs",
-        )}
-      >
+      <div className="mt-2.5 w-4/5 rounded-lg border border-border/75 bg-card p-2 text-left shadow-xs">
         <div className="flex items-center gap-1">
-          <div
-            className={cn(
-              "size-1.5 rounded-full",
-              dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30",
-            )}
-          />
-          <div
-            className={cn(
-              "size-1.5 rounded-full",
-              dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30",
-            )}
-          />
-          <div
-            className={cn(
-              "size-1.5 rounded-full",
-              dark ? "bg-primary-foreground/30" : "bg-muted-foreground/30",
-            )}
-          />
-          <div
-            className={cn(
-              "ml-1 h-1.5 w-10 rounded-full",
-              dark ? "bg-primary-foreground/20" : "bg-muted-foreground/15",
-            )}
-          />
+          <div className="size-1.5 rounded-full bg-muted-foreground/30" />
+          <div className="size-1.5 rounded-full bg-muted-foreground/30" />
+          <div className="size-1.5 rounded-full bg-muted-foreground/30" />
+          <div className="ml-1 h-1.5 w-10 rounded-full bg-muted-foreground/15" />
         </div>
         <div className="mt-1.5 flex gap-1.5">
           <div className="flex flex-1 flex-col gap-1">
-            <div
-              className={cn(
-                "h-1.5 w-3/5 rounded-full",
-                dark ? "bg-primary-foreground/40" : "bg-muted-foreground/25",
-              )}
-            />
-            <div
-              className={cn(
-                "h-1.5 w-2/5 rounded-full",
-                dark ? "bg-primary-foreground/25" : "bg-muted-foreground/12",
-              )}
-            />
-            <div
-              className={cn(
-                "mt-0.5 h-3 w-8 rounded",
-                dark ? "bg-primary-foreground/60" : "bg-primary",
-              )}
-            />
+            <div className="h-1.5 w-3/5 rounded-full bg-muted-foreground/25" />
+            <div className="h-1.5 w-2/5 rounded-full bg-muted-foreground/12" />
+            <div className="mt-0.5 h-3 w-8 rounded bg-primary" />
           </div>
           <div className="flex h-12 flex-1 items-end justify-between gap-0.5">
             {heroBars.map((h, i) => (
-              <div
-                key={i}
-                className={cn("w-1 rounded-sm", dark ? "bg-primary-foreground/50" : "bg-chart-3")}
-                style={{ height: `${h}%` }}
-              />
+              <div key={i} className="w-1 rounded-sm bg-chart-3" style={{ height: `${h}%` }} />
             ))}
           </div>
         </div>
@@ -200,12 +135,12 @@ function FeatureGrid() {
 function LogoStrip() {
   return (
     <motion.section className="flex flex-col items-center gap-1.5 py-2" variants={region}>
-      <span className="text-[7px] font-semibold tracking-wider text-muted-foreground/70 uppercase">
+      <span className="text-[7px] font-semibold tracking-wider text-muted-foreground uppercase">
         Trusted by teams at
       </span>
       <div className="flex items-center gap-3">
         {["Nova", "Hopper", "Orbit", "Flux", "Arc"].map((name) => (
-          <div key={name} className="flex items-center gap-1 opacity-60 grayscale">
+          <div key={name} className="flex items-center gap-1">
             <div className="size-2.5 rounded-full bg-muted-foreground/30" />
             <span className="text-[8px] leading-none font-semibold text-muted-foreground">
               {name}
@@ -225,7 +160,7 @@ function CtaBand() {
           <span className="text-[9px] leading-tight font-semibold text-primary-foreground">
             Start building today
           </span>
-          <span className="text-[8px] leading-tight text-primary-foreground/70">
+          <span className="text-[8px] leading-tight text-primary-foreground">
             Free for personal projects.
           </span>
         </div>
@@ -293,7 +228,7 @@ export function MarketingShell({
       <motion.div
         className={cn(
           "w-full",
-          !fill && "max-w-96",
+          fill ? "h-full" : "max-w-96",
           "overflow-hidden rounded-xl border bg-background shadow-xs",
         )}
         variants={animated ? shell : undefined}

@@ -31,13 +31,13 @@ const region = {
 
 function Field({ label, value, trailing }: { label: string; value: string; trailing?: boolean }) {
   return (
-    <motion.label className="flex flex-col gap-1" variants={region}>
+    <motion.div className="flex flex-col gap-1" variants={region}>
       <span className="text-[8px] leading-none font-medium text-foreground">{label}</span>
       <span className="flex h-6 items-center gap-1 rounded-md border border-input bg-background px-2">
         <span className="flex-1 truncate text-[9px] text-muted-foreground">{value}</span>
         {trailing && <EyeOff className="size-2.5 shrink-0 text-muted-foreground" strokeWidth={2} />}
       </span>
-    </motion.label>
+    </motion.div>
   );
 }
 
@@ -79,8 +79,8 @@ export function AuthShell({
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "flex h-72 w-full",
-          !fill && "max-w-80",
+          "flex w-full",
+          fill ? "h-full" : "h-72 max-w-80",
           "overflow-hidden rounded-xl border bg-background shadow-xs",
         )}
         variants={animated ? shell : undefined}

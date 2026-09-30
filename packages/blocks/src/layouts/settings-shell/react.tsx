@@ -143,7 +143,7 @@ function FormRows() {
 function DangerCard() {
   return (
     <motion.div
-      className="flex items-center justify-between gap-2 rounded-lg border border-destructive/30 bg-destructive/5 p-2"
+      className="flex items-center justify-between gap-2 rounded-lg border border-destructive/40 bg-card p-2"
       variants={region}
     >
       <div className="flex min-w-0 flex-col gap-0.5">
@@ -154,7 +154,7 @@ function DangerCard() {
           Permanently removes your workspace and data.
         </span>
       </div>
-      <span className="shrink-0 rounded-md bg-destructive px-1.5 py-1 text-[8px] leading-none font-medium text-white">
+      <span className="shrink-0 rounded-md bg-destructive px-1.5 py-1 text-[8px] leading-none font-medium text-destructive-foreground">
         Delete
       </span>
     </motion.div>
@@ -185,8 +185,8 @@ export function SettingsShell({
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         className={cn(
-          "flex h-72 w-full",
-          !fill && "max-w-90",
+          "flex w-full",
+          fill ? "h-full" : "h-72 max-w-90",
           "overflow-hidden rounded-xl border bg-background shadow-xs",
         )}
         variants={animated ? shell : undefined}
