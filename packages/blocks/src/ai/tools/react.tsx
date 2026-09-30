@@ -650,11 +650,9 @@ export function Tools({
                 transition={{ duration: 0.45, ease: "easeOut" }}
               />
             </span>
-            {/* exact renderToString bytes: `0<!-- -->/<!-- -->3` */}
-            <span
-              className="text-[10px] text-muted-foreground tabular-nums"
-              dangerouslySetInnerHTML={{ __html: `${doneCount}<!-- -->/<!-- -->${count}` }}
-            />
+            <span className="text-[10px] text-muted-foreground tabular-nums">
+              {doneCount}/{count}
+            </span>
           </motion.div>
         </div>
       </motion.div>

@@ -250,9 +250,8 @@ export function Tabs({
               className="flex h-5 flex-1 items-center rounded-xl bg-background/75 px-2"
               variants={animated ? chrome : undefined}
             >
-              {/* dynamic array child → React emits <!-- --> text separators like the POC SSR */}
               <span className="truncate text-[10px] text-muted-foreground">
-                {[url, "/", tabs[activeTab]?.toLowerCase()]}
+                {url}/{tabs[activeTab]?.toLowerCase()}
               </span>
             </motion.div>
             <motion.button

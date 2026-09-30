@@ -222,9 +222,8 @@ export function DatePicker({
             >
               <ChevronLeft className="size-3.5" strokeWidth={2} />
             </button>
-            {/* dynamic array child → React emits <!-- --> text separators like the POC SSR */}
             <span className="text-xs font-semibold text-foreground">
-              {[monthName, " ", currentYear]}
+              {monthName} {currentYear}
             </span>
             <button
               type="button"

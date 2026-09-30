@@ -653,12 +653,7 @@ export function Editor({
               <span className="text-muted-foreground/60">UTF-8</span>
             </div>
             <div className="flex items-center gap-2">
-              {/* renderToString emitted `Ln <!-- -->N<!-- -->, Col 1`; three text nodes for parity */}
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: `Ln <!-- -->${activeLines.length + 1}<!-- -->, Col 1`,
-                }}
-              />
+              <span>Ln {activeLines.length + 1}, Col 1</span>
               <span className="text-muted-foreground/60">Spaces: 2</span>
             </div>
           </div>

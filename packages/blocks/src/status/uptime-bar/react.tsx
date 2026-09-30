@@ -228,8 +228,7 @@ export function UptimeBar({
             variants={animated ? footerAnim : undefined}
             {...state}
           >
-            {/* renderToString emitted `60<!-- --> days ago`; two text nodes for parity */}
-            <span dangerouslySetInnerHTML={{ __html: `${days}<!-- --> days ago` }} />
+            <span>{days} days ago</span>
             {showLegend && (hasIncidents || hasOutages) && (
               <div className="flex items-center gap-2.5">
                 {hasIncidents && (

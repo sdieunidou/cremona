@@ -385,11 +385,12 @@ export function Request({
                 className={`flex items-center gap-1 rounded-full px-1.75 py-0.5 text-[9px] font-semibold ring-1 ring-inset ${chipClass}`}
                 variants={animated ? statusChip : undefined}
                 {...state}
-                /* exact renderToString bytes: `200<!-- --> <!-- -->OK` */
-                dangerouslySetInnerHTML={{
-                  __html: `<span class="size-1.25 rounded-full ${isError ? "bg-rose-500" : "bg-emerald-500"}"></span>${statusValue}<!-- --> <!-- -->${statusTextLabel}`,
-                }}
-              />
+              >
+                <span
+                  className={`size-1.25 rounded-full ${isError ? "bg-rose-500" : "bg-emerald-500"}`}
+                />
+                {statusValue} {statusTextLabel}
+              </motion.span>
               <span className="ml-auto flex items-center gap-0.75 text-[9px] text-muted-foreground tabular-nums">
                 <Timer className="size-2.5" strokeWidth={2.5} />
                 {latencyLabel}

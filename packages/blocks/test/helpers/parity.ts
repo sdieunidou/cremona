@@ -24,19 +24,33 @@ export function parseHtmlFragment(html: string): PNode[] {
 function childrenOf(node: Record<string, unknown>): PNode[] {
   const children = (node.children as Record<string, unknown>[] | null) ?? [];
   const out: PNode[] = [];
+  // Adjacent text nodes are one text run for the browser: React's `<!-- -->`
+  // separators (renderToString) are hydration markers, invisible.
+  let run = "";
+  const flush = () => {
+    const text = run.replace(/\s+/g, " ").trim();
+    if (text) out.push({ tag: "#text", attrs: {}, children: [], text });
+    run = "";
+  };
   for (const child of children) {
     const type = child.type as string;
     if (type === "text") {
-      const text = String(child.data ?? "").replace(/\s+/g, " ");
-      if (text.trim()) out.push({ tag: "#text", attrs: {}, children: [], text: text.trim() });
-    } else if (type === "tag" || type === "script" || type === "style") {
+      run += String(child.data ?? "");
+      continue;
+    }
+    if (type === "comment") continue;
+    flush();
+    if (type === "tag" || type === "script" || type === "style") {
       const attrs: Record<string, string> = {};
       for (const [k, v] of Object.entries((child.attribs as Record<string, string>) ?? {})) {
         attrs[k] = String(v);
       }
+      // React 19 hoists resource hints for <img>; they are not part of the visual
+      if (child.name === "link" && attrs.rel === "preload") continue;
       out.push({ tag: child.name as string, attrs, children: childrenOf(child) });
     }
   }
+  flush();
   return out;
 }
 

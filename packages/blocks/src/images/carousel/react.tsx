@@ -361,10 +361,9 @@ export function Carousel({
                 </span>
               </div>
               {badge && (
-                <span
-                  className="shrink-0 rounded-full border bg-background px-1.5 py-px text-[9px] font-medium text-muted-foreground tabular-nums"
-                  dangerouslySetInnerHTML={{ __html: `${active + 1}<!-- --> / <!-- -->${count}` }}
-                />
+                <span className="shrink-0 rounded-full border bg-background px-1.5 py-px text-[9px] font-medium text-muted-foreground tabular-nums">
+                  {active + 1} / {count}
+                </span>
               )}
             </motion.div>
             <motion.div

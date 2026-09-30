@@ -261,10 +261,9 @@ export function Donut({
                     {arc.label}
                   </span>
                 </div>
-                <span
-                  className="text-[10px] text-muted-foreground tabular-nums"
-                  dangerouslySetInnerHTML={{ __html: `${arc.percent}<!-- -->%` }}
-                />
+                <span className="text-[10px] text-muted-foreground tabular-nums">
+                  {arc.percent}%
+                </span>
               </motion.div>
             ))}
           </motion.div>

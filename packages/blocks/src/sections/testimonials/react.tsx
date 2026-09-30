@@ -117,12 +117,12 @@ export function Testimonials({
               variants={animated ? content : undefined}
               {...state}
             >
-              {/* renderToString emitted `“<!-- -->{quote}<!-- -->”`; three text nodes for parity */}
               <motion.p
                 className="text-center text-[9px] font-medium text-foreground"
                 variants={animated ? item : undefined}
-                dangerouslySetInnerHTML={{ __html: `“<!-- -->${quote}<!-- -->”` }}
-              />
+              >
+                “{quote}”
+              </motion.p>
               <motion.div
                 className="mt-3 flex items-center gap-1.5"
                 variants={animated ? item : undefined}

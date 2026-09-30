@@ -353,11 +353,9 @@ export function Query({
             >
               <div className="flex items-center gap-1.5">
                 <Table2 className="size-2.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />
-                {/* renderToString emitted `N<!-- --> rows`; two text nodes for parity */}
-                <span
-                  className="text-[10px] leading-none text-muted-foreground tabular-nums"
-                  dangerouslySetInnerHTML={{ __html: `${activeRows.length}<!-- --> rows` }}
-                />
+                <span className="text-[10px] leading-none text-muted-foreground tabular-nums">
+                  {activeRows.length} rows
+                </span>
               </div>
               <div className="flex items-center gap-1">
                 <Timer className="size-2.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />

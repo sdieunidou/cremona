@@ -4,20 +4,6 @@ import { useInView } from "@cremona/react";
 import { Lock, CreditCard, Wifi } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
-/**
- * The POC SSR emitted `<Lock/>Pay<!-- --> <!-- -->$42.00` inside the pay
- * buttons (renderToString inserts comment separators between adjacent text
- * nodes). renderToStaticMarkup merges them into one node, so the button
- * content is emitted verbatim — including the lock glyph, which is exactly
- * what <Lock className="size-3" strokeWidth={2.5}/> renders.
- */
-function payButtonHtml(buttonLabel: string, amount: string): string {
-  const lock =
-    `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-lock size-3" aria-hidden="true">` +
-    `<rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>`;
-  return `${lock}${buttonLabel}<!-- --> <!-- -->${amount}`;
-}
-
 const wrap = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -240,8 +226,10 @@ export function Checkout({
                     variants={animated ? payCardAnim : undefined}
                     tabIndex={-1}
                     onMouseDown={(e) => e.preventDefault()}
-                    dangerouslySetInnerHTML={{ __html: payButtonHtml(buttonLabel, amount) }}
-                  />
+                  >
+                    <Lock className="size-3" strokeWidth={2.5} />
+                    {buttonLabel} {amount}
+                  </motion.button>
                 </motion.div>
               </>
             ) : (
@@ -291,8 +279,10 @@ export function Checkout({
                   variants={animated ? payFormAnim : undefined}
                   tabIndex={-1}
                   onMouseDown={(e) => e.preventDefault()}
-                  dangerouslySetInnerHTML={{ __html: payButtonHtml(buttonLabel, amount) }}
-                />
+                >
+                  <Lock className="size-3" strokeWidth={2.5} />
+                  {buttonLabel} {amount}
+                </motion.button>
               </motion.div>
             )}
           </div>

@@ -40,8 +40,10 @@ if generated files are not committed.
    existing category.
 5. **Design tokens live only in `packages/tokens`** — blocks use semantic tokens
    (`bg-card`, `text-muted-foreground`…), never raw colors.
-6. **No HTML from props**: never interpolate a prop into
-   `dangerouslySetInnerHTML`; render text as JSX.
+6. **No HTML from props**: blocks render text as JSX and never use
+   `dangerouslySetInnerHTML` (ESLint error in `packages/blocks/src`). They never
+   read the clock while rendering either (`new Date()`): take a prop with a
+   fixed default, so server and client render the same markup.
 
 ## Layout map
 

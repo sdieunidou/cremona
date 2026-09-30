@@ -360,11 +360,7 @@ export function Webhook({
                     <X className="size-2.5" strokeWidth={3} />
                   )}
                 </span>
-                {/* exact renderToString bytes: `#<!-- -->1` */}
-                <span
-                  className="text-[10px] font-semibold text-foreground"
-                  dangerouslySetInnerHTML={{ __html: `#<!-- -->${t + 1}` }}
-                />
+                <span className="text-[10px] font-semibold text-foreground">#{t + 1}</span>
                 <span
                   className={`text-[10px] font-medium ${ok ? "text-muted-foreground" : "text-rose-600/80 dark:text-rose-400/80"}`}
                 >
