@@ -4,27 +4,46 @@ import { useInView } from "@cremona/react";
 import { Truck, ChevronRight } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+type OrderStatus = "processing" | "shipped" | "refunded";
+
 export interface OrderRowProps extends VisualProps {
+  /** Order number. */
   order?: string;
+  /** Secondary line: item count, date… */
   items?: string;
+  /** Formatted order total. */
   total?: string;
-  status?: "processing" | "shipped" | "refunded";
+  status?: OrderStatus;
+  /** Status pill text per status. */
+  statusLabels?: Partial<Record<OrderStatus, string>>;
+  /** Tracking note shown under a shipped order. */
+  tracking?: string;
+  /** Product thumbnail URL; a neutral tile when empty. */
+  image?: string;
+  /** Thumbnail alternative text; empty by default, the order number sits next to it. */
+  alt?: string;
+  /** Order details link. */
+  href?: string;
 }
 
-const statusStyles: Record<string, { pill: string; label: string }> = {
-  processing: {
-    pill: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-    label: "Processing",
-  },
-  shipped: {
-    pill: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
-    label: "Shipped",
-  },
-  refunded: {
-    pill: "bg-rose-500/10 text-rose-600 dark:text-rose-400",
-    label: "Refunded",
-  },
+const defaultStatusLabels: Record<OrderStatus, string> = {
+  processing: "Processing",
+  shipped: "Shipped",
+  refunded: "Refunded",
 };
+
+/** Tint and dot carry the status color; the text stays foreground so it reads in every theme. */
+const statusTones: Record<OrderStatus, { pill: string; dot: string }> = {
+  processing: { pill: "bg-warning/10", dot: "bg-warning" },
+  shipped: { pill: "bg-info/10", dot: "text-info" },
+  refunded: { pill: "bg-destructive/10", dot: "bg-destructive" },
+};
+
+/** Preview only: keeps a control out of the tab order and unfocused on click. Drop it when deriving. */
+const noFocus = { tabIndex: -1, onMouseDown: prevent, onClick: prevent } as const;
+function prevent(e: { preventDefault(): void }) {
+  e.preventDefault();
+}
 
 const entrance = {
   hidden: { opacity: 0, y: 8 },
@@ -41,6 +60,11 @@ export function OrderRow({
   items = "3 items · Placed Sep 18",
   total = "$86.00",
   status = "processing",
+  statusLabels,
+  tracking = "Out for delivery",
+  image = "/media/placeholders/photo-02.jpg",
+  alt = "",
+  href = "#",
   animated = false,
   trigger = "inView",
   fill = false,
@@ -59,67 +83,72 @@ export function OrderRow({
       }
     : {};
 
-  const s = statusStyles[status] ?? statusStyles.processing!;
+  const tone = statusTones[status] ?? statusTones.processing;
+  const label = { ...defaultStatusLabels, ...statusLabels }[status] ?? status;
+  const shipped = status === "shipped";
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
         variants={animated ? entrance : undefined}
         {...state}
-        className={cn("w-full", !fill && "max-w-96")}
+        className={cn("w-full", fill ? "self-center" : "max-w-96")}
       >
-        <motion.button
-          type="button"
-          tabIndex={-1}
-          onMouseDown={(e) => e.preventDefault()}
-          className={cn(
-            "flex w-full items-center gap-3 rounded-lg border bg-card p-3 text-left shadow-xs transition-all duration-200 hover:border-ring/40 hover:shadow-sm",
-            status === "shipped" && "flex-col items-stretch gap-2.5",
-          )}
+        <a
+          href={href}
+          className="@container flex w-full flex-col gap-2.5 rounded-lg border bg-card p-3 text-left shadow-xs outline-none transition-all duration-200 hover:border-ring/40 hover:shadow-sm focus-visible:ring-3 focus-visible:ring-ring/50"
+          {...noFocus}
         >
           <motion.span
-            className={cn("flex items-center gap-3", status === "shipped" && "w-full")}
+            className="flex w-full items-center gap-3"
             variants={animated ? item : undefined}
           >
             <span className="relative size-10 shrink-0 overflow-hidden rounded-md bg-muted">
-              <img
-                src="/media/placeholders/photo-02.jpg"
-                alt=""
-                className="size-full object-cover"
-              />
+              {image && <img src={image} alt={alt} className="size-full object-cover" />}
             </span>
-            <span className="min-w-0 flex-1 flex-col">
-              <span className="font-mono text-xs font-medium text-foreground">{order}</span>
-              <span className="mt-0.5 text-xs text-muted-foreground">{items}</span>
-            </span>
-            <span
-              className={cn(
-                "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium",
-                s.pill,
-              )}
-            >
-              {status === "shipped" && <Truck className="size-2.5" strokeWidth={2.25} />}
-              {s.label}
-            </span>
-            <span className="shrink-0 text-xs font-semibold text-foreground tabular-nums">
-              {total}
+            {/* stacked below 20rem of row width, one line above */}
+            <span className="flex min-w-0 flex-1 flex-col gap-1.5 @xs:flex-row @xs:items-center @xs:gap-3">
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate font-mono text-xs font-medium text-foreground">
+                  {order}
+                </span>
+                <span className="mt-0.5 truncate text-xs text-muted-foreground">{items}</span>
+              </span>
+              <span className="flex shrink-0 items-center gap-3">
+                <span
+                  className={cn(
+                    "inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium text-foreground",
+                    tone.pill,
+                  )}
+                >
+                  {shipped ? (
+                    <Truck className={cn("size-2.5", tone.dot)} strokeWidth={2.25} />
+                  ) : (
+                    <span className={cn("size-1.5 rounded-full", tone.dot)} />
+                  )}
+                  {label}
+                </span>
+                <span className="shrink-0 text-xs font-semibold text-foreground tabular-nums">
+                  {total}
+                </span>
+              </span>
             </span>
             <ChevronRight className="size-3.5 shrink-0 text-muted-foreground" strokeWidth={2.25} />
           </motion.span>
-          {status === "shipped" && (
+          {shipped && (
             <motion.span
               className="flex items-center gap-1 px-1"
               variants={animated ? item : undefined}
             >
-              <span className="size-1.5 rounded-full bg-emerald-500" />
-              <span className="h-px w-7 bg-emerald-500/50" />
-              <span className="size-1.5 rounded-full bg-emerald-500" />
+              <span className="size-1.5 rounded-full bg-success" />
+              <span className="h-px w-7 bg-success/50" />
+              <span className="size-1.5 rounded-full bg-success" />
               <span className="h-px w-7 bg-border" />
               <span className="size-1.5 rounded-full bg-muted-foreground/25" />
-              <span className="ml-auto text-[9px] text-muted-foreground">Out for delivery</span>
+              <span className="ml-auto text-[9px] text-muted-foreground">{tracking}</span>
             </motion.span>
           )}
-        </motion.button>
+        </a>
       </motion.div>
     </div>
   );
