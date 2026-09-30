@@ -103,7 +103,7 @@ renders one button with one label.
 - Tokens: full shadcn-style semantic set (`--background` … `--sidebar-ring`, `--chart-1..5`, `--radius`).
 - 9 themes: `default`, `claude-plus`, `light-green`, `zen`, `sakura`, `tiesen`,
   `deep-purple`, `indigo-clean`, `brutalism` — each with light + dark.
-- Default dark = warm "Claude-like" palette (NOT a gray inversion).
+- Default theme: neutral in light and dark; the warm "Claude-like" dark is `claude-plus`.
 - Font: Inter Variable. Motion: `motion/react`, springs stiffness 300–420 damping 14–18.
 - Preview frames: `h-96` (xs/sm/md/lg/xl), footer label, grid `lg:grid-cols-2`.
 

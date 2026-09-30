@@ -68,10 +68,23 @@ describe("cremona tokens", () => {
     blockFor(".dark{--background");
   });
 
-  it("dark mode default uses the warm palette (not a gray inversion)", () => {
-    const dark = blockFor(".dark{--background");
-    expect(dark).toContain("oklch(26.79% .0036 106.643)"); // warm background
-    expect(dark).toContain("oklch(67.24% .1308 38.7559)"); // terracotta primary
+  it("default dark is the neutral palette", () => {
+    expect(blockFor(".dark{--background")).toContain("--background:oklch(14.5% 0 0)");
+  });
+
+  it("themes.css and cremona.css define the same token blocks", () => {
+    // `.dark{` must be the bare rule, not the tail of `.theme-<name>.dark{`
+    const tokenBlocks = (source: string) =>
+      new Map(
+        [
+          ...source.matchAll(
+            /(?<![\w.-])(:root|\.dark|\.theme-[\w-]+(?::not\(\.dark\)|\.dark))\{(--background:[^}]*)\}/g,
+          ),
+        ].map((m) => [m[1], m[2]]),
+      );
+    const tokens = tokenBlocks(css);
+    expect(tokens.size).toBe(18);
+    expect(tokenBlocks(full)).toEqual(tokens);
   });
 
   for (const theme of THEMES.slice(1)) {

@@ -15,7 +15,7 @@ Full shadcn-style semantic set (all in oklch), per theme × mode:
 
 | Theme | Class | Personality |
 |---|---|---|
-| default | — | neutral light / warm dark |
+| default | — | neutral light / neutral dark |
 | claude-plus | `.theme-claude-plus` | warm terracotta + violet |
 | light-green | `.theme-light-green` | fresh green |
 | zen | `.theme-zen` | warm amber |
@@ -27,11 +27,11 @@ Full shadcn-style semantic set (all in oklch), per theme × mode:
 
 ## Dark mode
 
-Class-based: `.dark` on `<html>`. **The default dark palette is NOT a gray
-inversion** — it is the warm "Claude-like" scheme
-(`--background: oklch(26.79% .0036 106.643)`,
-`--primary: oklch(67.24% .1308 38.7559)`). Respect that when designing new
-blocks: don't assume `dark:` = "dimmed".
+Class-based: `.dark` on `<html>`. The default theme is neutral in both modes
+(dark: `--background: oklch(14.5% 0 0)`, `--primary: oklch(92.2% 0 0)`); the
+warm "Claude-like" dark is `.theme-claude-plus`. Themes change hue, lightness
+and radius in dark mode, so check new blocks in several themes: don't assume
+`dark:` = "dimmed".
 
 Anti-flash: inline script in `<head>` reading `localStorage` (see
 `apps/gallery/index.html`, or the `cremona-theme` controller for Stimulus apps).
