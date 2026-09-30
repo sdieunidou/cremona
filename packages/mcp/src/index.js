@@ -3,6 +3,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import * as store from "./store.js";
+import { existsSync } from "node:fs";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { REPO_ROOT } from "./store.js";
@@ -13,8 +14,9 @@ import { REPO_ROOT } from "./store.js";
  * `get_guide("react")` on its own — so the preview-vs-production warning lives
  * here, not only in the docs.
  */
-const INSTRUCTIONS = `Cremona — 160 animated visual blocks (37 categories, 1247 variants), a design
-system (9 themes x light/dark) and authoring tools.
+const library = store.blockIndex();
+const INSTRUCTIONS = `Cremona — ${library.length} animated visual blocks (${store.catalog().length} categories, ${library.reduce((n, b) => n + b.variants.length, 0)} variants), a design
+system (${store.themes().length} themes x light/dark) and authoring tools.
 
 BLOCKS ARE PREVIEW COMPOSITIONS, NOT PRODUCTION COMPONENTS. Every block:
 - has aria-hidden="true" on its root, so its content does not exist for a
@@ -59,6 +61,28 @@ const text = (data) => ({
   ],
 });
 
+/** A tool error, flagged as such to the client, with what the caller can use instead. */
+const fail = (error, extra = {}) => ({
+  content: [{ type: "text", text: JSON.stringify({ error, ...extra }, null, 2) }],
+  isError: true,
+});
+
+/** "<category>/<file>" → [category, file], or null when it is not two slugs. */
+function parseKey(key) {
+  const parts = key.split("/");
+  return parts.length === 2 && parts.every((p) => store.SLUG.test(p)) ? parts : null;
+}
+
+/** A variant by label, by slug, or by label regardless of case and spacing. */
+function findVariant(meta, variant) {
+  const norm = (s) => s.toLowerCase().replace(/\s+/g, " ").trim();
+  return (
+    meta.variants.find((v) => v.label === variant) ??
+    meta.variants.find((v) => v.slug === variant) ??
+    meta.variants.find((v) => norm(v.label) === norm(variant))
+  );
+}
+
 server.tool(
   "list_categories",
   "List every Cremona visual category with its block names.",
@@ -68,13 +92,19 @@ server.tool(
 
 server.tool(
   "list_blocks",
-  "List blocks, optionally filtered by category slug or kind (block|layout). Returns key, name, description, variant labels.",
+  "List blocks, optionally filtered by category slug or kind (block|layout|component). Returns key, name, description, variant labels.",
   {
     category: z.string().optional().describe("category slug (e.g. 'metrics', 'sections')"),
-    kind: z.enum(["block", "layout"]).optional(),
+    kind: z.enum(["block", "layout", "component"]).optional(),
     limit: z.number().optional(),
   },
   async ({ category, kind, limit }) => {
+    const known = store.catalog();
+    if (
+      category &&
+      !known.some((g) => g.slug === category || g.category.toLowerCase() === category.toLowerCase())
+    )
+      return fail(`unknown category '${category}'`, { categories: known.map((g) => g.slug) });
     const items = store
       .blockIndex()
       .filter(
@@ -108,10 +138,16 @@ server.tool(
       .describe("sections to include (default all except golden)"),
   },
   async ({ key, variant, include }) => {
-    const [categorySlug, file] = key.split("/");
-    if (!categorySlug || !file) return text({ error: "key must be '<category>/<file>'" });
+    const parts = parseKey(key);
+    if (!parts) return fail("key must be '<category>/<file>', e.g. 'metrics/stat-card'");
+    const [categorySlug, file] = parts;
     const meta = store.blockMeta(categorySlug, file);
-    if (!meta) return text({ error: `unknown block: ${key}` });
+    if (!meta) return fail(`unknown block: ${key}`, { hint: "list_blocks or search_blocks" });
+    const picked = variant === undefined ? undefined : findVariant(meta, variant);
+    if (variant !== undefined && !picked)
+      return fail(`unknown variant '${variant}' for ${key}`, {
+        variants: meta.variants.map((v) => v.label),
+      });
     const wanted = new Set(include ?? ["meta", "props", "react", "stimulus"]);
     const out = { key };
     if (wanted.has("meta")) {
@@ -131,9 +167,9 @@ server.tool(
     }
     if (wanted.has("props")) {
       const all = store.blockPreviewProps(categorySlug, file) ?? {};
-      out.props = variant ? { [variant]: all[variant] ?? {} } : all;
+      out.props = picked ? { [picked.label]: all[picked.label] ?? {} } : all;
       out.propsNote =
-        'Values like "lucide:Users" are icon components: in React import the icon from lucide-react; in Stimulus templates they are already rendered.';
+        'Values like "lucide:Users" are icon components: in React import the icon from lucide-react. { "$element": "lucide:Users", "props": {…} } is an element: pass <Users {...props} />. In Stimulus templates both are already rendered.';
     }
     if (wanted.has("react")) {
       out.reactSource = store.blockReactSource(categorySlug, file);
@@ -159,9 +195,7 @@ server.tool(
         sample: store.stimulusTemplate(
           categorySlug,
           file,
-          variant
-            ? (variants.find((v) => v.label === variant)?.slug ?? variants[0]?.slug)
-            : variants[0]?.slug,
+          (picked && variants.find((v) => v.label === picked.label)?.slug) ?? variants[0]?.slug,
         ),
         manifestNote:
           'All templates live in @cremona/stimulus/templates/<category>/<file>/<slug>.html (data-controller="cremona-visual").',
@@ -169,10 +203,7 @@ server.tool(
     }
     if (wanted.has("golden")) {
       out.goldenSlugs = store.blockGoldenSlugs(categorySlug, file);
-      if (variant) {
-        const v = meta.variants.find((x) => x.label === variant);
-        if (v) out.golden = store.goldenContent(categorySlug, file, v.slug);
-      }
+      if (picked) out.golden = store.goldenContent(categorySlug, file, picked.slug);
     }
     return text(out);
   },
@@ -183,11 +214,15 @@ server.tool(
   "Get the SSR golden HTML of one variant (the render reference).",
   { key: z.string(), variant: z.string() },
   async ({ key, variant }) => {
-    const [categorySlug, file] = key.split("/");
-    const meta = store.blockMeta(categorySlug, file);
-    const v = meta?.variants.find((x) => x.label === variant);
-    if (!meta || !v) return text({ error: "unknown block or variant" });
-    return text(store.goldenContent(categorySlug, file, v.slug));
+    const parts = parseKey(key);
+    const meta = parts && store.blockMeta(parts[0], parts[1]);
+    if (!meta) return fail(`unknown block: ${key}`, { hint: "list_blocks or search_blocks" });
+    const v = findVariant(meta, variant);
+    if (!v)
+      return fail(`unknown variant '${variant}' for ${key}`, {
+        variants: meta.variants.map((x) => x.label),
+      });
+    return text(store.goldenContent(parts[0], parts[1], v.slug));
   },
 );
 
@@ -217,6 +252,8 @@ server.tool(
         themes: store.themes(),
       });
     }
+    const known = store.themes().map((t) => t.value);
+    if (!known.includes(theme)) return fail(`unknown theme '${theme}'`, { themes: known });
     const wanted = [`:root{--background`, `.dark{--background`];
     if (theme !== "default")
       wanted.push(`.theme-${theme}:not(.dark){--background`, `.theme-${theme}.dark{--background`);
@@ -349,21 +386,19 @@ server.tool(
   async () => text(store.validate()),
 );
 
+const guides = Object.keys(store.docs()).sort();
 server.tool(
   "get_guide",
-  "Read a repo guide (markdown). Names: porting-guide, architecture, design-system, mcp, react, stimulus, adding-blocks.",
-  { name: z.string() },
-  async ({ name }) => {
-    const md = store.doc(name);
-    if (!md) {
-      const all = Object.keys(store.docs());
-      return text({ error: `unknown guide '${name}'`, available: all });
-    }
-    return text(md);
-  },
+  `Read a repo guide (markdown). Names: ${guides.join(", ")}.`,
+  { name: z.enum(guides) },
+  async ({ name }) => text(store.doc(name)),
 );
 
 function registerAuthoringTools() {
+  const catalogPath = join(REPO_ROOT, "packages", "blocks", "catalog.json");
+  // the catalog is ordered by plain code-unit comparison of category names
+  const byName = (a, b) => (a.category < b.category ? -1 : a.category > b.category ? 1 : 0);
+
   server.tool(
     "add_category",
     "Create a new visual category (folder + catalog entry). Returns the scaffold path.",
@@ -373,42 +408,65 @@ function registerAuthoringTools() {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-|-$/g, "");
-      const dir = join(store.BLOCKS_DIR, slug);
-      await mkdir(dir, { recursive: true });
-      const catalogPath = join(REPO_ROOT, "packages", "blocks", "catalog.json");
+      if (!store.SLUG.test(slug))
+        return fail(`"${name}" gives no usable slug: use letters or digits`);
       const current = JSON.parse(await readFile(catalogPath, "utf8"));
       if (current.some((g) => g.slug === slug))
         return text({ ok: true, slug, note: "category already exists" });
-      current.push({ category: name, slug, items: [] });
-      current.sort((a, b) => a.category.localeCompare(b.category));
+      await mkdir(join(store.BLOCKS_DIR, slug), { recursive: true });
+      current.push({ category: name.trim(), slug, items: [] });
+      current.sort(byName);
       await writeFile(catalogPath, JSON.stringify(current, null, 2) + "\n");
+      store.invalidateCaches();
       return text({
         ok: true,
         slug,
         path: `packages/blocks/src/${slug}/`,
-        next: "Add blocks with the add_block tool, then run node tools/generate-stimulus.mjs and the blocks test suite.",
+        next: "Add blocks with the add_block tool, then follow docs/authoring-guide.md.",
       });
     },
   );
 
   server.tool(
     "add_block",
-    "Scaffold a new visual block inside an existing category: block.json + react.tsx skeleton + parity test skeleton. Follow with the porting guide.",
+    "Scaffold a NEW visual block inside an existing category: block.json + react.tsx skeleton + parity test skeleton, then follow docs/authoring-guide.md. Refuses a key that already exists.",
     {
-      category: z.string(),
-      file: z.string().describe("slug, e.g. 'stat-card'"),
+      category: z.string().describe("slug of an existing category (see list_categories)"),
+      file: z.string().describe("new block slug, e.g. 'balance-card'"),
       name: z.string(),
       description: z.string(),
-      kind: z.enum(["block", "layout"]).optional(),
+      kind: z.enum(["block", "layout", "component"]).optional(),
     },
     async ({ category, file, name, description, kind }) => {
-      const slug = category.toLowerCase();
-      const dir = join(store.BLOCKS_DIR, slug, file);
+      const current = JSON.parse(await readFile(catalogPath, "utf8"));
+      const group = current.find((g) => g.slug === category);
+      if (!group)
+        return fail(`unknown category '${category}': create it with add_category first`, {
+          categories: current.map((g) => g.slug),
+        });
+      if (!store.SLUG.test(file))
+        return fail(`'${file}' is not a block slug (lowercase words joined by hyphens)`);
+      const dir = join(store.BLOCKS_DIR, category, file);
+      const testName = `${category}-${file}`;
+      const testPath = join(REPO_ROOT, "packages", "blocks", "test", `${testName}.parity.test.tsx`);
+      if (existsSync(dir) || existsSync(testPath) || group.items.some((i) => i.file === file))
+        return fail(`${category}/${file} already exists: add_block only scaffolds new blocks`);
+
       await mkdir(join(dir, "golden"), { recursive: true });
       const variants = [
         { label: "default", slug: "000-default", size: null, propsRaw: "{}" },
-        { label: "fadeOut", slug: "001-fadeout", size: null, propsRaw: "{fadeOut:!0}" },
-        { label: "isometric", slug: "002-isometric", size: null, propsRaw: "{isometric:!0}" },
+        {
+          label: "fadeOut",
+          slug: "001-fadeout",
+          size: null,
+          propsRaw: "{fadeOut:!0}",
+        },
+        {
+          label: "isometric",
+          slug: "002-isometric",
+          size: null,
+          propsRaw: "{isometric:!0}",
+        },
         {
           label: "isometric · fadeOut",
           slug: "003-isometric-fadeout",
@@ -429,102 +487,153 @@ function registerAuthoringTools() {
         },
       ];
       const meta = {
-        category: category.charAt(0).toUpperCase() + category.slice(1),
+        category: group.category,
         file,
         name,
         description,
         added: new Date().toISOString().slice(0, 10),
         kind: kind ?? "block",
-        sourcePath: `${slug}/${file}.tsx`,
+        sourcePath: `${category}/${file}.tsx`,
         page: { cols: 2, animated: true, trigger: "inViewRepeat" },
         chunks: { page: null, components: [] },
         variants,
       };
       await writeFile(join(dir, "block.json"), JSON.stringify(meta, null, 2) + "\n");
+      await writeFile(join(dir, "react.tsx"), reactSkeleton(pascal(file)));
+      await writeFile(testPath, testSkeleton(pascal(file), category, file));
 
-      const reactSkeleton = `import { useRef } from "react";
-  import { motion } from "motion/react";
-  import { useInView } from "@cremona/react";
-  import { cn, type VisualProps } from "@cremona/core";
-
-  export interface ${pascal(file)}Props extends VisualProps {
-    fadeOut?: boolean;
-    isometric?: boolean;
-    gradient?: boolean;
-  }
-
-  export function ${pascal(file)}({
-    animated = false,
-    trigger = "inView",
-    fadeOut = false,
-    isometric = false,
-    gradient = true,
-    className,
-  }: ${pascal(file)}Props) {
-    const ref = useRef<HTMLDivElement>(null);
-    const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-    const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-    const state = animated
-      ? { initial: "hidden", animate: trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce) ? "visible" : "hidden" }
-      : {};
-
-    return (
-      <div ref={ref} aria-hidden="true" className={cn("relative isolate flex size-full items-center justify-center overflow-hidden px-2", className)}>
-        <motion.div
-          className={cn("relative w-full max-w-72 rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform", fadeOut && "mask-b-from-60%")}
-          style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
-          variants={animated ? undefined : undefined}
-          {...state}
-        >
-          {/* TODO: implement the visual (see docs/porting-guide.md) */}
-        </motion.div>
-      </div>
-    );
-  }
-  `;
-      await writeFile(join(dir, "react.tsx"), reactSkeleton);
-
-      const testSkeleton = `import { dirname, join } from "node:path";
-  import { fileURLToPath } from "node:url";
-  import { ${pascal(file)} } from "../src/${slug}/${file}/react.js";
-  import { runGoldenParity } from "./helpers/run-golden-parity.js";
-
-  const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/${slug}/${file}");
-
-  runGoldenParity("${slug}/${file}", {
-    blockDir,
-    Component: ${pascal(file)},
-  });
-  `;
-      const testName = `${slug}-${file}`.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-      await writeFile(
-        join(REPO_ROOT, "packages", "blocks", "test", `${testName}.parity.test.tsx`),
-        testSkeleton,
-      );
-
-      const catalogPath = join(REPO_ROOT, "packages", "blocks", "catalog.json");
-      const current = JSON.parse(await readFile(catalogPath, "utf8"));
-      const group = current.find((g) => g.slug === slug);
-      if (group && !group.items.some((i) => i.file === file)) {
-        group.items.push({ file, name, description, added: meta.added });
-        await writeFile(catalogPath, JSON.stringify(current, null, 2) + "\n");
-      }
+      group.items.push({ file, name, description, added: meta.added });
+      await writeFile(catalogPath, JSON.stringify(current, null, 2) + "\n");
+      store.invalidateCaches();
 
       return text({
         ok: true,
         files: [
-          `packages/blocks/src/${slug}/${file}/block.json`,
-          `packages/blocks/src/${slug}/${file}/react.tsx`,
+          `packages/blocks/src/${category}/${file}/block.json`,
+          `packages/blocks/src/${category}/${file}/react.tsx`,
           `packages/blocks/test/${testName}.parity.test.tsx`,
         ],
         next: [
-          "Implement the visual following docs/porting-guide.md",
-          "pnpm vitest run test/" + testName + ".parity.test.tsx (from packages/blocks)",
-          "node tools/generate-stimulus.mjs",
+          "Implement the visual following docs/authoring-guide.md",
+          "From packages/blocks: pnpm vitest run test/generate-goldens.test.tsx, then pnpm vitest run test/" +
+            testName +
+            ".parity.test.tsx",
+          "From the repo root: pnpm generate:stimulus && pnpm check",
         ],
       });
     },
   );
+}
+
+/** react.tsx skeleton: the metrics/stat-card anatomy (frame, fill, card, glow, veil, entrance). */
+function reactSkeleton(Name) {
+  return `import { useRef } from "react";
+import { motion } from "motion/react";
+import { useInView } from "@cremona/react";
+import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+export interface ${Name}Props extends VisualProps {
+  fadeOut?: boolean;
+  isometric?: boolean;
+  gradient?: boolean;
+}
+
+const card = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
+} as const;
+
+const cardIso = {
+  hidden: { opacity: 0, transform: "rotateX(0deg) rotateZ(0deg)" },
+  visible: {
+    opacity: 1,
+    transform: "rotateX(45deg) rotateZ(-45deg)",
+    transition: { duration: 0.5, ease: "easeOut" },
+  },
+} as const;
+
+const glowAnim = {
+  hidden: { opacity: 0, scaleX: 0.6 },
+  visible: { opacity: 0.6, scaleX: 1, transition: { duration: 0.5, delay: 0.5, ease: "easeOut" } },
+} as const;
+
+const veilAnim = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
+} as const;
+
+export function ${Name}({
+  animated = false,
+  trigger = "inView",
+  fadeOut = false,
+  isometric = false,
+  gradient = true,
+  fill = false,
+  className,
+}: ${Name}Props) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
+  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const state = animated
+    ? {
+        initial: "hidden",
+        animate:
+          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
+            ? "visible"
+            : "hidden",
+      }
+    : {};
+
+  return (
+    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
+      <motion.div
+        className={cn(
+          "relative w-full",
+          !fill && "max-w-72",
+          "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
+          fadeOut && "mask-b-from-60%",
+        )}
+        style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
+        variants={animated ? (isometric ? cardIso : card) : undefined}
+        {...state}
+      >
+        {gradient && !fadeOut && (
+          <>
+            <motion.div
+              className="absolute inset-x-1.25 bottom-0 h-20 origin-center rounded-t-full rounded-b-xl bg-[linear-gradient(to_right,var(--color-red-500),var(--color-orange-500),var(--color-yellow-500),var(--color-green-500),var(--color-blue-500),var(--color-indigo-500),var(--color-violet-500))] opacity-60 blur-sm"
+              variants={animated ? glowAnim : undefined}
+              {...state}
+            />
+            <motion.div
+              className="absolute inset-x-0 bottom-0 h-16 rounded-b-3xl bg-background/75 mask-t-from-50% shadow-xs"
+              variants={animated ? veilAnim : undefined}
+              {...state}
+            />
+          </>
+        )}
+        <div className="relative flex flex-col gap-4 rounded-2xl border bg-card p-5 shadow-xs">
+          {/* the visual (docs/authoring-guide.md) */}
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+`;
+}
+
+function testSkeleton(Name, category, file) {
+  return `import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { ${Name} } from "../src/${category}/${file}/react.js";
+import { runGoldenParity } from "./helpers/run-golden-parity.js";
+
+const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/${category}/${file}");
+
+runGoldenParity("${category}/${file}", {
+  blockDir,
+  Component: ${Name},
+});
+`;
 }
 
 function pascal(s) {
