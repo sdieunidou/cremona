@@ -130,7 +130,7 @@ export function Bubbles({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -149,7 +149,12 @@ export function Bubbles({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center gap-2.5 border-b px-3 py-2.5">
             <div className="relative">
               <div className="flex size-7 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
@@ -222,7 +227,7 @@ export function Bubbles({
               </motion.div>
             )}
           </motion.div>
-          <div className="flex items-center gap-2 border-t px-3 py-2">
+          <div className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}>
             <div className="flex-1 truncate rounded-full bg-muted px-3 py-1.25 text-[10px] text-muted-foreground">
               Type a message…
             </div>

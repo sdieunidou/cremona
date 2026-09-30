@@ -322,7 +322,7 @@ export function Upload({
           />
         ))}
       </div>
-      <div ref={scope}>
+      <div ref={scope} className={fill ? "self-center" : undefined}>
         <div
           className="file-card relative flex flex-col rounded-lg rounded-tr-2xl border border-muted bg-muted p-0.75 shadow-xs dark:shadow-none"
           style={animated ? { opacity: 0, transform: "translateY(60px)" } : undefined}

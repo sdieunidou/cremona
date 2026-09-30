@@ -252,7 +252,7 @@ export function Webhook({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative shrink-0"
+        className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric
             ? { width: CANVAS.w, height: CANVAS.h, transform: "rotateX(45deg) rotateZ(-45deg)" }

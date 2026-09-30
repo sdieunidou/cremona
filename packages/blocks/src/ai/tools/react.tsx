@@ -597,7 +597,7 @@ export function Tools({
           </div>
         ))}
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-96"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-96"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -616,7 +616,12 @@ export function Tools({
             />
           </Fragment>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <motion.div
             className="flex items-center gap-2 border-b px-3 py-2.5"
             variants={animated ? header : undefined}
@@ -642,7 +647,7 @@ export function Tools({
             ))}
           </div>
           <motion.div
-            className="flex items-center gap-2 border-t px-3 py-2"
+            className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}
             variants={animated ? footer : undefined}
             {...state}
           >

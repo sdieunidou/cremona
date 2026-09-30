@@ -115,7 +115,7 @@ export function Thread({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -134,7 +134,12 @@ export function Thread({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <motion.div
             className="flex flex-col gap-2 border-b px-3 py-3"
             variants={animated ? parentAnim : undefined}
@@ -212,7 +217,7 @@ export function Thread({
               </motion.div>
             ))}
           </motion.div>
-          <div className="flex items-center gap-2 border-t px-3 py-2">
+          <div className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}>
             <div className="flex-1 truncate rounded-full bg-muted px-3 py-1.25 text-[10px] text-muted-foreground">
               Write a reply…
             </div>

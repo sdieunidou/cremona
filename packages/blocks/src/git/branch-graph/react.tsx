@@ -252,7 +252,7 @@ export function BranchGraph({
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >
       <motion.div
-        className="relative shrink-0"
+        className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric
             ? { width: W, height: H, transform: "rotateX(45deg) rotateZ(-45deg)" }

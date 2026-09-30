@@ -133,7 +133,11 @@ export function ProfileCard({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("relative flex w-full", !fill && "max-w-56", "flex-col items-center gap-3")}
+        className={cn(
+          "relative flex w-full",
+          fill ? "h-full" : "max-w-56",
+          "flex-col items-center gap-3",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -152,7 +156,12 @@ export function ProfileCard({
             />
           </>
         )}
-        <div className="relative flex w-full flex-col items-center gap-2.5 rounded-2xl border bg-card px-4 pt-5 pb-4 shadow-xs">
+        <div
+          className={cn(
+            "relative flex w-full flex-col items-center gap-2.5 rounded-2xl border bg-card px-4 pt-5 pb-4 shadow-xs",
+            fill && "flex-1 justify-center",
+          )}
+        >
           <div className="relative">
             <motion.div
               className="flex size-14 items-center justify-center rounded-full shadow-xs ring-2 ring-muted"

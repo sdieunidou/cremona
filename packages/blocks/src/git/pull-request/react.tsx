@@ -330,6 +330,7 @@ export function PullRequest({
         className={cn(
           "relative w-full",
           !fill && "max-w-96",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
@@ -351,7 +352,12 @@ export function PullRequest({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <motion.div
             className="flex flex-col gap-1.5 border-b px-3 py-2.5"
             variants={animated ? headerAnim : undefined}
@@ -425,7 +431,7 @@ export function PullRequest({
             ))}
           </div>
           <motion.div
-            className="flex items-center gap-2 border-t px-3 py-2"
+            className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}
             variants={animated ? riseAnim : undefined}
             custom={FOOTER_DELAY}
             {...state}

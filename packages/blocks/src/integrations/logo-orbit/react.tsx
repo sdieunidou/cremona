@@ -166,7 +166,7 @@ export function LogoOrbit({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative flex size-72 items-center justify-center"
+        className={cn("relative flex size-72 items-center justify-center", fill && "self-center")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? stageIso : stageAnim) : undefined}
         {...state}

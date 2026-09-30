@@ -287,7 +287,11 @@ export function Stacked({
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
-      <motion.div className="relative" variants={animated ? container : undefined} {...state}>
+      <motion.div
+        className={cn("relative", fill && "self-center")}
+        variants={animated ? container : undefined}
+        {...state}
+      >
         {angles.map((angle, i) => (
           <motion.div
             key={i}

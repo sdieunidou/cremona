@@ -185,7 +185,7 @@ export function DatePicker({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative flex w-full${fill ? "" : " max-w-72"} flex-col ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative flex w-full${fill ? " h-full" : " max-w-72"} flex-col ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated && isometric ? containerIso : undefined}
         {...state}
@@ -205,7 +205,10 @@ export function DatePicker({
           </>
         )}
         <motion.div
-          className="relative w-full rounded-xl border bg-card p-3 shadow-xs"
+          className={cn(
+            "relative w-full rounded-xl border bg-card p-3 shadow-xs",
+            fill && "flex-1",
+          )}
           variants={animated ? card : undefined}
           {...state}
         >

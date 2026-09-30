@@ -171,7 +171,7 @@ export function Compose({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
@@ -190,7 +190,12 @@ export function Compose({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center justify-between gap-2 border-b px-3 py-2.75">
             <span className="truncate text-xs font-semibold text-foreground">{title}</span>
             <div className="flex shrink-0 items-center gap-2 text-muted-foreground">
@@ -260,7 +265,7 @@ export function Compose({
               </div>
             </motion.div>
           </motion.div>
-          <div className="flex items-center justify-between px-3 py-2">
+          <div className={cn("flex items-center justify-between px-3 py-2", fill && "mt-auto")}>
             <motion.button
               type="button"
               className="flex items-center gap-1 rounded-md bg-primary px-2 py-1 text-[10px] font-semibold text-primary-foreground"

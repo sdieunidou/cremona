@@ -563,7 +563,7 @@ export function Editor({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-90"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-90"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -582,7 +582,12 @@ export function Editor({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center gap-2 border-b bg-muted/40 px-2.5 py-1.5">
             <div className="flex gap-1.25">
               <div className="size-2 rounded-full bg-rose-400" />
@@ -646,7 +651,12 @@ export function Editor({
               )}
             </motion.div>
           </div>
-          <div className="flex items-center justify-between border-t bg-background px-2.5 py-1.5 text-[8px] font-medium text-muted-foreground">
+          <div
+            className={cn(
+              "flex items-center justify-between border-t bg-background px-2.5 py-1.5 text-[8px] font-medium text-muted-foreground",
+              fill && "mt-auto",
+            )}
+          >
             <div className="flex items-center gap-2">
               <span className="tracking-wide uppercase">{language}</span>
               <span className="text-muted-foreground/60">UTF-8</span>

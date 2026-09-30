@@ -408,6 +408,7 @@ export function Diff({
         className={cn(
           "relative w-full",
           !fill && "max-w-96",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
@@ -429,7 +430,12 @@ export function Diff({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center gap-2 border-b px-3 py-2.5"
             variants={animated ? headerAnim : undefined}

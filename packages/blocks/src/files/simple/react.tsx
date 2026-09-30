@@ -612,7 +612,10 @@ export function SimpleFile({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className="relative flex flex-col rounded-lg rounded-tr-2xl border border-muted bg-muted p-0.75 shadow-xs dark:shadow-none"
+        className={cn(
+          "relative flex flex-col rounded-lg rounded-tr-2xl border border-muted bg-muted p-0.75 shadow-xs dark:shadow-none",
+          fill && "self-center",
+        )}
         variants={animated ? container : undefined}
         {...state}
       >

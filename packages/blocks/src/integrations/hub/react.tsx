@@ -171,7 +171,10 @@ export function Hub({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className={`relative flex ${cfg.frame} items-center justify-center`}
+        className={cn(
+          `relative flex ${cfg.frame} items-center justify-center`,
+          fill && "self-center",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? frameIso : frameAnim) : undefined}
         {...state}

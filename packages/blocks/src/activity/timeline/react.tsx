@@ -165,6 +165,7 @@ export function Timeline({
         className={cn(
           "relative w-full",
           !fill && "max-w-80",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
@@ -186,7 +187,7 @@ export function Timeline({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-3 py-2.75">
             <span className="text-xs font-semibold text-foreground">{title}</span>
             {meta && (

@@ -426,7 +426,7 @@ export function Snippet({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("relative flex w-full", !fill && "max-w-72", "flex-col")}
+        className={cn("relative flex w-full", fill ? "h-full" : "max-w-72", "flex-col")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -445,7 +445,12 @@ export function Snippet({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-xl border bg-card shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <div className="flex items-center justify-between gap-2 border-b bg-muted/30 px-2.5 py-1.5">
             <div className="flex min-w-0 items-center gap-1.5 text-[9px] font-semibold text-muted-foreground">
               <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/10 px-1.25 text-[9px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
