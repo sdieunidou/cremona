@@ -27,10 +27,25 @@ const slides = [
   },
 ];
 
+// `activeIndex` centres its slide (neighbours wrap). The POC always centred slides[1],
+// so these two variants list their slides in the order their goldens show.
+const dolomitesFirst = [
+  { kind: "mountain", title: "Dolomites", caption: "Above the cloud line" },
+  { kind: "ocean", title: "Big Sur", caption: "Pacific morning swell" },
+  { kind: "sunset", title: "Costa Brava", caption: "Sunset over the cliffs" },
+];
+const kyotoFirst = [
+  { kind: "blossom", title: "Kyoto", caption: "Cherry blossom season" },
+  { kind: "city", title: "Tokyo", caption: "Neon after dark" },
+  { kind: "aurora", title: "Tromsø", caption: "Lights at midnight" },
+];
+
 runGoldenParity("images/carousel", {
   blockDir,
   Component: Carousel,
   variants: [
+    { label: "active: first", props: { activeIndex: 0, count: 5, slides: dolomitesFirst } },
+    { label: "custom slides · count", props: { slides: kyotoFirst, count: 8, activeIndex: 3 } },
     { label: "real images", props: { badge: false, slides, count: 3 } },
     {
       label: "isometric · real images",

@@ -9,11 +9,15 @@ export interface CarouselSlide {
   src?: string;
   title: string;
   caption: string;
+  /** Alternative text of `src` (defaults to `title`). */
+  alt?: string;
 }
 
 export interface CarouselProps extends VisualProps {
   slides?: CarouselSlide[];
+  /** Number of positions (dots); defaults to `slides.length` (5 for the demo strip). */
   count?: number;
+  /** Centred slide and highlighted dot; neighbours wrap around `slides`. */
   activeIndex?: number;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -162,17 +166,17 @@ const scenes = {
   blossom: BlossomScene,
 };
 
-function Slide({ slide }: { slide: CarouselSlide }) {
-  if (slide.src) {
-    return <img src={slide.src} alt={slide.title} className="size-full object-cover" />;
+function Slide({ slide }: { slide?: CarouselSlide }) {
+  if (slide?.src) {
+    return (
+      <img src={slide.src} alt={slide.alt ?? slide.title} className="size-full object-cover" />
+    );
   }
-  if (slide.kind) {
-    const Scene = scenes[slide.kind];
-    return <Scene />;
-  }
-  return null;
+  const Scene = slide?.kind ? scenes[slide.kind] : undefined;
+  return Scene ? <Scene /> : null;
 }
 
+const DEMO_COUNT = 5;
 const defaultSlides: CarouselSlide[] = [
   { kind: "sunset", title: "Costa Brava", caption: "Sunset over the cliffs" },
   { kind: "mountain", title: "Dolomites", caption: "Above the cloud line" },
@@ -263,7 +267,7 @@ const arrowAnim = {
 
 export function Carousel({
   slides = defaultSlides,
-  count = 5,
+  count,
   activeIndex = 1,
   animated = false,
   trigger = "inView",
@@ -287,10 +291,18 @@ export function Carousel({
             : "hidden",
       }
     : {};
-  const active = Math.min(Math.max(activeIndex, 0), count - 1);
-  const leftSlide = slides[0]!;
-  const centerSlide = slides[Math.min(1, slides.length - 1)]!;
-  const rightSlide = slides[Math.min(2, slides.length - 1)]!;
+  const total = Math.max(
+    1,
+    Math.floor(count ?? (slides === defaultSlides ? DEMO_COUNT : slides.length)) || 1,
+  );
+  const active = Math.min(Math.max(Math.floor(activeIndex) || 0, 0), total - 1);
+  const slideAt = (offset: number): CarouselSlide | undefined =>
+    slides.length
+      ? slides[(((active + offset) % slides.length) + slides.length) % slides.length]
+      : undefined;
+  const leftSlide = slideAt(-1);
+  const centerSlide = slideAt(0);
+  const rightSlide = slideAt(1);
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -339,12 +351,14 @@ export function Carousel({
               </motion.div>
               <motion.div
                 role="img"
-                aria-label={centerSlide.title}
+                aria-label={centerSlide?.title}
                 className="relative h-28 w-44 overflow-hidden rounded-xl border-2 border-card bg-background"
                 variants={animated ? slideAnim : undefined}
               >
                 <Slide slide={centerSlide} />
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-foreground/60 to-transparent" />
+                {centerSlide && (
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-foreground/60 to-transparent" />
+                )}
               </motion.div>
             </motion.div>
             <motion.div
@@ -354,15 +368,15 @@ export function Carousel({
             >
               <div className="flex min-w-0 flex-col leading-tight">
                 <span className="truncate text-xs font-semibold text-foreground">
-                  {centerSlide.title}
+                  {centerSlide?.title}
                 </span>
                 <span className="truncate text-[10px] text-muted-foreground">
-                  {centerSlide.caption}
+                  {centerSlide?.caption}
                 </span>
               </div>
               {badge && (
                 <span className="shrink-0 rounded-full border bg-background px-1.5 py-px text-[9px] font-medium text-muted-foreground tabular-nums">
-                  {active + 1} / {count}
+                  {active + 1} / {total}
                 </span>
               )}
             </motion.div>
@@ -371,7 +385,7 @@ export function Carousel({
               variants={animated ? dotsAnim : undefined}
               {...motionState}
             >
-              {Array.from({ length: count }).map((_, i) => (
+              {Array.from({ length: total }).map((_, i) => (
                 <motion.span
                   key={i}
                   className={cn(
