@@ -3873,17 +3873,17 @@
       {
         "label": "default",
         "slug": "000-default",
-        "size": "lg"
+        "size": "xl"
       },
       {
         "label": "error",
         "slug": "001-error",
-        "size": "lg"
+        "size": "xl"
       },
       {
         "label": "loading",
         "slug": "002-loading",
-        "size": "lg"
+        "size": "xl"
       }
     ]
   },
@@ -3921,17 +3921,17 @@
       {
         "label": "default",
         "slug": "000-default",
-        "size": null
+        "size": "lg"
       },
       {
         "label": "dirty",
         "slug": "001-dirty",
-        "size": null
+        "size": "lg"
       },
       {
         "label": "saved",
         "slug": "002-saved",
-        "size": null
+        "size": "lg"
       }
     ]
   },
@@ -3945,17 +3945,22 @@
       {
         "label": "default",
         "slug": "000-default",
-        "size": null
+        "size": "lg"
       },
       {
         "label": "strong",
         "slug": "001-strong",
-        "size": null
+        "size": "lg"
       },
       {
         "label": "weak",
         "slug": "002-weak",
-        "size": null
+        "size": "lg"
+      },
+      {
+        "label": "email taken",
+        "slug": "003-email-taken",
+        "size": "lg"
       }
     ]
   },

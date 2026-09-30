@@ -19,19 +19,19 @@
     {
       "label": "default",
       "propsRaw": "{}",
-      "size": null,
+      "size": "lg",
       "slug": "000-default"
     },
     {
       "label": "dirty",
       "propsRaw": "{dirty:!0}",
-      "size": null,
+      "size": "lg",
       "slug": "001-dirty"
     },
     {
       "label": "saved",
       "propsRaw": "{saved:!0}",
-      "size": null,
+      "size": "lg",
       "slug": "002-saved"
     }
   ]

@@ -19,20 +19,26 @@
     {
       "label": "default",
       "propsRaw": "{}",
-      "size": null,
+      "size": "lg",
       "slug": "000-default"
     },
     {
       "label": "strong",
       "propsRaw": "{strength:4}",
-      "size": null,
+      "size": "lg",
       "slug": "001-strong"
     },
     {
       "label": "weak",
       "propsRaw": "{strength:1}",
-      "size": null,
+      "size": "lg",
       "slug": "002-weak"
+    },
+    {
+      "label": "email taken",
+      "propsRaw": "{name:`Ada Lovelace`,email:`ada@acme.dev`,emailError:`This email is already registered.`}",
+      "size": "lg",
+      "slug": "003-email-taken"
     }
   ]
 }

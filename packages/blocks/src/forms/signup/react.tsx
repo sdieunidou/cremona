@@ -1,25 +1,65 @@
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
+import { Check } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
-export interface SignupProps extends VisualProps {
-  name?: string;
-  email?: string;
-  strength?: 1 | 2 | 3 | 4;
+export interface SignupLabels {
+  title: string;
+  description: string;
+  name: string;
+  namePlaceholder: string;
+  email: string;
+  emailPlaceholder: string;
+  password: string;
+  passwordPlaceholder: string;
+  strength: string;
+  /** Strength words for levels 1 to 4. */
+  levels: [string, string, string, string];
+  terms: string;
+  submit: string;
 }
 
-const strengthMeta: Record<number, { filled: number; bar: string; word: string; text: string }> = {
-  1: { filled: 1, bar: "bg-rose-500", word: "Too weak", text: "text-rose-600 dark:text-rose-400" },
-  2: { filled: 2, bar: "bg-rose-500", word: "Weak", text: "text-rose-600 dark:text-rose-400" },
-  3: { filled: 3, bar: "bg-amber-500", word: "Medium", text: "text-amber-600 dark:text-amber-400" },
-  4: {
-    filled: 3,
-    bar: "bg-emerald-500",
-    word: "Strong",
-    text: "text-emerald-600 dark:text-emerald-400",
-  },
+export interface SignupProps extends VisualProps {
+  /** Prefilled full name. */
+  name?: string;
+  /** Prefilled email address. */
+  email?: string;
+  /** Password strength, 1 (too weak) to 4 (strong): fills that many meter segments. */
+  strength?: 1 | 2 | 3 | 4;
+  /** Error shown under the email field, which is then marked invalid. */
+  emailError?: string;
+  /** UI copy; every key is optional and falls back to the English default. */
+  labels?: Partial<SignupLabels>;
+}
+
+const defaultLabels: SignupLabels = {
+  title: "Create your account",
+  description: "Start your 14-day free trial.",
+  name: "Name",
+  namePlaceholder: "Ada Lovelace",
+  email: "Email",
+  emailPlaceholder: "you@example.com",
+  password: "Password",
+  passwordPlaceholder: "••••••••",
+  strength: "Password strength",
+  levels: ["Too weak", "Weak", "Medium", "Strong"],
+  terms: "I agree to the Terms and Privacy Policy.",
+  submit: "Create account",
 };
+
+const strengthTones: Record<number, { bar: string; text: string }> = {
+  1: { bar: "bg-destructive", text: "text-destructive" },
+  2: { bar: "bg-destructive", text: "text-destructive" },
+  3: { bar: "bg-warning", text: "text-warning" },
+  4: { bar: "bg-success", text: "text-success" },
+};
+
+/** Preview only: keeps a control out of the tab order and unfocused on click. Drop it when deriving. */
+const noFocus = { tabIndex: -1, onMouseDown: prevent } as const;
+function prevent(e: { preventDefault(): void }) {
+  e.preventDefault();
+}
 
 const entrance = {
   hidden: { opacity: 0, y: 8 },
@@ -37,12 +77,14 @@ const field = {
 } as const;
 
 const inputClass =
-  "h-9 w-full rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs outline-none transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus:border-ring focus:ring-3 focus:ring-ring/50";
+  "h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs outline-none transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20";
 
 export function Signup({
   name = "",
   email = "",
   strength = 3,
+  emailError,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -51,6 +93,8 @@ export function Signup({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const id = useId();
+  const t = { ...defaultLabels, ...labels };
   const state = animated
     ? {
         initial: "hidden",
@@ -61,11 +105,15 @@ export function Signup({
       }
     : {};
 
-  const meta = strengthMeta[strength] ?? strengthMeta[3]!;
+  const level = Math.min(4, Math.max(1, Math.round(strength))) as 1 | 2 | 3 | 4;
+  const tone = strengthTones[level]!;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
-      <motion.div
+      <motion.form
+        noValidate
+        onSubmit={prevent}
+        aria-labelledby={`${id}-title`}
         className={cn(
           "flex w-full",
           !fill && "max-w-72",
@@ -75,8 +123,10 @@ export function Signup({
         {...state}
       >
         <motion.div className="flex flex-col gap-1" variants={animated ? field : undefined}>
-          <p className="text-lg font-semibold text-foreground">Create your account</p>
-          <p className="text-xs text-muted-foreground">Start your 14-day free trial.</p>
+          <h2 id={`${id}-title`} className="text-lg font-semibold text-foreground">
+            {t.title}
+          </h2>
+          <p className="text-xs text-muted-foreground">{t.description}</p>
         </motion.div>
         <motion.div
           className="flex flex-col gap-3"
@@ -84,75 +134,97 @@ export function Signup({
           {...state}
         >
           <motion.div className="flex flex-col gap-1.5" variants={animated ? field : undefined}>
-            <label htmlFor="cremona-signup-name" className="text-xs font-medium text-foreground">
-              Name
+            <label htmlFor={`${id}-name`} className="text-xs font-medium text-foreground">
+              {t.name}
             </label>
             <input
-              id="cremona-signup-name"
+              id={`${id}-name`}
+              name="name"
               type="text"
-              value={name}
-              placeholder="Ada Lovelace"
+              autoComplete="name"
+              required
+              defaultValue={name}
+              placeholder={t.namePlaceholder}
               className={inputClass}
+              {...noFocus}
             />
           </motion.div>
           <motion.div className="flex flex-col gap-1.5" variants={animated ? field : undefined}>
-            <label htmlFor="cremona-signup-email" className="text-xs font-medium text-foreground">
-              Email
+            <label htmlFor={`${id}-email`} className="text-xs font-medium text-foreground">
+              {t.email}
             </label>
             <input
-              id="cremona-signup-email"
+              id={`${id}-email`}
+              name="email"
               type="email"
-              value={email}
-              placeholder="you@example.com"
+              autoComplete="email"
+              required
+              defaultValue={email}
+              placeholder={t.emailPlaceholder}
+              aria-invalid={emailError ? true : undefined}
+              aria-describedby={emailError ? `${id}-email-error` : undefined}
               className={inputClass}
+              {...noFocus}
             />
+            {emailError && (
+              <p id={`${id}-email-error`} className="text-[10px] font-medium text-destructive">
+                {emailError}
+              </p>
+            )}
           </motion.div>
           <motion.div className="flex flex-col gap-1.5" variants={animated ? field : undefined}>
-            <label
-              htmlFor="cremona-signup-password"
-              className="text-xs font-medium text-foreground"
-            >
-              Password
+            <label htmlFor={`${id}-password`} className="text-xs font-medium text-foreground">
+              {t.password}
             </label>
             <input
-              id="cremona-signup-password"
+              id={`${id}-password`}
+              name="password"
               type="password"
-              placeholder="••••••••"
+              autoComplete="new-password"
+              required
+              placeholder={t.passwordPlaceholder}
+              aria-describedby={`${id}-strength`}
               className={inputClass}
+              {...noFocus}
             />
-            <div className="mt-0.5 flex gap-1">
-              {[0, 1, 2].map((i) => (
+            <div className="mt-0.5 flex gap-1" aria-hidden="true">
+              {[1, 2, 3, 4].map((i) => (
                 <span
                   key={i}
                   className={cn(
                     "h-1 flex-1 rounded-full transition-colors duration-200",
-                    i < meta.filled ? meta.bar : "bg-muted",
+                    i <= level ? tone.bar : "bg-muted",
                   )}
                 />
               ))}
             </div>
-            <div className="flex items-center justify-between">
-              <span className="text-[10px] text-muted-foreground">Password strength</span>
-              <span className={cn("text-[10px] font-medium", meta.text)}>{meta.word}</span>
-            </div>
+            <p id={`${id}-strength`} className="flex items-center justify-between gap-2">
+              <span className="text-[10px] text-muted-foreground">{t.strength}</span>
+              <span className={cn("text-[10px] font-medium", tone.text)}>
+                {t.levels[level - 1]}
+              </span>
+            </p>
           </motion.div>
         </motion.div>
-        <motion.span className="flex items-center gap-1.5" variants={animated ? field : undefined}>
-          <span className="size-3 rounded-[4px] border border-input bg-background shadow-xs" />
-          <span className="text-[10px] text-muted-foreground">
-            I agree to the Terms and Privacy Policy.
+        <motion.label className="flex items-center gap-1.5" variants={animated ? field : undefined}>
+          <input type="checkbox" name="terms" required className="peer sr-only" {...noFocus} />
+          <span
+            aria-hidden="true"
+            className="flex size-3 shrink-0 items-center justify-center rounded-[4px] border border-input bg-background text-transparent shadow-xs transition-colors duration-200 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50"
+          >
+            <Check className="size-2" strokeWidth={3} />
           </span>
-        </motion.span>
+          <span className="text-[10px] text-muted-foreground">{t.terms}</span>
+        </motion.label>
         <motion.button
-          type="button"
-          tabIndex={-1}
-          onMouseDown={(e) => e.preventDefault()}
-          className="flex h-9 w-full items-center justify-center rounded-md bg-primary text-xs font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.99]"
+          type="submit"
+          className="flex h-9 w-full items-center justify-center rounded-md bg-primary text-xs font-semibold text-primary-foreground shadow-sm outline-none transition-all duration-200 hover:opacity-90 focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.99]"
           variants={animated ? field : undefined}
+          {...noFocus}
         >
-          Create account
+          {t.submit}
         </motion.button>
-      </motion.div>
+      </motion.form>
     </div>
   );
 }
