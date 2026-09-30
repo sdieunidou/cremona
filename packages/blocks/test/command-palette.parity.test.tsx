@@ -6,8 +6,8 @@ import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/search/command-palette");
 
-// icon ReactNodes for the custom-copy variants (from the POC page chunk)
-const icon = (Icon: typeof CreditCard) => <Icon className="size-3" strokeWidth={2.5} />;
+// icons as components: they render like the POC's `<Icon className="size-3" strokeWidth={2.5} />`
+// elements and serialize to "lucide:<Name>" in preview-props
 
 runGoldenParity("search/command-palette", {
   blockDir,
@@ -23,16 +23,16 @@ runGoldenParity("search/command-palette", {
             label: "Billing",
             items: [
               {
-                icon: icon(CreditCard),
+                icon: CreditCard,
                 label: "Update payment method",
                 shortcut: ["⌘", "B"],
               },
-              { icon: icon(Users), label: "Manage seats" },
+              { icon: Users, label: "Manage seats" },
             ],
           },
           {
             label: "Help",
-            items: [{ icon: icon(LifeBuoy), label: "Contact support" }],
+            items: [{ icon: LifeBuoy, label: "Contact support" }],
           },
         ],
       },
@@ -46,11 +46,11 @@ runGoldenParity("search/command-palette", {
             label: "Deployments",
             items: [
               {
-                icon: icon(GitBranch),
+                icon: GitBranch,
                 label: "Deploy to production",
                 shortcut: ["⌘", "↵"],
               },
-              { icon: icon(GitBranch), label: "Roll back last deploy" },
+              { icon: GitBranch, label: "Roll back last deploy" },
             ],
           },
         ],

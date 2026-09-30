@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { isValidElement, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { CornerDownLeft, FileText, Plus, Rocket, Search, Settings, UserPlus } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface CommandItem {
-  icon?: ReactNode;
+  /** A lucide icon component (`Plus`) or an element (`<Plus className="size-3" />`). */
+  icon?: LucideIcon | ReactNode;
   label: string;
   shortcut?: string[];
 }
@@ -15,6 +17,14 @@ export interface CommandGroup {
   items: CommandItem[];
 }
 
+export const commandPaletteDefaultLabels = {
+  navigate: "Navigate",
+  select: "Select",
+  close: "Close",
+  /** Shown when `groups` holds no command. */
+  empty: "No results",
+};
+
 export interface CommandPaletteProps extends VisualProps {
   query?: string;
   groups?: CommandGroup[];
@@ -23,6 +33,8 @@ export interface CommandPaletteProps extends VisualProps {
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
+  /** Footer hints and empty-state text. */
+  labels?: Partial<typeof commandPaletteDefaultLabels>;
 }
 
 const defaultQuery = "new";
@@ -30,31 +42,33 @@ const defaultGroups: CommandGroup[] = [
   {
     label: "Actions",
     items: [
-      {
-        icon: <Plus className="size-3" strokeWidth={2.5} />,
-        label: "New project",
-        shortcut: ["⌘", "N"],
-      },
-      {
-        icon: <FileText className="size-3" strokeWidth={2.5} />,
-        label: "New document",
-        shortcut: ["⌘", "D"],
-      },
-      {
-        icon: <UserPlus className="size-3" strokeWidth={2.5} />,
-        label: "Invite teammate",
-        shortcut: ["⌘", "I"],
-      },
+      { icon: Plus, label: "New project", shortcut: ["⌘", "N"] },
+      { icon: FileText, label: "New document", shortcut: ["⌘", "D"] },
+      { icon: UserPlus, label: "Invite teammate", shortcut: ["⌘", "I"] },
     ],
   },
   {
     label: "Recent",
     items: [
-      { icon: <Rocket className="size-3" strokeWidth={2.5} />, label: "Launch checklist" },
-      { icon: <Settings className="size-3" strokeWidth={2.5} />, label: "Workspace settings" },
+      { icon: Rocket, label: "Launch checklist" },
+      { icon: Settings, label: "Workspace settings" },
     ],
   },
 ];
+
+const COMPONENT_TYPES = new Set([Symbol.for("react.forward_ref"), Symbol.for("react.memo")]);
+
+function renderIcon(icon: CommandItem["icon"]): ReactNode {
+  const isComponent =
+    typeof icon === "function" ||
+    (typeof icon === "object" &&
+      icon !== null &&
+      !isValidElement(icon) &&
+      COMPONENT_TYPES.has((icon as { $$typeof?: symbol }).$$typeof as symbol));
+  if (!isComponent) return icon as ReactNode;
+  const Icon = icon as LucideIcon;
+  return <Icon className="size-3" strokeWidth={2.5} />;
+}
 
 const BASE_DELAY = 0.3;
 const CHAR_STAGGER = 0.045;
@@ -62,6 +76,8 @@ const CHAR_FADE = 0.18;
 const ITEM_STAGGER = 0.06;
 const LIST_DELAY = 0.25;
 const WALK_INTERVAL = 900;
+/** Longer lists are clipped (with a fade) after about this many rows; the walk stays within them. */
+const MAX_VISIBLE = 8;
 const FOOTER_PAD = 0.6;
 
 const typeDone = (len: number) => BASE_DELAY + Math.max(len - 1, 0) * CHAR_STAGGER + CHAR_FADE;
@@ -107,12 +123,14 @@ const charAnim: Variants = {
   }),
 };
 
-const caretAnim = (len: number): Variants => ({
+const caretAnim = (len: number, blink: boolean): Variants => ({
   hidden: { opacity: 0 },
-  visible: {
-    opacity: [0, 1, 1, 0],
-    transition: { duration: 1, repeat: 1 / 0, delay: typeDone(len) + 0.05, ease: "easeInOut" },
-  },
+  visible: blink
+    ? {
+        opacity: [0, 1, 1, 0],
+        transition: { duration: 1, repeat: 1 / 0, delay: typeDone(len) + 0.05, ease: "easeInOut" },
+      }
+    : { opacity: 1, transition: { duration: 0.2, delay: typeDone(len) } },
 });
 
 const badgeAnim = (len: number): Variants => ({
@@ -165,36 +183,40 @@ export function CommandPalette({
   gradient = true,
   fill = false,
   className,
+  labels,
 }: CommandPaletteProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
+  const text = { ...commandPaletteDefaultLabels, ...labels };
   const [hovering, setHovering] = useState(false);
   const [cursor, setCursor] = useState(0);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const cycling = animated && (hover ? hovering : triggered);
+  const cycling = animated && loop && (hover ? hovering : triggered);
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
-  const resolvedGroups = groups.length ? groups : defaultGroups;
+  const resolvedGroups = groups.map((group) => ({ ...group, items: group.items ?? [] }));
   const indexed = resolvedGroups.map((group, i) => ({
     group,
     start: resolvedGroups.slice(0, i).reduce((acc, g) => acc + g.items.length, 0),
   }));
   const itemCount = resolvedGroups.reduce((acc, g) => acc + g.items.length, 0);
   const chars = [...query];
-  const caretVariants = caretAnim(chars.length);
+  const caretVariants = caretAnim(chars.length, loop);
   const badgeVariants = badgeAnim(chars.length);
   const revealVariants = revealAnim(chars.length);
   const footerVariants = footerAnim(chars.length, itemCount);
-  const cursorItem = cycling ? cursor % Math.max(itemCount, 1) : 0;
+  const walkCount = Math.min(itemCount, MAX_VISIBLE);
+  const cursorItem = cycling ? cursor % Math.max(walkCount, 1) : 0;
   const walkStartMs = (footerDelay(chars.length, itemCount) + FOOTER_PAD) * 1000;
   useEffect(() => {
-    if (!cycling || itemCount < 2) return;
+    if (!cycling || walkCount < 2) return;
     let interval: ReturnType<typeof setInterval> | undefined;
     const timeout = setTimeout(
       () => {
         interval = setInterval(() => {
-          setCursor((c) => (c + 1) % itemCount);
+          setCursor((c) => (c + 1) % walkCount);
         }, WALK_INTERVAL);
       },
       hover ? 0 : walkStartMs,
@@ -204,7 +226,7 @@ export function CommandPalette({
       clearInterval(interval);
       setCursor(0);
     };
-  }, [cycling, hover, itemCount, walkStartMs]);
+  }, [cycling, hover, walkCount, walkStartMs]);
 
   return (
     <div
@@ -277,7 +299,22 @@ export function CommandPalette({
             </>
           )}
           <div className="relative rounded-[18px] border bg-card shadow-xs">
-            <div className="flex flex-col py-1.5">
+            <div
+              className={cn(
+                "flex flex-col py-1.5",
+                itemCount > MAX_VISIBLE && "max-h-72 overflow-hidden mask-b-from-75%",
+              )}
+            >
+              {itemCount === 0 && (
+                <motion.span
+                  className="px-3 py-4 text-center text-[11px] text-muted-foreground"
+                  variants={animated ? revealVariants : undefined}
+                  custom={0}
+                  {...state}
+                >
+                  {text.empty}
+                </motion.span>
+              )}
               {indexed.map(({ group, start }, i) => (
                 <div key={i} className="flex flex-col">
                   <motion.span
@@ -310,7 +347,7 @@ export function CommandPalette({
                         />
                         {item.icon && (
                           <span className="relative flex size-5.5 shrink-0 items-center justify-center rounded-md border bg-card text-muted-foreground shadow-xs">
-                            {item.icon}
+                            {renderIcon(item.icon)}
                           </span>
                         )}
                         <span className="relative min-w-0 flex-1 truncate text-[11px] font-medium text-foreground">
@@ -346,16 +383,16 @@ export function CommandPalette({
                 <span className="flex items-center gap-1">
                   <Key>↑</Key>
                   <Key>↓</Key>
-                  <span className="text-[9px] text-muted-foreground">Navigate</span>
+                  <span className="text-[9px] text-muted-foreground">{text.navigate}</span>
                 </span>
                 <span className="flex items-center gap-1">
                   <Key>↵</Key>
-                  <span className="text-[9px] text-muted-foreground">Select</span>
+                  <span className="text-[9px] text-muted-foreground">{text.select}</span>
                 </span>
               </div>
               <span className="flex items-center gap-1">
                 <Key>esc</Key>
-                <span className="text-[9px] text-muted-foreground">Close</span>
+                <span className="text-[9px] text-muted-foreground">{text.close}</span>
               </span>
             </motion.div>
           </div>

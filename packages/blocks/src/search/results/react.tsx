@@ -1,11 +1,13 @@
-import { useRef, type ReactNode } from "react";
+import { isValidElement, useRef, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { BookOpen, CodeXml, FileText, Search, SlidersHorizontal } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SearchResult {
-  icon?: ReactNode;
+  /** A lucide icon component (`BookOpen`) or an element (`<BookOpen className="size-3" />`). */
+  icon?: LucideIcon | ReactNode;
   title: string;
   path: string;
   snippet: string;
@@ -21,34 +23,59 @@ export interface ResultsProps extends VisualProps {
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
+  labels?: Partial<typeof resultsDefaultLabels>;
 }
+
+export const resultsDefaultLabels = {
+  /** Shown when `results` is empty. */
+  empty: "No results",
+};
 
 const defaultQuery = "webhook";
 const defaultStats = "128 results in 0.08s";
 const defaultFilters = ["All", "Docs", "API", "Help"];
-const defaultResults = [
+const defaultResults: SearchResult[] = [
   {
-    icon: <BookOpen className="size-3" strokeWidth={2.5} />,
+    icon: BookOpen,
     title: "Webhooks overview",
     path: "docs.acme.com › guides",
     snippet: "Receive events the moment they happen, without polling.",
     meta: "Docs",
   },
   {
-    icon: <CodeXml className="size-3" strokeWidth={2.5} />,
+    icon: CodeXml,
     title: "Verify webhook signatures",
     path: "docs.acme.com › api › security",
     snippet: "Every webhook request is signed with your endpoint secret.",
     meta: "API",
   },
   {
-    icon: <FileText className="size-3" strokeWidth={2.5} />,
+    icon: FileText,
     title: "Retry policy for failed webhooks",
     path: "help.acme.com › delivery",
     snippet: "Failed deliveries retry with backoff for up to 24 hours.",
     meta: "Help",
   },
 ];
+
+const COMPONENT_TYPES = new Set([Symbol.for("react.forward_ref"), Symbol.for("react.memo")]);
+
+function renderIcon(icon: SearchResult["icon"]): ReactNode {
+  const isComponent =
+    typeof icon === "function" ||
+    (typeof icon === "object" &&
+      icon !== null &&
+      !isValidElement(icon) &&
+      COMPONENT_TYPES.has((icon as { $$typeof?: symbol }).$$typeof as symbol));
+  if (!isComponent) return icon as ReactNode;
+  const Icon = icon as LucideIcon;
+  return <Icon className="size-3" strokeWidth={2.5} />;
+}
+
+/** Estimated chip width (9px text + padding + gap) and the room they have next to the stats. */
+const chipWidth = (label: string) => label.length * 5.5 + 22;
+const FILTER_ROW_WIDTH = 190;
+const META_MAX_CHARS = 14;
 
 const FILTER_BASE_DELAY = 0.25;
 const FILTER_STAGGER = 0.05;
@@ -139,8 +166,11 @@ interface Segment {
   match: boolean;
 }
 
-function segments(text: string, term: string): Segment[] {
-  const needle = term.trim().toLowerCase();
+function segments(raw: string, term: string): Segment[] {
+  const text = String(raw ?? "");
+  const needle = String(term ?? "")
+    .trim()
+    .toLowerCase();
   if (!needle) return [{ text, match: false }];
   const parts: Segment[] = [];
   const haystack = text.toLowerCase();
@@ -203,6 +233,7 @@ export function Results({
   gradient = true,
   fill = false,
   className,
+  labels,
 }: ResultsProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
@@ -216,7 +247,8 @@ export function Results({
             : "hidden",
       }
     : {};
-  const resolvedResults = results.length ? results : defaultResults;
+  const text = { ...resultsDefaultLabels, ...labels };
+  const crowded = filters.reduce((w, f) => w + chipWidth(f), 0) > FILTER_ROW_WIDTH;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -259,14 +291,19 @@ export function Results({
               <SlidersHorizontal className="size-3" strokeWidth={2.5} />
             </button>
           </motion.div>
-          <div className="flex items-center gap-1.5 border-b px-3 py-2">
+          <div
+            className={cn(
+              "flex items-center gap-1.5 border-b px-3 py-2",
+              crowded && "overflow-hidden mask-r-from-85%",
+            )}
+          >
             {filters.map((filter, i) => (
               <motion.button
                 key={i}
                 type="button"
                 tabIndex={-1}
                 onMouseDown={(e) => e.preventDefault()}
-                className={`rounded-full px-2 py-0.75 text-[9px] font-medium ${i === activeFilter ? "bg-primary text-primary-foreground" : "border bg-card text-muted-foreground"}`}
+                className={`rounded-full px-2 py-0.75 text-[9px] font-medium ${i === activeFilter ? "bg-primary text-primary-foreground" : "border bg-card text-muted-foreground"}${crowded ? " shrink-0 whitespace-nowrap" : ""}`}
                 variants={animated ? filterAnim : undefined}
                 custom={i}
                 {...state}
@@ -279,7 +316,17 @@ export function Results({
             </span>
           </div>
           <div className="flex flex-col divide-y">
-            {resolvedResults.map((result, i) => (
+            {results.length === 0 && (
+              <motion.span
+                className="px-3 py-6 text-center text-[11px] text-muted-foreground"
+                variants={animated ? resultAnim : undefined}
+                custom={0}
+                {...state}
+              >
+                {text.empty}
+              </motion.span>
+            )}
+            {results.map((result, i) => (
               <motion.div
                 key={i}
                 className="flex items-start gap-2.5 px-3 py-2.5"
@@ -289,7 +336,7 @@ export function Results({
               >
                 {result.icon && (
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-md border bg-muted/50 text-muted-foreground">
-                    {result.icon}
+                    {renderIcon(result.icon)}
                   </span>
                 )}
                 <div className="flex min-w-0 flex-1 flex-col gap-0.5">
@@ -314,7 +361,12 @@ export function Results({
                   </span>
                 </div>
                 {result.meta && (
-                  <span className="shrink-0 rounded-full border bg-muted/50 px-1.5 py-0.5 text-[9px] font-medium text-muted-foreground">
+                  <span
+                    className={cn(
+                      "shrink-0 rounded-full border bg-muted/50 px-1.5 py-0.5 text-[9px] font-medium text-muted-foreground",
+                      result.meta.length > META_MAX_CHARS && "max-w-24 truncate",
+                    )}
+                  >
                     {result.meta}
                   </span>
                 )}

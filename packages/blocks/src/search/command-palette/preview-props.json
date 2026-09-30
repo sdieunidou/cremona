@@ -24,13 +24,7 @@
         "label": "Billing",
         "items": [
           {
-            "icon": {
-              "$element": "lucide:CreditCard",
-              "props": {
-                "className": "size-3",
-                "strokeWidth": 2.5
-              }
-            },
+            "icon": "lucide:CreditCard",
             "label": "Update payment method",
             "shortcut": [
               "⌘",
@@ -38,13 +32,7 @@
             ]
           },
           {
-            "icon": {
-              "$element": "lucide:Users",
-              "props": {
-                "className": "size-3",
-                "strokeWidth": 2.5
-              }
-            },
+            "icon": "lucide:Users",
             "label": "Manage seats"
           }
         ]
@@ -53,13 +41,7 @@
         "label": "Help",
         "items": [
           {
-            "icon": {
-              "$element": "lucide:LifeBuoy",
-              "props": {
-                "className": "size-3",
-                "strokeWidth": 2.5
-              }
-            },
+            "icon": "lucide:LifeBuoy",
             "label": "Contact support"
           }
         ]
@@ -73,13 +55,7 @@
         "label": "Deployments",
         "items": [
           {
-            "icon": {
-              "$element": "lucide:GitBranch",
-              "props": {
-                "className": "size-3",
-                "strokeWidth": 2.5
-              }
-            },
+            "icon": "lucide:GitBranch",
             "label": "Deploy to production",
             "shortcut": [
               "⌘",
@@ -87,13 +63,7 @@
             ]
           },
           {
-            "icon": {
-              "$element": "lucide:GitBranch",
-              "props": {
-                "className": "size-3",
-                "strokeWidth": 2.5
-              }
-            },
+            "icon": "lucide:GitBranch",
             "label": "Roll back last deploy"
           }
         ]

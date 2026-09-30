@@ -1,6 +1,6 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type RefObject } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Search } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -49,6 +49,10 @@ const CHIP_STAGGER = 0.1;
 const SWEEP_DURATION = 2.4;
 const SWEEP_CYCLE_MS = 3899.9999999999995;
 const SWEEP_FIRST_DELAY = 1.8;
+
+function formatScore(score: number): string {
+  return typeof score === "number" ? score.toFixed(2) : String(score ?? "");
+}
 
 function distanceFromCenter(x: number, y: number): number {
   return Math.hypot(x - CENTER_X, y - CENTER_Y);
@@ -144,6 +148,35 @@ const footerAnim = {
   },
 } as const;
 
+/** Scale the fixed-size stage down to the frame's content box (client only). */
+function useFitScale(
+  frame: RefObject<HTMLElement | null>,
+  stage: RefObject<HTMLElement | null>,
+  layout?: unknown,
+) {
+  useEffect(() => {
+    const box = frame.current;
+    const el = stage.current;
+    if (!box || !el || typeof ResizeObserver === "undefined") return;
+    const fit = () => {
+      const style = getComputedStyle(box);
+      const width =
+        box.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      const height =
+        box.clientHeight - parseFloat(style.paddingTop) - parseFloat(style.paddingBottom);
+      const ratio = Math.min(1, width / el.offsetWidth, height / el.offsetHeight);
+      el.style.scale = ratio > 0 && ratio < 1 ? String(ratio) : "";
+    };
+    const observer = new ResizeObserver(fit);
+    observer.observe(box);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      el.style.scale = "";
+    };
+  }, [frame, stage, layout]);
+}
+
 export function Semantic({
   query = defaultQuery,
   matches = defaultMatches,
@@ -156,9 +189,12 @@ export function Semantic({
   className,
 }: SemanticProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const reactId = useId();
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
+  useFitScale(ref, stageRef);
   const [hovering, setHovering] = useState(false);
   const [litCount, setLitCount] = useState(0);
   const [sweepCount, setSweepCount] = useState(0);
@@ -170,13 +206,13 @@ export function Semantic({
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const sweeping = animated && triggered && ready;
-  const pinging = sweeping && (!hover || hovering);
+  const pinging = sweeping && loop && (!hover || hovering);
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const resolvedMatches = (matches.length ? matches : defaultMatches).slice(0, MAX_MATCHES);
   const count = resolvedMatches.length;
   const points = resolvedMatches.map((_, i) => MATCH_POINTS[i]!);
   useEffect(() => {
-    if (!sweeping) return;
+    if (!pinging) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     const schedule = (fn: () => void, ms: number) => {
       timers.push(setTimeout(fn, ms));
@@ -194,11 +230,11 @@ export function Semantic({
       }
       schedule(cycle, SWEEP_CYCLE_MS);
     };
-    schedule(cycle, SWEEP_FIRST_DELAY * 1000);
+    schedule(cycle, hover ? 0 : SWEEP_FIRST_DELAY * 1000);
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [sweeping, count]);
+  }, [pinging, hover, count]);
 
   return (
     <div
@@ -209,7 +245,8 @@ export function Semantic({
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >
       <motion.div
-        className="relative shrink-0"
+        ref={stageRef}
+        className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric
             ? { width: STAGE.w, height: STAGE.h, transform: "rotateX(45deg) rotateZ(-45deg)" }
@@ -398,7 +435,7 @@ export function Semantic({
                 {resolvedMatches[i]!.label}
               </span>
               <span className="shrink-0 rounded-full bg-muted px-1.25 py-px text-[9px] font-semibold text-muted-foreground tabular-nums">
-                {resolvedMatches[i]!.score.toFixed(2)}
+                {formatScore(resolvedMatches[i]!.score)}
               </span>
             </motion.div>
           </div>
