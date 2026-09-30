@@ -46,14 +46,17 @@ const veilAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
-export interface ErrorProps extends VisualProps {
+export interface ErrorSectionProps extends VisualProps {
   title?: string;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
 }
 
-export function Error({
+/** @deprecated Use `ErrorSectionProps`. */
+export type ErrorProps = ErrorSectionProps;
+
+export function ErrorSection({
   title = errorDefaultCopy.title,
   animated = false,
   trigger = "inView",
@@ -62,7 +65,7 @@ export function Error({
   isometric = false,
   fill = false,
   className,
-}: ErrorProps) {
+}: ErrorSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
@@ -142,3 +145,6 @@ export function Error({
     </div>
   );
 }
+
+/** @deprecated Use `ErrorSection` — this name shadows the global `Error` wherever it is imported. */
+export { ErrorSection as Error };
