@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { motion, type ValueTransition, type Variants } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";
 import { FileText, Search, Sparkles } from "lucide-react";
@@ -483,6 +483,35 @@ export interface RetrievalProps extends VisualProps {
   isometric?: boolean;
 }
 
+/** Scales the fixed-size canvas down to the frame's width on narrow screens (client only). */
+function useFitWidth(
+  frame: RefObject<HTMLElement | null>,
+  canvas: RefObject<HTMLElement | null>,
+  width: number,
+) {
+  useEffect(() => {
+    const root = frame.current;
+    const el = canvas.current;
+    if (!root || !el || typeof ResizeObserver === "undefined") return;
+    let raf = 0;
+    const fit = () => {
+      const style = getComputedStyle(root);
+      const room =
+        root.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (room > 0) el.style.zoom = room < width ? String(room / width) : "";
+    };
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(fit);
+    });
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [frame, canvas, width]);
+}
+
 export function Retrieval({
   query = retrievalDefaultCopy.query,
   sources = retrievalDefaultCopy.sources,
@@ -498,6 +527,8 @@ export function Retrieval({
   className,
 }: RetrievalProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  useFitWidth(ref, canvasRef, CANVAS.w);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
@@ -665,6 +696,7 @@ export function Retrieval({
           </div>
         ))}
       <motion.div
+        ref={canvasRef}
         className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric

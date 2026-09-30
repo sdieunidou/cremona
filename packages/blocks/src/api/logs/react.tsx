@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";
@@ -216,6 +216,35 @@ export interface LogsProps extends VisualProps {
   isometric?: boolean;
 }
 
+/** Scales the fixed-size canvas down to the frame's width on narrow screens (client only). */
+function useFitWidth(
+  frame: RefObject<HTMLElement | null>,
+  canvas: RefObject<HTMLElement | null>,
+  width: number,
+) {
+  useEffect(() => {
+    const root = frame.current;
+    const el = canvas.current;
+    if (!root || !el || typeof ResizeObserver === "undefined") return;
+    let raf = 0;
+    const fit = () => {
+      const style = getComputedStyle(root);
+      const room =
+        root.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (room > 0) el.style.zoom = room < width ? String(room / width) : "";
+    };
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(fit);
+    });
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [frame, canvas, width]);
+}
+
 export function Logs({
   variant = "api",
   service,
@@ -231,6 +260,8 @@ export function Logs({
   className,
 }: LogsProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  useFitWidth(ref, canvasRef, CANVAS.w);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
@@ -266,6 +297,7 @@ export function Logs({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
+        ref={canvasRef}
         className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric
