@@ -123,6 +123,10 @@ describe("cremona tokens", () => {
     expect(meta.map((t) => t.value)).toEqual(THEMES);
   });
 
+  it("native controls follow the mode (color-scheme)", () => {
+    expect(full).toContain(":root{color-scheme:light}.dark{color-scheme:dark}");
+  });
+
   it("the complete stylesheet embeds the tokens + Inter font", () => {
     expect(full).toContain(":root{--background:");
     expect(full).toContain("Inter Variable");
