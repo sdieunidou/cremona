@@ -8,76 +8,112 @@ import {
   CreditCard,
   Globe,
   HardDrive,
+  Lock,
+  Settings,
   ShieldCheck,
   SunMoon,
   Type,
+  User,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
-export interface ListRowsProps extends VisualProps {
-  groups?: number;
-  icons?: boolean;
-}
+export type ListRowIcon =
+  | "bell"
+  | "sun-moon"
+  | "globe"
+  | "hard-drive"
+  | "cloud"
+  | "credit-card"
+  | "shield"
+  | "type"
+  | "user"
+  | "lock"
+  | "settings";
 
-interface RowData {
-  icon: LucideIcon;
+export type ListRowTone = "primary" | "info" | "success" | "warning" | "destructive";
+
+export interface ListRow {
   label: string;
+  icon?: ListRowIcon;
+  /** Trailing value, e.g. the current setting. */
   value?: string;
-  tile?: string;
+  /** Color of the icon tile. */
+  tone?: ListRowTone;
 }
 
-interface GroupData {
+export interface ListRowGroup {
   title?: string;
-  rows: RowData[];
+  rows: ListRow[];
 }
 
-const settingsRows: RowData[] = [
-  { icon: Bell, label: "Notifications", value: "On" },
-  { icon: SunMoon, label: "Appearance", value: "Dark" },
-  { icon: Globe, label: "Language", value: "English" },
-  { icon: HardDrive, label: "Storage", value: "24 GB" },
+export interface ListRowsProps extends VisualProps {
+  /** Preset: 1 = one card of settings, 2 = two titled groups. */
+  groups?: number;
+  /** Preset: colored icon tiles without values (with `groups` 1). */
+  icons?: boolean;
+  /** Custom content; replaces the presets. */
+  sections?: ListRowGroup[];
+}
+
+const iconMap: Record<ListRowIcon, LucideIcon> = {
+  bell: Bell,
+  "sun-moon": SunMoon,
+  globe: Globe,
+  "hard-drive": HardDrive,
+  cloud: Cloud,
+  "credit-card": CreditCard,
+  shield: ShieldCheck,
+  type: Type,
+  user: User,
+  lock: Lock,
+  settings: Settings,
+};
+
+const tones: Record<ListRowTone, string> = {
+  primary: "bg-primary/10 text-primary",
+  info: "bg-info/10 text-info",
+  success: "bg-success/10 text-success",
+  warning: "bg-warning/10 text-warning",
+  destructive: "bg-destructive/10 text-destructive",
+};
+
+const settingsRows: ListRow[] = [
+  { icon: "bell", label: "Notifications", value: "On" },
+  { icon: "sun-moon", label: "Appearance", value: "Dark" },
+  { icon: "globe", label: "Language", value: "English" },
+  { icon: "hard-drive", label: "Storage", value: "24 GB" },
 ];
 
-const iconRows: RowData[] = [
-  {
-    icon: Cloud,
-    label: "iCloud sync",
-    tile: "bg-sky-500/10 text-sky-600 dark:text-sky-400",
-  },
-  {
-    icon: CreditCard,
-    label: "Billing",
-    tile: "bg-violet-500/10 text-violet-600 dark:text-violet-400",
-  },
-  {
-    icon: ShieldCheck,
-    label: "Security",
-    tile: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-  },
-  {
-    icon: Bell,
-    label: "Reminders",
-    tile: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-  },
+const iconRows: ListRow[] = [
+  { icon: "cloud", label: "iCloud sync", tone: "info" },
+  { icon: "credit-card", label: "Billing", tone: "primary" },
+  { icon: "shield", label: "Security", tone: "success" },
+  { icon: "bell", label: "Reminders", tone: "warning" },
 ];
 
-const groupedGroups: GroupData[] = [
+const groupedGroups: ListRowGroup[] = [
   {
     title: "General",
     rows: [
-      { icon: Bell, label: "Notifications", value: "On" },
-      { icon: Globe, label: "Language", value: "English" },
+      { icon: "bell", label: "Notifications", value: "On" },
+      { icon: "globe", label: "Language", value: "English" },
     ],
   },
   {
     title: "Appearance",
     rows: [
-      { icon: SunMoon, label: "Theme", value: "Dark" },
-      { icon: Type, label: "Text size", value: "Default" },
+      { icon: "sun-moon", label: "Theme", value: "Dark" },
+      { icon: "type", label: "Text size", value: "Default" },
     ],
   },
 ];
+
+/** Preview only: keeps a control out of the tab order and unfocused on click. Drop it when deriving. */
+const noFocus = { tabIndex: -1, onMouseDown: prevent } as const;
+function prevent(e: { preventDefault(): void }) {
+  e.preventDefault();
+}
 
 const cardIn = {
   hidden: { opacity: 0, y: 8 },
@@ -99,7 +135,7 @@ function ListCard({
   animated,
   state,
 }: {
-  group: GroupData;
+  group: ListRowGroup;
   startIndex: number;
   animated: boolean;
   state: Record<string, unknown>;
@@ -107,39 +143,47 @@ function ListCard({
   return (
     <section className="flex flex-col">
       {group.title && (
-        <p className="px-3 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+        <h2 className="px-3 pb-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
           {group.title}
-        </p>
+        </h2>
       )}
-      <motion.div
+      <motion.ul
         className="divide-y divide-border/50 overflow-hidden rounded-xl border bg-card"
         variants={animated ? cardIn : undefined}
         {...state}
       >
-        {group.rows.map((row, i) => (
-          <motion.button
-            key={row.label}
-            type="button"
-            className="flex h-11 w-full items-center gap-3 px-3 text-left transition-colors duration-200 hover:bg-muted"
-            variants={animated ? rowIn(startIndex + i) : undefined}
-            {...state}
-          >
-            <span
-              className={cn(
-                "flex size-6 shrink-0 items-center justify-center rounded-md",
-                row.tile ?? "bg-primary/10 text-primary",
-              )}
-            >
-              <row.icon className="size-3.5" strokeWidth={2} />
-            </span>
-            <span className="min-w-0 flex-1 truncate text-sm text-foreground">{row.label}</span>
-            {row.value && (
-              <span className="shrink-0 text-xs text-muted-foreground">{row.value}</span>
-            )}
-            <ChevronRight className="size-4 shrink-0 text-muted-foreground/50" strokeWidth={2} />
-          </motion.button>
-        ))}
-      </motion.div>
+        {group.rows.map((row, i) => {
+          const Icon = iconMap[row.icon ?? "settings"] ?? Settings;
+          return (
+            <li key={i}>
+              <motion.button
+                type="button"
+                className="flex h-11 w-full items-center gap-3 px-3 text-left outline-none transition-colors duration-200 hover:bg-muted focus-visible:bg-muted"
+                variants={animated ? rowIn(startIndex + i) : undefined}
+                {...state}
+                {...noFocus}
+              >
+                <span
+                  className={cn(
+                    "flex size-6 shrink-0 items-center justify-center rounded-md",
+                    tones[row.tone ?? "primary"] ?? tones.primary,
+                  )}
+                >
+                  <Icon className="size-3.5" strokeWidth={2} />
+                </span>
+                <span className="min-w-0 flex-1 truncate text-sm text-foreground">{row.label}</span>
+                {row.value && (
+                  <span className="shrink-0 text-xs text-muted-foreground">{row.value}</span>
+                )}
+                <ChevronRight
+                  className="size-4 shrink-0 text-muted-foreground/50"
+                  strokeWidth={2}
+                />
+              </motion.button>
+            </li>
+          );
+        })}
+      </motion.ul>
     </section>
   );
 }
@@ -147,6 +191,7 @@ function ListCard({
 export function ListRows({
   groups = 1,
   icons = false,
+  sections,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -165,9 +210,10 @@ export function ListRows({
       }
     : {};
 
-  const sections: GroupData[] =
-    groups >= 2 ? groupedGroups : [{ rows: icons ? iconRows : settingsRows }];
+  const list: ListRowGroup[] =
+    sections ?? (groups >= 2 ? groupedGroups : [{ rows: icons ? iconRows : settingsRows }]);
 
+  const starts = list.map((_, g) => list.slice(0, g).reduce((n, x) => n + x.rows.length, 0));
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <div
@@ -175,11 +221,17 @@ export function ListRows({
           "flex w-full",
           !fill && "max-w-72",
           "flex-col",
-          groups >= 2 ? "gap-3" : "gap-0",
+          list.length >= 2 ? "gap-3" : "gap-0",
         )}
       >
-        {sections.map((group, g) => (
-          <ListCard key={g} group={group} startIndex={g * 2} animated={animated} state={state} />
+        {list.map((group, g) => (
+          <ListCard
+            key={g}
+            group={group}
+            startIndex={starts[g]!}
+            animated={animated}
+            state={state}
+          />
         ))}
       </div>
     </div>
