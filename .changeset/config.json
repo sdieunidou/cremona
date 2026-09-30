@@ -4,7 +4,14 @@
   "access": "public",
   "ignore": [],
   "fixed": [
-    ["@cremona/tokens", "@cremona/core", "@cremona/react", "@cremona/stimulus", "@cremona/mcp"]
+    [
+      "@cremona/tokens",
+      "@cremona/core",
+      "@cremona/react",
+      "@cremona/blocks",
+      "@cremona/stimulus",
+      "@cremona/mcp"
+    ]
   ],
   "linked": [],
   "format": "auto",
