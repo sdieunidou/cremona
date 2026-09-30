@@ -22,7 +22,7 @@ const frame = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.1, ease: "easeOut" } },
 } as const;
 
-const steps = {
+const stepsAnim = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08, delayChildren: 0.2 } },
 } as const;
@@ -42,15 +42,31 @@ const veilAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
-const stepNumbers = [1, 2, 3];
+export interface ProcessStep {
+  /** Drawn in place of the title bar. */
+  label: string;
+  /** Drawn in place of the detail bar. */
+  detail?: string;
+}
+
+/** Three unlabelled steps. */
+const defaultSteps: readonly (string | ProcessStep)[] = ["", "", ""];
+
+/** A count instead of a list means that many blank entries (at most 12). */
+function blanks<T>(count: number, blank: T): T[] {
+  return Array.from({ length: Math.min(Math.max(Math.floor(count) || 0, 0), 12) }, () => blank);
+}
 
 export interface ProcessProps extends VisualProps {
+  /** One numbered step per entry (a label, or a label with its detail), or a count. */
+  steps?: readonly (string | ProcessStep)[] | number;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
 }
 
 export function Process({
+  steps = defaultSteps,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -110,29 +126,45 @@ export function Process({
           <div className="relative rounded-xl border bg-card px-6 py-8 shadow-xs">
             <motion.div
               className="flex items-center"
-              variants={animated ? steps : undefined}
+              variants={animated ? stepsAnim : undefined}
               {...state}
             >
-              {stepNumbers.map((step, i) => (
-                <Fragment key={step}>
-                  {i > 0 && (
+              {(typeof steps === "number" ? blanks(steps, "") : steps).map((raw, i) => {
+                const step =
+                  typeof raw === "object" && raw !== null ? raw : { label: String(raw ?? "") };
+                return (
+                  <Fragment key={i}>
+                    {i > 0 && (
+                      <motion.div
+                        className="h-px flex-1 bg-border"
+                        variants={animated ? item : undefined}
+                      />
+                    )}
                     <motion.div
-                      className="h-px flex-1 bg-border"
+                      className="flex shrink-0 flex-col items-center gap-1 px-1"
                       variants={animated ? item : undefined}
-                    />
-                  )}
-                  <motion.div
-                    className="flex shrink-0 flex-col items-center gap-1 px-1"
-                    variants={animated ? item : undefined}
-                  >
-                    <div className="flex size-5.5 items-center justify-center rounded-full border border-primary/10 bg-primary/5 text-[10px] font-semibold text-primary dark:bg-primary dark:text-primary-foreground">
-                      {step}
-                    </div>
-                    <div className="mt-1 h-0.75 w-8 rounded-full bg-foreground/10" />
-                    <div className="h-0.5 w-6 rounded-full bg-muted-foreground/12" />
-                  </motion.div>
-                </Fragment>
-              ))}
+                    >
+                      <div className="flex size-5.5 items-center justify-center rounded-full border border-primary/10 bg-primary/5 text-[10px] font-semibold text-primary dark:bg-primary dark:text-primary-foreground">
+                        {i + 1}
+                      </div>
+                      {step.label ? (
+                        <span className="mt-0.5 max-w-12 truncate text-[7px] leading-tight font-medium text-foreground/80">
+                          {step.label}
+                        </span>
+                      ) : (
+                        <div className="mt-1 h-0.75 w-8 rounded-full bg-foreground/10" />
+                      )}
+                      {step.detail ? (
+                        <span className="max-w-12 truncate text-[6px] leading-tight text-muted-foreground">
+                          {step.detail}
+                        </span>
+                      ) : (
+                        <div className="h-0.5 w-6 rounded-full bg-muted-foreground/12" />
+                      )}
+                    </motion.div>
+                  </Fragment>
+                );
+              })}
             </motion.div>
           </div>
         </div>

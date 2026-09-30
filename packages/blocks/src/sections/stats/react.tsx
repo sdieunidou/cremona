@@ -3,9 +3,16 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface StatValue {
+  value: string;
+  /** Caption, drawn in place of the bar under the value. */
+  label?: string;
+}
+
 export const statsDefaultCopy = {
   title: "Trusted by founders",
-} as const;
+  values: ["5m", "50+", "100%"] as readonly (string | StatValue)[],
+};
 
 const card = {
   hidden: { opacity: 0 },
@@ -51,10 +58,10 @@ const veilAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
-const stats = ["5m", "50+", "100%"];
-
 export interface StatsProps extends VisualProps {
   title?: string;
+  /** One tile per value: a string, or a value with its caption. */
+  values?: readonly (string | StatValue)[];
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -62,6 +69,7 @@ export interface StatsProps extends VisualProps {
 
 export function Stats({
   title = statsDefaultCopy.title,
+  values = statsDefaultCopy.values,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -71,6 +79,9 @@ export function Stats({
   className,
 }: StatsProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const tiles = values.map((v) =>
+    typeof v === "object" && v !== null ? v : { value: String(v ?? "") },
+  );
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const state = animated
@@ -139,16 +150,34 @@ export function Stats({
             </motion.div>
             <motion.div
               className="mt-3 grid grid-cols-3 gap-1.5 will-change-transform"
+              style={
+                tiles.length === 3
+                  ? undefined
+                  : { gridTemplateColumns: `repeat(${Math.max(tiles.length, 1)}, minmax(0, 1fr))` }
+              }
               variants={animated ? gridAnim : undefined}
               {...state}
             >
-              {stats.map((stat) => (
+              {tiles.map((stat, i) => (
                 <div
-                  key={stat}
+                  key={i}
                   className="flex flex-col items-center gap-0.5 rounded-lg border border-border/50 bg-muted/35 p-2"
                 >
-                  <p className="text-[10px] font-bold text-primary">{stat}</p>
-                  <div className="mt-1 h-0.75 w-8 rounded-full bg-foreground/10" />
+                  <p
+                    className={cn(
+                      "text-[10px] font-bold text-primary",
+                      stat.value.length > 6 && "max-w-full truncate",
+                    )}
+                  >
+                    {stat.value}
+                  </p>
+                  {stat.label ? (
+                    <p className="mt-0.5 max-w-full truncate text-[7px] leading-none text-muted-foreground">
+                      {stat.label}
+                    </p>
+                  ) : (
+                    <div className="mt-1 h-0.75 w-8 rounded-full bg-foreground/10" />
+                  )}
                 </div>
               ))}
             </motion.div>

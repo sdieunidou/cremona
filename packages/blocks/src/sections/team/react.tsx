@@ -3,9 +3,33 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface TeamMember {
+  /** Drawn in place of the name bar; its initials fill the avatar. */
+  name: string;
+  /** Drawn in place of the role bar. */
+  role?: string;
+}
+
 export const teamDefaultCopy = {
   title: "Our team",
-} as const;
+};
+
+/** Six unnamed members. */
+const defaultMembers: readonly (string | TeamMember)[] = ["", "", "", "", "", ""];
+
+/** A count instead of a list means that many blank entries (at most 12). */
+function blanks<T>(count: number, blank: T): T[] {
+  return Array.from({ length: Math.min(Math.max(Math.floor(count) || 0, 0), 12) }, () => blank);
+}
+
+function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => [...part][0]!.toUpperCase())
+    .join("");
+}
 
 const card = {
   hidden: { opacity: 0 },
@@ -53,6 +77,10 @@ const veilAnim = {
 
 export interface TeamProps extends VisualProps {
   title?: string;
+  /** One avatar per member (a name, or a name with a role), or a count. */
+  members?: readonly (string | TeamMember)[] | number;
+  /** Index of the highlighted avatar (default 0). */
+  highlight?: number;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -60,6 +88,8 @@ export interface TeamProps extends VisualProps {
 
 export function Team({
   title = teamDefaultCopy.title,
+  members = defaultMembers,
+  highlight = 0,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -140,20 +170,43 @@ export function Team({
               variants={animated ? gridAnim : undefined}
               {...state}
             >
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="flex flex-col items-center gap-1">
+              {(typeof members === "number" ? blanks(members, "") : members).map((raw, i) => {
+                const member =
+                  typeof raw === "object" && raw !== null ? raw : { name: String(raw ?? "") };
+                return (
                   <div
-                    className={cn(
-                      "size-6 rounded-full border",
-                      i === 0
-                        ? "ring-1.5 border-primary/10 bg-primary/15 ring-primary/20 dark:border-primary dark:bg-primary/50"
-                        : "bg-muted",
+                    key={i}
+                    className={cn("flex flex-col items-center gap-1", member.name && "min-w-0")}
+                  >
+                    <div
+                      className={cn(
+                        "size-6 rounded-full border",
+                        i === highlight
+                          ? "ring-1.5 border-primary/10 bg-primary/15 ring-primary/20 dark:border-primary dark:bg-primary/50"
+                          : "bg-muted",
+                        member.name &&
+                          "flex items-center justify-center text-[7px] font-semibold text-muted-foreground",
+                      )}
+                    >
+                      {member.name ? initials(member.name) : null}
+                    </div>
+                    {member.name ? (
+                      <span className="max-w-full truncate text-[7px] leading-none font-medium text-foreground/80">
+                        {member.name}
+                      </span>
+                    ) : (
+                      <div className="h-0.75 w-6 rounded-full bg-foreground/10" />
                     )}
-                  />
-                  <div className="h-0.75 w-6 rounded-full bg-foreground/10" />
-                  <div className="h-0.5 w-4 rounded-full bg-muted-foreground/12" />
-                </div>
-              ))}
+                    {member.role ? (
+                      <span className="max-w-full truncate text-[6px] leading-none text-muted-foreground">
+                        {member.role}
+                      </span>
+                    ) : (
+                      <div className="h-0.5 w-4 rounded-full bg-muted-foreground/12" />
+                    )}
+                  </div>
+                );
+              })}
             </motion.div>
           </div>
         </div>

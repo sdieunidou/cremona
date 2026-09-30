@@ -5,9 +5,26 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const faqDefaultCopy = {
   title: "Frequently asked questions",
-} as const;
+  items: [
+    { expanded: false },
+    { expanded: true },
+    { expanded: false },
+    { expanded: false },
+  ] as readonly FaqItem[],
+};
 
-const items = [{ expanded: false }, { expanded: true }, { expanded: false }, { expanded: false }];
+/** A count instead of a list means that many blank entries (at most 12). */
+function blanks<T>(count: number, blank: T): T[] {
+  return Array.from({ length: Math.min(Math.max(Math.floor(count) || 0, 0), 12) }, () => blank);
+}
+
+export interface FaqItem {
+  /** Drawn in place of the question bar. */
+  question?: string;
+  /** Drawn in place of the answer bars when `expanded`. */
+  answer?: string;
+  expanded?: boolean;
+}
 
 const card = {
   hidden: { opacity: 0 },
@@ -55,6 +72,8 @@ const veilAnim = {
 
 export interface FaqProps extends VisualProps {
   title?: string;
+  /** One row per question (four by default, the second one expanded), or a count. */
+  items?: readonly FaqItem[] | number;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -62,6 +81,7 @@ export interface FaqProps extends VisualProps {
 
 export function Faq({
   title = faqDefaultCopy.title,
+  items = faqDefaultCopy.items,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -136,15 +156,26 @@ export function Faq({
               variants={animated ? list : undefined}
               {...state}
             >
-              {items.map((entry, i) => (
+              {(typeof items === "number" ? blanks<FaqItem>(items, {}) : items).map((entry, i) => (
                 <div key={i} className="rounded-lg border border-border/50 bg-muted/35 px-2 py-1.5">
                   <div className="flex items-center justify-between">
-                    <div className="h-0.75 w-3/4 rounded-full bg-foreground/10" />
+                    {entry.question ? (
+                      <span className="min-w-0 truncate text-[8px] leading-tight font-medium text-foreground/80">
+                        {entry.question}
+                      </span>
+                    ) : (
+                      <div className="h-0.75 w-3/4 rounded-full bg-foreground/10" />
+                    )}
                     <span className="text-xs leading-none text-muted-foreground/50">
                       {entry.expanded ? "−" : "+"}
                     </span>
                   </div>
-                  {entry.expanded && (
+                  {entry.expanded && entry.answer && (
+                    <p className="mt-1 text-[7px] leading-snug text-muted-foreground">
+                      {entry.answer}
+                    </p>
+                  )}
+                  {entry.expanded && !entry.answer && (
                     <div className="mt-1.5 flex flex-col gap-0.75">
                       <div className="h-0.5 w-full rounded-full bg-muted-foreground/12" />
                       <div className="h-0.5 w-5/6 rounded-full bg-muted-foreground/12" />

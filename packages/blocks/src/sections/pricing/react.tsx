@@ -3,15 +3,23 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface PricingPlan {
+  price: string;
+  featured?: boolean;
+  /** Plan name, drawn in place of the name bar. */
+  name?: string;
+  /** Button label, drawn in place of the button bar. */
+  cta?: string;
+}
+
 export const pricingDefaultCopy = {
   title: "Pricing plans",
-} as const;
-
-const plans = [
-  { price: "$19/m", featured: false },
-  { price: "$39/m", featured: true },
-  { price: "$99/m", featured: false },
-];
+  plans: [
+    { price: "$19/m", featured: false },
+    { price: "$39/m", featured: true },
+    { price: "$99/m", featured: false },
+  ] as readonly PricingPlan[],
+};
 
 const card = {
   hidden: { opacity: 0 },
@@ -59,6 +67,8 @@ const veilAnim = {
 
 export interface PricingProps extends VisualProps {
   title?: string;
+  /** One card per plan (three by default). */
+  plans?: readonly PricingPlan[];
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -66,6 +76,7 @@ export interface PricingProps extends VisualProps {
 
 export function Pricing({
   title = pricingDefaultCopy.title,
+  plans = pricingDefaultCopy.plans,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -161,8 +172,21 @@ export function Pricing({
                       : "border-border/50 bg-muted/35",
                   )}
                 >
-                  <div className="h-0.75 w-3/5 rounded-full bg-muted-foreground/15" />
-                  <p className="text-[9px] font-bold text-foreground">{plan.price}</p>
+                  {plan.name ? (
+                    <p className="max-w-full truncate text-[7px] leading-none font-medium text-muted-foreground">
+                      {plan.name}
+                    </p>
+                  ) : (
+                    <div className="h-0.75 w-3/5 rounded-full bg-muted-foreground/15" />
+                  )}
+                  <p
+                    className={cn(
+                      "text-[9px] font-bold text-foreground",
+                      plan.price.length > 7 && "max-w-full truncate",
+                    )}
+                  >
+                    {plan.price}
+                  </p>
                   <div className="flex w-full flex-col gap-1">
                     {[0, 1, 2, 3].map((j) => (
                       <div key={j} className="flex items-center gap-1">
@@ -177,12 +201,23 @@ export function Pricing({
                       plan.featured ? "bg-primary" : "border",
                     )}
                   >
-                    <div
-                      className={cn(
-                        "h-0.5 w-2/3 rounded-full",
-                        plan.featured ? "bg-primary-foreground/75" : "bg-border",
-                      )}
-                    />
+                    {plan.cta ? (
+                      <span
+                        className={cn(
+                          "truncate px-0.5 text-[7px] leading-none font-medium",
+                          plan.featured ? "text-primary-foreground" : "text-foreground",
+                        )}
+                      >
+                        {plan.cta}
+                      </span>
+                    ) : (
+                      <div
+                        className={cn(
+                          "h-0.5 w-2/3 rounded-full",
+                          plan.featured ? "bg-primary-foreground/75" : "bg-border",
+                        )}
+                      />
+                    )}
                   </div>
                 </div>
               ))}
