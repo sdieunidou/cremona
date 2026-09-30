@@ -1,7 +1,7 @@
 import { useId, useRef } from "react";
 import { motion } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";
-import { Sparkles, Apple, Check, OctagonX, LoaderCircle } from "lucide-react";
+import { Sparkles, Apple, Check, Eye, OctagonX, LoaderCircle } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface LoginLabels {
@@ -11,6 +11,7 @@ export interface LoginLabels {
   emailPlaceholder: string;
   password: string;
   passwordPlaceholder: string;
+  showPassword: string;
   remember: string;
   forgot: string;
   submit: string;
@@ -43,6 +44,7 @@ const defaultLabels: LoginLabels = {
   emailPlaceholder: "you@example.com",
   password: "Password",
   passwordPlaceholder: "••••••••",
+  showPassword: "Show password",
   remember: "Remember me",
   forgot: "Forgot password?",
   submit: "Sign in",
@@ -161,18 +163,30 @@ export function Login({
             <label htmlFor={`${id}-password`} className="text-xs font-medium text-foreground">
               {t.password}
             </label>
-            <input
-              id={`${id}-password`}
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              placeholder={t.passwordPlaceholder}
-              aria-invalid={invalid}
-              aria-describedby={describedBy}
-              className={inputClass}
-              {...noFocus}
-            />
+            <div className="relative">
+              <input
+                id={`${id}-password`}
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                placeholder={t.passwordPlaceholder}
+                aria-invalid={invalid}
+                aria-describedby={describedBy}
+                className={cn(inputClass, "pr-9")}
+                {...noFocus}
+              />
+              <button
+                type="button"
+                aria-label={t.showPassword}
+                aria-pressed={false}
+                aria-controls={`${id}-password`}
+                className="absolute inset-y-0 right-0 flex w-9 items-center justify-center rounded-r-md text-muted-foreground outline-none transition-colors duration-200 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                {...noFocus}
+              >
+                <Eye className="size-3.5" strokeWidth={2.25} />
+              </button>
+            </div>
           </motion.div>
         </motion.div>
         <motion.div
@@ -211,11 +225,11 @@ export function Login({
           <motion.p
             id={`${id}-error`}
             role="alert"
-            className="flex items-center gap-2 rounded-md border border-destructive/20 bg-destructive/10 p-2.5 text-xs text-destructive"
+            className="flex items-center gap-2 rounded-md border border-destructive/30 bg-destructive/10 p-2.5 text-xs text-foreground"
             variants={animated ? field : undefined}
             {...state}
           >
-            <OctagonX className="size-3.5 shrink-0" strokeWidth={2.25} />
+            <OctagonX className="size-3.5 shrink-0 text-destructive" strokeWidth={2.25} />
             <span>{t.error}</span>
           </motion.p>
         )}

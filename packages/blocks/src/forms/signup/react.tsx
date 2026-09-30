@@ -1,7 +1,7 @@
 import { useId, useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Check } from "lucide-react";
+import { Check, Eye } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface SignupLabels {
@@ -13,6 +13,7 @@ export interface SignupLabels {
   emailPlaceholder: string;
   password: string;
   passwordPlaceholder: string;
+  showPassword: string;
   strength: string;
   /** Strength words for levels 1 to 4. */
   levels: [string, string, string, string];
@@ -42,6 +43,7 @@ const defaultLabels: SignupLabels = {
   emailPlaceholder: "you@example.com",
   password: "Password",
   passwordPlaceholder: "••••••••",
+  showPassword: "Show password",
   strength: "Password strength",
   levels: ["Too weak", "Weak", "Medium", "Strong"],
   terms: "I agree to the Terms and Privacy Policy.",
@@ -176,17 +178,29 @@ export function Signup({
             <label htmlFor={`${id}-password`} className="text-xs font-medium text-foreground">
               {t.password}
             </label>
-            <input
-              id={`${id}-password`}
-              name="password"
-              type="password"
-              autoComplete="new-password"
-              required
-              placeholder={t.passwordPlaceholder}
-              aria-describedby={`${id}-strength`}
-              className={inputClass}
-              {...noFocus}
-            />
+            <div className="relative">
+              <input
+                id={`${id}-password`}
+                name="password"
+                type="password"
+                autoComplete="new-password"
+                required
+                placeholder={t.passwordPlaceholder}
+                aria-describedby={`${id}-strength`}
+                className={cn(inputClass, "pr-9")}
+                {...noFocus}
+              />
+              <button
+                type="button"
+                aria-label={t.showPassword}
+                aria-pressed={false}
+                aria-controls={`${id}-password`}
+                className="absolute inset-y-0 right-0 flex w-9 items-center justify-center rounded-r-md text-muted-foreground outline-none transition-colors duration-200 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                {...noFocus}
+              >
+                <Eye className="size-3.5" strokeWidth={2.25} />
+              </button>
+            </div>
             <div className="mt-0.5 flex gap-1" aria-hidden="true">
               {[1, 2, 3, 4].map((i) => (
                 <span
