@@ -12,6 +12,7 @@ pnpm lint               # ESLint (errors fail CI; block a11y findings are warnin
 pnpm format             # Prettier (a hook formats files you edit in Claude Code)
 pnpm validate           # library coherence (catalog ↔ blocks ↔ goldens ↔ stimulus)
 pnpm generate:stimulus  # regenerate packages/stimulus/templates/**
+pnpm build:css          # recompile packages/tokens/css/cremona.css (Tailwind v4, dev only)
 pnpm gallery:build && pnpm e2e   # Playwright: every block page must render
 pnpm dev                # gallery dev server
 pnpm mcp                # run the MCP server over stdio
@@ -27,9 +28,10 @@ if generated files are not committed.
    `pnpm vitest run test/generate-goldens.test.tsx` (from `packages/blocks`),
    which never overwrites an existing golden.
 2. **Generated files are never hand-edited**: `preview-props.json` (rewritten by
-   `pnpm test`) and `packages/stimulus/templates/**` (rewritten by
-   `pnpm generate:stimulus`). Change the source block or the generator, rerun,
-   commit the result.
+   `pnpm test`), `packages/stimulus/templates/**` (rewritten by
+   `pnpm generate:stimulus`) and `packages/tokens/css/cremona.css` (rewritten by
+   `pnpm build:css`). Change the source block, `packages/tokens/src/cremona.css`
+   or the generator, rerun, commit the result.
 3. **Parity is a gate**: a block change that breaks its parity test is a
    regression unless the golden is deliberately regenerated. The comparator
    (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
@@ -49,9 +51,10 @@ if generated files are not committed.
 - `packages/blocks/src/<category>/<block>/` — source of truth: `block.json`,
   `react.tsx`, `preview-props.json`, `golden/`; some blocks also keep a
   `sources/` directory, which nothing reads at runtime.
-- `packages/tokens/css/` — `cremona.css` (precompiled stylesheet shipped to
-  hosts; it is not rebuilt from the blocks, so a class missing from it renders
-  unstyled) + `themes.css` (tokens only).
+- `packages/tokens/css/` — `cremona.css` (the stylesheet shipped to hosts,
+  compiled by `pnpm build:css` from `packages/tokens/src/cremona.css`: Tailwind
+  v4 over the blocks, their goldens and the gallery, so a block that adds a
+  class needs a rebuild) + `themes.css` (tokens only).
 - `packages/stimulus/{src,templates}/` — controllers + generated templates.
 - `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS).
 - `apps/gallery/` — docs app with live previews; Playwright specs in `e2e/`.

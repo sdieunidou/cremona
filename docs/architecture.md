@@ -83,14 +83,18 @@ fails the test.
 ## Design tokens
 
 `packages/tokens/css/cremona.css` is the complete, self-sufficient stylesheet
-(fonts + tokens + every utility the blocks use — compiled once from the POC).
+(fonts + tokens + every utility the blocks and the gallery use). `pnpm build:css`
+compiles it with Tailwind v4 (a dev dependency of `@cremona/tokens`) from
+`packages/tokens/src/cremona.css`, which scans the blocks' sources, their
+goldens and the gallery; CI fails when the committed file is stale, and a test
+checks that every class a golden renders has a rule.
 `css/themes.css` holds only the semantic token blocks (`:root`, `.dark`,
 `.theme-*:not(.dark)`, `.theme-*.dark`) for hosts that compile their own CSS.
 
 ## Gallery app
 
-Vite + React, zero extra UI deps: the shell reuses the POC's own class strings
-(`packages/tokens/css/cremona.css` contains them). Discovers all blocks through
+Vite + React, zero extra UI deps: the shell reuses the POC's own class strings,
+compiled into `packages/tokens/css/cremona.css` with the blocks. Discovers all blocks through
 `import.meta.glob`, renders live previews in faithful frames, theme picker +
 light/dark + Ctrl+K search.
 

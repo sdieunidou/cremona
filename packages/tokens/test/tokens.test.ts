@@ -109,6 +109,7 @@ describe("cremona tokens", () => {
   it("the complete stylesheet embeds the tokens + Inter font", () => {
     expect(full).toContain(":root{--background:");
     expect(full).toContain("Inter Variable");
-    expect(full.length).toBeGreaterThan(300_000);
+    expect(full.match(/@font-face\{/g)).toHaveLength(7);
+    expect(full).toContain("@layer utilities{");
   });
 });

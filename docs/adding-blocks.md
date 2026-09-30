@@ -13,8 +13,8 @@
 4. **Prove** — `pnpm vitest run test/<category>-<file>.parity.test.tsx`
    from `packages/blocks` must be green (golden parity).
    Passing tests also write `preview-props.json`.
-5. **Propagate** — `node tools/generate-stimulus.mjs` (templates),
-   `node packages/mcp/scripts/validate.mjs` (coherence).
+5. **Propagate** — `pnpm build:css` (the block's classes into `cremona.css`),
+   `pnpm generate:stimulus` (templates), `pnpm validate` (coherence).
 
 ## Naming rules
 

@@ -11,6 +11,7 @@
       "Bash(pnpm validate)",
       "Bash(pnpm check)",
       "Bash(pnpm generate:stimulus)",
+      "Bash(pnpm build:css)",
       "Bash(pnpm gallery:build)",
       "Bash(pnpm e2e)",
       "Bash(pnpm vitest run *)",
@@ -37,7 +38,9 @@
       "Edit(**/preview-props.json)",
       "Write(**/preview-props.json)",
       "Edit(**/stimulus/templates/**)",
-      "Write(**/stimulus/templates/**)"
+      "Write(**/stimulus/templates/**)",
+      "Edit(**/tokens/css/cremona.css)",
+      "Write(**/tokens/css/cremona.css)"
     ]
   },
   "hooks": {
