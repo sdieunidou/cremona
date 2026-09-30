@@ -5,6 +5,7 @@
     "kind": "block",
     "category": "activity",
     "file": "feed",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -54,6 +55,10 @@
     "kind": "block",
     "category": "activity",
     "file": "timeline",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -103,6 +108,12 @@
     "kind": "block",
     "category": "ai",
     "file": "agent-flow",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -142,6 +153,12 @@
     "kind": "block",
     "category": "ai",
     "file": "presence",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -186,6 +203,12 @@
     "kind": "block",
     "category": "ai",
     "file": "prompt-box",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -240,6 +263,12 @@
     "kind": "block",
     "category": "ai",
     "file": "retrieval",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -304,6 +333,12 @@
     "kind": "block",
     "category": "ai",
     "file": "tools",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -373,6 +408,12 @@
     "kind": "block",
     "category": "ai",
     "file": "voice",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default · cycles states",
@@ -432,6 +473,11 @@
     "kind": "block",
     "category": "api",
     "file": "logs",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -501,6 +547,11 @@
     "kind": "block",
     "category": "api",
     "file": "request",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -570,6 +621,11 @@
     "kind": "block",
     "category": "api",
     "file": "webhook",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -619,6 +675,7 @@
     "kind": "block",
     "category": "avatars",
     "file": "grid",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -658,6 +715,10 @@
     "kind": "block",
     "category": "avatars",
     "file": "profile-card",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -717,6 +778,7 @@
     "kind": "block",
     "category": "avatars",
     "file": "stack",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -786,6 +848,11 @@
     "kind": "block",
     "category": "branding",
     "file": "spotlight",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -830,6 +897,11 @@
     "kind": "block",
     "category": "browser",
     "file": "loading",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -879,6 +951,7 @@
     "kind": "block",
     "category": "browser",
     "file": "simple",
+    "effects": "full",
     "variants": [
       {
         "label": "landing",
@@ -948,6 +1021,12 @@
     "kind": "block",
     "category": "browser",
     "file": "tabs",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "sequences",
+      "pointer",
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -997,6 +1076,7 @@
     "kind": "block",
     "category": "calendar",
     "file": "date-picker",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1061,6 +1141,7 @@
     "kind": "block",
     "category": "calendar",
     "file": "event-list",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1110,6 +1191,7 @@
     "kind": "block",
     "category": "calendar",
     "file": "month-view",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1159,6 +1241,7 @@
     "kind": "block",
     "category": "charts",
     "file": "bar",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1218,6 +1301,7 @@
     "kind": "block",
     "category": "charts",
     "file": "donut",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1267,6 +1351,7 @@
     "kind": "block",
     "category": "charts",
     "file": "funnel",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1326,6 +1411,7 @@
     "kind": "block",
     "category": "charts",
     "file": "gauge",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1385,6 +1471,7 @@
     "kind": "block",
     "category": "charts",
     "file": "heatmap",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1444,6 +1531,7 @@
     "kind": "block",
     "category": "charts",
     "file": "line",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1503,6 +1591,7 @@
     "kind": "block",
     "category": "charts",
     "file": "sparkline",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1552,6 +1641,10 @@
     "kind": "block",
     "category": "chat",
     "file": "ai-chat",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -1626,6 +1719,10 @@
     "kind": "block",
     "category": "chat",
     "file": "bubbles",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -1685,6 +1782,7 @@
     "kind": "block",
     "category": "chat",
     "file": "thread",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -1744,6 +1842,10 @@
     "kind": "block",
     "category": "code",
     "file": "editor",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -1833,6 +1935,12 @@
     "kind": "block",
     "category": "code",
     "file": "snippet",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -1907,6 +2015,10 @@
     "kind": "block",
     "category": "code",
     "file": "terminal",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -1981,6 +2093,10 @@
     "kind": "component",
     "category": "components",
     "file": "accordion",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2005,6 +2121,7 @@
     "kind": "component",
     "category": "components",
     "file": "alert",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2034,6 +2151,7 @@
     "kind": "component",
     "category": "components",
     "file": "avatar",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2068,6 +2186,7 @@
     "kind": "component",
     "category": "components",
     "file": "badge",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2117,6 +2236,7 @@
     "kind": "component",
     "category": "components",
     "file": "breadcrumb",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2141,6 +2261,7 @@
     "kind": "component",
     "category": "components",
     "file": "button",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2210,6 +2331,7 @@
     "kind": "component",
     "category": "components",
     "file": "card",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2244,6 +2366,7 @@
     "kind": "component",
     "category": "components",
     "file": "checkbox",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2273,6 +2396,10 @@
     "kind": "component",
     "category": "components",
     "file": "command",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2302,6 +2429,7 @@
     "kind": "component",
     "category": "components",
     "file": "dialog",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2331,6 +2459,7 @@
     "kind": "component",
     "category": "components",
     "file": "dropdown-menu",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2360,6 +2489,10 @@
     "kind": "component",
     "category": "components",
     "file": "input",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2409,6 +2542,7 @@
     "kind": "component",
     "category": "components",
     "file": "kbd",
+    "effects": "full",
     "variants": [
       {
         "label": "single",
@@ -2433,6 +2567,7 @@
     "kind": "component",
     "category": "components",
     "file": "pagination",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2457,6 +2592,10 @@
     "kind": "component",
     "category": "components",
     "file": "progress",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2486,6 +2625,7 @@
     "kind": "component",
     "category": "components",
     "file": "select",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2510,6 +2650,7 @@
     "kind": "component",
     "category": "components",
     "file": "skeleton",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2539,6 +2680,7 @@
     "kind": "component",
     "category": "components",
     "file": "switch",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2563,6 +2705,7 @@
     "kind": "component",
     "category": "components",
     "file": "table",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2587,6 +2730,10 @@
     "kind": "component",
     "category": "components",
     "file": "tabs",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2616,6 +2763,7 @@
     "kind": "component",
     "category": "components",
     "file": "toast",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2650,6 +2798,7 @@
     "kind": "component",
     "category": "components",
     "file": "tooltip",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2669,6 +2818,11 @@
     "kind": "block",
     "category": "connections",
     "file": "converge",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2723,6 +2877,11 @@
     "kind": "block",
     "category": "connections",
     "file": "flow",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2757,6 +2916,11 @@
     "kind": "block",
     "category": "connections",
     "file": "pipeline",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2801,6 +2965,11 @@
     "kind": "block",
     "category": "connections",
     "file": "sync",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2840,6 +3009,7 @@
     "kind": "block",
     "category": "dashboard",
     "file": "mini-panel",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2879,6 +3049,7 @@
     "kind": "block",
     "category": "dashboard",
     "file": "widget-grid",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -2918,6 +3089,10 @@
     "kind": "block",
     "category": "data",
     "file": "filters",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "sequences"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2967,6 +3142,7 @@
     "kind": "block",
     "category": "data",
     "file": "import",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3021,6 +3197,7 @@
     "kind": "block",
     "category": "data",
     "file": "query",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3070,6 +3247,7 @@
     "kind": "block",
     "category": "data",
     "file": "table",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3119,6 +3297,7 @@
     "kind": "block",
     "category": "devices",
     "file": "laptop",
+    "effects": "full",
     "variants": [
       {
         "label": "landing",
@@ -3163,6 +3342,7 @@
     "kind": "block",
     "category": "devices",
     "file": "phone",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3247,6 +3427,7 @@
     "kind": "block",
     "category": "devices",
     "file": "tablet",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3321,6 +3502,7 @@
     "kind": "block",
     "category": "ecommerce",
     "file": "cart-drawer",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3345,6 +3527,7 @@
     "kind": "block",
     "category": "ecommerce",
     "file": "checkout-summary",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3364,6 +3547,7 @@
     "kind": "block",
     "category": "ecommerce",
     "file": "order-row",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3388,6 +3572,7 @@
     "kind": "block",
     "category": "ecommerce",
     "file": "product-card",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3417,6 +3602,7 @@
     "kind": "block",
     "category": "ecommerce",
     "file": "product-grid",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3436,6 +3622,10 @@
     "kind": "block",
     "category": "email",
     "file": "compose",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -3490,6 +3680,7 @@
     "kind": "block",
     "category": "email",
     "file": "inbox",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3544,6 +3735,7 @@
     "kind": "block",
     "category": "files",
     "file": "explorer",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3583,6 +3775,7 @@
     "kind": "block",
     "category": "files",
     "file": "simple",
+    "effects": "full",
     "variants": [
       {
         "label": "pdf",
@@ -3722,6 +3915,7 @@
     "kind": "block",
     "category": "files",
     "file": "stacked",
+    "effects": "full",
     "variants": [
       {
         "label": "files",
@@ -3791,6 +3985,12 @@
     "kind": "block",
     "category": "files",
     "file": "upload",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "document",
@@ -3845,6 +4045,7 @@
     "kind": "block",
     "category": "forms",
     "file": "feedback",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3869,6 +4070,7 @@
     "kind": "block",
     "category": "forms",
     "file": "login",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3893,6 +4095,7 @@
     "kind": "block",
     "category": "forms",
     "file": "onboarding-wizard",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3917,6 +4120,7 @@
     "kind": "block",
     "category": "forms",
     "file": "settings-form",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3941,6 +4145,7 @@
     "kind": "block",
     "category": "forms",
     "file": "signup",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -3970,6 +4175,12 @@
     "kind": "block",
     "category": "geo",
     "file": "globe",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "canvas",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4019,6 +4230,11 @@
     "kind": "block",
     "category": "geo",
     "file": "pin-drop",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4068,6 +4284,11 @@
     "kind": "block",
     "category": "geo",
     "file": "world-map",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4147,6 +4368,11 @@
     "kind": "block",
     "category": "git",
     "file": "branch-graph",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4196,6 +4422,11 @@
     "kind": "block",
     "category": "git",
     "file": "diff",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4265,6 +4496,12 @@
     "kind": "block",
     "category": "git",
     "file": "pull-request",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4329,6 +4566,7 @@
     "kind": "block",
     "category": "images",
     "file": "carousel",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4398,6 +4636,7 @@
     "kind": "block",
     "category": "images",
     "file": "gallery",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4457,6 +4696,11 @@
     "kind": "block",
     "category": "integrations",
     "file": "hub",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4546,6 +4790,11 @@
     "kind": "block",
     "category": "integrations",
     "file": "logo-orbit",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4610,6 +4859,11 @@
     "kind": "block",
     "category": "integrations",
     "file": "logo-reel",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4659,6 +4913,11 @@
     "kind": "block",
     "category": "keyboard",
     "file": "half",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4713,6 +4972,7 @@
     "kind": "block",
     "category": "keyboard",
     "file": "shortcut",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4752,6 +5012,7 @@
     "kind": "layout",
     "category": "layouts",
     "file": "auth-shell",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4771,6 +5032,7 @@
     "kind": "layout",
     "category": "layouts",
     "file": "dashboard-shell",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4795,6 +5057,7 @@
     "kind": "layout",
     "category": "layouts",
     "file": "docs-shell",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4814,6 +5077,7 @@
     "kind": "layout",
     "category": "layouts",
     "file": "marketing-shell",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4833,6 +5097,7 @@
     "kind": "layout",
     "category": "layouts",
     "file": "mobile-app-shell",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4852,6 +5117,7 @@
     "kind": "layout",
     "category": "layouts",
     "file": "settings-shell",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4871,6 +5137,7 @@
     "kind": "block",
     "category": "media",
     "file": "audio-waveform",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -4940,6 +5207,7 @@
     "kind": "block",
     "category": "media",
     "file": "video-player",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5024,6 +5292,7 @@
     "kind": "block",
     "category": "metrics",
     "file": "comparison",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5073,6 +5342,7 @@
     "kind": "block",
     "category": "metrics",
     "file": "stat-card",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5132,6 +5402,7 @@
     "kind": "block",
     "category": "metrics",
     "file": "trend",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5201,6 +5472,7 @@
     "kind": "block",
     "category": "mobile",
     "file": "action-sheet",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5220,6 +5492,7 @@
     "kind": "block",
     "category": "mobile",
     "file": "app-bar",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5244,6 +5517,7 @@
     "kind": "block",
     "category": "mobile",
     "file": "list-rows",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5268,6 +5542,7 @@
     "kind": "block",
     "category": "mobile",
     "file": "tab-bar",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5297,6 +5572,7 @@
     "kind": "block",
     "category": "notices",
     "file": "callout",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5331,6 +5607,7 @@
     "kind": "block",
     "category": "notices",
     "file": "cookie-banner",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5350,6 +5627,7 @@
     "kind": "block",
     "category": "notices",
     "file": "update-banner",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5369,6 +5647,11 @@
     "kind": "block",
     "category": "notifications",
     "file": "bell",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -5418,6 +5701,7 @@
     "kind": "block",
     "category": "notifications",
     "file": "list",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5457,6 +5741,7 @@
     "kind": "block",
     "category": "notifications",
     "file": "toast",
+    "effects": "full",
     "variants": [
       {
         "label": "success",
@@ -5516,6 +5801,7 @@
     "kind": "block",
     "category": "payments",
     "file": "checkout",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5595,6 +5881,7 @@
     "kind": "block",
     "category": "payments",
     "file": "credit-card",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5654,6 +5941,7 @@
     "kind": "block",
     "category": "payments",
     "file": "usage-meter",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5698,6 +5986,12 @@
     "kind": "block",
     "category": "search",
     "file": "command-palette",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -5757,6 +6051,7 @@
     "kind": "block",
     "category": "search",
     "file": "results",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5811,6 +6106,11 @@
     "kind": "block",
     "category": "search",
     "file": "semantic",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -5855,6 +6155,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "auth",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -5909,6 +6210,12 @@
     "kind": "layout",
     "category": "sections",
     "file": "backgrounds",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "sequences",
+      "pointer",
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -5978,6 +6285,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "bento",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6032,6 +6340,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "blog",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6071,6 +6380,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "blog-post",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6125,6 +6435,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "comments",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6179,6 +6490,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "components",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6233,6 +6545,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "contact",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6287,6 +6600,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "cta",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6341,6 +6655,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "error",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6395,6 +6710,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "faq",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6449,6 +6765,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "features",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6503,6 +6820,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "footers",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6557,6 +6875,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "headers",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6611,6 +6930,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "hero",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6665,6 +6985,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "logos",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6704,6 +7025,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "newsletter",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6758,6 +7080,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "pricing",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6812,6 +7135,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "process",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6851,6 +7175,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "stats",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6905,6 +7230,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "team",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -6959,6 +7285,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "testimonials",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -7013,6 +7340,7 @@
     "kind": "layout",
     "category": "sections",
     "file": "timeline",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -7052,6 +7380,10 @@
     "kind": "block",
     "category": "security",
     "file": "fingerprint",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7101,6 +7433,7 @@
     "kind": "block",
     "category": "security",
     "file": "lock",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -7150,6 +7483,10 @@
     "kind": "block",
     "category": "security",
     "file": "shield",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7199,6 +7536,11 @@
     "kind": "block",
     "category": "states",
     "file": "empty",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7253,6 +7595,11 @@
     "kind": "block",
     "category": "states",
     "file": "error",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7312,6 +7659,11 @@
     "kind": "block",
     "category": "states",
     "file": "maintenance",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7361,6 +7713,11 @@
     "kind": "block",
     "category": "states",
     "file": "not-found",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7420,6 +7777,7 @@
     "kind": "block",
     "category": "status",
     "file": "health-check",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -7474,6 +7832,12 @@
     "kind": "block",
     "category": "status",
     "file": "resource-monitor",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "sequences",
+      "pointer"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7543,6 +7907,7 @@
     "kind": "block",
     "category": "status",
     "file": "uptime-bar",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -7597,6 +7962,7 @@
     "kind": "block",
     "category": "tasks",
     "file": "checklist",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
@@ -7646,6 +8012,7 @@
     "kind": "block",
     "category": "tasks",
     "file": "kanban",
+    "effects": "full",
     "variants": [
       {
         "label": "default",
