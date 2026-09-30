@@ -11,6 +11,14 @@ Full shadcn-style semantic set (all in oklch), per theme × mode:
 --sidebar-primary-foreground --sidebar-accent --sidebar-accent-foreground
 --sidebar-border --sidebar-ring`
 
+Status tokens, defined in `:root` and `.dark` and inherited by every theme (a
+theme may override them): `--success --warning --info` with their
+`-foreground`, and `--destructive-foreground`. Use them for status text
+(`text-success`), tinted surfaces (`bg-warning/10`) and solid badges
+(`bg-info text-info-foreground`) instead of palette colors: they follow the
+theme and meet WCAG AA (4.5:1) as text on the background and as the foreground
+on their own color.
+
 ## Themes
 
 | Theme | Class | Personality |

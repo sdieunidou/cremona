@@ -210,7 +210,27 @@ import { FRAME_HEIGHTS, gridCols, cn } from "@cremona/core";
 - All blocks are client components in Next.js terms (they use refs/effects) —
   add `"use client"` at your import boundary.
 
+## Reduced motion
+
+Wrap the app once in motion's `MotionConfig`:
+
+```tsx
+import { MotionConfig } from "motion/react";
+
+<MotionConfig reducedMotion="user">{app}</MotionConfig>
+```
+
+For users who ask for reduced motion, entrance transforms then jump to their
+end state (fades remain). Looping animations stop on their own: blocks run them
+only while `useLoopActive` allows it.
+
 ## Hooks
 
-`useInView(ref, { once, initial, margin, amount })` — port of the POC hook;
-`observeInView(targets, onEnter, options)` for non-React contexts.
+- `useInView(ref, { once, initial, margin, amount })` — port of the POC hook;
+  `observeInView(targets, onEnter, options)` for non-React contexts.
+- `useLoopActive(ref, enabled)` — `true` while a looping animation should run:
+  `enabled`, the element intersects the viewport, the page is visible and the
+  user does not ask for reduced motion. It is `true` on the server and while
+  hydrating, so a block's server markup stays its looping state.
+- `usePrefersReducedMotion()` — the media query, `false` on the server and while
+  hydrating.

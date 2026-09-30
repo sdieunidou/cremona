@@ -8,7 +8,7 @@ export type TriggerMode = "mount" | "inView" | "inViewRepeat";
 
 /** Props shared by every Cremona visual. */
 export interface VisualProps {
-  /** Play the entrance animation (default true). When false, render the final state. */
+  /** Play the entrance animation (default false). When false, render the final state. */
   animated?: boolean;
   /** How the entrance is triggered. */
   trigger?: TriggerMode;
