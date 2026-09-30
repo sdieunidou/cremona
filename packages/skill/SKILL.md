@@ -100,7 +100,7 @@ renders one button with one label.
 
 ## Design system quick facts
 
-- Tokens: full shadcn-style semantic set (`--background` … `--sidebar-ring`, `--chart-1..5`, `--radius`).
+- Tokens: full shadcn-style semantic set (`--background` … `--sidebar-ring`, `--chart-1..5`, `--radius`), plus status tokens `--success`, `--warning`, `--info` (each with `-foreground`) and `--destructive-foreground` — use them instead of palette colors.
 - 9 themes: `default`, `claude-plus`, `light-green`, `zen`, `sakura`, `tiesen`,
   `deep-purple`, `indigo-clean`, `brutalism` — each with light + dark.
 - Default theme: neutral in light and dark; the warm "Claude-like" dark is `claude-plus`.

@@ -30,7 +30,9 @@ motion language, same tokens, same test machinery.
    (or springs `stiffness 300–420, damping 14–18`); stagger `.07–.15`;
    hover/focus feedback `transition-all duration-200`; respect the shared
    props (`animated`, `trigger`, plus `fadeOut`/`isometric`/`gradient`
-   whenever the visual lives in a card wrapper).
+   whenever the visual lives in a card wrapper). Loops (infinite transitions,
+   timers, rAF, SMIL, CSS `animate-*`) run only while
+   `useLoopActive(ref, animated)` is true; otherwise render their resting frame.
 5. **Accessibility mirror** — real text (not lorem), semantic elements
    (`button`, `input`, `table`…), `aria-*` on interactive parts. Blocks stay
    `aria-hidden="true"` at the scene root like the POC.

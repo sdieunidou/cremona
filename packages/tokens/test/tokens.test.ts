@@ -43,6 +43,16 @@ const SEMANTIC = [
   "--sidebar-ring",
 ];
 
+const STATUS = [
+  "--success",
+  "--success-foreground",
+  "--warning",
+  "--warning-foreground",
+  "--info",
+  "--info-foreground",
+  "--destructive-foreground",
+];
+
 const THEMES = [
   "default",
   "claude-plus",
@@ -66,6 +76,13 @@ describe("cremona tokens", () => {
   it("default light + dark exist", () => {
     blockFor(":root{--background");
     blockFor(".dark{--background");
+  });
+
+  it("default light + dark define the status tokens every theme inherits", () => {
+    for (const sel of [":root{--background", ".dark{--background"]) {
+      const block = blockFor(sel);
+      for (const token of STATUS) expect(block, `${sel} ${token}`).toContain(`${token}:`);
+    }
   });
 
   it("default dark is the neutral palette", () => {
