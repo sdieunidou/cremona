@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
-import { CircleCheck, Info, TriangleAlert, X } from "lucide-react";
+import { CircleCheck, CircleX, Info, TriangleAlert, X } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -9,12 +9,13 @@ export const toastDefaultCopy = {
   variant: "success",
 } as const;
 
-type Variant = "success" | "warning" | "info";
+type Variant = "success" | "warning" | "info" | "error";
 
 const variantStyles: Record<Variant, { icon: LucideIcon; accent: string }> = {
   success: { icon: CircleCheck, accent: "text-emerald-500" },
   warning: { icon: TriangleAlert, accent: "text-amber-500" },
   info: { icon: Info, accent: "text-sky-500" },
+  error: { icon: CircleX, accent: "text-destructive" },
 };
 
 const copy: Record<Variant, { title: string; description: string }> = {
@@ -29,6 +30,10 @@ const copy: Record<Variant, { title: string; description: string }> = {
   info: {
     title: "New update available",
     description: "Version 2.4 is ready to install.",
+  },
+  error: {
+    title: "Couldn't save changes",
+    description: "The connection dropped. Try again in a moment.",
   },
 };
 
@@ -109,8 +114,9 @@ export function Toast({
             : "hidden",
       }
     : {};
-  const { icon: Icon, accent } = variantStyles[variant];
-  const fallback = copy[variant];
+  const known: Variant = Object.hasOwn(variantStyles, variant) ? variant : "success";
+  const { icon: Icon, accent } = variantStyles[known];
+  const fallback = copy[known];
   const heading = title ?? fallback.title;
   const body = description ?? fallback.description;
 
