@@ -31,7 +31,8 @@ const bannerIn = {
 } as const;
 
 /* on the primary band, overlays are primary-foreground tints: they follow the theme in both modes */
-const focusRing = "outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/70";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-foreground";
 
 export function UpdateBanner({
   action = false,

@@ -77,9 +77,10 @@ const field = {
 } as const;
 
 const inputClass =
-  "h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs outline-none transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20";
+  "h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export function Login({
   email = "",
@@ -181,7 +182,7 @@ export function Login({
                 aria-label={t.showPassword}
                 aria-pressed={false}
                 aria-controls={`${id}-password`}
-                className="absolute inset-y-0 right-0 flex w-9 items-center justify-center rounded-r-md text-muted-foreground outline-none transition-colors duration-200 hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="absolute inset-y-0 right-0 flex w-9 items-center justify-center rounded-r-md text-muted-foreground transition-colors duration-200 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 {...noFocus}
               >
                 <Eye className="size-3.5" strokeWidth={2.25} />
@@ -203,7 +204,7 @@ export function Login({
             />
             <span
               aria-hidden="true"
-              className="flex size-3.5 shrink-0 items-center justify-center rounded-[4px] border border-input bg-background text-transparent shadow-xs transition-colors duration-200 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50"
+              className="flex size-3.5 shrink-0 items-center justify-center rounded-[4px] border border-input bg-background text-transparent shadow-xs transition-colors duration-200 peer-checked:border-primary peer-checked:bg-primary peer-checked:text-primary-foreground peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring"
             >
               <Check className="size-2.5" strokeWidth={3} />
             </span>

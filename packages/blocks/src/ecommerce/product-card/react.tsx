@@ -117,7 +117,7 @@ export function ProductCard({
     <button
       type="button"
       className={cn(
-        "flex h-8 w-full items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold shadow-sm outline-none transition-all duration-200 focus-visible:ring-3 focus-visible:ring-ring/50 active:scale-[0.98]",
+        "flex h-8 w-full items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold shadow-sm transition-all duration-200 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
         outOfStock
           ? "border bg-background text-foreground hover:bg-accent"
           : "bg-primary text-primary-foreground hover:opacity-90",

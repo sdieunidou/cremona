@@ -67,7 +67,8 @@ const item = {
 
 const scores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export function Feedback({
   score = 9,
@@ -160,7 +161,7 @@ export function Feedback({
                       className="peer sr-only"
                       {...noFocus}
                     />
-                    <span className="flex h-6 flex-1 items-center justify-center rounded-md border border-input bg-background text-[10px] text-muted-foreground tabular-nums transition-all duration-200 hover:border-ring/60 peer-checked:border-transparent peer-checked:bg-primary peer-checked:font-semibold peer-checked:text-primary-foreground peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50">
+                    <span className="flex h-6 flex-1 items-center justify-center rounded-md border border-input bg-background text-[10px] text-muted-foreground tabular-nums transition-all duration-200 hover:border-ring/60 peer-checked:border-transparent peer-checked:bg-primary peer-checked:font-semibold peer-checked:text-primary-foreground peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring">
                       {n}
                     </span>
                   </label>
@@ -183,7 +184,7 @@ export function Feedback({
                   id={`${id}-comment`}
                   name="comment"
                   placeholder={t.commentPlaceholder}
-                  className="h-16 w-full resize-none rounded-md border border-input bg-transparent p-2 text-xs text-foreground shadow-xs outline-none transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="h-16 w-full resize-none rounded-md border border-input bg-transparent p-2 text-xs text-foreground shadow-xs transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   {...noFocus}
                 />
               </motion.div>

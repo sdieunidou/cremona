@@ -78,9 +78,10 @@ const row = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 const controlClass =
-  "h-8 w-full min-w-0 rounded-md border border-input px-2.5 text-xs text-foreground shadow-xs outline-none transition-[color,box-shadow] duration-200 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50";
+  "h-8 w-full min-w-0 rounded-md border border-input px-2.5 text-xs text-foreground shadow-xs transition-[color,box-shadow] duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 /* stacked below 20rem of card width, label | control side by side above */
 const rowClass =
   "flex flex-col gap-2 px-3 py-2.5 @xs:flex-row @xs:items-center @xs:justify-between @xs:gap-3";

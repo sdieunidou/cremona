@@ -140,7 +140,7 @@ export function Callout({
           {linkText && (
             <a
               href={href}
-              className="mt-1 w-fit rounded-sm text-xs font-medium text-primary underline-offset-2 outline-none transition-colors duration-200 hover:underline focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="mt-1 w-fit rounded-sm text-xs font-medium text-primary underline-offset-2 transition-colors duration-200 hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               {...noFocus}
             >
               {linkText}

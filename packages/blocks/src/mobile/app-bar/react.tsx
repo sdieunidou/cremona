@@ -59,7 +59,7 @@ const chipIn = (i: number): Variants => ({
 });
 
 const iconButton =
-  "flex size-9 shrink-0 items-center justify-center rounded-full text-foreground outline-none transition-colors duration-200 hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50";
+  "flex size-9 shrink-0 items-center justify-center rounded-full text-foreground transition-colors duration-200 hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export function AppBar({
   title = "Photos",

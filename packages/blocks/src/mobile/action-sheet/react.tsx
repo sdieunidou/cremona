@@ -85,7 +85,8 @@ const optionIn = (i: number): Variants => ({
   },
 });
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 export function ActionSheet({
   danger = false,

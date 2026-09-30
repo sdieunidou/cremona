@@ -84,7 +84,8 @@ const row = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 /** Amounts are rounded to cents before they are summed or displayed. */
 const cents = (n: number) => Math.round(n * 100) / 100;

@@ -99,7 +99,8 @@ const item = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 const stepper = cn(
   "flex size-3.5 items-center justify-center rounded-[3px] border text-[9px] leading-none text-muted-foreground transition-colors duration-200 hover:text-foreground",
   focusRing,

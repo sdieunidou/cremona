@@ -96,7 +96,7 @@ export function OrderRow({
       >
         <a
           href={href}
-          className="@container flex w-full flex-col gap-2.5 rounded-lg border bg-card p-3 text-left shadow-xs outline-none transition-all duration-200 hover:border-ring/40 hover:shadow-sm focus-visible:ring-3 focus-visible:ring-ring/50"
+          className="@container flex w-full flex-col gap-2.5 rounded-lg border bg-card p-3 text-left shadow-xs transition-all duration-200 hover:border-ring/40 hover:shadow-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           {...noFocus}
         >
           <motion.span

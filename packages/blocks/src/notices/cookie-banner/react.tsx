@@ -49,7 +49,8 @@ const bannerIn = {
   },
 } as const;
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 /* Reject and Accept share one style: refusing is exactly as easy as accepting (GDPR, CNIL). */
 const choice = cn(
   "inline-flex h-8 shrink-0 items-center justify-center rounded-md bg-primary px-3 text-xs font-medium text-primary-foreground shadow-xs transition-colors duration-200 hover:bg-primary/90",

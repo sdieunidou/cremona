@@ -86,7 +86,8 @@ const item = {
 
 const icons = [Rocket, Palette, BarChart3, Blocks];
 
-const focusRing = "outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 function initialsOf(email: string) {
   return email.slice(0, 2).toUpperCase();
@@ -180,7 +181,7 @@ export function OnboardingWizard({
                   required
                   defaultValue={workspace}
                   placeholder={t.workspacePlaceholder}
-                  className="h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs outline-none transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                  className="h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   {...noFocus}
                 />
               </motion.div>
@@ -198,7 +199,7 @@ export function OnboardingWizard({
                         className="peer sr-only"
                         {...noFocus}
                       />
-                      <span className="flex h-12 items-center justify-center rounded-lg border p-2 text-muted-foreground transition-all duration-200 hover:border-ring/50 peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary peer-checked:ring-2 peer-checked:ring-primary peer-focus-visible:ring-3 peer-focus-visible:ring-ring/50">
+                      <span className="flex h-12 items-center justify-center rounded-lg border p-2 text-muted-foreground transition-all duration-200 hover:border-ring/50 peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary peer-checked:ring-2 peer-checked:ring-primary peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-ring">
                         <Icon className="size-4" strokeWidth={2.25} />
                       </span>
                     </label>

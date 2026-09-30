@@ -158,7 +158,7 @@ function ListCard({
             <li key={i}>
               <motion.button
                 type="button"
-                className="flex h-11 w-full items-center gap-3 px-3 text-left outline-none transition-colors duration-200 hover:bg-muted focus-visible:bg-muted"
+                className="flex h-11 w-full items-center gap-3 px-3 text-left transition-colors duration-200 hover:bg-muted focus-visible:bg-muted focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
                 variants={animated ? rowIn(startIndex + i) : undefined}
                 {...state}
                 {...noFocus}
