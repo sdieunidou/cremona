@@ -49,9 +49,15 @@ cd packages/blocks
 pnpm vitest run test/generate-goldens.test.tsx        # 1. write the golden
 pnpm vitest run test/<category>-<file>.parity.test.tsx # 2. parity vs golden (+ writes preview-props.json)
 pnpm vitest run                                        # 3. whole suite stays green
-node ../stimulus/… or: node tools/generate-stimulus.mjs # 4. stimulus templates
-node packages/mcp/scripts/validate.mjs                 # 5. coherence
+cd ../..
+pnpm build:css                                         # 4. compile the new classes into cremona.css
+pnpm generate:stimulus                                 # 5. stimulus templates
+pnpm validate                                          # 6. coherence
 ```
+
+`cremona.css` only contains the classes it was compiled from: until
+`pnpm build:css` runs, a class the block introduces renders unstyled (the tokens
+coverage test fails on it).
 
 The parity test for a new block uses the standard runner — since goldens are
 generated from the component itself, parity is a **regression lock** (any

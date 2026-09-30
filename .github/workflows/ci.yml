@@ -35,8 +35,9 @@ jobs:
       - name: Generated files are up to date
         run: |
           pnpm generate:stimulus
-          git diff --exit-code -- packages/blocks packages/stimulus \
-            || { echo "::error::Generated files changed: run 'pnpm test' and 'pnpm generate:stimulus', then commit."; exit 1; }
+          pnpm build:css
+          git diff --exit-code -- packages/blocks packages/stimulus packages/tokens \
+            || { echo "::error::Generated files changed: run 'pnpm test', 'pnpm generate:stimulus' and 'pnpm build:css', then commit."; exit 1; }
       - run: pnpm validate
 
   e2e:

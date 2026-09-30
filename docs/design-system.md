@@ -41,18 +41,23 @@ Anti-flash: inline script in `<head>` reading `localStorage` (see
 Inter Variable (`--font-sans`), weights 100–900, woff2 subsets shipped in
 `packages/tokens/css/`. No other font families are used.
 
-## Keyframes & custom utilities
+## Keyframes, variants & custom utilities
 
-`tw-shimmer` (text shine), `caret-blink`, `scroll-fade-reveal-*` (masked reveal
-at scroll edges), `enter/exit` (tw-animate-css variables). Tailwind v4 native
-utilities used by blocks: `mask-t-from-*`, `mask-b-from-*`, `bg-linear-to-*`,
+`cremona.css` holds what the blocks use: the `spin`, `ping` and `pulse`
+keyframes (tw-animate-css `enter`/`exit` are generated as soon as a block uses
+`animate-in`/`animate-out`), the `no-scrollbar` utility, and shadcn's state
+variants — `data-open:`, `data-closed:`, `data-checked:`, `data-unchecked:`,
+`data-active:`, `data-disabled:` match `data-state="…"` or the boolean data
+attribute; `data-selected:`, `data-horizontal:`, `data-vertical:` match
+`data-selected="true"` and `data-orientation`. Tailwind v4 native utilities
+used by blocks: `mask-t-from-*`, `mask-b-from-*`, `bg-linear-to-*`,
 `bg-size-[…]`, fractional spacing (`py-2.25`), `rounded-4xl`.
 
 ## CSS distribution
 
 | File | Use |
 |---|---|
-| `@cremona/tokens/css/cremona.css` | complete stylesheet: fonts + tokens + ALL utilities the blocks use. Include once; zero build required. |
+| `@cremona/tokens/css/cremona.css` | complete stylesheet: fonts + tokens + every utility the blocks use. Include once; no build on the host. It holds the blocks' classes only: classes of your own need your own CSS or Tailwind build. |
 | `@cremona/tokens/css/themes.css` | semantic tokens only — for hosts compiling their own Tailwind v4 styles. |
 
 ## Preview frame system

@@ -312,12 +312,7 @@ server.tool(
         "class-based (.dark on <html>); the default theme is neutral in light and dark (the warm 'Claude-like' dark is claude-plus)",
       themes: store.themes().map((t) => t.value),
       font: "Inter Variable (--font-sans), weights 100-900",
-      keyframes: [
-        "tw-shimmer",
-        "caret-blink",
-        "scroll-fade-reveal-*",
-        "enter/exit (tw-animate-css)",
-      ],
+      keyframes: ["spin", "ping", "pulse", "enter/exit (tw-animate-css, when a block uses them)"],
       previewFrame: {
         frame:
           "group/preview relative flex flex-col overflow-hidden rounded-lg border border-border/50 bg-muted/20 dark:bg-muted/15",

@@ -26,6 +26,7 @@
     "format:check": "prettier --check .",
     "extract": "python3 tools/extract/run_all.py",
     "generate:stimulus": "node tools/generate-stimulus.mjs",
+    "build:css": "pnpm --filter @cremona/tokens build:css",
     "validate": "node packages/mcp/scripts/validate.mjs",
     "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm validate",
     "dev": "pnpm --filter @cremona/gallery dev",
