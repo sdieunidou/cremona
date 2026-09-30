@@ -265,34 +265,46 @@ const word: Variants = {
   }),
 };
 
-const caretAnim = (lastWordEnd: number): Variants => ({
+/** When the last of `count` prompt words has faded in (s). */
+const lastWordEnd = (count: number) =>
+  WORD_DELAY_BASE + Math.max(count - 1, 0) * WORD_DELAY_UNIT + WORD_DURATION;
+
+const caretAnim = (count: number): Variants => ({
   hidden: { opacity: 0 },
   visible: {
     opacity: [0, 1, 1, 0],
-    transition: { duration: 1, repeat: Infinity, delay: lastWordEnd + 0.05, ease: "easeInOut" },
+    transition: {
+      duration: 1,
+      repeat: Infinity,
+      delay: lastWordEnd(count) + 0.05,
+      ease: "easeInOut",
+    },
   },
 });
 
-const toolbarAnim = (lastWordEnd: number): Variants => ({
+const toolbarAnim = (count: number): Variants => ({
   hidden: { opacity: 0, y: 6 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.35, delay: lastWordEnd + 0.15, ease: "easeOut" },
+    transition: { duration: 0.35, delay: lastWordEnd(count) + 0.15, ease: "easeOut" },
   },
 });
 
-const meterAnim = (lastWordEnd: number): Variants => ({
+const meterAnim = (count: number): Variants => ({
   hidden: { scaleX: 0 },
-  visible: { scaleX: 1, transition: { duration: 0.5, delay: lastWordEnd + 0.25, ease: "easeOut" } },
+  visible: {
+    scaleX: 1,
+    transition: { duration: 0.5, delay: lastWordEnd(count) + 0.25, ease: "easeOut" },
+  },
 });
 
-const sendAnim = (lastWordEnd: number): Variants => ({
+const sendAnim = (count: number): Variants => ({
   hidden: { scale: 0, opacity: 0 },
   visible: {
     scale: 1,
     opacity: 1,
-    transition: { type: "spring", stiffness: 420, damping: 14, delay: lastWordEnd + 0.3 },
+    transition: { type: "spring", stiffness: 420, damping: 14, delay: lastWordEnd(count) + 0.3 },
   },
 });
 
