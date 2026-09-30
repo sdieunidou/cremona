@@ -7,6 +7,9 @@ import { Converge } from "../src/connections/converge/react.js";
 import { Flow } from "../src/connections/flow/react.js";
 import { Pipeline } from "../src/connections/pipeline/react.js";
 import { Sync } from "../src/connections/sync/react.js";
+import { HealthCheck } from "../src/status/health-check/react.js";
+import { ResourceMonitor } from "../src/status/resource-monitor/react.js";
+import { UptimeBar } from "../src/status/uptime-bar/react.js";
 
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -96,5 +99,63 @@ describe("connections pulses", () => {
     const view = mount(on);
     expect(view.html()).not.toContain("<animateMotion");
     view.unmount();
+  });
+});
+
+const PINGS: [string, ReactElement, ReactElement][] = [
+  ["uptime-bar", <UptimeBar animated trigger="mount" />, <UptimeBar />],
+  ["health-check", <HealthCheck animated trigger="mount" />, <HealthCheck />],
+  ["resource-monitor", <ResourceMonitor animated trigger="mount" />, <ResourceMonitor />],
+];
+
+describe("status pings", () => {
+  it.each(PINGS)("%s: server markup pings, the static render does not", (_, on, off) => {
+    expect(renderToStaticMarkup(on)).toContain("animate-ping");
+    expect(renderToStaticMarkup(off)).not.toContain("animate-ping");
+  });
+
+  it.each(PINGS)("%s: the ping stops off-screen and under reduced motion", (_, on) => {
+    reducedMotion(false);
+    const view = mount(on);
+    expect(view.html()).toContain("animate-ping");
+    setIntersecting(false);
+    expect(view.html()).not.toContain("animate-ping");
+    view.unmount();
+    vi.restoreAllMocks();
+    reducedMotion(true);
+    const reduced = mount(on);
+    expect(reduced.html()).not.toContain("animate-ping");
+    reduced.unmount();
+  });
+});
+
+describe("status/resource-monitor feed", () => {
+  const plot = (html: string) => /<polyline points="([^"]*)"/.exec(html)?.[1];
+
+  it("scrolls while in view and holds still off-screen", () => {
+    vi.useFakeTimers();
+    reducedMotion(false);
+    const view = mount(<ResourceMonitor animated trigger="mount" interval={300} />);
+    const first = plot(view.html());
+    act(() => void vi.advanceTimersByTime(700));
+    const scrolled = plot(view.html());
+    expect(scrolled).not.toBe(first);
+    setIntersecting(false);
+    act(() => void vi.advanceTimersByTime(1500));
+    expect(plot(view.html())).toBe(scrolled);
+    view.unmount();
+    vi.useRealTimers();
+  });
+
+  it("never scrolls a series drawn from real samples", () => {
+    vi.useFakeTimers();
+    reducedMotion(false);
+    const series = [{ label: "CPU", color: "red", points: [0.2, 0.4, 0.6] }];
+    const view = mount(<ResourceMonitor animated trigger="mount" series={series} interval={300} />);
+    const first = plot(view.html());
+    act(() => void vi.advanceTimersByTime(1500));
+    expect(plot(view.html())).toBe(first);
+    view.unmount();
+    vi.useRealTimers();
   });
 });
