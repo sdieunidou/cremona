@@ -1,6 +1,7 @@
 /* Cremona design tokens (source of truth; `pnpm build:css` compiles them into cremona.css).
  * Default theme: neutral in light and dark (the warm Claude-like dark is .theme-claude-plus).
- * Theme classes: .theme-<name> on <html>, dark via .dark on <html>. */
+ * Theme classes: .theme-<name> on <html>, dark via .dark on <html>.
+ * Every theme x mode meets the contrast budget of test/contrast.test.ts. */
 
 :root{--background:oklch(100% 0 0);--foreground:oklch(14.5% 0 0);--card:oklch(100% 0 0);--card-foreground:oklch(14.5% 0 0);--popover:oklch(100% 0 0);--popover-foreground:oklch(14.5% 0 0);--primary:oklch(20.5% 0 0);--primary-foreground:oklch(98.5% 0 0);--secondary:oklch(97% 0 0);--secondary-foreground:oklch(20.5% 0 0);--muted:oklch(97% 0 0);--muted-foreground:oklch(52.6% 0 0);--accent:oklch(97% 0 0);--accent-foreground:oklch(20.5% 0 0);--destructive:oklch(54.8% .224 27.325);--border:oklch(92.2% 0 0);--input:oklch(92.2% 0 0);--ring:oklch(70.8% 0 0);--chart-1:oklch(66% 0 0);--chart-2:oklch(55.6% 0 0);--chart-3:oklch(43.9% 0 0);--chart-4:oklch(33% 0 0);--chart-5:oklch(22% 0 0);--radius:.625rem;--sidebar:oklch(98.5% 0 0);--sidebar-foreground:oklch(14.5% 0 0);--sidebar-primary:oklch(20.5% 0 0);--sidebar-primary-foreground:oklch(98.5% 0 0);--sidebar-accent:oklch(97% 0 0);--sidebar-accent-foreground:oklch(20.5% 0 0);--sidebar-border:oklch(92.2% 0 0);--sidebar-ring:oklch(70.8% 0 0);--nprogress-color:var(--color-primary);--success:oklch(51.5% .141 150.069);--success-foreground:oklch(98.5% 0 0);--warning:oklch(54.4% .146 48.998);--warning-foreground:oklch(98.5% 0 0);--info:oklch(48.8% .243 264.376);--info-foreground:oklch(98.5% 0 0);--destructive-foreground:oklch(98.5% 0 0)}
 

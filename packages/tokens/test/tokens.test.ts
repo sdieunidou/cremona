@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
+import { deltaE, parseColor, resolveTheme, tokenBlocks } from "./color";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const css = readFileSync(join(root, "css", "themes.css"), "utf8");
@@ -121,6 +122,22 @@ describe("cremona tokens", () => {
   it("theme classes match themes.json", () => {
     const meta = JSON.parse(readFileSync(join(root, "themes.json"), "utf8"));
     expect(meta.map((t) => t.value)).toEqual(THEMES);
+  });
+
+  it("themes.json swatches are colours of their theme's light tokens", () => {
+    const meta: { value: string; swatches: string[] }[] = JSON.parse(
+      readFileSync(join(root, "themes.json"), "utf8"),
+    );
+    const blocks = tokenBlocks(css);
+    for (const theme of meta) {
+      const light = Object.values(resolveTheme(blocks, theme.value, "light"))
+        .filter((v) => /^(oklch\(|#)/.test(v))
+        .map(parseColor);
+      for (const swatch of theme.swatches) {
+        const nearest = Math.min(...light.map((c) => deltaE(parseColor(swatch), c)));
+        expect(nearest, `${theme.value} swatch ${swatch}`).toBeLessThan(0.5);
+      }
+    }
   });
 
   it("native controls follow the mode (color-scheme)", () => {
