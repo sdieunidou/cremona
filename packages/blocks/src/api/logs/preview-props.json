@@ -54,68 +54,50 @@
   "two sources": {
     "sources": [
       {
-        "type": "lucide:Globe",
-        "key": null,
+        "$element": "lucide:Globe",
         "props": {
           "className": "size-3.5",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Database",
-        "key": null,
+        "$element": "lucide:Database",
         "props": {
           "className": "size-3.5",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       }
     ]
   },
   "four sources": {
     "sources": [
       {
-        "type": "lucide:Globe",
-        "key": null,
+        "$element": "lucide:Globe",
         "props": {
           "className": "size-3.5",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Server",
-        "key": null,
+        "$element": "lucide:Server",
         "props": {
           "className": "size-3.5",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Cpu",
-        "key": null,
+        "$element": "lucide:Cpu",
         "props": {
           "className": "size-3.5",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Cloud",
-        "key": null,
+        "$element": "lucide:Cloud",
         "props": {
           "className": "size-3.5",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       }
     ]
   }

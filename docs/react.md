@@ -32,7 +32,9 @@ card bottom), `isometric` (3D tilt), `gradient` (rainbow glow + veil).
 Per-block content props come from the POC defaults (e.g. `label`, `value`,
 `change`, `trend` for stat-card). **The exact prop shape per variant** is in
 each block's `preview-props.json` — values like `"lucide:Users"` mean "pass the
-lucide-react icon component with that name".
+lucide-react icon component with that name", and
+`{ "$element": "lucide:Users", "props": { "className": "size-4" } }` means "pass
+the element `<Users className="size-4" />`".
 
 ```tsx
 <StatCard
@@ -180,21 +182,28 @@ Pair it with `gradient={false}`: the glow is drawn outside the card, in the gap
 
 ## Composing your own previews
 
+There is no preview-frame component to import: the gallery's lives in
+`apps/gallery/src/components/preview-frame.tsx`. `@cremona/core` exports what it
+is built from — `FRAME_HEIGHTS` (stage height per variant `size`) and `gridCols`:
+
 ```tsx
-import { PreviewFrame, PreviewGrid } from "@cremona/react/preview-frame";
-// (gallery ships its own; host apps can use @cremona/core FRAME_HEIGHTS/gridCols)
-<PreviewGrid cols={2}>
-  <PreviewFrame label="default">
-    <StatCard animated trigger="inViewRepeat" />
-  </PreviewFrame>
-</PreviewGrid>
+import { FRAME_HEIGHTS, gridCols, cn } from "@cremona/core";
+
+<div className={cn("grid grid-cols-1 gap-2", gridCols(2))}>
+  <div className="flex flex-col overflow-hidden rounded-lg border border-border/50 bg-muted/20">
+    <div className={cn("flex grow items-center gap-2", FRAME_HEIGHTS.md)}>
+      <StatCard animated trigger="inViewRepeat" />
+    </div>
+  </div>
+</div>
 ```
 
 ## SSR / RSC notes
 
 - Blocks render deterministically server-side (that's how parity is verified).
-- `useId` gradient ids are stable per render tree; ids differ between trees —
-  safe to render many blocks on one page.
+- SVG gradient/mask ids come from `useId`: unique within one React root, so
+  many blocks can share a page. With several roots on one page (islands,
+  micro-frontends), give each root its own `identifierPrefix`.
 - Images use POC-relative placeholder paths (`../../media/placeholders/…` in
   goldens); in the library they resolve to your host's `/media/placeholders/…`
   when you copy the `media/` folder to your public dir (see gallery `public/`).

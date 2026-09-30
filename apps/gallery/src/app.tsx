@@ -5,6 +5,7 @@ import { SidebarContent, type NavProps } from "./components/sidebar.js";
 import { Header, SearchDialog } from "./components/header.js";
 import { HomePage, BlockPage } from "./pages/home.js";
 import { SHELL } from "./lib/shell-classes.js";
+import { ErrorBoundary } from "./components/error-boundary.js";
 import { cn } from "@cremona/core";
 
 export function App() {
@@ -45,7 +46,7 @@ export function App() {
   const sidebarClass = cn(
     SHELL.sidebar,
     mobileNav &&
-      "max-md:!block max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-100 max-md:w-64 max-md:bg-sidebar max-md:shadow-xl",
+      "max-md:block max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-100 max-md:w-64 max-md:bg-sidebar max-md:shadow-xl",
   );
 
   return (
@@ -63,7 +64,7 @@ export function App() {
       >
         <div className={SHELL.gap} />
         <div
-          className={cn(SHELL.container, mobileNav && "max-md:!flex")}
+          className={cn(SHELL.container, mobileNav && "max-md:flex")}
           data-slot="sidebar-container"
           data-side="left"
         >
@@ -97,11 +98,16 @@ export function App() {
           onOpenSearch={() => setSearchOpen(true)}
           onToggleSidebar={() => setMobileNav((v) => !v)}
         />
-        {route.name === "home" ? (
-          <HomePage onNavigate={nav.onNavigate} />
-        ) : (
-          <BlockPage category={route.category} file={route.file} onNavigate={nav.onNavigate} />
-        )}
+        <ErrorBoundary
+          key={path}
+          fallback={(error) => <PageError error={error} onNavigate={nav.onNavigate} />}
+        >
+          {route.name === "home" ? (
+            <HomePage onNavigate={nav.onNavigate} />
+          ) : (
+            <BlockPage category={route.category} file={route.file} onNavigate={nav.onNavigate} />
+          )}
+        </ErrorBoundary>
         <Footer />
       </main>
       <SearchDialog
@@ -113,6 +119,27 @@ export function App() {
     </div>
   );
 }
+function PageError({ error, onNavigate }: { error: Error; onNavigate: (to: string) => void }) {
+  return (
+    <section role="alert" className="relative py-8 md:py-16">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex flex-col gap-2">
+        <h1 className="text-2xl font-bold tracking-tight">This page failed to render</h1>
+        <p className="font-mono text-sm break-words text-muted-foreground">{error.message}</p>
+        <a
+          href="/"
+          className="text-sm underline underline-offset-4"
+          onClick={(e) => {
+            e.preventDefault();
+            onNavigate("/");
+          }}
+        >
+          Back to all visuals
+        </a>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="mt-auto border-t border-border/50 py-6">

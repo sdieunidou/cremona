@@ -13,24 +13,18 @@
     "pairs": [
       [
         {
-          "type": "lucide:Laptop",
-          "key": null,
+          "$element": "lucide:Laptop",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         {
-          "type": "lucide:Cloud",
-          "key": null,
+          "$element": "lucide:Cloud",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       ]
     ]
@@ -39,90 +33,66 @@
     "pairs": [
       [
         {
-          "type": "lucide:Laptop",
-          "key": null,
+          "$element": "lucide:Laptop",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         {
-          "type": "lucide:Server",
-          "key": null,
+          "$element": "lucide:Server",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       ],
       [
         {
-          "type": "lucide:Smartphone",
-          "key": null,
+          "$element": "lucide:Smartphone",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         {
-          "type": "lucide:Cloud",
-          "key": null,
+          "$element": "lucide:Cloud",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       ],
       [
         {
-          "type": "lucide:Monitor",
-          "key": null,
+          "$element": "lucide:Monitor",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         {
-          "type": "lucide:Database",
-          "key": null,
+          "$element": "lucide:Database",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       ],
       [
         {
-          "type": "lucide:Database",
-          "key": null,
+          "$element": "lucide:Database",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         {
-          "type": "lucide:HardDrive",
-          "key": null,
+          "$element": "lucide:HardDrive",
           "props": {
             "className": "size-4",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       ]
     ]

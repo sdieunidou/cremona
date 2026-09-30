@@ -29,14 +29,11 @@
     "results": [
       {
         "icon": {
-          "type": "lucide:User",
-          "key": null,
+          "$element": "lucide:User",
           "props": {
             "className": "size-3",
             "strokeWidth": 2.5
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         "title": "Sarah Chen",
         "path": "Design › Product",
@@ -45,14 +42,11 @@
       },
       {
         "icon": {
-          "type": "lucide:BuildingComplex",
-          "key": null,
+          "$element": "lucide:BuildingComplex",
           "props": {
             "className": "size-3",
             "strokeWidth": 2.5
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         "title": "Chen Labs",
         "path": "Accounts › Enterprise",
@@ -68,14 +62,11 @@
     "results": [
       {
         "icon": {
-          "type": "lucide:FileText",
-          "key": null,
+          "$element": "lucide:FileText",
           "props": {
             "className": "size-3",
             "strokeWidth": 2.5
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         "title": "Rate limits by plan",
         "path": "docs.acme.com › limits",
@@ -84,14 +75,11 @@
       },
       {
         "icon": {
-          "type": "lucide:FileText",
-          "key": null,
+          "$element": "lucide:FileText",
           "props": {
             "className": "size-3",
             "strokeWidth": 2.5
-          },
-          "_owner": null,
-          "_store": {}
+          }
         },
         "title": "Handling 429 responses",
         "path": "docs.acme.com › api › errors",

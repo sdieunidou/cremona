@@ -32,52 +32,55 @@ export function loadStimulusTemplate(key: string, slug: string): Promise<string 
   return stimRawModules[path]!();
 }
 
-function pascal(file: string): string {
-  return file
-    .split("-")
-    .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
-    .join("");
-}
+const IDENTIFIER = /^[A-Za-z_$][\w$]*$/;
 
-function jsxValue(value: unknown): string {
-  if (typeof value === "string") return JSON.stringify(value);
-  if (typeof value === "number") return `{${value}}`;
-  if (typeof value === "boolean") return "";
-  if (Array.isArray(value)) return `{${JSON.stringify(value)}}`;
-  if (typeof value === "object" && value !== null) return `{${JSON.stringify(value)}}`;
-  return `{${String(value)}}`;
+/** A preview-props value as a JS expression: "lucide:X" → `X`, { $element } → JSX. */
+function jsExpr(value: unknown, icons: Set<string>): string {
+  if (typeof value === "string") {
+    if (!value.startsWith("lucide:")) return JSON.stringify(value);
+    icons.add(value.slice(7));
+    return value.slice(7);
+  }
+  if (value === null || typeof value !== "object") return String(value);
+  if (Array.isArray(value)) return `[${value.map((v) => jsExpr(v, icons)).join(", ")}]`;
+  const element = value as {
+    $element?: unknown;
+    props?: Record<string, unknown>;
+    children?: unknown[];
+  };
+  if (typeof element.$element === "string") {
+    const tag = element.$element.startsWith("lucide:")
+      ? jsExpr(element.$element, icons)
+      : element.$element;
+    const attrs = Object.entries(element.props ?? {})
+      .map(([k, v]) => ` ${k}={${jsExpr(v, icons)}}`)
+      .join("");
+    const children = (element.children ?? []).map((c) => `{${jsExpr(c, icons)}}`).join("");
+    return children ? `<${tag}${attrs}>${children}</${tag}>` : `<${tag}${attrs} />`;
+  }
+  const entries = Object.entries(value).map(
+    ([k, v]) => `${IDENTIFIER.test(k) ? k : JSON.stringify(k)}: ${jsExpr(v, icons)}`,
+  );
+  return `{ ${entries.join(", ")} }`;
 }
 
 /** Build the React usage snippet for a variant (import + JSX with exact props). */
 export function reactUsage(entry: BlockEntry, label: string): string {
-  const componentName = pascal(entry.meta.file);
-  const props =
-    entry.previewProps[entry.meta.variants.find((v) => v.label === label) ? label : label] ?? {};
+  const props = entry.previewProps[label] ?? {};
   const icons = new Set<string>();
-  const attrs: string[] = [];
-  for (const [k, v] of Object.entries(props)) {
-    if (typeof v === "string" && v.startsWith("lucide:")) {
-      icons.add(v.slice(7));
-      attrs.push(`${k}={${v.slice(7)}}`);
-    } else if (typeof v === "boolean") {
-      if (v) attrs.push(k);
-    } else if (typeof v === "number" || typeof v === "object") {
-      if (v !== null) attrs.push(`${k}=${jsxValue(v)}`);
-    } else if (v !== undefined && v !== null) {
-      attrs.push(`${k}=${jsxValue(v)}`);
-    }
-  }
+  const attrs = Object.entries(props).map(([k, v]) => {
+    if (v === true) return k;
+    // plain JSX attribute strings do not process escapes or entities
+    if (typeof v === "string" && !v.startsWith("lucide:") && !/["\\\n&{}<>]/.test(v))
+      return `${k}=${JSON.stringify(v)}`;
+    return `${k}={${jsExpr(v, icons)}}`;
+  });
   const importLines = [
-    `import { ${componentName} } from "@cremona/blocks/src/${entry.key}/react.js";`,
+    `import { ${entry.exportName} } from "@cremona/blocks/src/${entry.key}/react.js";`,
     ...(icons.size ? [`import { ${[...icons].join(", ")} } from "lucide-react";`] : []),
   ].join("\n");
   const body = attrs.length
-    ? `<${componentName}\n  animated\n  ${attrs.join("\n  ")}\n/>`
-    : `<${componentName} animated />`;
+    ? `<${entry.exportName}\n  animated\n  ${attrs.join("\n  ")}\n/>`
+    : `<${entry.exportName} animated />`;
   return `${importLines}\n\n${body}`;
-}
-
-/** Props of one variant as raw data (hydrated: "lucide:X" resolved upstream). */
-export function variantPropsOf(entry: BlockEntry, label: string): Record<string, unknown> {
-  return entry.previewProps[label] ?? {};
 }

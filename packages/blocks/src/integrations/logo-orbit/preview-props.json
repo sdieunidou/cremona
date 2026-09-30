@@ -20,55 +20,43 @@
   },
   "custom logo": {
     "logo": {
-      "type": "svg",
-      "key": null,
+      "$element": "svg",
       "props": {
         "viewBox": "0 0 24 24",
-        "className": "size-7",
-        "children": [
-          {
-            "type": "circle",
-            "key": null,
-            "props": {
-              "cx": 7.5,
-              "cy": 8,
-              "r": 5,
-              "className": "fill-blue-500",
-              "opacity": 0.9
-            },
-            "_owner": null,
-            "_store": {}
-          },
-          {
-            "type": "circle",
-            "key": null,
-            "props": {
-              "cx": 16.5,
-              "cy": 8,
-              "r": 5,
-              "className": "fill-rose-500",
-              "opacity": 0.9
-            },
-            "_owner": null,
-            "_store": {}
-          },
-          {
-            "type": "circle",
-            "key": null,
-            "props": {
-              "cx": 12,
-              "cy": 15,
-              "r": 5,
-              "className": "fill-amber-500",
-              "opacity": 0.9
-            },
-            "_owner": null,
-            "_store": {}
-          }
-        ]
+        "className": "size-7"
       },
-      "_owner": null,
-      "_store": {}
+      "children": [
+        {
+          "$element": "circle",
+          "props": {
+            "cx": 7.5,
+            "cy": 8,
+            "r": 5,
+            "className": "fill-blue-500",
+            "opacity": 0.9
+          }
+        },
+        {
+          "$element": "circle",
+          "props": {
+            "cx": 16.5,
+            "cy": 8,
+            "r": 5,
+            "className": "fill-rose-500",
+            "opacity": 0.9
+          }
+        },
+        {
+          "$element": "circle",
+          "props": {
+            "cx": 12,
+            "cy": 15,
+            "r": 5,
+            "className": "fill-amber-500",
+            "opacity": 0.9
+          }
+        }
+      ]
     }
   },
   "inner ring": {

@@ -11,6 +11,7 @@ import {
   type BlockEntry,
 } from "../lib/discovery.js";
 import { hydrateProps } from "../lib/icons.js";
+import { ErrorBoundary, PreviewError } from "../components/error-boundary.js";
 
 export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
   return (
@@ -48,7 +49,9 @@ export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
                       description={item.description}
                     >
                       {entry ? (
-                        <Thumbnail entry={entry} />
+                        <ErrorBoundary fallback={(error) => <PreviewError error={error} />}>
+                          <Thumbnail entry={entry} />
+                        </ErrorBoundary>
                       ) : (
                         <div className="size-full animate-pulse bg-muted/40" />
                       )}

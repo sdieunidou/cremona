@@ -12,88 +12,64 @@
   "custom icons": {
     "sources": [
       {
-        "type": "lucide:Smartphone",
-        "key": null,
+        "$element": "lucide:Smartphone",
         "props": {
           "className": "size-4",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Laptop",
-        "key": null,
+        "$element": "lucide:Laptop",
         "props": {
           "className": "size-4",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Server",
-        "key": null,
+        "$element": "lucide:Server",
         "props": {
           "className": "size-4",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       }
     ],
     "transforms": [
       {
-        "type": "lucide:Cog",
-        "key": null,
+        "$element": "lucide:Cog",
         "props": {
           "className": "size-4.5 text-primary-foreground",
           "strokeWidth": 1.5
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Shuffle",
-        "key": null,
+        "$element": "lucide:Shuffle",
         "props": {
           "className": "size-4.5 text-primary-foreground",
           "strokeWidth": 1.5
-        },
-        "_owner": null,
-        "_store": {}
+        }
       }
     ],
     "destinations": [
       {
-        "type": "lucide:ChartLine",
-        "key": null,
+        "$element": "lucide:ChartLine",
         "props": {
           "className": "size-4",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Send",
-        "key": null,
+        "$element": "lucide:Send",
         "props": {
           "className": "size-4",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       },
       {
-        "type": "lucide:Bell",
-        "key": null,
+        "$element": "lucide:Bell",
         "props": {
           "className": "size-4",
           "strokeWidth": 2
-        },
-        "_owner": null,
-        "_store": {}
+        }
       }
     ]
   }

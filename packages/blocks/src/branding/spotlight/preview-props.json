@@ -11,14 +11,11 @@
   },
   "custom logo": {
     "logo": {
-      "type": "lucide:Sparkles",
-      "key": null,
+      "$element": "lucide:Sparkles",
       "props": {
         "className": "size-6",
         "strokeWidth": 1.5
-      },
-      "_owner": null,
-      "_store": {}
+      }
     }
   },
   "custom color": {
