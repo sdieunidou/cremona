@@ -12,6 +12,8 @@ export default defineConfig({
     alias: {
       "@": new URL("./src", import.meta.url).pathname,
       "@cremona/tokens": new URL("../../packages/tokens", import.meta.url).pathname,
+      "@cremona/core/land-mask": new URL("../../packages/core/src/land-mask.ts", import.meta.url)
+        .pathname,
       "@cremona/core": new URL("../../packages/core/src/index.ts", import.meta.url).pathname,
       "@cremona/react": new URL("../../packages/react/src/index.ts", import.meta.url).pathname,
     },

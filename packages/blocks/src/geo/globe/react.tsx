@@ -2,7 +2,7 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { motion, MotionConfigContext, cancelFrame, frame } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
-import { LAND_MASK_BASE64 } from "./land-mask.js";
+import { isLand as isLandAt } from "@cremona/core/land-mask";
 
 type Vec3 = { x: number; y: number; z: number };
 
@@ -132,39 +132,10 @@ function fibonacciSphere(count: number): Vec3[] {
   return points;
 }
 
-const MASK_WIDTH = 256;
-const MASK_HEIGHT = 128;
-const BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-let decodedMask: Uint8Array | null = null;
-
-function landMask(): Uint8Array {
-  if (decodedMask) return decodedMask;
-  const body = LAND_MASK_BASE64.replace(/=+$/, "");
-  const bytes = new Uint8Array((body.length * 3) >> 2);
-  let buffer = 0;
-  let bits = 0;
-  let index = 0;
-  for (let i = 0; i < body.length; i++) {
-    buffer = (buffer << 6) | BASE64_CHARS.indexOf(body[i]!);
-    bits += 6;
-    if (bits >= 8) {
-      bits -= 8;
-      bytes[index++] = (buffer >> bits) & 255;
-    }
-  }
-  decodedMask = bytes;
-  return bytes;
-}
-
 function isLand(p: Vec3): boolean {
   const lat = (Math.asin(Math.max(-1, Math.min(1, p.y))) * 180) / Math.PI;
   const lng = (Math.atan2(p.z, p.x) * 180) / Math.PI;
-  let col = Math.floor(((lng + 180) / 360) * MASK_WIDTH);
-  let row = Math.floor(((90 - lat) / 180) * MASK_HEIGHT);
-  col = col < 0 ? 0 : col >= MASK_WIDTH ? 255 : col;
-  row = row < 0 ? 0 : row >= MASK_HEIGHT ? 127 : row;
-  const bitIndex = row * MASK_WIDTH + col;
-  return ((landMask()[bitIndex >> 3]! >> (7 - (bitIndex & 7))) & 1) === 1;
+  return isLandAt(lat, lng);
 }
 
 const globeAnim = {
