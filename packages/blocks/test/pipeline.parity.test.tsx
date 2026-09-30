@@ -6,9 +6,6 @@ import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/connections/pipeline");
 
-// icon elements for the custom variants (from the POC page chunk imports)
-const icon = (Icon: typeof Globe) => <Icon className="size-4" strokeWidth={2} />;
-
 runGoldenParity("connections/pipeline", {
   blockDir,
   Component: Pipeline,
@@ -16,13 +13,14 @@ runGoldenParity("connections/pipeline", {
     {
       label: "2 in · 4 out",
       props: {
-        inputs: [icon(Globe), icon(Smartphone)],
-        outputs: [icon(ChartColumn), icon(Mail), icon(Bell), icon(Cloud)],
+        // icon components are drawn at the node icon size
+        inputs: [Globe, Smartphone],
+        outputs: [ChartColumn, Mail, Bell, Cloud],
       },
     },
     {
       label: "isometric · 1 in · 2 out",
-      props: { inputs: [icon(Globe)], outputs: [icon(ChartColumn), icon(Bell)], isometric: true },
+      props: { inputs: [Globe], outputs: [ChartColumn, Bell], isometric: true },
     },
     {
       label: "custom logo",

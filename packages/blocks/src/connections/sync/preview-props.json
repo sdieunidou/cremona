@@ -12,88 +12,28 @@
   "single pair": {
     "pairs": [
       [
-        {
-          "$element": "lucide:Laptop",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        },
-        {
-          "$element": "lucide:Cloud",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        }
+        "lucide:Laptop",
+        "lucide:Cloud"
       ]
     ]
   },
   "four pairs": {
     "pairs": [
       [
-        {
-          "$element": "lucide:Laptop",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        },
-        {
-          "$element": "lucide:Server",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        }
+        "lucide:Laptop",
+        "lucide:Server"
       ],
       [
-        {
-          "$element": "lucide:Smartphone",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        },
-        {
-          "$element": "lucide:Cloud",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        }
+        "lucide:Smartphone",
+        "lucide:Cloud"
       ],
       [
-        {
-          "$element": "lucide:Monitor",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        },
-        {
-          "$element": "lucide:Database",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        }
+        "lucide:Monitor",
+        "lucide:Database"
       ],
       [
-        {
-          "$element": "lucide:Database",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        },
-        {
-          "$element": "lucide:HardDrive",
-          "props": {
-            "className": "size-4",
-            "strokeWidth": 2
-          }
-        }
+        "lucide:Database",
+        "lucide:HardDrive"
       ]
     ]
   }

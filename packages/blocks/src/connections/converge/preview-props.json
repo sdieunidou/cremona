@@ -11,77 +11,23 @@
   },
   "custom icons": {
     "nodes": [
-      {
-        "$element": "lucide:Palette",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:CodeXml",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Music",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      }
+      "lucide:Palette",
+      "lucide:CodeXml",
+      "lucide:Music"
     ]
   },
   "4 nodes": {
     "nodes": [
-      {
-        "$element": "lucide:FileText",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Image",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Database",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:CodeXml",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      }
+      "lucide:FileText",
+      "lucide:Image",
+      "lucide:Database",
+      "lucide:CodeXml"
     ]
   },
   "isometric · 2 nodes": {
     "nodes": [
-      {
-        "$element": "lucide:Image",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Music",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      }
+      "lucide:Image",
+      "lucide:Music"
     ],
     "isometric": true
   },

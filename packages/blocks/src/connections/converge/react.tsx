@@ -1,9 +1,12 @@
-import { useId, useRef, useState } from "react";
+import { isValidElement, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
-import { Database, FileText, Image } from "lucide-react";
+import { useInView, useLoopActive } from "@cremona/react";
+import { Database, FileText, Image, type LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+/** A node's content: an icon component (drawn at the node's icon size) or any element. */
+export type ConvergeNode = ReactNode | LucideIcon;
 
 export const convergeDefaultCopy = {
   nodes: [
@@ -22,6 +25,19 @@ const DEST_X = 215;
 const DELAY_BASE = 0.35;
 const DELAY_UNIT = 0.1;
 const MAX_NODES = 4;
+
+function isIcon(node: ConvergeNode): node is LucideIcon {
+  return (
+    typeof node === "function" ||
+    (typeof node === "object" && node !== null && !isValidElement(node) && "$$typeof" in node)
+  );
+}
+
+function nodeContent(node: ConvergeNode): ReactNode {
+  if (!isIcon(node)) return node;
+  const Icon = node;
+  return <Icon className="size-4" strokeWidth={2} />;
+}
 
 function nodeY(i: number, n: number): number {
   return n <= 1 ? CANVAS.h / 2 : FIRST_NODE_Y + ((CANVAS.h - 56) * i) / (n - 1);
@@ -115,7 +131,8 @@ function ConvergePulse({
 }
 
 export interface ConvergeProps extends VisualProps {
-  nodes?: readonly ReactNode[];
+  /** Source nodes (up to 4). An empty list draws one empty, dashed slot. */
+  nodes?: readonly ConvergeNode[];
   pulse?: "dot" | "spike";
   hover?: boolean;
   isometric?: boolean;
@@ -136,6 +153,7 @@ export function Converge({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
+  const loop = useLoopActive(ref, animated);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
@@ -143,8 +161,10 @@ export function Converge({
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
 
-  const nodeList = (nodes.length ? nodes : convergeDefaultCopy.nodes) as readonly ReactNode[];
-  const list = nodeList.slice(0, MAX_NODES);
+  // an empty list keeps one dashed slot, so the diagram still reads as "nothing connected"
+  const list: readonly (ConvergeNode | undefined)[] = nodes.length
+    ? nodes.slice(0, MAX_NODES)
+    : [undefined];
   const n = list.length;
   const nodeDelay = (i: number) => DELAY_BASE + i * DELAY_UNIT;
   const paths = list.map((_, t) => cubic(NODE_X, nodeY(t, n), LINE_END_X, DEST_Y));
@@ -159,7 +179,7 @@ export function Converge({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative aspect-14/9 w-72"
+        className={cn("relative aspect-14/9 w-72", fill && "max-w-full self-center")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? stageIso : stage) : undefined}
         {...state}
@@ -198,7 +218,7 @@ export function Converge({
               {...state}
             />
           ))}
-          {animated && (
+          {animated && loop && (
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
@@ -208,16 +228,18 @@ export function Converge({
                 delay: pulseVisible && !hover ? pulseDelay : 0,
               }}
             >
-              {paths.map((d, i) => (
-                <ConvergePulse
-                  key={`cd${i}`}
-                  d={d}
-                  dur="2s"
-                  begin={`${-i * 0.7}s`}
-                  pulse={pulse}
-                  gradientId={gradientId}
-                />
-              ))}
+              {paths.map((d, i) =>
+                list[i] == null ? null : (
+                  <ConvergePulse
+                    key={`cd${i}`}
+                    d={d}
+                    dur="2s"
+                    begin={`${-i * 0.7}s`}
+                    pulse={pulse}
+                    gradientId={gradientId}
+                  />
+                ),
+              )}
             </motion.g>
           )}
         </svg>
@@ -231,12 +253,16 @@ export function Converge({
             }}
           >
             <motion.div
-              className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
+              className={
+                node == null
+                  ? "flex size-9 items-center justify-center rounded-xl border border-dashed border-muted-foreground/40 bg-card/60 ring-2 ring-background"
+                  : "flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
+              }
               variants={animated ? nodeAnim : undefined}
               custom={nodeDelay(t)}
               {...state}
             >
-              {node}
+              {node == null ? null : nodeContent(node)}
             </motion.div>
           </div>
         ))}

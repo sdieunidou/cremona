@@ -1,9 +1,20 @@
-import { useId, useRef, useState } from "react";
+import { isValidElement, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
-import { Archive, Cloud, Database, FileText, HardDrive, Server } from "lucide-react";
+import { useInView, useLoopActive } from "@cremona/react";
+import {
+  Archive,
+  Cloud,
+  Database,
+  FileText,
+  HardDrive,
+  Server,
+  type LucideIcon,
+} from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+/** A node's content: an icon component (drawn at the node's icon size) or any element. */
+export type SyncNode = ReactNode | LucideIcon;
 
 export const syncDefaultCopy = {
   pairs: [
@@ -26,6 +37,24 @@ const RIGHT_X = 226;
 const DELAY_BASE = 0.3;
 const DELAY_UNIT = 0.1;
 const MAX_PAIRS = 4;
+
+function isIcon(node: SyncNode): node is LucideIcon {
+  return (
+    typeof node === "function" ||
+    (typeof node === "object" && node !== null && !isValidElement(node) && "$$typeof" in node)
+  );
+}
+
+function nodeContent(node: SyncNode): ReactNode {
+  if (!isIcon(node)) return node;
+  const Icon = node;
+  return <Icon className="size-4" strokeWidth={2} />;
+}
+
+const NODE =
+  "flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background";
+const EMPTY_NODE =
+  "flex size-9 items-center justify-center rounded-xl border border-dashed border-muted-foreground/40 bg-card/60 ring-2 ring-background";
 
 function pairY(i: number, n: number): number {
   return n <= 1 ? CANVAS.h / 2 : FIRST_PAIR_Y + ((CANVAS.h - 60) * i) / (n - 1);
@@ -114,7 +143,8 @@ function SyncPulse({
 }
 
 export interface SyncProps extends VisualProps {
-  pairs?: readonly (readonly ReactNode[])[];
+  /** `[left, right]` pairs (up to 4). An empty list draws one empty, dashed pair. */
+  pairs?: readonly (readonly SyncNode[])[];
   pulse?: "dot" | "spike";
   hover?: boolean;
   isometric?: boolean;
@@ -135,6 +165,7 @@ export function Sync({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
+  const loop = useLoopActive(ref, animated);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
@@ -142,10 +173,7 @@ export function Sync({
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
 
-  const pairList = (
-    pairs.length ? pairs : syncDefaultCopy.pairs
-  ) as readonly (readonly ReactNode[])[];
-  const list = pairList.slice(0, MAX_PAIRS);
+  const list: readonly (readonly SyncNode[])[] = pairs.length ? pairs.slice(0, MAX_PAIRS) : [[]];
   const n = list.length;
   const nodeDelay = (i: number) => DELAY_BASE + i * DELAY_UNIT;
   const curves = list.map((_, t) => pairPaths(t, n));
@@ -160,7 +188,7 @@ export function Sync({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative aspect-13/9 w-72"
+        className={cn("relative aspect-13/9 w-72", fill && "max-w-full self-center")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? stageIso : stage) : undefined}
         {...state}
@@ -199,7 +227,7 @@ export function Sync({
               {...state}
             />
           ))}
-          {animated && (
+          {animated && loop && (
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
@@ -209,24 +237,26 @@ export function Sync({
                 delay: pulseVisible && !hover ? pulseDelay : 0,
               }}
             >
-              {curves.map((pair, i) => (
-                <g key={`sd${i}`}>
-                  <SyncPulse
-                    d={pair.forward}
-                    dur="3s"
-                    begin={`${-i * 0.8}s`}
-                    pulse={pulse}
-                    gradientId={gradientId}
-                  />
-                  <SyncPulse
-                    d={pair.reverse}
-                    dur="3s"
-                    begin={`${-(i * 0.8 + 1.5)}s`}
-                    pulse={pulse}
-                    gradientId={gradientId}
-                  />
-                </g>
-              ))}
+              {curves.map((pair, i) =>
+                list[i]![0] == null || list[i]![1] == null ? null : (
+                  <g key={`sd${i}`}>
+                    <SyncPulse
+                      d={pair.forward}
+                      dur="3s"
+                      begin={`${-i * 0.8}s`}
+                      pulse={pulse}
+                      gradientId={gradientId}
+                    />
+                    <SyncPulse
+                      d={pair.reverse}
+                      dur="3s"
+                      begin={`${-(i * 0.8 + 1.5)}s`}
+                      pulse={pulse}
+                      gradientId={gradientId}
+                    />
+                  </g>
+                ),
+              )}
             </motion.g>
           )}
         </svg>
@@ -240,12 +270,12 @@ export function Sync({
             }}
           >
             <motion.div
-              className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
+              className={pair[0] == null ? EMPTY_NODE : NODE}
               variants={animated ? nodeAnim : undefined}
               custom={nodeDelay(t)}
               {...state}
             >
-              {pair[0]}
+              {pair[0] == null ? null : nodeContent(pair[0])}
             </motion.div>
           </div>
         ))}
@@ -259,12 +289,12 @@ export function Sync({
             }}
           >
             <motion.div
-              className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
+              className={pair[1] == null ? EMPTY_NODE : NODE}
               variants={animated ? nodeAnim : undefined}
               custom={nodeDelay(t) + 0.1}
               {...state}
             >
-              {pair[1]}
+              {pair[1] == null ? null : nodeContent(pair[1])}
             </motion.div>
           </div>
         ))}
