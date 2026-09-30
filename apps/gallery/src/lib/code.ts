@@ -1,38 +1,12 @@
-/** Code access: lazy raw sources + usage-snippet generation. */
+/** Usage-snippet generation: the exact JSX of one variant, imported from the public path. */
 import type { BlockEntry } from "./discovery.js";
 
-const reactRawModules = import.meta.glob<string>("../../../../packages/blocks/src/*/*/react.tsx", {
-  query: "?raw",
-  import: "default",
-});
-const stimRawModules = import.meta.glob<string>(
-  "../../../../packages/stimulus/templates/*/*/*.html",
-  { query: "?raw", import: "default" },
-);
-
-export function reactSourcePath(key: string): string | undefined {
-  const path = `../../../../packages/blocks/src/${key}/react.tsx`;
-  return reactRawModules[path] ? path : undefined;
-}
-
-export function loadReactSource(key: string): Promise<string | null> {
-  const path = reactSourcePath(key);
-  if (!path) return Promise.resolve(null);
-  return reactRawModules[path]!();
-}
-
-export function stimulusTemplatePath(key: string, slug: string): string | undefined {
-  const path = `../../../../packages/stimulus/templates/${key}/${slug}.html`;
-  return stimRawModules[path] ? path : undefined;
-}
-
-export function loadStimulusTemplate(key: string, slug: string): Promise<string | undefined> {
-  const path = stimulusTemplatePath(key, slug);
-  if (!path) return Promise.resolve(undefined);
-  return stimRawModules[path]!();
-}
-
 const IDENTIFIER = /^[A-Za-z_$][\w$]*$/;
+
+/** Public package path of a block: `@cremona/blocks/<category>/<file>`. */
+export function importPath(key: string): string {
+  return `@cremona/blocks/${key}`;
+}
 
 /** A preview-props value as a JS expression: "lucide:X" → `X`, { $element } → JSX. */
 function jsExpr(value: unknown, icons: Set<string>): string {
@@ -76,7 +50,7 @@ export function reactUsage(entry: BlockEntry, label: string): string {
     return `${k}={${jsExpr(v, icons)}}`;
   });
   const importLines = [
-    `import { ${entry.exportName} } from "@cremona/blocks/src/${entry.key}/react.js";`,
+    `import { ${entry.exportName} } from "${importPath(entry.key)}";`,
     ...(icons.size ? [`import { ${[...icons].join(", ")} } from "lucide-react";`] : []),
   ].join("\n");
   const body = attrs.length

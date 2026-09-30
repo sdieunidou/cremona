@@ -1,8 +1,10 @@
 import { useId, useState } from "react";
 import { Search, Shapes, Folder, FolderOpen, ChevronRight } from "lucide-react";
-import { SHELL } from "../lib/shell-classes.js";
-import { categories, findBlock, type CatalogItem } from "../lib/discovery.js";
 import { cn } from "@cremona/core";
+import { SHELL } from "../lib/shell-classes.js";
+import { SEARCH_SHORTCUT } from "../lib/platform.js";
+import { categories, type CatalogItem } from "../lib/discovery.js";
+import { Link } from "./link.js";
 
 export interface NavProps {
   path: string;
@@ -12,28 +14,22 @@ export interface NavProps {
 
 export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
   const current = /^\/visuals\/([\w-]+)\/([\w-]+)/.exec(path);
+  const home = path === "/";
   return (
     <>
       <div className={SHELL.header}>
         <div className="flex items-center gap-2 px-2 py-1.5">
-          <a
-            className="group flex"
-            href="/"
-            onClick={(e) => {
-              e.preventDefault();
-              onNavigate("/");
-            }}
-          >
+          <Link to="/" onNavigate={onNavigate} className="group flex" aria-label="Cremona UI home">
             <span className="inline-flex items-center gap-2 transition-opacity group-hover:opacity-80">
               <CremonaMark />
-              <span className="font-semibold tracking-tight text-lg text-foreground hidden md:block">
+              <span className="font-semibold tracking-tight text-lg text-foreground">
                 Cremona
                 <span className="bg-[linear-gradient(90deg,var(--color-violet-600),var(--color-sky-600),var(--color-fuchsia-600),var(--color-indigo-600),var(--color-purple-600),var(--color-blue-600),var(--color-violet-600))] dark:bg-[linear-gradient(90deg,var(--color-violet-400),var(--color-sky-400),var(--color-fuchsia-400),var(--color-indigo-400),var(--color-purple-400),var(--color-blue-400),var(--color-violet-400))] bg-size-[300%_100%] bg-clip-text text-transparent">
                   UI
                 </span>
               </span>
             </span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className={SHELL.content}>
@@ -43,30 +39,29 @@ export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
           </div>
           <ul className={SHELL.menu}>
             <li className={SHELL.menuItem}>
-              <a
-                data-active={!current || undefined}
+              <Link
+                to="/"
+                onNavigate={onNavigate}
+                data-active={home || undefined}
+                aria-current={home ? "page" : undefined}
                 className={SHELL.menuButton}
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate("/");
-                }}
               >
-                <Shapes className="opacity-50" />
+                <Shapes className="opacity-50" aria-hidden="true" />
                 <span>All visuals</span>
-              </a>
+              </Link>
             </li>
             <li className={SHELL.menuItem}>
               <button
                 type="button"
                 className={cn(SHELL.menuButton, "text-muted-foreground")}
                 onClick={onOpenSearch}
+                aria-keyshortcuts="Control+K Meta+K"
               >
-                <Search className="opacity-50" />
+                <Search className="opacity-50" aria-hidden="true" />
                 <span>Search…</span>
-                <span className="pointer-events-none ml-auto hidden items-center gap-1 rounded border bg-background/75 px-1 py-0.25 text-[10px] font-semibold uppercase md:inline-flex">
-                  Ctrl K
-                </span>
+                <kbd className="pointer-events-none ml-auto hidden items-center gap-1 rounded border bg-background/75 px-1 py-0.25 font-sans text-[10px] font-semibold uppercase md:inline-flex">
+                  {SEARCH_SHORTCUT}
+                </kbd>
               </button>
             </li>
           </ul>
@@ -102,6 +97,7 @@ function CategoryGroup({
   activeKey: string | null;
   onNavigate: (to: string) => void;
 }) {
+  const listId = useId();
   const containsActive = activeKey?.startsWith(`${slug}/`) ?? false;
   const [open, setOpen] = useState(containsActive);
   const [hadActive, setHadActive] = useState(containsActive);
@@ -111,50 +107,52 @@ function CategoryGroup({
   }
 
   return (
-    <div
+    <li
+      className={cn(SHELL.menuItem, "group/collapsible")}
       data-open={open || undefined}
       data-closed={!open || undefined}
-      className="group/collapsible"
     >
-      <li className={SHELL.menuItem}>
-        <button
-          type="button"
-          aria-expanded={open}
-          className={SHELL.collapsibleTrigger}
-          onClick={() => setOpen((v) => !v)}
-        >
-          <Folder className="opacity-50 group-data-open/collapsible:hidden" />
-          <FolderOpen className="hidden opacity-50 group-data-open/collapsible:block" />
-          <span>{label}</span>
-          <ChevronRight className="ml-auto opacity-50 transition-transform group-data-open/collapsible:rotate-90" />
-        </button>
-      </li>
+      <button
+        type="button"
+        aria-expanded={open}
+        aria-controls={open ? listId : undefined}
+        className={SHELL.collapsibleTrigger}
+        onClick={() => setOpen((v) => !v)}
+      >
+        <Folder className="opacity-50 group-data-open/collapsible:hidden" aria-hidden="true" />
+        <FolderOpen
+          className="hidden opacity-50 group-data-open/collapsible:block"
+          aria-hidden="true"
+        />
+        <span>{label}</span>
+        <ChevronRight
+          className="ml-auto opacity-50 transition-transform group-data-open/collapsible:rotate-90"
+          aria-hidden="true"
+        />
+      </button>
       {open && (
-        <ul className={cn(SHELL.menu, "gallery-submenu")}>
+        <ul id={listId} className={cn(SHELL.menu, "gallery-submenu")}>
           {items.map((item) => {
             const href = `/visuals/${slug}/${item.file}`;
             const active = activeKey === `${slug}/${item.file}`;
-            const ported = !!findBlock(slug, item.file);
             return (
               <li key={item.file} className={SHELL.menuItem}>
-                <a
+                <Link
+                  to={href}
+                  onNavigate={onNavigate}
                   data-active={active || undefined}
-                  href={href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate(href);
-                  }}
-                  className={cn(SHELL.menuButton, !ported && "opacity-50")}
+                  aria-current={active ? "page" : undefined}
+                  className={SHELL.menuButton}
                   title={item.description}
                 >
                   <span className="truncate">{item.name}</span>
-                </a>
+                </Link>
               </li>
             );
           })}
         </ul>
       )}
-    </div>
+    </li>
   );
 }
 

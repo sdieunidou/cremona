@@ -1,26 +1,15 @@
 /** Deserialize preview props: "lucide:<Name>" strings back to icon components, { $element } back to elements. */
-import * as lucide from "lucide-react";
 import { createElement, type ComponentType, type ReactNode } from "react";
+import { ICONS } from "./icon-map.js";
 
-const registry = new Map<string, ComponentType<{ className?: string; strokeWidth?: number }>>();
-for (const value of Object.values(lucide)) {
-  const icon = value as { displayName?: string; $$typeof?: symbol };
-  // lucide-react 1.x icons are forwardRef objects (function in older versions)
-  const isComponent =
-    typeof value === "function" || icon.$$typeof === Symbol.for("react.forward_ref");
-  if (isComponent && icon.displayName) {
-    registry.set(`lucide:${icon.displayName}`, value as never);
-  }
-}
+type IconComponent = ComponentType<{ className?: string; strokeWidth?: number }>;
 
 export function isIconRef(value: unknown): value is string {
   return typeof value === "string" && value.startsWith("lucide:");
 }
 
-export function resolveIcon(
-  value: string,
-): ComponentType<{ className?: string; strokeWidth?: number }> | null {
-  return registry.get(value) ?? null;
+export function resolveIcon(value: string): IconComponent | null {
+  return (ICONS[value.slice("lucide:".length)] as IconComponent | undefined) ?? null;
 }
 
 /** Deep-clone props, converting icon refs into components (arrays stay arrays at every depth). */

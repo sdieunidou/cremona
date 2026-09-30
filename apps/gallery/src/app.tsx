@@ -1,24 +1,49 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useId, useRef, useState } from "react";
+import { X } from "lucide-react";
+import { cn } from "@cremona/core";
 import { useRoute, parseRoute } from "./lib/router.js";
 import { useTheme } from "./lib/theme.js";
-import { SidebarContent, type NavProps } from "./components/sidebar.js";
-import { Header, SearchDialog } from "./components/header.js";
-import { HomePage, BlockPage } from "./pages/home.js";
+import { findItem, stats } from "./lib/discovery.js";
+import { useFocusTrap } from "./lib/focus.js";
+import { useMediaQuery } from "./lib/viewport.js";
 import { SHELL } from "./lib/shell-classes.js";
+import { SidebarContent, type NavProps } from "./components/sidebar.js";
+import { Header } from "./components/header.js";
+import { SearchDialog } from "./components/search-dialog.js";
 import { ErrorBoundary } from "./components/error-boundary.js";
-import { cn } from "@cremona/core";
+import { Link } from "./components/link.js";
+import { HomePage } from "./pages/home.js";
+import { NotFound } from "./pages/not-found.js";
+
+const BlockPage = lazy(() => import("./pages/block.js"));
+
+const MOBILE = "(max-width: 767px)";
 
 export function App() {
   const [path, navigate] = useRoute();
   const route = parseRoute(path);
-  const { appearance, theme, isDark, updateTheme, toggleDark } = useTheme();
+  const found = route.name === "block" ? findItem(route.category, route.file) : undefined;
+  const { appearance, theme, isDark, updateAppearance, updateTheme, toggleDark } = useTheme();
   const [searchOpen, setSearchOpen] = useState(false);
-  const [mobileNav, setMobileNav] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
+  const mobile = useMediaQuery(MOBILE);
+  if (navOpen && !mobile) setNavOpen(false);
+  const navId = useId();
+  const navRef = useRef<HTMLDivElement>(null);
+  const insetRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
+
+  useFocusTrap(navRef, navOpen, {
+    onEscape: () => setNavOpen(false),
+    initialFocus: () => navRef.current?.querySelector<HTMLElement>("nav ul a"),
+    inertOutside: () => [insetRef.current],
+  });
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
+        setNavOpen(false);
         setSearchOpen((v) => !v);
       }
     };
@@ -26,36 +51,49 @@ export function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const title =
+    route.name === "home"
+      ? "Cremona — animated visual blocks"
+      : found
+        ? `${found.item.name} — ${found.group.category} — Cremona`
+        : "Not found — Cremona";
   useEffect(() => {
-    const route = parseRoute(path);
-    document.title =
-      route.name === "block"
-        ? `${route.file} visual — Cremona`
-        : "Cremona — animated visual blocks";
-  }, [path]);
+    document.title = title;
+  }, [title]);
 
   const nav: NavProps = {
     path,
     onNavigate: (to) => {
       navigate(to);
-      setMobileNav(false);
+      setNavOpen(false);
     },
-    onOpenSearch: () => setSearchOpen(true),
+    onOpenSearch: () => {
+      setNavOpen(false);
+      setSearchOpen(true);
+    },
   };
-
-  const sidebarClass = cn(
-    SHELL.sidebar,
-    mobileNav &&
-      "max-md:block max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-100 max-md:w-64 max-md:bg-sidebar max-md:shadow-xl",
-  );
 
   return (
     <div
       className={SHELL.wrapper}
       style={{ "--sidebar-width": "16rem", "--sidebar-width-icon": "3rem" } as React.CSSProperties}
     >
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-200 focus:rounded-md focus:border focus:bg-background focus:px-3 focus:py-2 focus:text-sm focus:font-medium focus:shadow-md focus:outline-none focus:ring-3 focus:ring-ring/50"
+        onClick={(e) => {
+          e.preventDefault();
+          mainRef.current?.focus();
+        }}
+      >
+        Skip to content
+      </a>
       <div
-        className={sidebarClass}
+        className={cn(
+          SHELL.sidebar,
+          navOpen &&
+            "max-md:block max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-100 max-md:w-64 max-md:bg-sidebar max-md:shadow-xl",
+        )}
         data-state="expanded"
         data-collapsible=""
         data-variant="inset"
@@ -64,77 +102,102 @@ export function App() {
       >
         <div className={SHELL.gap} />
         <div
-          className={cn(SHELL.container, mobileNav && "max-md:flex")}
+          ref={navRef}
+          id={navId}
+          className={cn(SHELL.container, navOpen && "max-md:flex")}
           data-slot="sidebar-container"
           data-side="left"
         >
-          <div className={SHELL.inner} data-sidebar="sidebar">
+          <nav aria-label="Visuals" className={SHELL.inner} data-sidebar="sidebar">
+            <button
+              type="button"
+              aria-label="Close navigation"
+              className="absolute top-3 right-3 z-10 inline-flex size-8 items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 focus-visible:ring-sidebar-ring md:hidden"
+              onClick={() => setNavOpen(false)}
+            >
+              <X className="size-4" aria-hidden="true" />
+            </button>
             <SidebarContent {...nav} />
             <div className={SHELL.footer}>
               <p className="px-2 text-xs text-muted-foreground">
-                {route.name === "home"
-                  ? "Every render is golden-verified."
-                  : "Render verified against the POC goldens."}
+                {stats.blocks} blocks · {stats.variants.toLocaleString("en-US")} variants ·{" "}
+                {stats.categories} categories
               </p>
             </div>
-          </div>
+          </nav>
         </div>
       </div>
-      {mobileNav && (
+      {navOpen && (
         <button
           type="button"
-          aria-label="Close navigation"
+          aria-hidden="true"
           tabIndex={-1}
           className="fixed inset-0 z-90 bg-black/40 md:hidden"
-          onClick={() => setMobileNav(false)}
+          onClick={() => setNavOpen(false)}
         />
       )}
-      <main className={SHELL.main} data-slot="sidebar-inset">
+      <div ref={insetRef} className={SHELL.main} data-slot="sidebar-inset">
         <Header
           appearance={appearance}
           theme={theme}
-          onToggleDark={toggleDark}
+          isDark={isDark}
+          navOpen={navOpen}
+          navId={navId}
+          onAppearance={updateAppearance}
           onTheme={updateTheme}
+          onToggleDark={toggleDark}
           onOpenSearch={() => setSearchOpen(true)}
-          onToggleSidebar={() => setMobileNav((v) => !v)}
+          onToggleNav={() => setNavOpen((v) => !v)}
+          onNavigate={nav.onNavigate}
         />
-        <ErrorBoundary
-          key={path}
-          fallback={(error) => <PageError error={error} onNavigate={nav.onNavigate} />}
-        >
-          {route.name === "home" ? (
-            <HomePage onNavigate={nav.onNavigate} />
-          ) : (
-            <BlockPage category={route.category} file={route.file} onNavigate={nav.onNavigate} />
-          )}
-        </ErrorBoundary>
+        <main id="main" ref={mainRef} tabIndex={-1} className="flex flex-1 flex-col outline-none">
+          <ErrorBoundary
+            key={path}
+            fallback={(error) => <PageError error={error} onNavigate={nav.onNavigate} />}
+          >
+            {route.name === "home" ? (
+              <HomePage onNavigate={nav.onNavigate} />
+            ) : found ? (
+              <Suspense fallback={<PageLoading />}>
+                <BlockPage blockKey={`${found.group.slug}/${found.item.file}`} />
+              </Suspense>
+            ) : (
+              <NotFound path={path} onNavigate={nav.onNavigate} />
+            )}
+          </ErrorBoundary>
+        </main>
         <Footer />
-      </main>
+      </div>
       <SearchDialog
         open={searchOpen}
         onClose={() => setSearchOpen(false)}
         onNavigate={nav.onNavigate}
       />
-      <span className="hidden">{String(isDark)}</span>
     </div>
   );
 }
+
+function PageLoading() {
+  return (
+    <section className="relative py-8 md:py-16" aria-busy="true">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16">
+        <p role="status" className="text-sm text-muted-foreground">
+          Loading…
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function PageError({ error, onNavigate }: { error: Error; onNavigate: (to: string) => void }) {
   return (
     <section role="alert" className="relative py-8 md:py-16">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex flex-col gap-2">
         <h1 className="text-2xl font-bold tracking-tight">This page failed to render</h1>
         <p className="font-mono text-sm break-words text-muted-foreground">{error.message}</p>
-        <a
-          href="/"
-          className="text-sm underline underline-offset-4"
-          onClick={(e) => {
-            e.preventDefault();
-            onNavigate("/");
-          }}
-        >
+        <Link to="/" onNavigate={onNavigate} className="text-sm underline underline-offset-4">
           Back to all visuals
-        </a>
+        </Link>
       </div>
     </section>
   );

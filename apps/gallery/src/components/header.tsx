@@ -1,106 +1,24 @@
-import { useEffect, useRef, useState } from "react";
-import { Search, Sun, Moon, Palette, Check } from "lucide-react";
-import { SHELL } from "../lib/shell-classes.js";
-import { CremonaMark } from "./sidebar.js";
-import { categories } from "../lib/discovery.js";
+import { useEffect, useId, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { Search, Sun, Moon, Monitor, Palette, Check } from "lucide-react";
 import { cn } from "@cremona/core";
-import type { Appearance } from "../lib/theme.js";
-
-interface ThemeMeta {
-  value: string;
-  label: string;
-  class: string | null;
-  swatches: string[];
-}
-
-const THEMES: ThemeMeta[] = [
-  {
-    value: "default",
-    label: "Default",
-    class: null,
-    swatches: ["oklch(0.205 0 0)", "oklch(0.556 0 0)", "oklch(0.922 0 0)"],
-  },
-  {
-    value: "claude-plus",
-    label: "Claude+",
-    class: "theme-claude-plus",
-    swatches: [
-      "oklch(0.6171 0.1375 39.0427)",
-      "oklch(0.6898 0.1581 290.4107)",
-      "oklch(0.9245 0.0138 92.9892)",
-    ],
-  },
-  {
-    value: "light-green",
-    label: "Light Green",
-    class: "theme-light-green",
-    swatches: [
-      "oklch(0.72 0.145 145)",
-      "oklch(0.7227 0.192 149.5793)",
-      "oklch(0.3717 0.0392 257.287)",
-    ],
-  },
-  {
-    value: "zen",
-    label: "Zen",
-    class: "theme-zen",
-    swatches: ["oklch(0.3012 0 0)", "oklch(0.6863 0.1743 34.2614)", "oklch(0.8647 0.0201 87.5232)"],
-  },
-  {
-    value: "sakura",
-    label: "Sakura",
-    class: "theme-sakura",
-    swatches: [
-      "oklch(0.7508 0.161 2.6024)",
-      "oklch(0.5367 0.153 7.7575)",
-      "oklch(0.9239 0.0415 1.1045)",
-    ],
-  },
-  {
-    value: "tiesen",
-    label: "Tiesen",
-    class: "theme-tiesen",
-    swatches: [
-      "oklch(0.2571 0.1161 272.24)",
-      "oklch(0.5144 0.1605 267.44)",
-      "oklch(0.9214 0.0248 257.65)",
-    ],
-  },
-  {
-    value: "deep-purple",
-    label: "Deep Purple",
-    class: "theme-deep-purple",
-    swatches: [
-      "oklch(0.4865 0.2423 291.8661)",
-      "oklch(0.6192 0.2037 312.7283)",
-      "oklch(0.9546 0.0227 303.2883)",
-    ],
-  },
-  {
-    value: "indigo-clean",
-    label: "Indigo Clean",
-    class: "theme-indigo-clean",
-    swatches: [
-      "oklch(0.5854 0.2041 277.1173)",
-      "oklch(0.6056 0.2189 292.7172)",
-      "oklch(0.9299 0.0334 272.7879)",
-    ],
-  },
-  {
-    value: "brutalism",
-    label: "Brutalism",
-    class: "theme-brutalism",
-    swatches: ["hsl(0, 100%, 43%)", "oklch(0.8408 0.1725 84.2008)", "oklch(0 0 0)"],
-  },
-];
+import { SHELL } from "../lib/shell-classes.js";
+import { SEARCH_SHORTCUT } from "../lib/platform.js";
+import { APPEARANCES, THEMES, type Appearance } from "../lib/theme.js";
+import { CremonaMark } from "./sidebar.js";
+import { Link } from "./link.js";
 
 export interface HeaderProps {
   appearance: Appearance;
   theme: string;
-  onToggleDark: () => void;
+  isDark: boolean;
+  navOpen: boolean;
+  navId: string;
+  onAppearance: (value: Appearance) => void;
   onTheme: (value: string) => void;
+  onToggleDark: () => void;
   onOpenSearch: () => void;
-  onToggleSidebar: () => void;
+  onToggleNav: () => void;
+  onNavigate: (to: string) => void;
 }
 
 const BUTTON =
@@ -109,10 +27,15 @@ const BUTTON =
 export function Header({
   appearance,
   theme,
-  onToggleDark,
+  isDark,
+  navOpen,
+  navId,
+  onAppearance,
   onTheme,
+  onToggleDark,
   onOpenSearch,
-  onToggleSidebar,
+  onToggleNav,
+  onNavigate,
 }: HeaderProps) {
   return (
     <header className={SHELL.pageHeader}>
@@ -121,8 +44,10 @@ export function Header({
           <button
             type="button"
             className={cn(BUTTON, "size-9 md:hidden")}
-            onClick={onToggleSidebar}
-            aria-label="Toggle Sidebar"
+            onClick={onToggleNav}
+            aria-label="Navigation menu"
+            aria-expanded={navOpen}
+            aria-controls={navId}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -148,35 +73,48 @@ export function Header({
               "h-9 px-2.5 gap-2 text-muted-foreground md:w-55 md:justify-start",
             )}
             onClick={onOpenSearch}
+            aria-label="Search visuals"
+            aria-keyshortcuts="Control+K Meta+K"
           >
-            <Search data-icon="inline-start" />
+            <Search data-icon="inline-start" aria-hidden="true" />
             <span className="hidden flex-1 text-left font-normal md:inline">Search visuals...</span>
-            <span className="pointer-events-none hidden items-center gap-1 rounded border bg-background/75 px-1 py-0.25 text-[10px] font-semibold uppercase md:inline-flex">
-              Ctrl K
-            </span>
+            <kbd className="pointer-events-none hidden items-center gap-1 rounded border bg-background/75 px-1 py-0.25 font-sans text-[10px] font-semibold uppercase md:inline-flex">
+              {SEARCH_SHORTCUT}
+            </kbd>
           </button>
-          <a className="group flex md:hidden" href="/" aria-label="Cremona">
+          <Link
+            to="/"
+            onNavigate={onNavigate}
+            className="group flex md:hidden"
+            aria-label="Cremona home"
+          >
             <span className="inline-flex items-center gap-2 transition-opacity group-hover:opacity-80 ml-[36px]">
               <CremonaMark />
             </span>
-          </a>
+          </Link>
         </div>
         <div className="ml-auto flex items-center gap-1 md:gap-2">
-          <ThemePicker current={theme} onTheme={onTheme} />
+          <ThemeMenu
+            appearance={appearance}
+            theme={theme}
+            onAppearance={onAppearance}
+            onTheme={onTheme}
+          />
           <button
             type="button"
             className={cn(BUTTON, "size-9")}
             onClick={onToggleDark}
-            aria-label="Toggle theme"
+            aria-label="Dark mode"
+            aria-pressed={isDark}
           >
             <Sun
-              className={cn(
-                "h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90",
-                appearance === "dark" && "hidden",
-              )}
+              aria-hidden="true"
+              className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
             />
-            <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-            <span className="sr-only">Toggle theme</span>
+            <Moon
+              aria-hidden="true"
+              className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
+            />
           </button>
         </div>
       </div>
@@ -184,190 +122,200 @@ export function Header({
   );
 }
 
-function ThemePicker({ current, onTheme }: { current: string; onTheme: (v: string) => void }) {
+const APPEARANCE_ICONS = { light: Sun, dark: Moon, system: Monitor } as const;
+
+/**
+ * Menu button with two radio groups (appearance, theme): arrow keys, Home/End and
+ * type-ahead move between items, Enter/Space picks, Escape and Tab close.
+ */
+function ThemeMenu({
+  appearance,
+  theme,
+  onAppearance,
+  onTheme,
+}: {
+  appearance: Appearance;
+  theme: string;
+  onAppearance: (value: Appearance) => void;
+  onTheme: (value: string) => void;
+}) {
+  const id = useId();
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const focusOnOpen = useRef<"first" | "last">("first");
+
+  const items = () => [
+    ...(menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitemradio"]') ?? []),
+  ];
 
   useEffect(() => {
     if (!open) return;
-    const onDoc = (e: MouseEvent) => {
-      if (!ref.current?.contains(e.target as Node)) setOpen(false);
+    const list = [
+      ...(menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitemradio"]') ?? []),
+    ];
+    (focusOnOpen.current === "last" ? list[list.length - 1] : list[0])?.focus();
+    const onPointerDown = (e: PointerEvent) => {
+      const target = e.target as Node;
+      if (!menuRef.current?.contains(target) && !triggerRef.current?.contains(target))
+        setOpen(false);
     };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
-    document.addEventListener("mousedown", onDoc);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDoc);
-      document.removeEventListener("keydown", onKey);
-    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [open]);
 
+  const close = () => {
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  const onTriggerKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    e.preventDefault();
+    focusOnOpen.current = e.key === "ArrowUp" ? "last" : "first";
+    setOpen(true);
+  };
+
+  const onMenuKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    const list = items();
+    const i = list.indexOf(document.activeElement as HTMLElement);
+    const focusAt = (index: number) => {
+      e.preventDefault();
+      list[(index + list.length) % list.length]?.focus();
+    };
+    if (e.key === "ArrowDown") focusAt(i + 1);
+    else if (e.key === "ArrowUp") focusAt(i - 1);
+    else if (e.key === "Home") focusAt(0);
+    else if (e.key === "End") focusAt(list.length - 1);
+    else if (e.key === "Escape") {
+      e.preventDefault();
+      close();
+    } else if (e.key === "Tab") {
+      // focus goes back to the trigger, then the Tab moves on from there
+      triggerRef.current?.focus();
+      setOpen(false);
+    } else if (e.key.length === 1 && /\S/.test(e.key)) {
+      const key = e.key.toLowerCase();
+      const next = [...list.slice(i + 1), ...list.slice(0, i + 1)].find((el) =>
+        el.textContent?.trim().toLowerCase().startsWith(key),
+      );
+      if (next) {
+        e.preventDefault();
+        next.focus();
+      }
+    }
+  };
+
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative">
       <button
+        ref={triggerRef}
         type="button"
         className={cn(BUTTON, "size-9")}
+        aria-haspopup="menu"
         aria-expanded={open}
-        aria-label="Pick theme"
-        onClick={() => setOpen((v) => !v)}
+        aria-controls={open ? `${id}-menu` : undefined}
+        aria-label="Theme and appearance"
+        onClick={() => {
+          focusOnOpen.current = "first";
+          setOpen((v) => !v);
+        }}
+        onKeyDown={onTriggerKeyDown}
       >
-        <Palette />
+        <Palette aria-hidden="true" />
       </button>
       {open && (
         <div
+          ref={menuRef}
+          id={`${id}-menu`}
           role="menu"
-          className="absolute right-0 top-10 z-50 w-56 overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-md"
+          tabIndex={-1}
+          aria-label="Theme and appearance"
+          onKeyDown={onMenuKeyDown}
+          className="absolute right-0 top-10 z-50 max-h-[calc(100svh-4.5rem)] w-56 overflow-y-auto rounded-lg border bg-popover p-1 text-popover-foreground shadow-md outline-none"
         >
-          <p className="px-2 py-1.5 text-xs font-medium text-muted-foreground">Theme</p>
-          {THEMES.map((t) => (
-            <button
-              key={t.value}
-              type="button"
-              role="menuitem"
-              className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground"
-              onClick={() => {
-                onTheme(t.value);
-                setOpen(false);
-              }}
-            >
-              <span className="flex gap-0.5">
-                {t.swatches.map((s, i) => (
-                  <span
-                    key={i}
-                    className="size-2.5 rounded-full border border-border/50"
-                    style={{ background: s }}
-                  />
-                ))}
-              </span>
-              <span className="flex-1 text-left">{t.label}</span>
-              {current === t.value && <Check className="size-4 opacity-70" />}
-            </button>
-          ))}
+          <MenuGroup id={`${id}-appearance`} label="Appearance">
+            {APPEARANCES.map((a) => {
+              const Icon = APPEARANCE_ICONS[a.value];
+              return (
+                <MenuRadio
+                  key={a.value}
+                  checked={appearance === a.value}
+                  onSelect={() => {
+                    onAppearance(a.value);
+                    close();
+                  }}
+                >
+                  <Icon className="size-4 opacity-70" aria-hidden="true" />
+                  <span className="flex-1 text-left">{a.label}</span>
+                </MenuRadio>
+              );
+            })}
+          </MenuGroup>
+          <div role="separator" className="-mx-1 my-1 h-px bg-border" />
+          <MenuGroup id={`${id}-theme`} label="Theme">
+            {THEMES.map((t) => (
+              <MenuRadio
+                key={t.value}
+                checked={theme === t.value}
+                onSelect={() => {
+                  onTheme(t.value);
+                  close();
+                }}
+              >
+                <span className="flex gap-0.5" aria-hidden="true">
+                  {t.swatches.map((s, i) => (
+                    <span
+                      key={i}
+                      className="size-2.5 rounded-full border border-border/50"
+                      style={{ background: s }}
+                    />
+                  ))}
+                </span>
+                <span className="flex-1 text-left">{t.label}</span>
+              </MenuRadio>
+            ))}
+          </MenuGroup>
         </div>
       )}
     </div>
   );
 }
 
-/** Ctrl+K command palette (simplified but POC-styled). */
-export function SearchDialog({
-  open,
-  onClose,
-  onNavigate,
-}: {
-  open: boolean;
-  onClose: () => void;
-  onNavigate: (to: string) => void;
-}) {
-  const [query, setQuery] = useState("");
-  const [wasOpen, setWasOpen] = useState(open);
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  if (open !== wasOpen) {
-    setWasOpen(open);
-    if (open) setQuery("");
-  }
-
-  useEffect(() => {
-    if (!open) return;
-    const timer = setTimeout(() => inputRef.current?.focus(), 10);
-    return () => clearTimeout(timer);
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
-  }, [open, onClose]);
-
-  if (!open) return null;
-  const q = query.trim().toLowerCase();
-  const results = q
-    ? categories
-        .flatMap((c) => c.items.map((i) => ({ cat: c, item: i })))
-        .filter(
-          ({ cat, item }) =>
-            item.name.toLowerCase().includes(q) ||
-            item.description.toLowerCase().includes(q) ||
-            cat.category.toLowerCase().includes(q),
-        )
-        .slice(0, 24)
-    : [];
-
+function MenuGroup({ id, label, children }: { id: string; label: string; children: ReactNode }) {
   return (
-    <div
-      role="presentation"
-      className="fixed inset-0 z-100 flex items-start justify-center bg-background/80 p-4 pt-[12vh] backdrop-blur-xs"
-      onMouseDown={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-label="Search visuals"
-        className="w-full max-w-xl overflow-hidden rounded-xl border bg-popover text-popover-foreground shadow-lg"
-      >
-        <div className="flex items-center gap-2 border-b px-3">
-          <Search className="size-4 opacity-50" />
-          <input
-            ref={inputRef}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search visuals..."
-            className="h-11 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && results[0]) {
-                onNavigate(`/visuals/${results[0].cat.slug}/${results[0].item.file}`);
-                onClose();
-              }
-            }}
-          />
-        </div>
-        <div className="max-h-80 overflow-y-auto p-1.5">
-          {q === "" ? (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
-              Type to search {categories.reduce((n, c) => n + c.items.length, 0)} visuals…
-            </p>
-          ) : results.length === 0 ? (
-            <p className="px-3 py-6 text-center text-sm text-muted-foreground">
-              No results for “{query}”.
-            </p>
-          ) : (
-            results.map(({ cat, item }) => (
-              <button
-                key={`${cat.slug}/${item.file}`}
-                type="button"
-                className="flex w-full flex-col items-start gap-0.5 rounded-lg px-3 py-2 text-left hover:bg-accent hover:text-accent-foreground"
-                onClick={() => {
-                  onNavigate(`/visuals/${cat.slug}/${item.file}`);
-                  onClose();
-                }}
-              >
-                <span className="text-sm font-medium">
-                  {highlight(item.name, q)} <span className="opacity-50">· {cat.category}</span>
-                </span>
-                <span className="line-clamp-1 text-xs text-muted-foreground">
-                  {item.description}
-                </span>
-              </button>
-            ))
-          )}
-        </div>
+    <div role="group" aria-labelledby={id}>
+      <div id={id} role="none" className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+        {label}
       </div>
+      {children}
     </div>
   );
 }
 
-function highlight(text: string, q: string) {
-  const i = text.toLowerCase().indexOf(q);
-  if (i === -1) return text;
+function MenuRadio({
+  checked,
+  onSelect,
+  children,
+}: {
+  checked: boolean;
+  onSelect: () => void;
+  children: ReactNode;
+}) {
   return (
-    <>
-      {text.slice(0, i)}
-      <mark className="rounded-[3px] bg-yellow-200 text-foreground dark:bg-yellow-400 dark:text-black">
-        {text.slice(i, i + q.length)}
-      </mark>
-      {text.slice(i + q.length)}
-    </>
+    <button
+      type="button"
+      role="menuitemradio"
+      aria-checked={checked}
+      tabIndex={-1}
+      className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-none select-none hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus-visible:ring-2 focus-visible:ring-ring"
+      onClick={onSelect}
+      onMouseMove={(e) => {
+        if (document.activeElement !== e.currentTarget) e.currentTarget.focus();
+      }}
+    >
+      {children}
+      <Check className={cn("size-4 opacity-70", !checked && "invisible")} aria-hidden="true" />
+    </button>
   );
 }
