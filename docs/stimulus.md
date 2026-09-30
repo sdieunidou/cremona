@@ -61,7 +61,11 @@ Plays the entrance animation when the visual enters the viewport (or on
 - inline initial styles (the hidden state — no flash, matches the POC SSR),
 - `data-anim-order="N"` — render order for the stagger cascade,
 - `data-anim-to="{"opacity":"1",…}"` — the target declarations,
-- `data-anim-initial="opacity:0;transform:…"` — for replay resets.
+- `data-anim-initial="opacity:0;transform:…"` — the initial style, restored
+  before each replay (`inViewRepeat`).
+
+With `prefers-reduced-motion: reduce`, the controller applies the end state
+without transitions.
 
 Values: `trigger` (`mount|inView|inViewRepeat`, default `inViewRepeat`),
 `duration` (450ms), `stagger` (70ms/order), `delay` (60ms).

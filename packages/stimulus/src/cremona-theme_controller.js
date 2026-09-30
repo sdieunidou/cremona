@@ -23,14 +23,14 @@ export default class CremonaThemeController extends Controller {
   };
 
   connect() {
-    this.appearanceValue = localStorage.getItem(this.storageKeyValue) ?? this.appearanceValue;
-    this.themeValue = localStorage.getItem(this.themeStorageKeyValue) ?? this.themeValue;
-    this.apply();
+    this.appearanceValue = read(this.storageKeyValue) ?? this.appearanceValue;
+    this.themeValue = read(this.themeStorageKeyValue) ?? this.themeValue;
     this.media = window.matchMedia("(prefers-color-scheme: dark)");
     this.onMedia = () => {
       if (this.appearanceValue === "system") this.apply();
     };
     this.media.addEventListener("change", this.onMedia);
+    this.apply();
   }
 
   disconnect() {
@@ -40,7 +40,7 @@ export default class CremonaThemeController extends Controller {
   appearanceChanged({ params }) {
     if (params?.appearance) {
       this.appearanceValue = params.appearance;
-      localStorage.setItem(this.storageKeyValue, this.appearanceValue);
+      write(this.storageKeyValue, this.appearanceValue);
       this.apply();
     }
   }
@@ -48,7 +48,7 @@ export default class CremonaThemeController extends Controller {
   themeChanged({ params }) {
     if (params?.theme) {
       this.themeValue = params.theme;
-      localStorage.setItem(this.themeStorageKey, this.themeValue);
+      write(this.themeStorageKeyValue, this.themeValue);
       this.apply();
     }
   }
@@ -56,7 +56,7 @@ export default class CremonaThemeController extends Controller {
   toggle() {
     const dark = document.documentElement.classList.contains("dark");
     this.appearanceValue = dark ? "light" : "dark";
-    localStorage.setItem(this.storageKeyValue, this.appearanceValue);
+    write(this.storageKeyValue, this.appearanceValue);
     this.apply();
   }
 
@@ -76,5 +76,22 @@ export default class CremonaThemeController extends Controller {
     this.dispatch("changed", {
       detail: { appearance: this.appearanceValue, theme: this.themeValue, dark },
     });
+  }
+}
+
+// Storage can be unavailable (privacy modes, blocked site data): the theme then lasts for the page.
+function read(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function write(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* not persisted */
   }
 }
