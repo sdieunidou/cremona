@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowUp, ChevronDown, FileText, Paperclip, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -280,6 +280,7 @@ const caretAnim = (count: number): Variants => ({
       ease: "easeInOut",
     },
   },
+  rest: { opacity: 1, transition: { duration: 0.2, delay: lastWordEnd(count) + 0.05 } },
 });
 
 const toolbarAnim = (count: number): Variants => ({
@@ -358,10 +359,16 @@ export function PromptBox({
   }, []);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const loop = useLoopActive(ref, animated);
   const active = (hover ? hovered : inView) && ticked;
+  const looping = active && loop;
   const drifting = inView && ticked;
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" } as const;
   const innerState = { initial: "hidden", animate: active ? "visible" : "hidden" } as const;
+  const caretState = {
+    initial: "hidden",
+    animate: active ? (loop ? "visible" : "rest") : "hidden",
+  } as const;
 
   const tokens2 = prompt.split(/(\s+)/).filter(Boolean);
   let wordIndex = 0;
@@ -397,7 +404,7 @@ export function PromptBox({
               <motion.span
                 className="ml-0.5 inline-block h-3.5 w-0.5 -translate-y-px bg-primary align-middle"
                 variants={caretAnim(wordCount)}
-                {...innerState}
+                {...caretState}
               />
             ) : (
               <span className="ml-0.5 inline-block h-3.5 w-0.5 -translate-y-px bg-primary align-middle" />
@@ -546,12 +553,12 @@ export function PromptBox({
           <motion.div
             className="absolute inset-0"
             animate={
-              active
+              looping
                 ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
                 : { scale: 1, opacity: 0.85 }
             }
             transition={
-              active
+              looping
                 ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
                 : { duration: 0.6, ease: "easeOut" }
             }
@@ -575,16 +582,16 @@ export function PromptBox({
               >
                 <motion.div
                   animate={
-                    drifting
+                    drifting && loop
                       ? {
                           x: [0, p.driftX, 0],
                           y: [0, -p.driftY, 0],
                           opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
                         }
-                      : { x: 0, y: 0, opacity: 0 }
+                      : { x: 0, y: 0, opacity: drifting ? p.opacity * 0.7 : 0 }
                   }
                   transition={
-                    drifting
+                    drifting && loop
                       ? {
                           duration: p.duration,
                           delay: p.delay,

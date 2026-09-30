@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Database, Globe, Server } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -237,6 +237,15 @@ export function Logs({
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
+  const loop = useLoopActive(ref, animated);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pulsing = pulseVisible && loop;
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pulsing) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pulsing]);
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
@@ -267,6 +276,7 @@ export function Logs({
         {...state}
       >
         <svg
+          ref={svgRef}
           className="pointer-events-none absolute inset-0 size-full"
           viewBox={`0 0 ${CANVAS.w} ${CANVAS.h}`}
           fill="none"
@@ -287,11 +297,11 @@ export function Logs({
           {animated && (
             <motion.g
               initial={false}
-              animate={{ opacity: +!!pulseVisible }}
+              animate={{ opacity: +!!pulsing }}
               transition={{
                 duration: 0.5,
                 ease: "easeOut",
-                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+                delay: pulsing && !hover ? PULSE_DELAY : 0,
               }}
             >
               {paths.map((d, t) => (
@@ -364,9 +374,9 @@ export function Logs({
                   {animated && t === lastRow && (
                     <motion.span
                       className="absolute inset-0 bg-primary/6"
-                      animate={pulseVisible ? { opacity: [0, 1, 0] } : { opacity: 0 }}
+                      animate={pulsing ? { opacity: [0, 1, 0] } : { opacity: 0 }}
                       transition={
-                        pulseVisible
+                        pulsing
                           ? {
                               duration: 2.4,
                               ease: "easeInOut",

@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { GitBranch, GitMerge } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -220,7 +220,15 @@ export function BranchGraph({
   const [hovering, setHovering] = useState(false);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const pulsing = animated && (hover ? hovering : triggered);
+  const loop = useLoopActive(ref, animated);
+  const pulsing = animated && (hover ? hovering : triggered) && loop;
+  const svgRef = useRef<SVGSVGElement>(null);
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pulsing) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pulsing]);
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const total = Math.min(Math.max(Math.round(commits), 2), MAX_COMMITS);
   const x0 = railStart(total);
@@ -254,6 +262,7 @@ export function BranchGraph({
         {...state}
       >
         <svg
+          ref={svgRef}
           className="pointer-events-none absolute inset-0 size-full"
           viewBox={`0 0 ${W} ${H}`}
           fill="none"

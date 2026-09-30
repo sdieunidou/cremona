@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const orbitMarkPath =
@@ -121,12 +121,14 @@ export function LogoReel({
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const seq = direction === "right" ? [...logos].reverse() : logos;
 
+  const loop = useLoopActive(ref, animated);
+
   useEffect(() => {
-    if (!animated || !interval) return;
+    if (!animated || !interval || !loop) return;
     if (hover && hovered) return;
     const id = setInterval(() => setTick((t) => t + 1), interval);
     return () => clearInterval(id);
-  }, [animated, interval, hover, hovered]);
+  }, [animated, interval, hover, hovered, loop]);
 
   return (
     <div

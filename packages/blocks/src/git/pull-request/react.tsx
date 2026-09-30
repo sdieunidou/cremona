@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowRight, Check, GitPullRequest, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -263,15 +263,17 @@ export function PullRequest({
   }, []);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const cycling = animated && (hover ? hovering : triggered) && ready;
-  const spinning = animated && triggered && ready;
+  const loop = useLoopActive(ref, animated);
+  const cycling = animated && (hover ? hovering : triggered) && ready && loop;
+  const spinning = animated && triggered && ready && loop;
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const rows = (checks?.length ? checks : defaultChecks).slice(0, MAX_CHECKS);
   const checkCount = rows.length;
   const failing = variant === "failing";
   const buttonLabel = mergeLabel ?? mergeLabels[variant];
   const reviewerInitials = initials(reviewer);
-  const progress = cycling ? cursor : animated ? (hover ? -1 : 0) : checkCount;
+  // paused: every check settled, as in the static render
+  const progress = cycling ? cursor : animated && loop ? (hover ? -1 : 0) : checkCount;
   const allDone = progress >= checkCount;
   const anyRunning = progress >= 0 && progress < checkCount;
   const changedTotal = additions + deletions;

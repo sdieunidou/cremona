@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Terminal as TerminalIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -81,6 +81,7 @@ const caretAnim: Variants = {
     opacity: [0, 1, 1, 0],
     transition: { duration: 1, repeat: Infinity, ease: "linear" },
   },
+  rest: { opacity: 1 },
 };
 
 const glowAnim = {
@@ -131,14 +132,12 @@ export function Terminal({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  // the caret holds steady while the loop is paused
+  const caretState = animated
+    ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
     : {};
   const resolvedTitle = title ?? terminalTitles[variant];
   const activeLines = lines ?? terminalDefaultLines[variant];
@@ -204,7 +203,7 @@ export function Terminal({
                         <motion.span
                           className="inline-block h-2.5 w-1.25 bg-primary"
                           variants={animated ? caretAnim : undefined}
-                          {...state}
+                          {...caretState}
                         />
                       )}
                     </>

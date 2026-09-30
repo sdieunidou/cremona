@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { FileDiff } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -356,7 +356,8 @@ export function Diff({
   }, []);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const sweeping = animated && (hover ? hovering : triggered) && ready;
+  const loop = useLoopActive(ref, animated);
+  const sweeping = animated && (hover ? hovering : triggered) && ready && loop;
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const marked = markKinds((lines?.length ? lines : defaultLines).slice(0, MAX_LINES));
   const changed = marked.filter((l) => l.kind !== "context");

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { motion, MotionConfigContext, cancelFrame, frame } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 import { isLand as isLandAt } from "@cremona/core/land-mask";
 
@@ -26,19 +26,19 @@ export interface GlobeProps extends VisualProps {
   wrapperClassName?: string;
 }
 
-/** Reusable rAF loop shared by the canvas globe (mirrors the POC `useGlobeFrame`). */
-function useGlobeFrame(callback: (time: number, delta: number) => void) {
+/** rAF loop of the canvas globe (mirrors the POC `useGlobeFrame`), running while `enabled`. */
+function useGlobeFrame(callback: (time: number, delta: number) => void, enabled: boolean) {
   const start = useRef(0);
   const { isStatic } = useContext(MotionConfigContext);
   useEffect(() => {
-    if (isStatic) return;
+    if (isStatic || !enabled) return;
     const onFrame = ({ timestamp, delta: d }: { timestamp: number; delta: number }) => {
       start.current ||= timestamp;
       callback(timestamp - start.current, d);
     };
     frame.update(onFrame, true);
     return () => cancelFrame(onFrame);
-  }, [callback, isStatic]);
+  }, [callback, isStatic, enabled]);
 }
 
 const TILTS = { top: 0.45, equator: 0, bottom: -0.45 };
@@ -205,7 +205,8 @@ export function Globe({
   const [hovering, setHovering] = useState(false);
   const visible =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const pulsing = (hover ? hovering : visible) && inViewRepeat;
+  const loop = useLoopActive(rootRef, animated);
+  const pulsing = (hover ? hovering : visible) && inViewRepeat && loop;
   const state = animated ? { initial: "hidden", animate: visible ? "visible" : "hidden" } : {};
   const resolvedMarkers = markers ?? defaultMarkers;
   const landSamples = useMemo(() => fibonacciSphere(CONFIG.landSampleCount).filter(isLand), []);
@@ -492,7 +493,7 @@ export function Globe({
       dirtyRef.current = false;
       drawRef.current();
     }
-  });
+  }, animated && loop);
   useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
@@ -506,6 +507,14 @@ export function Globe({
     onResize();
     return () => observer.disconnect();
   }, [animated]);
+  useEffect(() => {
+    if (!animated || loop) return;
+    // paused (off-screen, hidden page, reduced motion): hold a still frame, arcs drawn in
+    activityRef.current = 0;
+    drawStartRef.current = visible ? Number.MAX_SAFE_INTEGER : 0;
+    dirtyRef.current = true;
+    drawRef.current();
+  }, [animated, loop, visible]);
   useEffect(() => {
     const observer = new MutationObserver(() => {
       recolorRef.current = true;

@@ -1,6 +1,6 @@
 import { useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const githubPath =
@@ -149,7 +149,8 @@ export function LogoOrbit({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
-  const pause = active ? "" : " paused";
+  const loop = useLoopActive(ref, animated);
+  const pause = active && loop ? "" : " paused";
   const spinning = animated && orbit;
   const outerSpin = spinning ? `animate-[spin_120s_linear_infinite]${pause}` : "";
   const outerCounter = spinning ? `animate-[spin_120s_linear_infinite_reverse]${pause}` : "";

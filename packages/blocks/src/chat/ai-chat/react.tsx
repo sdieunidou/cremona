@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowUp, Copy, Sparkles, ThumbsUp } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -97,6 +97,7 @@ const caretVariants = (index: number): Variants => ({
       ease: "easeInOut",
     },
   },
+  rest: { opacity: 1, transition: { duration: 0.2, delay: wordDelay(index) + 0.05 } },
 });
 
 const avatarAnim = {
@@ -130,6 +131,7 @@ const veilAnim = {
 const dotsAnim = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.18 } },
+  rest: {},
 } as const;
 
 const dotAnim: Variants = {
@@ -138,6 +140,7 @@ const dotAnim: Variants = {
     opacity: [0.25, 1, 0.25],
     transition: { duration: 1.1, repeat: Infinity, ease: "easeInOut" },
   },
+  rest: { opacity: 1 },
 };
 
 export interface AiChatProps extends VisualProps {
@@ -172,14 +175,12 @@ export function AiChat({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  // looping pieces rest (steady caret, still dots) while the loop is paused
+  const loopState = animated
+    ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
     : {};
 
   let wordIndex = 0;
@@ -224,7 +225,7 @@ export function AiChat({
                 <motion.span
                   className="flex items-center gap-0.5"
                   variants={animated ? dotsAnim : undefined}
-                  {...state}
+                  {...loopState}
                 >
                   {[0, 1, 2].map((i) => (
                     <motion.span
@@ -289,7 +290,7 @@ export function AiChat({
                     <motion.span
                       className="ml-0.5 inline-block h-2.5 w-[2px] -translate-y-px bg-primary align-middle"
                       variants={animated ? caretVariantsFinal : undefined}
-                      {...state}
+                      {...loopState}
                     />
                   );
                   return block.kind === "bullet" ? (

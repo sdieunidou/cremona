@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Globe, Server, Timer } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -239,6 +239,15 @@ export function Request({
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
+  const loop = useLoopActive(ref, animated);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pulsing = pulseVisible && loop;
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pulsing) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pulsing]);
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
@@ -273,6 +282,7 @@ export function Request({
         {...state}
       >
         <svg
+          ref={svgRef}
           className="pointer-events-none absolute inset-0 size-full"
           viewBox={`0 0 ${CANVAS.w} ${CANVAS.h}`}
           fill="none"
@@ -300,11 +310,11 @@ export function Request({
           {animated && (
             <motion.g
               initial={false}
-              animate={{ opacity: +!!pulseVisible }}
+              animate={{ opacity: +!!pulsing }}
               transition={{
                 duration: 0.5,
                 ease: "easeOut",
-                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+                delay: pulsing && !hover ? PULSE_DELAY : 0,
               }}
             >
               <RequestPulse d={CURVE_IN} dur="2.6s" begin="0s" pulse={pulse} />

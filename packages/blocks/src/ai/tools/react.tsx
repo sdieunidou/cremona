@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Check, Mail, Search, Sparkles, Ticket } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -466,16 +466,19 @@ export function Tools({
   }, []);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const loop = useLoopActive(ref, animated);
   const active = animated && (hover ? hovered : inView) && ticked;
+  const looping = active && loop;
   const drifting = animated && inView && ticked;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
-  const cursor = active ? current : animated ? -1 : count;
+  // paused: every call done, as in the static render
+  const cursor = active ? (loop ? current : count) : animated ? -1 : count;
   const doneCount = Math.max(0, Math.min(cursor, count));
 
   useEffect(() => {
-    if (!active) return;
+    if (!looping) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     const at = (fn: () => void, ms: number) => {
       timers.push(setTimeout(fn, ms));
@@ -490,8 +493,9 @@ export function Tools({
     at(run, hover ? 0 : LOOP_INITIAL * 1000);
     return () => {
       timers.forEach(clearTimeout);
+      setCurrent(-1);
     };
-  }, [active, hover, count]);
+  }, [looping, hover, count]);
 
   return (
     <div
@@ -514,12 +518,12 @@ export function Tools({
             <motion.div
               className="absolute inset-0"
               animate={
-                active
+                looping
                   ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
                   : { scale: 1, opacity: 0.85 }
               }
               transition={
-                active
+                looping
                   ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
                   : { duration: 0.6, ease: "easeOut" }
               }
@@ -548,16 +552,16 @@ export function Tools({
                 >
                   <motion.div
                     animate={
-                      drifting
+                      drifting && loop
                         ? {
                             x: [0, p.driftX, 0],
                             y: [0, -p.driftY, 0],
                             opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
                           }
-                        : { x: 0, y: 0, opacity: 0 }
+                        : { x: 0, y: 0, opacity: drifting ? p.opacity * 0.7 : 0 }
                     }
                     transition={
-                      drifting
+                      drifting && loop
                         ? {
                             duration: p.duration,
                             delay: p.delay,
@@ -632,7 +636,7 @@ export function Tools({
                 status={t < cursor ? "done" : t === cursor ? "running" : "pending"}
                 index={t}
                 animated={animated}
-                spinActive={active}
+                spinActive={looping}
                 state={state}
               />
             ))}

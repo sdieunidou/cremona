@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Check } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -154,15 +154,10 @@ export function Timeline({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
-    : {};
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  const pulseState = { initial: "hidden", animate: shown && loop ? "visible" : "hidden" };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -231,6 +226,7 @@ export function Timeline({
                             <motion.div
                               className="absolute inset-0 rounded-full bg-primary"
                               variants={pulseAnim}
+                              {...pulseState}
                             />
                           )}
                         </>

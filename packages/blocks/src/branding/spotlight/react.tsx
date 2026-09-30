@@ -1,6 +1,6 @@
 import { useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import {
   Calendar,
   Camera,
@@ -381,6 +381,7 @@ export function Spotlight({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
+  const loop = useLoopActive(ref, animated);
   const logoEl = logo ?? defaultLogo;
   // the POC merges classes with twMerge: an icon bg-* override drops bg-primary
   const bgOverride =
@@ -450,6 +451,7 @@ export function Spotlight({
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
+  const looping = active && loop;
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" };
 
   return (
@@ -478,12 +480,12 @@ export function Spotlight({
             <motion.div
               className="absolute inset-0"
               animate={
-                active
+                looping
                   ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
                   : { scale: 1, opacity: 0.85 }
               }
               transition={
-                active
+                looping
                   ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
                   : { duration: 0.6, ease: "easeOut" }
               }
@@ -507,7 +509,7 @@ export function Spotlight({
                 >
                   <motion.div
                     animate={
-                      inView
+                      inView && loop
                         ? {
                             x: [0, particle.driftX, 0],
                             y: [0, -particle.driftY, 0],
@@ -517,10 +519,10 @@ export function Spotlight({
                               particle.opacity * 0.5,
                             ],
                           }
-                        : { x: 0, y: 0, opacity: 0 }
+                        : { x: 0, y: 0, opacity: inView ? particle.opacity * 0.7 : 0 }
                     }
                     transition={
-                      inView
+                      inView && loop
                         ? {
                             duration: particle.duration,
                             delay: particle.delay,

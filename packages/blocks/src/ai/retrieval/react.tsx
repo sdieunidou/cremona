@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, type ValueTransition, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { FileText, Search, Sparkles } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -510,7 +510,9 @@ export function Retrieval({
   }, []);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const loop = useLoopActive(ref, animated);
   const active = (hover ? hovered : inView) && ticked;
+  const looping = active && loop;
   const drifting = inView && ticked;
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
@@ -531,7 +533,7 @@ export function Retrieval({
   const convergeSamples = beziers.map(sampleBezier);
 
   useEffect(() => {
-    if (!animated || !active) return;
+    if (!animated || !looping) return;
     const timers: ReturnType<typeof setTimeout>[] = [];
     const at = (fn: () => void, ms: number) => {
       timers.push(setTimeout(fn, ms));
@@ -557,8 +559,10 @@ export function Retrieval({
     at(run, hover ? 0 : INITIAL_DELAY * 1000);
     return () => {
       timers.forEach(clearTimeout);
+      setLineIndex(-1);
+      setLitCount(0);
     };
-  }, [animated, active, hover, n]);
+  }, [animated, looping, hover, n]);
 
   return (
     <div
@@ -582,12 +586,12 @@ export function Retrieval({
             <motion.div
               className="absolute inset-0"
               animate={
-                active
+                looping
                   ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
                   : { scale: 1, opacity: 0.85 }
               }
               transition={
-                active
+                looping
                   ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
                   : { duration: 0.6, ease: "easeOut" }
               }
@@ -616,16 +620,16 @@ export function Retrieval({
                 >
                   <motion.div
                     animate={
-                      drifting
+                      drifting && loop
                         ? {
                             x: [0, p.driftX, 0],
                             y: [0, -p.driftY, 0],
                             opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
                           }
-                        : { x: 0, y: 0, opacity: 0 }
+                        : { x: 0, y: 0, opacity: drifting ? p.opacity * 0.7 : 0 }
                     }
                     transition={
-                      drifting
+                      drifting && loop
                         ? {
                             duration: p.duration,
                             delay: p.delay,
@@ -702,7 +706,7 @@ export function Retrieval({
             />
           ))}
           {animated &&
-            active &&
+            looping &&
             fanSamples.map((s, t) =>
               lineIndex === t ? (
                 <Pulse
@@ -717,7 +721,7 @@ export function Retrieval({
               ) : null,
             )}
           {animated &&
-            active &&
+            looping &&
             lineIndex === n &&
             convergeSamples.map((s, t) => (
               <Pulse
@@ -757,7 +761,7 @@ export function Retrieval({
           >
             <SourceCard
               source={source}
-              lit={active && litCount > t}
+              lit={looping && litCount > t}
               animated={animated}
               index={t}
               state={state}

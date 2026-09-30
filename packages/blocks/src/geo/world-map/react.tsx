@@ -1,6 +1,6 @@
-import { useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 import { isLand } from "@cremona/core/land-mask";
 
@@ -67,6 +67,7 @@ const SLOT_OFFSETS = [0, -1, 1, -2, 2, -3];
 const SPLIT_SLOTS = 2;
 const LABEL_MAX_DIST = 11.765999999999998;
 const DEFAULT_DENSITY = "normal";
+const NO_REGIONS: WorldMapRegion[] = [];
 const DEFAULT_REVEAL = "bloom";
 
 const defaultMarkers: WorldMapMarker[] = [
@@ -315,7 +316,7 @@ const labelAnim: Variants = {
 
 export function WorldMap({
   markers = defaultMarkers,
-  regions = [],
+  regions = NO_REGIONS,
   arcs = true,
   arcPairs = defaultArcPairs,
   labels = false,
@@ -336,7 +337,15 @@ export function WorldMap({
   const reactId = useId();
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const pinging = hover ? hovering : triggered;
+  const loop = useLoopActive(ref, animated);
+  const pinging = (hover ? hovering : triggered) && loop;
+  const arcsRef = useRef<SVGSVGElement>(null);
+  useEffect(() => {
+    const svg = arcsRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pinging) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pinging]);
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const { landPath, regionPaths } = useMemo(() => {
     const cols = DENSITY[density];
@@ -478,6 +487,7 @@ export function WorldMap({
         </svg>
         {arcs && arcsList.length > 0 && (
           <svg
+            ref={arcsRef}
             viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
             fill="none"
             className="absolute inset-0 size-full overflow-visible"
@@ -571,14 +581,22 @@ export function WorldMap({
                       key={p}
                       className="absolute inset-0 rounded-full border-[max(1px,0.18cqw)] border-current"
                       initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: [0.5, 0.8, 2.6], opacity: [0, 0.45, 0] }}
-                      transition={{
-                        duration: PING_DURATION,
-                        ease: "easeOut",
-                        repeat: 1 / 0,
-                        delay: i * PING_STAGGER + delay,
-                        times: [0, 0.12, 1],
-                      }}
+                      animate={
+                        pinging
+                          ? { scale: [0.5, 0.8, 2.6], opacity: [0, 0.45, 0] }
+                          : { scale: 0.5, opacity: 0 }
+                      }
+                      transition={
+                        pinging
+                          ? {
+                              duration: PING_DURATION,
+                              ease: "easeOut",
+                              repeat: 1 / 0,
+                              delay: i * PING_STAGGER + delay,
+                              times: [0, 0.12, 1],
+                            }
+                          : { duration: 0.3 }
+                      }
                     />
                   ))}
                 </motion.div>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowRight, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -167,7 +167,8 @@ export function Tabs({
   const [activeTab, setActiveTab] = useState(0);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const isActive = hover ? isHovering : inView;
+  const loop = useLoopActive(ref, animated);
+  const isActive = (hover ? isHovering : inView) && loop;
 
   useEffect(() => {
     if (!animated || !isActive) return;

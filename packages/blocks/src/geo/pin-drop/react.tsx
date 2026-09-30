@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { MapPin } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -104,7 +104,8 @@ export function PinDrop({
   const [hovering, setHovering] = useState(false);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const pinging = hover ? hovering : triggered;
+  const loop = useLoopActive(ref, animated);
+  const pinging = (hover ? hovering : triggered) && loop;
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const resolvedPins = pins ?? defaultPins;
   const yPercent = (y: number) => `${(y / BASE_HEIGHT) * 100}%`;

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Image, Paperclip, Smile, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -78,6 +78,7 @@ const caret: Variants = {
     opacity: [1, 0, 1],
     transition: { duration: 1, repeat: Infinity, ease: "linear" },
   },
+  rest: { opacity: 1 },
 };
 
 const glow = {
@@ -150,6 +151,7 @@ export function Compose({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
   const state = animated
     ? {
         initial: "hidden",
@@ -253,7 +255,7 @@ export function Compose({
                 <motion.div
                   className="h-2 w-px bg-foreground"
                   variants={animated ? caret : undefined}
-                  animate={animated ? "visible" : undefined}
+                  animate={animated ? (loop ? "visible" : "rest") : undefined}
                 />
               </div>
             </motion.div>

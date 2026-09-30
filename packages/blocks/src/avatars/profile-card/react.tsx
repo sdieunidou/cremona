@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const profileCardDefaultCopy = {
@@ -123,15 +123,10 @@ export function ProfileCard({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
-    : {};
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  const pulseState = { initial: "hidden", animate: shown && loop ? "visible" : "hidden" };
   const style = statusStyles[status];
 
   return (
@@ -183,7 +178,7 @@ export function ProfileCard({
                   <motion.span
                     className={`absolute inset-0 inline-flex size-2.5 rounded-full ${style.pulse}`}
                     variants={animated ? pulse : undefined}
-                    {...state}
+                    {...(animated ? pulseState : {})}
                   />
                 )}
                 <span

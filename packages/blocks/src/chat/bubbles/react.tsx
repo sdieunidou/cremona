@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowUp, Check, CheckCheck } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -79,6 +79,7 @@ const veilAnim = {
 const typingDotsAnim = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.18 } },
+  rest: {},
 } as const;
 
 const typingDotAnim: Variants = {
@@ -87,6 +88,7 @@ const typingDotAnim: Variants = {
     opacity: [0.25, 1, 0.25],
     transition: { duration: 1.1, repeat: Infinity, ease: "easeInOut" },
   },
+  rest: { opacity: 1 },
 };
 
 export interface BubblesProps extends VisualProps {
@@ -117,14 +119,12 @@ export function Bubbles({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  // looping pieces rest (still typing dots) while the loop is paused
+  const loopState = animated
+    ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
     : {};
 
   return (
@@ -209,6 +209,7 @@ export function Bubbles({
                 <motion.div
                   className="flex items-center gap-1 rounded-2xl rounded-bl-md border bg-muted px-2.5 py-2"
                   variants={animated ? typingDotsAnim : undefined}
+                  {...loopState}
                 >
                   {[0, 1, 2].map((i) => (
                     <motion.span
