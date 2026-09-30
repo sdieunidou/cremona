@@ -204,31 +204,59 @@ export function categorySummary() {
   }));
 }
 
-/** Coherence validation across catalog, blocks, goldens and stimulus templates. */
+/**
+ * Block keys that have a parity test (`runGoldenParity("<key>", …)` in
+ * packages/blocks/test), or null when the tests are not shipped (published package).
+ */
+export function parityTestKeys() {
+  const dir = join(REPO_ROOT, "packages", "blocks", "test");
+  if (!existsSync(dir)) return null;
+  const keys = new Set();
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".parity.test.tsx")) continue;
+    for (const m of readText(join(dir, f)).matchAll(/runGoldenParity\(\s*["']([^"']+)["']/g))
+      keys.add(m[1]);
+  }
+  return keys;
+}
+
+/** Coherence validation across catalog, blocks, goldens, preview props, stimulus templates and parity tests. */
 export function validate() {
   const issues = [];
   const index = blockIndex();
+  const manifest = stimulusManifest();
+  const parity = parityTestKeys();
   for (const b of index) {
     const dir = blockDir(b.categorySlug, b.file);
-    if (!b.ported) {
-      issues.push(`MISSING_REACT: ${b.key} has no react.tsx`);
+    const meta = blockMeta(b.categorySlug, b.file);
+    if (!meta) {
+      issues.push(`MISSING_META: ${b.key} has no block.json`);
       continue;
     }
-    const meta = blockMeta(b.categorySlug, b.file);
-    for (const v of meta.variants) {
-      if (!existsSync(join(dir, "golden", `${v.slug}.html`))) {
-        issues.push(`MISSING_GOLDEN: ${b.key} · ${v.label} (${v.slug})`);
-      }
-    }
-    if (!existsSync(join(dir, "preview-props.json"))) {
+    if (!existsSync(join(dir, "react.tsx")))
+      issues.push(`MISSING_REACT: ${b.key} has no react.tsx`);
+    const props = blockPreviewProps(b.categorySlug, b.file);
+    if (!props)
       issues.push(`MISSING_PREVIEW_PROPS: ${b.key} (run the blocks test suite to generate)`);
+    const stim = manifest[b.key];
+    if (!stim) issues.push(`MISSING_STIMULUS: ${b.key} (run pnpm generate:stimulus)`);
+    for (const v of meta.variants) {
+      if (!existsSync(join(dir, "golden", `${v.slug}.html`)))
+        issues.push(`MISSING_GOLDEN: ${b.key} · ${v.label} (${v.slug})`);
+      if (props && !Object.hasOwn(props, v.label))
+        issues.push(`MISSING_PREVIEW_PROPS: ${b.key} · ${v.label} (run the blocks test suite)`);
+      if (!stim) continue;
+      const template = stim.variants?.find((t) => t.label === v.label);
+      if (!template || !stimulusTemplate(b.categorySlug, b.file, template.slug))
+        issues.push(`MISSING_STIMULUS: ${b.key} · ${v.label} (run pnpm generate:stimulus)`);
     }
-    const stim = stimulusManifest()[b.key];
-    if (!stim) issues.push(`MISSING_STIMULUS: ${b.key} (run node tools/generate-stimulus.mjs)`);
+    if (parity && !parity.has(b.key))
+      issues.push(
+        `MISSING_PARITY_TEST: ${b.key} (packages/blocks/test/${b.categorySlug}-${b.file}.parity.test.tsx)`,
+      );
   }
-  const reactBlocks = listBlockDirs().filter((k) => !index.some((b) => b.key === k));
-  for (const k of reactBlocks)
-    issues.push(`ORPHAN_BLOCK: ${k} exists on disk but not in catalog.json`);
+  const orphans = listBlockDirs().filter((k) => !index.some((b) => b.key === k));
+  for (const k of orphans) issues.push(`ORPHAN_BLOCK: ${k} exists on disk but not in catalog.json`);
   return {
     blocks: index.length,
     ported: index.filter((b) => b.ported).length,
