@@ -159,6 +159,8 @@ export interface GaugeProps extends VisualProps {
   value?: string;
   label?: string;
   change?: string;
+  /** Which way of `change` is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
   minLabel?: string;
   maxLabel?: string;
   color?: string;
@@ -175,6 +177,7 @@ export function Gauge({
   value,
   label = gaugeDefault.label,
   change = gaugeDefault.change,
+  positive = "up",
   minLabel = gaugeDefault.minLabel,
   maxLabel = gaugeDefault.maxLabel,
   color = "var(--color-primary)",
@@ -205,7 +208,8 @@ export function Gauge({
   const valueText = value ?? (known ? String(Math.round(percent)) : "—");
   const zoneSpans = zones ? computeZones(zones) : [];
   const needlePos = needle(progress);
-  const down = change.startsWith("-");
+  const down = /^\s*[-−]/.test(change);
+  const good = positive === "down" ? down : !down;
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
 
   return (
@@ -337,9 +341,9 @@ export function Gauge({
             <motion.span
               className={cn(
                 "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums ring-1 ring-inset",
-                down
-                  ? "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400"
-                  : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400",
+                good
+                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
+                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
               )}
               variants={animated ? pillAnim : undefined}
             >

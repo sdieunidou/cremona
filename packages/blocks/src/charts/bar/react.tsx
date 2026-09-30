@@ -96,6 +96,8 @@ export interface BarProps extends VisualProps {
   badge?: string;
   value?: string;
   change?: string;
+  /** Which way of `change` is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
   /** One bar per item. Negative values hang from a zero baseline; missing ones draw no bar. */
   items?: readonly { label: string; value: number }[];
   /** Shown in place of the bars when `items` is empty. */
@@ -110,6 +112,7 @@ export function Bar({
   badge = barDefault.badge,
   value = barDefault.value,
   change = barDefault.change,
+  positive = "up",
   items = barDefault.items,
   emptyLabel = "No data",
   animated = false,
@@ -151,7 +154,8 @@ export function Bar({
     ? Math.ceil(count / Math.max(2, Math.floor(48 / (labelChars + 2))))
     : 1;
   const gap = gapFor(count);
-  const down = change.startsWith("-");
+  const down = /^\s*[-−]/.test(change);
+  const good = positive === "down" ? down : !down;
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
 
   return (
@@ -209,9 +213,9 @@ export function Bar({
             <motion.span
               className={cn(
                 "mb-1 inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums ring-1 ring-inset",
-                down
-                  ? "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400"
-                  : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400",
+                good
+                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
+                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
               )}
               variants={animated ? pillAnim : undefined}
               {...state}

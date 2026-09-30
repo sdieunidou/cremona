@@ -90,6 +90,8 @@ export interface StatCardProps extends VisualProps {
   change?: string;
   period?: string;
   trend?: Trend;
+  /** Which trend is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -102,6 +104,7 @@ export function StatCard({
   change = statCardDefaultCopy.change,
   period = statCardDefaultCopy.period,
   trend = statCardDefaultCopy.trend,
+  positive = "up",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -124,6 +127,13 @@ export function StatCard({
     : {};
   const trendStyle = trendStyles[trend] ?? trendStyles.neutral;
   const TrendIcon = trendStyle.icon;
+  // the pill colour says good or bad news: swapped when going down is the good way
+  const pill =
+    positive === "down" && trendStyle !== trendStyles.neutral
+      ? trendStyle === trendStyles.up
+        ? trendStyles.down.pill
+        : trendStyles.up.pill
+      : trendStyle.pill;
   const Icon = icon ?? statCardDefaultCopy.icon;
 
   return (
@@ -187,7 +197,7 @@ export function StatCard({
             <motion.span
               className={cn(
                 "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums",
-                trendStyle.pill,
+                pill,
               )}
               variants={animated ? pillAnim : undefined}
               {...state}

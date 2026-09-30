@@ -136,6 +136,8 @@ export interface FunnelProps extends VisualProps {
   badge?: string;
   value?: string;
   change?: string;
+  /** Which way of `change` is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
   stages?: readonly FunnelStage[];
   /** Shown in place of the stages when `stages` is empty. */
   emptyLabel?: string;
@@ -149,6 +151,7 @@ export function Funnel({
   badge = funnelDefault.badge,
   value,
   change = funnelDefault.change,
+  positive = "up",
   stages = funnelDefault.stages,
   emptyLabel = "No data",
   animated = false,
@@ -173,7 +176,8 @@ export function Funnel({
     : {};
   const rows = computeStages(stages);
   const valueText = value ?? formatPercent(rows.length ? rows.at(-1)!.percent : null);
-  const down = change.startsWith("-");
+  const down = /^\s*[-−]/.test(change);
+  const good = positive === "down" ? down : !down;
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
 
   return (
@@ -231,9 +235,9 @@ export function Funnel({
             <motion.span
               className={cn(
                 "mb-1 inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums ring-1 ring-inset",
-                down
-                  ? "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400"
-                  : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400",
+                good
+                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
+                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
               )}
               variants={animated ? pillAnim : undefined}
               {...state}

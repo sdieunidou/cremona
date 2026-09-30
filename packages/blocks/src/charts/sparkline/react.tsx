@@ -147,6 +147,8 @@ export interface SparklineProps extends VisualProps {
   title?: string;
   value?: string;
   change?: string;
+  /** Which way of `change` is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
   /**
    * The series as heights, 0 (bottom) to 1 (top). Values outside 0..1 are scaled
    * to the series' own range, like `values`.
@@ -176,6 +178,7 @@ export function Sparkline({
   title = sparklineDefault.title,
   value = sparklineDefault.value,
   change = sparklineDefault.change,
+  positive = "up",
   points = sparklineDefault.points,
   values,
   min,
@@ -202,7 +205,8 @@ export function Sparkline({
       }
     : {};
   const gradientId = useId();
-  const down = change.startsWith("-");
+  const down = /^\s*[-−]/.test(change);
+  const good = positive === "down" ? down : !down;
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
   const series = toFractions(points, values, min, max);
   const pts = toPoints(series);
@@ -271,9 +275,9 @@ export function Sparkline({
             <motion.span
               className={cn(
                 "inline-flex w-fit items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold tabular-nums ring-1 ring-inset",
-                down
-                  ? "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400"
-                  : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400",
+                good
+                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
+                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
               )}
               variants={animated ? pillAnim : undefined}
               {...state}

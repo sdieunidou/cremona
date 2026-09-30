@@ -8,6 +8,7 @@ import { Gauge } from "../src/charts/gauge/react.js";
 import { Heatmap } from "../src/charts/heatmap/react.js";
 import { Line } from "../src/charts/line/react.js";
 import { Sparkline } from "../src/charts/sparkline/react.js";
+import { StatCard } from "../src/metrics/stat-card/react.js";
 
 type Props = Record<string, unknown>;
 const render = (C: ComponentType<Props>, props: Props) => renderToStaticMarkup(<C {...props} />);
@@ -203,5 +204,21 @@ describe("charts with real data", () => {
     // the headline and both conversion rates, instead of "4000%"
     expect(html.match(/>—</g)).toHaveLength(3);
     expect(render(Funnel, { stages: [{ label: "A", value: 1_234_567_890 }] })).toContain("1.2B");
+  });
+
+  it("colours the change by its meaning, not only its sign", () => {
+    const GOOD = "bg-emerald-500/10";
+    const BAD = "bg-red-500/10";
+    // a Unicode minus is a minus
+    expect(render(Line, { change: "−3.2%" })).toContain(BAD);
+    expect(render(Line, { change: "−3.2%" })).toContain("lucide-arrow-down-right");
+    // falling churn is good news
+    for (const C of [Bar, Line, Sparkline, Funnel, Gauge, Heatmap]) {
+      expect(render(C, { change: "-0.8%", positive: "down" })).toContain(GOOD);
+      expect(render(C, { change: "+0.8%", positive: "down" })).toContain(BAD);
+    }
+    const churn = renderToStaticMarkup(<StatCard trend="down" positive="down" />);
+    expect(churn).toContain("bg-emerald-500/10");
+    expect(churn).toContain("lucide-arrow-down-right");
   });
 });
