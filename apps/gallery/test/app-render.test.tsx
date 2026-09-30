@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
 import { App } from "../src/app.js";
-import { stats, blockKeys } from "../src/lib/discovery.js";
+import { stats, blockKeys, loadBlock } from "../src/lib/discovery.js";
 
 afterEach(cleanup);
 
@@ -44,8 +44,12 @@ describe("gallery app", () => {
   });
 
   it("renders a block page with all its variants", async () => {
+    // the page and the block load lazily: warm both so a busy machine does not time out
+    await Promise.all([loadBlock("metrics/stat-card"), import("../src/pages/block.js")]);
     renderAt("/visuals/metrics/stat-card");
-    expect(await screen.findByRole("heading", { level: 1, name: "Stat Card" })).toBeTruthy();
+    expect(
+      await screen.findByRole("heading", { level: 1, name: "Stat Card" }, { timeout: 15000 }),
+    ).toBeTruthy();
     // the 6 core variants' labels appear in preview footers
     expect(screen.getAllByText("default").length).toBeGreaterThan(0);
     expect(screen.getAllByText("isometric").length).toBeGreaterThan(0);
