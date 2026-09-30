@@ -65,3 +65,14 @@
   padding-block: 0.125rem;
   border-left: 1px solid var(--sidebar-border);
 }
+
+/* preview toolbar: shown while the frame is hovered or holds focus, always on touch screens */
+.group\/preview:is(:hover, :focus-within) .group-hover\/preview\:opacity-100,
+.focus-visible\:opacity-100:focus-visible {
+  opacity: 1;
+}
+@media (hover: none) {
+  .group-hover\/preview\:opacity-100 {
+    opacity: 1;
+  }
+}

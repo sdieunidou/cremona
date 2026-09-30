@@ -60,8 +60,12 @@ Two version drifts are normalized semantically (see `test/helpers/parity.ts`):
   version — the comparator coalesces them (visually equivalent).
 
 `preview-props.json` is generated **by the parity tests themselves**
-(`test/helpers/run-golden-parity.tsx` writes resolved props after a green run),
-so the gallery/MCP always describe props that are proven to render correctly.
+(`test/helpers/run-golden-parity.tsx`). Each variant's props are serialized to
+JSON, hydrated back and re-rendered, and the result must equal the tested
+render; the file is only written when every variant of the block passed. Icon
+components are stored as `"lucide:<Name>"`, icon elements as
+`{ "$element": "lucide:<Name>", "props": {…} }`; anything JSON cannot carry
+fails the test.
 
 ## Animation model
 

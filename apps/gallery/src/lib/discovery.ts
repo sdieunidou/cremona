@@ -67,6 +67,8 @@ export interface BlockEntry {
   key: string;
   meta: BlockJsonMeta;
   Component: ComponentType<Record<string, unknown>>;
+  /** Name of the module export `Component` was taken from (what a consumer imports). */
+  exportName: string;
   previewProps: Record<string, Record<string, unknown>>;
 }
 
@@ -75,13 +77,14 @@ for (const [path, mod] of Object.entries(metaModules)) {
   const key = keyOf(path);
   const componentMod = reactModules[path.replace("block.json", "react.tsx")];
   if (!componentMod) continue;
-  const Component = pickComponent(componentMod, key);
-  if (!Component) continue;
+  const picked = pickComponent(componentMod, key);
+  if (!picked) continue;
   const propsMod = propsModules[path.replace("block.json", "preview-props.json")];
   blocks[key] = {
     key,
     meta: mod.default,
-    Component,
+    Component: picked.Component,
+    exportName: picked.name,
     previewProps: propsMod?.default ?? {},
   };
 }
@@ -90,7 +93,7 @@ for (const [path, mod] of Object.entries(metaModules)) {
 function pickComponent(
   mod: Record<string, unknown>,
   key: string,
-): ComponentType<Record<string, unknown>> | null {
+): { name: string; Component: ComponentType<Record<string, unknown>> } | null {
   const pascal = key
     .split("/")
     .pop()!
@@ -102,8 +105,8 @@ function pickComponent(
   );
   if (functions.length === 0) return null;
   const named = functions.find(([name]) => name === pascal);
-  const chosen = named ?? functions[functions.length - 1]!;
-  return chosen[1] as ComponentType<Record<string, unknown>>;
+  const [name, Component] = named ?? functions[functions.length - 1]!;
+  return { name, Component: Component as ComponentType<Record<string, unknown>> };
 }
 
 export const categories = catalog.map((c) => ({

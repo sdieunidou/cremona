@@ -26,14 +26,11 @@
         "result": "active",
         "duration": "96ms",
         "icon": {
-          "type": "lucide:CreditCard",
-          "key": null,
+          "$element": "lucide:CreditCard",
           "props": {
             "className": "size-3.5",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       },
       {
@@ -42,14 +39,11 @@
         "result": "1.2M events",
         "duration": "244ms",
         "icon": {
-          "type": "lucide:Database",
-          "key": null,
+          "$element": "lucide:Database",
           "props": {
             "className": "size-3.5",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       },
       {
@@ -58,14 +52,11 @@
         "result": "confirmed",
         "duration": "173ms",
         "icon": {
-          "type": "lucide:Calendar",
-          "key": null,
+          "$element": "lucide:Calendar",
           "props": {
             "className": "size-3.5",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       }
     ]
@@ -80,14 +71,11 @@
         "result": "12kb",
         "duration": "210ms",
         "icon": {
-          "type": "lucide:Globe",
-          "key": null,
+          "$element": "lucide:Globe",
           "props": {
             "className": "size-3.5",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       },
       {
@@ -96,14 +84,11 @@
         "result": "18 columns",
         "duration": "64ms",
         "icon": {
-          "type": "lucide:Database",
-          "key": null,
+          "$element": "lucide:Database",
           "props": {
             "className": "size-3.5",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       },
       {
@@ -112,14 +97,11 @@
         "result": "#312",
         "duration": "418ms",
         "icon": {
-          "type": "lucide:GitBranch",
-          "key": null,
+          "$element": "lucide:GitBranch",
           "props": {
             "className": "size-3.5",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       },
       {
@@ -128,14 +110,11 @@
         "result": "posted",
         "duration": "77ms",
         "icon": {
-          "type": "lucide:MessageSquare",
-          "key": null,
+          "$element": "lucide:MessageSquare",
           "props": {
             "className": "size-3.5",
             "strokeWidth": 2
-          },
-          "_owner": null,
-          "_store": {}
+          }
         }
       }
     ]

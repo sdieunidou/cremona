@@ -55,3 +55,35 @@ test("search palette opens with Ctrl+K and navigates", async ({ page }) => {
   await page.waitForTimeout(800);
   await expect(page.locator("h1")).toContainText("Kanban");
 });
+
+test("preview stages keep their golden height", async ({ page }) => {
+  await page.goto("/visuals/metrics/stat-card");
+  await expect(page.locator("h1")).toContainText("Stat Card");
+  // h-96 = 24rem: the stage is the frame's `flex grow` child
+  const stage = page.locator(".group\\/preview > .grow").first();
+  expect((await stage.boundingBox())?.height).toBe(384);
+  await page.goto("/visuals/files/simple");
+  await expect(page.locator("h1")).toContainText("Simple");
+  expect((await page.locator(".group\\/preview > .grow").first().boundingBox())?.height).toBe(256);
+});
+
+test("code toolbar is revealed on hover and on keyboard focus", async ({ page }) => {
+  await page.goto("/visuals/metrics/stat-card");
+  const button = page.locator('button[aria-label="View code"]').first();
+  await expect(button).toHaveCSS("opacity", "0");
+  await page.locator(".group\\/preview").first().hover();
+  await expect(button).toHaveCSS("opacity", "1");
+  await page.mouse.move(0, 0);
+  await button.focus();
+  await expect(button).toHaveCSS("opacity", "1");
+});
+
+test("mobile navigation opens", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const sidebar = page.locator('[data-slot="sidebar-container"]');
+  await expect(sidebar).toBeHidden();
+  await page.getByRole("button", { name: "Toggle Sidebar" }).click();
+  await expect(sidebar).toBeVisible();
+  await expect(sidebar.getByText("All visuals")).toBeVisible();
+});

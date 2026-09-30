@@ -25,14 +25,11 @@
         "items": [
           {
             "icon": {
-              "type": "lucide:CreditCard",
-              "key": null,
+              "$element": "lucide:CreditCard",
               "props": {
                 "className": "size-3",
                 "strokeWidth": 2.5
-              },
-              "_owner": null,
-              "_store": {}
+              }
             },
             "label": "Update payment method",
             "shortcut": [
@@ -42,14 +39,11 @@
           },
           {
             "icon": {
-              "type": "lucide:Users",
-              "key": null,
+              "$element": "lucide:Users",
               "props": {
                 "className": "size-3",
                 "strokeWidth": 2.5
-              },
-              "_owner": null,
-              "_store": {}
+              }
             },
             "label": "Manage seats"
           }
@@ -60,14 +54,11 @@
         "items": [
           {
             "icon": {
-              "type": "lucide:LifeBuoy",
-              "key": null,
+              "$element": "lucide:LifeBuoy",
               "props": {
                 "className": "size-3",
                 "strokeWidth": 2.5
-              },
-              "_owner": null,
-              "_store": {}
+              }
             },
             "label": "Contact support"
           }
@@ -83,14 +74,11 @@
         "items": [
           {
             "icon": {
-              "type": "lucide:GitBranch",
-              "key": null,
+              "$element": "lucide:GitBranch",
               "props": {
                 "className": "size-3",
                 "strokeWidth": 2.5
-              },
-              "_owner": null,
-              "_store": {}
+              }
             },
             "label": "Deploy to production",
             "shortcut": [
@@ -100,14 +88,11 @@
           },
           {
             "icon": {
-              "type": "lucide:GitBranch",
-              "key": null,
+              "$element": "lucide:GitBranch",
               "props": {
                 "className": "size-3",
                 "strokeWidth": 2.5
-              },
-              "_owner": null,
-              "_store": {}
+              }
             },
             "label": "Roll back last deploy"
           }

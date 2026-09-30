@@ -1,20 +1,29 @@
 import type { ComponentType, ReactNode } from "react";
 import { PREVIEW_FRAME, PREVIEW_STAGE, PREVIEW_FOOTER } from "../lib/shell-classes.js";
 import { FRAME_HEIGHTS, cn } from "@cremona/core";
+import { ErrorBoundary, PreviewError } from "./error-boundary.js";
 
 export interface PreviewFrameProps {
   label?: ReactNode;
+  /** Variant `size` from block.json: the stage height (xs…xl, default md). */
   size?: string | null;
   className?: string;
+  /** Rendered inside the frame, before the stage (toolbar, code panel). */
+  overlay?: ReactNode;
   children: ReactNode;
 }
 
 /** Faithful reproduction of the POC preview frame. */
-export function PreviewFrame({ label, size = "md", className, children }: PreviewFrameProps) {
+export function PreviewFrame({ label, size, className, overlay, children }: PreviewFrameProps) {
   const height = FRAME_HEIGHTS[size ?? "md"] ?? FRAME_HEIGHTS.md!;
   return (
     <div className={cn(PREVIEW_FRAME, className)}>
-      <div className={cn(PREVIEW_STAGE, height)}>{children}</div>
+      {overlay}
+      <div className={cn(PREVIEW_STAGE, height)}>
+        <ErrorBoundary fallback={(error) => <PreviewError error={error} />}>
+          {children}
+        </ErrorBoundary>
+      </div>
       {label != null && <div className={PREVIEW_FOOTER}>{label}</div>}
     </div>
   );

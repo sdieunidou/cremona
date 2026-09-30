@@ -1,6 +1,6 @@
-/** Deserialize preview props: "lucide:<Name>" strings back to icon components. */
+/** Deserialize preview props: "lucide:<Name>" strings back to icon components, { $element } back to elements. */
 import * as lucide from "lucide-react";
-import type { ComponentType } from "react";
+import { createElement, type ComponentType, type ReactNode } from "react";
 
 const registry = new Map<string, ComponentType<{ className?: string; strokeWidth?: number }>>();
 for (const value of Object.values(lucide)) {
@@ -28,8 +28,24 @@ export function hydrateProps(props: Record<string, unknown>): Record<string, unk
   return hydrateValue(props) as Record<string, unknown>;
 }
 
+type ElementRef = { $element: string; props?: Record<string, unknown>; children?: unknown[] };
+function isElementRef(value: unknown): value is ElementRef {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    typeof (value as ElementRef).$element === "string"
+  );
+}
+
 function hydrateValue(value: unknown): unknown {
   if (isIconRef(value)) return resolveIcon(value) ?? undefined;
+  if (isElementRef(value)) {
+    const type = isIconRef(value.$element) ? resolveIcon(value.$element) : value.$element;
+    if (!type) return null;
+    const props = hydrateValue(value.props ?? {}) as Record<string, unknown>;
+    const children = (value.children ?? []).map(hydrateValue) as ReactNode[];
+    return createElement(type, props, ...children);
+  }
   if (Array.isArray(value)) return value.map(hydrateValue);
   if (typeof value === "object" && value !== null) {
     const out: Record<string, unknown> = {};

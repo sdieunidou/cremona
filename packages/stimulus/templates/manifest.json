@@ -3587,132 +3587,132 @@
       {
         "label": "pdf",
         "slug": "000-pdf",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "docx",
         "slug": "001-docx",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "pptx",
         "slug": "002-pptx",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "txt",
         "slug": "003-txt",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "md",
         "slug": "004-md",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "xlsx",
         "slug": "005-xlsx",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "csv",
         "slug": "006-csv",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "png",
         "slug": "007-png",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "jpg",
         "slug": "008-jpg",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "webp",
         "slug": "009-webp",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "svg",
         "slug": "010-svg",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "psd",
         "slug": "011-psd",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "fig",
         "slug": "012-fig",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "mp4",
         "slug": "013-mp4",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "mp3",
         "slug": "014-mp3",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "zip",
         "slug": "015-zip",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "json",
         "slug": "016-json",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "sql",
         "slug": "017-sql",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "html",
         "slug": "018-html",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "css",
         "slug": "019-css",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "js",
         "slug": "020-js",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "ts",
         "slug": "021-ts",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "jsx",
         "slug": "022-jsx",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "tsx",
         "slug": "023-tsx",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "py",
         "slug": "024-py",
-        "size": null
+        "size": "sm"
       },
       {
         "label": "php",
         "slug": "025-php",
-        "size": null
+        "size": "sm"
       }
     ]
   },
