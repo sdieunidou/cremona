@@ -1,10 +1,12 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
+const catalog = JSON.parse(readFileSync(join(here, "../../blocks/catalog.json"), "utf8"));
 let client;
 let transport;
 
@@ -26,13 +28,11 @@ function textOf(result) {
 }
 
 describe("cremona MCP server", () => {
-  it("lists 37 categories", async () => {
+  it("lists every category of the catalog", async () => {
     const cats = textOf(await client.callTool({ name: "list_categories", arguments: {} }));
-    expect(cats).toHaveLength(37);
+    expect(cats.map((c) => c.slug)).toEqual(catalog.map((g) => g.slug));
     const metrics = cats.find((c) => c.category === "Metrics");
-    expect(metrics.blocks).toBe(3);
-    const components = cats.find((c) => c.category === "Components");
-    expect(components.blocks).toBe(22);
+    expect(metrics.blocks).toBe(catalog.find((g) => g.slug === "metrics").items.length);
   });
 
   it("lists blocks with variants", async () => {
@@ -110,6 +110,17 @@ describe("cremona MCP server", () => {
     expect(ds.themes).toHaveLength(9);
   });
 
+  it("registers every tool with a title and annotations", async () => {
+    const { tools } = await client.listTools();
+    expect(tools.length).toBe(14);
+    for (const tool of tools) {
+      expect(tool.title, tool.name).toBeTruthy();
+      const writes = tool.name.startsWith("add_");
+      expect(tool.annotations?.readOnlyHint, tool.name).toBe(!writes);
+      if (writes) expect(tool.annotations?.destructiveHint, tool.name).toBe(true);
+    }
+  });
+
   it("validates coherence", async () => {
     const v = textOf(await client.callTool({ name: "validate", arguments: {} }));
     expect(v.ok).toBe(true);
@@ -153,7 +164,8 @@ describe("cremona MCP server", () => {
     const components = textOf(
       await client.callTool({ name: "list_blocks", arguments: { kind: "component" } }),
     );
-    expect(components.length).toBe(22);
+    const expected = catalog.find((g) => g.slug === "components").items.length;
+    expect(components.length).toBe(expected);
     expect(components.every((b) => b.kind === "component")).toBe(true);
   });
 
