@@ -1,18 +1,21 @@
 import { Controller } from "@hotwired/stimulus";
 
 /**
- * cremona-theme — applies the Cremona design system to <html>.
- *
- * Mount on the <html> element (or any ancestor of your app):
+ * cremona-theme — applies the Cremona appearance and theme to <html>.
  *
  *   <html data-controller="cremona-theme" data-cremona-theme-appearance-value="system">
  *
- * Values:
- *   appearance: "light" | "dark" | "system"  (persisted to localStorage)
- *   theme:     one of @cremona/tokens themes.json values (default, claude-plus, …)
+ * Values (render them from the server; changing them at runtime applies at once):
+ *   appearance       "light" | "dark" | "system" (follows prefers-color-scheme)
+ *   theme            a @cremona/tokens theme: "default", "sakura", …
+ *   storageKey       localStorage key of the appearance ("cremona-appearance")
+ *   themeStorageKey  localStorage key of the theme ("cremona-theme")
  *
- * The controller toggles the `dark` class and the `.theme-<name>` class on
- * document.documentElement — exactly like the POC.
+ * A stored choice wins over the rendered values; an empty key turns storage off.
+ * Actions: setAppearance (param `appearance`), setTheme (param `theme`), toggle.
+ * The controller sets `dark`, `theme-<name>` and `color-scheme` on
+ * document.documentElement and dispatches `cremona-theme:changed`
+ * ({ appearance, theme, dark }) whenever the result changes.
  */
 export default class CremonaThemeController extends Controller {
   static values = {
@@ -23,64 +26,78 @@ export default class CremonaThemeController extends Controller {
   };
 
   connect() {
-    this.appearanceValue = read(this.storageKeyValue) ?? this.appearanceValue;
-    this.themeValue = read(this.themeStorageKeyValue) ?? this.themeValue;
-    this.media = window.matchMedia("(prefers-color-scheme: dark)");
+    this.media = window.matchMedia?.("(prefers-color-scheme: dark)") ?? null;
     this.onMedia = () => {
       if (this.appearanceValue === "system") this.apply();
     };
-    this.media.addEventListener("change", this.onMedia);
+    this.media?.addEventListener?.("change", this.onMedia);
+    const appearance = read(this.storageKeyValue);
+    const theme = read(this.themeStorageKeyValue);
+    if (appearance) this.appearanceValue = appearance;
+    if (theme) this.themeValue = theme;
+    this.live = true;
     this.apply();
   }
 
   disconnect() {
-    this.media?.removeEventListener("change", this.onMedia);
+    this.live = false;
+    this.media?.removeEventListener?.("change", this.onMedia);
   }
 
-  appearanceChanged({ params }) {
-    if (params?.appearance) {
-      this.appearanceValue = params.appearance;
-      write(this.storageKeyValue, this.appearanceValue);
-      this.apply();
-    }
+  appearanceValueChanged() {
+    if (this.live) this.apply();
   }
 
-  themeChanged({ params }) {
-    if (params?.theme) {
-      this.themeValue = params.theme;
-      write(this.themeStorageKeyValue, this.themeValue);
-      this.apply();
-    }
+  themeValueChanged() {
+    if (this.live) this.apply();
+  }
+
+  setAppearance({ params }) {
+    if (!params?.appearance) return;
+    this.appearanceValue = params.appearance;
+    write(this.storageKeyValue, params.appearance);
+    this.apply();
+  }
+
+  setTheme({ params }) {
+    if (!params?.theme) return;
+    this.themeValue = params.theme;
+    write(this.themeStorageKeyValue, params.theme);
+    this.apply();
   }
 
   toggle() {
-    const dark = document.documentElement.classList.contains("dark");
-    this.appearanceValue = dark ? "light" : "dark";
-    write(this.storageKeyValue, this.appearanceValue);
-    this.apply();
+    this.setAppearance({
+      params: {
+        appearance: document.documentElement.classList.contains("dark") ? "light" : "dark",
+      },
+    });
   }
 
   apply() {
     const root = document.documentElement;
-    const prefersDark = this.media ? this.media.matches : false;
     const dark =
-      this.appearanceValue === "dark" || (this.appearanceValue === "system" && prefersDark);
+      this.appearanceValue === "dark" ||
+      (this.appearanceValue === "system" && !!this.media?.matches);
+    const theme =
+      this.themeValue && this.themeValue !== "default" ? `theme-${this.themeValue}` : "";
     root.classList.toggle("dark", dark);
-    for (const c of [...root.classList]) {
-      if (c.startsWith("theme-")) root.classList.remove(c);
-    }
-    if (this.themeValue && this.themeValue !== "default") {
-      root.classList.add(`theme-${this.themeValue}`);
-    }
+    for (const c of [...root.classList])
+      if (c.startsWith("theme-") && c !== theme) root.classList.remove(c);
+    if (theme) root.classList.add(theme);
     root.style.colorScheme = dark ? "dark" : "light";
+    const state = `${this.appearanceValue} ${this.themeValue} ${dark}`;
+    if (state === this.applied) return;
+    this.applied = state;
     this.dispatch("changed", {
       detail: { appearance: this.appearanceValue, theme: this.themeValue, dark },
     });
   }
 }
 
-// Storage can be unavailable (privacy modes, blocked site data): the theme then lasts for the page.
+// Storage can be unavailable (privacy modes, blocked site data): the choice then lasts for the page.
 function read(key) {
+  if (!key) return null;
   try {
     return localStorage.getItem(key);
   } catch {
@@ -89,6 +106,7 @@ function read(key) {
 }
 
 function write(key, value) {
+  if (!key) return;
   try {
     localStorage.setItem(key, value);
   } catch {

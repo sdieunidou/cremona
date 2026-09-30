@@ -378,22 +378,88 @@ describe("cremona-visual", () => {
 });
 
 describe("cremona-theme", () => {
-  const controller = () => app.getControllerForElementAndIdentifier(html, "cremona-theme");
+  const theme = () => app.getControllerForElementAndIdentifier(html, "cremona-theme");
+  const events = [];
+  const record = (e) => events.push(e.detail);
+  beforeEach(() => {
+    events.length = 0;
+    document.addEventListener("cremona-theme:changed", record);
+  });
+  afterEach(() => document.removeEventListener("cremona-theme:changed", record));
 
   it("follows a dark system preference as soon as it connects", async () => {
     mockMedia(["(prefers-color-scheme: dark)"]);
     html.setAttribute("data-controller", "cremona-theme");
     await start("");
     expect(html.classList.contains("dark")).toBe(true);
+    expect(html.style.colorScheme).toBe("dark");
+    expect(events.at(-1)).toEqual({ appearance: "system", theme: "default", dark: true });
   });
 
-  it("persists the chosen theme under its storage key", async () => {
+  it("persists the chosen theme and appearance under their storage keys", async () => {
     mockMedia([]);
     html.setAttribute("data-controller", "cremona-theme");
     await start("");
-    controller().themeChanged({ params: { theme: "sakura" } });
+    theme().setTheme({ params: { theme: "sakura" } });
+    theme().setAppearance({ params: { appearance: "dark" } });
     expect(html.classList.contains("theme-sakura")).toBe(true);
+    expect(html.classList.contains("dark")).toBe(true);
     expect(localStorage.getItem("cremona-theme")).toBe("sakura");
+    expect(localStorage.getItem("cremona-appearance")).toBe("dark");
+    await tick();
+    expect(events.map((e) => `${e.appearance} ${e.theme}`)).toEqual([
+      "system default",
+      "system sakura",
+      "dark sakura",
+    ]);
+  });
+
+  it("works from data-action with params", async () => {
+    mockMedia([]);
+    html.setAttribute("data-controller", "cremona-theme");
+    await start(
+      `<button data-action="cremona-theme#setTheme" data-cremona-theme-theme-param="zen">zen</button>`,
+    );
+    document.querySelector("button").click();
+    expect(html.classList.contains("theme-zen")).toBe(true);
+  });
+
+  it("restores a stored choice over the rendered values", async () => {
+    mockMedia([]);
+    localStorage.setItem("cremona-appearance", "dark");
+    localStorage.setItem("cremona-theme", "sakura");
+    html.setAttribute("data-controller", "cremona-theme");
+    html.setAttribute("data-cremona-theme-appearance-value", "light");
+    await start("");
+    expect(html.classList.contains("dark")).toBe(true);
+    expect(html.classList.contains("theme-sakura")).toBe(true);
+  });
+
+  it("keeps the rendered values when storage is turned off", async () => {
+    mockMedia([]);
+    localStorage.setItem("cremona-appearance", "dark");
+    html.setAttribute("data-controller", "cremona-theme");
+    html.setAttribute("data-cremona-theme-appearance-value", "light");
+    html.setAttribute("data-cremona-theme-storage-key-value", "");
+    await start("");
+    expect(html.classList.contains("dark")).toBe(false);
+    theme().toggle();
+    expect(html.classList.contains("dark")).toBe(true);
+    expect(localStorage.getItem("cremona-appearance")).toBe("dark");
+  });
+
+  it("applies values changed at runtime", async () => {
+    mockMedia([]);
+    html.setAttribute("data-controller", "cremona-theme");
+    await start("");
+    html.setAttribute("data-cremona-theme-appearance-value", "dark");
+    html.setAttribute("data-cremona-theme-theme-value", "zen");
+    await tick();
+    expect(html.classList.contains("dark")).toBe(true);
+    expect(html.classList.contains("theme-zen")).toBe(true);
+    html.setAttribute("data-cremona-theme-theme-value", "default");
+    await tick();
+    expect([...html.classList].some((c) => c.startsWith("theme-"))).toBe(false);
   });
 
   it("still applies the theme when storage is blocked", async () => {
@@ -407,7 +473,7 @@ describe("cremona-theme", () => {
     html.setAttribute("data-controller", "cremona-theme");
     await start("");
     expect(html.classList.contains("dark")).toBe(true);
-    controller().toggle();
+    theme().toggle();
     expect(html.classList.contains("dark")).toBe(false);
   });
 });
