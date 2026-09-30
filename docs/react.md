@@ -2,14 +2,25 @@
 
 ## Install/imports
 
-```tsx
-import "@cremona/tokens/css/cremona.css"; // once, app-wide
-import { StatCard } from "@cremona/blocks/src/metrics/stat-card/react.js";
-import { Line } from "@cremona/blocks/src/charts/line/react.js";
+```bash
+npm i @cremona/blocks @cremona/tokens motion lucide-react
 ```
 
-Blocks depend only on: `react`, `motion/react`, `lucide-react`, `@cremona/core`
-(constants/types), `@cremona/react` (`useInView`).
+```tsx
+import "@cremona/tokens/css/cremona.css"; // once, app-wide
+import { StatCard } from "@cremona/blocks/metrics/stat-card";
+import { Line, type LineProps } from "@cremona/blocks/charts/line";
+```
+
+One entry per block, `@cremona/blocks/<category>/<file>`: compiled ESM with its
+type declarations, starting with `"use client"`. `react`, `react-dom`, `motion`
+and `lucide-react` are peer dependencies (React 18.2+ or 19, motion 12 or 13,
+lucide-react 1.47+); `@cremona/core` (constants, types, `cn`, `frameClasses`)
+and `@cremona/react` (`useInView`, `useLoopActive`) come as dependencies.
+Tested with React 19.3 and 18.3, Next.js 16.3, Vite 8.3, TypeScript 6.0,
+motion 13.4 and lucide-react 1.49. The setup of a new app — stylesheet, dark
+mode, images, Server Components, Tailwind — is in
+[getting-started.md](getting-started.md).
 
 Blocks are **preview compositions**, not production components — read
 [Preview compositions vs production UI](#preview-compositions-vs-production-ui)
@@ -74,14 +85,16 @@ sized box and pair it with a text equivalent, since its root is `aria-hidden`:
 ```tsx
 <div className="h-72">
   <Donut
-    title="Charge par semaine"
-    centerValue="90 j"
+    title="Load per week"
+    badge="Week 40"
+    centerValue="90 d"
+    centerLabel="planned"
     segments={segments}   // your data, never the demo defaults
     animated
     trigger="mount"
   />
 </div>
-<p className="sr-only">Charge par semaine : 90 j. {/* … */}</p>
+<p className="sr-only">Load per week: 90 days planned. {/* … */}</p>
 ```
 
 ### Derive it, for anything interactive
@@ -92,9 +105,13 @@ on the switch knob (`stiffness: 400, damping: 28`), the tooltip arrow, the
 `layoutId` indicator that slides between tabs, the 150 ms offset between a card
 and its rows.
 
-Start from the source instead. `get_block` returns the complete, self-contained
-TSX (`include: ["react"]`), or copy `packages/blocks/src/<category>/<block>/react.tsx`.
-Then apply the same three edits every time:
+Start from the source instead: copy
+`packages/blocks/src/<category>/<block>/react.tsx` into your app, or take it
+from the MCP `get_block`. It imports `@cremona/core` and `@cremona/react`, so
+install them next to motion and lucide-react
+(`npm i @cremona/core @cremona/react @cremona/tokens motion lucide-react`), and
+keep its first line, `"use client"`, in a Next.js app. Then apply the same
+three edits every time:
 
 | | |
 |---|---|
@@ -135,12 +152,19 @@ By default a visual renders for the gallery: the preview frame centres it
 grid and you get three widths, three left edges and three top edges.
 
 `fill` turns the frame into a plain box the visual occupies entirely: no side
-padding, stretched on the cross axis, no module cap.
+padding, no module cap, and the card stretched to the box's height (the card
+wrapper becomes `h-full flex flex-col`, the card `flex-1`). Stages with a fixed
+aspect — maps, devices, scenes — keep it: they are centred and contained in the
+box, not distorted.
 
 ```tsx
 <div className="grid gap-3 lg:grid-cols-3">
-  <div className="h-72"><Gauge fill gradient={false} percent={43} /></div>
-  <div className="h-72"><Donut fill gradient={false} segments={segments} /></div>
+  <div className="h-72">
+    <Gauge fill gradient={false} title="Health" badge="Live" percent={43} value="43%" label="Degraded" change="-12%" />
+  </div>
+  <div className="h-72">
+    <Donut fill gradient={false} title="Storage" badge="Team" centerValue="61%" centerLabel="used" segments={segments} />
+  </div>
   <div className="h-72"><YourOwnCard /></div>
 </div>
 ```
@@ -204,11 +228,14 @@ import { FRAME_HEIGHTS, gridCols, cn } from "@cremona/core";
 - SVG gradient/mask ids come from `useId`: unique within one React root, so
   many blocks can share a page. With several roots on one page (islands,
   micro-frontends), give each root its own `identifierPrefix`.
-- Images use POC-relative placeholder paths (`../../media/placeholders/…` in
-  goldens); in the library they resolve to your host's `/media/placeholders/…`
-  when you copy the `media/` folder to your public dir (see gallery `public/`).
-- All blocks are client components in Next.js terms (they use refs/effects) —
-  add `"use client"` at your import boundary.
+- Blocks that show a demo photo by default load it from
+  `/media/placeholders/…`; the images ship in `@cremona/blocks/public/media/`,
+  to copy into your app's public directory
+  ([getting-started.md](getting-started.md#7-placeholder-images)).
+- Every block module starts with `"use client"`: import blocks from Server
+  Components freely, with serializable props. A component-typed prop
+  (`icon={Users}`) cannot cross that boundary — pass it from a client module of
+  your own ([the pattern](getting-started.md#8-nextjs-app-router-and-server-components)).
 
 ## Reduced motion
 
