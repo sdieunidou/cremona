@@ -308,7 +308,8 @@ server.tool(
     ];
     return text({
       tokens: tokenNames,
-      darkMode: "class-based (.dark on <html>), default dark = warm 'Claude-like' palette",
+      darkMode:
+        "class-based (.dark on <html>); the default theme is neutral in light and dark (the warm 'Claude-like' dark is claude-plus)",
       themes: store.themes().map((t) => t.value),
       font: "Inter Variable (--font-sans), weights 100-900",
       keyframes: [

@@ -120,7 +120,8 @@ def step_themes() -> None:
     # default light + dark
     m = re.search(r":root\{(--background:.*?)\}", css)
     blocks_out.append(("default-light", ":root", m.group(1)))
-    m = re.search(r"\.dark\{(--background:.*?)\}", css)
+    # the bare `.dark{` rule, not the tail of `.theme-<name>.dark{`
+    m = re.search(r"(?<![\w.-])\.dark\{(--background:.*?)\}", css)
     blocks_out.append(("default-dark", ".dark", m.group(1)))
     # themed
     for name in ["claude-plus", "light-green", "zen", "sakura", "tiesen", "deep-purple", "indigo-clean", "brutalism"]:
@@ -133,7 +134,7 @@ def step_themes() -> None:
 
     lines = [
         "/* Cremona design tokens — extracted from the POC build (source of truth).",
-        " * Default light: neutral · Default dark: warm (Claude-like).",
+        " * Default theme: neutral in light and dark (the warm Claude-like dark is .theme-claude-plus).",
         " * Theme classes: .theme-<name> on <html>, dark via .dark on <html>. */",
         "",
     ]
