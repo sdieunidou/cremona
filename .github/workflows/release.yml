@@ -35,7 +35,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - uses: changesets/action@v1
+      - uses: changesets/action@v2
         with:
           version: pnpm changeset version
           commit: "chore: version packages"
