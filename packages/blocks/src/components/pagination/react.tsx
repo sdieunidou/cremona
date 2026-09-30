@@ -9,7 +9,14 @@ export interface PaginationProps extends VisualProps {
   total?: number;
   compact?: boolean;
   rounded?: boolean;
+  /** Full width, at the top of the box. */
+  fill?: boolean;
 }
+
+const NO_REF = { current: null };
+
+const focusRing =
+  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 const entrance = {
   hidden: { opacity: 0, y: 8 },
@@ -36,8 +43,14 @@ export function Pagination({
   className,
 }: PaginationProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const inViewOnce = useInView(animated && trigger === "inView" ? ref : NO_REF, {
+    once: true,
+    amount: 0.5,
+  });
+  const inViewRepeat = useInView(animated && trigger === "inViewRepeat" ? ref : NO_REF, {
+    once: false,
+    amount: 0.5,
+  });
   const state = animated
     ? {
         initial: "hidden",
@@ -51,11 +64,13 @@ export function Pagination({
   const shape = rounded ? "rounded-full" : "rounded-md";
   const arrowClasses = cn(
     "inline-flex size-8 items-center justify-center border border-border bg-background text-muted-foreground shadow-xs transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-50",
+    focusRing,
     shape,
   );
   const pageClasses = (current: boolean) =>
     cn(
       "inline-flex size-8 items-center justify-center border text-sm font-medium shadow-xs transition-colors",
+      focusRing,
       shape,
       current
         ? "border-primary bg-primary text-primary-foreground"
@@ -64,7 +79,12 @@ export function Pagination({
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
-      <motion.nav aria-label="Pagination" variants={animated ? entrance : undefined} {...state}>
+      <motion.nav
+        aria-label="Pagination"
+        className={fill ? "flex w-full justify-center self-start" : undefined}
+        variants={animated ? entrance : undefined}
+        {...state}
+      >
         {compact ? (
           <div className="flex items-center gap-3">
             <button
@@ -73,7 +93,7 @@ export function Pagination({
               disabled={page <= 1}
               className={arrowClasses}
             >
-              <ChevronLeft className="size-4" aria-hidden="true" />
+              <ChevronLeft className="size-4" />
             </button>
             <span className="text-sm text-muted-foreground">
               Page <span className="font-medium text-foreground">{page}</span> of {total}
@@ -84,7 +104,7 @@ export function Pagination({
               disabled={page >= total}
               className={arrowClasses}
             >
-              <ChevronRight className="size-4" aria-hidden="true" />
+              <ChevronRight className="size-4" />
             </button>
           </div>
         ) : (
@@ -96,7 +116,7 @@ export function Pagination({
                 disabled={page <= 1}
                 className={arrowClasses}
               >
-                <ChevronLeft className="size-4" aria-hidden="true" />
+                <ChevronLeft className="size-4" />
               </button>
             </li>
             {pageWindow(page, total).map((item, i) => (
@@ -123,7 +143,7 @@ export function Pagination({
                 disabled={page >= total}
                 className={arrowClasses}
               >
-                <ChevronRight className="size-4" aria-hidden="true" />
+                <ChevronRight className="size-4" />
               </button>
             </li>
           </ul>
