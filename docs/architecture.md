@@ -89,9 +89,15 @@ fails the test.
 - **React**: `motion/react` variants, copied character-for-character from the
   POC chunks (springs, durations, staggers). Entry control: `animated` +
   `trigger` (`mount`, `inView` via `useInView` IntersectionObserver, `inViewRepeat`).
-- **Stimulus**: identical markup; `cremona-visual` controller reads
-  `data-anim-order` / `data-anim-to` (generated) and plays CSS transitions with
-  a stagger cascade. Same visual beats, approximated easings (documented).
+- **Stimulus**: each template is the block's final render (`animated={false}`),
+  so it reads correctly without JavaScript. The generator pairs its elements with
+  the initial render (checked against the golden) and writes their initial state
+  as `data-anim-from` (plus `data-anim-to` / `data-anim-path` for values that
+  cannot be interpolated). The `cremona-visual` controller plays those states
+  back to the markup with Web Animations, with a stagger by document order. Start
+  and end states match React; timing is simplified (one duration and easing), and
+  loops or JS-driven effects stay React-only (`effects: "entrance-only"` in the
+  manifest).
 
 ## Design tokens
 
