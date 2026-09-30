@@ -22,7 +22,7 @@ export type DropdownMenuEntry =
       variant?: "default" | "destructive";
       disabled?: boolean;
     }
-  | { type: "checkbox"; label: string; checked?: boolean }
+  | { type: "checkbox"; label: string; /** Checked on first render. */ checked?: boolean }
   | { type: "label"; label: string }
   | { type: "separator" };
 

@@ -18,6 +18,7 @@ export type TableCell = string | { text: string; secondary?: string; tone?: Tabl
 
 export interface TableRow {
   cells: Record<string, TableCell>;
+  /** Selected on first render. */
   checked?: boolean;
 }
 
