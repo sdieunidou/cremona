@@ -112,6 +112,8 @@ export interface FiltersProps extends VisualProps {
   total?: number;
   rules?: readonly FilterRule[];
   addLabel?: string;
+  /** Shown in place of the rules when `rules` is empty. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -123,6 +125,7 @@ export function Filters({
   total = 2480,
   rules = filtersDefaultRules,
   addLabel = "Add filter",
+  emptyLabel = "No filters",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -138,11 +141,13 @@ export function Filters({
   const active =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const state = animated ? { initial: "hidden", animate: active ? "visible" : "hidden" } : {};
-  const activeRules = rules.length ? rules : filtersDefaultRules;
+  const activeRules = rules;
   const ruleCount = activeRules.length;
   const shownRules = animated ? Math.min(landed, ruleCount) : ruleCount;
-  const matches = shownRules === 0 ? total : activeRules[shownRules - 1]!.matches;
-  const pct = Math.min(Math.max(total > 0 ? (matches / total) * 100 : 100, MIN_PCT), MAX_PCT);
+  const count = Number.isFinite(total) ? total : 0;
+  const lastMatches = shownRules === 0 ? count : activeRules[shownRules - 1]!.matches;
+  const matches = Number.isFinite(lastMatches) ? lastMatches : count;
+  const pct = count > 0 ? Math.min(Math.max((matches / count) * 100, MIN_PCT), MAX_PCT) : 0;
 
   useEffect(() => {
     if (!animated || !active) return;
@@ -161,7 +166,7 @@ export function Filters({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-84"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-84"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -180,7 +185,12 @@ export function Filters({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between border-b px-3 py-2.75"
             variants={animated ? headerAnim : undefined}
@@ -199,7 +209,18 @@ export function Filters({
               Clear
             </button>
           </motion.div>
-          <div className="flex flex-col gap-1.5 bg-muted/40 px-3 py-3">
+          <div className={cn("flex flex-col gap-1.5 bg-muted/40 px-3 py-3", fill && "flex-1")}>
+            {ruleCount === 0 && (
+              <motion.div
+                className="flex items-center gap-2"
+                variants={animated ? rowAnim : undefined}
+                custom={0}
+                {...state}
+              >
+                <span className="w-8 shrink-0" />
+                <span className="py-1.5 text-[10px] text-muted-foreground">{emptyLabel}</span>
+              </motion.div>
+            )}
             {activeRules.map((rule, i) => (
               <motion.div
                 key={i}
@@ -274,7 +295,7 @@ export function Filters({
                 transition={{ duration: timing.labelShift, ease: "easeOut" }}
                 className="text-[10px] text-muted-foreground"
               >
-                of {formatCount(total)} {unit}
+                of {formatCount(count)} {unit}
               </motion.span>
             </div>
             <div className="h-1 w-full overflow-hidden rounded-full bg-muted">

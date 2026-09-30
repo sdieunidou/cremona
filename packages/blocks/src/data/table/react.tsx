@@ -118,17 +118,16 @@ const veilAnim = {
 
 const EMAIL_RE = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/;
 
-/** Auto-links email addresses inside a string (POC build renders them as mailto anchors). */
+/** Auto-links the first email address inside a string (POC build renders them as mailto anchors). */
 function EmailText({ text }: { text: string }) {
   const match = EMAIL_RE.exec(text);
   if (!match) return <>{text}</>;
   const email = match[1]!;
-  const parts = text.split(email);
   return (
     <>
-      {parts[0]}
+      {text.slice(0, match.index)}
       <a href={`mailto:${email}`}>{email}</a>
-      {parts[1]}
+      {text.slice(match.index + email.length)}
     </>
   );
 }
@@ -137,6 +136,8 @@ export interface TableProps extends VisualProps {
   title?: string;
   columns?: readonly TableColumn[];
   items?: readonly TableRowItem[];
+  /** Shown in the table body when `items` is empty. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -146,6 +147,7 @@ export function Table({
   title = "Members",
   columns = tableDefaultColumns,
   items = tableDefaultItems,
+  emptyLabel = "No rows",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -170,7 +172,7 @@ export function Table({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-96"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-96"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -189,7 +191,7 @@ export function Table({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-3 py-2.75">
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold text-foreground">{title}</span>
@@ -207,7 +209,7 @@ export function Table({
               <tr className="border-b bg-muted/25">
                 {columns.map((column, i) => (
                   <th
-                    key={column.key}
+                    key={i}
                     className={`py-2 text-left text-[10px] font-medium text-muted-foreground ${column.avatar ? "w-full" : "whitespace-nowrap"} ${i === 0 ? "pr-1.5 pl-3" : i === columns.length - 1 ? "pr-3 pl-1.5" : "px-1.5"}`}
                   >
                     <div className="flex items-center gap-0.5">
@@ -219,6 +221,16 @@ export function Table({
               </tr>
             </motion.thead>
             <motion.tbody variants={animated ? rowsAnim : undefined} {...state}>
+              {items.length === 0 && (
+                <motion.tr variants={animated ? rowAnim : undefined}>
+                  <td
+                    colSpan={Math.max(1, columns.length)}
+                    className="py-4 text-center text-[10px] text-muted-foreground"
+                  >
+                    {emptyLabel}
+                  </td>
+                </motion.tr>
+              )}
               {items.map((item, row) => (
                 <motion.tr
                   key={row}
@@ -230,7 +242,7 @@ export function Table({
                       i === 0 ? "pl-3 pr-1.5" : i === columns.length - 1 ? "pl-1.5 pr-3" : "px-1.5";
                     if (column.avatar) {
                       return (
-                        <td key={column.key} className={`py-2 ${pad}`}>
+                        <td key={i} className={`py-2 ${pad}`}>
                           <div className="flex items-center gap-2 overflow-hidden">
                             <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-muted text-[9px] font-semibold text-muted-foreground">
                               {item.initials}
@@ -251,7 +263,7 @@ export function Table({
                     }
                     if (column.badge) {
                       return (
-                        <td key={column.key} className={`py-2 ${pad}`}>
+                        <td key={i} className={`py-2 ${pad}`}>
                           <motion.span
                             className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium ${badgeStyles[String(item[column.key])] ?? "bg-muted text-muted-foreground"}`}
                             variants={animated ? badgeAnim : undefined}
@@ -262,10 +274,7 @@ export function Table({
                       );
                     }
                     return (
-                      <td
-                        key={column.key}
-                        className={`py-2 ${pad} text-[10px] text-muted-foreground`}
-                      >
+                      <td key={i} className={`py-2 ${pad} text-[10px] text-muted-foreground`}>
                         {item[column.key]}
                       </td>
                     );
