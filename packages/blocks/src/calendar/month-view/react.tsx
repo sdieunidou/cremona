@@ -12,22 +12,23 @@ const noopSubscribe = () => () => {};
 const DEFAULT_MONTH = 8; // September
 const DEFAULT_YEAR = 2026;
 
-const weekdaysMon = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-const weekdaysSun = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+// Names follow the grid: Gregorian months, read in UTC so the server and the client agree.
+const CALENDAR = { timeZone: "UTC", calendar: "gregory" } as const;
+// 2024-01-07 is a Sunday.
+const weekdayDate = (weekStartsOn: number, i: number) => Date.UTC(2024, 0, 7 + weekStartsOn + i);
+
+/** A stand-alone month name starts with a capital, as CLDR asks for titles ("Septembre"). */
+function capitalize(text: string, locale: string): string {
+  return text.charAt(0).toLocaleUpperCase(locale) + text.slice(1);
+}
+
+/** Two-letter weekday headers ("Mo", "lu"), or the locale's short names when two letters collide. */
+function weekdayHeaders(locale: string, weekStartsOn: number): string[] {
+  const short = new Intl.DateTimeFormat(locale, { weekday: "short", ...CALENDAR });
+  const names = Array.from({ length: 7 }, (_, i) => short.format(weekdayDate(weekStartsOn, i)));
+  const twoLetters = names.map((name) => Array.from(name).slice(0, 2).join(""));
+  return new Set(twoLetters).size === 7 ? twoLetters : names;
+}
 
 export type MonthTone = "sky" | "rose" | "emerald" | "violet" | "amber";
 
@@ -150,6 +151,8 @@ export interface MonthViewProps extends VisualProps {
   highlighted?: number | null;
   weekStartsOn?: 0 | 1;
   events?: MonthEvent[];
+  /** BCP 47 locale of the year, month, weekday names and day numbers (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -161,6 +164,7 @@ export function MonthView({
   highlighted,
   weekStartsOn = 1,
   events = monthViewDefaultCopy.events,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -191,8 +195,19 @@ export function MonthView({
   const currentYear = year ?? DEFAULT_YEAR;
   const leadingBlanks = (new Date(currentYear, currentMonth, 1).getDay() - weekStartsOn + 7) % 7;
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  const monthName = MONTHS[currentMonth];
-  const weekdayLabels = weekStartsOn === 1 ? weekdaysMon : weekdaysSun;
+  const monthStart = Date.UTC(currentYear, currentMonth, 1);
+  const valid = !Number.isNaN(monthStart);
+  const yearName = valid
+    ? new Intl.DateTimeFormat(locale, { year: "numeric", ...CALENDAR }).format(monthStart)
+    : "";
+  const monthName = valid
+    ? capitalize(
+        new Intl.DateTimeFormat(locale, { month: "long", ...CALENDAR }).format(monthStart),
+        locale,
+      )
+    : "";
+  const weekdayLabels = weekdayHeaders(locale, weekStartsOn);
+  const dayNumber = new Intl.NumberFormat(locale);
   // eslint-disable-next-line no-restricted-syntax -- client-only: "today" is read after hydration
   const now = isHydrated ? new Date() : null;
   const isThisMonth =
@@ -241,7 +256,7 @@ export function MonthView({
             {...state}
           >
             <div className="flex flex-col">
-              <span className="text-[10px] font-medium text-muted-foreground">{currentYear}</span>
+              <span className="text-[10px] font-medium text-muted-foreground">{yearName}</span>
               <span className="text-sm font-semibold text-foreground">{monthName}</span>
             </div>
             <div className="flex items-center gap-1">
@@ -310,10 +325,10 @@ export function MonthView({
                     ) : null}
                     {isSelected && animated ? (
                       <motion.span className="relative" variants={pillTextVariants}>
-                        {day}
+                        {dayNumber.format(day)}
                       </motion.span>
                     ) : (
-                      <span className="relative">{day}</span>
+                      <span className="relative">{dayNumber.format(day)}</span>
                     )}
                   </div>
                   {dayEvents && dayEvents.length > 0 && (

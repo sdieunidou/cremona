@@ -37,5 +37,10 @@
   },
   "Sunday start": {
     "weekStartsOn": 0
+  },
+  "french": {
+    "highlighted": 7,
+    "selected": 18,
+    "locale": "fr-FR"
   }
 }

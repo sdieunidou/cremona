@@ -8,6 +8,13 @@
     { "name": "rangeStart", "type": "number | null", "optional": true, "default": "null" },
     { "name": "rangeEnd", "type": "number | null", "optional": true, "default": "null" },
     { "name": "weekStartsOn", "type": "0 | 1", "optional": true, "default": "1" },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the month, weekday initials and day numbers (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },

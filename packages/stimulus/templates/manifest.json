@@ -1145,6 +1145,11 @@
         "label": "Sunday start",
         "slug": "010-sunday-start",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "011-french",
+        "size": null
       }
     ]
   },
@@ -1244,6 +1249,11 @@
       {
         "label": "Sunday start",
         "slug": "007-sunday-start",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
         "size": null
       }
     ]
