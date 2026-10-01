@@ -1,0 +1,68 @@
+{
+  "component": "Select",
+  "props": [
+    { "name": "value", "type": "string", "optional": true, "default": "\"eu-west-1\"" },
+    {
+      "name": "open",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the option list.",
+      "default": "false"
+    },
+    { "name": "invalid", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "options",
+      "type": "(string | SelectOption)[]",
+      "optional": true,
+      "description": "Choices, as values or `{ value, label }` (default: three regions).",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Visible label above the trigger."
+    },
+    { "name": "placeholder", "type": "string", "optional": true, "default": "\"Select region\"" },
+    {
+      "name": "errorText",
+      "type": "string",
+      "optional": true,
+      "default": "\"Please choose a region.\""
+    },
+    { "name": "disabled", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width, at the top of the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "SelectOption",
+      "props": [
+        { "name": "value", "type": "string", "optional": false },
+        { "name": "label", "type": "string", "optional": true }
+      ]
+    }
+  ]
+}

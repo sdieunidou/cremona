@@ -1,0 +1,70 @@
+{
+  "component": "ActionSheet",
+  "props": [
+    {
+      "name": "danger",
+      "type": "boolean",
+      "optional": true,
+      "description": "Use the destructive preset (share + delete) instead of the share preset.",
+      "default": "false"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": "Sheet title; each preset has its own."
+    },
+    {
+      "name": "options",
+      "type": "ActionSheetOption[]",
+      "optional": true,
+      "description": "Options, top to bottom; replace the preset."
+    },
+    { "name": "cancelLabel", "type": "string", "optional": true, "default": "\"Cancel\"" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "ActionSheetIcon",
+      "type": "\"share\" | \"message\" | \"mail\" | \"copy\" | \"link\" | \"download\" | \"edit\" | \"flag\" | \"trash\""
+    },
+    {
+      "name": "ActionSheetOption",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "icon", "type": "ActionSheetIcon", "optional": true },
+        {
+          "name": "note",
+          "type": "string",
+          "optional": true,
+          "description": "Secondary line under the label."
+        },
+        { "name": "destructive", "type": "boolean", "optional": true }
+      ]
+    }
+  ]
+}

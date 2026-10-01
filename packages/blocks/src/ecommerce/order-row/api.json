@@ -1,0 +1,87 @@
+{
+  "component": "OrderRow",
+  "props": [
+    {
+      "name": "order",
+      "type": "string",
+      "optional": true,
+      "description": "Order number.",
+      "default": "\"#ORD-10241\""
+    },
+    {
+      "name": "items",
+      "type": "string",
+      "optional": true,
+      "description": "Secondary line: item count, date…",
+      "default": "\"3 items · Placed Sep 18\""
+    },
+    {
+      "name": "total",
+      "type": "string",
+      "optional": true,
+      "description": "Formatted order total.",
+      "default": "\"$86.00\""
+    },
+    { "name": "status", "type": "OrderStatus", "optional": true, "default": "\"processing\"" },
+    {
+      "name": "statusLabels",
+      "type": "Partial<Record<OrderStatus, string>>",
+      "optional": true,
+      "description": "Status pill text per status."
+    },
+    {
+      "name": "tracking",
+      "type": "string",
+      "optional": true,
+      "description": "Tracking note shown under a shipped order.",
+      "default": "\"Out for delivery\""
+    },
+    {
+      "name": "image",
+      "type": "string",
+      "optional": true,
+      "description": "Product thumbnail URL; a neutral tile when empty.",
+      "default": "\"/media/placeholders/photo-02.jpg\""
+    },
+    {
+      "name": "alt",
+      "type": "string",
+      "optional": true,
+      "description": "Thumbnail alternative text; empty by default, the order number sits next to it.",
+      "default": "\"\""
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "optional": true,
+      "description": "Order details link.",
+      "default": "\"#\""
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [{ "name": "OrderStatus", "type": "\"processing\" | \"shipped\" | \"refunded\"" }]
+}

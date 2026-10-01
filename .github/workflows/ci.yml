@@ -36,11 +36,12 @@ jobs:
       - name: Generated files are up to date
         run: |
           pnpm generate:stimulus
+          pnpm generate:api
           pnpm build:css
           changed=$(git status --porcelain -- packages/blocks packages/stimulus packages/tokens)
           if [ -n "$changed" ]; then
             echo "$changed"
-            echo "::error::Generated files changed or were added: run 'pnpm test', 'pnpm generate:stimulus' and 'pnpm build:css', then commit."
+            echo "::error::Generated files changed or were added: run 'pnpm test', 'pnpm generate:stimulus', 'pnpm generate:api' and 'pnpm build:css', then commit."
             exit 1
           fi
       - run: pnpm validate

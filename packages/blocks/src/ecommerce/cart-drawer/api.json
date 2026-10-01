@@ -1,0 +1,129 @@
+{
+  "component": "CartDrawer",
+  "props": [
+    {
+      "name": "items",
+      "type": "CartDrawerItem[]",
+      "optional": true,
+      "description": "Line items: the count badge, line totals and totals are computed from them.",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "optional": true,
+      "description": "ISO 4217 currency of every amount.",
+      "default": "\"USD\""
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "Locale used to format amounts.",
+      "default": "\"en-US\""
+    },
+    {
+      "name": "shipping",
+      "type": "number",
+      "optional": true,
+      "description": "Shipping cost; 0 reads \"Free\".",
+      "default": "0"
+    },
+    {
+      "name": "discount",
+      "type": "boolean",
+      "optional": true,
+      "description": "Apply the promo code below the totals.",
+      "default": "false"
+    },
+    { "name": "promoCode", "type": "string", "optional": true, "default": "\"WELCOME10\"" },
+    {
+      "name": "promoPercent",
+      "type": "number",
+      "optional": true,
+      "description": "Promo discount, in percent of the subtotal.",
+      "default": "10"
+    },
+    {
+      "name": "empty",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the empty cart.",
+      "default": "false"
+    },
+    {
+      "name": "labels",
+      "type": "Partial<CartDrawerLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "CartDrawerItem",
+      "props": [
+        { "name": "name", "type": "string", "optional": false },
+        { "name": "qty", "type": "number", "optional": false },
+        {
+          "name": "price",
+          "type": "number",
+          "optional": false,
+          "description": "Unit price, in `currency`."
+        },
+        {
+          "name": "image",
+          "type": "string",
+          "optional": true,
+          "description": "Image URL; a neutral tile when omitted."
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "optional": true,
+          "description": "Image alternative text; empty by default, the name sits next to it."
+        }
+      ]
+    },
+    {
+      "name": "CartDrawerLabels",
+      "props": [
+        { "name": "title", "type": "string", "optional": false },
+        { "name": "close", "type": "string", "optional": false },
+        { "name": "decrease", "type": "string", "optional": false },
+        { "name": "increase", "type": "string", "optional": false },
+        { "name": "subtotal", "type": "string", "optional": false },
+        { "name": "shipping", "type": "string", "optional": false },
+        { "name": "free", "type": "string", "optional": false },
+        { "name": "checkout", "type": "string", "optional": false },
+        { "name": "continue", "type": "string", "optional": false },
+        { "name": "empty", "type": "string", "optional": false },
+        { "name": "emptyHint", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

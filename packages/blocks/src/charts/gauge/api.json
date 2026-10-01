@@ -1,0 +1,76 @@
+{
+  "component": "Gauge",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"Health score\"" },
+    { "name": "badge", "type": "string", "optional": true, "default": "\"Live\"" },
+    {
+      "name": "percent",
+      "type": "number",
+      "optional": true,
+      "description": "0–100. The arc clamps to that range; a non-finite value draws no arc and reads \"—\".",
+      "default": "92"
+    },
+    { "name": "value", "type": "string", "optional": true },
+    { "name": "label", "type": "string", "optional": true, "default": "\"All systems healthy\"" },
+    { "name": "change", "type": "string", "optional": true, "default": "\"+4.2%\"" },
+    {
+      "name": "positive",
+      "type": "\"up\" | \"down\"",
+      "optional": true,
+      "description": "Which way of `change` is good news, coloured green (default \"up\"; \"down\" for churn, latency…).",
+      "default": "\"up\""
+    },
+    { "name": "minLabel", "type": "string", "optional": true, "default": "\"0\"" },
+    { "name": "maxLabel", "type": "string", "optional": true, "default": "\"100\"" },
+    { "name": "color", "type": "string", "optional": true, "default": "\"var(--color-primary)\"" },
+    { "name": "zones", "type": "readonly GaugeZone[]", "optional": true },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "GaugeZone",
+      "props": [
+        {
+          "name": "to",
+          "type": "number",
+          "optional": false,
+          "description": "Upper bound of the band, 0–100."
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "optional": true,
+          "description": "Class applied to the band. The arc strokes `currentColor`, so this is a **text** colour: `text-amber-300 dark:text-amber-400/30`."
+        },
+        { "name": "color", "type": "string", "optional": true, "deprecated": true }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "component": "Donut",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"Storage\"" },
+    { "name": "badge", "type": "string", "optional": true, "default": "\"Pro Plan\"" },
+    { "name": "centerValue", "type": "string", "optional": true, "default": "\"82%\"" },
+    { "name": "centerLabel", "type": "string", "optional": true, "default": "\"of 100GB\"" },
+    {
+      "name": "segments",
+      "type": "readonly DonutSegment[]",
+      "optional": true,
+      "default": "[…] (4 items)"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Shown in place of the legend when `segments` is empty.",
+      "default": "\"No data\""
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "DonutSegment",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        {
+          "name": "value",
+          "type": "number",
+          "optional": false,
+          "description": "Share of the ring; zero, negative and non-finite values take no share."
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "optional": true,
+          "description": "Any CSS colour (default: the chart palette, in order)."
+        }
+      ]
+    }
+  ]
+}

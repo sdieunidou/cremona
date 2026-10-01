@@ -1,0 +1,62 @@
+{
+  "component": "Toast",
+  "props": [
+    {
+      "name": "variant",
+      "type": "ToastVariant | \"error\"",
+      "optional": true,
+      "description": "Visual intent (`error` is a deprecated alias of `destructive`).",
+      "default": "\"info\""
+    },
+    { "name": "title", "type": "string", "optional": true },
+    { "name": "description", "type": "string", "optional": true },
+    {
+      "name": "action",
+      "type": "boolean | string",
+      "optional": true,
+      "description": "Action button: its text, or `true` for \"View\".",
+      "default": "false"
+    },
+    {
+      "name": "dismissible",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show a close button.",
+      "default": "false"
+    },
+    {
+      "name": "stack",
+      "type": "number",
+      "optional": true,
+      "description": "Toasts in the stack (up to 3 drawn).",
+      "default": "1"
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "In the flow at the full width of the box, instead of pinned to its bottom-right corner.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    { "name": "ToastVariant", "type": "\"info\" | \"success\" | \"warning\" | \"destructive\"" }
+  ]
+}

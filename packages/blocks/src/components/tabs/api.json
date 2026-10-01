@@ -1,0 +1,106 @@
+{
+  "component": "Tabs",
+  "props": [
+    {
+      "name": "tabs",
+      "type": "string[]",
+      "optional": true,
+      "description": "Trigger labels (demo panels).",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "items",
+      "type": "TabItem[]",
+      "optional": true,
+      "description": "Tabs with their panel content; overrides `tabs`."
+    },
+    {
+      "name": "active",
+      "type": "number",
+      "optional": true,
+      "description": "Index of the tab selected on first render.",
+      "default": "0"
+    },
+    {
+      "name": "panels",
+      "type": "boolean",
+      "optional": true,
+      "description": "Render the panel as a grid of stat panels.",
+      "default": "false"
+    },
+    {
+      "name": "icons",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show an icon inside each trigger.",
+      "default": "false"
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name of the tab list.",
+      "default": "\"Workspace\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width and height of the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "TabItem",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "icon", "type": "LucideIcon", "optional": true },
+        { "name": "body", "type": "string", "optional": true, "description": "Panel text." },
+        {
+          "name": "rows",
+          "type": "TabRow[]",
+          "optional": true,
+          "description": "Panel list: a title and a meta per row."
+        },
+        {
+          "name": "stats",
+          "type": "TabStat[]",
+          "optional": true,
+          "description": "Panel stat tiles."
+        }
+      ]
+    },
+    {
+      "name": "TabRow",
+      "props": [
+        { "name": "title", "type": "string", "optional": false },
+        { "name": "meta", "type": "string", "optional": false }
+      ]
+    },
+    {
+      "name": "TabStat",
+      "props": [
+        { "name": "value", "type": "string", "optional": false },
+        { "name": "label", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

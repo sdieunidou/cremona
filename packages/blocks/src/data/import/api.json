@@ -1,0 +1,62 @@
+{
+  "component": "Import",
+  "props": [
+    { "name": "fileName", "type": "string", "optional": true, "default": "\"customers.csv\"" },
+    { "name": "rowCount", "type": "number", "optional": true, "default": "2480" },
+    { "name": "unit", "type": "string", "optional": true, "default": "\"rows ready\"" },
+    {
+      "name": "mappings",
+      "type": "readonly ImportMapping[]",
+      "optional": true,
+      "default": "[…] (5 items)"
+    },
+    { "name": "sourceLabel", "type": "string", "optional": true, "default": "\"CSV column\"" },
+    { "name": "targetLabel", "type": "string", "optional": true, "default": "\"Field\"" },
+    { "name": "skipLabel", "type": "string", "optional": true, "default": "\"Skip\"" },
+    { "name": "actionLabel", "type": "string", "optional": true, "default": "\"Import\"" },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Shown in place of the mappings when `mappings` is empty.",
+      "default": "\"No columns to map\""
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "ImportMapping",
+      "props": [
+        { "name": "source", "type": "string", "optional": false },
+        { "name": "target", "type": "string", "optional": true }
+      ]
+    }
+  ]
+}

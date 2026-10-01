@@ -1,0 +1,63 @@
+{
+  "component": "Breadcrumb",
+  "props": [
+    {
+      "name": "separator",
+      "type": "\"chevron\" | \"slash\"",
+      "optional": true,
+      "default": "\"chevron\""
+    },
+    {
+      "name": "ellipsis",
+      "type": "boolean",
+      "optional": true,
+      "description": "Collapse the middle of the trail into \"…\" (before the last two items).",
+      "default": "false"
+    },
+    {
+      "name": "items",
+      "type": "(string | BreadcrumbItem)[]",
+      "optional": true,
+      "description": "The trail, as labels or `{ label, href }` (default: a four-level demo path).",
+      "default": "[…] (4 items)"
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width, at the top of the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "BreadcrumbItem",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        {
+          "name": "href",
+          "type": "string",
+          "optional": true,
+          "description": "Link target; the last item is the current page."
+        }
+      ]
+    }
+  ]
+}

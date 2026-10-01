@@ -1,0 +1,98 @@
+{
+  "component": "Login",
+  "props": [
+    {
+      "name": "email",
+      "type": "string",
+      "optional": true,
+      "description": "Prefilled email address.",
+      "default": "\"\""
+    },
+    {
+      "name": "remember",
+      "type": "boolean",
+      "optional": true,
+      "description": "Initial state of the \"remember me\" checkbox.",
+      "default": "false"
+    },
+    {
+      "name": "error",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the credentials error and mark both fields invalid.",
+      "default": "false"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Submission in progress: the submit button is disabled and shows a spinner.",
+      "default": "false"
+    },
+    {
+      "name": "providers",
+      "type": "(\"google\" | \"apple\")[]",
+      "optional": true,
+      "description": "Social sign-in buttons, in order; `[]` hides them and the divider.",
+      "default": "[…] (2 items)"
+    },
+    {
+      "name": "forgotHref",
+      "type": "string",
+      "optional": true,
+      "description": "Target of the \"forgot password\" link.",
+      "default": "\"#\""
+    },
+    {
+      "name": "labels",
+      "type": "Partial<LoginLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "LoginLabels",
+      "props": [
+        { "name": "title", "type": "string", "optional": false },
+        { "name": "description", "type": "string", "optional": false },
+        { "name": "email", "type": "string", "optional": false },
+        { "name": "emailPlaceholder", "type": "string", "optional": false },
+        { "name": "password", "type": "string", "optional": false },
+        { "name": "passwordPlaceholder", "type": "string", "optional": false },
+        { "name": "showPassword", "type": "string", "optional": false },
+        { "name": "remember", "type": "string", "optional": false },
+        { "name": "forgot", "type": "string", "optional": false },
+        { "name": "submit", "type": "string", "optional": false },
+        { "name": "submitting", "type": "string", "optional": false },
+        { "name": "error", "type": "string", "optional": false },
+        { "name": "divider", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

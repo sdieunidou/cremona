@@ -1,0 +1,110 @@
+{
+  "component": "OnboardingWizard",
+  "props": [
+    { "name": "step", "type": "1 | 2 | 3", "optional": true, "default": "1" },
+    {
+      "name": "workspace",
+      "type": "string",
+      "optional": true,
+      "description": "Workspace name, prefilled on step 1 and recapped on step 3.",
+      "default": "\"Acme Inc.\""
+    },
+    {
+      "name": "invites",
+      "type": "OnboardingInvite[]",
+      "optional": true,
+      "description": "Teammates listed on step 2.",
+      "default": "[…] (2 items)"
+    },
+    {
+      "name": "roles",
+      "type": "string[]",
+      "optional": true,
+      "description": "Role choices of the step-2 selects.",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "checklist",
+      "type": "string[]",
+      "optional": true,
+      "description": "Step-3 recap; derived from `workspace` and `invites` when omitted."
+    },
+    {
+      "name": "labels",
+      "type": "Partial<OnboardingWizardLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "OnboardingInvite",
+      "props": [
+        { "name": "email", "type": "string", "optional": false },
+        { "name": "role", "type": "string", "optional": false },
+        {
+          "name": "initials",
+          "type": "string",
+          "optional": true,
+          "description": "Avatar initials; derived from the email when omitted."
+        }
+      ]
+    },
+    {
+      "name": "OnboardingWizardLabels",
+      "props": [
+        {
+          "name": "progress",
+          "type": "string",
+          "optional": false,
+          "description": "`{step}` and `{total}` are replaced by the current step and the step count."
+        },
+        { "name": "workspace", "type": "string", "optional": false },
+        { "name": "workspacePlaceholder", "type": "string", "optional": false },
+        { "name": "icon", "type": "string", "optional": false },
+        {
+          "name": "icons",
+          "type": "[string, string, string, string]",
+          "optional": false,
+          "description": "Accessible names of the four workspace icons."
+        },
+        { "name": "invite", "type": "string", "optional": false },
+        {
+          "name": "roleFor",
+          "type": "string",
+          "optional": false,
+          "description": "`{email}` is replaced by the invitee's address."
+        },
+        { "name": "inviteHint", "type": "string", "optional": false },
+        { "name": "back", "type": "string", "optional": false },
+        { "name": "next", "type": "string", "optional": false },
+        { "name": "finish", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

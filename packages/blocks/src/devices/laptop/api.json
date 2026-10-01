@@ -1,0 +1,41 @@
+{
+  "component": "Laptop",
+  "props": [
+    { "name": "variant", "type": "LaptopVariant", "optional": true, "default": "\"landing\"" },
+    { "name": "image", "type": "string", "optional": true },
+    { "name": "time", "type": "string", "optional": true, "default": "\"9:41\"" },
+    { "name": "date", "type": "string", "optional": true, "default": "\"Monday, May 25\"" },
+    { "name": "name", "type": "string", "optional": true, "default": "\"Alex Morgan\"" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "LaptopVariant",
+      "type": "\"landing\" | \"dashboard\" | \"windows\" | \"mac\" | \"lockscreen\" | \"screenshot\""
+    }
+  ]
+}

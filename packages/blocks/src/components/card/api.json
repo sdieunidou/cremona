@@ -1,0 +1,84 @@
+{
+  "component": "Card",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"Usage this month\"" },
+    {
+      "name": "description",
+      "type": "string",
+      "optional": true,
+      "default": "\"API calls across every region, refreshed hourly.\""
+    },
+    {
+      "name": "footer",
+      "type": "string",
+      "optional": true,
+      "default": "\"Updated 4 minutes ago\""
+    },
+    { "name": "badge", "type": "string", "optional": true, "default": "\"Pro plan\"" },
+    {
+      "name": "action",
+      "type": "string",
+      "optional": true,
+      "description": "Footer action text.",
+      "default": "\"View report\""
+    },
+    {
+      "name": "actionHref",
+      "type": "string",
+      "optional": true,
+      "description": "Footer action link target."
+    },
+    {
+      "name": "rows",
+      "type": "CardRow[]",
+      "optional": true,
+      "description": "Label/value rows (default: API usage).",
+      "default": "[…] (2 items)"
+    },
+    {
+      "name": "skeleton",
+      "type": "boolean",
+      "optional": true,
+      "description": "Loading placeholders instead of the content.",
+      "default": "false"
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width and height of the box; the footer sticks to the bottom.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "CardRow",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "value", "type": "string", "optional": false },
+        {
+          "name": "tone",
+          "type": "\"default\" | \"success\" | \"warning\" | \"destructive\"",
+          "optional": true
+        }
+      ]
+    }
+  ]
+}

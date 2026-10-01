@@ -1,0 +1,51 @@
+{
+  "component": "PromptBox",
+  "props": [
+    {
+      "name": "prompt",
+      "type": "string",
+      "optional": true,
+      "default": "\"Summarize the key wins from the Q3 report and suggest impr…"
+    },
+    { "name": "model", "type": "string", "optional": true, "default": "\"Claude Opus\"" },
+    { "name": "tokens", "type": "string", "optional": true, "default": "\"1,240\"" },
+    { "name": "contextUsed", "type": "number", "optional": true, "default": "0.16" },
+    {
+      "name": "attachments",
+      "type": "readonly string[]",
+      "optional": true,
+      "default": "[…] (1 items)"
+    },
+    { "name": "caret", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "glow", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "particles", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": []
+}

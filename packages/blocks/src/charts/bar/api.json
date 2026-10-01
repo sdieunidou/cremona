@@ -1,0 +1,59 @@
+{
+  "component": "Bar",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"Revenue\"" },
+    { "name": "badge", "type": "string", "optional": true, "default": "\"7d\"" },
+    { "name": "value", "type": "string", "optional": true, "default": "\"$48.2k\"" },
+    { "name": "change", "type": "string", "optional": true, "default": "\"+18.4%\"" },
+    {
+      "name": "positive",
+      "type": "\"up\" | \"down\"",
+      "optional": true,
+      "description": "Which way of `change` is good news, coloured green (default \"up\"; \"down\" for churn, latency…).",
+      "default": "\"up\""
+    },
+    {
+      "name": "items",
+      "type": "readonly { label: string; value: number }[]",
+      "optional": true,
+      "description": "One bar per item. Negative values hang from a zero baseline; missing ones draw no bar.",
+      "default": "[…] (7 items)"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Shown in place of the bars when `items` is empty.",
+      "default": "\"No data\""
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": []
+}

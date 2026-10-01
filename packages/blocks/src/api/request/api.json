@@ -1,0 +1,42 @@
+{
+  "component": "Request",
+  "props": [
+    { "name": "variant", "type": "RequestVariant", "optional": true, "default": "\"get\"" },
+    { "name": "method", "type": "string", "optional": true },
+    { "name": "endpoint", "type": "string", "optional": true },
+    { "name": "status", "type": "number", "optional": true },
+    { "name": "statusText", "type": "string", "optional": true },
+    { "name": "latency", "type": "string", "optional": true },
+    { "name": "response", "type": "readonly string[]", "optional": true },
+    { "name": "pulse", "type": "\"dot\" | \"line\"", "optional": true, "default": "\"dot\"" },
+    { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [{ "name": "RequestVariant", "type": "\"get\" | \"post\" | \"error\"" }]
+}

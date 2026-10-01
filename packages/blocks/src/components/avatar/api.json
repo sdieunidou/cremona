@@ -1,0 +1,55 @@
+{
+  "component": "Avatar",
+  "props": [
+    {
+      "name": "fallback",
+      "type": "string",
+      "optional": true,
+      "description": "Initials shown when there is no image.",
+      "default": "\"SC\""
+    },
+    { "name": "src", "type": "string", "optional": true, "description": "Image URL." },
+    {
+      "name": "alt",
+      "type": "string",
+      "optional": true,
+      "description": "Image text alternative (default: `fallback`)."
+    },
+    { "name": "img", "type": "boolean", "optional": true, "deprecated": true, "default": "false" },
+    { "name": "size", "type": "\"sm\" | \"md\" | \"lg\"", "optional": true, "default": "\"lg\"" },
+    { "name": "presence", "type": "Presence", "optional": true },
+    { "name": "ring", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "sizes",
+      "type": "boolean",
+      "optional": true,
+      "description": "Showcase: the three sizes side by side.",
+      "default": "false"
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Stays centred in the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [{ "name": "Presence", "type": "\"online\" | \"away\" | \"busy\" | \"offline\"" }]
+}

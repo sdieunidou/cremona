@@ -1,0 +1,79 @@
+{
+  "component": "Button",
+  "props": [
+    {
+      "name": "variant",
+      "type": "\"default\" | \"secondary\" | \"destructive\" | \"outline\" | \"ghost\" | \"link\"",
+      "optional": true,
+      "description": "Visual intent.",
+      "default": "\"default\""
+    },
+    {
+      "name": "size",
+      "type": "\"sm\" | \"default\" | \"lg\" | \"icon\" | \"icon-sm\"",
+      "optional": true,
+      "default": "\"default\""
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Button text. With an icon-only size it is the accessible name instead.",
+      "default": "\"Continue\""
+    },
+    {
+      "name": "withIcon",
+      "type": "boolean | \"end\"",
+      "optional": true,
+      "description": "true = leading icon, \"end\" = trailing icon",
+      "default": "false"
+    },
+    {
+      "name": "icon",
+      "type": "LucideIcon",
+      "optional": true,
+      "description": "Icon for `withIcon` and the icon-only sizes (default ArrowRight).",
+      "default": "ArrowRight"
+    },
+    { "name": "loading", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "loadingText",
+      "type": "string",
+      "optional": true,
+      "description": "Text shown while `loading`.",
+      "default": "\"Working…\""
+    },
+    { "name": "disabled", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "href",
+      "type": "string",
+      "optional": true,
+      "description": "Render a link styled as a button."
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full-width button.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": []
+}
