@@ -1,4 +1,7 @@
-/** Smoke test: every block page renders every variant frame, none of them as an error card. */
+/**
+ * Smoke test: every block page renders every variant frame, none of them as an error card,
+ * without an uncaught error or a console error (a failed image or font request logs one).
+ */
 import { readFileSync } from "node:fs";
 import { test, expect } from "@playwright/test";
 
@@ -18,11 +21,15 @@ for (const group of catalog) {
     test(`renders ${key}`, async ({ page }) => {
       const errors: string[] = [];
       page.on("pageerror", (error) => errors.push(error.message));
+      page.on("console", (message) => {
+        if (message.type() === "error") errors.push(`${message.text()} ${message.location().url}`);
+      });
       await page.goto(`/visuals/${key}`);
       await expect(page.locator("h1")).toContainText(meta.name, { timeout: 8000 });
       await expect(page.locator(".group\\/preview")).toHaveCount(meta.variants.length);
       await expect(page.locator("[data-preview-error]")).toHaveCount(0);
-      expect(errors, `uncaught errors on /visuals/${key}`).toEqual([]);
+      await page.waitForLoadState("networkidle");
+      expect(errors, `errors on /visuals/${key}`).toEqual([]);
     });
   }
 }

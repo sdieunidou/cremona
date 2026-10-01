@@ -1,5 +1,7 @@
 version: 2
 updates:
+  # Minor and patch updates come grouped; every major update gets its own pull request, so a
+  # breaking release (motion, React, Tailwind, TypeScript…) is reviewed and tested on its own.
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -7,10 +9,15 @@ updates:
     groups:
       dev-tooling:
         dependency-type: development
+        update-types: [minor, patch]
       runtime:
         dependency-type: production
-    open-pull-requests-limit: 5
+        update-types: [minor, patch]
+    open-pull-requests-limit: 10
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions:
+        update-types: [minor, patch]
