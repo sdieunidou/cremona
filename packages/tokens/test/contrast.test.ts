@@ -1,7 +1,7 @@
 /**
- * Contrast budget: in every theme × mode, text stays legible (WCAG AA, 4.5:1), chart series
- * stay visible on cards (3:1) and distinct from each other, and primary actions never look
- * destructive. Colours are resolved as an sRGB display renders them.
+ * Contrast budget: in every theme × mode, text stays legible (WCAG AA, 4.5:1), focus rings
+ * and chart series stay visible (3:1) and series distinct from each other, and primary
+ * actions never look destructive. Colours are resolved as an sRGB display renders them.
  */
 import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
@@ -55,7 +55,7 @@ const TEXT_PAIRS = [
   ["--sidebar-accent-foreground", "--sidebar-accent"],
 ] as const;
 
-/** Status colours used as text (`text-destructive`, and on their own tint: `bg-success/10`). */
+/** Status colours used as text (`text-destructive`), also on their own tint (`bg-success/10 text-success`). */
 const STATUS = ["--destructive", "--success", "--warning", "--info"] as const;
 const CHARTS = ["--chart-1", "--chart-2", "--chart-3", "--chart-4", "--chart-5"] as const;
 
@@ -78,10 +78,26 @@ function budget(theme: string, mode: "light" | "dark"): string[] {
   for (const [fg, bg] of TEXT_PAIRS) check(`${fg} on ${bg}`, text(color(fg), surface(bg)), TEXT);
   for (const status of STATUS) {
     const c = color(status);
-    check(`${status} text on --background`, text(c, background), TEXT);
-    check(`${status} text on --card`, text(c, card), TEXT);
-    check(`${status} text on its /10 tint`, text(c, over(withAlpha(c, 0.1), card)), TEXT);
+    for (const [name, base] of [
+      ["--background", background],
+      ["--card", card],
+    ] as const) {
+      check(`${status} text on ${name}`, text(c, base), TEXT);
+      check(
+        `${status} text on its /10 tint over ${name}`,
+        text(c, over(withAlpha(c, 0.1), base)),
+        TEXT,
+      );
+    }
   }
+  // focus outlines (`outline-ring`, offset from the element) sit on the page or on a card
+  check("--ring on --background", contrast(surface("--ring"), background), GRAPHIC);
+  check("--ring on --card", contrast(surface("--ring"), card), GRAPHIC);
+  check(
+    "--sidebar-ring on --sidebar",
+    contrast(surface("--sidebar-ring"), surface("--sidebar")),
+    GRAPHIC,
+  );
 
   const series = CHARTS.map(color);
   const primary = surface("--primary");

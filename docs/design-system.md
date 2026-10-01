@@ -100,7 +100,11 @@ way an sRGB display renders it and fails the build unless:
   `accent`, `sidebar`, `sidebar-primary`, `sidebar-accent`, `destructive`,
   `success`, `warning`, `info`); `--muted-foreground` on `--background`,
   `--card` and `--muted`; `--destructive`, `--success`, `--warning` and
-  `--info` as text on `--background`, `--card` and their own `/10` tint;
+  `--info` as text on `--background` and `--card`, and on their own `/10`
+  tint over either;
+- **focus rings reach 3:1**: `--ring` on `--background` and `--card` (a
+  `focus-visible:outline-2 outline-offset-2 outline-ring` outline), and
+  `--sidebar-ring` on `--sidebar`;
 - **chart series** reach 3:1 on `--card`, differ pairwise by at least 10 in
   OKLab (ΔE × 100; about 2 is barely noticeable) and by 5 under simulated
   deuteranopia and protanopia, and `chart-1..3` stay 8 apart from `--primary`
@@ -120,6 +124,9 @@ Outside the budget, by design:
   they separate surfaces, they don't carry information on their own.
 - Opacity-modified text (`text-muted-foreground/60`, 2.3–4:1) is for
   decoration only (line numbers, placeholder art), never for content.
+- A translucent focus halo (`ring-ring/50`) falls under 3:1 in 16 of the 18
+  theme × mode combinations: draw keyboard focus with the full-opacity
+  `outline-ring` above.
 
 ## Fonts
 
