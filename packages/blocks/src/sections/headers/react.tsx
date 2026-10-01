@@ -53,6 +53,10 @@ const veilAnim = {
 
 export interface HeaderProps extends VisualProps {
   title?: string;
+  /** Navigation labels, drawn in place of the three link bars. */
+  links?: readonly string[];
+  /** Button label, drawn in place of the button bar. */
+  label?: string;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -60,6 +64,8 @@ export interface HeaderProps extends VisualProps {
 
 export function Header({
   title = headersDefaultCopy.title,
+  links,
+  label,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -140,9 +146,18 @@ export function Header({
                 className="flex flex-1 items-center justify-center gap-2"
                 variants={animated ? item : undefined}
               >
-                {[0, 1, 2].map((i) => (
-                  <div key={i} className="h-0.75 w-2.5 rounded-full bg-muted-foreground/20" />
-                ))}
+                {links
+                  ? links.map((link, i) => (
+                      <span
+                        key={i}
+                        className="truncate text-[6px] leading-none font-medium text-muted-foreground"
+                      >
+                        {link}
+                      </span>
+                    ))
+                  : [0, 1, 2].map((i) => (
+                      <div key={i} className="h-0.75 w-2.5 rounded-full bg-muted-foreground/20" />
+                    ))}
               </motion.div>
               <motion.div
                 className="flex items-center gap-1"
@@ -150,7 +165,13 @@ export function Header({
               >
                 <div className="h-3 w-4.5 rounded-md border" />
                 <div className="flex h-3 min-w-6 items-center rounded-md bg-primary px-1.5">
-                  <div className="h-0.5 w-full rounded-full bg-primary-foreground/75" />
+                  {label ? (
+                    <span className="text-[6px] leading-none font-medium whitespace-nowrap text-primary-foreground">
+                      {label}
+                    </span>
+                  ) : (
+                    <div className="h-0.5 w-full rounded-full bg-primary-foreground/75" />
+                  )}
                 </div>
               </motion.div>
             </motion.div>

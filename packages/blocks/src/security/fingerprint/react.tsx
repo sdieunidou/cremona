@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Check, FingerprintPattern, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -100,6 +100,20 @@ const ringScanAnim = {
   },
 } as const;
 
+const ringScanRest = {
+  hidden: ringScanAnim.hidden,
+  visible: {
+    pathLength: 0.25,
+    opacity: 1,
+    rotate: 0,
+    transition: {
+      pathLength: { duration: 0.4, delay: 0.5, ease: "easeOut" },
+      opacity: { duration: 0.2, delay: 0.5 },
+      rotate: { duration: 0 },
+    },
+  },
+} as const;
+
 const beamOnceAnim: Variants = {
   hidden: { y: -22, opacity: 0 },
   visible: {
@@ -127,6 +141,11 @@ const beamLoopAnim: Variants = {
       repeat: 1 / 0,
     },
   },
+};
+
+const beamRestAnim: Variants = {
+  hidden: { y: -22, opacity: 0 },
+  visible: { y: -22, opacity: 0 },
 };
 
 const badgeAnim = {
@@ -168,6 +187,7 @@ export function Fingerprint({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
   const motionState = animated
     ? {
         initial: "hidden",
@@ -211,17 +231,30 @@ export function Fingerprint({
               className="stroke-card/50 dark:stroke-card/80"
               strokeWidth="2"
             />
-            <motion.circle
-              cx="50"
-              cy="50"
-              r="45"
-              fill="none"
-              className={styles.ring}
-              strokeWidth="2"
-              strokeLinecap="round"
-              variants={animated ? (scanning ? ringScanAnim : ringDrawAnim) : undefined}
-              style={animated ? undefined : { pathLength: scanning ? 0.25 : 1 }}
-            />
+            {animated ? (
+              <motion.circle
+                cx="50"
+                cy="50"
+                r="45"
+                fill="none"
+                className={styles.ring}
+                strokeWidth="2"
+                strokeLinecap="round"
+                variants={scanning ? (loop ? ringScanAnim : ringScanRest) : ringDrawAnim}
+              />
+            ) : (
+              <circle
+                cx="50"
+                cy="50"
+                r="45"
+                fill="none"
+                className={styles.ring}
+                strokeWidth="2"
+                strokeLinecap="round"
+                pathLength={1}
+                strokeDasharray={scanning ? "0.25 1" : undefined}
+              />
+            )}
           </svg>
           <div className="relative flex size-20 items-center justify-center overflow-hidden rounded-full border bg-card/75">
             <motion.div variants={animated ? iconAnim : undefined} {...motionState}>
@@ -230,7 +263,7 @@ export function Fingerprint({
             {animated && (
               <motion.div
                 className={cn("absolute inset-x-2 h-px", styles.beam)}
-                variants={scanning ? beamLoopAnim : beamOnceAnim}
+                variants={scanning ? (loop ? beamLoopAnim : beamRestAnim) : beamOnceAnim}
               />
             )}
           </div>
@@ -258,9 +291,15 @@ export function Fingerprint({
           >
             <motion.span
               className={cn("size-1.5 rounded-full", styles.dot)}
-              animate={animated && scanning ? { opacity: [1, 0.3, 1] } : undefined}
-              transition={
+              animate={
                 animated && scanning
+                  ? loop
+                    ? { opacity: [1, 0.3, 1] }
+                    : { opacity: 1 }
+                  : undefined
+              }
+              transition={
+                animated && scanning && loop
                   ? { duration: 1.2, repeat: 1 / 0, ease: "easeInOut" }
                   : undefined
               }

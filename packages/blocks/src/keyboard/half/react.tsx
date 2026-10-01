@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { motion, useAnimate, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const KEY_UNIT = 46;
@@ -58,6 +58,43 @@ const ROWS: KeyDef[][] = [
   ],
 ];
 
+/** French AZERTY left half (ISO: short left shift and the `<` key). */
+const AZERTY_ROWS: KeyDef[][] = [
+  ROWS[0]!,
+  [
+    { label: "@", w: 1 },
+    { label: "1", w: 1 },
+    { label: "2", w: 1 },
+    { label: "3", w: 1 },
+    { label: "4", w: 1 },
+    { label: "5", w: 1 },
+  ],
+  [
+    { label: "tab", w: 1.5 },
+    { label: "A", w: 1 },
+    { label: "Z", w: 1 },
+    { label: "E", w: 1 },
+    { label: "R", w: 1 },
+    { label: "T", w: 1 },
+  ],
+  [
+    { label: "caps lock", w: 1.75 },
+    { label: "Q", w: 1 },
+    { label: "S", w: 1 },
+    { label: "D", w: 1 },
+    { label: "F", w: 1 },
+    { label: "G", w: 1 },
+  ],
+  [
+    { label: "shift", w: 1.25 },
+    { label: "<", w: 1 },
+    { label: "W", w: 1 },
+    { label: "X", w: 1 },
+    { label: "C", w: 1 },
+    { label: "V", w: 1 },
+  ],
+];
+
 const MAC_BOTTOM: KeyDef[] = [
   { label: "control", w: 1.25 },
   { label: "option", w: 1.25 },
@@ -72,8 +109,14 @@ const WINDOWS_BOTTOM: KeyDef[] = [
   { label: "", w: 2.75 },
 ];
 
-function buildRows(layout: string): KeyDef[][] {
-  return [...ROWS, layout === "windows" ? WINDOWS_BOTTOM : MAC_BOTTOM];
+function buildRows(layout: string, keymap: string): KeyDef[][] {
+  const rows =
+    keymap === "azerty"
+      ? AZERTY_ROWS.map((row, i) =>
+          i === 1 && layout === "windows" ? [{ label: "²", w: 1 }, ...row.slice(1)] : row,
+        )
+      : ROWS;
+  return [...rows, layout === "windows" ? WINDOWS_BOTTOM : MAC_BOTTOM];
 }
 
 const MODIFIER_MAP: Record<string, string> = {
@@ -138,17 +181,55 @@ function sleep(ms: number): Promise<void> {
 }
 
 export type HalfLayout = "mac" | "windows";
+export type HalfKeymap = "qwerty" | "azerty";
 
 export interface HalfProps extends VisualProps {
   keys?: string[] | null;
   layout?: HalfLayout;
+  /** Letter arrangement of the half (default `qwerty`). */
+  keymap?: HalfKeymap;
+  /**
+   * Captions by key name (`{ shift: "maj", "caps lock": "verr. maj", space: "espace" }`);
+   * `keys` still match the key names.
+   */
+  labels?: Partial<Record<string, string>>;
   hover?: boolean;
   isometric?: boolean;
+}
+
+/** Scale the fixed-size stage down to the frame's content box (client only). */
+function useFitScale(
+  frame: RefObject<HTMLElement | null>,
+  stage: RefObject<HTMLElement | null>,
+  layout?: unknown,
+) {
+  useEffect(() => {
+    const box = frame.current;
+    const el = stage.current;
+    if (!box || !el || typeof ResizeObserver === "undefined") return;
+    const px = (value: string) => parseFloat(value) || 0;
+    const fit = () => {
+      const style = getComputedStyle(box);
+      const width = box.clientWidth - px(style.paddingLeft) - px(style.paddingRight);
+      const height = box.clientHeight - px(style.paddingTop) - px(style.paddingBottom);
+      const ratio = Math.min(1, width / el.offsetWidth, height / el.offsetHeight);
+      el.style.scale = ratio > 0 && ratio < 1 ? String(ratio) : "";
+    };
+    const observer = new ResizeObserver(fit);
+    observer.observe(box);
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      el.style.scale = "";
+    };
+  }, [frame, stage, layout]);
 }
 
 export function Half({
   keys = null,
   layout = "mac",
+  keymap = "qwerty",
+  labels,
   animated = false,
   trigger = "inView",
   hover = false,
@@ -157,25 +238,28 @@ export function Half({
   className,
 }: HalfProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const [scope, animate] = useAnimate();
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
+  useFitScale(ref, stageRef);
   const [hovered, setHovered] = useState(false);
   const inViewActive =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pressedKeys = useMemo(() => keys ?? [], [keys]);
   const hasKeys = pressedKeys.length > 0;
-  const active = hover && hasKeys ? hovered : inViewActive;
+  const active = (hover && hasKeys ? hovered : inViewActive) && loop;
   const state = animated ? { initial: "hidden", animate: inViewActive ? "visible" : "hidden" } : {};
-  const rows = buildRows(layout);
+  const rows = buildRows(layout, keymap);
   const matched = useMemo(() => {
     const available = new Set(
-      buildRows(layout)
+      buildRows(layout, keymap)
         .flatMap((rowKeys) => rowKeys.map((key) => normalizeKey(key.label)))
         .filter((label) => label.length > 0),
     );
     return pressedKeys.map((_, i) => i).filter((i) => available.has(normalizeKey(pressedKeys[i]!)));
-  }, [layout, pressedKeys]);
+  }, [layout, keymap, pressedKeys]);
 
   function keyIndex(label: string): number {
     return pressedKeys.findIndex((key) => normalizeKey(key) === normalizeKey(label));
@@ -191,8 +275,10 @@ export function Half({
       return;
     }
     if (!active) {
+      // paused loop (off-screen, hidden tab, reduced motion) rests on the pressed combination
       for (const i of matched) {
-        animate(`.key-glow-${i}`, { opacity: 0 }, { duration: 0.2 });
+        animate(`.key-glow-${i}`, { opacity: loop ? 0 : 1 }, { duration: 0.2 });
+        if (!loop) animate(`.key-ripple-${i}`, { opacity: 0 }, { duration: 0 });
       }
       return;
     }
@@ -236,7 +322,7 @@ export function Half({
     return () => {
       cancelled = true;
     };
-  }, [animated, inViewActive, active, hover, animate, matched]);
+  }, [animated, inViewActive, active, loop, hover, animate, matched]);
 
   return (
     <div
@@ -247,6 +333,8 @@ export function Half({
       onMouseLeave={animated && hover && hasKeys ? () => setHovered(false) : undefined}
     >
       <motion.div
+        ref={stageRef}
+        className={fill ? "self-center" : undefined}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? keyboardIso : keyboard) : undefined}
         {...state}
@@ -272,6 +360,7 @@ export function Half({
                     const isSpace = key.label === "";
                     const isWide =
                       key.label === "tab" || key.label === "shift" || key.label === "caps lock";
+                    const caption = labels?.[key.label] ?? key.label;
                     return (
                       <button
                         key={`${rowIndex}-${keyPos}`}
@@ -287,11 +376,11 @@ export function Half({
                         <span
                           className={cn(
                             "font-medium text-muted-foreground select-none",
-                            key.label.length > 1 ? "text-[10px]" : "text-xs",
+                            caption.length > 1 ? "text-[10px]" : "text-xs",
                             isSpace && "sr-only",
                           )}
                         >
-                          {isSpace ? "Space" : key.label}
+                          {isSpace ? (labels?.space ?? "Space") : caption}
                         </span>
                         {matchedKey && !animated && (
                           <span className="pointer-events-none absolute inset-0 block rounded-[4px] bg-primary/15 ring-1 ring-primary/40 ring-inset" />

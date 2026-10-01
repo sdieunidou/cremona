@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Bell as BellIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -103,10 +103,11 @@ export function Bell({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
   const [hovered, setHovered] = useState(false);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const active = hover ? hovered : inView;
+  const active = (hover ? hovered : inView) && loop;
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const label = count > 99 ? "99+" : String(count);
 
@@ -153,19 +154,19 @@ export function Bell({
                 className="absolute size-32 rounded-full border-2 border-primary/25"
                 variants={ripple}
                 initial="hidden"
-                animate="visible"
+                animate={active ? "visible" : "hidden"}
               />
               <motion.div
                 className="absolute size-32 rounded-full border-2 border-primary/15"
                 variants={rippleVariants(0.9)}
                 initial="hidden"
-                animate="visible"
+                animate={active ? "visible" : "hidden"}
               />
               <motion.div
                 className="absolute size-32 rounded-full border-2 border-primary/10"
                 variants={rippleVariants(1.3)}
                 initial="hidden"
-                animate="visible"
+                animate={active ? "visible" : "hidden"}
               />
             </motion.div>
           </>

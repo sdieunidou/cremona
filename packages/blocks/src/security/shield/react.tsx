@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import {
   Eye,
   FingerprintPattern,
@@ -157,6 +157,25 @@ const innerRingAnim = {
   },
 } as const;
 
+/** The ring entrances without the endless rotation (loop paused). */
+const outerRingRest = {
+  hidden: outerRingAnim.hidden,
+  visible: {
+    ...outerRingAnim.visible,
+    rotate: 0,
+    transition: { ...outerRingAnim.visible.transition, rotate: { duration: 0 } },
+  },
+} as const;
+
+const innerRingRest = {
+  hidden: innerRingAnim.hidden,
+  visible: {
+    ...innerRingAnim.visible,
+    rotate: 0,
+    transition: { ...innerRingAnim.visible.transition, rotate: { duration: 0 } },
+  },
+} as const;
+
 const pillAnim = {
   hidden: { opacity: 0, y: 6 },
   visible: {
@@ -178,6 +197,7 @@ export function Shield({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
   const motionState = animated
     ? {
         initial: "hidden",
@@ -206,7 +226,7 @@ export function Shield({
               "pointer-events-none absolute size-39 rounded-full border border-dashed",
               styles.outerConnector,
             )}
-            variants={animated ? outerRingAnim : undefined}
+            variants={animated ? (loop ? outerRingAnim : outerRingRest) : undefined}
             style={animated ? undefined : { opacity: 1 }}
             {...motionState}
           />
@@ -215,7 +235,7 @@ export function Shield({
               "pointer-events-none absolute size-37 rounded-full border border-dashed",
               styles.innerConnector,
             )}
-            variants={animated ? innerRingAnim : undefined}
+            variants={animated ? (loop ? innerRingAnim : innerRingRest) : undefined}
             style={animated ? undefined : { opacity: 1 }}
             {...motionState}
           />

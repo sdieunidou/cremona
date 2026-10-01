@@ -5,7 +5,8 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const testimonialsDefaultCopy = {
   quote: "I loved it the very moment I used it. Would highly recommend.",
-} as const;
+  quotes: ["“", "”"] as readonly [string, string],
+};
 
 const card = {
   hidden: { opacity: 0 },
@@ -48,6 +49,12 @@ const veilAnim = {
 
 export interface TestimonialsProps extends VisualProps {
   quote?: string;
+  /** Drawn in place of the name bar. */
+  author?: string;
+  /** Drawn in place of the role bar. */
+  role?: string;
+  /** Opening and closing quotation marks (default “ ”; « » in French). */
+  quotes?: readonly [string, string];
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -55,6 +62,9 @@ export interface TestimonialsProps extends VisualProps {
 
 export function Testimonials({
   quote = testimonialsDefaultCopy.quote,
+  author,
+  role,
+  quotes = testimonialsDefaultCopy.quotes,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -121,7 +131,9 @@ export function Testimonials({
                 className="text-center text-[9px] font-medium text-foreground"
                 variants={animated ? item : undefined}
               >
-                “{quote}”
+                {quotes[0]}
+                {quote}
+                {quotes[1]}
               </motion.p>
               <motion.div
                 className="mt-3 flex items-center gap-1.5"
@@ -129,8 +141,18 @@ export function Testimonials({
               >
                 <div className="size-4 rounded-full border border-primary/10 bg-primary/15 dark:bg-primary/50" />
                 <div className="flex flex-col gap-0.5">
-                  <div className="h-0.75 w-8 rounded-full bg-foreground/12" />
-                  <div className="h-0.5 w-6 rounded-full bg-muted-foreground/15" />
+                  {author ? (
+                    <span className="text-[8px] leading-none font-semibold text-foreground">
+                      {author}
+                    </span>
+                  ) : (
+                    <div className="h-0.75 w-8 rounded-full bg-foreground/12" />
+                  )}
+                  {role ? (
+                    <span className="text-[7px] leading-none text-muted-foreground">{role}</span>
+                  ) : (
+                    <div className="h-0.5 w-6 rounded-full bg-muted-foreground/15" />
+                  )}
                 </div>
               </motion.div>
               <motion.div className="mt-3 flex gap-1" variants={animated ? item : undefined}>

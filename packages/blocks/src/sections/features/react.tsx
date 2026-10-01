@@ -3,9 +3,24 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface FeatureItem {
+  /** Drawn in place of the title bar. */
+  title: string;
+  /** Drawn in place of the description bar. */
+  description?: string;
+}
+
 export const featuresDefaultCopy = {
   title: "Amazing features",
-} as const;
+};
+
+/** Six unnamed feature cells. */
+const defaultFeatures: readonly (string | FeatureItem)[] = ["", "", "", "", "", ""];
+
+/** A count instead of a list means that many blank entries (at most 12). */
+function blanks<T>(count: number, blank: T): T[] {
+  return Array.from({ length: Math.min(Math.max(Math.floor(count) || 0, 0), 12) }, () => blank);
+}
 
 const card = {
   hidden: { opacity: 0 },
@@ -53,6 +68,8 @@ const veilAnim = {
 
 export interface FeaturesProps extends VisualProps {
   title?: string;
+  /** One cell per feature (a title, or a title with a description), or a count. */
+  features?: readonly (string | FeatureItem)[] | number;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -60,6 +77,7 @@ export interface FeaturesProps extends VisualProps {
 
 export function Features({
   title = featuresDefaultCopy.title,
+  features = defaultFeatures,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -146,16 +164,35 @@ export function Features({
               variants={animated ? cells : undefined}
               {...state}
             >
-              {[0, 1, 2, 3, 4, 5].map((i) => (
-                <div
-                  key={i}
-                  className="flex flex-col gap-1 rounded-lg border border-border/50 bg-muted/35 p-2 will-change-transform"
-                >
-                  <div className="size-2.25 rounded-xs bg-primary/15 ring-1 ring-primary/20" />
-                  <div className="mt-1 h-0.75 w-4/5 rounded-full bg-foreground/10" />
-                  <div className="h-0.5 w-3/5 rounded-full bg-muted-foreground/15" />
-                </div>
-              ))}
+              {(typeof features === "number" ? blanks(features, "") : features).map((raw, i) => {
+                const feature =
+                  typeof raw === "object" && raw !== null ? raw : { title: String(raw ?? "") };
+                return (
+                  <div
+                    key={i}
+                    className={cn(
+                      "flex flex-col gap-1 rounded-lg border border-border/50 bg-muted/35 p-2 will-change-transform",
+                      feature.title && "min-w-0",
+                    )}
+                  >
+                    <div className="size-2.25 rounded-xs bg-primary/15 ring-1 ring-primary/20" />
+                    {feature.title ? (
+                      <span className="mt-0.5 truncate text-[7px] leading-tight font-medium text-foreground/80">
+                        {feature.title}
+                      </span>
+                    ) : (
+                      <div className="mt-1 h-0.75 w-4/5 rounded-full bg-foreground/10" />
+                    )}
+                    {feature.description ? (
+                      <span className="line-clamp-2 text-[6px] leading-tight text-muted-foreground">
+                        {feature.description}
+                      </span>
+                    ) : (
+                      <div className="h-0.5 w-3/5 rounded-full bg-muted-foreground/15" />
+                    )}
+                  </div>
+                );
+              })}
             </motion.div>
           </div>
         </div>

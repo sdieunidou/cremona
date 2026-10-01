@@ -117,11 +117,18 @@ const veil = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
+export const listDefaultLabels = {
+  title: "Notifications",
+  markAllRead: "Mark all read",
+};
+
 export interface ListProps extends VisualProps {
   items?: ListItem[];
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
+  /** Header title and action. */
+  labels?: Partial<typeof listDefaultLabels>;
 }
 
 export function NotificationList({
@@ -133,6 +140,7 @@ export function NotificationList({
   gradient = true,
   fill = false,
   className,
+  labels,
 }: ListProps) {
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
@@ -147,6 +155,7 @@ export function NotificationList({
       }
     : {};
   const unread = items.filter((i) => i.unread).length;
+  const text = { ...listDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -173,7 +182,7 @@ export function NotificationList({
         <div className="relative rounded-2xl border bg-card shadow-xs">
           <div className="flex items-center justify-between border-b px-3 py-2.75">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-foreground">Notifications</span>
+              <span className="text-xs font-semibold text-foreground">{text.title}</span>
               {unread > 0 && (
                 <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/10 px-1.25 text-[9px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
                   {unread}
@@ -186,12 +195,13 @@ export function NotificationList({
               tabIndex={-1}
               onMouseDown={(e) => e.preventDefault()}
             >
-              Mark all read
+              {text.markAllRead}
             </button>
           </div>
           <motion.div className="flex flex-col" variants={animated ? list : undefined} {...state}>
             {items.map((n, i) => {
-              const { icon: Icon, accent } = iconStyles[n.icon];
+              const { icon: Icon, accent } =
+                iconStyles[Object.hasOwn(iconStyles, n.icon) ? n.icon : "message"];
               return (
                 <motion.div
                   key={i}

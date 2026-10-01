@@ -42,15 +42,27 @@ const rowLogos: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.4, delay: 0.35, ease: "easeOut" } },
 };
 
-const SLOTS = [0, 1, 2, 3, 4];
+/** Five unnamed logo slots. */
+const defaultLogos: readonly string[] = ["", "", "", "", ""];
+
+/** A count instead of a list means that many blank entries (at most 12). */
+function blanks<T>(count: number, blank: T): T[] {
+  return Array.from({ length: Math.min(Math.max(Math.floor(count) || 0, 0), 12) }, () => blank);
+}
 
 export interface LogosProps extends VisualProps {
+  /** Drawn in place of the heading bar. */
+  title?: string;
+  /** One slot per entry (a name is drawn inside its slot, "" leaves it blank), or a count. */
+  logos?: readonly string[] | number;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
 }
 
 export function Logos({
+  title,
+  logos = defaultLogos,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -114,16 +126,33 @@ export function Logos({
                 variants={animated ? rowHead : undefined}
                 {...state}
               >
-                <div className="h-0.75 w-1/2 rounded-full bg-muted-foreground/20" />
+                {title ? (
+                  <p className="text-center text-[8px] leading-tight font-medium text-muted-foreground">
+                    {title}
+                  </p>
+                ) : (
+                  <div className="h-0.75 w-1/2 rounded-full bg-muted-foreground/20" />
+                )}
               </motion.div>
               <motion.div
                 className="mt-4 flex w-full items-center justify-between gap-2"
                 variants={animated ? rowLogos : undefined}
                 {...state}
               >
-                {SLOTS.map((slot) => (
-                  <div key={slot} className="h-2.5 flex-1 rounded-md bg-muted-foreground/10" />
-                ))}
+                {(typeof logos === "number" ? blanks(logos, "") : logos).map((name, slot) =>
+                  name ? (
+                    <div
+                      key={slot}
+                      className="flex h-2.5 min-w-0 flex-1 items-center justify-center rounded-md bg-muted-foreground/10"
+                    >
+                      <span className="truncate px-0.5 text-[6px] leading-none font-semibold text-muted-foreground">
+                        {name}
+                      </span>
+                    </div>
+                  ) : (
+                    <div key={slot} className="h-2.5 flex-1 rounded-md bg-muted-foreground/10" />
+                  ),
+                )}
               </motion.div>
             </div>
           </div>

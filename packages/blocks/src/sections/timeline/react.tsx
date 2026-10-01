@@ -42,15 +42,33 @@ const veilAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
-const items = [0, 1, 2, 3];
+export interface TimelineItem {
+  /** Drawn in place of the title bar. */
+  title: string;
+  /** Drawn in place of the first line bar. */
+  date?: string;
+  /** Drawn in place of the second line bar. */
+  description?: string;
+}
+
+/** Four unnamed events, the first one current. */
+const defaultItems: readonly (string | TimelineItem)[] = ["", "", "", ""];
+
+/** A count instead of a list means that many blank entries (at most 12). */
+function blanks<T>(count: number, blank: T): T[] {
+  return Array.from({ length: Math.min(Math.max(Math.floor(count) || 0, 0), 12) }, () => blank);
+}
 
 export interface TimelineProps extends VisualProps {
+  /** One event per entry (a title, or a title with a date and a description), or a count. */
+  items?: readonly (string | TimelineItem)[] | number;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
 }
 
 export function Timeline({
+  items = defaultItems,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -60,6 +78,7 @@ export function Timeline({
   className,
 }: TimelineProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const events = typeof items === "number" ? blanks(items, "") : items;
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const state = animated
@@ -113,24 +132,46 @@ export function Timeline({
               variants={animated ? list : undefined}
               {...state}
             >
-              {items.map((i) => (
-                <motion.div key={i} className="flex gap-3" variants={animated ? item : undefined}>
-                  <div className="flex flex-col items-center">
-                    <div
-                      className={cn(
-                        "size-2.75 rounded-full",
-                        i === 0 ? "bg-primary" : "bg-muted-foreground/20",
+              {events.map((raw, i) => {
+                const event =
+                  typeof raw === "object" && raw !== null ? raw : { title: String(raw ?? "") };
+                return (
+                  <motion.div key={i} className="flex gap-3" variants={animated ? item : undefined}>
+                    <div className="flex flex-col items-center">
+                      <div
+                        className={cn(
+                          "size-2.75 rounded-full",
+                          i === 0 ? "bg-primary" : "bg-muted-foreground/20",
+                        )}
+                      />
+                      {i < events.length - 1 && <div className="h-4.5 w-px bg-border" />}
+                    </div>
+                    <div className={cn("flex flex-col gap-0.5", event.title && "min-w-0")}>
+                      {event.title ? (
+                        <span className="truncate text-[8px] leading-none font-medium text-foreground/80">
+                          {event.title}
+                        </span>
+                      ) : (
+                        <div className="h-0.75 w-10 rounded-full bg-foreground/10" />
                       )}
-                    />
-                    {i < items.length - 1 && <div className="h-4.5 w-px bg-border" />}
-                  </div>
-                  <div className="flex flex-col gap-0.5">
-                    <div className="h-0.75 w-10 rounded-full bg-foreground/10" />
-                    <div className="mt-0.5 h-0.5 w-16 rounded-full bg-muted-foreground/12" />
-                    <div className="h-0.5 w-12 rounded-full bg-muted-foreground/12" />
-                  </div>
-                </motion.div>
-              ))}
+                      {event.date ? (
+                        <span className="truncate text-[7px] leading-none text-muted-foreground">
+                          {event.date}
+                        </span>
+                      ) : (
+                        <div className="mt-0.5 h-0.5 w-16 rounded-full bg-muted-foreground/12" />
+                      )}
+                      {event.description ? (
+                        <span className="truncate text-[6px] leading-tight text-muted-foreground">
+                          {event.description}
+                        </span>
+                      ) : (
+                        <div className="h-0.5 w-12 rounded-full bg-muted-foreground/12" />
+                      )}
+                    </div>
+                  </motion.div>
+                );
+              })}
             </motion.div>
           </div>
         </div>

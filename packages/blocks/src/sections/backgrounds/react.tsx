@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const backgroundsDefaultCopy = {
   title: "Designed to stand out",
 } as const;
 
-type BackgroundKind = "mesh" | "grid" | "dots" | "rays";
+export type BackgroundKind = "mesh" | "grid" | "dots" | "rays";
 
 const defaultBackgrounds: BackgroundKind[] = ["mesh", "grid", "dots", "rays"];
 
@@ -147,18 +147,24 @@ export function Backgrounds({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
   const hasCycledRef = useRef(false);
   const [hovering, setHovering] = useState(false);
   const [index, setIndex] = useState(0);
+  // a picked backdrop stops the cycle until the entrance replays
+  const [pinned, setPinned] = useState(false);
   const active =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const [wasActive, setWasActive] = useState(active);
   if (wasActive !== active) {
     setWasActive(active);
-    if (!active) setIndex(0);
+    if (!active) {
+      setIndex(0);
+      setPinned(false);
+    }
   }
   const state = animated ? { initial: "hidden", animate: active ? "visible" : "hidden" } : {};
-  const playing = animated && active && (!hover || hovering);
+  const playing = animated && active && loop && !pinned && (!hover || hovering);
   const period = Math.max(interval, minInterval);
   const count = backgrounds.length;
   const current = Math.min(index, Math.max(count - 1, 0));
@@ -285,6 +291,7 @@ export function Backgrounds({
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => {
                         hasCycledRef.current = true;
+                        setPinned(true);
                         setIndex(i);
                       }}
                       className={cn(

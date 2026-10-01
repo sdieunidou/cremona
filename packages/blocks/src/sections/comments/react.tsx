@@ -67,7 +67,8 @@ const veilAnim = {
 
 export interface CommentsProps extends VisualProps {
   title?: string;
-  count?: number;
+  /** Shown as given: format it yourself ("1.2k", "1 234"). */
+  count?: number | string;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;

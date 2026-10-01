@@ -48,6 +48,10 @@ const veilAnim = {
 
 export interface CtaProps extends VisualProps {
   title?: string;
+  /** Drawn in place of the two text bars. */
+  description?: string;
+  /** Button label, drawn in place of the button bar. */
+  label?: string;
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -55,6 +59,8 @@ export interface CtaProps extends VisualProps {
 
 export function Cta({
   title = ctaDefaultCopy.title,
+  description,
+  label,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -127,12 +133,26 @@ export function Cta({
                 className="mt-1.5 flex w-full flex-col items-center gap-1"
                 variants={animated ? item : undefined}
               >
-                <div className="h-0.75 w-3/5 rounded-full bg-muted-foreground/20" />
-                <div className="h-0.75 w-2/5 rounded-full bg-muted-foreground/20" />
+                {description ? (
+                  <p className="text-center text-[8px] leading-snug text-muted-foreground">
+                    {description}
+                  </p>
+                ) : (
+                  <>
+                    <div className="h-0.75 w-3/5 rounded-full bg-muted-foreground/20" />
+                    <div className="h-0.75 w-2/5 rounded-full bg-muted-foreground/20" />
+                  </>
+                )}
               </motion.div>
               <motion.div className="mt-3" variants={animated ? item : undefined}>
                 <div className="flex h-3 items-center rounded-md bg-primary px-2">
-                  <div className="h-0.5 w-8 rounded-full bg-primary-foreground/75" />
+                  {label ? (
+                    <span className="text-[7px] leading-none font-medium whitespace-nowrap text-primary-foreground">
+                      {label}
+                    </span>
+                  ) : (
+                    <div className="h-0.5 w-8 rounded-full bg-primary-foreground/75" />
+                  )}
                 </div>
               </motion.div>
             </motion.div>

@@ -51,10 +51,18 @@ const veilAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
-const chartBars = [40, 70, 50, 85, 55, 75, 45, 38, 71, 64];
+const chartBars: readonly number[] = [40, 70, 50, 85, 55, 75, 45, 38, 71, 64];
 
 export interface HeroProps extends VisualProps {
   title?: string;
+  /** Drawn in place of the two text bars. */
+  description?: string;
+  /** Primary button label, drawn in place of its bar. */
+  label?: string;
+  /** Secondary button label, drawn in place of its bar. */
+  secondaryLabel?: string;
+  /** Heights (0–100) of the dashboard chart bars. */
+  bars?: readonly number[];
   gradient?: boolean;
   fadeOut?: boolean;
   isometric?: boolean;
@@ -62,6 +70,10 @@ export interface HeroProps extends VisualProps {
 
 export function Hero({
   title = heroDefaultCopy.title,
+  description,
+  label,
+  secondaryLabel,
+  bars = chartBars,
   animated = false,
   trigger = "inView",
   gradient = true,
@@ -134,15 +146,35 @@ export function Hero({
                 className="mt-1.5 flex w-full flex-col items-center gap-1"
                 variants={animated ? item : undefined}
               >
-                <div className="h-0.75 w-3/4 rounded-full bg-muted-foreground/20" />
-                <div className="h-0.75 w-1/2 rounded-full bg-muted-foreground/20" />
+                {description ? (
+                  <p className="text-center text-[8px] leading-snug text-muted-foreground">
+                    {description}
+                  </p>
+                ) : (
+                  <>
+                    <div className="h-0.75 w-3/4 rounded-full bg-muted-foreground/20" />
+                    <div className="h-0.75 w-1/2 rounded-full bg-muted-foreground/20" />
+                  </>
+                )}
               </motion.div>
               <motion.div className="mt-2 flex gap-1" variants={animated ? item : undefined}>
                 <div className="flex h-3 min-w-8 items-center rounded-md bg-primary px-1.5">
-                  <div className="h-0.5 w-full rounded-full bg-primary-foreground/75" />
+                  {label ? (
+                    <span className="text-[7px] leading-none font-medium whitespace-nowrap text-primary-foreground">
+                      {label}
+                    </span>
+                  ) : (
+                    <div className="h-0.5 w-full rounded-full bg-primary-foreground/75" />
+                  )}
                 </div>
                 <div className="flex h-3 min-w-7 items-center rounded-md border px-1.5">
-                  <div className="h-0.5 w-full rounded-full bg-border" />
+                  {secondaryLabel ? (
+                    <span className="text-[7px] leading-none font-medium whitespace-nowrap text-foreground">
+                      {secondaryLabel}
+                    </span>
+                  ) : (
+                    <div className="h-0.5 w-full rounded-full bg-border" />
+                  )}
                 </div>
               </motion.div>
             </motion.div>
@@ -166,11 +198,11 @@ export function Hero({
                   ))}
                 </div>
                 <div className="flex h-10 items-end justify-between gap-px rounded bg-card px-1 pt-1">
-                  {chartBars.map((height, i) => (
+                  {bars.map((height, i) => (
                     <div
                       key={i}
                       className="w-1.25 rounded-t-xs bg-chart-1"
-                      style={{ height: `${height}%` }}
+                      style={{ height: `${Math.min(Math.max(Number(height) || 0, 0), 100)}%` }}
                     />
                   ))}
                 </div>

@@ -6,7 +6,10 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 export interface GalleryItem {
   kind?: keyof typeof scenes;
   src?: string;
+  /** Accessible name of the tile; describe what the image shows. */
   title: string;
+  /** Alternative text of `src` when it should differ from `title`. */
+  alt?: string;
 }
 
 export interface GalleryProps extends VisualProps {
@@ -304,12 +307,16 @@ export function Gallery({
                 <motion.div
                   key={i}
                   role="img"
-                  aria-label={item.title}
+                  aria-label={item.alt ?? item.title}
                   className="aspect-square overflow-hidden rounded-lg bg-background will-change-transform"
                   variants={animated ? itemAnim : undefined}
                 >
                   {item.src ? (
-                    <img src={item.src} alt={item.title} className="size-full object-cover" />
+                    <img
+                      src={item.src}
+                      alt={item.alt ?? item.title}
+                      className="size-full object-cover"
+                    />
                   ) : (
                     Thumb && <Thumb />
                   )}

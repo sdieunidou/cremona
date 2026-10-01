@@ -20,11 +20,6 @@
   "custom slides · count": {
     "slides": [
       {
-        "kind": "aurora",
-        "title": "Tromsø",
-        "caption": "Lights at midnight"
-      },
-      {
         "kind": "blossom",
         "title": "Kyoto",
         "caption": "Cherry blossom season"
@@ -33,6 +28,11 @@
         "kind": "city",
         "title": "Tokyo",
         "caption": "Neon after dark"
+      },
+      {
+        "kind": "aurora",
+        "title": "Tromsø",
+        "caption": "Lights at midnight"
       }
     ],
     "count": 8,
@@ -42,7 +42,25 @@
     "arrows": false
   },
   "active: first": {
-    "activeIndex": 0
+    "activeIndex": 0,
+    "count": 5,
+    "slides": [
+      {
+        "kind": "mountain",
+        "title": "Dolomites",
+        "caption": "Above the cloud line"
+      },
+      {
+        "kind": "ocean",
+        "title": "Big Sur",
+        "caption": "Pacific morning swell"
+      },
+      {
+        "kind": "sunset",
+        "title": "Costa Brava",
+        "caption": "Sunset over the cliffs"
+      }
+    ]
   },
   "active: last": {
     "activeIndex": 4

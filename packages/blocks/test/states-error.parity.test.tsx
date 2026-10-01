@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { Error } from "../src/states/error/react.js";
+import { ErrorState } from "../src/states/error/react.js";
 import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/states/error");
@@ -10,7 +10,7 @@ const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/states/er
 // sections/error.
 runGoldenParity("states/error", {
   blockDir,
-  Component: Error,
+  Component: ErrorState,
   variants: [
     { label: "default · no glow", props: { glow: false } },
     { label: "isometric · no glow", props: { isometric: true, glow: false } },
