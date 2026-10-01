@@ -183,14 +183,15 @@ export function MobileAppShell({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(frameClasses(fill), fill && "@container-size", className)}
+      className={cn(frameClasses(fill), fill && "@container-size min-h-48", className)}
     >
-      {/* a 9:19 phone: with `fill` it keeps its cap and shrinks to the box height */}
+      {/* a 9:19 phone: with `fill` it keeps its cap and shrinks to the box height; the 12rem box and
+          6rem phone minimums keep it visible in a box without a height of its own */}
       <motion.div
         className={cn(
           "rounded-3xl border-8 shadow-xs",
           fill
-            ? "w-[min(11rem,calc((100cqh-1rem)*9/19+1rem))] max-w-full self-center"
+            ? "w-[min(11rem,max(6rem,calc((100cqh-1rem)*9/19+1rem)))] max-w-full self-center"
             : "w-full max-w-44",
           dark ? "dark border-muted bg-background" : "border-foreground/10 bg-background",
         )}
