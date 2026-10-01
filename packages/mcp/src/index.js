@@ -63,7 +63,10 @@ md h-96 by default, lg h-[28rem], xl h-[32rem]). Blocks whose \`effects\` is
 "entrance-only" keep their loops and JS effects (canvas, pointer, sequences) in
 React only; get_block(include:["stimulus"]) says which.
 
-Ship @cremona/tokens/css/cremona.css once; no Tailwind build required.`;
+Stylesheet, loaded once: @cremona/tokens/css/cremona.css (no Tailwind build needed). An app
+with its own Tailwind v4 build imports css/tailwind.css inside that build instead; a page whose
+CSS must keep working (Bootstrap, a theme) loads css/cremona.scoped.css and puts the blocks inside
+a .cremona element. get_css says how.`;
 
 const server = new McpServer({ name: "cremona", version }, { instructions: INSTRUCTIONS });
 
@@ -121,6 +124,8 @@ const unknownCategory = (category) =>
 const REACT_INSTALL = "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom";
 const STIMULUS_INSTALL = "npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus";
 const STYLESHEET = "@cremona/tokens/css/cremona.css";
+const TAILWIND_STYLESHEET = "@cremona/tokens/css/tailwind.css";
+const SCOPED_STYLESHEET = "@cremona/tokens/css/cremona.scoped.css";
 
 tool(
   "list_categories",
@@ -219,7 +224,7 @@ tool(
       import: exportName
         ? `import { ${exportName} } from "${store.blockImportPath(categorySlug, file)}";`
         : null,
-      stylesheet: `import "${STYLESHEET}"; // once, in the app entry`,
+      stylesheet: `import "${STYLESHEET}"; // once, in the app entry (a Tailwind v4 or Bootstrap host: get_css)`,
     };
     if (wanted.has("meta")) {
       out.meta = {
@@ -441,8 +446,10 @@ tool(
   {
     title: "Get the stylesheet",
     description:
-      "How to load the library stylesheet. kind 'summary' (default): path, size, import snippets and font files of @cremona/tokens/css/cremona.css (fonts + theme tokens + every utility class the blocks use). 'full': the whole minified file (large: prefer reading it from node_modules). 'tokens': css/themes.css only (semantic tokens). 'fonts': the font files.",
-    inputSchema: { kind: z.enum(["summary", "full", "tokens", "fonts"]).optional() },
+      "How to load the library's styles. kind 'summary' (default): the three stylesheets and which host takes which (plain cremona.css; tailwind.css inside a host's Tailwind v4 build; cremona.scoped.css next to Bootstrap or other CSS), with path, size and import snippets. 'tailwind': css/tailwind.css itself (small) and the host recipe. 'full': the whole minified cremona.css (large: prefer reading it from node_modules). 'tokens': css/themes.css only (semantic tokens). 'fonts': the font files.",
+    inputSchema: {
+      kind: z.enum(["summary", "tailwind", "full", "tokens", "fonts"]).optional(),
+    },
   },
   async ({ kind = "summary" }) => {
     const fonts = readdirSync(join(store.TOKENS_DIR, "css")).filter((f) => f.endsWith(".woff2"));
@@ -453,8 +460,26 @@ tool(
       const css = store.themeCss();
       return text({ kind, path: "@cremona/tokens/css/themes.css", bytes: css.length, css });
     }
+    const tailwindRecipe = [
+      '@import "tailwindcss";',
+      '@import "@cremona/tokens/css/tailwind.css";',
+      '@source "../node_modules/@cremona/blocks/dist";',
+    ].join("\n");
+    if (kind === "tailwind") {
+      const css = store.tokensCss("tailwind.css");
+      return text({
+        kind,
+        path: TAILWIND_STYLESHEET,
+        recipe: tailwindRecipe,
+        usage:
+          "In the app's own Tailwind v4 entry stylesheet (create-next-app: app/globals.css), instead of cremona.css: one Tailwind build compiles the blocks' classes and the app's together, with Cremona's theme. Adjust the @source path to where node_modules sits.",
+        bytes: css.length,
+        css,
+      });
+    }
     const css = store.designSystemCss();
     if (kind === "full") return text({ kind, path: STYLESHEET, bytes: css.length, css });
+    const scoped = store.tokensCss("cremona.scoped.css");
     return text({
       kind,
       path: STYLESHEET,
@@ -462,12 +487,34 @@ tool(
       approxTokens: Math.round(css.length / 4),
       import: { js: `import "${STYLESHEET}";`, css: `@import "${STYLESHEET}";` },
       contains:
-        "Inter @font-face rules, the theme tokens (all themes, light + dark) and every utility class the blocks use, compiled with Tailwind v4 and minified. A utility that no block uses has no rule in it.",
+        "Inter @font-face rules, the theme tokens (all themes, light + dark), Tailwind's preflight reset and every utility class the blocks use, compiled with Tailwind v4 and minified. A utility that no block uses has no rule in it.",
       usage:
-        "Load it once, at the app root, and toggle .dark / .theme-<name> on <html>. No Tailwind build is needed on the host.",
+        "For an app with no CSS framework: load it once, at the app root, and toggle .dark / .theme-<name> on <html>. Its reset applies to the whole page. No Tailwind build is needed on the host.",
+      stylesheets: [
+        {
+          host: "no CSS framework (a new Vite or Next.js app without Tailwind)",
+          path: STYLESHEET,
+          bytes: css.length,
+        },
+        {
+          host: "its own Tailwind CSS v4 build (create-next-app's default)",
+          path: TAILWIND_STYLESHEET,
+          recipe: tailwindRecipe,
+          more: "get_css kind 'tailwind'",
+        },
+        {
+          host: "CSS of its own that must keep working (Bootstrap, a theme, an existing app)",
+          path: SCOPED_STYLESHEET,
+          bytes: scoped.length,
+          usage:
+            'Load it instead of cremona.css and put the blocks inside an element with class="cremona": the reset and the utilities apply only there, and its !important utilities in cascade layers win over unlayered page CSS. If the page puts its own CSS in a layer, declare Cremona\'s first: @layer cremona, bootstrap;',
+        },
+      ],
       fonts: { files: fonts, note: fontsNote },
       tokensOnly: "@cremona/tokens/css/themes.css (get_css kind 'tokens')",
-      full: "get_css kind 'full' returns the whole file",
+      full: "get_css kind 'full' returns the whole cremona.css",
+      guide:
+        'get_guide("getting-started") §2 and §9, get_guide("design-system") "Next to other CSS"',
     });
   },
 );
