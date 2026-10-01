@@ -1,19 +1,55 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Star, ShoppingCart } from "lucide-react";
+import { Star, ShoppingCart, Bell } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+export interface ProductCardLabels {
+  add: string;
+  soldOut: string;
+  notify: string;
+  shipping: string;
+  /** `{rating}` is replaced by the rating value. */
+  rating: string;
+}
 
 export interface ProductCardProps extends VisualProps {
   title?: string;
   category?: string;
+  /** Formatted price. */
   price?: string;
+  /** Formatted price before the sale, struck through on sale. */
   compareAt?: string;
+  /** Review count. */
   reviews?: string;
+  /** Average rating out of 5: that many stars are filled (rounded). */
+  rating?: number;
   sale?: boolean;
+  /** Sale badge text. */
   discount?: string;
   stock?: "in" | "out";
+  /** Reveal the add-to-cart button over the image on hover (always shown on touch screens). */
   hoverAdd?: boolean;
+  /** Product image URL; a neutral tile when empty. */
+  image?: string;
+  /** Image alternative text; defaults to the title. */
+  alt?: string;
+  /** UI copy; every key is optional and falls back to the English default. */
+  labels?: Partial<ProductCardLabels>;
+}
+
+const defaultLabels: ProductCardLabels = {
+  add: "Add to cart",
+  soldOut: "Sold out",
+  notify: "Notify me",
+  shipping: "Free shipping",
+  rating: "Rated {rating} out of 5",
+};
+
+/** Preview only: keeps a control out of the tab order and unfocused on click. Drop it when deriving. */
+const noFocus = { tabIndex: -1, onMouseDown: prevent } as const;
+function prevent(e: { preventDefault(): void }) {
+  e.preventDefault();
 }
 
 const entrance = {
@@ -46,10 +82,14 @@ export function ProductCard({
   price = "$128.00",
   compareAt = "$160.00",
   reviews = "214",
+  rating = 4,
   sale = false,
   discount = "-20%",
   stock = "in",
   hoverAdd = false,
+  image = "/media/placeholders/photo-01.jpg",
+  alt,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -58,6 +98,7 @@ export function ProductCard({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const t = { ...defaultLabels, ...labels };
   const state = animated
     ? {
         initial: "hidden",
@@ -69,45 +110,55 @@ export function ProductCard({
     : {};
 
   const outOfStock = stock === "out";
+  const onSale = sale && !outOfStock;
+  const stars = Math.round(Math.min(5, Math.max(0, rating)));
 
   const addButton = (
     <button
       type="button"
-      tabIndex={-1}
-      onMouseDown={(e) => e.preventDefault()}
-      disabled={outOfStock}
       className={cn(
-        "flex h-8 w-full items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold shadow-sm transition-all duration-200 active:scale-[0.98]",
+        "flex h-8 w-full items-center justify-center gap-1.5 rounded-md px-3 text-xs font-semibold shadow-sm transition-all duration-200 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
         outOfStock
-          ? "cursor-not-allowed bg-muted text-muted-foreground"
+          ? "border bg-background text-foreground hover:bg-accent"
           : "bg-primary text-primary-foreground hover:opacity-90",
       )}
+      {...noFocus}
     >
-      {!outOfStock && <ShoppingCart className="size-3.5" strokeWidth={2.25} />}
-      {outOfStock ? "Sold out" : "Add to cart"}
+      {outOfStock ? (
+        <Bell className="size-3.5" strokeWidth={2.25} />
+      ) : (
+        <ShoppingCart className="size-3.5" strokeWidth={2.25} />
+      )}
+      {outOfStock ? t.notify : t.add}
     </button>
   );
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
-      <motion.div
+      <motion.article
         className={cn(
-          "group/product w-full",
+          "group/product flex w-full flex-col",
           !fill && "max-w-64",
           "overflow-hidden rounded-xl border bg-card text-card-foreground shadow-xs",
         )}
         variants={animated ? entrance : undefined}
         {...state}
       >
-        <div className="relative aspect-square bg-muted">
-          <img
-            src="/media/placeholders/photo-01.jpg"
-            alt={title}
-            className={cn("size-full object-cover", outOfStock && "grayscale")}
-          />
-          {sale && !outOfStock && (
+        <div className={cn("relative bg-muted", fill ? "min-h-0 flex-1" : "aspect-square")}>
+          {image && (
+            <img
+              src={image}
+              alt={alt ?? title}
+              className={cn(
+                fill ? "absolute inset-0" : "",
+                "size-full object-cover",
+                outOfStock && "grayscale",
+              )}
+            />
+          )}
+          {onSale && (
             <motion.span
-              className="absolute top-2 left-2 rounded-full bg-destructive px-2 py-0.5 text-[10px] font-semibold text-white"
+              className="absolute top-2 left-2 rounded-full bg-destructive px-2 py-0.5 text-[10px] font-semibold text-destructive-foreground"
               variants={animated ? badgeIn : undefined}
               {...state}
             >
@@ -117,12 +168,12 @@ export function ProductCard({
           {outOfStock && (
             <div className="absolute inset-0 flex items-center justify-center">
               <span className="rounded-full bg-background/90 px-2.5 py-1 text-[10px] font-semibold text-foreground shadow-sm backdrop-blur">
-                Sold out
+                {t.soldOut}
               </span>
             </div>
           )}
           {hoverAdd && (
-            <div className="absolute inset-x-3 bottom-3 opacity-0 transition-opacity duration-200 group-hover/product:opacity-100">
+            <div className="absolute inset-x-3 bottom-3 opacity-0 transition-opacity duration-200 group-focus-within/product:opacity-100 group-hover/product:opacity-100 [@media(hover:none)]:opacity-100">
               {addButton}
             </div>
           )}
@@ -138,19 +189,26 @@ export function ProductCard({
           >
             {category}
           </motion.p>
-          <motion.p
+          <motion.h3
             className="text-sm font-semibold text-foreground"
             variants={animated ? item : undefined}
           >
             {title}
-          </motion.p>
+          </motion.h3>
           <motion.div className="flex items-center gap-1" variants={animated ? item : undefined}>
-            <span className="flex items-center gap-0.5">
-              {[0, 1, 2, 3].map((i) => (
-                <Star key={i} className="size-3 fill-amber-400 text-amber-400" strokeWidth={2} />
+            <span className="flex items-center gap-0.5" aria-hidden="true">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <Star
+                  key={i}
+                  className={cn(
+                    "size-3",
+                    i < stars ? "fill-warning text-warning" : "text-muted-foreground/30",
+                  )}
+                  strokeWidth={2}
+                />
               ))}
-              <Star className="size-3 text-muted-foreground/30" strokeWidth={2} />
             </span>
+            <span className="sr-only">{t.rating.replace("{rating}", String(rating))}</span>
             <span className="text-xs text-muted-foreground">({reviews})</span>
           </motion.div>
           <motion.div
@@ -159,19 +217,15 @@ export function ProductCard({
           >
             <span className="flex items-baseline gap-1.5">
               <span className="text-sm font-semibold text-foreground tabular-nums">{price}</span>
-              {sale && !outOfStock && (
-                <span className="text-xs text-muted-foreground line-through tabular-nums">
-                  {compareAt}
-                </span>
-              )}
+              {onSale && <s className="text-xs text-muted-foreground tabular-nums">{compareAt}</s>}
             </span>
-            {!hoverAdd && (
-              <span className="text-[10px] font-medium text-primary">Free shipping</span>
+            {!hoverAdd && !outOfStock && (
+              <span className="text-[10px] font-medium text-primary">{t.shipping}</span>
             )}
           </motion.div>
           {!hoverAdd && <div className="mt-1">{addButton}</div>}
         </motion.div>
-      </motion.div>
+      </motion.article>
     </div>
   );
 }

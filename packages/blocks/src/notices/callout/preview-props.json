@@ -7,5 +7,11 @@
   },
   "update": {
     "variant": "update"
+  },
+  "success": {
+    "variant": "success"
+  },
+  "error": {
+    "variant": "error"
   }
 }

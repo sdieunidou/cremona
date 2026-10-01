@@ -24,7 +24,7 @@
     },
     {
       "label": "large title",
-      "propsRaw": "{large:!0}",
+      "propsRaw": "{large:!0,title:`Library`}",
       "size": null,
       "slug": "001-large-title"
     },

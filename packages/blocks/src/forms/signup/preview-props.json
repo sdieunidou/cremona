@@ -5,5 +5,10 @@
   },
   "weak": {
     "strength": 1
+  },
+  "email taken": {
+    "name": "Ada Lovelace",
+    "email": "ada@acme.dev",
+    "emailError": "This email is already registered."
   }
 }

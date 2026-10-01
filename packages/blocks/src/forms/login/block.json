@@ -19,19 +19,19 @@
     {
       "label": "default",
       "propsRaw": "{}",
-      "size": "lg",
+      "size": "xl",
       "slug": "000-default"
     },
     {
       "label": "error",
       "propsRaw": "{error:!0}",
-      "size": "lg",
+      "size": "xl",
       "slug": "001-error"
     },
     {
       "label": "loading",
       "propsRaw": "{loading:!0}",
-      "size": "lg",
+      "size": "xl",
       "slug": "002-loading"
     }
   ]

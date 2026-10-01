@@ -1,7 +1,8 @@
 {
   "default": {},
   "large title": {
-    "large": true
+    "large": true,
+    "title": "Library"
   },
   "scrolled": {
     "scrolled": true

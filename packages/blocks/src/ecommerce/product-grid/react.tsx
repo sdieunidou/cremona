@@ -3,18 +3,35 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
-export interface ProductGridProps extends VisualProps {
-  filter?: "All" | "Shoes" | "Apparel";
+export interface ProductGridItem {
+  name: string;
+  /** Category, matched against the active filter. */
+  category: string;
+  /** Formatted price. */
+  price: string;
+  /** Image URL; a neutral tile when omitted. */
+  image?: string;
 }
 
-const products = [
-  { name: "Aero Runner 2", cat: "Shoes", price: "$128" },
-  { name: "Court Classic", cat: "Shoes", price: "$96" },
-  { name: "Trail GTX", cat: "Shoes", price: "$142" },
-  { name: "Merino Crew", cat: "Apparel", price: "$76" },
-];
+export interface ProductGridProps extends VisualProps {
+  /** Active filter: "All" or one of `filters`. */
+  filter?: string;
+  /** Filter chips, "All" first. */
+  filters?: string[];
+  products?: ProductGridItem[];
+  title?: string;
+  /** Result count label; `{count}` is replaced by `count`. */
+  countLabel?: string;
+  /** Total number of results (defaults to six per product shown). */
+  count?: number;
+}
 
-const filters = ["All", "Shoes", "Apparel"] as const;
+const defaultProducts: ProductGridItem[] = [
+  { name: "Aero Runner 2", category: "Shoes", price: "$128" },
+  { name: "Court Classic", category: "Shoes", price: "$96" },
+  { name: "Trail GTX", category: "Shoes", price: "$142" },
+  { name: "Merino Crew", category: "Apparel", price: "$76" },
+];
 
 const entrance = {
   hidden: { opacity: 0, y: 8 },
@@ -48,6 +65,11 @@ const card = {
 
 export function ProductGrid({
   filter = "All",
+  filters = ["All", "Shoes", "Apparel"],
+  products = defaultProducts,
+  title = "New arrivals",
+  countLabel = "{count} items",
+  count,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -66,13 +88,17 @@ export function ProductGrid({
       }
     : {};
 
-  const visible =
-    filter === "All" ? products.slice(0, 4) : products.filter((p) => p.cat === filter);
+  const all = filter === filters[0];
+  const visible = all ? products.slice(0, 4) : products.filter((p) => p.category === filter);
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-96", "rounded-lg border bg-card shadow-xs")}
+        className={cn(
+          "@container w-full",
+          !fill && "max-w-96",
+          "rounded-lg border bg-card shadow-xs",
+        )}
         variants={animated ? entrance : undefined}
         {...state}
       >
@@ -86,17 +112,17 @@ export function ProductGrid({
               className="text-[9px] font-semibold text-foreground"
               variants={animated ? chip : undefined}
             >
-              New arrivals
+              {title}
             </motion.span>
             <motion.span
               className="text-[8px] text-muted-foreground"
               variants={animated ? chip : undefined}
             >
-              {visible.length * 6} items
+              {countLabel.replace("{count}", String(count ?? visible.length * 6))}
             </motion.span>
           </motion.div>
           <motion.div
-            className="mt-2 flex gap-1"
+            className="mt-2 flex flex-wrap gap-1"
             variants={animated ? content : undefined}
             {...state}
           >
@@ -115,23 +141,31 @@ export function ProductGrid({
               </motion.span>
             ))}
           </motion.div>
+          {/* two columns (three when filtered), four once the card is 32rem wide */}
           <motion.div
-            className={cn("mt-2 grid gap-1.5", filter === "All" ? "grid-cols-2" : "grid-cols-3")}
+            className={cn(
+              "mt-2 grid gap-1.5",
+              all ? "grid-cols-2 @lg:grid-cols-4" : "grid-cols-3 @lg:grid-cols-4",
+            )}
             variants={animated ? cards : undefined}
             {...state}
           >
-            {visible.map((p) => (
+            {visible.map((p, i) => (
               <motion.div
-                key={p.name}
+                key={i}
                 className="overflow-hidden rounded-md border border-border/50 bg-card"
                 variants={animated ? card : undefined}
               >
                 <div className="relative aspect-[16/10] bg-muted">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="h-1/2 w-1/2 rounded-[3px] bg-muted-foreground/10" />
-                  </div>
+                  {p.image ? (
+                    <img src={p.image} alt="" className="absolute inset-0 size-full object-cover" />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="h-1/2 w-1/2 rounded-[3px] bg-muted-foreground/10" />
+                    </div>
+                  )}
                 </div>
-                <div className="flex items-center justify-between px-1.5 py-1">
+                <div className="flex items-center justify-between gap-1 px-1.5 py-1">
                   <span className="truncate text-[8px] font-medium text-foreground">{p.name}</span>
                   <span className="text-[8px] font-semibold text-foreground tabular-nums">
                     {p.price}

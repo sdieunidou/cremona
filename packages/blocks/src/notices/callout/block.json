@@ -33,6 +33,18 @@
       "propsRaw": "{variant:`update`}",
       "size": null,
       "slug": "002-update"
+    },
+    {
+      "label": "success",
+      "propsRaw": "{variant:`success`}",
+      "size": null,
+      "slug": "003-success"
+    },
+    {
+      "label": "error",
+      "propsRaw": "{variant:`error`}",
+      "size": null,
+      "slug": "004-error"
     }
   ]
 }

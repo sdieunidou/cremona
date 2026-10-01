@@ -82,10 +82,11 @@ const tile = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
-const deltaTones = {
-  ok: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
-  warn: "bg-amber-500/10 text-amber-600 dark:text-amber-400",
-  bad: "bg-red-500/10 text-red-600 dark:text-red-400",
+/* status tints and marks; the text stays foreground so it reads in every theme */
+const statusTones = {
+  ok: { pill: "bg-success/10", mark: "bg-success" },
+  warn: { pill: "bg-warning/10", mark: "bg-warning" },
+  bad: { pill: "bg-destructive/10", mark: "bg-destructive" },
 } as const;
 
 function DeltaPill({ delta, up }: { delta: string; up: boolean }) {
@@ -93,13 +94,14 @@ function DeltaPill({ delta, up }: { delta: string; up: boolean }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-0.5 rounded-full px-1 py-px text-[7px] font-semibold tabular-nums",
-        up
-          ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-          : "bg-red-500/10 text-red-600 dark:text-red-400",
+        "inline-flex items-center gap-0.5 rounded-full px-1 py-px text-[7px] font-semibold text-foreground tabular-nums",
+        up ? "bg-success/10" : "bg-destructive/10",
       )}
     >
-      <Icon className="size-1.5" strokeWidth={2.5} />
+      <Icon
+        className={cn("size-1.5", up ? "text-success" : "text-destructive")}
+        strokeWidth={2.5}
+      />
       {delta}
     </span>
   );
@@ -220,6 +222,7 @@ function ChartCard({ className }: { className?: string }) {
           <path
             d={sparkPath}
             fill="none"
+            vectorEffect="non-scaling-stroke"
             strokeWidth="1.75"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -257,10 +260,11 @@ function TableCard() {
             </div>
             <span
               className={cn(
-                "rounded-full px-1 py-px text-[7px] font-semibold",
-                deltaTones[row.tone],
+                "inline-flex items-center gap-0.5 rounded-full px-1 py-px text-[7px] font-semibold text-foreground",
+                statusTones[row.tone].pill,
               )}
             >
+              <span className={cn("size-1 rounded-full", statusTones[row.tone].mark)} />
               {row.status}
             </span>
             <span className="w-10 text-right text-[9px] font-semibold text-foreground tabular-nums">
@@ -281,7 +285,9 @@ function KpiRow({ stacked }: { stacked: boolean }) {
           key={kpi.label}
           className={cn(
             "flex rounded-lg border bg-card",
-            stacked ? "items-center justify-between px-2 py-1.5" : "flex-1 flex-col gap-1 p-1.5",
+            stacked
+              ? "items-center justify-between px-2 py-1.5"
+              : "flex-1 flex-col items-start gap-1 p-1.5",
           )}
           variants={tile}
         >
@@ -353,12 +359,12 @@ export function DashboardShell({
         {...state}
       >
         <motion.div
-          className={cn("flex h-80", mobile && "flex-col")}
+          className={cn("flex", fill ? "h-full" : "h-80", mobile && "flex-col")}
           variants={animated ? regions : undefined}
           {...state}
         >
           {!mobile && <Rail collapsed={collapsed} />}
-          <motion.div className="flex min-w-0 flex-1 flex-col" variants={subRegions}>
+          <motion.div className="flex min-h-0 min-w-0 flex-1 flex-col" variants={subRegions}>
             <Topbar mobile={mobile} />
             <motion.div className="flex min-h-0 flex-1 flex-col gap-2 p-2" variants={subRegions}>
               <KpiRow stacked={mobile} />

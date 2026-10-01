@@ -19,13 +19,13 @@
     {
       "label": "default",
       "propsRaw": "{}",
-      "size": "lg",
+      "size": "xl",
       "slug": "000-default"
     },
     {
       "label": "dark hero",
       "propsRaw": "{darkHero:!0}",
-      "size": "lg",
+      "size": "xl",
       "slug": "001-dark-hero"
     }
   ]
