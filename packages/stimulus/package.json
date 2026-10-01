@@ -15,10 +15,20 @@
   },
   "type": "module",
   "main": "./src/index.js",
+  "types": "./src/index.d.ts",
   "exports": {
-    ".": "./src/index.js",
-    "./controllers/cremona-visual": "./src/cremona-visual_controller.js",
-    "./controllers/cremona-theme": "./src/cremona-theme_controller.js",
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./controllers/cremona-visual": {
+      "types": "./src/cremona-visual_controller.d.ts",
+      "default": "./src/cremona-visual_controller.js"
+    },
+    "./controllers/cremona-theme": {
+      "types": "./src/cremona-theme_controller.d.ts",
+      "default": "./src/cremona-theme_controller.js"
+    },
     "./templates/*": "./templates/*",
     "./package.json": "./package.json"
   },
@@ -29,7 +39,7 @@
   "sideEffects": false,
   "scripts": {
     "test": "vitest run",
-    "typecheck": "true"
+    "typecheck": "tsc -p tsconfig.json"
   },
   "peerDependencies": {
     "@hotwired/stimulus": "^3.2.2"

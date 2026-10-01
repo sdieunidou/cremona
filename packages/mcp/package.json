@@ -28,7 +28,7 @@
   "scripts": {
     "start": "node bin/cremona-mcp.mjs",
     "test": "vitest run",
-    "typecheck": "true",
+    "typecheck": "tsc -p tsconfig.json",
     "validate": "node scripts/validate.mjs",
     "prepack": "node scripts/bundle-data.mjs"
   },
