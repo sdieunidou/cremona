@@ -1,10 +1,12 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { StdioClientTransport } from "@modelcontextprotocol/sdk/client/stdio.js";
+import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
+const catalog = JSON.parse(readFileSync(join(here, "../../blocks/catalog.json"), "utf8"));
 let client;
 let transport;
 
@@ -26,13 +28,11 @@ function textOf(result) {
 }
 
 describe("cremona MCP server", () => {
-  it("lists 37 categories", async () => {
+  it("lists every category of the catalog", async () => {
     const cats = textOf(await client.callTool({ name: "list_categories", arguments: {} }));
-    expect(cats).toHaveLength(37);
+    expect(cats.map((c) => c.slug)).toEqual(catalog.map((g) => g.slug));
     const metrics = cats.find((c) => c.category === "Metrics");
-    expect(metrics.blocks).toBe(3);
-    const components = cats.find((c) => c.category === "Components");
-    expect(components.blocks).toBe(22);
+    expect(metrics.blocks).toBe(catalog.find((g) => g.slug === "metrics").items.length);
   });
 
   it("lists blocks with variants", async () => {
@@ -50,6 +50,44 @@ describe("cremona MCP server", () => {
       await client.callTool({ name: "search_blocks", arguments: { query: "kanban" } }),
     );
     expect(results[0].key).toBe("tasks/kanban");
+  });
+
+  it("finds plurals, synonyms and natural phrasings", async () => {
+    const keys = async (query, extra = {}) =>
+      textOf(await client.callTool({ name: "search_blocks", arguments: { query, ...extra } })).map(
+        (b) => b.key,
+      );
+
+    expect((await keys("buttons"))[0]).toBe("components/button");
+    expect((await keys("pie chart"))[0]).toBe("charts/donut");
+    expect((await keys("404"))[0]).toBe("states/not-found");
+    expect(await keys("settings page")).toEqual(
+      expect.arrayContaining(["forms/settings-form", "layouts/settings-shell"]),
+    );
+    const login = await keys("login");
+    expect(login[0]).toBe("forms/login");
+    expect(login).toEqual(expect.arrayContaining(["sections/auth", "layouts/auth-shell"]));
+    expect((await keys("sign in"))[0]).toBe("forms/login");
+    // a short term matches whole words only: "ai" is not the "ai" in "email"
+    expect(await keys("ai")).not.toContain("email/inbox");
+  });
+
+  it("filters a search by category, kind and scale", async () => {
+    const search = async (args) =>
+      textOf(await client.callTool({ name: "search_blocks", arguments: args }));
+    const metrics = await search({ query: "card", category: "metrics" });
+    expect(metrics.map((b) => b.key)).toEqual(["metrics/stat-card"]);
+    const components = await search({ query: "table", kind: "component" });
+    expect(components.map((b) => b.key)).toEqual(["components/table"]);
+    const real = await search({ query: "login", scale: "real-size" });
+    expect(real.map((b) => b.key)).toEqual(["forms/login"]);
+
+    const unknown = await client.callTool({
+      name: "search_blocks",
+      arguments: { query: "card", category: "nope" },
+    });
+    expect(unknown.isError).toBe(true);
+    expect(textOf(unknown).categories).toContain("metrics");
   });
 
   it("searches on every term, not on the raw query", async () => {
@@ -72,16 +110,43 @@ describe("cremona MCP server", () => {
     expect((await search("stat card"))[0].key).toBe("metrics/stat-card");
   });
 
-  it("returns a block with react source + stimulus sample + props", async () => {
+  it("returns a block with meta, props and react source by default", async () => {
     const block = textOf(
       await client.callTool({ name: "get_block", arguments: { key: "metrics/stat-card" } }),
     );
     expect(block.meta.name).toBe("Stat Card");
     expect(block.reactSource).toContain("export function StatCard");
-    expect(block.stimulus.templates.length).toBeGreaterThan(0);
-    expect(block.stimulus.sample).toContain('data-controller="cremona-visual"');
     expect(block.props["default"]).toEqual({});
     expect(block.props["isometric"]).toEqual({ isometric: true });
+    expect(block.stimulus).toBeUndefined();
+    expect(block.goldenSlugs).toBeUndefined();
+  });
+
+  it("returns the Stimulus templates and goldens on request", async () => {
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "metrics/stat-card", include: ["stimulus", "golden"] },
+      }),
+    );
+    expect(block.reactSource).toBeUndefined();
+    expect(block.stimulus.templates.length).toBeGreaterThan(0);
+    expect(block.stimulus.sample).toContain('data-controller="cremona-visual"');
+    expect(block.goldenSlugs).toContain("000-default.html");
+  });
+
+  it("tells how to install and import a block from its public path", async () => {
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "files/simple", include: ["meta"] },
+      }),
+    );
+    expect(block.install).toBe(
+      "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom",
+    );
+    expect(block.import).toBe('import { SimpleFile } from "@cremona/blocks/files/simple";');
+    expect(block.stylesheet).toContain("@cremona/tokens/css/cremona.css");
   });
 
   it("returns golden html", async () => {
@@ -108,6 +173,29 @@ describe("cremona MCP server", () => {
     const ds = textOf(await client.callTool({ name: "get_design_system", arguments: {} }));
     expect(ds.tokens).toContain("--chart-1");
     expect(ds.themes).toHaveLength(9);
+  });
+
+  it("returns a stylesheet summary by default and the full file on request", async () => {
+    const summary = textOf(await client.callTool({ name: "get_css", arguments: {} }));
+    expect(summary.kind).toBe("summary");
+    expect(summary.path).toBe("@cremona/tokens/css/cremona.css");
+    expect(summary.bytes).toBeGreaterThan(100000);
+    expect(summary.import.js).toBe('import "@cremona/tokens/css/cremona.css";');
+    expect(summary.fonts.files.length).toBeGreaterThan(0);
+    expect(summary.css).toBeUndefined();
+    const full = textOf(await client.callTool({ name: "get_css", arguments: { kind: "full" } }));
+    expect(full.css.length).toBe(summary.bytes);
+  });
+
+  it("registers every tool with a title and annotations", async () => {
+    const { tools } = await client.listTools();
+    expect(tools.length).toBe(14);
+    for (const tool of tools) {
+      expect(tool.title, tool.name).toBeTruthy();
+      const writes = tool.name.startsWith("add_");
+      expect(tool.annotations?.readOnlyHint, tool.name).toBe(!writes);
+      if (writes) expect(tool.annotations?.destructiveHint, tool.name).toBe(true);
+    }
   });
 
   it("validates coherence", async () => {
@@ -149,11 +237,42 @@ describe("cremona MCP server", () => {
     );
   });
 
+  it("gives every block a scale", async () => {
+    const all = textOf(await client.callTool({ name: "list_blocks", arguments: {} }));
+    const scale = Object.fromEntries(all.map((b) => [b.key, b.scale]));
+    expect(scale["components/button"]).toBe("real-size");
+    expect(scale["forms/login"]).toBe("real-size");
+    expect(scale["ecommerce/product-card"]).toBe("real-size");
+    expect(scale["ecommerce/product-grid"]).toBe("miniature");
+    expect(scale["sections/hero"]).toBe("miniature");
+    expect(scale["layouts/auth-shell"]).toBe("miniature");
+    expect(scale["charts/line"]).toBe("illustration");
+    expect(new Set(Object.values(scale))).toEqual(
+      new Set(["real-size", "miniature", "illustration"]),
+    );
+
+    const miniature = textOf(
+      await client.callTool({ name: "list_blocks", arguments: { scale: "miniature" } }),
+    );
+    expect(miniature.every((b) => b.scale === "miniature")).toBe(true);
+    expect(miniature.map((b) => b.key)).toContain("sections/pricing");
+
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "sections/pricing", include: ["meta"] },
+      }),
+    );
+    expect(block.meta.scale).toBe("miniature");
+    expect(client.getInstructions()).toContain("`scale`");
+  });
+
   it("lists the component kind", async () => {
     const components = textOf(
       await client.callTool({ name: "list_blocks", arguments: { kind: "component" } }),
     );
-    expect(components.length).toBe(22);
+    const expected = catalog.find((g) => g.slug === "components").items.length;
+    expect(components.length).toBe(expected);
     expect(components.every((b) => b.kind === "component")).toBe(true);
   });
 

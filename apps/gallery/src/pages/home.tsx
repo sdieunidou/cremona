@@ -1,17 +1,9 @@
-import type { ComponentType } from "react";
-import { BlockCard, PreviewGrid } from "../components/preview-frame.js";
-import { PreviewWithCode } from "../components/preview-with-code.js";
-import { BADGE_OUTLINE_MONO } from "../lib/shell-classes.js";
-import {
-  blocks,
-  categories,
-  findBlock,
-  stats,
-  thumbnails,
-  type BlockEntry,
-} from "../lib/discovery.js";
-import { hydrateProps } from "../lib/icons.js";
+import { Suspense, use, useRef, useState } from "react";
+import { categories, hasBlock, loadComponent, stats, thumbnails } from "../lib/discovery.js";
+import { useNearViewport } from "../lib/viewport.js";
 import { ErrorBoundary, PreviewError } from "../components/error-boundary.js";
+import { Link } from "../components/link.js";
+import { PageHeading } from "../components/page-heading.js";
 
 export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
   return (
@@ -19,46 +11,39 @@ export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex flex-col gap-8">
         <div className="flex flex-col gap-4 border-b pb-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex flex-col gap-2">
-            <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
+            <PageHeading className="text-2xl font-bold tracking-tight md:text-3xl">
               All visual compositions
-            </h1>
+            </PageHeading>
             <p className="max-w-3xl text-sm/relaxed text-muted-foreground">
-              Search and explore {stats.blocks} animated, copy-paste coded illustrations with{" "}
-              {stats.variants}+ ready made variations across {stats.categories} categories. Click
-              any one to preview all of its variations.
+              Search and explore {stats.blocks} animated, copy-paste coded blocks with{" "}
+              {stats.variants.toLocaleString("en-US")} ready-made variants across {stats.categories}{" "}
+              categories. Hover a card to play its animation, open it to preview every variant and
+              copy its code.
             </p>
           </div>
         </div>
         <div className="flex flex-col gap-10">
           {categories.map((cat) => (
-            <section key={cat.slug} className="flex flex-col gap-3">
-              <div className="flex items-baseline gap-2">
-                <h2 className="font-semibold tracking-tight">{cat.category}</h2>
-              </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-                {cat.items.map((item) => {
-                  const key = `${cat.slug}/${item.file}`;
-                  const entry = blocks[key];
-                  const href = `/visuals/${cat.slug}/${item.file}`;
-                  return (
+            <section
+              key={cat.slug}
+              aria-labelledby={`category-${cat.slug}`}
+              className="flex flex-col gap-3"
+            >
+              <h2 id={`category-${cat.slug}`} className="font-semibold tracking-tight">
+                {cat.category}
+              </h2>
+              <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+                {cat.items.map((item) => (
+                  <li key={item.file} className="flex">
                     <BlockCard
-                      key={key}
-                      href={href}
-                      onClick={() => onNavigate(href)}
+                      blockKey={`${cat.slug}/${item.file}`}
                       title={item.name}
                       description={item.description}
-                    >
-                      {entry ? (
-                        <ErrorBoundary fallback={(error) => <PreviewError error={error} />}>
-                          <Thumbnail entry={entry} />
-                        </ErrorBoundary>
-                      ) : (
-                        <div className="size-full animate-pulse bg-muted/40" />
-                      )}
-                    </BlockCard>
-                  );
-                })}
-              </div>
+                      onNavigate={onNavigate}
+                    />
+                  </li>
+                ))}
+              </ul>
             </section>
           ))}
         </div>
@@ -67,85 +52,85 @@ export function HomePage({ onNavigate }: { onNavigate: (to: string) => void }) {
   );
 }
 
-/** Home thumbnails render the live component, masked + isometric like the POC. */
-function Thumbnail({ entry }: { entry: BlockEntry }) {
-  const defaults = thumbnails[entry.key] ?? {};
-  const Animated = entry.Component as ComponentType<Record<string, unknown>>;
-  return (
-    <Animated
-      animated
-      trigger="inView"
-      className="mask-t-from-85% mask-r-from-85% mask-b-from-85% mask-l-from-85%"
-      {...defaults}
-    />
-  );
-}
-
-export function BlockPage({
-  category,
-  file,
+/**
+ * Home card: a container whose title link stretches over the whole card, so the
+ * preview inside (which renders links and buttons of its own) is never nested in
+ * a link. The preview mounts when the card nears the viewport, renders its static
+ * final state, and replays its animation while the card is hovered or focused.
+ */
+function BlockCard({
+  blockKey,
+  title,
+  description,
   onNavigate,
 }: {
-  category: string;
-  file: string;
+  blockKey: string;
+  title: string;
+  description: string;
   onNavigate: (to: string) => void;
 }) {
-  const entry = findBlock(category, file);
-  if (!entry) {
-    return (
-      <section className="relative py-8 md:py-16">
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16">
-          <p className="text-sm text-muted-foreground">
-            This visual is not ported yet. Its spec and golden references exist in{" "}
-            <code className="font-mono text-xs">
-              packages/blocks/src/{category}/{file}
-            </code>
-            .
-          </p>
-        </div>
-      </section>
-    );
-  }
-  const { meta, previewProps } = entry;
-  void onNavigate;
+  const media = useRef<HTMLDivElement>(null);
+  const near = useNearViewport(media);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [plays, setPlays] = useState(0);
+  const playing = hovered || focused;
+  const start = (set: (v: boolean) => void) => () => {
+    if (!playing) setPlays((n) => n + 1);
+    set(true);
+  };
 
   return (
-    <section className="relative py-8 md:py-16">
-      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-16 flex flex-col gap-8">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-col gap-2">
-            <span data-slot="badge" data-variant="outline" className={BADGE_OUTLINE_MONO}>
-              {meta.sourcePath}
-            </span>
-            <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight md:text-3xl">
-              {meta.name}
-            </h1>
-            <p className="max-w-2xl text-sm/relaxed text-muted-foreground">{meta.description}</p>
-          </div>
-          <div className="flex shrink-0 items-center" />
-        </div>
-        <PreviewGrid cols={meta.page?.cols ?? 2}>
-          {meta.variants.map((variant) => {
-            const props = hydrateProps(previewProps[variant.label] ?? {});
-            return (
-              <PreviewWithCode
-                key={variant.slug}
-                entry={entry}
-                label={variant.label}
-                size={variant.size}
-              >
-                <AnimatedVisual entry={entry} props={props} />
-              </PreviewWithCode>
-            );
-          })}
-        </PreviewGrid>
+    <div
+      className="group relative flex w-full flex-col overflow-hidden rounded-lg border border-border/50 hover:border-border active:border-border/75 has-[a:focus-visible]:border-ring has-[a:focus-visible]:ring-3 has-[a:focus-visible]:ring-ring/50"
+      onPointerEnter={start(setHovered)}
+      onPointerLeave={() => setHovered(false)}
+      onFocus={start(setFocused)}
+      onBlur={() => setFocused(false)}
+    >
+      <div
+        ref={media}
+        inert
+        data-thumbnail={near ? (playing ? "playing" : "static") : "pending"}
+        className="relative flex h-72 items-center justify-center overflow-hidden bg-muted/20 [content-visibility:auto] dark:bg-muted/15"
+      >
+        {near && hasBlock(blockKey) && (
+          <ErrorBoundary fallback={(error) => <PreviewError error={error} />}>
+            <Suspense fallback={null}>
+              <Thumbnail
+                key={playing ? `play-${plays}` : "static"}
+                blockKey={blockKey}
+                animated={playing}
+              />
+            </Suspense>
+          </ErrorBoundary>
+        )}
       </div>
-    </section>
+      <div className="border-t border-border/50 px-3 py-2.5">
+        <h3 className="text-sm font-medium">
+          <Link
+            to={`/visuals/${blockKey}`}
+            onNavigate={onNavigate}
+            className="outline-none after:absolute after:inset-0 after:z-10"
+          >
+            {title}
+          </Link>
+        </h3>
+        <p className="mt-0.75 line-clamp-1 text-xs text-muted-foreground">{description}</p>
+      </div>
+    </div>
   );
 }
 
-/** Block-page previews: animated + trigger inViewRepeat (POC default). */
-function AnimatedVisual({ entry, props }: { entry: BlockEntry; props: Record<string, unknown> }) {
-  const Animated = entry.Component as ComponentType<Record<string, unknown>>;
-  return <Animated animated trigger="inViewRepeat" {...props} />;
+/** The block itself, masked like the POC: its final state, or its entrance while `animated`. */
+function Thumbnail({ blockKey, animated }: { blockKey: string; animated: boolean }) {
+  const { Component } = use(loadComponent(blockKey));
+  return (
+    <Component
+      animated={animated}
+      trigger="mount"
+      className="mask-t-from-85% mask-r-from-85% mask-b-from-85% mask-l-from-85%"
+      {...thumbnails[blockKey]}
+    />
+  );
 }

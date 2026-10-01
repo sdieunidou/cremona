@@ -2,7 +2,7 @@
   "category": "Layouts",
   "file": "settings-shell",
   "name": "Settings Shell",
-  "description": "Settings layout with sectioned sidebar nav and form panels.",
+  "description": "Wireframe illustration of a settings layout with sectioned sidebar nav and form panels.",
   "added": "2026-09-21",
   "kind": "layout",
   "sourcePath": "layouts/settings-shell.tsx",

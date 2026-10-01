@@ -126,6 +126,38 @@ export function doc(name) {
   return existsSync(p) ? readText(p) : null;
 }
 
+export const SCALES = ["real-size", "miniature", "illustration"];
+
+// Measured sizes (text 12–16 px, controls 32–44 px vs 7–10 px text): the kit
+// categories are real-size templates, sections and layouts are thumbnail-scale
+// wireframes, and every POC category is animated product artwork.
+const REAL_SIZE_CATEGORIES = new Set(["components", "ecommerce", "forms", "mobile", "notices"]);
+const MINIATURE_CATEGORIES = new Set(["sections", "layouts"]);
+const SCALE_OVERRIDES = {
+  "ecommerce/product-grid": "miniature",
+  "ecommerce/cart-drawer": "miniature",
+};
+
+/** How a block renders: "real-size" UI, a "miniature" wireframe, or an "illustration". */
+export function blockScale(categorySlug, file) {
+  const override = SCALE_OVERRIDES[`${categorySlug}/${file}`];
+  if (override) return override;
+  if (REAL_SIZE_CATEGORIES.has(categorySlug)) return "real-size";
+  if (MINIATURE_CATEGORIES.has(categorySlug)) return "miniature";
+  return "illustration";
+}
+
+/** The component a block's react.tsx exports (one PascalCase function per block). */
+export function blockExportName(categorySlug, file) {
+  const source = blockReactSource(categorySlug, file);
+  return source ? (/^export function ([A-Z]\w*)/m.exec(source)?.[1] ?? null) : null;
+}
+
+/** Public package path of a block: `@cremona/blocks/<category>/<file>`. */
+export function blockImportPath(categorySlug, file) {
+  return `@cremona/blocks/${categorySlug}/${file}`;
+}
+
 /** Flattened block index for list/search tools. */
 export function blockIndex() {
   const out = [];
@@ -140,6 +172,7 @@ export function blockIndex() {
         name: item.name,
         description: item.description,
         kind: meta?.kind ?? item.kind ?? "block",
+        scale: blockScale(group.slug, item.file),
         added: item.added,
         ported: !!meta,
         variants: meta?.variants?.map((v) => v.label) ?? [],
@@ -150,31 +183,139 @@ export function blockIndex() {
   return out;
 }
 
-/** Score of one search term against one block. 0 = no match. */
-function scoreTerm(block, term) {
-  let score = 0;
-  if (block.name.toLowerCase().includes(term)) score += 10;
-  if (block.file.includes(term)) score += 6;
-  if (block.description.toLowerCase().includes(term)) score += 4;
-  if (block.variants.some((v) => v.toLowerCase().includes(term))) score += 3;
-  if (block.category.toLowerCase().includes(term)) score += 1;
+/** The catalog group a category slug or name designates, if any. */
+export function findCategory(category) {
+  const wanted = category.trim().toLowerCase();
+  return catalog().find((g) => g.slug === wanted || g.category.toLowerCase() === wanted);
+}
+
+/** Words that describe the request, not the block ("settings page" is the settings block). */
+const FILLER = new Set(
+  "a an the of for with and or to in on my our some any page pages screen screens view ui block blocks visual visuals".split(
+    " ",
+  ),
+);
+
+/** Multi-word ways of saying one thing, folded into one term before splitting. */
+const PHRASES = [
+  [/\b(sign|log)[ -](in|on)\b/g, "login"],
+  [/\bsign[ -]up\b/g, "signup"],
+  [/\bnot[ -]found\b/g, "notfound"],
+  [/\b(cmd|ctrl|command|meta)[ +-]?k\b/g, "cmdk"],
+];
+
+/** Query term → other ways the library says it. */
+const SYNONYMS = {
+  404: ["not found", "not-found"],
+  notfound: ["not found", "not-found"],
+  pie: ["donut"],
+  doughnut: ["donut"],
+  graph: ["chart"],
+  plot: ["chart"],
+  login: ["sign-in", "sign in", "auth"],
+  logon: ["login", "sign in", "auth"],
+  signin: ["login", "sign-in", "sign in", "auth"],
+  signup: ["sign up", "registration", "register"],
+  register: ["signup", "registration"],
+  registration: ["signup", "register"],
+  authentication: ["auth", "login"],
+  preference: ["settings"],
+  setting: ["settings", "preferences"],
+  modal: ["dialog"],
+  popup: ["dialog", "popover", "tooltip"],
+  dropdown: ["menu", "select"],
+  combobox: ["select", "command"],
+  navbar: ["header", "navigation", "app bar"],
+  topbar: ["header", "app bar"],
+  nav: ["navigation", "breadcrumb", "tab bar", "sidebar"],
+  snackbar: ["toast"],
+  notification: ["toast", "bell", "alert"],
+  banner: ["callout", "alert"],
+  slider: ["carousel"],
+  spinner: ["loading", "progress"],
+  loader: ["loading", "progress", "skeleton"],
+  toggle: ["switch"],
+  kpi: ["stat", "metric"],
+  metric: ["stat"],
+  cmdk: ["command"],
+  shortcut: ["kbd", "keyboard"],
+  keyboard: ["kbd", "shortcut"],
+  payment: ["checkout", "billing", "credit card"],
+  billing: ["usage", "checkout", "payment"],
+  invoice: ["checkout", "billing", "order"],
+  shop: ["ecommerce", "product", "cart"],
+  store: ["ecommerce", "product", "cart"],
+  landing: ["marketing", "hero"],
+  wizard: ["onboarding", "step"],
+  stepper: ["step", "wizard", "process"],
+  map: ["globe", "geo"],
+  user: ["avatar", "profile", "team"],
+};
+
+/** Conservative English singular: "buttons" → "button", "categories" → "category". */
+function singular(term) {
+  if (term.length <= 3 || /(ss|us|is)$/.test(term)) return term;
+  if (term.endsWith("ies")) return `${term.slice(0, -3)}y`;
+  if (/(sses|xes|ches|shes)$/.test(term)) return term.slice(0, -2);
+  return term.endsWith("s") ? term.slice(0, -1) : term;
+}
+
+/** Every spelling one query term stands for; a synonym counts half as much as the term itself. */
+function alternativesOf(term) {
+  const base = singular(term);
+  const synonyms = (SYNONYMS[term] ?? SYNONYMS[base] ?? []).filter((s) => s !== term && s !== base);
+  return [
+    { spelling: term, weight: 1 },
+    ...(base === term ? [] : [{ spelling: base, weight: 1 }]),
+    ...synonyms.map((spelling) => ({ spelling, weight: 0.5 })),
+  ];
+}
+
+const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+/**
+ * How well `term` matches a word of `text`: 1 for the whole word (or its plural),
+ * 0.5 for the start of a longer word ("table" in "tablet"), 0 otherwise, so "ai"
+ * matches "AI Chat" but not "email".
+ */
+function wordMatch(text, term) {
+  const t = escapeRegex(term);
+  if (new RegExp(`(^|[^a-z0-9])${t}(e?s)?([^a-z0-9]|$)`).test(text)) return 1;
+  return new RegExp(`(^|[^a-z0-9])${t}`).test(text) ? 0.5 : 0;
+}
+
+/** Score of one spelling against one block. 0 = no match. */
+function scoreSpelling(block, term) {
+  const name = block.name.toLowerCase();
+  const category = block.category.toLowerCase();
+  let score = wordMatch(name, term) * (name === term || block.file === term ? 18 : 10);
+  score += wordMatch(block.file, term) * 6;
+  score += wordMatch(block.description.toLowerCase(), term) * 4;
+  score += Math.max(0, ...block.variants.map((v) => wordMatch(v.toLowerCase(), term))) * 3;
+  score += category === term || singular(category) === term ? 5 : wordMatch(category, term) * 1;
   return score;
 }
 
-export function searchBlocks(query, { category, kind, limit = 30 } = {}) {
-  const q = query.trim().toLowerCase();
+/** Best score of a query term over its spellings (itself, singular, synonyms). */
+function scoreTerm(block, term) {
+  return Math.max(
+    ...alternativesOf(term).map(({ spelling, weight }) => scoreSpelling(block, spelling) * weight),
+  );
+}
+
+export function searchBlocks(query, { category, kind, scale, limit = 30 } = {}) {
+  let q = query.trim().toLowerCase().replace(/\s+/g, " ");
+  for (const [pattern, term] of PHRASES) q = q.replace(pattern, term);
+  const group = category ? findCategory(category) : null;
   let items = blockIndex();
-  if (category)
-    items = items.filter(
-      (b) => b.categorySlug === category || b.category.toLowerCase() === category.toLowerCase(),
-    );
+  if (category) items = items.filter((b) => b.categorySlug === group?.slug);
   if (kind) items = items.filter((b) => b.kind === kind);
+  if (scale) items = items.filter((b) => b.scale === scale);
   if (q) {
-    // Terms are matched individually and ANDed. Matching the raw query as one
-    // substring made natural multi-word queries fail whenever the words are not
-    // adjacent in that exact order: "empty state" returned nothing even though
-    // "empty" and "state" each match states/empty.
-    const terms = q.split(/\s+/).filter(Boolean);
+    // Terms are matched individually (as words, in any order) and ANDed.
+    const words = q.split(/[^a-z0-9-]+/).filter(Boolean);
+    const meaningful = words.filter((w) => !FILLER.has(w));
+    const terms = meaningful.length ? meaningful : words;
     items = items
       .map((b) => {
         let score = 0;
@@ -183,10 +324,9 @@ export function searchBlocks(query, { category, kind, limit = 30 } = {}) {
           if (termScore === 0) return { ...b, score: 0 };
           score += termScore;
         }
-        // The whole query as a contiguous substring stays the strongest signal,
-        // so "stat card" still ranks metrics/stat-card above blocks that merely
-        // mention both words.
-        if (terms.length > 1 && scoreTerm(b, q) > 0) score += 10;
+        // The whole query as one phrase stays the strongest signal, so "stat card"
+        // ranks metrics/stat-card above blocks that merely mention both words.
+        if (terms.length > 1 && scoreSpelling(b, terms.join(" ")) > 0) score += 10;
         return { ...b, score };
       })
       .filter((b) => b.score > 0)
@@ -204,31 +344,59 @@ export function categorySummary() {
   }));
 }
 
-/** Coherence validation across catalog, blocks, goldens and stimulus templates. */
+/**
+ * Block keys that have a parity test (`runGoldenParity("<key>", …)` in
+ * packages/blocks/test), or null when the tests are not shipped (published package).
+ */
+export function parityTestKeys() {
+  const dir = join(REPO_ROOT, "packages", "blocks", "test");
+  if (!existsSync(dir)) return null;
+  const keys = new Set();
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".parity.test.tsx")) continue;
+    for (const m of readText(join(dir, f)).matchAll(/runGoldenParity\(\s*["']([^"']+)["']/g))
+      keys.add(m[1]);
+  }
+  return keys;
+}
+
+/** Coherence validation across catalog, blocks, goldens, preview props, stimulus templates and parity tests. */
 export function validate() {
   const issues = [];
   const index = blockIndex();
+  const manifest = stimulusManifest();
+  const parity = parityTestKeys();
   for (const b of index) {
     const dir = blockDir(b.categorySlug, b.file);
-    if (!b.ported) {
-      issues.push(`MISSING_REACT: ${b.key} has no react.tsx`);
+    const meta = blockMeta(b.categorySlug, b.file);
+    if (!meta) {
+      issues.push(`MISSING_META: ${b.key} has no block.json`);
       continue;
     }
-    const meta = blockMeta(b.categorySlug, b.file);
-    for (const v of meta.variants) {
-      if (!existsSync(join(dir, "golden", `${v.slug}.html`))) {
-        issues.push(`MISSING_GOLDEN: ${b.key} · ${v.label} (${v.slug})`);
-      }
-    }
-    if (!existsSync(join(dir, "preview-props.json"))) {
+    if (!existsSync(join(dir, "react.tsx")))
+      issues.push(`MISSING_REACT: ${b.key} has no react.tsx`);
+    const props = blockPreviewProps(b.categorySlug, b.file);
+    if (!props)
       issues.push(`MISSING_PREVIEW_PROPS: ${b.key} (run the blocks test suite to generate)`);
+    const stim = manifest[b.key];
+    if (!stim) issues.push(`MISSING_STIMULUS: ${b.key} (run pnpm generate:stimulus)`);
+    for (const v of meta.variants) {
+      if (!existsSync(join(dir, "golden", `${v.slug}.html`)))
+        issues.push(`MISSING_GOLDEN: ${b.key} · ${v.label} (${v.slug})`);
+      if (props && !Object.hasOwn(props, v.label))
+        issues.push(`MISSING_PREVIEW_PROPS: ${b.key} · ${v.label} (run the blocks test suite)`);
+      if (!stim) continue;
+      const template = stim.variants?.find((t) => t.label === v.label);
+      if (!template || !stimulusTemplate(b.categorySlug, b.file, template.slug))
+        issues.push(`MISSING_STIMULUS: ${b.key} · ${v.label} (run pnpm generate:stimulus)`);
     }
-    const stim = stimulusManifest()[b.key];
-    if (!stim) issues.push(`MISSING_STIMULUS: ${b.key} (run node tools/generate-stimulus.mjs)`);
+    if (parity && !parity.has(b.key))
+      issues.push(
+        `MISSING_PARITY_TEST: ${b.key} (packages/blocks/test/${b.categorySlug}-${b.file}.parity.test.tsx)`,
+      );
   }
-  const reactBlocks = listBlockDirs().filter((k) => !index.some((b) => b.key === k));
-  for (const k of reactBlocks)
-    issues.push(`ORPHAN_BLOCK: ${k} exists on disk but not in catalog.json`);
+  const orphans = listBlockDirs().filter((k) => !index.some((b) => b.key === k));
+  for (const k of orphans) issues.push(`ORPHAN_BLOCK: ${k} exists on disk but not in catalog.json`);
   return {
     blocks: index.length,
     ported: index.filter((b) => b.ported).length,

@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "auth",
   "name": "Auth",
-  "description": "A login section with social buttons, fields, and a sign-in button.",
+  "description": "Wireframe illustration of a login section with social buttons, fields, and a sign-in button.",
   "added": "2026-06-26",
   "kind": "layout",
   "sourcePath": "sections/auth.tsx",

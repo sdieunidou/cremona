@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "headers",
   "name": "Headers",
-  "description": "A marketing header with navigation and actions.",
+  "description": "Wireframe illustration of a marketing header with navigation and actions.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/headers.tsx",

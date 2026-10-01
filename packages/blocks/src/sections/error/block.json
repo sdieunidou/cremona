@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "error",
   "name": "Error",
-  "description": "An error state section with code, message, and action.",
+  "description": "Wireframe illustration of an error state section with code, message, and action.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/error.tsx",

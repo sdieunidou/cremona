@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "pricing",
   "name": "Pricing",
-  "description": "A pricing section with plan cards and features.",
+  "description": "Wireframe illustration of a pricing section with plan cards and features.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/pricing.tsx",

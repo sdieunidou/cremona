@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "stats",
   "name": "Stats",
-  "description": "A stats section highlighting key numbers.",
+  "description": "Wireframe illustration of a stats section highlighting key numbers.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/stats.tsx",

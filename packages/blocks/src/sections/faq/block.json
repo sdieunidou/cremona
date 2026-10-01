@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "faq",
   "name": "FAQ",
-  "description": "A frequently asked questions section with expandable items.",
+  "description": "Wireframe illustration of a frequently asked questions section with expandable items.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/faq.tsx",

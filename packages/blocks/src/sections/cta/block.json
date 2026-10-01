@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "cta",
   "name": "CTA",
-  "description": "A call to action section with heading and buttons.",
+  "description": "Wireframe illustration of a call to action section with heading and buttons.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/cta.tsx",

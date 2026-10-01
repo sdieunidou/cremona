@@ -2,7 +2,7 @@
   "category": "Layouts",
   "file": "mobile-app-shell",
   "name": "Mobile App Shell",
-  "description": "A phone-framed app: status bar, scrollable feed and floating tab bar.",
+  "description": "Wireframe illustration of a phone-framed app: status bar, scrollable feed and floating tab bar.",
   "added": "2026-09-21",
   "kind": "layout",
   "sourcePath": "layouts/mobile-app-shell.tsx",

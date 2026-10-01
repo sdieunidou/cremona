@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "blog-post",
   "name": "Blog Post",
-  "description": "A blog post layout with title, meta, and content.",
+  "description": "Wireframe illustration of a blog post layout with title, meta, and content.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/blog-post.tsx",

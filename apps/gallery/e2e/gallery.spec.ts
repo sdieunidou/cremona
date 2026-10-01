@@ -3,7 +3,7 @@ import { test, expect } from "@playwright/test";
 
 test("home: sidebar sits beside content, not above", async ({ page }) => {
   await page.goto("/");
-  await page.locator('[data-slot="sidebar-trigger"], header').first().waitFor({ timeout: 20000 });
+  await page.locator("header").first().waitFor({ timeout: 20000 });
   await page.waitForTimeout(1500);
   const sidebar = page.locator('[data-slot="sidebar-container"]');
   const main = page.locator("main");
@@ -21,38 +21,40 @@ test("home: sidebar sits beside content, not above", async ({ page }) => {
 
 test("block page renders all variant frames", async ({ page }) => {
   await page.goto("/visuals/metrics/stat-card");
-  await page.waitForTimeout(1500);
   await expect(page.locator("h1")).toContainText("Stat Card");
-  const frames = page.locator(".group\\/preview");
-  expect(await frames.count()).toBe(10);
+  await expect(page.locator(".group\\/preview")).toHaveCount(10);
+  await page.waitForTimeout(1500);
   await page.screenshot({ path: test.info().outputPath("stat-card.png") });
 });
 
 test("dark mode + theme switch apply classes", async ({ page }) => {
   await page.goto("/");
-  await page.locator('button[aria-label="Toggle theme"]').click();
-  await page.waitForTimeout(300);
-  const dark = await page.evaluate(() => document.documentElement.classList.contains("dark"));
-  expect(dark).toBe(true);
-  await page.locator('button[aria-label="Pick theme"]').click();
-  await page.getByRole("menuitem", { name: /Claude\+/ }).click();
-  await page.waitForTimeout(200);
-  const theme = await page.evaluate(() =>
-    document.documentElement.classList.contains("theme-claude-plus"),
-  );
-  expect(theme).toBe(true);
+  const dark = page.getByRole("button", { name: "Dark mode" });
+  await expect(dark).toHaveAttribute("aria-pressed", "false");
+  await dark.click();
+  await expect(page.locator("html")).toHaveClass(/(^|\s)dark(\s|$)/);
+  await expect(dark).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("button", { name: "Theme and appearance" }).click();
+  await page.getByRole("menuitemradio", { name: /Claude\+/ }).click();
+  await expect(page.locator("html")).toHaveClass(/theme-claude-plus/);
   await page.screenshot({ path: test.info().outputPath("dark-claude.png") });
+
+  // "System" follows the OS preference again
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.getByRole("button", { name: "Theme and appearance" }).click();
+  await page.getByRole("menuitemradio", { name: "System" }).click();
+  await expect(page.locator("html")).not.toHaveClass(/(^|\s)dark(\s|$)/);
+  await page.emulateMedia({ colorScheme: "dark" });
+  await expect(page.locator("html")).toHaveClass(/(^|\s)dark(\s|$)/);
 });
 
 test("search palette opens with Ctrl+K and navigates", async ({ page }) => {
   await page.goto("/");
-  await page.locator('button[aria-label="Toggle theme"]').waitFor({ timeout: 20000 });
-  await page.waitForTimeout(1200);
+  await page.getByRole("button", { name: "Dark mode" }).waitFor({ timeout: 20000 });
   await page.keyboard.press("Control+k");
-  await page.getByPlaceholder("Search visuals...").fill("kanban");
+  await page.getByRole("combobox", { name: "Search visuals" }).fill("kanban");
   await page.screenshot({ path: test.info().outputPath("search.png") });
   await page.keyboard.press("Enter");
-  await page.waitForTimeout(800);
   await expect(page.locator("h1")).toContainText("Kanban");
 });
 
@@ -69,7 +71,7 @@ test("preview stages keep their golden height", async ({ page }) => {
 
 test("code toolbar is revealed on hover and on keyboard focus", async ({ page }) => {
   await page.goto("/visuals/metrics/stat-card");
-  const button = page.locator('button[aria-label="View code"]').first();
+  const button = page.getByRole("button", { name: "View code" }).first();
   await expect(button).toHaveCSS("opacity", "0");
   await page.locator(".group\\/preview").first().hover();
   await expect(button).toHaveCSS("opacity", "1");
@@ -78,12 +80,10 @@ test("code toolbar is revealed on hover and on keyboard focus", async ({ page })
   await expect(button).toHaveCSS("opacity", "1");
 });
 
-test("mobile navigation opens", async ({ page }) => {
-  await page.setViewportSize({ width: 390, height: 844 });
+test("sidebar icons are 16px", async ({ page }) => {
   await page.goto("/");
-  const sidebar = page.locator('[data-slot="sidebar-container"]');
-  await expect(sidebar).toBeHidden();
-  await page.getByRole("button", { name: "Toggle Sidebar" }).click();
-  await expect(sidebar).toBeVisible();
-  await expect(sidebar.getByText("All visuals")).toBeVisible();
+  const icon = page.getByRole("link", { name: "All visuals" }).locator("svg");
+  const box = await icon.boundingBox();
+  expect(box?.width).toBe(16);
+  expect(box?.height).toBe(16);
 });

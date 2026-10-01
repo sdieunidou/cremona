@@ -1,8 +1,9 @@
 # MCP server
 
 The `@cremona/mcp` package exposes the whole library to AI sessions over
-stdio. **160 blocks / 37 categories / 1247 variants**, the design system,
-authoring tools and coherence validation — no human in the loop required.
+stdio: **160 blocks / 37 categories / 1247 variants**, the design system,
+authoring tools and coherence validation. The `cremona` skill
+(`packages/skill/SKILL.md`) tells a session how to use them.
 
 ## Install
 
@@ -45,22 +46,80 @@ Run `pnpm install` in the cremona repo first. CLI alternative (no client needed)
 node packages/mcp/tools/mcp-call.mjs search_blocks '{"query":"kanban"}'
 ```
 
+## Skill
+
+The skill is a single file, `packages/skill/SKILL.md`, whose frontmatter names
+it `cremona`. Claude Code and opencode both load it from a `cremona/`
+directory under a skills folder:
+
+```bash
+# every project on this machine
+mkdir -p ~/.claude/skills/cremona
+cp /absolute/path/to/cremona/packages/skill/SKILL.md ~/.claude/skills/cremona/SKILL.md
+
+# one project only: commit it with the project
+mkdir -p .claude/skills/cremona
+cp /absolute/path/to/cremona/packages/skill/SKILL.md .claude/skills/cremona/SKILL.md
+```
+
+A symlink (`ln -s /absolute/path/to/cremona/packages/skill ~/.claude/skills/cremona`)
+keeps the skill in step with a checkout. opencode also reads
+`~/.config/opencode/skills/cremona/SKILL.md` and `.opencode/skills/cremona/SKILL.md`.
+The session lists the skill by its `description` and loads it when a request
+is about Cremona or its blocks.
+
 ## Tools
+
+Every tool only reads the library (`readOnlyHint`), except the two authoring
+tools, which write files and rewrite `catalog.json` (`destructiveHint`).
 
 | Tool | Purpose |
 |---|---|
-| `list_categories` | 37 categories with block names |
-| `list_blocks` | blocks by category/kind, with variant labels + ported status |
-| `search_blocks` | full-text over names, descriptions, variants |
-| `get_block` | metadata + **exact variant props** + **full React source** + Stimulus template sample |
-| `get_golden` | the SSR render reference HTML of one variant |
+| `list_categories` | 37 categories with slugs and block names |
+| `list_blocks` | blocks filtered by category (slug or name), kind or scale, with variant labels |
+| `search_blocks` | word search over names, descriptions and variants; plurals, synonyms (`pie chart` → donut, `404` → not-found, `sign in` → login) and category/kind/scale filters |
+| `get_block` | install line, public import, metadata (with `scale`), **exact variant props** and the **full React source**; Stimulus templates and goldens on request |
+| `get_golden` | the SSR render reference HTML of one variant (hidden initial state) |
 | `get_themes` / `get_theme` | the 9 themes; one theme's full light+dark CSS |
-| `get_css` | the complete stylesheet (`full`), tokens only, or font list |
+| `get_css` | the stylesheet's path, size, import lines and fonts; the whole file (`full`) or the tokens (`tokens`) on request |
 | `get_controller` | Stimulus controller source (`visual`, `theme`) |
 | `get_design_system` | token list, conventions, frame anatomy |
-| `add_category` / `add_block` | scaffold new categories/blocks with conventions |
-| `validate` | catalog ↔ blocks ↔ goldens ↔ stimulus coherence |
+| `add_category` / `add_block` | scaffold new categories/blocks with conventions (repo only) |
+| `validate` | catalog ↔ blocks (block.json, react.tsx) ↔ goldens ↔ preview props ↔ Stimulus templates ↔ parity tests |
 | `get_guide` | repo guides (porting-guide, authoring-guide…) |
+
+### `get_block`
+
+`include` selects the sections: `meta`, `props` and `react` by default,
+`stimulus` (the template list and one sample) and `golden` on request.
+`variant` (label or slug) scopes the props, the Stimulus sample and the golden
+to one variant. Every response starts with:
+
+```json
+{
+  "key": "metrics/stat-card",
+  "install": "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom",
+  "import": "import { StatCard } from \"@cremona/blocks/metrics/stat-card\";",
+  "stylesheet": "import \"@cremona/tokens/css/cremona.css\"; // once, in the app entry"
+}
+```
+
+### Scale
+
+Each block has a `scale` that says what it can be used for:
+
+| Scale | Blocks | Use |
+|---|---|---|
+| `real-size` | `components/*`, `forms/*`, `mobile/*`, `notices/*`, `ecommerce/product-card`, `order-row`, `checkout-summary` | 12–16 px text: templates to derive real UI from |
+| `miniature` | `sections/*`, `layouts/*`, `ecommerce/product-grid`, `ecommerce/cart-drawer` | thumbnail-scale wireframes (7–10 px text): illustrations only, never a page or a section |
+| `illustration` | every other category | animated product artwork |
+
+### Output size
+
+`get_css` without arguments returns a summary of a few hundred tokens; the
+whole minified stylesheet (`kind: "full"`) is about 67k tokens, above Claude
+Code's default 25k-token cap on MCP output (`MAX_MCP_OUTPUT_TOKENS`). The
+largest default `get_block` is about 7k tokens (`geo/world-map`).
 
 ## Prompt recipes
 
@@ -76,7 +135,7 @@ context to your own.
 ```text
 Call cremona_list_categories. Then cremona_list_blocks for the three
 categories most relevant to a project-management SaaS. For each block keep:
-key, name, description, variant count. No code yet.
+key, name, description, scale, variant count. No code yet.
 ```
 
 ```text
@@ -121,17 +180,19 @@ MCP to pick and fetch:
 - a data table (components/table)
 - buttons and badges for the header (components/button, components/badge)
 Call cremona_get_block for each, then write app/page.tsx: "use client",
-import @cremona/tokens/css/cremona.css once in app/layout.tsx, render the
-blocks in a responsive grid, pass the exact variant props from the MCP.
-Dark mode must work (I already have .dark toggling).
+install and import as the responses say, import @cremona/tokens/css/cremona.css
+once in app/layout.tsx, render the blocks in a responsive grid with `fill`,
+pass the exact variant props from the MCP. Dark mode must work (I already
+have .dark toggling).
 ```
 
 ```text
-Build me a pricing page section using cremona blocks: sections/pricing for
-the hero pricing, components/switch for the monthly/yearly toggle, and
-notifications/toast for the "plan changed" confirmation. Fetch each block
-with cremona_get_block first, keep the animation props, and assemble them
-into one React page with sensible spacing.
+Build me a pricing page. sections/pricing is a miniature wireframe: use it at
+most as an illustration, and write the real pricing cards with the design
+tokens. Derive the monthly/yearly toggle from components/switch and the
+"plan changed" confirmation from components/toast: fetch each with
+cremona_get_block (include react), follow the derive recipe from
+cremona_get_guide "react", and keep their class strings and motion variants.
 ```
 
 ### Building a page (Stimulus / Symfony)
@@ -187,9 +248,9 @@ parity tests green and cremona_validate.
 
 ```text
 Run cremona_validate and fix every issue it reports (missing goldens,
-missing stimulus templates, missing preview-props). Use the documented
-commands: pnpm vitest run test/generate-goldens.test.tsx,
-node tools/generate-stimulus.mjs, and the blocks test suite.
+missing stimulus templates, missing preview-props, missing parity tests). Use
+the documented commands: pnpm vitest run test/generate-goldens.test.tsx
+(from packages/blocks), pnpm generate:stimulus, and the blocks test suite.
 ```
 
 ### Auditing
@@ -205,7 +266,9 @@ Report a table.
 
 The gallery (docs app) exposes the same data visually: every preview has a
 **View code** panel (Usage / React source / Stimulus template) and one-click
-copy — convenient for humans, same source of truth as the MCP.
+copy of the variant's exact JSX, imported from the public path
+`@cremona/blocks/<category>/<file>` — convenient for humans, same source of
+truth as the MCP.
 
 ## Notes
 
@@ -217,8 +280,8 @@ copy — convenient for humans, same source of truth as the MCP.
   regardless of case and spacing.
 - `get_block` returns the **complete React source**, a preview composition to
   use as-is or derive from (see docs/react.md). It imports `@cremona/core` and
-  `@cremona/react`.
-- Ship `@cremona/tokens/css/cremona.css` once (or fetch via `get_css`) — no
-  Tailwind build required on the host.
-- `validate` exits non-zero via `scripts/validate.mjs` in CI:
-  `node packages/mcp/scripts/validate.mjs`.
+  `@cremona/react`, which `@cremona/blocks` depends on.
+- Ship `@cremona/tokens/css/cremona.css` once (`get_css` gives its path and
+  import line) — no Tailwind build required on the host.
+- `pnpm validate` runs the same checks as the `validate` tool and exits
+  non-zero on any issue; CI runs it.

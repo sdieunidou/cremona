@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "footers",
   "name": "Footers",
-  "description": "A marketing footer with brand, links, and socials.",
+  "description": "Wireframe illustration of a marketing footer with brand, links, and socials.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/footers.tsx",

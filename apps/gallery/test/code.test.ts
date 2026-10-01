@@ -1,15 +1,15 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { createElement, isValidElement } from "react";
 import * as lucide from "lucide-react";
 import { transformWithEsbuild } from "vite";
-import { blocks } from "../src/lib/discovery.js";
+import { blockKeys, loadBlock, type BlockEntry } from "../src/lib/discovery.js";
 import { reactUsage } from "../src/lib/code.js";
 import { hydrateProps } from "../src/lib/icons.js";
 
 /** Compile a usage snippet and return the props its JSX passes to the block. */
 async function evaluate(snippet: string, component: unknown) {
   const [imports = "", ...rest] = snippet.split("\n\n");
-  const name = /^import \{ (\w+) \} from "@cremona\/blocks\/src\/[^"]+\/react\.js";$/m.exec(
+  const name = /^import \{ (\w+) \} from "@cremona\/blocks\/[a-z0-9-]+\/[a-z0-9-]+";$/m.exec(
     imports,
   )?.[1];
   const icons =
@@ -51,7 +51,17 @@ function same(a: unknown, b: unknown): boolean {
   return Object.is(a, b);
 }
 
+let blocks: Record<string, BlockEntry>;
+beforeAll(async () => {
+  const entries = await Promise.all(blockKeys.map(loadBlock));
+  blocks = Object.fromEntries(entries.map((e) => [e.key, e]));
+});
+
 describe("Copy React usage snippets", () => {
+  it("covers every block", () => {
+    expect(Object.keys(blocks)).toHaveLength(160);
+  });
+
   it("reproduce the exact props the gallery renders, for every variant", async () => {
     const wrong: string[] = [];
     for (const entry of Object.values(blocks)) {
@@ -73,7 +83,12 @@ describe("Copy React usage snippets", () => {
     expect(reactUsage(pick("metrics/stat-card"), "default · no gradient")).toContain(
       "gradient={false}",
     );
-    expect(reactUsage(pick("avatars/grid"), "default")).toContain("import { AvatarGrid }");
+    expect(reactUsage(pick("avatars/grid"), "default")).toContain(
+      'import { AvatarGrid } from "@cremona/blocks/avatars/grid";',
+    );
+    expect(reactUsage(pick("states/error"), "default")).toContain(
+      'import { ErrorState } from "@cremona/blocks/states/error";',
+    );
     const flow = reactUsage(pick("connections/flow"), "custom icons");
     expect(flow).toContain('<Smartphone className={"size-4"} strokeWidth={2} />');
     expect(flow).toMatch(/^import \{ .*Smartphone.* \} from "lucide-react";$/m);

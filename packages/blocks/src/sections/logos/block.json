@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "logos",
   "name": "Logos",
-  "description": "A logo cloud of customer or partner brands.",
+  "description": "Wireframe illustration of a logo cloud of customer or partner brands.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "components/cremona/sections/logos.tsx",

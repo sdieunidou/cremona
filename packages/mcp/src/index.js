@@ -3,10 +3,12 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import * as store from "./store.js";
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { join } from "node:path";
 import { REPO_ROOT } from "./store.js";
+
+const { version } = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
 
 /**
  * Sent back on `initialize`; MCP clients put it in the model's context. This is
@@ -40,6 +42,12 @@ Two correct ways to use one:
    class strings and the motion variants. Rewriting a block from its class
    strings silently drops every entrance animation in the library.
 
+Each block has a \`scale\`: "real-size" (components, forms, mobile, notices, most
+ecommerce: templates to derive real UI from), "miniature" (sections/*, layouts/*,
+ecommerce/product-grid and cart-drawer: thumbnail-scale wireframes with 7-10 px
+text — illustrations, never a page or a section) or "illustration" (every other
+category: animated product artwork).
+
 Call get_guide("react") for the derivation recipe, the props contract and the
 gotchas — the \`gradient\` veil hides the bottom 64px of a card, and entrance
 chains run ~1.3s, which screenshot tests must wait out. Before adding blocks,
@@ -47,13 +55,25 @@ read get_guide("porting-guide") or get_guide("authoring-guide").
 
 Ship @cremona/tokens/css/cremona.css once; no Tailwind build required.`;
 
-const server = new McpServer(
-  {
-    name: "cremona",
-    version: "0.1.0",
-  },
-  { instructions: INSTRUCTIONS },
-);
+const server = new McpServer({ name: "cremona", version }, { instructions: INSTRUCTIONS });
+
+/** Hints for clients: every tool only reads the library, except the add_* authoring tools. */
+const READ_ONLY = { readOnlyHint: true, openWorldHint: false };
+const WRITES_LIBRARY = {
+  readOnlyHint: false,
+  destructiveHint: true,
+  idempotentHint: false,
+  openWorldHint: false,
+};
+
+/** registerTool with the title repeated in the annotations (older clients read it there). */
+function tool(name, { title, annotations = READ_ONLY, ...config }, handler) {
+  server.registerTool(
+    name,
+    { title, inputSchema: {}, ...config, annotations: { title, ...annotations } },
+    handler,
+  );
+}
 
 const text = (data) => ({
   content: [
@@ -83,59 +103,92 @@ function findVariant(meta, variant) {
   );
 }
 
-server.tool(
+const KINDS = ["block", "layout", "component"];
+const limitSchema = (max) => z.number().int().min(1).max(max).optional();
+const unknownCategory = (category) =>
+  fail(`unknown category '${category}'`, { categories: store.catalog().map((g) => g.slug) });
+
+const REACT_INSTALL = "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom";
+const STIMULUS_INSTALL = "npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus";
+const STYLESHEET = "@cremona/tokens/css/cremona.css";
+
+tool(
   "list_categories",
-  "List every Cremona visual category with its block names.",
-  {},
+  {
+    title: "List categories",
+    description: "List every Cremona visual category with its slug and block names.",
+  },
   async () => text(store.categorySummary()),
 );
 
-server.tool(
+tool(
   "list_blocks",
-  "List blocks, optionally filtered by category slug or kind (block|layout|component). Returns key, name, description, variant labels.",
   {
-    category: z.string().optional().describe("category slug (e.g. 'metrics', 'sections')"),
-    kind: z.enum(["block", "layout", "component"]).optional(),
-    limit: z.number().optional(),
+    title: "List blocks",
+    description:
+      "List blocks, optionally filtered by category, kind (block|layout|component) or scale (real-size|miniature|illustration). Returns key, name, description, kind, scale and variant labels.",
+    inputSchema: {
+      category: z
+        .string()
+        .optional()
+        .describe("category slug or name (e.g. 'metrics', 'Sections')"),
+      kind: z.enum(KINDS).optional(),
+      scale: z.enum(store.SCALES).optional(),
+      limit: limitSchema(200),
+    },
   },
-  async ({ category, kind, limit }) => {
-    const known = store.catalog();
-    if (
-      category &&
-      !known.some((g) => g.slug === category || g.category.toLowerCase() === category.toLowerCase())
-    )
-      return fail(`unknown category '${category}'`, { categories: known.map((g) => g.slug) });
+  async ({ category, kind, scale, limit }) => {
+    const group = category ? store.findCategory(category) : null;
+    if (category && !group) return unknownCategory(category);
     const items = store
       .blockIndex()
-      .filter(
-        (b) =>
-          !category ||
-          b.categorySlug === category ||
-          b.category.toLowerCase() === category.toLowerCase(),
-      )
+      .filter((b) => !group || b.categorySlug === group.slug)
       .filter((b) => !kind || b.kind === kind)
+      .filter((b) => !scale || b.scale === scale)
       .slice(0, limit ?? 200);
     return text(items);
   },
 );
 
-server.tool(
+tool(
   "search_blocks",
-  "Full-text search across block names, descriptions and variant labels.",
-  { query: z.string(), limit: z.number().optional() },
-  async ({ query, limit }) => text(store.searchBlocks(query, { limit: limit ?? 20 })),
+  {
+    title: "Search blocks",
+    description:
+      "Search block names, descriptions and variant labels. Every word must match, in any order; plurals and common synonyms count ('buttons', 'pie chart' → charts/donut, '404' → states/not-found, 'sign in' → forms/login), and filler words like 'page' are ignored. Optional category/kind/scale filters.",
+    inputSchema: {
+      query: z.string().describe("words to look for, e.g. 'settings page' or 'pie chart'"),
+      category: z.string().optional().describe("category slug or name"),
+      kind: z.enum(KINDS).optional(),
+      scale: z.enum(store.SCALES).optional(),
+      limit: limitSchema(200),
+    },
+  },
+  async ({ query, category, kind, scale, limit }) => {
+    if (category && !store.findCategory(category)) return unknownCategory(category);
+    if (!query.trim() && !category && !kind && !scale)
+      return fail("empty query: pass words to look for, or use list_blocks");
+    return text(store.searchBlocks(query, { category, kind, scale, limit: limit ?? 20 }));
+  },
 );
 
-server.tool(
+tool(
   "get_block",
-  "Get everything about a visual block: metadata, exact variant props, React source, Stimulus template and golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
   {
-    key: z.string().describe("block key as '<category>/<file>', e.g. 'metrics/stat-card'"),
-    variant: z.string().optional().describe("variant label to scope props/template/golden to"),
-    include: z
-      .array(z.enum(["meta", "props", "react", "stimulus", "golden"]))
-      .optional()
-      .describe("sections to include (default all except golden)"),
+    title: "Get a block",
+    description:
+      "Get a visual block: install line, public import, metadata (with scale), exact variant props and the React source. Add 'stimulus' to include for the Stimulus templates and one sample, 'golden' for the golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
+    inputSchema: {
+      key: z.string().describe("block key as '<category>/<file>', e.g. 'metrics/stat-card'"),
+      variant: z
+        .string()
+        .optional()
+        .describe("variant label (or slug) to scope props/template/golden to"),
+      include: z
+        .array(z.enum(["meta", "props", "react", "stimulus", "golden"]))
+        .optional()
+        .describe('sections to include (default ["meta", "props", "react"])'),
+    },
   },
   async ({ key, variant, include }) => {
     const parts = parseKey(key);
@@ -148,13 +201,22 @@ server.tool(
       return fail(`unknown variant '${variant}' for ${key}`, {
         variants: meta.variants.map((v) => v.label),
       });
-    const wanted = new Set(include ?? ["meta", "props", "react", "stimulus"]);
-    const out = { key };
+    const wanted = new Set(include ?? ["meta", "props", "react"]);
+    const exportName = store.blockExportName(categorySlug, file);
+    const out = {
+      key,
+      install: REACT_INSTALL,
+      import: exportName
+        ? `import { ${exportName} } from "${store.blockImportPath(categorySlug, file)}";`
+        : null,
+      stylesheet: `import "${STYLESHEET}"; // once, in the app entry`,
+    };
     if (wanted.has("meta")) {
       out.meta = {
         name: meta.name,
         description: meta.description,
         kind: meta.kind,
+        scale: store.blockScale(categorySlug, file),
         sourcePath: meta.sourcePath,
         added: meta.added,
         page: meta.page,
@@ -191,6 +253,7 @@ server.tool(
     if (wanted.has("stimulus")) {
       const variants = store.stimulusTemplates(categorySlug, file);
       out.stimulus = {
+        install: STIMULUS_INSTALL,
         templates: variants.map((v) => ({ label: v.label, slug: v.slug })),
         sample: store.stimulusTemplate(
           categorySlug,
@@ -209,10 +272,17 @@ server.tool(
   },
 );
 
-server.tool(
+tool(
   "get_golden",
-  "Get the SSR golden HTML of one variant (the render reference).",
-  { key: z.string(), variant: z.string() },
+  {
+    title: "Get a golden reference",
+    description:
+      "Get the SSR golden HTML of one variant: the render reference, in its hidden initial state (entrance animations start at opacity 0).",
+    inputSchema: {
+      key: z.string().describe("block key as '<category>/<file>'"),
+      variant: z.string().describe("variant label or slug"),
+    },
+  },
   async ({ key, variant }) => {
     const parts = parseKey(key);
     const meta = parts && store.blockMeta(parts[0], parts[1]);
@@ -226,21 +296,26 @@ server.tool(
   },
 );
 
-server.tool(
+tool(
   "get_themes",
-  "List every design-system theme (9) with labels and oklch swatches.",
-  {},
+  {
+    title: "List themes",
+    description: `List every design-system theme (${store.themes().length}) with labels and oklch swatches.`,
+  },
   async () => text(store.themes()),
 );
 
-server.tool(
+tool(
   "get_theme",
-  "Get the full CSS token block of one theme (light + dark) plus usage notes.",
   {
-    theme: z
-      .string()
-      .optional()
-      .describe("theme value, e.g. 'claude-plus'. Omit for all + default light/dark."),
+    title: "Get a theme's CSS",
+    description: "Get the full CSS token block of one theme (light + dark) plus usage notes.",
+    inputSchema: {
+      theme: z
+        .string()
+        .optional()
+        .describe("theme value, e.g. 'claude-plus'. Omit for all + default light/dark."),
+    },
   },
   async ({ theme }) => {
     const css = store.themeCss();
@@ -266,10 +341,13 @@ server.tool(
   },
 );
 
-server.tool(
+tool(
   "get_design_system",
-  "Design-system overview: token names, fonts, keyframes, preview-frame anatomy and the animation conventions.",
-  {},
+  {
+    title: "Design-system overview",
+    description:
+      "Design-system overview: token names, fonts, keyframes, preview-frame anatomy and the animation conventions.",
+  },
   async () => {
     const css = store.designSystemCss();
     const tokenNames = [
@@ -329,71 +407,88 @@ server.tool(
         grid: "grid grid-cols-1 gap-2 lg:grid-cols-2 (+ xl:grid-cols-3 for 3 cols)",
       },
       cssBytes: css.length,
-      cssPath: "@cremona/tokens/css/cremona.css",
+      cssPath: STYLESHEET,
     });
   },
 );
 
-server.tool(
+tool(
   "get_css",
-  "Get a library stylesheet. kinds: 'full' = @cremona/tokens/css/cremona.css (complete: fonts + tokens + every utility class the blocks use — ship this); 'tokens' = semantic tokens only; 'fonts' = list of font files.",
-  { kind: z.enum(["full", "tokens", "fonts"]).optional() },
-  async ({ kind = "full" }) => {
-    if (kind === "fonts") {
-      const dir = join(store.TOKENS_DIR, "css");
-      const fonts = [];
-      const { readdirSync } = await import("node:fs");
-      for (const f of readdirSync(dir)) if (f.endsWith(".woff2")) fonts.push(f);
-      return text({
-        fonts,
-        note: "Copy packages/tokens/css/*.woff2 next to cremona.css, or rely on the @font-face urls (relative).",
-      });
+  {
+    title: "Get the stylesheet",
+    description:
+      "How to load the library stylesheet. kind 'summary' (default): path, size, import snippets and font files of @cremona/tokens/css/cremona.css (fonts + theme tokens + every utility class the blocks use). 'full': the whole minified file (large: prefer reading it from node_modules). 'tokens': css/themes.css only (semantic tokens). 'fonts': the font files.",
+    inputSchema: { kind: z.enum(["summary", "full", "tokens", "fonts"]).optional() },
+  },
+  async ({ kind = "summary" }) => {
+    const fonts = readdirSync(join(store.TOKENS_DIR, "css")).filter((f) => f.endsWith(".woff2"));
+    const fontsNote =
+      "The @font-face urls are relative: keep these .woff2 files next to cremona.css (they ship in the same folder of @cremona/tokens).";
+    if (kind === "fonts") return text({ fonts, note: fontsNote });
+    if (kind === "tokens") {
+      const css = store.themeCss();
+      return text({ kind, path: "@cremona/tokens/css/themes.css", bytes: css.length, css });
     }
-    const css = kind === "tokens" ? store.themeCss() : store.designSystemCss();
+    const css = store.designSystemCss();
+    if (kind === "full") return text({ kind, path: STYLESHEET, bytes: css.length, css });
     return text({
       kind,
+      path: STYLESHEET,
       bytes: css.length,
-      note:
-        kind === "full"
-          ? "Ship this file as-is (one <link>), no Tailwind build needed on the host."
-          : undefined,
-      css,
+      approxTokens: Math.round(css.length / 4),
+      import: { js: `import "${STYLESHEET}";`, css: `@import "${STYLESHEET}";` },
+      contains:
+        "Inter @font-face rules, the theme tokens (all themes, light + dark) and every utility class the blocks use, compiled with Tailwind v4 and minified. A utility that no block uses has no rule in it.",
+      usage:
+        "Load it once, at the app root, and toggle .dark / .theme-<name> on <html>. No Tailwind build is needed on the host.",
+      fonts: { files: fonts, note: fontsNote },
+      tokensOnly: "@cremona/tokens/css/themes.css (get_css kind 'tokens')",
+      full: "get_css kind 'full' returns the whole file",
     });
   },
 );
 
-server.tool(
+tool(
   "get_controller",
-  "Get a Stimulus controller source for host apps: 'visual' = entrance animation player, 'theme' = light/dark + 9 themes switcher.",
-  { name: z.enum(["visual", "theme"]).optional() },
+  {
+    title: "Get a Stimulus controller",
+    description: `Get a Stimulus controller source for host apps: 'visual' = entrance animation player, 'theme' = light/dark + ${store.themes().length} themes switcher.`,
+    inputSchema: { name: z.enum(["visual", "theme"]).optional() },
+  },
   async ({ name = "visual" }) => {
-    const { readText } = store;
     const file =
       name === "theme"
         ? join(store.REPO_ROOT, "packages", "stimulus", "src", "cremona-theme_controller.js")
         : join(store.REPO_ROOT, "packages", "stimulus", "src", "cremona-visual_controller.js");
     return text({
       name,
+      install: STIMULUS_INSTALL,
       register: 'import { registerCremona } from "@cremona/stimulus"; registerCremona(app);',
-      source: readText(file),
+      source: store.readText(file),
     });
   },
 );
 
 if (store.IN_REPO) registerAuthoringTools();
 
-server.tool(
+tool(
   "validate",
-  "Validate library coherence: catalog ↔ blocks ↔ goldens ↔ stimulus templates.",
-  {},
+  {
+    title: "Validate the library",
+    description:
+      "Validate library coherence: catalog ↔ blocks (block.json, react.tsx) ↔ goldens ↔ preview props ↔ Stimulus templates (one per variant) ↔ parity tests.",
+  },
   async () => text(store.validate()),
 );
 
 const guides = Object.keys(store.docs()).sort();
-server.tool(
+tool(
   "get_guide",
-  `Read a repo guide (markdown). Names: ${guides.join(", ")}.`,
-  { name: z.enum(guides) },
+  {
+    title: "Read a guide",
+    description: `Read a repo guide (markdown). Names: ${guides.join(", ")}.`,
+    inputSchema: { name: z.enum(guides) },
+  },
   async ({ name }) => text(store.doc(name)),
 );
 
@@ -402,10 +497,15 @@ function registerAuthoringTools() {
   // the catalog is ordered by plain code-unit comparison of category names
   const byName = (a, b) => (a.category < b.category ? -1 : a.category > b.category ? 1 : 0);
 
-  server.tool(
+  tool(
     "add_category",
-    "Create a new visual category (folder + catalog entry). Returns the scaffold path.",
-    { name: z.string().describe('Human category name, e.g. "Payments"') },
+    {
+      title: "Add a category",
+      description:
+        "Create a new visual category (folder + catalog entry, catalog.json rewritten). Returns the scaffold path.",
+      inputSchema: { name: z.string().describe('Human category name, e.g. "Payments"') },
+      annotations: WRITES_LIBRARY,
+    },
     async ({ name }) => {
       const slug = name
         .toLowerCase()
@@ -430,15 +530,20 @@ function registerAuthoringTools() {
     },
   );
 
-  server.tool(
+  tool(
     "add_block",
-    "Scaffold a NEW visual block inside an existing category: block.json + react.tsx skeleton + parity test skeleton, then follow docs/authoring-guide.md. Refuses a key that already exists.",
     {
-      category: z.string().describe("slug of an existing category (see list_categories)"),
-      file: z.string().describe("new block slug, e.g. 'balance-card'"),
-      name: z.string(),
-      description: z.string(),
-      kind: z.enum(["block", "layout", "component"]).optional(),
+      title: "Scaffold a block",
+      description:
+        "Scaffold a NEW visual block inside an existing category: block.json + react.tsx skeleton + parity test skeleton, and a catalog.json entry; then follow docs/authoring-guide.md. Refuses a key that already exists.",
+      inputSchema: {
+        category: z.string().describe("slug of an existing category (see list_categories)"),
+        file: z.string().describe("new block slug, e.g. 'balance-card'"),
+        name: z.string(),
+        description: z.string(),
+        kind: z.enum(KINDS).optional(),
+      },
+      annotations: WRITES_LIBRARY,
     },
     async ({ category, file, name, description, kind }) => {
       const current = JSON.parse(await readFile(catalogPath, "utf8"));
@@ -530,7 +635,9 @@ function registerAuthoringTools() {
 
 /** react.tsx skeleton: the metrics/stat-card anatomy (frame, fill, card, glow, veil, entrance). */
 function reactSkeleton(Name) {
-  return `import { useRef } from "react";
+  return `"use client";
+
+import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";

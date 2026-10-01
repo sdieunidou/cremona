@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "components",
   "name": "Components",
-  "description": "A showcase grid of UI components and building blocks.",
+  "description": "Wireframe illustration of a showcase grid of UI components and building blocks.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/components.tsx",

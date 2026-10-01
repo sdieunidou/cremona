@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "newsletter",
   "name": "Newsletter",
-  "description": "A newsletter signup section with an email input.",
+  "description": "Wireframe illustration of a newsletter signup section with an email input.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/newsletter.tsx",

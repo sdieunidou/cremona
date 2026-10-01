@@ -2,7 +2,7 @@
   "category": "Sections",
   "file": "contact",
   "name": "Contact",
-  "description": "A contact section with a form and details.",
+  "description": "Wireframe illustration of a contact section with a form and details.",
   "added": "2026-06-18",
   "kind": "layout",
   "sourcePath": "sections/contact.tsx",

@@ -4,17 +4,30 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Cremona: animated visual blocks for React and Stimulus, with a 9-theme design system and an MCP server."
+    />
     <title>Cremona — animated visual blocks</title>
     <script>
       (function () {
-        var appearance = localStorage.getItem("cremona-appearance") || "system";
-        var theme = localStorage.getItem("cremona-theme") || "default";
+        // storage throws when site data is blocked: fall back to the defaults
+        var read = function (key) {
+          try {
+            return localStorage.getItem(key);
+          } catch (e) {
+            return null;
+          }
+        };
+        var appearance = read("cremona-appearance") || "system";
+        var theme = read("cremona-theme") || "default";
         var dark =
           appearance === "dark" ||
           (appearance === "system" &&
+            window.matchMedia &&
             window.matchMedia("(prefers-color-scheme: dark)").matches);
         if (dark) document.documentElement.classList.add("dark");
-        if (theme && theme !== "default")
+        if (/^[a-z0-9-]+$/.test(theme) && theme !== "default")
           document.documentElement.classList.add("theme-" + theme);
       })();
     </script>
