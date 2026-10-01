@@ -21,6 +21,12 @@
       "description": "Shown in the table body when `items` is empty.",
       "default": "\"No rows\""
     },
+    {
+      "name": "labels",
+      "type": "Partial<TableLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -59,6 +65,25 @@
         { "name": "avatar", "type": "boolean", "optional": true },
         { "name": "badge", "type": "boolean", "optional": true },
         { "name": "sort", "type": "boolean", "optional": true }
+      ]
+    },
+    {
+      "name": "TableLabels",
+      "props": [
+        {
+          "name": "filter",
+          "type": "string",
+          "optional": false,
+          "description": "Filter chip of the header."
+        },
+        {
+          "name": "active",
+          "type": "string",
+          "optional": false,
+          "description": "Badge text of the `active`, `inactive` and `pending` values; other values show as they are."
+        },
+        { "name": "inactive", "type": "string", "optional": false },
+        { "name": "pending", "type": "string", "optional": false }
       ]
     },
     {

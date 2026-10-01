@@ -5,5 +5,45 @@
   },
   "empty": {
     "empty": true
+  },
+  "french": {
+    "items": [
+      {
+        "name": "Aero Runner 2",
+        "qty": 1,
+        "price": 129,
+        "image": "/media/placeholders/photo-01.jpg"
+      },
+      {
+        "name": "Chaussettes trail",
+        "qty": 2,
+        "price": 14.5,
+        "image": "/media/placeholders/photo-02.jpg"
+      },
+      {
+        "name": "Casquette",
+        "qty": 1,
+        "price": 22,
+        "image": "/media/placeholders/photo-03.jpg"
+      }
+    ],
+    "currency": "EUR",
+    "locale": "fr-FR",
+    "discount": true,
+    "promoCode": "BIENVENUE10",
+    "promoPercent": 10,
+    "labels": {
+      "title": "Votre panier",
+      "close": "Fermer le panier",
+      "decrease": "Diminuer la quantité de",
+      "increase": "Augmenter la quantité de",
+      "subtotal": "Sous-total",
+      "shipping": "Livraison",
+      "free": "Offerte",
+      "checkout": "Commander",
+      "continue": "Continuer mes achats",
+      "empty": "Votre panier est vide",
+      "emptyHint": "Parcourez nos produits pour commencer"
+    }
   }
 }

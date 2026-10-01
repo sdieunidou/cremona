@@ -28,6 +28,19 @@
       "description": "Shown in the results table when `rows` is empty.",
       "default": "\"No rows\""
     },
+    {
+      "name": "labels",
+      "type": "Partial<QueryLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the row count (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -64,6 +77,42 @@
         { "name": "field", "type": "string", "optional": false },
         { "name": "operator", "type": "string", "optional": false },
         { "name": "value", "type": "string", "optional": false }
+      ]
+    },
+    {
+      "name": "QueryLabels",
+      "props": [
+        {
+          "name": "from",
+          "type": "string",
+          "optional": false,
+          "description": "Before the source name."
+        },
+        { "name": "run", "type": "string", "optional": false },
+        {
+          "name": "where",
+          "type": "string",
+          "optional": false,
+          "description": "Before the first condition."
+        },
+        {
+          "name": "and",
+          "type": "string",
+          "optional": false,
+          "description": "Before each following condition."
+        },
+        {
+          "name": "rows",
+          "type": "string",
+          "optional": false,
+          "description": "Result count; `{count}` is replaced by the number of rows."
+        },
+        {
+          "name": "rowsOne",
+          "type": "string",
+          "optional": false,
+          "description": "`rows` when the count is one."
+        }
       ]
     }
   ]

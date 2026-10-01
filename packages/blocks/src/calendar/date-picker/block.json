@@ -83,6 +83,12 @@
       "slug": "010-sunday-start",
       "size": null,
       "propsRaw": "{weekStartsOn:0}"
+    },
+    {
+      "label": "french",
+      "slug": "011-french",
+      "size": null,
+      "propsRaw": "{highlighted:7,selected:18,locale:`fr-FR`}"
     }
   ]
 }

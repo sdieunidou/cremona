@@ -4,8 +4,27 @@
     { "name": "language", "type": "EditorLanguage", "optional": true, "default": "\"tsx\"" },
     { "name": "tabs", "type": "readonly EditorTab[]", "optional": true },
     { "name": "lines", "type": "readonly EditorLine[]", "optional": true },
+    {
+      "name": "code",
+      "type": "string",
+      "optional": true,
+      "description": "Real code shown as monospace text lines instead of the token bars (`lines`)."
+    },
+    {
+      "name": "branch",
+      "type": "string",
+      "optional": true,
+      "description": "Branch name in the title bar.",
+      "default": "\"main\""
+    },
     { "name": "lineNumbers", "type": "boolean", "optional": true, "default": "true" },
     { "name": "caret", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "labels",
+      "type": "Partial<EditorLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -36,6 +55,29 @@
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
   "types": [
+    {
+      "name": "EditorLabels",
+      "props": [
+        {
+          "name": "encoding",
+          "type": "string",
+          "optional": false,
+          "description": "File encoding in the status bar."
+        },
+        {
+          "name": "position",
+          "type": "string",
+          "optional": false,
+          "description": "Caret position in the status bar; `{line}` and `{column}` are replaced."
+        },
+        {
+          "name": "indentation",
+          "type": "string",
+          "optional": false,
+          "description": "Indentation setting in the status bar."
+        }
+      ]
+    },
     {
       "name": "EditorLanguage",
       "type": "\"tsx\" | \"js\" | \"py\" | \"php\" | \"html\" | \"css\" | \"go\""

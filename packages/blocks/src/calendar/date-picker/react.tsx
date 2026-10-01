@@ -12,22 +12,15 @@ const noopSubscribe = () => () => {};
 const DEFAULT_MONTH = 8; // September
 const DEFAULT_YEAR = 2026;
 
-const weekdaysMon = ["M", "T", "W", "T", "F", "S", "S"];
-const weekdaysSun = ["S", "M", "T", "W", "T", "F", "S"];
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+// Names follow the grid: Gregorian months, read in UTC so the server and the client agree.
+const CALENDAR = { timeZone: "UTC", calendar: "gregory" } as const;
+// 2024-01-07 is a Sunday.
+const weekdayDate = (weekStartsOn: number, i: number) => Date.UTC(2024, 0, 7 + weekStartsOn + i);
+
+/** A stand-alone month name starts with a capital, as CLDR asks for titles ("Septembre 2026"). */
+function capitalize(text: string, locale: string): string {
+  return text.charAt(0).toLocaleUpperCase(locale) + text.slice(1);
+}
 
 const containerIso = {
   hidden: { opacity: 0, transform: "rotateX(0deg) rotateZ(0deg)" },
@@ -115,6 +108,8 @@ export interface DatePickerProps extends VisualProps {
   rangeStart?: number | null;
   rangeEnd?: number | null;
   weekStartsOn?: 0 | 1;
+  /** BCP 47 locale of the month, weekday initials and day numbers (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -128,6 +123,7 @@ export function DatePicker({
   rangeStart = null,
   rangeEnd = null,
   weekStartsOn = 1,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -158,8 +154,20 @@ export function DatePicker({
   const currentYear = year ?? DEFAULT_YEAR;
   const leadingBlanks = (new Date(currentYear, currentMonth, 1).getDay() - weekStartsOn + 7) % 7;
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-  const monthName = MONTHS[currentMonth];
-  const weekdayLabels = weekStartsOn === 1 ? weekdaysMon : weekdaysSun;
+  const monthStart = Date.UTC(currentYear, currentMonth, 1);
+  const monthName = Number.isNaN(monthStart)
+    ? ""
+    : capitalize(
+        new Intl.DateTimeFormat(locale, { month: "long", year: "numeric", ...CALENDAR }).format(
+          monthStart,
+        ),
+        locale,
+      );
+  const weekdayName = new Intl.DateTimeFormat(locale, { weekday: "narrow", ...CALENDAR });
+  const weekdayLabels = Array.from({ length: 7 }, (_, i) =>
+    weekdayName.format(weekdayDate(weekStartsOn, i)),
+  );
+  const dayNumber = new Intl.NumberFormat(locale);
   // eslint-disable-next-line no-restricted-syntax -- client-only: "today" is read after hydration
   const now = isHydrated ? new Date() : null;
   const isThisMonth =
@@ -227,9 +235,7 @@ export function DatePicker({
             >
               <ChevronLeft className="size-3.5" strokeWidth={2} />
             </button>
-            <span className="text-xs font-semibold text-foreground">
-              {monthName} {currentYear}
-            </span>
+            <span className="text-xs font-semibold text-foreground">{monthName}</span>
             <button
               type="button"
               className="flex size-6 items-center justify-center rounded-full border bg-background text-muted-foreground hover:bg-muted hover:text-foreground"
@@ -297,10 +303,10 @@ export function DatePicker({
                     ) : null}
                     {marked && animated ? (
                       <motion.span className="relative" variants={pillTextVariants}>
-                        {day}
+                        {dayNumber.format(day)}
                       </motion.span>
                     ) : (
-                      <span className="relative">{day}</span>
+                      <span className="relative">{dayNumber.format(day)}</span>
                     )}
                   </div>
                 </motion.div>

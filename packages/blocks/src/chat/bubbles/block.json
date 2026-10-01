@@ -77,6 +77,12 @@
       "slug": "009-read-receipts",
       "size": null,
       "propsRaw": "{messages:[{from:`me`,text:`Sending the updated specs now.`},{from:`me`,text:`Let me know what you think.`,time:`14:04`,receipt:`read`},{from:`them`,text:`Got it, reviewing now.`,time:`14:05`},{from:`me`,text:`Let me know if have any questions.`,time:`14:06`,receipt:`delivered`},{from:`me`,text:`Thanks!`,time:`14:07`,receipt:`sent`}]}"
+    },
+    {
+      "label": "french",
+      "slug": "010-french",
+      "size": null,
+      "propsRaw": "{name:`Camille Martin`,status:`En ligne`,initials:`CM`,messages:[{from:`them`,text:`Salut ! Je viens de pousser les nouvelles maquettes.`,time:`10:24`},{from:`me`,text:`Super, j’adore le dégradé.`,time:`10:25`,receipt:`read`},{from:`them`,text:`Merci ! On livre quand ?`,time:`10:26`},{from:`me`,text:`Demain matin, ça me va.`,time:`10:27`,receipt:`read`}],labels:{placeholder:`Écrivez un message…`}}"
     }
   ]
 }

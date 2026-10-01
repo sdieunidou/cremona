@@ -11,6 +11,37 @@ export interface PullRequestCheck {
   duration: string;
 }
 
+export interface PullRequestLabels {
+  /** Footer while no check has started. */
+  checksQueued: string;
+  /** Footer while a check runs. */
+  checksRunning: string;
+  /** Footer of the failing variant once the checks are done. */
+  checksFailed: string;
+  /** Footer of the passing variant once the checks are done; `{reviewer}` is replaced. */
+  approved: string;
+  /** Changed files; `{count}` is replaced. */
+  files: string;
+  /** `files` when the count is one. */
+  filesOne: string;
+}
+
+export const pullRequestDefaultLabels: PullRequestLabels = {
+  checksQueued: "Checks queued",
+  checksRunning: "Checks running",
+  checksFailed: "1 check failed",
+  approved: "{reviewer} approved",
+  files: "{count} files",
+  filesOne: "{count} file",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 export interface PullRequestProps extends VisualProps {
   variant?: "passing" | "failing";
   title?: string;
@@ -25,6 +56,10 @@ export interface PullRequestProps extends VisualProps {
   reviewerImage?: string;
   status?: string;
   mergeLabel?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<PullRequestLabels>;
+  /** BCP 47 locale of the file count's plural (default `"en-US"`). */
+  locale?: string;
   hover?: boolean;
   gradient?: boolean;
   fadeOut?: boolean;
@@ -40,8 +75,6 @@ const defaultAdditions = 214;
 const defaultDeletions = 36;
 const defaultReviewer = "Emma Wallace";
 const defaultStatus = "Open";
-const checksQueued = "Checks queued";
-const checksRunning = "Checks running";
 const defaultChecks = [
   { name: "build", duration: "1m 12s" },
   { name: "tests", duration: "2m 04s" },
@@ -244,6 +277,8 @@ export function PullRequest({
   reviewerImage,
   status = defaultStatus,
   mergeLabel,
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   hover = false,
@@ -273,6 +308,7 @@ export function PullRequest({
   const checkCount = rows.length;
   const failing = variant === "failing";
   const buttonLabel = mergeLabel ?? mergeLabels[variant];
+  const text = { ...pullRequestDefaultLabels, ...labels };
   const reviewerInitials = initials(reviewer);
   // paused: every check settled, as in the static render
   const progress = cycling ? cursor : animated && loop ? (hover ? -1 : 0) : checkCount;
@@ -399,7 +435,10 @@ export function PullRequest({
             {...state}
           >
             <span className="text-[10px] text-muted-foreground">
-              {files} {files === 1 ? "file" : "files"}
+              {interpolate(
+                new Intl.PluralRules(locale).select(files) === "one" ? text.filesOne : text.files,
+                { count: String(files) },
+              )}
             </span>
             <span className="text-[10px] font-medium text-emerald-600 tabular-nums dark:text-emerald-400">
               +{additions}
@@ -479,7 +518,7 @@ export function PullRequest({
                 animate={{ opacity: +!allDone }}
                 transition={{ duration: OPACITY_DURATION, ease: "easeOut" }}
               >
-                {anyRunning ? checksRunning : checksQueued}
+                {anyRunning ? text.checksRunning : text.checksQueued}
               </motion.span>
               <motion.span
                 className={cn(
@@ -490,7 +529,7 @@ export function PullRequest({
                 animate={{ opacity: +!!allDone }}
                 transition={{ duration: OPACITY_DURATION, ease: "easeOut" }}
               >
-                {failing ? "1 check failed" : `${reviewer} approved`}
+                {failing ? text.checksFailed : interpolate(text.approved, { reviewer })}
               </motion.span>
             </span>
             <button

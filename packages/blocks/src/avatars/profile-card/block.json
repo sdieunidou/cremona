@@ -77,6 +77,12 @@
       "slug": "009-away-isometric-custom-copy",
       "size": null,
       "propsRaw": "{isometric:!0,status:`away`,initials:`OB`,name:`Olivia Bay`,role:`Brand Designer`,tint:`bg-pink-200/80 text-pink-700 dark:bg-pink-950/80 dark:text-pink-300`}"
+    },
+    {
+      "label": "french",
+      "slug": "010-french",
+      "size": null,
+      "propsRaw": "{initials:`CM`,name:`Camille Martin`,role:`Responsable design`,labels:{online:`En ligne`,away:`Absent`,busy:`Occupé`,offline:`Hors ligne`}}"
     }
   ]
 }

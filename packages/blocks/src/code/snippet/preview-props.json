@@ -185,5 +185,10 @@
   },
   "md": {
     "language": "md"
+  },
+  "french": {
+    "language": "bash",
+    "filename": "installer.sh",
+    "code": "# Installer la bibliothèque\nnpm install @cremona/blocks\n\n# Lancer le serveur de dev\nnpm run dev"
   }
 }

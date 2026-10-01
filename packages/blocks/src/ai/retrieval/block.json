@@ -83,6 +83,12 @@
       "slug": "010-docs-isometric",
       "size": null,
       "propsRaw": "{isometric:!0,query:`How do I rotate an API key?`,sources:[{name:`api-keys.mdx`,score:.98},{name:`migrate.md`,score:.9},{name:`changelog.md`,score:.64}],answer:`Deploy a second key, then revoke the old one.`}"
+    },
+    {
+      "label": "french",
+      "slug": "011-french",
+      "size": null,
+      "propsRaw": "{query:`Comment se faire rembourser ?`,sources:[{name:`facturation.mdx`,score:0.94},{name:`remboursements.pdf`,score:0.87},{name:`cgv.md`,score:0.71}],answer:`Les remboursements sont versés sous 30 jours, sur le moyen de paiement d’origine.`,labels:{answer:`Réponse`},locale:`fr-FR`}"
     }
   ]
 }

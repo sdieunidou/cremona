@@ -108,5 +108,49 @@
         "latency": "6 ms"
       }
     ]
+  },
+  "french": {
+    "title": "État des services",
+    "items": [
+      {
+        "name": "Passerelle API",
+        "region": "eu-west-3",
+        "status": "operational",
+        "latency": "42 ms"
+      },
+      {
+        "name": "Base de données",
+        "region": "primaire · réplique",
+        "status": "operational",
+        "latency": "8 ms"
+      },
+      {
+        "name": "Authentification",
+        "region": "eu-west-3",
+        "status": "operational",
+        "latency": "31 ms"
+      },
+      {
+        "name": "Stockage",
+        "region": "eu-central-1",
+        "status": "degraded",
+        "latency": "412 ms"
+      },
+      {
+        "name": "CDN",
+        "region": "edge · 218 PoP",
+        "status": "operational",
+        "latency": "12 ms"
+      }
+    ],
+    "emptyLabel": "Aucun service",
+    "labels": {
+      "operational": "Opérationnel",
+      "degraded": "Dégradé",
+      "down": "Panne",
+      "summaryOperational": "Tout fonctionne",
+      "summaryDegraded": "Dégradation partielle",
+      "summaryDown": "Panne détectée"
+    }
   }
 }

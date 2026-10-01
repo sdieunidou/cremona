@@ -5,22 +5,73 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface DocsShellLabels {
+  /** Accessible name of the sidebar. */
+  navigation: string;
+  /** Sidebar group titles. */
+  gettingStarted: string;
+  apiReference: string;
+  guides: string;
+  /** Sidebar pages; `installation` is also the article title, `quickstart` and `authentication` the previous and next links. */
+  introduction: string;
+  installation: string;
+  quickstart: string;
+  authentication: string;
+  endpoints: string;
+  migrations: string;
+  theming: string;
+  /** Article lead paragraph. */
+  intro: string;
+  /** Title and accessible name of the table of contents. */
+  onThisPage: string;
+  /** Table of contents entries. */
+  tocOverview: string;
+  tocInstall: string;
+  tocStyles: string;
+  tocNextSteps: string;
+}
+
+export const docsShellDefaultLabels: DocsShellLabels = {
+  navigation: "Docs navigation",
+  gettingStarted: "Getting started",
+  apiReference: "API reference",
+  guides: "Guides",
+  introduction: "Introduction",
+  installation: "Installation",
+  quickstart: "Quickstart",
+  authentication: "Authentication",
+  endpoints: "Endpoints",
+  migrations: "Migrations",
+  theming: "Theming",
+  intro:
+    "Cremona ships as a single stylesheet plus per-framework adapters. Install the package, then import the tokens once at the root of your app.",
+  onThisPage: "On this page",
+  tocOverview: "Overview",
+  tocInstall: "Install",
+  tocStyles: "Styles",
+  tocNextSteps: "Next steps",
+};
+
 export interface DocsShellProps extends VisualProps {
   /** Replace the article code card with a highlighted, line-numbered listing. */
   code?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<DocsShellLabels>;
 }
 
-const navGroups: { title: string; items: string[]; active?: string }[] = [
+type DocsPage = keyof DocsShellLabels;
+
+const navGroups: { title: DocsPage; items: DocsPage[]; active?: DocsPage }[] = [
   {
-    title: "Getting started",
-    items: ["Introduction", "Installation", "Quickstart"],
-    active: "Installation",
+    title: "gettingStarted",
+    items: ["introduction", "installation", "quickstart"],
+    active: "installation",
   },
-  { title: "API reference", items: ["Authentication", "Endpoints"] },
-  { title: "Guides", items: ["Migrations", "Theming"] },
+  { title: "apiReference", items: ["authentication", "endpoints"] },
+  { title: "guides", items: ["migrations", "theming"] },
 ];
 
-const tocItems = ["Overview", "Install", "Styles", "Next steps"] as const;
+const tocItems = ["tocOverview", "tocInstall", "tocStyles", "tocNextSteps"] as const;
 
 const codeLines = [
   [
@@ -64,17 +115,17 @@ const region = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
-function SidebarNav() {
+function SidebarNav({ text }: { text: DocsShellLabels }) {
   return (
     <motion.aside
       className="flex w-[5.75rem] shrink-0 flex-col gap-2 border-r p-2"
-      aria-label="Docs navigation"
+      aria-label={text.navigation}
       variants={region}
     >
       {navGroups.map((group) => (
         <div key={group.title} className="flex flex-col gap-0.5">
           <span className="px-1 pb-0.5 text-[7px] font-semibold tracking-wider text-muted-foreground uppercase">
-            {group.title}
+            {text[group.title]}
           </span>
           {group.items.map((item) => (
             <span
@@ -86,7 +137,7 @@ function SidebarNav() {
                   : "text-muted-foreground",
               )}
             >
-              {item}
+              {text[item]}
             </span>
           ))}
         </div>
@@ -95,18 +146,17 @@ function SidebarNav() {
   );
 }
 
-function Article({ code }: { code: boolean }) {
+function Article({ code, text }: { code: boolean; text: DocsShellLabels }) {
   return (
     <motion.article className="flex min-w-0 flex-1 flex-col gap-1.5 p-2.5" variants={subRegions}>
       <motion.p
         className="text-[11px] leading-tight font-semibold tracking-tight text-foreground"
         variants={region}
       >
-        Installation
+        {text.installation}
       </motion.p>
       <motion.p className="text-[9px] leading-snug text-muted-foreground" variants={region}>
-        Cremona ships as a single stylesheet plus per-framework adapters. Install the package, then
-        import the tokens once at the root of your app.
+        {text.intro}
       </motion.p>
       <motion.div className="flex flex-col gap-1" variants={region}>
         <div className="h-1.5 w-full rounded-full bg-muted-foreground/10" />
@@ -150,22 +200,22 @@ function Article({ code }: { code: boolean }) {
         className="mt-auto flex items-center justify-between border-t pt-1.5"
         variants={region}
       >
-        <span className="text-[8px] font-medium text-primary">← Quickstart</span>
-        <span className="text-[8px] font-medium text-primary">Authentication →</span>
+        <span className="text-[8px] font-medium text-primary">← {text.quickstart}</span>
+        <span className="text-[8px] font-medium text-primary">{text.authentication} →</span>
       </motion.div>
     </motion.article>
   );
 }
 
-function OnThisPage() {
+function OnThisPage({ text }: { text: DocsShellLabels }) {
   return (
     <motion.aside
       className="flex w-16 shrink-0 flex-col gap-1 border-l p-2"
-      aria-label="On this page"
+      aria-label={text.onThisPage}
       variants={region}
     >
       <span className="pb-0.5 text-[7px] font-semibold tracking-wider text-foreground uppercase">
-        On this page
+        {text.onThisPage}
       </span>
       {tocItems.map((item, i) => (
         <span
@@ -177,7 +227,7 @@ function OnThisPage() {
               : "border-transparent text-muted-foreground",
           )}
         >
-          {item}
+          {text[item]}
         </span>
       ))}
     </motion.aside>
@@ -186,6 +236,7 @@ function OnThisPage() {
 
 export function DocsShell({
   code = false,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -203,6 +254,7 @@ export function DocsShell({
             : "hidden",
       }
     : {};
+  const text = { ...docsShellDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -220,9 +272,9 @@ export function DocsShell({
           variants={animated ? regions : undefined}
           {...state}
         >
-          <SidebarNav />
-          <Article code={code} />
-          <OnThisPage />
+          <SidebarNav text={text} />
+          <Article code={code} text={text} />
+          <OnThisPage text={text} />
         </motion.div>
       </motion.div>
     </div>

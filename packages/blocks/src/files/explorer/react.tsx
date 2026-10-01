@@ -23,11 +23,38 @@ const files: ExplorerFile[] = [
   { name: "Logo", ext: "svg" },
 ];
 
-const sidebarItems: { icon: LucideIcon; label: string; active: boolean }[] = [
-  { icon: Folder, label: "All Files", active: true },
-  { icon: Star, label: "Starred", active: false },
-  { icon: Image, label: "Photos", active: false },
-  { icon: LayoutGrid, label: "Projects", active: false },
+export interface ExplorerLabels {
+  /** Search field of the toolbar. */
+  search: string;
+  /** Sidebar section titles. */
+  library: string;
+  tags: string;
+  /** Sidebar entries. */
+  allFiles: string;
+  starred: string;
+  photos: string;
+  projects: string;
+}
+
+export const explorerDefaultLabels: ExplorerLabels = {
+  search: "Search files",
+  library: "Library",
+  tags: "Tags",
+  allFiles: "All Files",
+  starred: "Starred",
+  photos: "Photos",
+  projects: "Projects",
+};
+
+const sidebarItems: {
+  icon: LucideIcon;
+  id: "allFiles" | "starred" | "photos" | "projects";
+  active: boolean;
+}[] = [
+  { icon: Folder, id: "allFiles", active: true },
+  { icon: Star, id: "starred", active: false },
+  { icon: Image, id: "photos", active: false },
+  { icon: LayoutGrid, id: "projects", active: false },
 ];
 
 const container = {
@@ -74,12 +101,15 @@ const gridVariants: Variants[] = files.map((_, i) => ({
 }));
 
 export interface ExplorerProps extends VisualProps {
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<ExplorerLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
 }
 
 export function Explorer({
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -100,6 +130,7 @@ export function Explorer({
             : "hidden",
       }
     : {};
+  const text = { ...explorerDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -156,7 +187,7 @@ export function Explorer({
               variants={animated ? chrome : undefined}
             >
               <Search className="size-2.5 text-muted-foreground" />
-              <span className="truncate text-[10px] text-muted-foreground">Search files</span>
+              <span className="truncate text-[10px] text-muted-foreground">{text.search}</span>
             </motion.div>
             <motion.button
               type="button"
@@ -176,19 +207,19 @@ export function Explorer({
             <div className="flex h-full gap-2">
               <div className="flex w-18 flex-col gap-0.5 border-r border-muted pr-1.5">
                 <div className="px-1 pb-0.5 text-[7px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
-                  Library
+                  {text.library}
                 </div>
-                {sidebarItems.map(({ icon: Icon, label, active }) => (
+                {sidebarItems.map(({ icon: Icon, id, active }) => (
                   <div
-                    key={label}
+                    key={id}
                     className={`flex items-center gap-1 rounded px-1 py-0.5 text-[9px] font-medium ${active ? `bg-primary/7 text-primary` : `text-muted-foreground`}`}
                   >
                     <Icon className="size-2.5 opacity-60" />
-                    <span className="truncate">{label}</span>
+                    <span className="truncate">{text[id]}</span>
                   </div>
                 ))}
                 <div className="mt-2 px-1 pb-0.5 text-[7px] font-semibold tracking-wider text-muted-foreground/60 uppercase">
-                  Tags
+                  {text.tags}
                 </div>
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center gap-1 px-1">

@@ -90,6 +90,8 @@ export interface StackStatus {
 export interface StackProps extends VisualProps {
   avatars?: StackAvatar[];
   status?: StackStatus | false;
+  /** BCP 47 locale of the status count (default `"en-US"`). */
+  locale?: string;
   isometric?: boolean;
   gradient?: boolean;
 }
@@ -97,6 +99,7 @@ export interface StackProps extends VisualProps {
 export function Stack({
   avatars = stackDefaultCopy.avatars,
   status = stackDefaultCopy.status,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -184,7 +187,7 @@ export function Stack({
               )}
               {!!status.count && (
                 <span className="text-foreground tabular-nums">
-                  {status.count.toLocaleString("en-US")}
+                  {new Intl.NumberFormat(locale).format(status.count)}
                 </span>
               )}
               <span>{status.label}</span>

@@ -107,6 +107,12 @@
       "slug": "014-isometric-real-image",
       "size": null,
       "propsRaw": "{isometric:!0,image:e(`media/placeholders/photo-06.jpg`),title:`Behind the scenes`}"
+    },
+    {
+      "label": "french",
+      "slug": "015-french",
+      "size": null,
+      "propsRaw": "{variant:`livestream`,title:`Studio en direct · Q&R`,current:`58:42`,duration:`DIRECT`,progress:72,viewers:6400,labels:{play:`Lecture`,pause:`Pause`,live:`Direct`,watching:`{count} spectateurs`},locale:`fr-FR`}"
     }
   ]
 }

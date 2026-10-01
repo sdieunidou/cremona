@@ -19,7 +19,7 @@
       "name": "locale",
       "type": "string",
       "optional": true,
-      "description": "Locale used to format amounts.",
+      "description": "Locale used to format amounts and the promo percentage.",
       "default": "\"en-US\""
     },
     {

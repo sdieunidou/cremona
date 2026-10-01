@@ -2,5 +2,35 @@
   "default": {},
   "dark hero": {
     "darkHero": true
+  },
+  "french": {
+    "labels": {
+      "product": "Produit",
+      "pricing": "Tarifs",
+      "docs": "Docs",
+      "blog": "Blog",
+      "getStarted": "Commencer",
+      "heroTitle": "Livrez de belles interfaces plus vite",
+      "heroDescription": "Des blocs animés et thémables pour les équipes produit exigeantes.",
+      "startFree": "Essai gratuit",
+      "bookDemo": "Réserver une démo",
+      "setupTitle": "Installation éclair",
+      "setupCopy": "Une commande, zéro config.",
+      "typesTitle": "Typage strict",
+      "typesCopy": "Des tokens typés de bout en bout.",
+      "motionTitle": "Animations intégrées",
+      "motionCopy": "Des ressorts bien réglés.",
+      "trustedBy": "Ils nous font confiance",
+      "ctaTitle": "Lancez-vous aujourd’hui",
+      "ctaDescription": "Gratuit pour les projets personnels.",
+      "company": "Entreprise",
+      "legal": "Légal",
+      "features": "Fonctionnalités",
+      "changelog": "Nouveautés",
+      "about": "À propos",
+      "careers": "Carrières",
+      "privacy": "Confidentialité",
+      "terms": "CGU"
+    }
   }
 }

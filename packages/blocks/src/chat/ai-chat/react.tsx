@@ -18,6 +18,18 @@ export const aiChatDefaultCopy: ChatMessage[] = [
   { kind: "bullet", text: "Net retention reached an all-time high of 118%" },
 ];
 
+export interface AiChatLabels {
+  /** Name above the reply. */
+  assistant: string;
+  /** Text of the empty composer. */
+  placeholder: string;
+}
+
+export const aiChatDefaultLabels: AiChatLabels = {
+  assistant: "Assistant",
+  placeholder: "Ask anything…",
+};
+
 type StatusKind = "online" | "busy" | "offline";
 
 const statusDot: Record<StatusKind, string> = {
@@ -153,6 +165,8 @@ export interface AiChatProps extends VisualProps {
   statusKind?: StatusKind;
   caret?: boolean;
   actions?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<AiChatLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -166,6 +180,7 @@ export function AiChat({
   statusKind = "online",
   caret = true,
   actions = true,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -194,6 +209,7 @@ export function AiChat({
       .map((word) => ({ word, idx: wordIndex++ })),
   }));
   const totalWords = wordIndex;
+  const text = { ...aiChatDefaultLabels, ...labels };
   const caretVariantsFinal = caretVariants(totalWords);
   const actionsVariantsFinal = actionsVariants(totalWords);
 
@@ -273,7 +289,9 @@ export function AiChat({
                 >
                   <Sparkles className="size-2.5" strokeWidth={2.5} />
                 </motion.div>
-                <span className="text-[10px] font-semibold text-muted-foreground">Assistant</span>
+                <span className="text-[10px] font-semibold text-muted-foreground">
+                  {text.assistant}
+                </span>
               </motion.div>
               <motion.div
                 className="flex flex-col gap-1.5 pl-5.5 text-[11px] leading-relaxed text-foreground"
@@ -350,7 +368,7 @@ export function AiChat({
           </div>
           <div className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}>
             <div className="flex-1 truncate rounded-full bg-muted px-3 py-1.25 text-[10px] text-muted-foreground">
-              Ask anything…
+              {text.placeholder}
             </div>
             <button
               type="button"

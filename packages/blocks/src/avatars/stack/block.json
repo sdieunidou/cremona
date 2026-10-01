@@ -89,6 +89,12 @@
       "slug": "011-three-avatars-custom-copy",
       "size": null,
       "propsRaw": "{avatars:[{initials:`HZ`,tint:`bg-cyan-200/80 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-300`},{initials:`OB`,tint:`bg-fuchsia-200/80 text-fuchsia-700 dark:bg-fuchsia-950/80 dark:text-fuchsia-300`},{initials:`TN`,tint:`bg-lime-200/80 text-lime-700 dark:bg-lime-950/80 dark:text-lime-300`}],status:{count:3,label:`founding designers`}}"
+    },
+    {
+      "label": "french",
+      "slug": "012-french",
+      "size": null,
+      "propsRaw": "{status:{count:1284,label:`membres en ligne`},locale:`fr-FR`}"
     }
   ]
 }

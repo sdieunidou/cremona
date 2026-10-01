@@ -21,6 +21,15 @@ interface Source {
   score: number;
 }
 
+export interface RetrievalLabels {
+  /** Heading of the answer card. */
+  answer: string;
+}
+
+export const retrievalDefaultLabels: RetrievalLabels = {
+  answer: "Answer",
+};
+
 const CANVAS = { w: 416, h: 288 };
 const QUERY_Y = 26;
 const LINE_TOP = 44;
@@ -427,12 +436,14 @@ function SourceCard({
   animated,
   index,
   state,
+  locale,
 }: {
   source: Source;
   lit: boolean;
   animated: boolean;
   index: number;
   state: Record<string, unknown>;
+  locale: string;
 }) {
   return (
     <motion.div
@@ -467,7 +478,12 @@ function SourceCard({
           />
         </span>
         <span className="text-[9px] font-medium text-muted-foreground tabular-nums">
-          {source.score.toFixed(2)}
+          {Number.isFinite(source.score)
+            ? new Intl.NumberFormat(locale, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(Number(source.score.toFixed(2)))
+            : source.score.toFixed(2)}
         </span>
       </span>
     </motion.div>
@@ -482,6 +498,10 @@ export interface RetrievalProps extends VisualProps {
   hover?: boolean;
   glow?: boolean;
   particles?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<RetrievalLabels>;
+  /** BCP 47 locale of the relevance scores (default `"en-US"`). */
+  locale?: string;
   isometric?: boolean;
 }
 
@@ -524,6 +544,8 @@ export function Retrieval({
   hover = false,
   glow = true,
   particles = true,
+  labels,
+  locale = "en-US",
   isometric = false,
   fill = false,
   className,
@@ -556,6 +578,7 @@ export function Retrieval({
   ).slice(0, MAX_SOURCES);
   const n = sourceList.length;
   const words = tokenize(answer);
+  const text = { ...retrievalDefaultLabels, ...labels };
   const fanLines = sourceList.map((_, t) => verticalLine(sourceX(t, n)));
   const fanSamples = sourceList.map((_, t) => {
     const x = sourceX(t, n);
@@ -799,6 +822,7 @@ export function Retrieval({
               animated={animated}
               index={t}
               state={state}
+              locale={locale}
             />
           </div>
         ))}
@@ -817,7 +841,7 @@ export function Retrieval({
             <span className="flex items-center gap-1.5">
               <Sparkles className="size-3 text-primary" strokeWidth={2.5} />
               <span className="text-[9px] font-medium tracking-wide text-muted-foreground uppercase">
-                Answer
+                {text.answer}
               </span>
             </span>
             <p className="text-[11px] leading-relaxed text-foreground">

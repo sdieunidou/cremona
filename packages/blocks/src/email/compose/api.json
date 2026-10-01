@@ -7,6 +7,12 @@
     { "name": "cc", "type": "ComposeRecipient[]", "optional": true },
     { "name": "subject", "type": "string", "optional": true, "default": "\"Q4 roadmap review\"" },
     { "name": "sendLabel", "type": "string", "optional": true, "default": "\"Send\"" },
+    {
+      "name": "labels",
+      "type": "Partial<ComposeLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -37,6 +43,20 @@
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
   "types": [
+    {
+      "name": "ComposeLabels",
+      "props": [
+        { "name": "to", "type": "string", "optional": false, "description": "Field names." },
+        { "name": "cc", "type": "string", "optional": false },
+        { "name": "subject", "type": "string", "optional": false },
+        {
+          "name": "remove",
+          "type": "string",
+          "optional": false,
+          "description": "Remove button of a recipient; `{email}` is replaced by the address."
+        }
+      ]
+    },
     {
       "name": "ComposeRecipient",
       "props": [

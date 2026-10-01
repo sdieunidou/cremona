@@ -63,5 +63,28 @@
   },
   "custom likes": {
     "likes": 142
+  },
+  "french": {
+    "parentUser": "Lucas Bernard",
+    "parentInitials": "LB",
+    "parentTime": "10:24",
+    "parentText": "Le nouveau parcours d’accueil est en ligne. La conversion grimpe déjà de 18 %.",
+    "replies": [
+      {
+        "user": "Camille Martin",
+        "initials": "CM",
+        "text": "Énorme. L’indicateur de progression a tout changé.",
+        "time": "10:31"
+      },
+      {
+        "user": "Inès Moreau",
+        "initials": "IM",
+        "text": "On teste l’étape de bienvenue en A/B ensuite ?",
+        "time": "10:42"
+      }
+    ],
+    "labels": {
+      "placeholder": "Écrire une réponse…"
+    }
   }
 }

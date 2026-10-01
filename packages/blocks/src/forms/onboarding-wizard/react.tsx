@@ -28,6 +28,13 @@ export interface OnboardingWizardLabels {
   back: string;
   next: string;
   finish: string;
+  /** Step-3 recap when `checklist` is omitted; `{workspace}` is replaced by the workspace name. */
+  created: string;
+  /** `{count}` is replaced by the number of invites. */
+  invited: string;
+  /** `invited` when the count is one. */
+  invitedOne: string;
+  configured: string;
 }
 
 export interface OnboardingWizardProps extends VisualProps {
@@ -42,6 +49,8 @@ export interface OnboardingWizardProps extends VisualProps {
   checklist?: string[];
   /** UI copy; every key is optional and falls back to the English default. */
   labels?: Partial<OnboardingWizardLabels>;
+  /** BCP 47 locale of the recap's invite count (default `"en-US"`). */
+  locale?: string;
 }
 
 const defaultLabels: OnboardingWizardLabels = {
@@ -56,6 +65,10 @@ const defaultLabels: OnboardingWizardLabels = {
   back: "Back",
   next: "Continue",
   finish: "Finish",
+  created: "Workspace “{workspace}” created",
+  invited: "{count} teammates invited",
+  invitedOne: "{count} teammate invited",
+  configured: "Notifications configured",
 };
 
 const defaultInvites: OnboardingInvite[] = [
@@ -102,6 +115,7 @@ export function OnboardingWizard({
   roles = ["Admin", "Editor", "Viewer"],
   checklist,
   labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fill = false,
@@ -122,10 +136,12 @@ export function OnboardingWizard({
       }
     : {};
 
+  const invited =
+    new Intl.PluralRules(locale).select(invites.length) === "one" ? t.invitedOne : t.invited;
   const recap = checklist ?? [
-    `Workspace “${workspace}” created`,
-    `${invites.length} ${invites.length === 1 ? "teammate" : "teammates"} invited`,
-    "Notifications configured",
+    t.created.replace("{workspace}", () => workspace),
+    invited.replace("{count}", new Intl.NumberFormat(locale).format(invites.length)),
+    t.configured,
   ];
   const last = step === TOTAL;
 

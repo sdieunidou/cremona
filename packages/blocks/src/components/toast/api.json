@@ -32,6 +32,12 @@
       "default": "1"
     },
     {
+      "name": "labels",
+      "type": "Partial<ToastLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "fill",
       "type": "boolean",
       "optional": true,
@@ -57,6 +63,17 @@
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
   "types": [
+    {
+      "name": "ToastLabels",
+      "props": [
+        {
+          "name": "dismiss",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the close button (`dismissible`)."
+        }
+      ]
+    },
     { "name": "ToastVariant", "type": "\"info\" | \"success\" | \"warning\" | \"destructive\"" }
   ]
 }

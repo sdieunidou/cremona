@@ -14,6 +14,12 @@
     { "name": "expiry", "type": "string", "optional": true, "default": "\"12/29\"" },
     { "name": "cvc", "type": "string", "optional": true, "default": "\"•••\"" },
     { "name": "card", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "labels",
+      "type": "Partial<CheckoutLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -43,5 +49,44 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "CheckoutLabels",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "description": "Header of the payment form."
+        },
+        {
+          "name": "secure",
+          "type": "string",
+          "optional": false,
+          "description": "Next to the lock in the header."
+        },
+        {
+          "name": "cardHolder",
+          "type": "string",
+          "optional": false,
+          "description": "Captions on the card face (`card` mode)."
+        },
+        { "name": "cardExpires", "type": "string", "optional": false },
+        {
+          "name": "changeCard",
+          "type": "string",
+          "optional": false,
+          "description": "Link under the card (`card` mode)."
+        },
+        {
+          "name": "cardNumber",
+          "type": "string",
+          "optional": false,
+          "description": "Field labels of the form."
+        },
+        { "name": "expires", "type": "string", "optional": false },
+        { "name": "cvc", "type": "string", "optional": false }
+      ]
+    }
+  ]
 }

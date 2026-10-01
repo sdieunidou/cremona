@@ -16,5 +16,48 @@
   "isometric · no gradient": {
     "isometric": true,
     "gradient": false
+  },
+  "french": {
+    "stats": [
+      {
+        "label": "Revenu",
+        "value": "48,2 k€",
+        "change": "+12,4 %"
+      },
+      {
+        "label": "Utilisateurs",
+        "value": "2 418",
+        "change": "+8,1 %"
+      },
+      {
+        "label": "Attrition",
+        "value": "1,2 %",
+        "change": "−0,4 %",
+        "positive": "down"
+      }
+    ],
+    "values": [
+      42,
+      35,
+      51,
+      38,
+      47,
+      29,
+      33,
+      36,
+      58,
+      44,
+      61,
+      33,
+      52,
+      64,
+      46
+    ],
+    "labels": {
+      "title": "Vue d’ensemble",
+      "otherPeriod": "7 j",
+      "period": "30 j",
+      "empty": "Aucune donnée"
+    }
   }
 }

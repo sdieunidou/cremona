@@ -32,7 +32,7 @@ export interface CheckoutSummaryProps extends VisualProps {
   lines?: CheckoutLine[];
   /** ISO 4217 currency of every amount. */
   currency?: string;
-  /** Locale used to format amounts. */
+  /** Locale used to format amounts and the promo percentage. */
   locale?: string;
   /** Shipping cost; 0 reads "Free". */
   shipping?: number;
@@ -122,6 +122,7 @@ export function CheckoutSummary({
     : {};
 
   const money = new Intl.NumberFormat(locale, { style: "currency", currency });
+  const percent = new Intl.NumberFormat(locale, { style: "unit", unit: "percent" });
   const subtotal = cents(lines.reduce((sum, l) => sum + cents(l.price * (l.qty ?? 1)), 0));
   const discount = promo ? cents((subtotal * promoPercent) / 100) : 0;
   const tax = cents((subtotal - discount) * taxRate);
@@ -172,7 +173,9 @@ export function CheckoutSummary({
               <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold text-primary">
                 {promoCode}
               </span>
-              <span className="text-[10px] text-muted-foreground">-{promoPercent}%</span>
+              <span className="text-[10px] text-muted-foreground">
+                {percent.format(-promoPercent)}
+              </span>
               <button
                 type="button"
                 className={cn(

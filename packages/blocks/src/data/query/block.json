@@ -65,6 +65,12 @@
       "slug": "007-custom-data-sessions-isometric",
       "size": null,
       "propsRaw": "{isometric:!0,gradient:!1,source:`sessions`,duration:`112 ms`,conditions:[{field:`country`,operator:`in`,value:`EU`},{field:`duration`,operator:`>`,value:`30s`},{field:`device`,operator:`=`,value:`mobile`}],columns:[`id`,`country`,`duration`],rows:[[`a19f`,`Germany`,`4m 12s`],[`c74b`,`France`,`2m 48s`],[`e02d`,`Spain`,`1m 09s`],[`f5a1`,`Italy`,`52s`]]}"
+    },
+    {
+      "label": "french",
+      "slug": "008-french",
+      "size": null,
+      "propsRaw": "{source:`commandes`,conditions:[{field:`statut`,operator:`=`,value:`payée`},{field:`total`,operator:`>`,value:`100`}],columns:[`id`,`client`,`total`],rows:[[`4291`,`Emma Martin`,`249,00 €`],[`4288`,`Lucas Bernard`,`512,00 €`],[`4283`,`Chloé Petit`,`134,50 €`],[`4279`,`Hugo Durand`,`408,00 €`]],duration:`24 ms`,emptyLabel:`Aucune ligne`,labels:{from:`Depuis`,run:`Exécuter`,where:`Où`,and:`Et`,rows:`{count} lignes`,rowsOne:`{count} ligne`},locale:`fr-FR`}"
     }
   ]
 }

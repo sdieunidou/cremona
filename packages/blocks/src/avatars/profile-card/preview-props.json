@@ -38,5 +38,16 @@
     "name": "Olivia Bay",
     "role": "Brand Designer",
     "tint": "bg-pink-200/80 text-pink-700 dark:bg-pink-950/80 dark:text-pink-300"
+  },
+  "french": {
+    "initials": "CM",
+    "name": "Camille Martin",
+    "role": "Responsable design",
+    "labels": {
+      "online": "En ligne",
+      "away": "Absent",
+      "busy": "Occupé",
+      "offline": "Hors ligne"
+    }
   }
 }

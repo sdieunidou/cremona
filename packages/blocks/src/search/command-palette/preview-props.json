@@ -75,5 +75,54 @@
   },
   "hover": {
     "hover": true
+  },
+  "french": {
+    "query": "nouv",
+    "groups": [
+      {
+        "label": "Actions",
+        "items": [
+          {
+            "label": "Nouveau projet",
+            "shortcut": [
+              "⌘",
+              "N"
+            ]
+          },
+          {
+            "label": "Nouveau document",
+            "shortcut": [
+              "⌘",
+              "D"
+            ]
+          },
+          {
+            "label": "Inviter un membre",
+            "shortcut": [
+              "⌘",
+              "I"
+            ]
+          }
+        ]
+      },
+      {
+        "label": "Récents",
+        "items": [
+          {
+            "label": "Checklist de lancement"
+          },
+          {
+            "label": "Paramètres de l’espace"
+          }
+        ]
+      }
+    ],
+    "labels": {
+      "navigate": "Naviguer",
+      "select": "Choisir",
+      "close": "Fermer",
+      "escape": "échap",
+      "empty": "Aucun résultat"
+    }
   }
 }

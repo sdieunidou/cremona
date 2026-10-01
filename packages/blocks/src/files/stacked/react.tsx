@@ -254,16 +254,41 @@ const label = {
   },
 } as const;
 
+export interface StackedLabels {
+  /** Badge text when `label` is not set; `{count}` is replaced by the file count. */
+  files: string;
+  /** `files` when the count is one. */
+  filesOne: string;
+}
+
+export const stackedDefaultLabels: StackedLabels = {
+  files: "{count} files",
+  filesOne: "{count} file",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 export interface StackedProps extends VisualProps {
   category?: StackCategory;
   label?: string;
   count?: number;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<StackedLabels>;
+  /** BCP 47 locale of the file count (default `"en-US"`). */
+  locale?: string;
 }
 
 export function Stacked({
   category = "default",
   label: labelText,
   count = 5,
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fill = false,
@@ -285,7 +310,12 @@ export function Stacked({
   const { angles, zIndices, frontIndex } = stackLayout(count);
   const badgeStyle = badgeStyles[category] ?? badgeStyles.default;
   const Preview = previews[category] ?? previews.default;
-  const text = labelText ?? `${count} files`;
+  const copy = { ...stackedDefaultLabels, ...labels };
+  const text =
+    labelText ??
+    interpolate(new Intl.PluralRules(locale).select(count) === "one" ? copy.filesOne : copy.files, {
+      count: new Intl.NumberFormat(locale).format(count),
+    });
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>

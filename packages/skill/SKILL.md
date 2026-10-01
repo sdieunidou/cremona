@@ -82,6 +82,9 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
      with types and defaults, `preview-props.json` has each variant's exact props,
      and "Block data props" in `docs/react.md` says how blocks treat real data
      (an empty array renders empty, never the demo data)
+   - non-English UI: `labels` (the block's own interface text, English defaults
+     exported as `xDefaultLabels`) and `locale` (BCP 47, formats its numbers and
+     dates); the `french` variants show both
 4. Icons come from `lucide-react`. For reduced motion, wrap the app in
    `<MotionConfig reducedMotion="user">` (from `motion/react`); loops pause on their own.
 5. Every block module starts with `"use client"`: a Next.js Server Component renders

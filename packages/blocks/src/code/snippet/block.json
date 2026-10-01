@@ -95,6 +95,12 @@
       "slug": "012-md",
       "size": null,
       "propsRaw": "{language:`md`}"
+    },
+    {
+      "label": "french",
+      "slug": "013-french",
+      "size": null,
+      "propsRaw": "{language:`bash`,filename:`installer.sh`,code:`# Installer la bibliothèque\\nnpm install @cremona/blocks\\n\\n# Lancer le serveur de dev\\nnpm run dev`}"
     }
   ]
 }

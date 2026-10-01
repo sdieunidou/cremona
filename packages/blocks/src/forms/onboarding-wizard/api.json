@@ -36,6 +36,13 @@
       "description": "UI copy; every key is optional and falls back to the English default."
     },
     {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the recap's invite count (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -103,7 +110,26 @@
         { "name": "inviteHint", "type": "string", "optional": false },
         { "name": "back", "type": "string", "optional": false },
         { "name": "next", "type": "string", "optional": false },
-        { "name": "finish", "type": "string", "optional": false }
+        { "name": "finish", "type": "string", "optional": false },
+        {
+          "name": "created",
+          "type": "string",
+          "optional": false,
+          "description": "Step-3 recap when `checklist` is omitted; `{workspace}` is replaced by the workspace name."
+        },
+        {
+          "name": "invited",
+          "type": "string",
+          "optional": false,
+          "description": "`{count}` is replaced by the number of invites."
+        },
+        {
+          "name": "invitedOne",
+          "type": "string",
+          "optional": false,
+          "description": "`invited` when the count is one."
+        },
+        { "name": "configured", "type": "string", "optional": false }
       ]
     }
   ]

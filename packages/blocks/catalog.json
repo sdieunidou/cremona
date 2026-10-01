@@ -76,7 +76,8 @@
           "hover",
           "two sources",
           "support · custom copy",
-          "docs · isometric"
+          "docs · isometric",
+          "french"
         ],
         "cols": 2
       },
@@ -149,7 +150,8 @@
           "errors",
           "worker · isometric",
           "two sources",
-          "four sources"
+          "four sources",
+          "french"
         ],
         "cols": 2
       },
@@ -281,7 +283,8 @@
           "photos",
           "photos · isometric",
           "custom roster",
-          "three avatars · custom copy"
+          "three avatars · custom copy",
+          "french"
         ],
         "cols": 2
       },
@@ -302,7 +305,8 @@
           "away",
           "busy",
           "offline",
-          "away · isometric · custom copy"
+          "away · isometric · custom copy",
+          "french"
         ],
         "cols": 2
       }
@@ -421,7 +425,8 @@
           "range · isometric",
           "highlighted · selected",
           "specific month",
-          "Sunday start"
+          "Sunday start",
+          "french"
         ],
         "cols": 2
       },
@@ -459,7 +464,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "specific month",
-          "Sunday start"
+          "Sunday start",
+          "french"
         ],
         "cols": 2
       }
@@ -505,7 +511,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "traffic · custom copy",
-          "plans · isometric · custom copy"
+          "plans · isometric · custom copy",
+          "french"
         ],
         "cols": 2
       },
@@ -526,7 +533,8 @@
           "checkout · custom copy",
           "negative change · custom copy",
           "highlighted stage · isometric · custom copy",
-          "three stages · custom copy"
+          "three stages · custom copy",
+          "french"
         ],
         "cols": 2
       },
@@ -547,7 +555,8 @@
           "capacity · custom copy",
           "zones · custom copy",
           "low value · custom copy",
-          "score · isometric · custom copy"
+          "score · isometric · custom copy",
+          "french"
         ],
         "cols": 2
       },
@@ -638,7 +647,8 @@
           "busy status",
           "offline status",
           "no caret",
-          "no actions"
+          "no actions",
+          "french"
         ],
         "cols": 2
       },
@@ -659,7 +669,8 @@
           "default · custom messages",
           "isometric · custom messages",
           "typing",
-          "read receipts"
+          "read receipts",
+          "french"
         ],
         "cols": 2
       },
@@ -680,7 +691,8 @@
           "default · custom thread",
           "isometric · custom thread",
           "no actions",
-          "custom likes"
+          "custom likes",
+          "french"
         ],
         "cols": 2
       }
@@ -713,7 +725,8 @@
           "php",
           "html",
           "css",
-          "go"
+          "go",
+          "french"
         ],
         "cols": 2
       },
@@ -737,7 +750,8 @@
           "css",
           "sql",
           "yaml",
-          "md"
+          "md",
+          "french"
         ],
         "cols": 2
       },
@@ -999,7 +1013,8 @@
           "isometric",
           "isometric · fadeOut",
           "default · no gradient",
-          "isometric · no gradient"
+          "isometric · no gradient",
+          "french"
         ],
         "cols": 2
       },
@@ -1016,7 +1031,8 @@
           "isometric",
           "isometric · fadeOut",
           "default · no gradient",
-          "isometric · no gradient"
+          "isometric · no gradient",
+          "french"
         ],
         "cols": 2
       }
@@ -1041,7 +1057,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "custom data · deals",
-          "custom data · errors · isometric"
+          "custom data · errors · isometric",
+          "french"
         ],
         "cols": 2
       },
@@ -1061,7 +1078,8 @@
           "isometric · no gradient",
           "custom data · products",
           "custom data · contacts · isometric",
-          "all mapped"
+          "all mapped",
+          "french"
         ],
         "cols": 2
       },
@@ -1080,7 +1098,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "custom data · events",
-          "custom data · sessions · isometric"
+          "custom data · sessions · isometric",
+          "french"
         ],
         "cols": 2
       },
@@ -1099,7 +1118,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "custom data · orders",
-          "custom data · projects · isometric"
+          "custom data · projects · isometric",
+          "french"
         ],
         "cols": 2
       }
@@ -1235,7 +1255,8 @@
           "isometric · no gradient",
           "with cc",
           "team broadcast · custom",
-          "draft saved · meta"
+          "draft saved · meta",
+          "french"
         ],
         "cols": 2
       },
@@ -1255,7 +1276,8 @@
           "isometric · no gradient",
           "promotions · custom",
           "drafts · custom",
-          "support · custom"
+          "support · custom",
+          "french"
         ],
         "cols": 2
       }
@@ -1278,7 +1300,8 @@
           "isometric",
           "isometric · fadeOut",
           "default · no gradient",
-          "isometric · no gradient"
+          "isometric · no gradient",
+          "french"
         ],
         "cols": 2
       },
@@ -1338,7 +1361,8 @@
           "video",
           "audio",
           "archives",
-          "mixed"
+          "mixed",
+          "french"
         ],
         "cols": 4
       },
@@ -1533,7 +1557,8 @@
           "avatar image",
           "failing",
           "failing · custom copy",
-          "hover"
+          "hover",
+          "french"
         ],
         "cols": 2
       }
@@ -1562,7 +1587,8 @@
           "active: first",
           "active: last",
           "real images",
-          "isometric · real images"
+          "isometric · real images",
+          "french"
         ],
         "cols": 2
       },
@@ -1771,7 +1797,8 @@
           "podcast · pause · isometric",
           "bars · 26",
           "bars · 42",
-          "bars · 56"
+          "bars · 56",
+          "french"
         ],
         "cols": 2
       },
@@ -1797,7 +1824,8 @@
           "variant · podcast",
           "variant · livestream",
           "real image",
-          "isometric · real image"
+          "isometric · real image",
+          "french"
         ],
         "cols": 2
       }
@@ -2014,7 +2042,8 @@
           "card · isometric · fadeOut",
           "card · no gradient",
           "card · isometric · no gradient",
-          "card · custom content"
+          "card · custom content",
+          "french"
         ],
         "cols": 2
       },
@@ -2035,7 +2064,8 @@
           "flipped",
           "stacked · flipped",
           "isometric · flipped",
-          "isometric · stacked · flipped"
+          "isometric · stacked · flipped",
+          "french"
         ],
         "cols": 2
       },
@@ -2080,7 +2110,8 @@
           "support · custom copy",
           "single group",
           "no caret",
-          "hover"
+          "hover",
+          "french"
         ],
         "cols": 2
       },
@@ -2118,7 +2149,8 @@
           "support · custom copy",
           "docs · isometric",
           "two matches",
-          "one match"
+          "one match",
+          "french"
         ],
         "cols": 2
       }
@@ -2751,7 +2783,8 @@
           "isometric · no gradient",
           "e-commerce · partial degradation",
           "ai stack · outage",
-          "minimal stack · all operational"
+          "minimal stack · all operational",
+          "french"
         ],
         "cols": 2
       },
@@ -2774,7 +2807,8 @@
           "single series · isometric",
           "fast · 96 samples",
           "no grid",
-          "no axis"
+          "no axis",
+          "french"
         ],
         "cols": 2
       },
@@ -2794,7 +2828,8 @@
           "outage · isometric",
           "45 days · clean",
           "30 days · incident",
-          "no legend"
+          "no legend",
+          "french"
         ],
         "cols": 2
       }
@@ -2838,7 +2873,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "content pipeline · custom",
-          "hiring pipeline · custom"
+          "hiring pipeline · custom",
+          "french"
         ],
         "cols": 2
       }

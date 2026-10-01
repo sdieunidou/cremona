@@ -65,6 +65,12 @@
       "slug": "007-custom-data-projects-isometric",
       "size": null,
       "propsRaw": "{isometric:!0,gradient:!1,title:`Projects`,columns:[{label:`Project`,key:`name`,avatar:!0},{label:`Status`,key:`status`,badge:!0},{label:`Tasks`,key:`tasks`},{label:`Due`,key:`due`,sort:!0}],items:[{name:`Website Redesign`,initials:`WR`,subtitle:`Marketing`,status:`active`,tasks:`12/20`,due:`Jun 15`},{name:`Mobile App v2`,initials:`MA`,subtitle:`Engineering`,status:`pending`,tasks:`8/34`,due:`Jul 1`},{name:`Brand Guidelines`,initials:`BG`,subtitle:`Design`,status:`active`,tasks:`18/18`,due:`May 30`},{name:`API Migration`,initials:`AM`,subtitle:`Backend`,status:`inactive`,tasks:`5/12`,due:`Jun 22`}]}"
+    },
+    {
+      "label": "french",
+      "slug": "008-french",
+      "size": null,
+      "propsRaw": "{title:`Membres`,columns:[{label:`Nom`,key:`name`,avatar:!0},{label:`Statut`,key:`status`,badge:!0},{label:`Rôle`,key:`role`},{label:`Arrivée`,key:`joined`,sort:!0}],items:[{name:`Camille Martin`,initials:`CM`,subtitle:`Paris`,status:`active`,role:`Admin`,joined:`12 mars`},{name:`Lucas Bernard`,initials:`LB`,subtitle:`Lyon`,status:`pending`,role:`Développeur`,joined:`28 avr.`},{name:`Léa Dubois`,initials:`LD`,subtitle:`Nantes`,status:`active`,role:`Designer`,joined:`3 mai`},{name:`Hugo Moreau`,initials:`HM`,subtitle:`Lille`,status:`inactive`,role:`Développeur`,joined:`1 juin`}],emptyLabel:`Aucune ligne`,labels:{filter:`Filtrer`,active:`actif`,inactive:`inactif`,pending:`invité`}}"
     }
   ]
 }

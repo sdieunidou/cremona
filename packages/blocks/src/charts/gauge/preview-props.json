@@ -72,5 +72,12 @@
     "minLabel": "-100",
     "maxLabel": "100",
     "change": "+8.0"
+  },
+  "french": {
+    "title": "Score de santé",
+    "badge": "En direct",
+    "label": "Systèmes en bonne santé",
+    "change": "+4,2 %",
+    "locale": "fr-FR"
   }
 }

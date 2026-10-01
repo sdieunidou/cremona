@@ -59,6 +59,12 @@
       "slug": "006-one-match",
       "size": null,
       "propsRaw": "{query:`export my data`,matches:[{label:`Data export`,score:.98}]}"
+    },
+    {
+      "label": "french",
+      "slug": "007-french",
+      "size": null,
+      "propsRaw": "{query:`changer d’offre`,matches:[{label:`Offre supérieure`,score:0.94},{label:`Comparer les offres`,score:0.88},{label:`Ajouter des sièges`,score:0.79}],spaceLabel:`Espace vectoriel`,locale:`fr-FR`}"
     }
   ]
 }

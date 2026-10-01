@@ -77,6 +77,12 @@
       "slug": "009-score-isometric-custom-copy",
       "size": null,
       "propsRaw": "{isometric:!0,title:`NPS`,badge:`Q3`,percent:81,value:`+62`,label:`promoters minus detractors`,minLabel:`-100`,maxLabel:`100`,change:`+8.0`}"
+    },
+    {
+      "label": "french",
+      "slug": "010-french",
+      "size": null,
+      "propsRaw": "{title:`Score de santé`,badge:`En direct`,label:`Systèmes en bonne santé`,change:`+4,2 %`,locale:`fr-FR`}"
     }
   ]
 }

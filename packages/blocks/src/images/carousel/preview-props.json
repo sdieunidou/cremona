@@ -107,5 +107,28 @@
       }
     ],
     "count": 3
+  },
+  "french": {
+    "slides": [
+      {
+        "kind": "sunset",
+        "title": "Costa Brava",
+        "caption": "Coucher de soleil sur les falaises"
+      },
+      {
+        "kind": "mountain",
+        "title": "Dolomites",
+        "caption": "Au-dessus des nuages"
+      },
+      {
+        "kind": "ocean",
+        "title": "Big Sur",
+        "caption": "Houle matinale du Pacifique"
+      }
+    ],
+    "labels": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
   }
 }

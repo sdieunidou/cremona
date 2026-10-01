@@ -5,5 +5,61 @@
   },
   "mobile": {
     "viewport": "mobile"
+  },
+  "french": {
+    "stats": [
+      {
+        "label": "Chiffre d’affaires",
+        "value": "48,2 k€",
+        "change": "+12,4 %"
+      },
+      {
+        "label": "Utilisateurs actifs",
+        "value": "8 102",
+        "change": "+3,1 %"
+      },
+      {
+        "label": "Conversion",
+        "value": "4,7 %",
+        "change": "−0,8 %"
+      }
+    ],
+    "invoices": [
+      {
+        "name": "Nova Labs",
+        "plan": "Pro",
+        "status": "paid",
+        "amount": "120,00 €"
+      },
+      {
+        "name": "Hopper Co.",
+        "plan": "Team",
+        "status": "sent",
+        "amount": "84,00 €"
+      },
+      {
+        "name": "Orbit AI",
+        "plan": "Pro",
+        "status": "overdue",
+        "amount": "220,00 €"
+      }
+    ],
+    "labels": {
+      "overview": "Aperçu",
+      "analytics": "Analyses",
+      "customers": "Clients",
+      "billing": "Facturation",
+      "settings": "Paramètres",
+      "role": "Admin",
+      "search": "Rechercher…",
+      "chartTitle": "Évolution du chiffre d’affaires",
+      "chartRange": "30 derniers jours",
+      "invoicesTitle": "Dernières factures",
+      "viewAll": "Tout voir",
+      "plan": "Offre {plan}",
+      "paid": "Payée",
+      "sent": "Envoyée",
+      "overdue": "En retard"
+    }
   }
 }

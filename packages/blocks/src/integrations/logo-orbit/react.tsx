@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState, type ReactNode } from "react";
+import { isValidElement, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";
+import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 const githubPath =
@@ -30,6 +31,22 @@ const spotifyPath =
 
 const youtubePath =
   "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z";
+
+/** A logo: an icon component (drawn at the slot's icon size) or any element, e.g. an `<img>` or `<svg>`. */
+export type LogoOrbitLogo = ReactNode | LucideIcon;
+
+function isIcon(node: LogoOrbitLogo): node is LucideIcon {
+  return (
+    typeof node === "function" ||
+    (typeof node === "object" && node !== null && !isValidElement(node) && "$$typeof" in node)
+  );
+}
+
+function logoContent(node: LogoOrbitLogo, className: string): ReactNode {
+  if (!isIcon(node)) return node;
+  const Icon = node;
+  return <Icon className={className} strokeWidth={2} />;
+}
 
 function brandIcon(path: string, size: string, fillRule?: "evenodd"): ReactNode {
   return (
@@ -118,9 +135,9 @@ export interface LogoOrbitProps extends VisualProps {
   orbit?: boolean;
   innerRing?: boolean;
   hiddenLogo?: boolean;
-  logo?: ReactNode;
-  logos?: ReactNode[];
-  innerLogos?: ReactNode[];
+  logo?: LogoOrbitLogo;
+  logos?: LogoOrbitLogo[];
+  innerLogos?: LogoOrbitLogo[];
   radius?: number;
   innerRadius?: number;
   hover?: boolean;
@@ -193,7 +210,7 @@ export function LogoOrbit({
                     custom={0.2 + i * 0.1}
                     {...state}
                   >
-                    {item}
+                    {logoContent(item, "size-4.5 text-foreground")}
                   </motion.div>
                 </div>
               </div>
@@ -217,7 +234,7 @@ export function LogoOrbit({
                       custom={0.35 + i * 0.1}
                       {...state}
                     >
-                      {item}
+                      {logoContent(item, "size-4 text-foreground")}
                     </motion.div>
                   </div>
                 </div>
@@ -231,7 +248,7 @@ export function LogoOrbit({
             variants={animated ? centerAnim : undefined}
             {...state}
           >
-            {logo}
+            {logoContent(logo, "size-7 text-primary")}
           </motion.div>
         )}
       </motion.div>

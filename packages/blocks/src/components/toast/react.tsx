@@ -9,6 +9,15 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 type ToastVariant = "info" | "success" | "warning" | "destructive";
 
+export interface ToastLabels {
+  /** Accessible name of the close button (`dismissible`). */
+  dismiss: string;
+}
+
+export const toastDefaultLabels: ToastLabels = {
+  dismiss: "Dismiss",
+};
+
 export interface ToastProps extends VisualProps {
   /** Visual intent (`error` is a deprecated alias of `destructive`). */
   variant?: ToastVariant | "error";
@@ -20,6 +29,8 @@ export interface ToastProps extends VisualProps {
   dismissible?: boolean;
   /** Toasts in the stack (up to 3 drawn). */
   stack?: number;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<ToastLabels>;
   /** In the flow at the full width of the box, instead of pinned to its bottom-right corner. */
   fill?: boolean;
 }
@@ -74,6 +85,7 @@ export function Toast({
   action = false,
   dismissible = false,
   stack = 1,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -98,6 +110,7 @@ export function Toast({
       }
     : {};
 
+  const text = { ...toastDefaultLabels, ...labels };
   const tone: ToastVariant = variant === "error" ? "destructive" : variant;
   const { icon, Icon } = variantClasses[tone] ?? variantClasses.info;
   const fallback = copy[tone] ?? copy.info;
@@ -152,7 +165,7 @@ export function Toast({
           {dismissible && (
             <button
               type="button"
-              aria-label="Dismiss"
+              aria-label={text.dismiss}
               className={cn(
                 "-mt-1 -mr-1 flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
                 focusRing,

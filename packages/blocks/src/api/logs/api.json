@@ -16,6 +16,12 @@
       "default": "[…] (3 items)"
     },
     { "name": "pulse", "type": "\"dot\" | \"line\"", "optional": true, "default": "\"dot\"" },
+    {
+      "name": "labels",
+      "type": "Partial<LogsLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
@@ -53,6 +59,16 @@
         { "name": "time", "type": "string", "optional": false },
         { "name": "level", "type": "LogLevel", "optional": false },
         { "name": "message", "type": "string", "optional": false }
+      ]
+    },
+    {
+      "name": "LogsLabels",
+      "props": [
+        { "name": "info", "type": "string", "optional": false },
+        { "name": "warn", "type": "string", "optional": false },
+        { "name": "error", "type": "string", "optional": false },
+        { "name": "debug", "type": "string", "optional": false },
+        { "name": "success", "type": "string", "optional": false }
       ]
     }
   ]

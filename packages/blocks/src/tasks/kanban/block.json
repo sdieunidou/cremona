@@ -65,6 +65,12 @@
       "slug": "007-hiring-pipeline-custom",
       "size": null,
       "propsRaw": "{title:`Hiring · Engineering`,meta:`6 open roles`,columns:[{id:`applied`,title:`Applied`,dot:`neutral`,cards:[{title:`Maya Patel · Senior Frontend`},{title:`Tomás Ruiz · Full-stack`,attachments:2},{title:`Lena Köhler · Design Engineer`},{title:`Owen Hart · Backend`}]},{id:`interviewing`,title:`Interviewing`,dot:`active`,cards:[{title:`Priya Shah · Onsite Thu`,comments:4},{title:`Daniel Cho · Tech screen`}]},{id:`offer`,title:`Offer sent`,dot:`success`,cards:[{title:`Iris Müller · Senior Frontend`,comments:8}]}]}"
+    },
+    {
+      "label": "french",
+      "slug": "008-french",
+      "size": null,
+      "propsRaw": "{title:`Tableau Kanban`,columns:[{id:`todo`,title:`À faire`,dot:`neutral`,cards:[{title:`Revoir les états vides`,comments:4},{title:`Corriger le calcul de TVA`,attachments:2},{title:`Ajouter l’export CSV`}]},{id:`doing`,title:`En cours`,dot:`active`,cards:[{title:`Centre de notifications v2`,comments:7},{title:`Refonte du module de facturation`}]},{id:`done`,title:`Terminé`,dot:`success`,cards:[{title:`Spécification d’accueil v3`,comments:12},{title:`Correctif · redirection de connexion`}]}],labels:{tasks:`{count} tâches`,tasksOne:`{count} tâche`},locale:`fr-FR`}"
     }
   ]
 }

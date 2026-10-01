@@ -324,6 +324,11 @@
         "label": "docs · isometric",
         "slug": "010-docs-isometric",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "011-french",
+        "size": null
       }
     ]
   },
@@ -538,6 +543,11 @@
       {
         "label": "four sources",
         "slug": "011-four-sources",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
         "size": null
       }
     ]
@@ -772,6 +782,11 @@
         "label": "away · isometric · custom copy",
         "slug": "009-away-isometric-custom-copy",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -841,6 +856,11 @@
       {
         "label": "three avatars · custom copy",
         "slug": "011-three-avatars-custom-copy",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
         "size": null
       }
     ]
@@ -1135,6 +1155,11 @@
         "label": "Sunday start",
         "slug": "010-sunday-start",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "011-french",
+        "size": null
       }
     ]
   },
@@ -1234,6 +1259,11 @@
       {
         "label": "Sunday start",
         "slug": "007-sunday-start",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
         "size": null
       }
     ]
@@ -1345,6 +1375,11 @@
         "label": "plans · isometric · custom copy",
         "slug": "007-plans-isometric-custom-copy",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
+        "size": null
       }
     ]
   },
@@ -1405,6 +1440,11 @@
         "label": "three stages · custom copy",
         "slug": "009-three-stages-custom-copy",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -1464,6 +1504,11 @@
       {
         "label": "score · isometric · custom copy",
         "slug": "009-score-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
         "size": null
       }
     ]
@@ -1713,6 +1758,11 @@
         "label": "no actions",
         "slug": "012-no-actions",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "013-french",
+        "size": null
       }
     ]
   },
@@ -1776,6 +1826,11 @@
         "label": "read receipts",
         "slug": "009-read-receipts",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -1835,6 +1890,11 @@
       {
         "label": "custom likes",
         "slug": "009-custom-likes",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
         "size": null
       }
     ]
@@ -1929,6 +1989,11 @@
         "label": "go",
         "slug": "015-go",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "016-french",
+        "size": null
       }
     ]
   },
@@ -2008,6 +2073,11 @@
       {
         "label": "md",
         "slug": "012-md",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "013-french",
         "size": null
       }
     ]
@@ -2430,6 +2500,11 @@
         "label": "nested",
         "slug": "003-nested",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "004-french",
+        "size": null
       }
     ]
   },
@@ -2595,6 +2670,11 @@
       {
         "label": "rounded",
         "slug": "002-rounded",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
         "size": null
       }
     ]
@@ -3067,6 +3147,11 @@
         "label": "isometric · no gradient",
         "slug": "005-isometric-no-gradient",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "006-french",
+        "size": null
       }
     ]
   },
@@ -3106,6 +3191,11 @@
       {
         "label": "isometric · no gradient",
         "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "006-french",
         "size": null
       }
     ]
@@ -3159,6 +3249,11 @@
       {
         "label": "custom data · errors · isometric",
         "slug": "007-custom-data-errors-isometric",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
         "size": null
       }
     ]
@@ -3215,6 +3310,11 @@
         "label": "all mapped",
         "slug": "008-all-mapped",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -3265,6 +3365,11 @@
         "label": "custom data · sessions · isometric",
         "slug": "007-custom-data-sessions-isometric",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
+        "size": null
       }
     ]
   },
@@ -3314,6 +3419,11 @@
       {
         "label": "custom data · projects · isometric",
         "slug": "007-custom-data-projects-isometric",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
         "size": null
       }
     ]
@@ -3545,6 +3655,11 @@
         "label": "empty",
         "slug": "002-empty",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
+        "size": null
       }
     ]
   },
@@ -3564,6 +3679,11 @@
       {
         "label": "with promo",
         "slug": "001-with-promo",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
         "size": null
       }
     ]
@@ -3619,6 +3739,11 @@
       {
         "label": "hover add",
         "slug": "003-hover-add",
+        "size": "lg"
+      },
+      {
+        "label": "french",
+        "slug": "004-french",
         "size": "lg"
       }
     ]
@@ -3698,6 +3823,11 @@
         "label": "draft saved · meta",
         "slug": "008-draft-saved-meta",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -3753,6 +3883,11 @@
         "label": "support · custom",
         "slug": "008-support-custom",
         "size": "lg"
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -3792,6 +3927,11 @@
       {
         "label": "isometric · no gradient",
         "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "006-french",
         "size": null
       }
     ]
@@ -4003,6 +4143,11 @@
         "label": "mixed",
         "slug": "011-mixed",
         "size": "sm"
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
+        "size": null
       }
     ]
   },
@@ -4146,6 +4291,11 @@
       {
         "label": "step 3",
         "slug": "002-step-3",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
         "size": null
       }
     ]
@@ -4600,6 +4750,11 @@
         "label": "hover",
         "slug": "010-hover",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "011-french",
+        "size": null
       }
     ]
   },
@@ -4669,6 +4824,11 @@
       {
         "label": "isometric · real images",
         "slug": "011-isometric-real-images",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
         "size": null
       }
     ]
@@ -5066,6 +5226,11 @@
         "label": "signup",
         "slug": "001-signup",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
+        "size": null
       }
     ]
   },
@@ -5091,6 +5256,11 @@
         "label": "mobile",
         "slug": "002-mobile",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
+        "size": null
       }
     ]
   },
@@ -5110,6 +5280,11 @@
       {
         "label": "with code block",
         "slug": "001-with-code-block",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
         "size": null
       }
     ]
@@ -5131,6 +5306,11 @@
         "label": "dark hero",
         "slug": "001-dark-hero",
         "size": "xl"
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
+        "size": "xl"
       }
     ]
   },
@@ -5151,6 +5331,11 @@
         "label": "dark",
         "slug": "001-dark",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
+        "size": null
       }
     ]
   },
@@ -5170,6 +5355,11 @@
       {
         "label": "danger zone",
         "slug": "001-danger-zone",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
         "size": null
       }
     ]
@@ -5240,6 +5430,11 @@
       {
         "label": "bars · 56",
         "slug": "011-bars-56",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
         "size": null
       }
     ]
@@ -5325,6 +5520,11 @@
       {
         "label": "isometric · real image",
         "slug": "014-isometric-real-image",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "015-french",
         "size": null
       }
     ]
@@ -5915,6 +6115,11 @@
         "label": "card · custom content",
         "slug": "013-card-custom-content",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "014-french",
+        "size": null
       }
     ]
   },
@@ -5974,6 +6179,11 @@
       {
         "label": "isometric · stacked · flipped",
         "slug": "009-isometric-stacked-flipped",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
         "size": null
       }
     ]
@@ -6085,6 +6295,11 @@
         "label": "hover",
         "slug": "009-hover",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -6188,6 +6403,11 @@
       {
         "label": "one match",
         "slug": "006-one-match",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "007-french",
         "size": null
       }
     ]
@@ -7873,6 +8093,11 @@
         "label": "minimal stack · all operational",
         "slug": "008-minimal-stack-all-operational",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -7948,6 +8173,11 @@
         "label": "no axis",
         "slug": "011-no-axis",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
+        "size": null
       }
     ]
   },
@@ -8005,6 +8235,11 @@
       {
         "label": "no legend",
         "slug": "008-no-legend",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
         "size": null
       }
     ]
@@ -8105,6 +8340,11 @@
       {
         "label": "hiring pipeline · custom",
         "slug": "007-hiring-pipeline-custom",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
         "size": null
       }
     ]

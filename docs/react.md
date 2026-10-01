@@ -332,6 +332,67 @@ in French), comments a preformatted `count`.
   element: that subtree takes the dark tokens of the page's theme, in a light
   page too ([Dark mode](design-system.md#dark-mode)).
 
+## Labels and locale
+
+A block renders its own interface text (buttons, column headers, status words,
+units, placeholders, `aria-label`s) in English and formats the numbers and
+dates it computes itself as `en-US`. Two optional props change that, so a
+French — or any non-English — interface uses the blocks without editing them:
+
+| Prop | Default | Meaning |
+|---|---|---|
+| `labels` | English | `Partial<XLabels>`: the interface text you want to change; every key you leave out keeps its English default |
+| `locale` | `"en-US"` | BCP 47 tag for the numbers, percentages, currencies, dates and plurals the block formats itself |
+
+Without them a block renders exactly what the gallery shows. Content stays in
+the content props it already had (`title`, `emptyLabel`, `unit`, `items`,
+`rows`…): `labels` only covers the text no other prop reaches.
+
+```tsx
+import { Filters, filtersDefaultLabels } from "@cremona/blocks/data/filters";
+
+<Filters
+  title="Filtres"
+  unit="clients"
+  total={2480}
+  rules={rules}
+  addLabel="Ajouter un filtre"
+  labels={{ where: "Où", and: "Et", clear: "Effacer", of: "sur {total} {unit}" }}
+  locale="fr-FR"
+/>;
+// filtersDefaultLabels → { where: "Where", and: "And", clear: "Clear", of: "of {total} {unit}" }
+```
+
+- **Which blocks.** The _Props_ table of each block page lists its `labels`
+  and `locale` props; the English defaults are exported next to the component
+  as `xDefaultLabels`, typed by an `XLabels` interface
+  (`filtersDefaultLabels: FiltersLabels`, `uptimeBarDefaultLabels`…). Blocks
+  whose visible text changes have a `french` variant in the gallery: its
+  "Copy React" snippet is a complete French example.
+- **Placeholders.** `{name}` in a label is replaced by a value
+  (`"of {total} {unit}"`, `"{count} rows"`, `"Page {page} of {total}"`), so the
+  word order is yours. Each key's description lists its placeholders.
+- **Plurals.** A count comes as a pair of keys, `x` and `xOne`
+  (`rows` / `rowsOne`, `daysAgo` / `daysAgoOne`). The block uses `xOne` when
+  `new Intl.PluralRules(locale).select(count)` is `"one"` — French uses the
+  singular for 0 and 1 — and `x` otherwise. Languages with more plural forms
+  get `x` for every count that is not "one".
+- **Status and enum words** are keyed by the value they translate
+  (`labels={{ operational: "Opérationnel", degraded: "Dégradé" }}`); the value
+  keeps its colour.
+- **`locale`** drives `Intl.NumberFormat` (grouping, decimal separator, the
+  space before `%`, compact notation such as `1,2 M`), `Intl.PluralRules` and
+  `Intl.DateTimeFormat` (month and weekday names). Dates are built and
+  formatted in UTC, and no block reads the clock while rendering, so the
+  server and the browser print the same text.
+- **Pre-formatted strings are yours.** Props such as `value="$48.2k"`,
+  `change="+12%"` or `latency="42 ms"` are shown as given: format them with the
+  same locale before passing them.
+- **`aria-label`s follow `labels` too**, even inside the `aria-hidden` preview
+  root: they matter as soon as you derive a component from the block.
+- `geo/world-map`'s `labels` is a boolean (marker labels on or off): it shows
+  no interface text of its own.
+
 ## Using a block as a panel
 
 By default a visual renders for the gallery: the preview frame centres it

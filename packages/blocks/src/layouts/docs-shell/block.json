@@ -27,6 +27,12 @@
       "propsRaw": "{code:!0}",
       "size": null,
       "slug": "001-with-code-block"
+    },
+    {
+      "label": "french",
+      "slug": "002-french",
+      "size": null,
+      "propsRaw": "{labels:{navigation:`Navigation de la documentation`,gettingStarted:`Premiers pas`,apiReference:`Référence API`,guides:`Guides`,introduction:`Introduction`,installation:`Installation`,quickstart:`Démarrage rapide`,authentication:`Authentification`,endpoints:`Endpoints`,migrations:`Migrations`,theming:`Thèmes`,intro:`Cremona tient en une feuille de style et des adaptateurs par framework. Installez le paquet, puis importez les tokens une seule fois à la racine de l’app.`,onThisPage:`Sur cette page`,tocOverview:`Aperçu`,tocInstall:`Installer`,tocStyles:`Styles`,tocNextSteps:`Et ensuite`}}"
     }
   ]
 }

@@ -6,12 +6,17 @@
     { "name": "hiddenLogo", "type": "boolean", "optional": true, "default": "false" },
     {
       "name": "logo",
-      "type": "ReactNode",
+      "type": "LogoOrbitLogo",
       "optional": true,
       "default": "<svg viewBox=\"0 0 24 24\" className=\"size-7 text-primary\" fi…"
     },
-    { "name": "logos", "type": "ReactNode[]", "optional": true, "default": "[…] (6 items)" },
-    { "name": "innerLogos", "type": "ReactNode[]", "optional": true, "default": "[…] (3 items)" },
+    { "name": "logos", "type": "LogoOrbitLogo[]", "optional": true, "default": "[…] (6 items)" },
+    {
+      "name": "innerLogos",
+      "type": "LogoOrbitLogo[]",
+      "optional": true,
+      "default": "[…] (3 items)"
+    },
     { "name": "radius", "type": "number", "optional": true, "default": "125" },
     { "name": "innerRadius", "type": "number", "optional": true, "default": "60" },
     { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
@@ -42,5 +47,5 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [{ "name": "LogoOrbitLogo", "type": "ReactNode | LucideIcon" }]
 }

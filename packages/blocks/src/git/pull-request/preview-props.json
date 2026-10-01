@@ -56,5 +56,35 @@
   },
   "hover": {
     "hover": true
+  },
+  "french": {
+    "title": "Ajouter le paiement par carte",
+    "source": "feat/paiement",
+    "checks": [
+      {
+        "name": "build",
+        "duration": "1 min 12 s"
+      },
+      {
+        "name": "tests",
+        "duration": "2 min 04 s"
+      },
+      {
+        "name": "lint",
+        "duration": "18 s"
+      }
+    ],
+    "reviewer": "Camille Martin",
+    "status": "Ouverte",
+    "mergeLabel": "Fusionner",
+    "labels": {
+      "checksQueued": "Vérifications en attente",
+      "checksRunning": "Vérifications en cours",
+      "checksFailed": "1 vérification en échec",
+      "approved": "Approuvée par {reviewer}",
+      "files": "{count} fichiers",
+      "filesOne": "{count} fichier"
+    },
+    "locale": "fr-FR"
   }
 }

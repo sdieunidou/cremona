@@ -6,6 +6,13 @@
     { "name": "highlighted", "type": "number | null", "optional": true },
     { "name": "weekStartsOn", "type": "0 | 1", "optional": true, "default": "1" },
     { "name": "events", "type": "MonthEvent[]", "optional": true, "default": "[…] (8 items)" },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the year, month, weekday names and day numbers (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },

@@ -36,7 +36,7 @@ export interface CartDrawerProps extends VisualProps {
   items?: CartDrawerItem[];
   /** ISO 4217 currency of every amount. */
   currency?: string;
-  /** Locale used to format amounts. */
+  /** Locale used to format amounts and the promo percentage. */
   locale?: string;
   /** Shipping cost; 0 reads "Free". */
   shipping?: number;
@@ -142,6 +142,7 @@ export function CartDrawer({
     : {};
 
   const money = new Intl.NumberFormat(locale, { style: "currency", currency });
+  const percent = new Intl.NumberFormat(locale, { style: "unit", unit: "percent" });
   const lines = empty ? [] : items;
   const count = lines.reduce((n, it) => n + it.qty, 0);
   const subtotal = cents(lines.reduce((sum, it) => sum + cents(it.price * it.qty), 0));
@@ -299,7 +300,7 @@ export function CartDrawer({
                   >
                     <Tag className="size-2.5 text-primary" strokeWidth={2.25} />
                     <span className="rounded bg-primary/10 px-1 py-0.5 text-[8px] font-semibold text-primary">
-                      -{promoPercent}% {promoCode}
+                      {percent.format(-promoPercent)} {promoCode}
                     </span>
                     <span className="ml-auto font-medium text-success tabular-nums">
                       {money.format(-off)}

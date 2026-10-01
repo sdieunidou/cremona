@@ -2,5 +2,27 @@
   "default": {},
   "dark": {
     "dark": true
+  },
+  "french": {
+    "balance": {
+      "value": "8 420,50 €",
+      "change": "+4,2 %"
+    },
+    "transaction": {
+      "name": "Jonas Weiss",
+      "initials": "JW",
+      "detail": "Virement · auj., 9:12",
+      "amount": "36,00 €"
+    },
+    "weekTotal": "32 courses",
+    "labels": {
+      "greeting": "Bonjour",
+      "balance": "Solde",
+      "thisWeek": "Cette semaine",
+      "home": "Accueil",
+      "explore": "Explorer",
+      "saved": "Favoris",
+      "profile": "Profil"
+    }
   }
 }

@@ -39,6 +39,12 @@
       "propsRaw": "{groups:[`Actions`,`Navigation`,`Deploy`]}",
       "size": null,
       "slug": "003-nested"
+    },
+    {
+      "label": "french",
+      "slug": "004-french",
+      "size": null,
+      "propsRaw": "{placeholder:`Chercher une commande…`,emptyText:`Aucun résultat`,emptyHint:`Essayez « déployer » ou « paramètres ».`,catalog:[{heading:`Actions`,items:[{label:`Nouveau fichier`,shortcut:`⌘N`,keywords:`nouveau fichier créer`},{label:`Déployer en production`,shortcut:`⇧⌘D`,keywords:`déployer production publier`}]},{heading:`Navigation`,items:[{label:`Aller au tableau de bord`,shortcut:`G D`,keywords:`tableau de bord accueil`},{label:`Ouvrir les paramètres`,shortcut:`G S`,keywords:`paramètres préférences`}]}],labels:{search:`Rechercher une commande`,escape:`échap`,commands:`Commandes`,navigate:`Naviguer`,select:`Sélectionner`}}"
     }
   ]
 }

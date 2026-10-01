@@ -119,5 +119,61 @@
         ]
       }
     ]
+  },
+  "french": {
+    "title": "Tableau Kanban",
+    "columns": [
+      {
+        "id": "todo",
+        "title": "À faire",
+        "dot": "neutral",
+        "cards": [
+          {
+            "title": "Revoir les états vides",
+            "comments": 4
+          },
+          {
+            "title": "Corriger le calcul de TVA",
+            "attachments": 2
+          },
+          {
+            "title": "Ajouter l’export CSV"
+          }
+        ]
+      },
+      {
+        "id": "doing",
+        "title": "En cours",
+        "dot": "active",
+        "cards": [
+          {
+            "title": "Centre de notifications v2",
+            "comments": 7
+          },
+          {
+            "title": "Refonte du module de facturation"
+          }
+        ]
+      },
+      {
+        "id": "done",
+        "title": "Terminé",
+        "dot": "success",
+        "cards": [
+          {
+            "title": "Spécification d’accueil v3",
+            "comments": 12
+          },
+          {
+            "title": "Correctif · redirection de connexion"
+          }
+        ]
+      }
+    ],
+    "labels": {
+      "tasks": "{count} tâches",
+      "tasksOne": "{count} tâche"
+    },
+    "locale": "fr-FR"
   }
 }

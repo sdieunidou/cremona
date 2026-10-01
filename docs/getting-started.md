@@ -97,6 +97,10 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
   gallery page; how blocks treat real data is in
   [Block data props](react.md#block-data-props). An empty array renders
   empty, never as the demo data.
+- **Language**: interface text the content props do not reach (buttons,
+  column headers, status words) takes a `labels` object, and `locale="fr-FR"`
+  formats the numbers and dates a block computes — see
+  [Labels and locale](react.md#labels-and-locale).
 - **Accessibility**: the block's root is `aria-hidden`. Say what it shows in
   text next to it ([what blocks guarantee and what you add](accessibility.md)).
 - **Animation**: `animated={false}` (the default) renders the final state.

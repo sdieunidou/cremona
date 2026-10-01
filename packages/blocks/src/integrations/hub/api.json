@@ -7,11 +7,11 @@
     { "name": "spin", "type": "boolean", "optional": true, "default": "false" },
     {
       "name": "logo",
-      "type": "ReactNode",
+      "type": "HubNode",
       "optional": true,
       "default": "<Boxes className=\"size-6\" strokeWidth={1.25} />"
     },
-    { "name": "satellites", "type": "ReactNode[]", "optional": true, "default": "[…] (6 items)" },
+    { "name": "satellites", "type": "HubNode[]", "optional": true, "default": "[…] (6 items)" },
     { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     {
@@ -41,6 +41,7 @@
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
   "types": [
+    { "name": "HubNode", "type": "ReactNode | LucideIcon" },
     { "name": "HubSpread", "type": "\"compact\" | \"default\" | \"wide\"" },
     { "name": "HubVariant", "type": "\"orbit\" | \"beam\"" }
   ]

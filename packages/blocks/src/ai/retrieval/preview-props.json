@@ -73,5 +73,27 @@
       }
     ],
     "answer": "Deploy a second key, then revoke the old one."
+  },
+  "french": {
+    "query": "Comment se faire rembourser ?",
+    "sources": [
+      {
+        "name": "facturation.mdx",
+        "score": 0.94
+      },
+      {
+        "name": "remboursements.pdf",
+        "score": 0.87
+      },
+      {
+        "name": "cgv.md",
+        "score": 0.71
+      }
+    ],
+    "answer": "Les remboursements sont versés sous 30 jours, sur le moyen de paiement d’origine.",
+    "labels": {
+      "answer": "Réponse"
+    },
+    "locale": "fr-FR"
   }
 }

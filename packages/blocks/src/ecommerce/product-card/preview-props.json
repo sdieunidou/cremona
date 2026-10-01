@@ -8,5 +8,23 @@
   },
   "hover add": {
     "hoverAdd": true
+  },
+  "french": {
+    "title": "Aero Runner 2",
+    "category": "Running · Homme",
+    "price": "119,00 €",
+    "compareAt": "149,00 €",
+    "reviews": "214",
+    "rating": 4.5,
+    "sale": true,
+    "discount": "-20 %",
+    "labels": {
+      "add": "Ajouter au panier",
+      "soldOut": "Épuisé",
+      "notify": "M’avertir",
+      "shipping": "Livraison offerte",
+      "rating": "Noté {rating} sur 5"
+    },
+    "locale": "fr-FR"
   }
 }

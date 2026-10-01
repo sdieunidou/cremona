@@ -5,6 +5,19 @@
     { "name": "label", "type": "string", "optional": true },
     { "name": "count", "type": "number", "optional": true, "default": "5" },
     {
+      "name": "labels",
+      "type": "Partial<StackedLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the file count (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -34,6 +47,23 @@
     {
       "name": "StackCategory",
       "type": "| \"default\" | \"documents\" | \"spreadsheets\" | \"images\" | \"design\" | \"code\" | \"fonts\" | \"media\" | \"video\" | \"audio\" | \"archives\" | \"mixed\""
+    },
+    {
+      "name": "StackedLabels",
+      "props": [
+        {
+          "name": "files",
+          "type": "string",
+          "optional": false,
+          "description": "Badge text when `label` is not set; `{count}` is replaced by the file count."
+        },
+        {
+          "name": "filesOne",
+          "type": "string",
+          "optional": false,
+          "description": "`files` when the count is one."
+        }
+      ]
     }
   ]
 }

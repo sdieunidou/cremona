@@ -20,24 +20,52 @@ const barColors: Record<"ok" | "degraded" | "outage", string> = {
   outage: "bg-destructive/85",
 };
 
-const statusMeta: Record<
-  UptimeStatus,
-  { label: string; dot: string; ping: string; badge: string }
-> = {
+export interface UptimeBarLabels {
+  /** Status line of each status. */
+  operational: string;
+  degraded: string;
+  outage: string;
+  /** Legend of the degraded and outage days. */
+  legendDegraded: string;
+  legendOutage: string;
+  /** Start of the window; `{count}` is replaced by the number of days. */
+  daysAgo: string;
+  /** `daysAgo` when the count is one. */
+  daysAgoOne: string;
+  /** End of the window. */
+  today: string;
+}
+
+export const uptimeBarDefaultLabels: UptimeBarLabels = {
+  operational: "All systems operational",
+  degraded: "Degraded performance",
+  outage: "Major outage",
+  legendDegraded: "Degraded",
+  legendOutage: "Outage",
+  daysAgo: "{count} days ago",
+  daysAgoOne: "{count} day ago",
+  today: "Today",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
+const statusMeta: Record<UptimeStatus, { dot: string; ping: string; badge: string }> = {
   operational: {
-    label: "All systems operational",
     dot: "bg-emerald-500",
     ping: "bg-emerald-500/60",
     badge: "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
   },
   degraded: {
-    label: "Degraded performance",
     dot: "bg-amber-500",
     ping: "bg-amber-500/60",
     badge: "border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400",
   },
   outage: {
-    label: "Major outage",
     dot: "bg-destructive",
     ping: "bg-destructive/60",
     badge: "border-destructive/20 bg-destructive/10 text-destructive",
@@ -115,6 +143,10 @@ export interface UptimeBarProps extends VisualProps {
   /** The current status. Defaults to today's: the last day's outage or incident, else operational. */
   status?: UptimeStatus;
   showLegend?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<UptimeBarLabels>;
+  /** BCP 47 locale of the uptime and day count (default `"en-US"`). */
+  locale?: string;
   isometric?: boolean;
   gradient?: boolean;
 }
@@ -127,6 +159,8 @@ export function UptimeBar({
   outages,
   status,
   showLegend = true,
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -152,8 +186,15 @@ export function UptimeBar({
   const incidentSet = new Set((incidents ?? uptimeBarDefault.incidents).filter(inWindow));
   const outageSet = new Set((outages ?? uptimeBarDefault.outages).filter(inWindow));
   const downDays = new Set([...incidentSet, ...outageSet]).size;
+  const text = { ...uptimeBarDefaultLabels, ...labels };
+  const percent = new Intl.NumberFormat(locale, {
+    style: "unit",
+    unit: "percent",
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
   const computedUptime = dayCount
-    ? (((dayCount - downDays) / dayCount) * 100).toFixed(2) + "%"
+    ? percent.format(Number((((dayCount - downDays) / dayCount) * 100).toFixed(2)))
     : "—";
   const uptimeLabel = uptime ?? computedUptime;
   const today = dayCount - 1;
@@ -165,7 +206,10 @@ export function UptimeBar({
         : incidentSet.has(today)
           ? "degraded"
           : "operational";
-  const meta = (status && statusMeta[status]) || statusMeta[current];
+  const shown: UptimeStatus = status && Object.hasOwn(statusMeta, status) ? status : current;
+  const meta = statusMeta[shown];
+  const daysAgo =
+    new Intl.PluralRules(locale).select(dayCount) === "one" ? text.daysAgoOne : text.daysAgo;
   const hasIncidents = [...incidentSet].some((day) => !outageSet.has(day));
   const hasOutages = outageSet.size > 0;
   const footerAnim = {
@@ -222,7 +266,7 @@ export function UptimeBar({
                 <span className={cn("relative size-2 rounded-full", meta.dot)} />
               </span>
               <span className="text-xs font-semibold text-foreground">{title}</span>
-              <span className="text-[10px] font-medium text-muted-foreground">{meta.label}</span>
+              <span className="text-[10px] font-medium text-muted-foreground">{text[shown]}</span>
             </div>
             <motion.span
               className={cn(
@@ -260,24 +304,26 @@ export function UptimeBar({
             variants={animated ? footerAnim : undefined}
             {...state}
           >
-            <span>{dayCount} days ago</span>
+            <span>
+              {interpolate(daysAgo, { count: new Intl.NumberFormat(locale).format(dayCount) })}
+            </span>
             {showLegend && (hasIncidents || hasOutages) && (
               <div className="flex items-center gap-2.5">
                 {hasIncidents && (
                   <span className="flex items-center gap-1">
                     <span className="size-1.5 rounded-full bg-amber-500" />
-                    Degraded
+                    {text.legendDegraded}
                   </span>
                 )}
                 {hasOutages && (
                   <span className="flex items-center gap-1">
                     <span className="size-1.5 rounded-full bg-destructive" />
-                    Outage
+                    {text.legendOutage}
                   </span>
                 )}
               </div>
             )}
-            <span>Today</span>
+            <span>{text.today}</span>
           </motion.div>
         </div>
       </motion.div>

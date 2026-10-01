@@ -27,6 +27,12 @@
       "propsRaw": "{mode:`signup`}",
       "size": null,
       "slug": "001-signup"
+    },
+    {
+      "label": "french",
+      "slug": "002-french",
+      "size": null,
+      "propsRaw": "{labels:{quote:`« Avec Acme, on livre deux fois plus vite. »`,quoteRole:`Directrice du design, Nova`,signInTitle:`Connexion`,signInDescription:`Bon retour — reprenez là où vous en étiez.`,signUpTitle:`Créer un compte`,signUpDescription:`Commencez votre essai gratuit de 14 jours.`,name:`Nom`,email:`E-mail`,password:`Mot de passe`,strength:`Robustesse : bonne`,remember:`Se souvenir de moi`,forgot:`Oublié ?`,signInSubmit:`Se connecter`,signUpSubmit:`Créer un compte`,or:`ou`}}"
     }
   ]
 }

@@ -71,6 +71,12 @@
       "slug": "008-no-legend",
       "size": null,
       "propsRaw": "{showLegend:!1}"
+    },
+    {
+      "label": "french",
+      "slug": "009-french",
+      "size": null,
+      "propsRaw": "{title:`Disponibilité`,days:90,incidents:[23,61,62],outages:[47],labels:{operational:`Systèmes opérationnels`,degraded:`Performances dégradées`,outage:`Panne majeure`,legendDegraded:`Dégradé`,legendOutage:`Panne`,daysAgo:`il y a {count} jours`,daysAgoOne:`il y a {count} jour`,today:`Aujourd’hui`},locale:`fr-FR`}"
     }
   ]
 }

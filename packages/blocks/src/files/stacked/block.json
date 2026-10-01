@@ -89,6 +89,12 @@
       "slug": "011-mixed",
       "size": "sm",
       "propsRaw": "{category:`mixed`,label:`Mixed`}"
+    },
+    {
+      "label": "french",
+      "slug": "012-french",
+      "size": null,
+      "propsRaw": "{category:`documents`,count:3,labels:{files:`{count} fichiers`,filesOne:`{count} fichier`},locale:`fr-FR`}"
     }
   ]
 }

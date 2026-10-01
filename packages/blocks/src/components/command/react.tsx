@@ -29,6 +29,26 @@ export interface CommandGroup {
   items: CommandItem[];
 }
 
+export interface CommandLabels {
+  /** Accessible name of the search input. */
+  search: string;
+  /** Key cap that closes the menu. */
+  escape: string;
+  /** Accessible name of the list of commands. */
+  commands: string;
+  /** Footer hints. */
+  navigate: string;
+  select: string;
+}
+
+export const commandDefaultLabels: CommandLabels = {
+  search: "Search commands",
+  escape: "esc",
+  commands: "Commands",
+  navigate: "Navigate",
+  select: "Select",
+};
+
 export interface CommandProps extends VisualProps {
   /** Initial search query; only matching items are rendered. */
   query?: string;
@@ -43,6 +63,8 @@ export interface CommandProps extends VisualProps {
   emptyText?: string;
   /** Empty-state hint (default: a hint for the demo catalog). */
   emptyHint?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<CommandLabels>;
   /** Full width and height of the box; the list scrolls. */
   fill?: boolean;
 }
@@ -106,6 +128,7 @@ export function Command({
   placeholder = "Type a command or search…",
   emptyText = "No results found",
   emptyHint,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -134,6 +157,7 @@ export function Command({
       }
     : {};
 
+  const text = { ...commandDefaultLabels, ...labels };
   const source = catalog ?? demoCatalog;
   const shownGroups = groups ?? (catalog ? undefined : ["Actions", "Navigation"]);
   const needle = (empty ? "\u0000no-match" : value).trim().toLowerCase();
@@ -201,7 +225,7 @@ export function Command({
             onKeyDown={onKeyDown}
             placeholder={placeholder}
             role="combobox"
-            aria-label="Search commands"
+            aria-label={text.search}
             aria-expanded="true"
             aria-controls={listId}
             aria-autocomplete="list"
@@ -209,11 +233,11 @@ export function Command({
             className="h-8 w-full bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
           <kbd className="rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
-            esc
+            {text.escape}
           </kbd>
         </div>
         <div ref={listRef} className={cn("p-1", fill && "min-h-0 flex-1 overflow-y-auto")}>
-          <div id={listId} role="listbox" aria-label="Commands">
+          <div id={listId} role="listbox" aria-label={text.commands}>
             {rendered.map((group, g) => {
               const headingId = `${id}-group-${g}`;
               return (
@@ -272,11 +296,11 @@ export function Command({
           <span className="flex items-center gap-1">
             <kbd className={hintKbd}>↑</kbd>
             <kbd className={hintKbd}>↓</kbd>
-            Navigate
+            {text.navigate}
           </span>
           <span className="flex items-center gap-1">
             <kbd className={hintKbd}>↵</kbd>
-            Select
+            {text.select}
           </span>
         </div>
       </motion.div>

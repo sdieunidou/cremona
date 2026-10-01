@@ -21,8 +21,6 @@ export const importDefaultMappings: ImportMapping[] = [
 
 const timing = { start: 0.15, step: 0.09, duration: 0.4 } as const;
 
-const formatCount = (value: number) => String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
 const card = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -71,6 +69,8 @@ export interface ImportProps extends VisualProps {
   actionLabel?: string;
   /** Shown in place of the mappings when `mappings` is empty. */
   emptyLabel?: string;
+  /** BCP 47 locale of the row count (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -86,6 +86,7 @@ export function Import({
   skipLabel = "Skip",
   actionLabel = "Import",
   emptyLabel = "No columns to map",
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -211,7 +212,7 @@ export function Import({
           >
             <div className="flex items-baseline gap-1.5">
               <span className="text-sm font-semibold text-foreground tabular-nums">
-                {formatCount(Number.isFinite(rowCount) ? rowCount : 0)}
+                {new Intl.NumberFormat(locale).format(Number.isFinite(rowCount) ? rowCount : 0)}
               </span>
               <span className="text-[10px] text-muted-foreground">{unit}</span>
             </div>

@@ -108,5 +108,37 @@
         "receipt": "sent"
       }
     ]
+  },
+  "french": {
+    "name": "Camille Martin",
+    "status": "En ligne",
+    "initials": "CM",
+    "messages": [
+      {
+        "from": "them",
+        "text": "Salut ! Je viens de pousser les nouvelles maquettes.",
+        "time": "10:24"
+      },
+      {
+        "from": "me",
+        "text": "Super, j’adore le dégradé.",
+        "time": "10:25",
+        "receipt": "read"
+      },
+      {
+        "from": "them",
+        "text": "Merci ! On livre quand ?",
+        "time": "10:26"
+      },
+      {
+        "from": "me",
+        "text": "Demain matin, ça me va.",
+        "time": "10:27",
+        "receipt": "read"
+      }
+    ],
+    "labels": {
+      "placeholder": "Écrivez un message…"
+    }
   }
 }

@@ -18,6 +18,19 @@
       "description": "Shown in place of the rules when `rules` is empty.",
       "default": "\"No filters\""
     },
+    {
+      "name": "labels",
+      "type": "Partial<FiltersLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the counts (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -55,6 +68,30 @@
         { "name": "operator", "type": "string", "optional": false },
         { "name": "value", "type": "string", "optional": false },
         { "name": "matches", "type": "number", "optional": false }
+      ]
+    },
+    {
+      "name": "FiltersLabels",
+      "props": [
+        {
+          "name": "where",
+          "type": "string",
+          "optional": false,
+          "description": "Before the first rule."
+        },
+        {
+          "name": "and",
+          "type": "string",
+          "optional": false,
+          "description": "Before each following rule."
+        },
+        { "name": "clear", "type": "string", "optional": false },
+        {
+          "name": "of",
+          "type": "string",
+          "optional": false,
+          "description": "After the match count; `{total}` and `{unit}` are replaced."
+        }
       ]
     }
   ]

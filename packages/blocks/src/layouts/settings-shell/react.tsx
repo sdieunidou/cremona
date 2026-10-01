@@ -7,38 +7,92 @@ import { Bell, ChevronDown, CreditCard, Settings, ShieldCheck } from "lucide-rea
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface SettingsShellLabels {
+  /** Accessible name of the section list. */
+  navigation: string;
+  settings: string;
+  /** Sections; `general` is also the page title. */
+  general: string;
+  security: string;
+  billing: string;
+  notifications: string;
+  generalDescription: string;
+  /** Form rows: label and hint. */
+  workspaceName: string;
+  workspaceNameHint: string;
+  timeZone: string;
+  timeZoneHint: string;
+  emailDigests: string;
+  emailDigestsHint: string;
+  publicProfile: string;
+  publicProfileHint: string;
+  /** Danger zone card (`danger`). */
+  deleteAccount: string;
+  deleteAccountHint: string;
+  delete: string;
+  cancel: string;
+  save: string;
+}
+
+export const settingsShellDefaultLabels: SettingsShellLabels = {
+  navigation: "Settings sections",
+  settings: "Settings",
+  general: "General",
+  security: "Security",
+  billing: "Billing",
+  notifications: "Notifications",
+  generalDescription: "How your workspace looks and behaves.",
+  workspaceName: "Workspace name",
+  workspaceNameHint: "Shown across your workspace.",
+  timeZone: "Time zone",
+  timeZoneHint: "Used for digests and reports.",
+  emailDigests: "Email digests",
+  emailDigestsHint: "A weekly summary every Monday.",
+  publicProfile: "Public profile",
+  publicProfileHint: "Let anyone see your workspace.",
+  deleteAccount: "Delete account",
+  deleteAccountHint: "Permanently removes your workspace and data.",
+  delete: "Delete",
+  cancel: "Cancel",
+  save: "Save changes",
+};
+
 export interface SettingsShellProps extends VisualProps {
   /** Append a destructive "Delete account" card above the save bar. */
   danger?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<SettingsShellLabels>;
 }
 
-const sections: { icon: LucideIcon; label: string; active?: boolean }[] = [
-  { icon: Settings, label: "General", active: true },
-  { icon: ShieldCheck, label: "Security" },
-  { icon: CreditCard, label: "Billing" },
-  { icon: Bell, label: "Notifications" },
+type SettingsText = keyof SettingsShellLabels;
+
+const sections: { icon: LucideIcon; id: SettingsText; active?: boolean }[] = [
+  { icon: Settings, id: "general", active: true },
+  { icon: ShieldCheck, id: "security" },
+  { icon: CreditCard, id: "billing" },
+  { icon: Bell, id: "notifications" },
 ];
 
 type FormRow =
-  | { label: string; hint: string; control: "input"; value: string }
-  | { label: string; hint: string; control: "select"; value: string }
-  | { label: string; hint: string; control: "switch"; on: boolean };
+  | { label: SettingsText; hint: SettingsText; control: "input"; value: string }
+  | { label: SettingsText; hint: SettingsText; control: "select"; value: string }
+  | { label: SettingsText; hint: SettingsText; control: "switch"; on: boolean };
 
 const rows: FormRow[] = [
   {
-    label: "Workspace name",
-    hint: "Shown across your workspace.",
+    label: "workspaceName",
+    hint: "workspaceNameHint",
     control: "input",
     value: "Acme Inc.",
   },
   {
-    label: "Time zone",
-    hint: "Used for digests and reports.",
+    label: "timeZone",
+    hint: "timeZoneHint",
     control: "select",
     value: "(GMT+01:00) Berlin",
   },
-  { label: "Email digests", hint: "A weekly summary every Monday.", control: "switch", on: true },
-  { label: "Public profile", hint: "Let anyone see your workspace.", control: "switch", on: false },
+  { label: "emailDigests", hint: "emailDigestsHint", control: "switch", on: true },
+  { label: "publicProfile", hint: "publicProfileHint", control: "switch", on: false },
 ];
 const shell = {
   hidden: { opacity: 0 },
@@ -94,33 +148,33 @@ function Control({ row }: { row: (typeof rows)[number] }) {
   );
 }
 
-function SettingsNav() {
+function SettingsNav({ text }: { text: SettingsShellLabels }) {
   return (
     <motion.aside
       className="flex w-[5.5rem] shrink-0 flex-col gap-0.5 border-r p-2"
-      aria-label="Settings sections"
+      aria-label={text.navigation}
       variants={region}
     >
       <span className="px-1 pb-1 text-[10px] leading-none font-semibold tracking-tight text-foreground">
-        Settings
+        {text.settings}
       </span>
-      {sections.map(({ icon: Icon, label, active }) => (
+      {sections.map(({ icon: Icon, id, active }) => (
         <span
-          key={label}
+          key={id}
           className={cn(
             "flex items-center gap-1.5 rounded-md px-1.5 py-1",
             active ? "bg-primary/10 text-primary" : "text-muted-foreground",
           )}
         >
           <Icon className="size-3 shrink-0" strokeWidth={2} />
-          <span className="text-[9px] leading-none font-medium">{label}</span>
+          <span className="text-[9px] leading-none font-medium">{text[id]}</span>
         </span>
       ))}
     </motion.aside>
   );
 }
 
-function FormRows() {
+function FormRows({ text }: { text: SettingsShellLabels }) {
   return (
     <motion.div className="flex flex-col rounded-lg border bg-card" variants={subRegions}>
       {rows.map((row) => (
@@ -130,9 +184,11 @@ function FormRows() {
           variants={region}
         >
           <div className="flex min-w-0 flex-col gap-0.5">
-            <span className="text-[9px] leading-none font-medium text-foreground">{row.label}</span>
+            <span className="text-[9px] leading-none font-medium text-foreground">
+              {text[row.label]}
+            </span>
             <span className="truncate text-[7px] leading-tight text-muted-foreground">
-              {row.hint}
+              {text[row.hint]}
             </span>
           </div>
           <Control row={row} />
@@ -142,7 +198,7 @@ function FormRows() {
   );
 }
 
-function DangerCard() {
+function DangerCard({ text }: { text: SettingsShellLabels }) {
   return (
     <motion.div
       className="flex items-center justify-between gap-2 rounded-lg border border-destructive/40 bg-card p-2"
@@ -150,14 +206,14 @@ function DangerCard() {
     >
       <div className="flex min-w-0 flex-col gap-0.5">
         <span className="text-[9px] leading-none font-semibold text-destructive">
-          Delete account
+          {text.deleteAccount}
         </span>
         <span className="text-[7px] leading-tight text-muted-foreground">
-          Permanently removes your workspace and data.
+          {text.deleteAccountHint}
         </span>
       </div>
       <span className="shrink-0 rounded-md bg-destructive px-1.5 py-1 text-[8px] leading-none font-medium text-destructive-foreground">
-        Delete
+        {text.delete}
       </span>
     </motion.div>
   );
@@ -165,6 +221,7 @@ function DangerCard() {
 
 export function SettingsShell({
   danger = false,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -182,6 +239,7 @@ export function SettingsShell({
             : "hidden",
       }
     : {};
+  const text = { ...settingsShellDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -194,29 +252,29 @@ export function SettingsShell({
         variants={animated ? shell : undefined}
         {...state}
       >
-        <SettingsNav />
+        <SettingsNav text={text} />
         <motion.div className="flex min-w-0 flex-1 flex-col p-2.5" variants={regions} {...state}>
           <motion.div className="flex flex-col gap-1" variants={region}>
             <span className="text-[11px] leading-tight font-semibold tracking-tight text-foreground">
-              General
+              {text.general}
             </span>
             <span className="text-[8px] leading-tight text-muted-foreground">
-              How your workspace looks and behaves.
+              {text.generalDescription}
             </span>
           </motion.div>
           <motion.div className="mt-2 flex flex-col gap-2" variants={subRegions}>
-            <FormRows />
-            {danger && <DangerCard />}
+            <FormRows text={text} />
+            {danger && <DangerCard text={text} />}
           </motion.div>
           <motion.div
             className="mt-auto flex items-center justify-end gap-1.5 border-t pt-2"
             variants={region}
           >
             <span className="rounded-md px-2 py-1 text-[9px] font-medium text-muted-foreground">
-              Cancel
+              {text.cancel}
             </span>
             <span className="rounded-md bg-primary px-2 py-1 text-[9px] font-medium text-primary-foreground">
-              Save changes
+              {text.save}
             </span>
           </motion.div>
         </motion.div>

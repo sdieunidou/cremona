@@ -18,6 +18,19 @@
     { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
     { "name": "glow", "type": "boolean", "optional": true, "default": "true" },
     { "name": "particles", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "labels",
+      "type": "Partial<RetrievalLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the relevance scores (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     {
       "name": "animated",
@@ -46,6 +59,17 @@
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
   "types": [
+    {
+      "name": "RetrievalLabels",
+      "props": [
+        {
+          "name": "answer",
+          "type": "string",
+          "optional": false,
+          "description": "Heading of the answer card."
+        }
+      ]
+    },
     {
       "name": "Source",
       "props": [

@@ -23,12 +23,35 @@ export const composeDefaultCopy: {
   to: [{ initials: "SC", email: "sarah@example.dev" }],
 };
 
+export interface ComposeLabels {
+  /** Field names. */
+  to: string;
+  cc: string;
+  subject: string;
+  /** Remove button of a recipient; `{email}` is replaced by the address. */
+  remove: string;
+}
+
+export const composeDefaultLabels: ComposeLabels = {
+  to: "To",
+  cc: "Cc",
+  subject: "Subject",
+  remove: "Remove {email}",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 const LINE_WIDTHS = ["w-3/4", "w-2/3", "w-4/5", "w-1/2", "w-3/5", "w-2/5"];
 const LINE_BASE = 0.25;
 const LINE_STEP = 0.08;
 const LINE_DURATION = 0.3;
 
-function Recipient({ recipient }: { recipient: ComposeRecipient }) {
+function Recipient({ recipient, remove }: { recipient: ComposeRecipient; remove: string }) {
   return (
     <div className="flex items-center gap-1 rounded-full bg-muted px-1 py-0.5">
       <div className="flex size-3.5 items-center justify-center rounded-full bg-background text-[7px] font-semibold text-muted-foreground">
@@ -39,7 +62,7 @@ function Recipient({ recipient }: { recipient: ComposeRecipient }) {
       </span>
       <button
         type="button"
-        aria-label={`Remove ${recipient.email}`}
+        aria-label={interpolate(remove, { email: recipient.email })}
         className="flex items-center text-muted-foreground"
         tabIndex={-1}
         onMouseDown={(e) => e.preventDefault()}
@@ -130,6 +153,8 @@ export interface ComposeProps extends VisualProps {
   cc?: ComposeRecipient[];
   subject?: string;
   sendLabel?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<ComposeLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -142,6 +167,7 @@ export function Compose({
   cc,
   subject = composeDefaultCopy.subject,
   sendLabel = composeDefaultCopy.sendLabel,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -154,6 +180,7 @@ export function Compose({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const loop = useLoopActive(ref, animated);
+  const text = { ...composeDefaultLabels, ...labels };
   const state = animated
     ? {
         initial: "hidden",
@@ -213,11 +240,11 @@ export function Compose({
               variants={animated ? row : undefined}
             >
               <span className="w-10 shrink-0 text-[10px] font-medium text-muted-foreground">
-                To
+                {text.to}
               </span>
               <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
                 {to.map((recipient, i) => (
-                  <Recipient key={i} recipient={recipient} />
+                  <Recipient key={i} recipient={recipient} remove={text.remove} />
                 ))}
               </div>
             </motion.div>
@@ -227,11 +254,11 @@ export function Compose({
                 variants={animated ? row : undefined}
               >
                 <span className="w-10 shrink-0 text-[10px] font-medium text-muted-foreground">
-                  Cc
+                  {text.cc}
                 </span>
                 <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
                   {cc!.map((recipient, i) => (
-                    <Recipient key={i} recipient={recipient} />
+                    <Recipient key={i} recipient={recipient} remove={text.remove} />
                   ))}
                 </div>
               </motion.div>
@@ -241,7 +268,7 @@ export function Compose({
               variants={animated ? row : undefined}
             >
               <span className="w-10 shrink-0 text-[10px] font-medium text-muted-foreground">
-                Subject
+                {text.subject}
               </span>
               <span className="truncate text-[11px] font-medium text-foreground">{subject}</span>
             </motion.div>

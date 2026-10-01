@@ -1,10 +1,34 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ReactElement } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { Maximize2, Pause, Play, Settings, Volume2 } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+export interface VideoPlayerLabels {
+  /** Name of the play/pause button, by the action it shows. */
+  play: string;
+  pause: string;
+  /** Badge of the livestream scene. */
+  live: string;
+  /** Viewer count of the livestream scene; `{count}` is replaced by `viewers`. */
+  watching: string;
+}
+
+export const videoPlayerDefaultLabels: VideoPlayerLabels = {
+  play: "Play",
+  pause: "Pause",
+  live: "Live",
+  watching: "{count} watching",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
 
 export interface VideoPlayerProps extends VisualProps {
   variant?: "landscape" | "tutorial" | "podcast" | "livestream";
@@ -16,6 +40,12 @@ export interface VideoPlayerProps extends VisualProps {
   state?: "play" | "pause";
   showInfo?: boolean;
   showPlayButton?: boolean;
+  /** Viewers of the livestream scene, shown in compact notation (default 6400, "6.4K"). */
+  viewers?: number;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<VideoPlayerLabels>;
+  /** BCP 47 locale of the viewer count (default `"en-US"`). */
+  locale?: string;
   isometric?: boolean;
   gradient?: boolean;
 }
@@ -108,7 +138,12 @@ function PodcastScene() {
   );
 }
 
-function LivestreamScene() {
+interface SceneText {
+  live: string;
+  watching: string;
+}
+
+function LivestreamScene({ live, watching }: SceneText) {
   return (
     <div className="absolute inset-0 overflow-hidden bg-[linear-gradient(135deg,var(--color-violet-700),var(--color-fuchsia-600),var(--color-rose-500))]">
       <div className="absolute -bottom-10 left-1/4 size-32 rounded-full bg-fuchsia-300/40 blur-2xl" />
@@ -136,22 +171,25 @@ function LivestreamScene() {
       </div>
       <div className="absolute top-2.5 right-2.5 flex items-center gap-1 rounded bg-rose-600 px-1.5 py-0.5 text-[8px] font-bold tracking-wide text-white uppercase shadow-sm">
         <span className="size-1 rounded-full bg-white" />
-        Live
+        {live}
       </div>
       <div className="absolute top-8 right-2.5 rounded-full bg-black/45 px-1.5 py-0.5 text-[8px] font-medium text-white backdrop-blur-sm">
-        6.4K watching
+        {watching}
       </div>
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(0,0,0,0.4))]" />
     </div>
   );
 }
 
-const scenes = {
+const scenes: Record<
+  NonNullable<VideoPlayerProps["variant"]>,
+  (text: SceneText) => ReactElement
+> = {
   landscape: LandscapeScene,
   tutorial: TutorialScene,
   podcast: PodcastScene,
   livestream: LivestreamScene,
-} as const;
+};
 
 const card = {
   hidden: { opacity: 0 },
@@ -229,6 +267,9 @@ export function VideoPlayer({
   state = "play",
   showInfo = true,
   showPlayButton = true,
+  viewers = 6400,
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -247,6 +288,12 @@ export function VideoPlayer({
       : "hidden";
   const motionState = animated ? { initial: "hidden", animate: visible } : {};
   const Scene = scenes[variant];
+  const text = { ...videoPlayerDefaultLabels, ...labels };
+  const watching = interpolate(text.watching, {
+    count: new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 }).format(
+      viewers,
+    ),
+  });
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -292,7 +339,11 @@ export function VideoPlayer({
               variants={animated ? mediaAnim : undefined}
               {...motionState}
             >
-              {image ? <img src={image} alt="" className="size-full object-cover" /> : <Scene />}
+              {image ? (
+                <img src={image} alt="" className="size-full object-cover" />
+              ) : (
+                <Scene live={text.live} watching={watching} />
+              )}
             </motion.div>
             {showInfo && (
               <motion.div
@@ -307,7 +358,7 @@ export function VideoPlayer({
             {showPlayButton && (
               <motion.button
                 type="button"
-                aria-label={paused ? "Pause" : "Play"}
+                aria-label={paused ? text.pause : text.play}
                 className="absolute top-1/2 left-1/2 flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-background text-primary shadow-lg ring-4 ring-white/20"
                 variants={animated ? buttonAnim : undefined}
                 {...motionState}
@@ -356,7 +407,7 @@ export function VideoPlayer({
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    aria-label={paused ? "Pause" : "Play"}
+                    aria-label={paused ? text.pause : text.play}
                     className="flex size-5 items-center justify-center rounded-full hover:bg-white/15"
                     tabIndex={-1}
                     onMouseDown={(e) => e.preventDefault()}

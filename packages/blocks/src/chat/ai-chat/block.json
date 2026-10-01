@@ -95,6 +95,12 @@
       "slug": "012-no-actions",
       "size": null,
       "propsRaw": "{actions:!1}"
+    },
+    {
+      "label": "french",
+      "slug": "013-french",
+      "size": null,
+      "propsRaw": "{title:`Assistant IA`,prompt:`Résume les résultats du T3.`,response:[{kind:`paragraph`,text:`Voici un aperçu rapide du T3 :`},{kind:`bullet`,text:`Le chiffre d’affaires progresse de 24 % sur un an`},{kind:`bullet`,text:`L’offre Entreprise apporte 62 % du nouvel ARR`},{kind:`bullet`,text:`La rétention nette atteint un record de 118 %`}],status:`Prêt`,labels:{assistant:`Assistant`,placeholder:`Posez votre question…`}}"
     }
   ]
 }

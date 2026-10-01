@@ -9,6 +9,12 @@
       "default": "\"signin\""
     },
     {
+      "name": "labels",
+      "type": "Partial<AuthShellLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -34,5 +40,46 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "AuthShellLabels",
+      "props": [
+        {
+          "name": "quote",
+          "type": "string",
+          "optional": false,
+          "description": "Testimonial quote, with its quotation marks."
+        },
+        {
+          "name": "quoteRole",
+          "type": "string",
+          "optional": false,
+          "description": "Role of the quoted person."
+        },
+        { "name": "signInTitle", "type": "string", "optional": false },
+        { "name": "signInDescription", "type": "string", "optional": false },
+        { "name": "signUpTitle", "type": "string", "optional": false },
+        { "name": "signUpDescription", "type": "string", "optional": false },
+        { "name": "name", "type": "string", "optional": false },
+        { "name": "email", "type": "string", "optional": false },
+        { "name": "password", "type": "string", "optional": false },
+        {
+          "name": "strength",
+          "type": "string",
+          "optional": false,
+          "description": "Password strength caption (sign-up mode)."
+        },
+        { "name": "remember", "type": "string", "optional": false },
+        { "name": "forgot", "type": "string", "optional": false },
+        { "name": "signInSubmit", "type": "string", "optional": false },
+        { "name": "signUpSubmit", "type": "string", "optional": false },
+        {
+          "name": "or",
+          "type": "string",
+          "optional": false,
+          "description": "Separator above the single sign-on buttons."
+        }
+      ]
+    }
+  ]
 }

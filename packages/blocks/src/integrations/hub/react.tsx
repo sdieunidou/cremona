@@ -1,12 +1,37 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { isValidElement, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";
-import { Boxes, Cloud, CodeXml, Database, Globe, Mail, MessageSquare } from "lucide-react";
+import {
+  Boxes,
+  Cloud,
+  CodeXml,
+  Database,
+  Globe,
+  Mail,
+  MessageSquare,
+  type LucideIcon,
+} from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 type HubVariant = "orbit" | "beam";
+
+/** A logo or satellite: an icon component (drawn at the slot's icon size) or any element, e.g. an `<img>`. */
+export type HubNode = ReactNode | LucideIcon;
+
+function isIcon(node: HubNode): node is LucideIcon {
+  return (
+    typeof node === "function" ||
+    (typeof node === "object" && node !== null && !isValidElement(node) && "$$typeof" in node)
+  );
+}
+
+function nodeContent(node: HubNode, className: string, strokeWidth: number): ReactNode {
+  if (!isIcon(node)) return node;
+  const Icon = node;
+  return <Icon className={className} strokeWidth={strokeWidth} />;
+}
 type HubSpread = "compact" | "default" | "wide";
 
 const BEAM_WIDTH = 16;
@@ -119,8 +144,8 @@ export interface HubProps extends VisualProps {
   label?: string;
   spread?: HubSpread;
   spin?: boolean;
-  logo?: ReactNode;
-  satellites?: ReactNode[];
+  logo?: HubNode;
+  satellites?: HubNode[];
   hover?: boolean;
   isometric?: boolean;
 }
@@ -312,7 +337,7 @@ export function Hub({
                     custom={beamDelay(i)}
                     {...state}
                   >
-                    {sat}
+                    {nodeContent(sat, "size-4", 2)}
                   </motion.div>
                 </div>
               );
@@ -361,7 +386,7 @@ export function Hub({
                       custom={beamDelay(i)}
                       {...state}
                     >
-                      {sat}
+                      {nodeContent(sat, "size-4", 2)}
                     </motion.div>
                   </div>
                 </div>
@@ -374,7 +399,7 @@ export function Hub({
             className="relative z-1 flex size-13 items-center justify-center rounded-2xl border border-primary bg-linear-to-b from-primary/60 to-primary/85 text-primary-foreground shadow-md ring-3 ring-primary/10"
             variants={animated ? logoAnim : undefined}
           >
-            {logo}
+            {nodeContent(logo, "size-6", 1.25)}
           </motion.div>
         )}
         {label && (

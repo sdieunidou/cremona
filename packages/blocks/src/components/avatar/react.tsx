@@ -18,6 +18,8 @@ export interface AvatarProps extends VisualProps {
   img?: boolean;
   size?: "sm" | "md" | "lg";
   presence?: Presence;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<AvatarLabels>;
   ring?: boolean;
   /** Showcase: the three sizes side by side. */
   sizes?: boolean;
@@ -42,7 +44,15 @@ const presenceClasses: Record<Presence, string> = {
   offline: "bg-muted-foreground",
 };
 
-const presenceLabels: Record<Presence, string> = {
+export interface AvatarLabels {
+  /** Accessible names of the presence dot. */
+  online: string;
+  away: string;
+  busy: string;
+  offline: string;
+}
+
+export const avatarDefaultLabels: AvatarLabels = {
   online: "Online",
   away: "Away",
   busy: "Busy",
@@ -60,6 +70,7 @@ function Circle({
   src,
   alt,
   presence,
+  presenceLabel,
   ring = false,
 }: {
   size?: "sm" | "md" | "lg";
@@ -67,6 +78,7 @@ function Circle({
   src?: string;
   alt?: string;
   presence?: Presence;
+  presenceLabel?: string;
   ring?: boolean;
 }) {
   return (
@@ -88,7 +100,7 @@ function Circle({
       {presence && (
         <span
           role="img"
-          aria-label={presenceLabels[presence]}
+          aria-label={presenceLabel}
           className={cn(
             "absolute right-0 bottom-0 size-2.5 rounded-full ring-2 ring-background",
             presenceClasses[presence],
@@ -106,6 +118,7 @@ export function Avatar({
   img = false,
   size = "lg",
   presence,
+  labels,
   ring = false,
   sizes = false,
   animated = false,
@@ -132,6 +145,8 @@ export function Avatar({
       }
     : {};
 
+  const text = { ...avatarDefaultLabels, ...labels };
+
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
@@ -152,6 +167,7 @@ export function Avatar({
             src={src ?? (img ? PLACEHOLDER : undefined)}
             alt={alt}
             presence={presence}
+            presenceLabel={presence && text[presence]}
             ring={ring}
           />
         )}

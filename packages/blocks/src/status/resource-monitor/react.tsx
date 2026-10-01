@@ -195,6 +195,8 @@ export interface ResourceMonitorProps extends VisualProps {
   hover?: boolean;
   /** Shown over the plot when no series has a sample. */
   emptyLabel?: string;
+  /** BCP 47 locale of the readings and the axis (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -209,6 +211,7 @@ export function ResourceMonitor({
   showAxis = true,
   hover = false,
   emptyLabel = "No data",
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -229,6 +232,7 @@ export function ResourceMonitor({
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const simulated = series.some((entry) => (entry.jitter ?? 0) > 0);
   const live = animated && inView && (!hover || hovered) && loop && simulated;
+  const percent = new Intl.NumberFormat(locale, { style: "unit", unit: "percent" });
   const tickMs = Math.max(Number.isFinite(interval) ? interval : DEFAULT_INTERVAL, MIN_INTERVAL);
   const sampleCount = Math.max(
     Math.round(Number.isFinite(samples) ? samples : DEFAULT_SAMPLES),
@@ -356,7 +360,7 @@ export function ResourceMonitor({
                   />
                   <span className="font-medium text-muted-foreground">{entry.label}</span>
                   <span className="min-w-[3ch] text-right font-semibold text-foreground tabular-nums">
-                    {reading === null ? "—" : `${reading}%`}
+                    {reading === null ? "—" : percent.format(reading || 0)}
                   </span>
                 </motion.span>
               ))}
@@ -369,8 +373,8 @@ export function ResourceMonitor({
                 variants={animated ? axisAnim : undefined}
                 {...state}
               >
-                <span>100%</span>
-                <span>0%</span>
+                <span>{percent.format(100)}</span>
+                <span>{percent.format(0)}</span>
               </motion.div>
             )}
             <div className={cn("relative min-w-0 flex-1", fill ? "min-h-24" : "h-24")}>

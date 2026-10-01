@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";
 import { Check, Copy } from "lucide-react";
@@ -390,6 +390,8 @@ export interface SnippetProps extends VisualProps {
   language?: SnippetLanguage;
   filename?: string;
   lines?: readonly SnippetLine[];
+  /** Real code shown as monospace text lines instead of the token bars (`lines`); the copy button copies it. */
+  code?: string;
   lineNumbers?: boolean;
   caret?: boolean;
   isometric?: boolean;
@@ -400,6 +402,7 @@ export function Snippet({
   language = "tsx",
   filename,
   lines,
+  code,
   lineNumbers = true,
   caret = true,
   animated = false,
@@ -422,8 +425,17 @@ export function Snippet({
     : {};
   const resolvedFilename = filename ?? snippetFilenames[language];
   const activeLines = lines ?? snippetDefaultLines[language];
-  const hasDiff = activeLines.some((line) => !!line.diff);
+  const codeLines = code === undefined ? undefined : code.split("\n");
+  const tokenLines = codeLines ? [] : activeLines;
+  const lineCount = codeLines ? codeLines.length : activeLines.length;
+  const hasDiff = !codeLines && activeLines.some((line) => !!line.diff);
   const showGutter = lineNumbers || hasDiff;
+
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 1400);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -464,7 +476,7 @@ export function Snippet({
               type="button"
               onClick={() => {
                 setCopied(true);
-                window.setTimeout(() => setCopied(false), 1400);
+                if (code !== undefined) navigator.clipboard?.writeText(code).catch(() => undefined);
               }}
               className="flex size-5 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
               variants={animated ? buttonAnim : undefined}
@@ -483,11 +495,25 @@ export function Snippet({
             </motion.button>
           </div>
           <motion.div
-            className="flex flex-col gap-1.5 py-3"
+            className={codeLines ? "flex flex-col py-3" : "flex flex-col gap-1.5 py-3"}
             variants={animated ? linesAnim : undefined}
             {...state}
           >
-            {activeLines.map((line, i) => (
+            {codeLines?.map((line, i) => (
+              <motion.div key={i} variants={animated ? lineAnim : undefined}>
+                <div className="flex items-center gap-1.5 border-l-2 border-transparent px-3">
+                  {showGutter && (
+                    <span className="w-3 shrink-0 text-right text-[8px] font-semibold text-muted-foreground/60 tabular-nums">
+                      {lineNumbers ? i + 1 : ""}
+                    </span>
+                  )}
+                  <span className="min-w-0 flex-1 overflow-hidden font-mono text-[9px]/3.5 text-ellipsis whitespace-pre text-foreground">
+                    {line || " "}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+            {tokenLines.map((line, i) => (
               <motion.div key={i} variants={animated ? lineAnim : undefined}>
                 <SnippetCodeLine
                   line={line}
@@ -501,7 +527,7 @@ export function Snippet({
               <div className="flex items-center gap-1.5 border-l-2 border-transparent px-3">
                 {showGutter && (
                   <span className="w-3 shrink-0 text-right text-[8px] font-semibold text-muted-foreground/60 tabular-nums">
-                    {lineNumbers ? activeLines.length + 1 : ""}
+                    {lineNumbers ? lineCount + 1 : ""}
                   </span>
                 )}
                 <motion.div

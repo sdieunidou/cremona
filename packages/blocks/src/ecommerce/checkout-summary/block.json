@@ -27,6 +27,12 @@
       "propsRaw": "{promo:!0}",
       "size": null,
       "slug": "001-with-promo"
+    },
+    {
+      "label": "french",
+      "slug": "002-french",
+      "size": null,
+      "propsRaw": "{lines:[{title:`Trail Runner GTX`,price:129},{title:`Chaussettes en mérinos`,price:12,qty:2}],currency:`EUR`,locale:`fr-FR`,taxRate:0.2,promo:!0,promoCode:`BIENVENUE10`,promoPercent:10,labels:{title:`Récapitulatif`,subtotal:`Sous-total`,discount:`Remise`,shipping:`Livraison`,free:`Offerte`,tax:`TVA`,total:`Total`,removePromo:`Retirer`,pay:`Payer`,secure:`Paiement sécurisé, chiffré en 256 bits`}}"
     }
   ]
 }

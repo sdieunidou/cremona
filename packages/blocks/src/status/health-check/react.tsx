@@ -19,26 +19,42 @@ export interface HealthCheckItem {
   latency: string;
 }
 
-const statusMeta: Record<
-  ServiceStatus,
-  { dot: string; ping: string; label: string; text: string }
-> = {
+export interface HealthCheckLabels {
+  /** Status of each service, by status value. */
+  operational: string;
+  degraded: string;
+  down: string;
+  /** Header summary when every service is operational. */
+  summaryOperational: string;
+  /** Header summary when a service is degraded and none is down. */
+  summaryDegraded: string;
+  /** Header summary when a service is down. */
+  summaryDown: string;
+}
+
+export const healthCheckDefaultLabels: HealthCheckLabels = {
+  operational: "Operational",
+  degraded: "Degraded",
+  down: "Outage",
+  summaryOperational: "All systems normal",
+  summaryDegraded: "Partial degradation",
+  summaryDown: "Outage detected",
+};
+
+const statusMeta: Record<ServiceStatus, { dot: string; ping: string; text: string }> = {
   operational: {
     dot: "bg-emerald-500",
     ping: "bg-emerald-500/60",
-    label: "Operational",
     text: "text-emerald-600 dark:text-emerald-400",
   },
   degraded: {
     dot: "bg-amber-500",
     ping: "bg-amber-500/60",
-    label: "Degraded",
     text: "text-amber-600 dark:text-amber-400",
   },
   down: {
     dot: "bg-destructive",
     ping: "bg-destructive/60",
-    label: "Outage",
     text: "text-destructive",
   },
 };
@@ -48,7 +64,6 @@ function metaFor(status: string) {
     statusMeta[status as ServiceStatus] ?? {
       dot: "bg-muted-foreground",
       ping: "bg-muted-foreground/60",
-      label: status.charAt(0).toUpperCase() + status.slice(1),
       text: "text-muted-foreground",
     }
   );
@@ -152,6 +167,8 @@ export interface HealthCheckProps extends VisualProps {
   items?: readonly HealthCheckItem[];
   /** Shown in place of the list when `items` is empty. */
   emptyLabel?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<HealthCheckLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -161,6 +178,7 @@ export function HealthCheck({
   title = "System Status",
   items = healthCheckDefaultItems,
   emptyLabel = "No services",
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -182,15 +200,20 @@ export function HealthCheck({
       }
     : {};
   const loop = useLoopActive(ref, animated);
+  const copy = { ...healthCheckDefaultLabels, ...labels };
+  const statusLabel = (status: string) =>
+    Object.hasOwn(statusMeta, status)
+      ? copy[status as ServiceStatus]
+      : status.charAt(0).toUpperCase() + status.slice(1);
   const allOperational = items.every((i) => i.status === "operational");
   const headline =
     items.length === 0
       ? ""
       : allOperational
-        ? "All systems normal"
+        ? copy.summaryOperational
         : items.some((i) => i.status === "down")
-          ? "Outage detected"
-          : "Partial degradation";
+          ? copy.summaryDown
+          : copy.summaryDegraded;
   const meta =
     items.length === 0
       ? metaFor("")
@@ -291,7 +314,7 @@ export function HealthCheck({
                       variants={animated ? badgeAnim : undefined}
                     >
                       <span className={cn("size-1.5 rounded-full", s.dot)} />
-                      {s.label}
+                      {statusLabel(item.status)}
                     </motion.div>
                   </div>
                 </motion.div>

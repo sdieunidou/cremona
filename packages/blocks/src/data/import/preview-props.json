@@ -86,5 +86,37 @@
         "target": "amount"
       }
     ]
+  },
+  "french": {
+    "fileName": "clients.csv",
+    "rowCount": 2480,
+    "unit": "lignes prêtes",
+    "mappings": [
+      {
+        "source": "Adresse e-mail",
+        "target": "email"
+      },
+      {
+        "source": "Nom complet",
+        "target": "name"
+      },
+      {
+        "source": "Société",
+        "target": "company"
+      },
+      {
+        "source": "Date d’inscription",
+        "target": "created_at"
+      },
+      {
+        "source": "Réf. interne"
+      }
+    ],
+    "sourceLabel": "Colonne CSV",
+    "targetLabel": "Champ",
+    "skipLabel": "Ignorer",
+    "actionLabel": "Importer",
+    "emptyLabel": "Aucune colonne à associer",
+    "locale": "fr-FR"
   }
 }
