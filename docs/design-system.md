@@ -49,9 +49,12 @@ a single series), never by expected hue.
 
 ## Dark mode
 
-Class-based: `.dark` on `<html>`. The default theme is neutral in both modes
-(dark: `--background: oklch(14.5% 0 0)`, `--primary: oklch(92.2% 0 0)`); the
-warm "Claude-like" dark is `.theme-claude-plus`. Themes change hue and
+Class-based: `.dark` on `<html>`. `.dark` also works on an inner element: that
+subtree renders with the page theme's dark tokens and a dark `color-scheme`
+(a dark phone mockup inside a light page, for instance). The default theme is
+neutral in both modes (dark: `--background: oklch(14.5% 0 0)`,
+`--primary: oklch(92.2% 0 0)`); the warm "Claude-like" dark is
+`.theme-claude-plus`. Themes change hue and
 lightness in dark mode, so check new blocks in several themes: don't assume
 `dark:` = "dimmed". `cremona.css` sets `color-scheme: light` on `:root` and
 `color-scheme: dark` on `.dark`, so native controls (checkboxes, date and range

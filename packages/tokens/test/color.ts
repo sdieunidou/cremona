@@ -114,32 +114,42 @@ export function simulate(c: Rgb, deficiency: Deficiency): Rgb {
   return { r: row(0), g: row(3), b: row(6), alpha: c.alpha };
 }
 
-/** `selector → { --token: value }` for the token blocks of a stylesheet. */
+const TOKEN_SELECTOR = /^(:root|\.dark|\.theme-[\w-]+(:not\(\.dark\)|\.dark| \.dark))$/;
+
+/**
+ * `selector → { --token: value }` for the token blocks of a stylesheet (the rules that start
+ * with `--background`). A rule listing several selectors yields one entry per selector.
+ */
 export function tokenBlocks(css: string): Map<string, Record<string, string>> {
   const blocks = new Map<string, Record<string, string>>();
-  // `.dark{` must be the bare rule, not the tail of `.theme-<name>.dark{`
-  for (const m of css.matchAll(
-    /(?<![\w.-])(:root|\.dark|\.theme-[\w-]+(?::not\(\.dark\)|\.dark))\{(--[^}]*)\}/g,
-  )) {
+  const source = css.replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const m of source.matchAll(/([^{}]+)\{(--background:[^}]*)\}/g)) {
     const decls: Record<string, string> = {};
     for (const decl of m[2]!.split(";")) {
       const i = decl.indexOf(":");
       if (i > 0) decls[decl.slice(0, i).trim()] = decl.slice(i + 1).trim();
     }
-    blocks.set(m[1]!, decls);
+    for (const selector of m[1]!.split(",").map((s) => s.trim().replace(/\s+/g, " ")))
+      if (TOKEN_SELECTOR.test(selector)) blocks.set(selector, decls);
   }
   return blocks;
 }
 
-/** The tokens a theme resolves to in a mode: :root, then .dark, then the theme block. */
+/**
+ * The tokens a theme resolves to on a light or dark page (`.theme-x` and `.dark` on <html>),
+ * or inside a `.dark` element of a light page ("dark-subtree"): the page's light tokens are
+ * inherited there, and the subtree's own rules override them.
+ */
 export function resolveTheme(
   blocks: Map<string, Record<string, string>>,
   theme: string,
-  mode: "light" | "dark",
+  mode: "light" | "dark" | "dark-subtree",
 ): Record<string, string> {
+  const themed = theme !== "default";
   const layers = [":root"];
   if (mode === "dark") layers.push(".dark");
-  if (theme !== "default")
-    layers.push(`.theme-${theme}${mode === "dark" ? ".dark" : ":not(.dark)"}`);
+  if (themed) layers.push(`.theme-${theme}${mode === "dark" ? ".dark" : ":not(.dark)"}`);
+  if (mode === "dark-subtree") layers.push(".dark");
+  if (themed && mode === "dark-subtree") layers.push(`.theme-${theme} .dark`);
   return Object.assign({}, ...layers.map((s) => blocks.get(s) ?? {}));
 }
