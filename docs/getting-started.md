@@ -88,7 +88,9 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
   *Copy React* and the MCP `get_block` give the exact line.
 - **Size**: a block fills the box you give it. Give that box a height.
 - **Content**: pass every text prop. The defaults are demo copy ("Pro Plan",
-  "of 100GB"), so a prop you leave out shows it.
+  "of 100GB"), so a prop you leave out shows it. Components take their data
+  as JSON props too (`items`, `columns` and `rows`, `options`…): see
+  [the components layer](react.md#the-components-layer).
 - **Accessibility**: the block's root is `aria-hidden`. Say what it shows in
   text next to it.
 - **Animation**: `animated={false}` (the default) renders the final state.
@@ -119,8 +121,11 @@ and `gradient={false}` so its rainbow glow does not spill outside the card:
 </div>
 ```
 
-Details and caveats: [Using a block as a panel](react.md#using-a-block-as-a-panel)
-and [Gotchas](react.md#gotchas).
+Components take the box their own way — cards fill it, controls take its full
+width at the top, badges stay centred. Details and caveats:
+[Using a block as a panel](react.md#using-a-block-as-a-panel),
+[the components layer](react.md#the-components-layer) and
+[Gotchas](react.md#gotchas).
 
 ## 5. Dark mode and themes
 

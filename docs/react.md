@@ -71,11 +71,44 @@ obvious from the import:
    (`relative isolate flex size-full items-center justify-center overflow-hidden px-2`)
    that centres a `max-w-*` card inside whatever box you give it;
 3. it takes **content** props (`label`, `value`, `items`…) but no `onClick`, no
-   `ref`, no `children` — `components/button` renders one button with one
-   label, `components/table` renders four fixed rows.
+   `ref`, no `children` — `components/table` renders the `columns` and `rows`
+   you give it, and its checkboxes toggle, but nothing reaches your code.
 
 So a block cannot become a form field, a sortable table or an editable grid.
 There are two correct ways to use one.
+
+### The components layer
+
+`components/*` render at their real size and take JSON-serializable content
+props whose defaults reproduce the gallery's demo content — pass yours:
+
+| Block | Content props |
+|---|---|
+| `accordion` | `items`, `active` (the item open on first render) |
+| `breadcrumb` | `items` (labels, or `{ label, href }` links) |
+| `button` | `label`, `variant`, `size`, `icon`, `href` (renders a link styled as a button), `loading` + `loadingText`, `disabled`; the icon-only sizes (`icon`, `icon-sm`) show the icon and use `label` as the `aria-label` |
+| `card` | `title`, `description`, `badge`, `rows`, `footer`, `action` + `actionHref` |
+| `command` | `catalog` (groups of items with icon, shortcut, keywords), `placeholder`, `emptyText`, `emptyHint` |
+| `dialog` | `title`, `description`, `variant` (`"destructive"` is an alertdialog), `actionLabel`, `cancelLabel`, `fields`, `changes` |
+| `input` | `label`, `placeholder`, `hint`, `errorText`, `invalid`, `disabled`, `defaultValue` |
+| `select` | `options` (values, or `{ value, label }`), `value`, `label`, `placeholder`, `errorText`, `invalid`, `disabled` |
+| `table` | `columns`, `rows` (text, two-line or status-pill cells), `caption`, `checkboxes`, `loading` + `loadingRows` |
+| `tabs` | `items` (label, icon and body per tab), `active`, `label` (the tab list's name) |
+| `tooltip`, `toast`, `kbd` | `content`, `side`, `triggerLabel`; `title`, `description`, `action`, `variant`, `dismissible`; `keys`, `caption` |
+
+Inside the preview they behave like the real thing — keyboard focus with one
+ring recipe (`focus-visible:outline-2 focus-visible:outline-offset-2
+focus-visible:outline-ring`, inset with `-outline-offset-2` on list and menu
+items), arrow keys in `command`, `select`, `tabs`, checkboxes and switches
+that toggle, ids from `useId` — but the state stays inside the block. Keep
+that ring recipe when you derive one.
+
+With `fill` (see [Using a block as a panel](#using-a-block-as-a-panel)) each
+kind takes the box its own way: cards fill it (`card`, the `command` palette,
+whose list then scrolls); controls take its full width at the top (`button`,
+`input`, `select`, `switch`, `toast`…); `badge`, `avatar` and `kbd` stay
+centred at their size; `dialog` stays centred at its size over a scrim that
+fills the box.
 
 ### Use it as-is, for illustration
 
