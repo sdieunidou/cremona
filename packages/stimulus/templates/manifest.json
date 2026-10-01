@@ -476,6 +476,7 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
+      "sequences",
       "pointer"
     ],
     "variants": [
@@ -550,6 +551,7 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
+      "sequences",
       "pointer"
     ],
     "variants": [
@@ -624,6 +626,7 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
+      "sequences",
       "pointer"
     ],
     "variants": [
@@ -2261,7 +2264,10 @@
     "kind": "component",
     "category": "components",
     "file": "button",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2331,7 +2337,10 @@
     "kind": "component",
     "category": "components",
     "file": "card",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2398,6 +2407,7 @@
     "file": "command",
     "effects": "entrance-only",
     "reactOnly": [
+      "pointer",
       "interaction"
     ],
     "variants": [
@@ -2459,7 +2469,10 @@
     "kind": "component",
     "category": "components",
     "file": "dropdown-menu",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2625,7 +2638,11 @@
     "kind": "component",
     "category": "components",
     "file": "select",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "pointer",
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2650,7 +2667,10 @@
     "kind": "component",
     "category": "components",
     "file": "skeleton",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2680,7 +2700,10 @@
     "kind": "component",
     "category": "components",
     "file": "switch",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -2705,7 +2728,11 @@
     "kind": "component",
     "category": "components",
     "file": "table",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops",
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4045,7 +4072,10 @@
     "kind": "block",
     "category": "forms",
     "file": "feedback",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4070,7 +4100,10 @@
     "kind": "block",
     "category": "forms",
     "file": "login",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4095,7 +4128,10 @@
     "kind": "block",
     "category": "forms",
     "file": "onboarding-wizard",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4120,7 +4156,10 @@
     "kind": "block",
     "category": "forms",
     "file": "settings-form",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4145,7 +4184,10 @@
     "kind": "block",
     "category": "forms",
     "file": "signup",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "interaction"
+    ],
     "variants": [
       {
         "label": "default",
@@ -4371,6 +4413,7 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
+      "sequences",
       "pointer"
     ],
     "variants": [
@@ -7539,7 +7582,8 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
-      "pointer"
+      "pointer",
+      "interaction"
     ],
     "variants": [
       {
@@ -7598,7 +7642,8 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
-      "pointer"
+      "pointer",
+      "interaction"
     ],
     "variants": [
       {
@@ -7662,7 +7707,8 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
-      "pointer"
+      "pointer",
+      "interaction"
     ],
     "variants": [
       {
@@ -7716,7 +7762,8 @@
     "effects": "entrance-only",
     "reactOnly": [
       "loops",
-      "pointer"
+      "pointer",
+      "interaction"
     ],
     "variants": [
       {
@@ -7777,7 +7824,10 @@
     "kind": "block",
     "category": "status",
     "file": "health-check",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
@@ -7907,7 +7957,10 @@
     "kind": "block",
     "category": "status",
     "file": "uptime-bar",
-    "effects": "full",
+    "effects": "entrance-only",
+    "reactOnly": [
+      "loops"
+    ],
     "variants": [
       {
         "label": "default",
