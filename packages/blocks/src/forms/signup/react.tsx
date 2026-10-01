@@ -80,6 +80,12 @@ const field = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 } as const;
 
+// once in place, the button's opacity is its hover:opacity-90 class's again
+const submitField = {
+  hidden: { ...field.hidden, transition: { opacity: { duration: 0 } } },
+  visible: { ...field.visible, transitionEnd: { opacity: "" } },
+} as const;
+
 const inputClass =
   "h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 text-sm text-foreground shadow-xs transition-[color,box-shadow] duration-200 placeholder:text-muted-foreground aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
@@ -235,7 +241,7 @@ export function Signup({
         <motion.button
           type="submit"
           className="flex h-9 w-full items-center justify-center rounded-md bg-primary text-xs font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
-          variants={animated ? field : undefined}
+          variants={animated ? submitField : undefined}
           {...noFocus}
         >
           {t.submit}

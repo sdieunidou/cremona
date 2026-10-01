@@ -50,22 +50,26 @@ const fieldAnim = {
 } as const;
 
 const payFormAnim = {
-  hidden: { opacity: 0, scale: 0.94, y: 8 },
+  hidden: { opacity: 0, scale: 0.94, y: 8, transition: { opacity: { duration: 0 } } },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
     transition: { type: "spring", stiffness: 300, damping: 18, delay: 0.7 },
+    // once in place, the button's opacity is its hover:opacity-90 class's again
+    transitionEnd: { opacity: "" },
   },
 } as const;
 
 const payCardAnim = {
-  hidden: { opacity: 0, scale: 0.94, y: 8 },
+  hidden: { opacity: 0, scale: 0.94, y: 8, transition: { opacity: { duration: 0 } } },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
     transition: { type: "spring", stiffness: 300, damping: 18, delay: 0.9 },
+    // once in place, the button's opacity is its hover:opacity-90 class's again
+    transitionEnd: { opacity: "" },
   },
 } as const;
 

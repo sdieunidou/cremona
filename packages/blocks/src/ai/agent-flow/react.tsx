@@ -284,6 +284,30 @@ const letter = {
   visible: { opacity: 1, filter: "blur(0px)", transition: { duration: 0.25, ease: "easeOut" } },
 } as const;
 
+/** A step label typed letter by letter, then plain text (kerning, ligatures) like the static render. */
+function TypedLabel({ text }: { text: string }) {
+  const [typed, setTyped] = useState(false);
+  return (
+    <motion.span
+      className="text-sm font-medium whitespace-nowrap text-foreground"
+      variants={letters}
+      onAnimationComplete={(definition) => definition === "visible" && setTyped(true)}
+    >
+      {typed
+        ? text
+        : text.split("").map((ch, k) =>
+            ch === " " ? (
+              <span key={k}>&nbsp;</span>
+            ) : (
+              <motion.span key={k} className="inline-block" variants={letter}>
+                {ch}
+              </motion.span>
+            ),
+          )}
+    </motion.span>
+  );
+}
+
 function GlowScene() {
   return (
     <>
@@ -358,8 +382,10 @@ export function AgentFlow({
   const looping = active && loop;
   const drifting = inView && ticked;
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" } as const;
-  // paused: hold the current step (the first one if the cycle never ran), settled
-  const shownStep = loop ? current : Math.max(current, 0);
+  // paused or reduced motion: rest on the static frame (hover or not) — every step listed,
+  // the first one lit and done
+  const resting = drifting && !loop;
+  const shownStep = loop ? current : 0;
   const shownSettled = settled || !loop;
 
   useEffect(() => {
@@ -393,23 +419,29 @@ export function AgentFlow({
       <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
         {glow && (
           <div className="absolute inset-0 -z-10">
-            <GlowScene />
+            <div className="absolute inset-0">
+              <GlowScene />
+            </div>
           </div>
         )}
         {particles && (
           <div className="absolute inset-0 -z-10">
-            {PARTICLES.map((p, i) => (
-              <div
-                key={i}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              >
+            <div className="absolute inset-0">
+              {PARTICLES.map((p, i) => (
                 <div
-                  className={`rotate-45 rounded-[1px] ${p.color}`}
-                  style={{ width: p.size, height: p.size, opacity: p.opacity * 0.7 }}
-                />
-              </div>
-            ))}
+                  key={i}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${p.x}%`, top: `${p.y}%` }}
+                >
+                  <div style={{ opacity: p.opacity * 0.7 }}>
+                    <div
+                      className={`rotate-45 rounded-[1px] ${p.color}`}
+                      style={{ width: p.size, height: p.size }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
         <div className="relative flex flex-col items-start">
@@ -421,10 +453,12 @@ export function AgentFlow({
                 </div>
                 <div className="ml-2 h-6 w-36 shrink-0 overflow-hidden">
                   <div className="flex h-full items-center gap-2">
-                    <span className="w-6 shrink-0 border-t border-dashed border-muted-foreground/40" />
+                    <span className="w-6 shrink-0 origin-left border-t border-dashed border-muted-foreground/40" />
                     {i === 0 && (
-                      <span className="flex shrink-0">
-                        <Check className="size-3.5 text-primary" strokeWidth={3} />
+                      <span className="shrink-0">
+                        <span className="flex">
+                          <Check className="size-3.5 text-primary" strokeWidth={3} />
+                        </span>
                       </span>
                     )}
                     <span className="text-sm font-medium whitespace-nowrap text-foreground">
@@ -435,7 +469,7 @@ export function AgentFlow({
               </div>
               {i < count - 1 && (
                 <div className="flex w-16 shrink-0 justify-center">
-                  <div className="my-1 h-4 w-0.5 rounded-full bg-muted-foreground/40" />
+                  <div className="my-1 h-4 w-0.5 origin-top rounded-full bg-muted-foreground/40" />
                 </div>
               )}
             </Fragment>
@@ -458,9 +492,7 @@ export function AgentFlow({
           <motion.div
             className="absolute inset-0"
             animate={
-              looping
-                ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
-                : { scale: 1, opacity: 0.85 }
+              looping ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 1 }
             }
             transition={
               looping
@@ -476,7 +508,7 @@ export function AgentFlow({
         <motion.div className="absolute inset-0 -z-10" variants={particleField} {...state}>
           <motion.div
             className="absolute inset-0"
-            animate={{ opacity: +!!active }}
+            animate={{ opacity: +!!(active || resting) }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             {PARTICLES.map((p, i) => (
@@ -518,8 +550,9 @@ export function AgentFlow({
       )}
       <motion.div className="relative flex flex-col items-start" variants={column} {...state}>
         {stepsList.map((step, i) => {
-          const isCurrent = active && shownStep === i;
+          const isCurrent = (active || resting) && shownStep === i;
           const isSettled = isCurrent && shownSettled;
+          const listed = isCurrent || resting;
           return (
             <Fragment key={i}>
               <div className="flex items-center">
@@ -528,7 +561,7 @@ export function AgentFlow({
                 </motion.div>
                 <div className="ml-2 h-6 w-36 shrink-0 overflow-hidden">
                   <AnimatePresence>
-                    {isCurrent && (
+                    {listed && (
                       <motion.div
                         key={i}
                         className="flex h-full items-center gap-2"
@@ -541,50 +574,39 @@ export function AgentFlow({
                           className="w-6 shrink-0 origin-left border-t border-dashed border-muted-foreground/40"
                           variants={dash}
                         />
-                        <motion.span className="shrink-0" variants={iconSwap}>
-                          <AnimatePresence mode="wait" initial={false}>
-                            {isSettled ? (
-                              <motion.span
-                                key="check"
-                                className="flex"
-                                initial={{ scale: 0, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0, opacity: 0 }}
-                                transition={{ type: "spring", stiffness: 500, damping: 18 }}
-                              >
-                                <Check className="size-3.5 text-primary" strokeWidth={3} />
-                              </motion.span>
-                            ) : (
-                              <motion.span
-                                key="spin"
-                                className="flex"
-                                initial={{ scale: 0, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                exit={{ scale: 0, opacity: 0 }}
-                                transition={{ duration: 0.15 }}
-                              >
-                                <LoaderCircle
-                                  className="size-3.5 animate-spin text-primary"
-                                  strokeWidth={2.5}
-                                />
-                              </motion.span>
-                            )}
-                          </AnimatePresence>
-                        </motion.span>
-                        <motion.span
-                          className="text-sm font-medium whitespace-nowrap text-foreground"
-                          variants={letters}
-                        >
-                          {step.split("").map((ch, k) =>
-                            ch === " " ? (
-                              <span key={k}>&nbsp;</span>
-                            ) : (
-                              <motion.span key={k} className="inline-block" variants={letter}>
-                                {ch}
-                              </motion.span>
-                            ),
-                          )}
-                        </motion.span>
+                        {isCurrent && (
+                          <motion.span className="shrink-0" variants={iconSwap}>
+                            <AnimatePresence mode="wait" initial={false}>
+                              {isSettled ? (
+                                <motion.span
+                                  key="check"
+                                  className="flex"
+                                  initial={{ scale: 0, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  exit={{ scale: 0, opacity: 0 }}
+                                  transition={{ type: "spring", stiffness: 500, damping: 18 }}
+                                >
+                                  <Check className="size-3.5 text-primary" strokeWidth={3} />
+                                </motion.span>
+                              ) : (
+                                <motion.span
+                                  key="spin"
+                                  className="flex"
+                                  initial={{ scale: 0, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  exit={{ scale: 0, opacity: 0 }}
+                                  transition={{ duration: 0.15 }}
+                                >
+                                  <LoaderCircle
+                                    className="size-3.5 animate-spin text-primary"
+                                    strokeWidth={2.5}
+                                  />
+                                </motion.span>
+                              )}
+                            </AnimatePresence>
+                          </motion.span>
+                        )}
+                        <TypedLabel text={step} />
                       </motion.div>
                     )}
                   </AnimatePresence>

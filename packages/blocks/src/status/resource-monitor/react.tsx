@@ -148,6 +148,7 @@ const clipAnim = {
       delay: 0.3,
       ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
     },
+    transitionEnd: { clipPath: "none" },
   },
 } as const;
 
@@ -334,7 +335,8 @@ export function ResourceMonitor({
             {...state}
           >
             <div className="flex min-w-0 items-center gap-2">
-              {animated && (
+              {/* the live dot goes with the feed: at rest, the static header */}
+              {animated && loop && (
                 <span className="relative flex size-2 shrink-0">
                   <span
                     className={cn(

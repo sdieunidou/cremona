@@ -170,7 +170,8 @@ export function LogoOrbit({
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const loop = useLoopActive(ref, animated);
   const pause = active && loop ? "" : " paused";
-  const spinning = animated && orbit;
+  // paused or reduced motion once in view: rest on the static frame, unrotated
+  const spinning = animated && orbit && !(inView && !loop);
   const outerSpin = spinning ? `animate-[spin_120s_linear_infinite]${pause}` : "";
   const outerCounter = spinning ? `animate-[spin_120s_linear_infinite_reverse]${pause}` : "";
   const innerSpin = spinning ? `animate-[spin_80s_linear_infinite_reverse]${pause}` : "";

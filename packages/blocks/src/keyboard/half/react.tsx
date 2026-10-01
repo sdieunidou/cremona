@@ -224,6 +224,8 @@ export function Half({
   const pressedKeys = useMemo(() => keys ?? [], [keys]);
   const hasKeys = pressedKeys.length > 0;
   const active = (hover && hasKeys ? hovered : inViewActive) && loop;
+  // paused loop (off-screen, hidden tab, reduced motion): the static frame, pressed keys highlighted
+  const resting = inViewActive && !loop;
   const state = animated ? { initial: "hidden", animate: inViewActive ? "visible" : "hidden" } : {};
   const rows = buildRows(layout, keymap);
   const matched = useMemo(() => {
@@ -249,9 +251,8 @@ export function Half({
       return;
     }
     if (!active) {
-      // paused loop (off-screen, hidden tab, reduced motion) rests on the pressed combination
       for (const i of matched) {
-        animate(`.key-glow-${i}`, { opacity: loop ? 0 : 1 }, { duration: 0.2 });
+        animate(`.key-glow-${i}`, { opacity: 0 }, { duration: 0.2 });
         if (!loop) animate(`.key-ripple-${i}`, { opacity: 0 }, { duration: 0 });
       }
       return;
@@ -356,7 +357,7 @@ export function Half({
                         >
                           {isSpace ? (labels?.space ?? "Space") : caption}
                         </span>
-                        {matchedKey && !animated && (
+                        {matchedKey && (!animated || resting) && (
                           <span className="pointer-events-none absolute inset-0 block rounded-[4px] bg-primary/15 ring-1 ring-primary/40 ring-inset" />
                         )}
                         {matchedKey && animated && (

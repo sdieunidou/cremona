@@ -387,6 +387,7 @@ export function NotFound({
               </div>
             ))}
           {animated &&
+            loop &&
             pulseRings.map((r, ri) => (
               <div
                 key={ri}

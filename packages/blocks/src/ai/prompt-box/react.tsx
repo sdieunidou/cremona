@@ -365,11 +365,13 @@ export function PromptBox({
   const active = (hover ? hovered : inView) && ticked;
   const looping = active && loop;
   const drifting = inView && ticked;
+  // paused or reduced motion: rest on the static frame, hover or not
+  const shown = active || (drifting && !loop);
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" } as const;
-  const innerState = { initial: "hidden", animate: active ? "visible" : "hidden" } as const;
+  const innerState = { initial: "hidden", animate: shown ? "visible" : "hidden" } as const;
   const caretState = {
     initial: "hidden",
-    animate: active ? (loop ? "visible" : "rest") : "hidden",
+    animate: shown ? (loop ? "visible" : "rest") : "hidden",
   } as const;
 
   const tokens2 = prompt.split(/(\s+)/).filter(Boolean);
@@ -378,6 +380,9 @@ export function PromptBox({
     /^\s+$/.test(text) ? { type: "space", text } : { type: "word", text, index: wordIndex++ },
   );
   const wordCount = wordIndex;
+  // the words fade in one by one, then are plain text (kerning, wrapping) like the static render
+  const [typed, setTyped] = useState(false);
+  if (typed && !shown) setTyped(false);
   const meterWidth = `${Math.max(0, Math.min(contextUsed, 1)) * 100}%`;
 
   const cardInner = (motionContent: boolean) => (
@@ -385,20 +390,23 @@ export function PromptBox({
       <div className="min-h-16 px-4 pt-4 pb-2">
         <p className="text-sm leading-relaxed whitespace-pre-wrap text-foreground">
           {words.map((token, t) =>
-            token.type === "space" ? (
+            token.type === "space" || !motionContent || typed ? (
               <span key={t}>{token.text}</span>
-            ) : motionContent ? (
+            ) : (
               <motion.span
                 key={t}
                 className="inline-block"
                 variants={word}
                 custom={token.index}
                 {...innerState}
+                onAnimationComplete={
+                  token.index === wordCount - 1
+                    ? (definition) => definition === "visible" && setTyped(true)
+                    : undefined
+                }
               >
                 {token.text}
               </motion.span>
-            ) : (
-              <span key={t}>{token.text}</span>
             ),
           )}
           {caret &&
@@ -508,23 +516,29 @@ export function PromptBox({
       <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
         {glow && (
           <div className="absolute inset-0 -z-10">
-            <GlowScene />
+            <div className="absolute inset-0">
+              <GlowScene />
+            </div>
           </div>
         )}
         {particles && (
           <div className="absolute inset-0 -z-10">
-            {PARTICLES.map((p, i) => (
-              <div
-                key={i}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              >
+            <div className="absolute inset-0">
+              {PARTICLES.map((p, i) => (
                 <div
-                  className={`rotate-45 rounded-[1px] ${p.color}`}
-                  style={{ width: p.size, height: p.size, opacity: p.opacity * 0.7 }}
-                />
-              </div>
-            ))}
+                  key={i}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${p.x}%`, top: `${p.y}%` }}
+                >
+                  <div style={{ opacity: p.opacity * 0.7 }}>
+                    <div
+                      className={`rotate-45 rounded-[1px] ${p.color}`}
+                      style={{ width: p.size, height: p.size }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
         <div className={cn("relative w-full", !fill && "max-w-md")}>
@@ -555,9 +569,7 @@ export function PromptBox({
           <motion.div
             className="absolute inset-0"
             animate={
-              looping
-                ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
-                : { scale: 1, opacity: 0.85 }
+              looping ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 1 }
             }
             transition={
               looping
@@ -573,7 +585,7 @@ export function PromptBox({
         <motion.div className="absolute inset-0 -z-10" variants={particlesVariant} {...state}>
           <motion.div
             className="absolute inset-0"
-            animate={{ opacity: +!!active }}
+            animate={{ opacity: +!!shown }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             {PARTICLES.map((p, i) => (

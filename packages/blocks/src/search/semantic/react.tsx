@@ -157,6 +157,44 @@ const footerAnim = {
   },
 } as const;
 
+/**
+ * A dashed connector. Drawn on with `pathLength`, which strokes it solid, it gives way to the
+ * plain dashed path of the static render once drawn (remount it to draw it again).
+ */
+function Connector({
+  d,
+  animated,
+  variants,
+  custom,
+  state,
+}: {
+  d: string;
+  animated: boolean;
+  variants: Variants;
+  custom?: number;
+  state: { initial?: string; animate?: string };
+}) {
+  const [drawn, setDrawn] = useState(false);
+  const path = {
+    d,
+    stroke: "currentColor",
+    strokeWidth: 0.75,
+    strokeDasharray: "3 4",
+    strokeLinecap: "round",
+    className: "text-muted-foreground/60",
+  } as const;
+  if (!animated || drawn) return <path {...path} />;
+  return (
+    <motion.path
+      {...path}
+      variants={variants}
+      custom={custom}
+      {...state}
+      onAnimationComplete={(definition) => definition === "visible" && setDrawn(true)}
+    />
+  );
+}
+
 export function Semantic({
   query = defaultQuery,
   matches = defaultMatches,
@@ -290,17 +328,13 @@ export function Semantic({
               </motion.g>
             )}
             {points.map(([x, y], i) => (
-              <motion.path
-                key={`link${i}`}
+              <Connector
+                key={`link${i}-${+triggered}`}
                 d={`M ${CENTER_X},${CENTER_Y} L ${x},${y}`}
-                stroke="currentColor"
-                strokeWidth={0.75}
-                strokeDasharray="3 4"
-                strokeLinecap="round"
-                className="text-muted-foreground/60"
-                variants={animated ? linkAnim : undefined}
+                animated={animated}
+                variants={linkAnim}
                 custom={i}
-                {...state}
+                state={state}
               />
             ))}
             {points.map(([x, y], i) => (
@@ -365,15 +399,12 @@ export function Semantic({
               />
             </motion.g>
           </g>
-          <motion.path
+          <Connector
+            key={`stem-${+triggered}`}
             d={`M ${CENTER_X},${LINE_TOP} L ${CENTER_X},158`}
-            stroke="currentColor"
-            strokeWidth={0.75}
-            strokeDasharray="3 4"
-            strokeLinecap="round"
-            className="text-muted-foreground/60"
-            variants={animated ? stemAnim : undefined}
-            {...state}
+            animated={animated}
+            variants={stemAnim}
+            state={state}
           />
         </svg>
         <div

@@ -173,7 +173,7 @@ export function Bell({
             </motion.div>
           </>
         ) : (
-          <>
+          <div className="absolute inset-0 flex items-center justify-center">
             <div
               className="absolute size-24 rounded-full border-2 border-primary/25 opacity-25"
               style={{ transform: "scale(1.05)" }}
@@ -186,7 +186,7 @@ export function Bell({
               className="absolute size-32 rounded-full border-2 border-primary/10 opacity-15"
               style={{ transform: "scale(1.25)" }}
             />
-          </>
+          </div>
         )}
         <motion.div
           className="relative flex size-17 items-center justify-center rounded-3xl border border-muted bg-card shadow-sm ring-3 ring-muted dark:shadow-none dark:ring-border/50"
