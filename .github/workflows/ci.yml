@@ -31,13 +31,18 @@ jobs:
       - run: pnpm lint
       - run: pnpm format:check
       - run: pnpm typecheck
+      - run: pnpm check:use-client
       - run: pnpm test
       - name: Generated files are up to date
         run: |
           pnpm generate:stimulus
           pnpm build:css
-          git diff --exit-code -- packages/blocks packages/stimulus packages/tokens \
-            || { echo "::error::Generated files changed: run 'pnpm test', 'pnpm generate:stimulus' and 'pnpm build:css', then commit."; exit 1; }
+          changed=$(git status --porcelain -- packages/blocks packages/stimulus packages/tokens)
+          if [ -n "$changed" ]; then
+            echo "$changed"
+            echo "::error::Generated files changed or were added: run 'pnpm test', 'pnpm generate:stimulus' and 'pnpm build:css', then commit."
+            exit 1
+          fi
       - run: pnpm validate
 
   e2e:

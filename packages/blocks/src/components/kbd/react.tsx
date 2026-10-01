@@ -1,3 +1,5 @@
+"use client";
+
 import { Fragment, useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
