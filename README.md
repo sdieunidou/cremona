@@ -1,108 +1,145 @@
 # Cremona
 
-**Cremona** est une bibliothèque de **160 compositions UI animées** ("visuals") avec un **design system** complet (9 thèmes × light/dark), consommable par des **sessions IA** (Claude Code, opencode…) via **MCP**, et utilisable dans n'importe quel projet **React** (Next.js, Vite…) ou **Stimulus** (Symfony, Hotwire).
+**Cremona** is a library of **160 animated UI blocks** for React and Stimulus,
+with a **design system** of 9 themes in light and dark, an **MCP server** and a
+**Skill** that let AI coding sessions (Claude Code, opencode…) find a block,
+read its exact props and use it correctly.
 
-> Chaque rendu est **vérifié pixel-exact** : les 115 blocs issus du POC contre les snapshots SSR d'origine, les 45 nouveaux contre leurs goldens générés — 1 408 tests.
+What a block is, before you build with it: a **preview composition** — an
+animated, `aria-hidden` illustration that takes content props (`label`,
+`value`, `segments`…) but no handlers, `ref` or `children`. They come in three
+scales:
 
----
+- **illustrations** — `metrics/*`, `charts/*`, `ai/*`, `states/*` and most
+  categories: product artwork (KPI cards, charts, scenes, empty states) to use
+  as-is, next to a text equivalent;
+- **real-size** — `components/*` (button, input, tabs, dialog, table…),
+  `forms/*`, `mobile/*`, `notices/*` and most of `ecommerce/*`: UI at its real
+  size, the templates your own interactive components are derived from;
+- **miniatures** — `sections/*` and `layouts/*` (plus `ecommerce/product-grid`
+  and `cart-drawer`): thumbnail-scale wireframes of a page or a section, never
+  a page, a section or a page skeleton themselves.
 
-## Why Cremona
+## Quick start — React / Next.js
 
-AI coding sessions are great at wiring logic, and mediocre at inventing polished
-animated UI. Cremona gives them a curated, coherent, themeable vocabulary:
+```bash
+npm i @cremona/blocks @cremona/tokens motion lucide-react
+```
 
-- **160 visuals** in 37 categories — metrics, charts, AI scenes, states, dashboards, git, geo, payments, marketing sections…
-- **1 247 ready-made variants** (default, fadeOut, isometric, custom copy, custom data, states…)
-- **A real component layer** (`components/*` — button, input, table, dialog, tabs…) for assembling production UI
-- **Page layouts** (`layouts/*` — dashboard, docs, marketing, auth, settings, mobile shells)
-- **Vertical kits** — ecommerce (product cards, cart, checkout), forms (login, signup, wizard), mobile (tab bar, app bar, action sheets), notices (cookie banner, callouts)
-- **9 themes × light/dark**, full shadcn-style semantic tokens, Inter Variable
-- **Golden parity tests** — every render matches its reference exactly
-- **MCP server + Skill** — sessions discover and use the library without human guidance
-- **Two adapters** — React (motion) and Stimulus (identical markup, CSS-driven motion)
+```tsx
+import "@cremona/tokens/css/cremona.css"; // once, in the app entry
+import { StatCard } from "@cremona/blocks/metrics/stat-card";
 
-## Repo layout
+<div style={{ height: "12rem" }}>
+  <StatCard fill gradient={false} label="Revenue" value="$48,213" change="+12.4%" period="vs last month" trend="up" />
+</div>
+```
+
+One entry per block, `@cremona/blocks/<category>/<file>` (ESM + types, marked
+`"use client"`, so Server Components can render them). The stylesheet ships
+the fonts, the tokens and every class the blocks use: the blocks need no
+Tailwind build, but the classes of your own markup need your own CSS or your
+own Tailwind build. [docs/getting-started.md](docs/getting-started.md) covers
+the rest of a new app: the template CSS to remove, panels (`fill`,
+`gradient={false}`), dark mode and themes, reduced motion, placeholder images,
+Server Components and Tailwind hosts.
+
+## Quick start — Symfony / Stimulus
+
+```bash
+npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus
+```
+
+```js
+import { registerCremona } from "@cremona/stimulus";
+import "@cremona/tokens/css/cremona.css";
+
+registerCremona(yourStimulusApp); // cremona-visual + cremona-theme
+```
+
+Every variant ships as a static HTML template,
+`@cremona/stimulus/templates/<category>/<file>/<slug>.html`, generated from the
+same references as the React render: [docs/stimulus.md](docs/stimulus.md).
+
+## Quick start — AI sessions
+
+```bash
+claude mcp add cremona -s user -- npx -y @cremona/mcp
+```
+
+The server searches the catalog, returns a block's install line, import,
+exact variant props and source, the design system and the stylesheet's
+location: [docs/mcp.md](docs/mcp.md).
+
+## What's inside
+
+- **160 blocks in 37 categories** — metrics, charts, AI scenes, states,
+  dashboards, git, geo, payments, components, forms, mobile, marketing
+  sections… — with about 1 250 ready-made variants (default, fadeOut,
+  isometric, custom copy, custom data, states…).
+- **9 themes × light/dark** on shadcn-style semantic tokens and status tokens,
+  Inter Variable.
+- **Locked server renders** — every variant's server render is compared with a
+  committed golden reference (DOM structure, attributes, sorted classes, text;
+  not pixels), so a change that alters a block's markup fails a test.
+- **Two adapters** — React (motion) and Stimulus (the same markup, CSS-driven
+  motion).
+
+## Working on the repo
+
+```bash
+pnpm install
+pnpm dev          # the gallery, http://localhost:5173 (View code / Copy React / Stimulus on every preview)
+pnpm test         # golden parity, MCP e2e, tokens, stimulus…
+pnpm check        # lint + format + typecheck + tests + validate, before finishing
+pnpm build        # compiles @cremona/core, @cremona/react, @cremona/blocks and the gallery
+pnpm mcp          # the MCP server over stdio, with the authoring tools
+```
+
+Rules for contributors and AI sessions: [AGENTS.md](AGENTS.md). New category,
+block or variant: [docs/authoring-guide.md](docs/authoring-guide.md) and the
+MCP tools `add_category` / `add_block`.
 
 ```
 cremona/
 ├── packages/
+│   ├── blocks/      the source of truth: 160 blocks (react.tsx, block.json, goldens) — @cremona/blocks
 │   ├── tokens/      design system CSS (themes, tokens, fonts) — @cremona/tokens
-│   ├── core/        shared types + helpers — @cremona/core
-│   ├── react/       hooks (useInView) — @cremona/react
-│   ├── blocks/      THE SOURCE OF TRUTH: 160 blocks (react.tsx + goldens + specs)
-│   ├── stimulus/    controllers + 1247 static templates — @cremona/stimulus
+│   ├── core/        shared types and helpers — @cremona/core
+│   ├── react/       hooks (useInView, useLoopActive) — @cremona/react
+│   ├── stimulus/    controllers + generated static templates — @cremona/stimulus
 │   ├── mcp/         MCP server + CLI — @cremona/mcp
-│   └── skill/       SKILL.md for AI sessions — @cremona/skill
+│   └── skill/       SKILL.md for AI sessions
 ├── apps/
 │   └── gallery/     docs app: live previews + one-click React/Stimulus code
-├── tools/           extraction + generation scripts (POC → library)
-└── docs/            guides (start here: docs/architecture.md)
+├── tools/           generators (Stimulus templates, "use client" directive)
+└── docs/            guides
 ```
-
-## Quick start
-
-```bash
-pnpm install
-
-# run every test (blocks golden parity, mcp e2e, tokens, stimulus…)
-pnpm test
-
-# browse the gallery (hover any preview → View code / Copy React / Stimulus)
-pnpm dev            # → http://localhost:5173
-
-# use the MCP server (Claude Code / opencode)
-pnpm mcp            # stdio; see docs/mcp.md for install + prompt recipes
-```
-
-## Using a visual in React
-
-```tsx
-import "@cremona/tokens/css/cremona.css";   // once, global CSS
-import { StatCard } from "@cremona/blocks/src/metrics/stat-card/react.js";
-import { Button } from "@cremona/blocks/src/components/button/react.js";
-
-<StatCard animated trigger="inView" />
-<Button variant="outline" withIcon="end" label="Export data" />
-```
-
-Blocks are self-contained (TSX + lucide-react + motion). The tokens CSS is
-dependency-free — no Tailwind build required on the host.
-
-## Using a visual in Symfony (Stimulus)
-
-```js
-import { registerCremona } from "@cremona/stimulus";
-registerCremona(yourStimulusApp);
-```
-
-Copy markup from `packages/stimulus/templates/<category>/<file>/<slug>.html`
-(identical to the React render) — the `cremona-visual` controller plays the
-entrance animation, `cremona-theme` handles light/dark + 9 themes.
-
-## Extending
-
-New category, new block, new variant → `docs/authoring-guide.md` and the MCP
-tools `add_category` / `add_block`. Porting a POC visual → `docs/porting-guide.md`.
 
 ## Documentation
 
 | Doc | Content |
 |---|---|
-| [docs/architecture.md](docs/architecture.md) | monorepo, data flow, invariants |
+| [docs/getting-started.md](docs/getting-started.md) | a new React / Next.js app, step by step |
+| [docs/react.md](docs/react.md) | React adapter: props, triggers, panels, gotchas, deriving a component |
 | [docs/design-system.md](docs/design-system.md) | tokens, 9 themes, dark mode, frames |
-| [docs/react.md](docs/react.md) | React adapter: props, triggers, usage |
 | [docs/stimulus.md](docs/stimulus.md) | Stimulus adapter: controllers, templates |
-| [docs/mcp.md](docs/mcp.md) | MCP server: install, tools + **prompt recipes** |
-| [docs/adding-blocks.md](docs/adding-blocks.md) | authoring new visuals |
-| [docs/authoring-guide.md](docs/authoring-guide.md) | full authoring contract (new visuals) |
-| [docs/porting-guide.md](docs/porting-guide.md) | full porting contract (POC visuals) |
-| [docs/releasing.md](docs/releasing.md) | versioning and npm publishing |
+| [docs/mcp.md](docs/mcp.md) | MCP server: install, tools, prompt recipes |
+| [docs/architecture.md](docs/architecture.md) | monorepo, data flow, invariants |
+| [docs/authoring-guide.md](docs/authoring-guide.md) | authoring contract for new visuals |
+| [docs/adding-blocks.md](docs/adding-blocks.md) | adding a block, step by step |
+| [docs/porting-guide.md](docs/porting-guide.md) | porting contract for POC visuals |
+| [docs/releasing.md](docs/releasing.md) | versioning, npm publishing, repository settings |
 
 ## Provenance
 
-This library started as a faithful, tested reconstruction of the *Cremona* POC
-(`../cremona-ui/`): catalog, goldens, themes and animation parameters were
-extracted from the POC build; the React implementations were re-authored from
-the minified chunks and verified against the extracted SSR goldens. The
-component, layout, ecommerce, forms, mobile and notices layers extend it with
-the same quality bar (authoring contract + generated goldens + parity locks).
+The library started as a tested reconstruction of the *Cremona* POC: the
+catalog, goldens, themes and animation parameters were extracted from its
+build, and the React implementations were re-authored from its minified chunks
+against the extracted server renders. The component, layout, ecommerce, forms,
+mobile and notices layers extend it under the same contract (authoring guide,
+generated goldens, parity tests).
+
+## License
+
+[MIT](LICENSE). Inter is distributed under the SIL Open Font License.

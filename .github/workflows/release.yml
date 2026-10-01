@@ -1,8 +1,9 @@
 name: Release
 
-# Versioning is automatic, publishing is not:
-# - push to main with pending changesets → opens/updates the "version packages" PR;
-# - publishing to npm only happens when this workflow is run by hand with publish=true.
+# Versioning is automatic, publishing is not (docs/releasing.md):
+# - push to main with pending changesets → opens/updates the "chore: version packages" PR;
+# - publishing runs only when this workflow is started by hand on main with publish=true.
+#   It authenticates with npm trusted publishing (OIDC): no npm token, provenance attached.
 on:
   push:
     branches: [main]
@@ -16,6 +17,9 @@ on:
 concurrency:
   group: release
   cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
   version:
@@ -44,24 +48,29 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
-    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    if: github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/main'
     name: Publish to npm
     runs-on: ubuntu-latest
+    # npm's trusted publisher for each package names this workflow and this environment
+    environment: npm
     permissions:
-      contents: write
+      contents: write # push the release tags
+      id-token: write # OIDC token for npm trusted publishing and provenance
     steps:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - uses: pnpm/action-setup@v4
+      # No registry-url and no dependency cache: pnpm exchanges the OIDC token itself
+      # (an .npmrc token placeholder would be sent instead), and a release build
+      # installs from the lockfile only.
       - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: pnpm
-          registry-url: https://registry.npmjs.org
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
+      - run: pnpm --filter @cremona/blocks check:package
       - run: pnpm release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PNPM_CONFIG_PROVENANCE: "true"
       - run: git push --tags
