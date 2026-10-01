@@ -433,13 +433,13 @@ export function ErrorState({
             )}
           </div>
           {!animated && (
-            <div className="absolute -top-2.5 -right-2.5 flex size-6 items-center justify-center rounded-full bg-destructive text-white shadow-xs ring-2 ring-background">
+            <div className="absolute -top-2.5 -right-2.5 flex size-6 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-xs ring-2 ring-background">
               <TriangleAlert className="size-3.5" strokeWidth={2.5} />
             </div>
           )}
           {animated && (
             <motion.div
-              className="absolute -top-2.5 -right-2.5 flex size-6 items-center justify-center rounded-full bg-destructive text-white shadow-xs ring-2 ring-background"
+              className="absolute -top-2.5 -right-2.5 flex size-6 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-xs ring-2 ring-background"
               initial={{ scale: 0, opacity: 0 }}
               animate={
                 active
