@@ -36,9 +36,15 @@ motion language, same tokens, same test machinery.
 5. **Accessibility mirror** — real text (not lorem), semantic elements
    (`button`, `input`, `table`…), `aria-*` on interactive parts. Blocks stay
    `aria-hidden="true"` at the scene root like the POC.
-6. **Both scales** — `components/*` render at REAL size (centered in the
-   preview stage); `layouts/*`, `ecommerce/*`, `forms/*`, `mobile/*` render as
-   miniature mockups (like `sections/*`), with a `max-w-*` wrapper.
+6. **Scale** — the category decides it (`blockScale()` in
+   `packages/mcp/src/store.js`, reported as the MCP `scale`): **real-size**
+   for `components/*`, `forms/*`, `mobile/*`, `notices/*` and
+   `ecommerce/product-card`, `order-row`, `checkout-summary` — real UI
+   (12–16 px text, 32–44 px controls) centred in the preview stage;
+   **miniature** for `sections/*`, `layouts/*`, `ecommerce/product-grid` and
+   `cart-drawer` — thumbnail wireframes (7–10 px text) in a `max-w-*` wrapper;
+   **illustration** for every other category. A block in a new category is an
+   illustration until `store.js` lists the category.
 7. **Variants** — the 6 core ones + 2–6 custom ones per visual. Labels follow
    `aspect · aspect` ordering (`isometric · custom copy`).
 8. **Dark mode** — every visual must read correctly in all 9 themes ×

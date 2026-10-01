@@ -13,8 +13,10 @@ scales:
 | Scale | Blocks | Use |
 |---|---|---|
 | illustration | `metrics/*`, `charts/*`, `ai/*`, `states/*`… (every category not listed below) | product artwork: KPI cards, charts, scenes, empty states |
-| real-size | `components/*`, `forms/*`, `mobile/*`, `notices/*`, most of `ecommerce/*` | UI at its real size (12–16 px text): templates to derive your own components from |
+| real-size | `components/*`, `forms/*`, `mobile/*`, `notices/*`, `ecommerce/product-card`, `ecommerce/order-row`, `ecommerce/checkout-summary` | UI at its real size (12–16 px text): templates to derive your own components from |
 | miniature | `sections/*`, `layouts/*`, `ecommerce/product-grid`, `ecommerce/cart-drawer` | thumbnail-scale wireframes (7–10 px text): illustrations of a page, never a page |
+
+The MCP server reports this as each block's `scale`.
 
 A form field, a sortable table or a dialog you ship is **derived** from a block,
 not the block itself: see [Preview compositions vs production UI](react.md#preview-compositions-vs-production-ui).

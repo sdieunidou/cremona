@@ -8,9 +8,11 @@ with [motion](https://motion.dev). Browse them in the gallery of the
 
 Every block is a **preview composition**: an `aria-hidden` illustration that
 takes content props but no handlers, `ref` or `children`. Charts, KPI cards and
-scenes are used as-is next to a text equivalent; `components/*` and the kits
-are real-size templates to derive interactive components from; `sections/*`
-and `layouts/*` are miniature wireframes.
+scenes are used as-is next to a text equivalent; `components/*`, `forms/*`,
+`mobile/*`, `notices/*` and the ecommerce product card, order row and checkout
+summary are real-size templates to derive interactive components from;
+`sections/*`, `layouts/*`, `ecommerce/product-grid` and `cart-drawer` are
+miniature wireframes.
 
 ## Install
 

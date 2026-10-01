@@ -14,8 +14,9 @@ scales:
   categories: product artwork (KPI cards, charts, scenes, empty states) to use
   as-is, next to a text equivalent;
 - **real-size** — `components/*` (button, input, tabs, dialog, table…),
-  `forms/*`, `mobile/*`, `notices/*` and most of `ecommerce/*`: UI at its real
-  size, the templates your own interactive components are derived from;
+  `forms/*`, `mobile/*`, `notices/*` and `ecommerce/product-card`, `order-row`
+  and `checkout-summary`: UI at its real size, the templates your own
+  interactive components are derived from;
 - **miniatures** — `sections/*` and `layouts/*` (plus `ecommerce/product-grid`
   and `cart-drawer`): thumbnail-scale wireframes of a page or a section, never
   a page, a section or a page skeleton themselves.

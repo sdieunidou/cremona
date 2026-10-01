@@ -178,10 +178,20 @@ the rainbow glow (`opacity-60 blur-sm`), the bottom veil
 
 ## Scales
 
-- **Real-size components** (`components/*`, parts of `ecommerce/forms/mobile/notices`)
-  render full-size UI centered in the stage — usable directly in an app.
-- **Miniature mocks** (`sections/*`, `layouts/*`, some ecommerce) are scaled-down
-  wireframes of whole pages, in the POC product-illustration style.
+Every block renders at one of three scales (the MCP `scale`):
+
+- **illustration** — product artwork in the POC style (metrics, charts, scenes,
+  states…): every category not listed below;
+- **real-size** — `components/*`, `forms/*`, `mobile/*`, `notices/*`,
+  `ecommerce/product-card`, `order-row` and `checkout-summary`: UI at its real
+  size (12–16 px text), the templates interactive components are derived from;
+- **miniature** — `sections/*`, `layouts/*`, `ecommerce/product-grid` and
+  `cart-drawer`: thumbnail-scale wireframes of a page or a section (7–10 px
+  text), never the page itself.
+
+All three are preview compositions:
+[react.md](react.md#preview-compositions-vs-production-ui) says how to use one
+as-is or derive a component from it.
 
 ## Motion conventions
 
