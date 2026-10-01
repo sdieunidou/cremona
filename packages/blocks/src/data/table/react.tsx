@@ -64,6 +64,22 @@ export const tableDefaultItems: TableRowItem[] = [
   },
 ];
 
+export interface TableLabels {
+  /** Filter chip of the header. */
+  filter: string;
+  /** Badge text of the `active`, `inactive` and `pending` values; other values show as they are. */
+  active: string;
+  inactive: string;
+  pending: string;
+}
+
+export const tableDefaultLabels: TableLabels = {
+  filter: "Filter",
+  active: "active",
+  inactive: "inactive",
+  pending: "pending",
+};
+
 const badgeStyles: Record<string, string> = {
   active: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400",
   inactive: "bg-muted text-muted-foreground",
@@ -140,6 +156,8 @@ export interface TableProps extends VisualProps {
   items?: readonly TableRowItem[];
   /** Shown in the table body when `items` is empty. */
   emptyLabel?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<TableLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -150,6 +168,7 @@ export function Table({
   columns = tableDefaultColumns,
   items = tableDefaultItems,
   emptyLabel = "No rows",
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -170,6 +189,9 @@ export function Table({
             : "hidden",
       }
     : {};
+  const text = { ...tableDefaultLabels, ...labels };
+  const badgeText = (value: string | undefined) =>
+    value === "active" || value === "inactive" || value === "pending" ? text[value] : value;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -203,7 +225,7 @@ export function Table({
             </div>
             <div className="flex items-center gap-1.5 rounded-full bg-muted px-1.75 py-0.5">
               <Funnel className="size-2.5 text-muted-foreground" />
-              <span className="text-[9px] text-muted-foreground">Filter</span>
+              <span className="text-[9px] text-muted-foreground">{text.filter}</span>
             </div>
           </div>
           <table className="w-full">
@@ -270,7 +292,7 @@ export function Table({
                             className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[9px] font-medium ${badgeStyles[String(item[column.key])] ?? "bg-muted text-muted-foreground"}`}
                             variants={animated ? badgeAnim : undefined}
                           >
-                            {item[column.key]}
+                            {badgeText(item[column.key])}
                           </motion.span>
                         </td>
                       );

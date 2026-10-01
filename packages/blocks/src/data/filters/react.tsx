@@ -34,7 +34,29 @@ const timing = {
 const MIN_PCT = 6;
 const MAX_PCT = 100;
 
-const formatCount = (value: number) => String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export interface FiltersLabels {
+  /** Before the first rule. */
+  where: string;
+  /** Before each following rule. */
+  and: string;
+  clear: string;
+  /** After the match count; `{total}` and `{unit}` are replaced. */
+  of: string;
+}
+
+export const filtersDefaultLabels: FiltersLabels = {
+  where: "Where",
+  and: "And",
+  clear: "Clear",
+  of: "of {total} {unit}",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
 
 const card = {
   hidden: { opacity: 0 },
@@ -116,6 +138,10 @@ export interface FiltersProps extends VisualProps {
   addLabel?: string;
   /** Shown in place of the rules when `rules` is empty. */
   emptyLabel?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<FiltersLabels>;
+  /** BCP 47 locale of the counts (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -128,6 +154,8 @@ export function Filters({
   rules = filtersDefaultRules,
   addLabel = "Add filter",
   emptyLabel = "No filters",
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -150,6 +178,8 @@ export function Filters({
   const lastMatches = shownRules === 0 ? count : activeRules[shownRules - 1]!.matches;
   const matches = Number.isFinite(lastMatches) ? lastMatches : count;
   const pct = count > 0 ? Math.min(Math.max((matches / count) * 100, MIN_PCT), MAX_PCT) : 0;
+  const text = { ...filtersDefaultLabels, ...labels };
+  const formatCount = new Intl.NumberFormat(locale).format;
 
   useEffect(() => {
     if (!animated || !active) return;
@@ -208,7 +238,7 @@ export function Filters({
               onMouseDown={(e) => e.preventDefault()}
               className="text-[10px] font-medium text-muted-foreground"
             >
-              Clear
+              {text.clear}
             </button>
           </motion.div>
           <div className={cn("flex flex-col gap-1.5 bg-muted/40 px-3 py-3", fill && "flex-1")}>
@@ -232,7 +262,7 @@ export function Filters({
                 {...state}
               >
                 <span className="w-8 shrink-0 text-[9px] font-semibold tracking-wide text-muted-foreground uppercase">
-                  {i === 0 ? "Where" : "And"}
+                  {i === 0 ? text.where : text.and}
                 </span>
                 <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-lg border bg-card px-2 py-1.5 shadow-xs">
                   <span className="truncate text-[10px] font-medium text-foreground">
@@ -297,7 +327,7 @@ export function Filters({
                 transition={{ duration: timing.labelShift, ease: "easeOut" }}
                 className="text-[10px] text-muted-foreground"
               >
-                of {formatCount(count)} {unit}
+                {interpolate(text.of, { total: formatCount(count), unit })}
               </motion.span>
             </div>
             <div className="h-1 w-full overflow-hidden rounded-full bg-muted">

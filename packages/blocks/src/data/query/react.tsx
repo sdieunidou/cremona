@@ -19,6 +19,36 @@ export const queryDefaultConditions: QueryCondition[] = [
 
 export const queryDefaultColumns = ["id", "customer", "total"];
 
+export interface QueryLabels {
+  /** Before the source name. */
+  from: string;
+  run: string;
+  /** Before the first condition. */
+  where: string;
+  /** Before each following condition. */
+  and: string;
+  /** Result count; `{count}` is replaced by the number of rows. */
+  rows: string;
+  /** `rows` when the count is one. */
+  rowsOne: string;
+}
+
+export const queryDefaultLabels: QueryLabels = {
+  from: "From",
+  run: "Run",
+  where: "Where",
+  and: "And",
+  rows: "{count} rows",
+  rowsOne: "{count} row",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 export const queryDefaultRows: string[][] = [
   ["4291", "Emma Wilson", "$249.00"],
   ["4288", "Lisa Chang", "$512.00"],
@@ -185,6 +215,10 @@ export interface QueryProps extends VisualProps {
   rows?: readonly (readonly string[])[];
   /** Shown in the results table when `rows` is empty. */
   emptyLabel?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<QueryLabels>;
+  /** BCP 47 locale of the row count (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -197,6 +231,8 @@ export function Query({
   rows = queryDefaultRows,
   duration = "24 ms",
   emptyLabel = "No rows",
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -228,6 +264,11 @@ export function Query({
   const head = headAnim(conditionCount);
   const rowVariants = resultRowVariants(conditionCount);
   const footer = footerVariants(conditionCount, activeRows.length);
+  const text = { ...queryDefaultLabels, ...labels };
+  const rowCount = interpolate(
+    new Intl.PluralRules(locale).select(activeRows.length) === "one" ? text.rowsOne : text.rows,
+    { count: new Intl.NumberFormat(locale).format(activeRows.length) },
+  );
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -245,7 +286,7 @@ export function Query({
           >
             <div className="flex min-w-0 items-center gap-1">
               <Database className="size-3 shrink-0 text-muted-foreground" strokeWidth={2.5} />
-              <span className="shrink-0 text-[10px]/4 text-muted-foreground">From</span>
+              <span className="shrink-0 text-[10px]/4 text-muted-foreground">{text.from}</span>
               <span className="min-w-0 truncate text-[10px]/4 font-semibold text-foreground underline decoration-primary/25 underline-offset-2">
                 {source}
               </span>
@@ -259,7 +300,7 @@ export function Query({
               {...state}
             >
               <Play className="size-2 shrink-0 fill-current" strokeWidth={3} />
-              Run
+              {text.run}
             </motion.button>
           </motion.div>
           {activeConditions.length > 0 && (
@@ -273,7 +314,7 @@ export function Query({
                   {...state}
                 >
                   <span className="w-8 shrink-0 text-[10px]/4 text-muted-foreground">
-                    {i === 0 ? "Where" : "And"}
+                    {i === 0 ? text.where : text.and}
                   </span>
                   <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-lg border bg-card px-2 py-1.5 shadow-xs">
                     <span className="truncate font-mono text-[10px] font-medium text-foreground">
@@ -381,7 +422,7 @@ export function Query({
               <div className="flex items-center gap-1.5">
                 <Table2 className="size-2.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />
                 <span className="text-[10px] leading-none text-muted-foreground tabular-nums">
-                  {activeRows.length} {activeRows.length === 1 ? "row" : "rows"}
+                  {rowCount}
                 </span>
               </div>
               <div className="flex items-center gap-1">

@@ -65,6 +65,12 @@
       "slug": "007-custom-data-errors-isometric",
       "size": null,
       "propsRaw": "{isometric:!0,gradient:!1,title:`Log filters`,unit:`events`,total:94200,rules:[{field:`Level`,operator:`is`,value:`Error`,matches:8140},{field:`Service`,operator:`is`,value:`checkout`,matches:2310},{field:`Seen`,operator:`after`,value:`12:00`,matches:486},{field:`Region`,operator:`is`,value:`eu-west`,matches:92}]}"
+    },
+    {
+      "label": "french",
+      "slug": "008-french",
+      "size": null,
+      "propsRaw": "{title:`Filtres`,unit:`clients`,total:2480,addLabel:`Ajouter un filtre`,rules:[{field:`Offre`,operator:`est`,value:`Pro`,matches:1640},{field:`Statut`,operator:`est`,value:`Actif`,matches:1284},{field:`MRR`,operator:`supérieur à`,value:`500 €`,matches:612},{field:`Inscription`,operator:`après le`,value:`1 janv.`,matches:318}],labels:{where:`Où`,and:`Et`,clear:`Effacer`,of:`sur {total} {unit}`},locale:`fr-FR`}"
     }
   ]
 }

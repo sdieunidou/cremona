@@ -3160,6 +3160,11 @@
         "label": "custom data · errors · isometric",
         "slug": "007-custom-data-errors-isometric",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
+        "size": null
       }
     ]
   },
@@ -3215,6 +3220,11 @@
         "label": "all mapped",
         "slug": "008-all-mapped",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -3265,6 +3275,11 @@
         "label": "custom data · sessions · isometric",
         "slug": "007-custom-data-sessions-isometric",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
+        "size": null
       }
     ]
   },
@@ -3314,6 +3329,11 @@
       {
         "label": "custom data · projects · isometric",
         "slug": "007-custom-data-projects-isometric",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
         "size": null
       }
     ]

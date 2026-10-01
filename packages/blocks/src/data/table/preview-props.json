@@ -126,5 +126,70 @@
         "due": "Jun 22"
       }
     ]
+  },
+  "french": {
+    "title": "Membres",
+    "columns": [
+      {
+        "label": "Nom",
+        "key": "name",
+        "avatar": true
+      },
+      {
+        "label": "Statut",
+        "key": "status",
+        "badge": true
+      },
+      {
+        "label": "Rôle",
+        "key": "role"
+      },
+      {
+        "label": "Arrivée",
+        "key": "joined",
+        "sort": true
+      }
+    ],
+    "items": [
+      {
+        "name": "Camille Martin",
+        "initials": "CM",
+        "subtitle": "Paris",
+        "status": "active",
+        "role": "Admin",
+        "joined": "12 mars"
+      },
+      {
+        "name": "Lucas Bernard",
+        "initials": "LB",
+        "subtitle": "Lyon",
+        "status": "pending",
+        "role": "Développeur",
+        "joined": "28 avr."
+      },
+      {
+        "name": "Léa Dubois",
+        "initials": "LD",
+        "subtitle": "Nantes",
+        "status": "active",
+        "role": "Designer",
+        "joined": "3 mai"
+      },
+      {
+        "name": "Hugo Moreau",
+        "initials": "HM",
+        "subtitle": "Lille",
+        "status": "inactive",
+        "role": "Développeur",
+        "joined": "1 juin"
+      }
+    ],
+    "emptyLabel": "Aucune ligne",
+    "labels": {
+      "filter": "Filtrer",
+      "active": "actif",
+      "inactive": "inactif",
+      "pending": "invité"
+    }
   }
 }

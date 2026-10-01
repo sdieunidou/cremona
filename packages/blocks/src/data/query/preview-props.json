@@ -104,5 +104,58 @@
         "52s"
       ]
     ]
+  },
+  "french": {
+    "source": "commandes",
+    "conditions": [
+      {
+        "field": "statut",
+        "operator": "=",
+        "value": "payée"
+      },
+      {
+        "field": "total",
+        "operator": ">",
+        "value": "100"
+      }
+    ],
+    "columns": [
+      "id",
+      "client",
+      "total"
+    ],
+    "rows": [
+      [
+        "4291",
+        "Emma Martin",
+        "249,00 €"
+      ],
+      [
+        "4288",
+        "Lucas Bernard",
+        "512,00 €"
+      ],
+      [
+        "4283",
+        "Chloé Petit",
+        "134,50 €"
+      ],
+      [
+        "4279",
+        "Hugo Durand",
+        "408,00 €"
+      ]
+    ],
+    "duration": "24 ms",
+    "emptyLabel": "Aucune ligne",
+    "labels": {
+      "from": "Depuis",
+      "run": "Exécuter",
+      "where": "Où",
+      "and": "Et",
+      "rows": "{count} lignes",
+      "rowsOne": "{count} ligne"
+    },
+    "locale": "fr-FR"
   }
 }

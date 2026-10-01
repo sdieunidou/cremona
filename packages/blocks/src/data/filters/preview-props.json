@@ -75,5 +75,44 @@
         "matches": 92
       }
     ]
+  },
+  "french": {
+    "title": "Filtres",
+    "unit": "clients",
+    "total": 2480,
+    "addLabel": "Ajouter un filtre",
+    "rules": [
+      {
+        "field": "Offre",
+        "operator": "est",
+        "value": "Pro",
+        "matches": 1640
+      },
+      {
+        "field": "Statut",
+        "operator": "est",
+        "value": "Actif",
+        "matches": 1284
+      },
+      {
+        "field": "MRR",
+        "operator": "supérieur à",
+        "value": "500 €",
+        "matches": 612
+      },
+      {
+        "field": "Inscription",
+        "operator": "après le",
+        "value": "1 janv.",
+        "matches": 318
+      }
+    ],
+    "labels": {
+      "where": "Où",
+      "and": "Et",
+      "clear": "Effacer",
+      "of": "sur {total} {unit}"
+    },
+    "locale": "fr-FR"
   }
 }
