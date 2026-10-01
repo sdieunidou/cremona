@@ -15,6 +15,26 @@
     { "name": "state", "type": "\"play\" | \"pause\"", "optional": true, "default": "\"play\"" },
     { "name": "showInfo", "type": "boolean", "optional": true, "default": "true" },
     { "name": "showPlayButton", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "viewers",
+      "type": "number",
+      "optional": true,
+      "description": "Viewers of the livestream scene, shown in compact notation (default 6400, \"6.4K\").",
+      "default": "6400"
+    },
+    {
+      "name": "labels",
+      "type": "Partial<VideoPlayerLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the viewer count (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
     {
@@ -43,5 +63,30 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "VideoPlayerLabels",
+      "props": [
+        {
+          "name": "play",
+          "type": "string",
+          "optional": false,
+          "description": "Name of the play/pause button, by the action it shows."
+        },
+        { "name": "pause", "type": "string", "optional": false },
+        {
+          "name": "live",
+          "type": "string",
+          "optional": false,
+          "description": "Badge of the livestream scene."
+        },
+        {
+          "name": "watching",
+          "type": "string",
+          "optional": false,
+          "description": "Viewer count of the livestream scene; `{count}` is replaced by `viewers`."
+        }
+      ]
+    }
+  ]
 }

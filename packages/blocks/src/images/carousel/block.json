@@ -89,6 +89,12 @@
       "slug": "011-isometric-real-images",
       "size": null,
       "propsRaw": "{isometric:!0,badge:!1,slides:a,count:3}"
+    },
+    {
+      "label": "french",
+      "slug": "012-french",
+      "size": null,
+      "propsRaw": "{slides:[{kind:`sunset`,title:`Costa Brava`,caption:`Coucher de soleil sur les falaises`},{kind:`mountain`,title:`Dolomites`,caption:`Au-dessus des nuages`},{kind:`ocean`,title:`Big Sur`,caption:`Houle matinale du Pacifique`}],labels:{previous:`Précédent`,next:`Suivant`}}"
     }
   ]
 }

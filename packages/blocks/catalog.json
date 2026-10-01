@@ -645,7 +645,8 @@
           "busy status",
           "offline status",
           "no caret",
-          "no actions"
+          "no actions",
+          "french"
         ],
         "cols": 2
       },
@@ -666,7 +667,8 @@
           "default · custom messages",
           "isometric · custom messages",
           "typing",
-          "read receipts"
+          "read receipts",
+          "french"
         ],
         "cols": 2
       },
@@ -687,7 +689,8 @@
           "default · custom thread",
           "isometric · custom thread",
           "no actions",
-          "custom likes"
+          "custom likes",
+          "french"
         ],
         "cols": 2
       }
@@ -1248,7 +1251,8 @@
           "isometric · no gradient",
           "with cc",
           "team broadcast · custom",
-          "draft saved · meta"
+          "draft saved · meta",
+          "french"
         ],
         "cols": 2
       },
@@ -1268,7 +1272,8 @@
           "isometric · no gradient",
           "promotions · custom",
           "drafts · custom",
-          "support · custom"
+          "support · custom",
+          "french"
         ],
         "cols": 2
       }
@@ -1291,7 +1296,8 @@
           "isometric",
           "isometric · fadeOut",
           "default · no gradient",
-          "isometric · no gradient"
+          "isometric · no gradient",
+          "french"
         ],
         "cols": 2
       },
@@ -1351,7 +1357,8 @@
           "video",
           "audio",
           "archives",
-          "mixed"
+          "mixed",
+          "french"
         ],
         "cols": 4
       },
@@ -1575,7 +1582,8 @@
           "active: first",
           "active: last",
           "real images",
-          "isometric · real images"
+          "isometric · real images",
+          "french"
         ],
         "cols": 2
       },
@@ -1784,7 +1792,8 @@
           "podcast · pause · isometric",
           "bars · 26",
           "bars · 42",
-          "bars · 56"
+          "bars · 56",
+          "french"
         ],
         "cols": 2
       },
@@ -1810,7 +1819,8 @@
           "variant · podcast",
           "variant · livestream",
           "real image",
-          "isometric · real image"
+          "isometric · real image",
+          "french"
         ],
         "cols": 2
       }
@@ -2856,7 +2866,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "content pipeline · custom",
-          "hiring pipeline · custom"
+          "hiring pipeline · custom",
+          "french"
         ],
         "cols": 2
       }

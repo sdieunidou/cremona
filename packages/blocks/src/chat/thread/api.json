@@ -18,6 +18,12 @@
     },
     { "name": "likes", "type": "number", "optional": true, "default": "24" },
     { "name": "actions", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "labels",
+      "type": "Partial<ThreadLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -48,6 +54,17 @@
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
   "types": [
+    {
+      "name": "ThreadLabels",
+      "props": [
+        {
+          "name": "placeholder",
+          "type": "string",
+          "optional": false,
+          "description": "Text of the empty reply box."
+        }
+      ]
+    },
     {
       "name": "ThreadReply",
       "props": [

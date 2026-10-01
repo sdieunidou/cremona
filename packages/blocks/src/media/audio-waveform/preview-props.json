@@ -61,5 +61,16 @@
   },
   "bars · 56": {
     "bars": 56
+  },
+  "french": {
+    "title": "Minuit à Lisbonne",
+    "subtitle": "Léo Marques · Single",
+    "meta": "Hi-Fi · 320 kbit/s",
+    "labels": {
+      "play": "Lecture",
+      "pause": "Pause",
+      "playHint": "Touchez pour lire",
+      "pauseHint": "Touchez pour mettre en pause"
+    }
   }
 }

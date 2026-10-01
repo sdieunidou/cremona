@@ -77,6 +77,12 @@
       "slug": "009-custom-likes",
       "size": null,
       "propsRaw": "{likes:142}"
+    },
+    {
+      "label": "french",
+      "slug": "010-french",
+      "size": null,
+      "propsRaw": "{parentUser:`Lucas Bernard`,parentInitials:`LB`,parentTime:`10:24`,parentText:`Le nouveau parcours d’accueil est en ligne. La conversion grimpe déjà de 18 %.`,replies:[{user:`Camille Martin`,initials:`CM`,text:`Énorme. L’indicateur de progression a tout changé.`,time:`10:31`},{user:`Inès Moreau`,initials:`IM`,text:`On teste l’étape de bienvenue en A/B ensuite ?`,time:`10:42`}],labels:{placeholder:`Écrire une réponse…`}}"
     }
   ]
 }

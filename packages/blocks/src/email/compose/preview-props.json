@@ -68,5 +68,28 @@
         "email": "jordan@example.dev"
       }
     ]
+  },
+  "french": {
+    "title": "Nouveau message",
+    "subject": "Revue de la feuille de route T4",
+    "sendLabel": "Envoyer",
+    "to": [
+      {
+        "initials": "CM",
+        "email": "camille@exemple.fr"
+      }
+    ],
+    "cc": [
+      {
+        "initials": "LB",
+        "email": "lucas@exemple.fr"
+      }
+    ],
+    "labels": {
+      "to": "À",
+      "cc": "Cc",
+      "subject": "Objet",
+      "remove": "Retirer {email}"
+    }
   }
 }

@@ -1748,6 +1748,11 @@
         "label": "no actions",
         "slug": "012-no-actions",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "013-french",
+        "size": null
       }
     ]
   },
@@ -1811,6 +1816,11 @@
         "label": "read receipts",
         "slug": "009-read-receipts",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -1870,6 +1880,11 @@
       {
         "label": "custom likes",
         "slug": "009-custom-likes",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
         "size": null
       }
     ]
@@ -3763,6 +3778,11 @@
         "label": "draft saved · meta",
         "slug": "008-draft-saved-meta",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -3818,6 +3838,11 @@
         "label": "support · custom",
         "slug": "008-support-custom",
         "size": "lg"
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -3857,6 +3882,11 @@
       {
         "label": "isometric · no gradient",
         "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "006-french",
         "size": null
       }
     ]
@@ -4068,6 +4098,11 @@
         "label": "mixed",
         "slug": "011-mixed",
         "size": "sm"
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
+        "size": null
       }
     ]
   },
@@ -4735,6 +4770,11 @@
         "label": "isometric · real images",
         "slug": "011-isometric-real-images",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
+        "size": null
       }
     ]
   },
@@ -5306,6 +5346,11 @@
         "label": "bars · 56",
         "slug": "011-bars-56",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
+        "size": null
       }
     ]
   },
@@ -5390,6 +5435,11 @@
       {
         "label": "isometric · real image",
         "slug": "014-isometric-real-image",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "015-french",
         "size": null
       }
     ]
@@ -8195,6 +8245,11 @@
       {
         "label": "hiring pipeline · custom",
         "slug": "007-hiring-pipeline-custom",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
         "size": null
       }
     ]

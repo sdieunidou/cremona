@@ -1,6 +1,12 @@
 {
   "component": "Explorer",
   "props": [
+    {
+      "name": "labels",
+      "type": "Partial<ExplorerLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -30,5 +36,33 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "ExplorerLabels",
+      "props": [
+        {
+          "name": "search",
+          "type": "string",
+          "optional": false,
+          "description": "Search field of the toolbar."
+        },
+        {
+          "name": "library",
+          "type": "string",
+          "optional": false,
+          "description": "Sidebar section titles."
+        },
+        { "name": "tags", "type": "string", "optional": false },
+        {
+          "name": "allFiles",
+          "type": "string",
+          "optional": false,
+          "description": "Sidebar entries."
+        },
+        { "name": "starred", "type": "string", "optional": false },
+        { "name": "photos", "type": "string", "optional": false },
+        { "name": "projects", "type": "string", "optional": false }
+      ]
+    }
+  ]
 }

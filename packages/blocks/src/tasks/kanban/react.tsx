@@ -100,10 +100,33 @@ const veilAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
+export interface KanbanLabels {
+  /** Header badge when `meta` is not set; `{count}` is replaced by the card count. */
+  tasks: string;
+  /** `tasks` when the count is one. */
+  tasksOne: string;
+}
+
+export const kanbanDefaultLabels: KanbanLabels = {
+  tasks: "{count} tasks",
+  tasksOne: "{count} task",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 export interface KanbanProps extends VisualProps {
   title?: string;
   meta?: string;
   columns?: readonly KanbanColumn[];
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<KanbanLabels>;
+  /** BCP 47 locale of the card count (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -113,6 +136,8 @@ export function Kanban({
   title = "Kanban board",
   meta,
   columns = kanbanDefaultColumns,
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -134,6 +159,11 @@ export function Kanban({
       }
     : {};
   const totalCards = columns.reduce((acc, col) => acc + col.cards.length, 0);
+  const text = { ...kanbanDefaultLabels, ...labels };
+  const tasks = interpolate(
+    new Intl.PluralRules(locale).select(totalCards) === "one" ? text.tasksOne : text.tasks,
+    { count: new Intl.NumberFormat(locale).format(totalCards) },
+  );
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -165,7 +195,7 @@ export function Kanban({
           >
             <span className="text-xs font-semibold text-foreground">{title}</span>
             <span className="rounded-full bg-primary/10 px-1.75 py-px text-[9px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
-              {meta ?? `${totalCards} tasks`}
+              {meta ?? tasks}
             </span>
           </motion.div>
           <motion.div

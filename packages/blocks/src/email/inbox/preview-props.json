@@ -119,5 +119,52 @@
         "hasAttachment": true
       }
     ]
+  },
+  "french": {
+    "title": "Boîte de réception",
+    "items": [
+      {
+        "initials": "CM",
+        "sender": "Camille Martin",
+        "subject": "Re : revue de la feuille de route",
+        "preview": "Parfait, prêt à livrer vendredi.",
+        "time": "9:42",
+        "unread": true,
+        "starred": true
+      },
+      {
+        "initials": "LB",
+        "sender": "Lucas Bernard",
+        "subject": "Spécifications du design system v3",
+        "preview": "Jetons, animations et typographie prêts.",
+        "time": "9:18",
+        "unread": true,
+        "hasAttachment": true
+      },
+      {
+        "initials": "IM",
+        "sender": "Inès Moreau",
+        "subject": "Centre de notifications fusionné",
+        "preview": "Tests au vert, déploiement en préproduction.",
+        "time": "8:34"
+      },
+      {
+        "initials": "HG",
+        "sender": "Hugo Girard",
+        "subject": "Brouillon des notes de version",
+        "preview": "v2.4 : les nouveautés de cette version.",
+        "time": "Hier"
+      },
+      {
+        "initials": "JR",
+        "sender": "Julie Roux",
+        "subject": "Visite guidée de l’accueil",
+        "preview": "Premier montage de la vidéo v3.",
+        "time": "lun."
+      }
+    ],
+    "labels": {
+      "search": "Rechercher"
+    }
   }
 }

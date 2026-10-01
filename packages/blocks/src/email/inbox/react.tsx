@@ -88,6 +88,15 @@ const row = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 } as const;
 
+export interface InboxLabels {
+  /** Search field of the header. */
+  search: string;
+}
+
+export const inboxDefaultLabels: InboxLabels = {
+  search: "Search",
+};
+
 const unreadDot = {
   hidden: { scale: 0, opacity: 0 },
   visible: {
@@ -128,6 +137,8 @@ export interface InboxProps extends VisualProps {
   title?: string;
   meta?: string;
   items?: InboxItem[];
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<InboxLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -137,6 +148,7 @@ export function Inbox({
   title = inboxDefaultCopy.title,
   meta,
   items = inboxDefaultCopy.items,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -159,6 +171,7 @@ export function Inbox({
     : {};
 
   const unreadCount = items.filter((item) => item.unread).length;
+  const text = { ...inboxDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -199,7 +212,7 @@ export function Inbox({
             ) : (
               <div className="flex items-center gap-1.5 rounded-full bg-muted px-1.75 py-0.5">
                 <Search className="size-2.5 text-muted-foreground" />
-                <span className="text-[9px] text-muted-foreground">Search</span>
+                <span className="text-[9px] text-muted-foreground">{text.search}</span>
               </div>
             )}
           </div>

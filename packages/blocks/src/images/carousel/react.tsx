@@ -15,12 +15,25 @@ export interface CarouselSlide {
   alt?: string;
 }
 
+export interface CarouselLabels {
+  /** Names of the arrow buttons. */
+  previous: string;
+  next: string;
+}
+
+export const carouselDefaultLabels: CarouselLabels = {
+  previous: "Previous",
+  next: "Next",
+};
+
 export interface CarouselProps extends VisualProps {
   slides?: CarouselSlide[];
   /** Number of positions (dots); defaults to `slides.length` (5 for the demo strip). */
   count?: number;
   /** Centred slide and highlighted dot; neighbours wrap around `slides`. */
   activeIndex?: number;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<CarouselLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -271,6 +284,7 @@ export function Carousel({
   slides = defaultSlides,
   count,
   activeIndex = 1,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -282,6 +296,7 @@ export function Carousel({
   className,
 }: CarouselProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const text = { ...carouselDefaultLabels, ...labels };
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const motionState = animated
@@ -405,7 +420,7 @@ export function Carousel({
             <motion.button
               type="button"
               className="absolute top-20 -left-2.5 z-1 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border bg-background/75 text-foreground shadow-lg backdrop-blur-sm hover:border-primary hover:bg-primary hover:text-primary-foreground"
-              aria-label="Previous"
+              aria-label={text.previous}
               variants={animated ? arrowAnim : undefined}
               tabIndex={-1}
               onMouseDown={(e) => e.preventDefault()}
@@ -415,7 +430,7 @@ export function Carousel({
             <motion.button
               type="button"
               className="absolute top-20 -right-2.5 z-1 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border bg-background/75 text-foreground shadow-lg backdrop-blur-sm hover:border-primary hover:bg-primary hover:text-primary-foreground"
-              aria-label="Next"
+              aria-label={text.next}
               variants={animated ? arrowAnim : undefined}
               tabIndex={-1}
               onMouseDown={(e) => e.preventDefault()}

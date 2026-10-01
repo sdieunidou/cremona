@@ -6,6 +6,22 @@ import { useInView } from "@cremona/react";
 import { Music, Pause, Play } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface AudioWaveformLabels {
+  /** Name of the play/pause button, by the action it shows. */
+  play: string;
+  pause: string;
+  /** Hint under the waveform when `hint` is not set, by the action the button shows. */
+  playHint: string;
+  pauseHint: string;
+}
+
+export const audioWaveformDefaultLabels: AudioWaveformLabels = {
+  play: "Play",
+  pause: "Pause",
+  playHint: "Tap to play",
+  pauseHint: "Tap to pause",
+};
+
 export interface AudioWaveformProps extends VisualProps {
   icon?: ReactNode;
   title?: string;
@@ -17,6 +33,8 @@ export interface AudioWaveformProps extends VisualProps {
   hint?: string;
   meta?: string;
   bars?: number;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<AudioWaveformLabels>;
   isometric?: boolean;
   gradient?: boolean;
 }
@@ -126,6 +144,7 @@ export function AudioWaveform({
   hint,
   meta = defaultMeta,
   bars: barCount = 36,
+  labels,
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -135,7 +154,8 @@ export function AudioWaveform({
 }: AudioWaveformProps) {
   const paused = state === "pause";
   const PlayPauseIcon = paused ? Pause : Play;
-  const hintText = hint ?? (paused ? "Tap to pause" : "Tap to play");
+  const text = { ...audioWaveformDefaultLabels, ...labels };
+  const hintText = hint ?? (paused ? text.pauseHint : text.playHint);
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
@@ -198,7 +218,7 @@ export function AudioWaveform({
           <div className="flex items-center gap-2.5">
             <motion.button
               type="button"
-              aria-label={paused ? "Pause" : "Play"}
+              aria-label={paused ? text.pause : text.play}
               className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm"
               variants={animated ? buttonAnim : undefined}
               {...motionState}

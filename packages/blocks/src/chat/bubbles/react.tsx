@@ -20,6 +20,15 @@ export const bubblesDefaultCopy: ChatBubble[] = [
   { from: "me", text: "Tomorrow morning works for me.", time: "10:27", receipt: "read" },
 ];
 
+export interface BubblesLabels {
+  /** Text of the empty composer. */
+  placeholder: string;
+}
+
+export const bubblesDefaultLabels: BubblesLabels = {
+  placeholder: "Type a message…",
+};
+
 const card = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -99,6 +108,8 @@ export interface BubblesProps extends VisualProps {
   initials?: string;
   messages?: readonly ChatBubble[];
   typing?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<BubblesLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -110,6 +121,7 @@ export function Bubbles({
   initials = "SC",
   messages = bubblesDefaultCopy,
   typing = false,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -124,6 +136,7 @@ export function Bubbles({
   const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
   const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
   const loop = useLoopActive(ref, animated);
+  const text = { ...bubblesDefaultLabels, ...labels };
   // looping pieces rest (still typing dots) while the loop is paused
   const loopState = animated
     ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
@@ -231,7 +244,7 @@ export function Bubbles({
           </motion.div>
           <div className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}>
             <div className="flex-1 truncate rounded-full bg-muted px-3 py-1.25 text-[10px] text-muted-foreground">
-              Type a message…
+              {text.placeholder}
             </div>
             <button
               type="button"

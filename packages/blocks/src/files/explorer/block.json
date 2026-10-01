@@ -53,6 +53,12 @@
       "slug": "005-isometric-no-gradient",
       "size": null,
       "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "french",
+      "slug": "006-french",
+      "size": null,
+      "propsRaw": "{labels:{search:`Rechercher des fichiers`,library:`Bibliothèque`,tags:`Étiquettes`,allFiles:`Fichiers`,starred:`Favoris`,photos:`Photos`,projects:`Projets`}}"
     }
   ]
 }

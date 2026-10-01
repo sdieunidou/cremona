@@ -21,6 +21,12 @@
     { "name": "hint", "type": "string", "optional": true },
     { "name": "meta", "type": "string", "optional": true, "default": "\"Hi-Fi · 320kbps\"" },
     { "name": "bars", "type": "number", "optional": true, "default": "36" },
+    {
+      "name": "labels",
+      "type": "Partial<AudioWaveformLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
     {
@@ -49,5 +55,25 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "AudioWaveformLabels",
+      "props": [
+        {
+          "name": "play",
+          "type": "string",
+          "optional": false,
+          "description": "Name of the play/pause button, by the action it shows."
+        },
+        { "name": "pause", "type": "string", "optional": false },
+        {
+          "name": "playHint",
+          "type": "string",
+          "optional": false,
+          "description": "Hint under the waveform when `hint` is not set, by the action the button shows."
+        },
+        { "name": "pauseHint", "type": "string", "optional": false }
+      ]
+    }
+  ]
 }

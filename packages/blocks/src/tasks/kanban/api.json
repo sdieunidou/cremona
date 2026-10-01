@@ -9,6 +9,19 @@
       "optional": true,
       "default": "[…] (3 items)"
     },
+    {
+      "name": "labels",
+      "type": "Partial<KanbanLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the card count (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -58,6 +71,23 @@
           "optional": true
         },
         { "name": "cards", "type": "readonly KanbanCard[]", "optional": false }
+      ]
+    },
+    {
+      "name": "KanbanLabels",
+      "props": [
+        {
+          "name": "tasks",
+          "type": "string",
+          "optional": false,
+          "description": "Header badge when `meta` is not set; `{count}` is replaced by the card count."
+        },
+        {
+          "name": "tasksOne",
+          "type": "string",
+          "optional": false,
+          "description": "`tasks` when the count is one."
+        }
       ]
     }
   ]

@@ -28,6 +28,15 @@ export const threadDefaultCopy: ThreadReply[] = [
   },
 ];
 
+export interface ThreadLabels {
+  /** Text of the empty reply box. */
+  placeholder: string;
+}
+
+export const threadDefaultLabels: ThreadLabels = {
+  placeholder: "Write a reply…",
+};
+
 const card = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -80,6 +89,8 @@ export interface ThreadProps extends VisualProps {
   replies?: readonly ThreadReply[];
   likes?: number;
   actions?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<ThreadLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -93,6 +104,7 @@ export function Thread({
   replies = threadDefaultCopy,
   likes = 24,
   actions = true,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -113,6 +125,7 @@ export function Thread({
             : "hidden",
       }
     : {};
+  const text = { ...threadDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -221,7 +234,7 @@ export function Thread({
           </motion.div>
           <div className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}>
             <div className="flex-1 truncate rounded-full bg-muted px-3 py-1.25 text-[10px] text-muted-foreground">
-              Write a reply…
+              {text.placeholder}
             </div>
             <button
               type="button"

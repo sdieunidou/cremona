@@ -48,5 +48,14 @@
   "mixed": {
     "category": "mixed",
     "label": "Mixed"
+  },
+  "french": {
+    "category": "documents",
+    "count": 3,
+    "labels": {
+      "files": "{count} fichiers",
+      "filesOne": "{count} fichier"
+    },
+    "locale": "fr-FR"
   }
 }

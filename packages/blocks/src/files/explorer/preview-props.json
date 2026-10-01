@@ -16,5 +16,16 @@
   "isometric · no gradient": {
     "isometric": true,
     "gradient": false
+  },
+  "french": {
+    "labels": {
+      "search": "Rechercher des fichiers",
+      "library": "Bibliothèque",
+      "tags": "Étiquettes",
+      "allFiles": "Fichiers",
+      "starred": "Favoris",
+      "photos": "Photos",
+      "projects": "Projets"
+    }
   }
 }
