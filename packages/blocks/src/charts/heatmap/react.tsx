@@ -27,12 +27,19 @@ const LEVELS = [0, 22, 42, 68, 100];
 const CELL = 20;
 const GAP = 4;
 const LABEL_W = 34;
+/** Label column plus its gap when a row label needs more than `w-7`. */
+const WIDE_LABEL_W = 54;
+/** Up to this many columns the grid keeps its preview spacing. */
+const ROOMY = 14;
 
+/** Intensity level 0–4; -1 for a missing (non-finite) value. */
 function levelOf(value: number, max: number): number {
+  if (!Number.isFinite(value)) return -1;
   return value <= 0 ? 0 : Math.min(4, Math.max(1, Math.ceil((value / max) * 4)));
 }
 
 function colorFor(level: number, color: string): string {
+  if (level < 0) return "transparent";
   return level === 0
     ? "var(--color-muted)"
     : `color-mix(in oklab, ${color} ${LEVELS[level]}%, transparent)`;
@@ -40,6 +47,7 @@ function colorFor(level: number, color: string): string {
 
 export interface HeatmapRow {
   label: string;
+  /** One value per column; a missing column reads 0, a non-finite value draws an empty cell. */
   values: readonly number[];
 }
 
@@ -110,12 +118,16 @@ export interface HeatmapProps extends VisualProps {
   badge?: string;
   value?: string;
   change?: string;
+  /** Which way of `change` is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
   rows?: readonly HeatmapRow[];
   columns?: readonly string[];
   color?: string;
   legend?: boolean;
   legendLow?: string;
   legendHigh?: string;
+  /** Shown in place of the grid when there is no row or column. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -126,12 +138,14 @@ export function Heatmap({
   badge = heatmapDefault.badge,
   value = heatmapDefault.value,
   change = heatmapDefault.change,
+  positive = "up",
   rows = heatmapDefault.rows,
   columns = heatmapDefault.columns,
   color = "var(--color-primary)",
   legend = true,
   legendLow = heatmapDefault.legendLow,
   legendHigh = heatmapDefault.legendHigh,
+  emptyLabel = "No data",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -153,10 +167,15 @@ export function Heatmap({
       }
     : {};
   const count = Math.max(columns.length, ...rows.map((r) => r.values.length));
-  const max = Math.max(1, ...rows.flatMap((r) => r.values));
+  const max = Math.max(1, ...rows.flatMap((r) => r.values).filter((v) => Number.isFinite(v)));
   const gridTemplate = `repeat(${count}, minmax(0, 1fr))`;
-  const maxWidth = LABEL_W + count * CELL + (count - 1) * GAP;
-  const down = change.startsWith("-");
+  const gapPx = count <= ROOMY ? GAP : count <= 30 ? 2 : 1;
+  const gap = count <= ROOMY ? "gap-1" : count <= 30 ? "gap-0.5" : "gap-px";
+  const wideLabels = rows.some((r) => String(r.label).length > 5);
+  const maxWidth = (wideLabels ? WIDE_LABEL_W : LABEL_W) + count * CELL + (count - 1) * gapPx;
+  const empty = rows.length === 0 || count === 0;
+  const down = /^\s*[-−]/.test(change);
+  const good = positive === "down" ? down : !down;
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
   const hasColumnLabels = columns.some((c) => c !== "");
 
@@ -168,6 +187,7 @@ export function Heatmap({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -187,7 +207,12 @@ export function Heatmap({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-3.5 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-3.5 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between"
             variants={animated ? headAnim : undefined}
@@ -209,9 +234,9 @@ export function Heatmap({
             <motion.span
               className={cn(
                 "mb-1 inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums ring-1 ring-inset",
-                down
-                  ? "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400"
-                  : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400",
+                good
+                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
+                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
               )}
               variants={animated ? pillAnim : undefined}
               {...state}
@@ -220,60 +245,87 @@ export function Heatmap({
               {change}
             </motion.span>
           </div>
-          <div className="flex flex-col gap-1.5 pt-0.5">
-            <div className="mx-auto flex w-full gap-1.5" style={{ maxWidth }}>
-              <div className="flex w-7 shrink-0 flex-col gap-1">
-                {rows.map((row, i) => (
-                  <motion.span
-                    key={i}
-                    className="flex flex-1 items-center justify-end text-[8px] font-medium text-muted-foreground"
-                    variants={animated ? labelAnim : undefined}
-                    {...state}
-                  >
-                    {row.label}
-                  </motion.span>
-                ))}
-              </div>
-              <div className="flex flex-1 flex-col gap-1">
-                {rows.map((row, i) => (
-                  <div key={i} className="grid gap-1" style={{ gridTemplateColumns: gridTemplate }}>
-                    {Array.from({ length: count }, (_, c) => {
-                      const level = levelOf(row.values[c] ?? 0, max);
-                      return (
-                        <motion.div
-                          key={c}
-                          className="aspect-square rounded-[3px]"
-                          style={{ backgroundColor: colorFor(level, color) }}
-                          custom={i + c}
-                          variants={animated ? cellAnim : undefined}
-                        />
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
-            </div>
-            {hasColumnLabels && (
-              <motion.div
-                className="mx-auto flex w-full gap-1.5"
-                style={{ maxWidth }}
-                variants={animated ? labelAnim : undefined}
-                {...state}
-              >
-                <span className="w-7 shrink-0" />
-                <div className="grid flex-1 gap-1" style={{ gridTemplateColumns: gridTemplate }}>
-                  {Array.from({ length: count }, (_, c) => (
-                    <span
-                      key={c}
-                      className="text-center text-[8px] font-medium text-muted-foreground tabular-nums"
+          {empty ? (
+            <motion.div
+              className={cn(
+                "flex items-center justify-center rounded-lg border border-dashed",
+                fill ? "min-h-20 flex-1" : "h-20",
+              )}
+              variants={animated ? labelAnim : undefined}
+              {...state}
+            >
+              <span className="text-[10px] font-medium text-muted-foreground">{emptyLabel}</span>
+            </motion.div>
+          ) : (
+            <div className={cn("flex flex-col gap-1.5 pt-0.5", fill && "my-auto")}>
+              <div className="mx-auto flex w-full gap-1.5" style={{ maxWidth }}>
+                <div className={cn("flex shrink-0 flex-col", wideLabels ? "w-12" : "w-7", gap)}>
+                  {rows.map((row, i) => (
+                    <motion.span
+                      key={i}
+                      className="flex flex-1 items-center justify-end text-[8px] font-medium text-muted-foreground"
+                      variants={animated ? labelAnim : undefined}
+                      {...state}
                     >
-                      {columns[c] ?? ""}
-                    </span>
+                      {wideLabels ? (
+                        <span className="min-w-0 truncate">{row.label}</span>
+                      ) : (
+                        row.label
+                      )}
+                    </motion.span>
                   ))}
                 </div>
-              </motion.div>
-            )}
-          </div>
+                <div className={cn("flex flex-1 flex-col", gap)}>
+                  {rows.map((row, i) => (
+                    <div
+                      key={i}
+                      className={cn("grid", gap)}
+                      style={{ gridTemplateColumns: gridTemplate }}
+                    >
+                      {Array.from({ length: count }, (_, c) => {
+                        const level = levelOf(row.values[c] ?? 0, max);
+                        return (
+                          <motion.div
+                            key={c}
+                            className={cn(
+                              "aspect-square rounded-[3px]",
+                              level < 0 && "ring-1 ring-border ring-inset",
+                            )}
+                            style={{ backgroundColor: colorFor(level, color) }}
+                            custom={i + c}
+                            variants={animated ? cellAnim : undefined}
+                          />
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {hasColumnLabels && (
+                <motion.div
+                  className="mx-auto flex w-full gap-1.5"
+                  style={{ maxWidth }}
+                  variants={animated ? labelAnim : undefined}
+                  {...state}
+                >
+                  <span className={cn("shrink-0", wideLabels ? "w-12" : "w-7")} />
+                  <div
+                    className={cn("grid flex-1", gap)}
+                    style={{ gridTemplateColumns: gridTemplate }}
+                  >
+                    {Array.from({ length: count }, (_, c) => (
+                      <span
+                        key={c}
+                        className="text-center text-[8px] font-medium text-muted-foreground tabular-nums"
+                      >
+                        {columns[c] ?? ""}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+          )}
           {legend && (
             <motion.div
               className="flex items-center justify-end gap-1.5"

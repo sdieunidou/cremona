@@ -161,17 +161,16 @@ const footerVariants = (index: number, rowCount: number): Variants => ({
 
 const EMAIL_RE = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/;
 
-/** Auto-links email addresses inside a string (POC build renders them as mailto anchors). */
+/** Auto-links the first email address inside a string (POC build renders them as mailto anchors). */
 function EmailText({ text }: { text: string }) {
   const match = EMAIL_RE.exec(text);
   if (!match) return <>{text}</>;
   const email = match[1]!;
-  const parts = text.split(email);
   return (
     <>
-      {parts[0]}
+      {text.slice(0, match.index)}
       <a href={`mailto:${email}`}>{email}</a>
-      {parts[1]}
+      {text.slice(match.index + email.length)}
     </>
   );
 }
@@ -182,6 +181,8 @@ export interface QueryProps extends VisualProps {
   conditions?: readonly QueryCondition[];
   columns?: readonly string[];
   rows?: readonly (readonly string[])[];
+  /** Shown in the results table when `rows` is empty. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -193,6 +194,7 @@ export function Query({
   columns = queryDefaultColumns,
   rows = queryDefaultRows,
   duration = "24 ms",
+  emptyLabel = "No rows",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -213,11 +215,12 @@ export function Query({
             : "hidden",
       }
     : {};
-  const activeConditions = conditions.length ? conditions : queryDefaultConditions;
-  const activeColumns = columns.length ? columns : queryDefaultColumns;
-  const activeRows = (rows.length ? rows : queryDefaultRows).map((row) =>
-    activeColumns.map((_, i) => row[i] ?? ""),
-  );
+  const activeConditions = conditions;
+  // without column names, the rows say how many columns there are
+  const activeColumns = columns.length
+    ? columns
+    : Array.from({ length: Math.max(0, ...rows.map((row) => row.length)) }, () => "");
+  const activeRows = rows.map((row) => activeColumns.map((_, i) => row[i] ?? ""));
   const conditionCount = activeConditions.length;
   const sweep = sweepVariants(conditionCount);
   const head = headAnim(conditionCount);
@@ -227,7 +230,7 @@ export function Query({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative flex w-full${fill ? "" : " max-w-88"} flex-col gap-1.5 rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative flex w-full${fill ? " h-full" : " max-w-88"} flex-col gap-1.5 rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -257,37 +260,39 @@ export function Query({
               Run
             </motion.button>
           </motion.div>
-          <div className="flex flex-col gap-1.5 bg-muted/40 px-3 py-2.5">
-            {activeConditions.map((condition, i) => (
-              <motion.div
-                key={i}
-                className="flex items-center gap-2"
-                variants={animated ? conditionAnim : undefined}
-                custom={i}
-                {...state}
-              >
-                <span className="w-8 shrink-0 text-[10px]/4 text-muted-foreground">
-                  {i === 0 ? "Where" : "And"}
-                </span>
-                <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-lg border bg-card px-2 py-1.5 shadow-xs">
-                  <span className="truncate font-mono text-[10px] font-medium text-foreground">
-                    {condition.field}
+          {activeConditions.length > 0 && (
+            <div className="flex flex-col gap-1.5 bg-muted/40 px-3 py-2.5">
+              {activeConditions.map((condition, i) => (
+                <motion.div
+                  key={i}
+                  className="flex items-center gap-2"
+                  variants={animated ? conditionAnim : undefined}
+                  custom={i}
+                  {...state}
+                >
+                  <span className="w-8 shrink-0 text-[10px]/4 text-muted-foreground">
+                    {i === 0 ? "Where" : "And"}
                   </span>
-                  <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
-                    {condition.operator}
-                  </span>
-                  <motion.span
-                    className="truncate rounded-md bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] font-medium text-primary ring-1 ring-primary/15 ring-inset dark:text-foreground"
-                    variants={animated ? valueAnim : undefined}
-                    custom={i}
-                    {...state}
-                  >
-                    {condition.value}
-                  </motion.span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                  <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-lg border bg-card px-2 py-1.5 shadow-xs">
+                    <span className="truncate font-mono text-[10px] font-medium text-foreground">
+                      {condition.field}
+                    </span>
+                    <span className="shrink-0 font-mono text-[10px] text-muted-foreground">
+                      {condition.operator}
+                    </span>
+                    <motion.span
+                      className="truncate rounded-md bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] font-medium text-primary ring-1 ring-primary/15 ring-inset dark:text-foreground"
+                      variants={animated ? valueAnim : undefined}
+                      custom={i}
+                      {...state}
+                    >
+                      {condition.value}
+                    </motion.span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
           {animated && (
             <motion.div
               className="absolute inset-x-0 bottom-0 h-0.5 origin-left bg-primary"
@@ -296,7 +301,7 @@ export function Query({
             />
           )}
         </div>
-        <div className="relative">
+        <div className={cn("relative", fill && "flex flex-1 flex-col")}>
           {gradient && !fadeOut && (
             <>
               <motion.div
@@ -311,7 +316,12 @@ export function Query({
               />
             </>
           )}
-          <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
+          <div
+            className={cn(
+              "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+              fill && "flex flex-1 flex-col",
+            )}
+          >
             <table className="w-full table-fixed">
               <motion.thead variants={animated ? head : undefined} {...state}>
                 <tr className="border-b bg-muted/25">
@@ -326,6 +336,21 @@ export function Query({
                 </tr>
               </motion.thead>
               <tbody>
+                {activeRows.length === 0 && (
+                  <motion.tr
+                    className="border-b border-border/50"
+                    variants={animated ? rowVariants : undefined}
+                    custom={0}
+                    {...state}
+                  >
+                    <td
+                      colSpan={Math.max(1, activeColumns.length)}
+                      className="py-3 text-center text-[10px] text-muted-foreground"
+                    >
+                      {emptyLabel}
+                    </td>
+                  </motion.tr>
+                )}
                 {activeRows.map((row, i) => (
                   <motion.tr
                     key={i}
@@ -347,14 +372,14 @@ export function Query({
               </tbody>
             </table>
             <motion.div
-              className="flex items-center justify-between px-3 py-2"
+              className={cn("flex items-center justify-between px-3 py-2", fill && "mt-auto")}
               variants={animated ? footer : undefined}
               {...state}
             >
               <div className="flex items-center gap-1.5">
                 <Table2 className="size-2.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />
                 <span className="text-[10px] leading-none text-muted-foreground tabular-nums">
-                  {activeRows.length} rows
+                  {activeRows.length} {activeRows.length === 1 ? "row" : "rows"}
                 </span>
               </div>
               <div className="flex items-center gap-1">

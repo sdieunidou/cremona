@@ -1,16 +1,18 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
-import { Globe, Database, KeyRound, HardDrive, Cloud } from "lucide-react";
+import { useInView, useLoopActive } from "@cremona/react";
+import { Globe, Database, KeyRound, HardDrive, Cloud, Server } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
-type ServiceStatus = "operational" | "degraded" | "down";
+export type ServiceStatus = "operational" | "degraded" | "down";
 
 export interface HealthCheckItem {
-  icon: LucideIcon;
+  /** Defaults to a server icon. */
+  icon?: LucideIcon;
   name: string;
   region: string;
+  /** Any other value renders as a neutral status labelled with the value itself. */
   status: ServiceStatus;
   latency: string;
 }
@@ -38,6 +40,17 @@ const statusMeta: Record<
     text: "text-destructive",
   },
 };
+
+function metaFor(status: string) {
+  return (
+    statusMeta[status as ServiceStatus] ?? {
+      dot: "bg-muted-foreground",
+      ping: "bg-muted-foreground/60",
+      label: status.charAt(0).toUpperCase() + status.slice(1),
+      text: "text-muted-foreground",
+    }
+  );
+}
 
 const latencyColor = (status: ServiceStatus): string =>
   status === "degraded"
@@ -135,6 +148,8 @@ const veilAnim = {
 export interface HealthCheckProps extends VisualProps {
   title?: string;
   items?: readonly HealthCheckItem[];
+  /** Shown in place of the list when `items` is empty. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -143,6 +158,7 @@ export interface HealthCheckProps extends VisualProps {
 export function HealthCheck({
   title = "System Status",
   items = healthCheckDefaultItems,
+  emptyLabel = "No services",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -163,17 +179,24 @@ export function HealthCheck({
             : "hidden",
       }
     : {};
+  const loop = useLoopActive(ref, animated);
   const allOperational = items.every((i) => i.status === "operational");
-  const headline = allOperational
-    ? "All systems normal"
-    : items.some((i) => i.status === "down")
-      ? "Outage detected"
-      : "Partial degradation";
-  const meta = allOperational
-    ? statusMeta.operational
-    : items.some((i) => i.status === "down")
-      ? statusMeta.down
-      : statusMeta.degraded;
+  const headline =
+    items.length === 0
+      ? ""
+      : allOperational
+        ? "All systems normal"
+        : items.some((i) => i.status === "down")
+          ? "Outage detected"
+          : "Partial degradation";
+  const meta =
+    items.length === 0
+      ? metaFor("")
+      : allOperational
+        ? statusMeta.operational
+        : items.some((i) => i.status === "down")
+          ? statusMeta.down
+          : statusMeta.degraded;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -183,6 +206,7 @@ export function HealthCheck({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
@@ -202,11 +226,13 @@ export function HealthCheck({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-3 py-2.75">
             <div className="flex items-center gap-2">
               <span className="relative flex size-2">
-                <span className={cn("absolute inset-0 animate-ping rounded-full", meta.ping)} />
+                <span
+                  className={cn("absolute inset-0 rounded-full", loop && "animate-ping", meta.ping)}
+                />
                 <span className={cn("relative size-2 rounded-full", meta.dot)} />
               </span>
               <span className="text-xs font-semibold text-foreground">{title}</span>
@@ -218,9 +244,17 @@ export function HealthCheck({
             variants={animated ? listAnim : undefined}
             {...state}
           >
+            {items.length === 0 && (
+              <motion.div
+                className="px-3 py-4 text-center text-[10px] text-muted-foreground"
+                variants={animated ? itemAnim : undefined}
+              >
+                {emptyLabel}
+              </motion.div>
+            )}
             {items.map((item, i) => {
-              const Icon = item.icon;
-              const s = statusMeta[item.status];
+              const Icon = item.icon ?? Server;
+              const s = metaFor(item.status);
               return (
                 <motion.div
                   key={i}

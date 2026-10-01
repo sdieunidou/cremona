@@ -14,9 +14,45 @@ export const sparklineDefault = {
 const W = 80;
 const H = 30;
 
-function toPoints(values: readonly number[]): [number, number][] {
+/**
+ * The series as heights between 0 (bottom) and 1 (top), `null` where a value is
+ * missing. `points` already in 0..1 are used as they are; `values` — and
+ * `points` outside 0..1 — are scaled to `min`..`max`, the series' own range by default.
+ */
+function toFractions(
+  points: readonly number[],
+  values?: readonly number[],
+  min?: number,
+  max?: number,
+): (number | null)[] {
+  const raw = values ?? points;
+  const finite = raw.filter((v) => Number.isFinite(v));
+  const fixedMin = typeof min === "number" && Number.isFinite(min);
+  const fixedMax = typeof max === "number" && Number.isFinite(max);
+  if (!values && !fixedMin && !fixedMax && finite.every((v) => v >= 0 && v <= 1))
+    return raw.map((v) => (Number.isFinite(v) ? v : null));
+  const lo = fixedMin ? min! : Math.min(...finite);
+  const hi = fixedMax ? max! : Math.max(...finite);
+  const span = hi - lo;
+  return raw.map((v) =>
+    Number.isFinite(v) ? (span > 0 ? Math.min(1, Math.max(0, (v - lo) / span)) : 0.5) : null,
+  );
+}
+
+function toPoints(values: readonly (number | null)[]): [number, number][] {
+  if (values.length === 1 && values[0] !== null) {
+    const y = 3 + (1 - values[0]!) * 24;
+    return [
+      [0, y],
+      [W, y],
+    ];
+  }
   const step = W / (values.length - 1);
-  return values.map((v, i) => [i * step, 3 + (1 - v) * 24]);
+  const points: [number, number][] = [];
+  values.forEach((v, i) => {
+    if (v !== null) points.push([i * step, 3 + (1 - v) * 24]);
+  });
+  return points;
 }
 
 function toPath(points: [number, number][]): string {
@@ -31,8 +67,11 @@ function toPath(points: [number, number][]): string {
   return d;
 }
 
-function areaPath(points: [number, number][]): string {
-  return `${toPath(points)} L ${W},${H} L 0,${H} Z`;
+function areaPath(points: [number, number][], values: readonly (number | null)[]): string {
+  if (points.length < 2) return "";
+  const right = values[values.length - 1] === null ? points[points.length - 1]![0] : W;
+  const left = values[0] === null ? points[0]![0] : 0;
+  return `${toPath(points)} L ${right},${H} L ${left},${H} Z`;
 }
 
 const wrap = {
@@ -108,7 +147,21 @@ export interface SparklineProps extends VisualProps {
   title?: string;
   value?: string;
   change?: string;
+  /** Which way of `change` is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
+  /**
+   * The series as heights, 0 (bottom) to 1 (top). Values outside 0..1 are scaled
+   * to the series' own range, like `values`.
+   */
   points?: readonly number[];
+  /** The series in its own unit, scaled to `min`..`max`. Takes precedence over `points`. */
+  values?: readonly number[];
+  /** Value at the bottom of the plot (default: the smallest value). */
+  min?: number;
+  /** Value at the top of the plot (default: the largest value). */
+  max?: number;
+  /** Shown in place of the plot when the series has no finite value. */
+  emptyLabel?: string;
   isometric?: boolean;
   gradient?: boolean;
   /**
@@ -125,7 +178,12 @@ export function Sparkline({
   title = sparklineDefault.title,
   value = sparklineDefault.value,
   change = sparklineDefault.change,
+  positive = "up",
   points = sparklineDefault.points,
+  values,
+  min,
+  max,
+  emptyLabel = "No data",
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -147,23 +205,23 @@ export function Sparkline({
       }
     : {};
   const gradientId = useId();
-  const down = change.startsWith("-");
+  const down = /^\s*[-−]/.test(change);
+  const good = positive === "down" ? down : !down;
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
-  const pts = toPoints(points);
+  const series = toFractions(points, values, min, max);
+  const pts = toPoints(series);
   const line = toPath(pts);
-  const area = areaPath(pts);
-  const last = pts[pts.length - 1]!;
+  const area = areaPath(pts, series);
+  const last = pts[pts.length - 1];
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        // `cn` réordonnerait si on lui donnait les classes en vrac ; ici
-        // l'ordre préfixe / cap / plateau reproduit exactement les deux
-        // chaînes d'origine, donc les goldens ne bougent pas.
         className={cn(
           "relative w-full",
           !fill && "max-w-64",
           framed && "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -192,11 +250,12 @@ export function Sparkline({
           </>
         )}
         <div
-          className={
+          className={cn(
             framed
               ? "relative flex items-center gap-3 rounded-2xl border bg-card px-3.5 py-3 shadow-xs"
-              : "relative flex items-center gap-3 rounded-xl border bg-card px-3.5 py-3 shadow-xs"
-          }
+              : "relative flex items-center gap-3 rounded-xl border bg-card px-3.5 py-3 shadow-xs",
+            fill && "flex-1",
+          )}
         >
           <div className="flex min-w-0 flex-1 flex-col gap-0.5">
             <motion.span
@@ -216,9 +275,9 @@ export function Sparkline({
             <motion.span
               className={cn(
                 "inline-flex w-fit items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold tabular-nums ring-1 ring-inset",
-                down
-                  ? "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400"
-                  : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400",
+                good
+                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
+                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
               )}
               variants={animated ? pillAnim : undefined}
               {...state}
@@ -227,47 +286,58 @@ export function Sparkline({
               {change}
             </motion.span>
           </div>
-          <div className="relative shrink-0">
-            <svg
-              viewBox={`0 0 ${W} ${H}`}
-              preserveAspectRatio="none"
-              className="block h-10 w-20"
-              aria-hidden="true"
-            >
-              <defs>
-                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--color-chart-1)" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              <motion.path
-                d={area}
-                fill={`url(#${gradientId})`}
-                variants={animated ? areaAnim : undefined}
-                {...state}
-              />
-              <motion.path
-                d={line}
-                fill="none"
-                stroke="var(--color-chart-1)"
-                strokeWidth={1.75}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                variants={animated ? lineAnim : undefined}
-                {...state}
-              />
-            </svg>
+          {!last ? (
             <motion.div
-              className="absolute size-2 -translate-1/2 rounded-full border-[1.75px] bg-card"
-              style={{
-                left: `${(last[0] / W) * 100}%`,
-                top: `${(last[1] / H) * 100}%`,
-                borderColor: "var(--color-chart-1)",
-              }}
-              variants={animated ? dotAnim : undefined}
+              className="relative flex h-10 w-20 shrink-0 items-center justify-center"
+              variants={animated ? areaAnim : undefined}
               {...state}
-            />
-          </div>
+            >
+              <div className="absolute inset-x-0 bottom-1 border-t border-dashed border-border" />
+              <span className="text-[9px] font-medium text-muted-foreground">{emptyLabel}</span>
+            </motion.div>
+          ) : (
+            <div className="relative shrink-0">
+              <svg
+                viewBox={`0 0 ${W} ${H}`}
+                preserveAspectRatio="none"
+                className="block h-10 w-20"
+                aria-hidden="true"
+              >
+                <defs>
+                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--color-chart-1)" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="var(--color-chart-1)" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <motion.path
+                  d={area}
+                  fill={`url(#${gradientId})`}
+                  variants={animated ? areaAnim : undefined}
+                  {...state}
+                />
+                <motion.path
+                  d={line}
+                  fill="none"
+                  stroke="var(--color-chart-1)"
+                  strokeWidth={1.75}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  variants={animated ? lineAnim : undefined}
+                  {...state}
+                />
+              </svg>
+              <motion.div
+                className="absolute size-2 -translate-1/2 rounded-full border-[1.75px] bg-card"
+                style={{
+                  left: `${(last[0] / W) * 100}%`,
+                  top: `${(last[1] / H) * 100}%`,
+                  borderColor: "var(--color-chart-1)",
+                }}
+                variants={animated ? dotAnim : undefined}
+                {...state}
+              />
+            </div>
+          )}
         </div>
       </motion.div>
     </div>

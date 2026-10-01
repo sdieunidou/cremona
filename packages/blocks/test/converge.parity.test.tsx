@@ -6,9 +6,6 @@ import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/connections/converge");
 
-// icon elements for the custom-node variants (from the POC page chunk imports)
-const icon = (Icon: typeof FileText) => <Icon className="size-4" strokeWidth={2} />;
-
 // brand glyphs used by the "company logos" variants (inline SVGs from the POC page chunk)
 const logo = (d: string) => (
   <svg viewBox="0 0 24 24" className="size-4 fill-current text-foreground">
@@ -27,12 +24,13 @@ runGoldenParity("connections/converge", {
   blockDir,
   Component: Converge,
   variants: [
-    { label: "custom icons", props: { nodes: [icon(Palette), icon(CodeXml), icon(Music)] } },
+    // icon components: the block draws them at its node icon size
+    { label: "custom icons", props: { nodes: [Palette, CodeXml, Music] } },
     {
       label: "4 nodes",
-      props: { nodes: [icon(FileText), icon(Image), icon(Database), icon(CodeXml)] },
+      props: { nodes: [FileText, Image, Database, CodeXml] },
     },
-    { label: "isometric · 2 nodes", props: { nodes: [icon(Image), icon(Music)], isometric: true } },
+    { label: "isometric · 2 nodes", props: { nodes: [Image, Music], isometric: true } },
     { label: "company logos", props: { nodes: LOGOS.map(logo) } },
     {
       label: "company logos · isometric",

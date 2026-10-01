@@ -22,24 +22,40 @@ const RADIUS = 53;
 const CIRC = 2 * Math.PI * RADIUS;
 const GAP = 4;
 
-interface Segment {
+export interface DonutSegment {
   label: string;
+  /** Share of the ring; zero, negative and non-finite values take no share. */
   value: number;
-  color: string;
+  /** Any CSS colour (default: the chart palette, in order). */
+  color?: string;
 }
 
-interface Arc extends Segment {
+interface Arc extends DonutSegment {
+  color: string;
   dash: string;
   offset: number;
   visibleLength: number;
   percent: number;
 }
 
-function computeArcs(segments: readonly Segment[]): Arc[] {
-  const total = segments.reduce((acc, s) => acc + s.value, 0);
+const PALETTE = [
+  "var(--color-chart-1)",
+  "var(--color-chart-2)",
+  "var(--color-chart-3)",
+  "var(--color-chart-4)",
+  "var(--color-chart-5)",
+];
+
+function computeArcs(segments: readonly DonutSegment[]): Arc[] {
+  const clean = segments.map((s, i) => ({
+    ...s,
+    value: Number.isFinite(s.value) && s.value > 0 ? s.value : 0,
+    color: s.color ?? PALETTE[i % PALETTE.length]!,
+  }));
+  const total = clean.reduce((acc, s) => acc + s.value, 0);
   let acc = 0;
-  return segments.map((s) => {
-    const frac = s.value / total;
+  return clean.map((s) => {
+    const frac = total > 0 ? s.value / total : 0;
     const arc = frac * CIRC;
     const length = Math.max(0, arc - GAP);
     const offset = -acc;
@@ -128,7 +144,9 @@ export interface DonutProps extends VisualProps {
   badge?: string;
   centerValue?: string;
   centerLabel?: string;
-  segments?: readonly Segment[];
+  segments?: readonly DonutSegment[];
+  /** Shown in place of the legend when `segments` is empty. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -140,6 +158,7 @@ export function Donut({
   centerValue = donutDefault.centerValue,
   centerLabel = donutDefault.centerLabel,
   segments = donutDefault.segments,
+  emptyLabel = "No data",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -161,6 +180,7 @@ export function Donut({
       }
     : {};
   const arcs = computeArcs(segments);
+  const empty = arcs.every((arc) => arc.value === 0);
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -170,6 +190,7 @@ export function Donut({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -189,7 +210,12 @@ export function Donut({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-4 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3 rounded-2xl border bg-card px-4 py-4 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between"
             variants={animated ? headAnim : undefined}
@@ -200,7 +226,7 @@ export function Donut({
               {badge}
             </span>
           </motion.div>
-          <div className="flex items-center justify-center py-2">
+          <div className={cn("flex items-center justify-center py-2", fill && "flex-1")}>
             <div className="relative">
               <motion.svg
                 width={SIZE}
@@ -211,22 +237,35 @@ export function Donut({
                 {...state}
               >
                 <g transform={`rotate(-90 ${SIZE / 2} ${SIZE / 2})`}>
-                  {arcs.map((arc, i) => (
-                    <motion.circle
-                      key={i}
-                      custom={{ offset: arc.offset, visibleLength: arc.visibleLength }}
+                  {empty ? (
+                    <circle
                       cx={SIZE / 2}
                       cy={SIZE / 2}
                       r={RADIUS}
                       fill="none"
-                      stroke={arc.color}
+                      stroke="var(--color-muted)"
                       strokeWidth={STROKE}
-                      strokeLinecap="round"
-                      strokeDasharray={arc.dash}
-                      strokeDashoffset={arc.offset}
-                      variants={animated ? segAnim : undefined}
                     />
-                  ))}
+                  ) : (
+                    arcs.map((arc, i) =>
+                      arc.value > 0 ? (
+                        <motion.circle
+                          key={i}
+                          custom={{ offset: arc.offset, visibleLength: arc.visibleLength }}
+                          cx={SIZE / 2}
+                          cy={SIZE / 2}
+                          r={RADIUS}
+                          fill="none"
+                          stroke={arc.color}
+                          strokeWidth={STROKE}
+                          strokeLinecap="round"
+                          strokeDasharray={arc.dash}
+                          strokeDashoffset={arc.offset}
+                          variants={animated ? segAnim : undefined}
+                        />
+                      ) : null,
+                    )
+                  )}
                 </g>
               </motion.svg>
               <motion.div
@@ -241,32 +280,42 @@ export function Donut({
               </motion.div>
             </div>
           </div>
-          <motion.div
-            className="grid grid-cols-2 gap-x-3 gap-y-1.5 pt-1"
-            variants={animated ? legendAnim : undefined}
-            {...state}
-          >
-            {arcs.map((arc, i) => (
-              <motion.div
-                key={i}
-                className="flex items-center justify-between gap-2"
-                variants={animated ? itemAnim : undefined}
-              >
-                <div className="flex min-w-0 items-center gap-1.5">
-                  <span
-                    className="inline-flex size-2 shrink-0 rounded-full"
-                    style={{ backgroundColor: arc.color }}
-                  />
-                  <span className="truncate text-[10px] font-medium text-foreground">
-                    {arc.label}
+          {arcs.length === 0 ? (
+            <motion.p
+              className="pt-1 text-center text-[10px] font-medium text-muted-foreground"
+              variants={animated ? itemAnim : undefined}
+              {...state}
+            >
+              {emptyLabel}
+            </motion.p>
+          ) : (
+            <motion.div
+              className="grid grid-cols-2 gap-x-3 gap-y-1.5 pt-1"
+              variants={animated ? legendAnim : undefined}
+              {...state}
+            >
+              {arcs.map((arc, i) => (
+                <motion.div
+                  key={i}
+                  className="flex items-center justify-between gap-2"
+                  variants={animated ? itemAnim : undefined}
+                >
+                  <div className="flex min-w-0 items-center gap-1.5">
+                    <span
+                      className="inline-flex size-2 shrink-0 rounded-full"
+                      style={{ backgroundColor: arc.color }}
+                    />
+                    <span className="truncate text-[10px] font-medium text-foreground">
+                      {arc.label}
+                    </span>
+                  </div>
+                  <span className="text-[10px] text-muted-foreground tabular-nums">
+                    {arc.percent}%
                   </span>
-                </div>
-                <span className="text-[10px] text-muted-foreground tabular-nums">
-                  {arc.percent}%
-                </span>
-              </motion.div>
-            ))}
-          </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </motion.div>
     </div>

@@ -47,7 +47,8 @@
     ],
     "outages": [
       14
-    ]
+    ],
+    "status": "outage"
   },
   "no legend": {
     "showLegend": false

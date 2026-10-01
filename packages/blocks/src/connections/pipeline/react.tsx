@@ -1,9 +1,21 @@
-import { useId, useRef, useState } from "react";
+import { isValidElement, useId, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
-import { ChartColumn, Cloud, Cpu, Database, FileText, Image, Mail } from "lucide-react";
+import { useInView, useLoopActive } from "@cremona/react";
+import {
+  ChartColumn,
+  Cloud,
+  Cpu,
+  Database,
+  FileText,
+  Image,
+  Mail,
+  type LucideIcon,
+} from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+/** A node's content: an icon component (drawn at the node's icon size) or any element. */
+export type PipelineNode = ReactNode | LucideIcon;
 
 export const pipelineDefaultCopy = {
   logo: <Cpu className="size-5" strokeWidth={1.5} />,
@@ -37,6 +49,28 @@ function cubic(x1: number, y1: number, x2: number, y2: number): string {
   const mid = (x1 + x2) / 2;
   return `M ${x1},${y1} C ${mid},${y1} ${mid},${y2} ${x2},${y2}`;
 }
+
+function isIcon(node: PipelineNode): node is LucideIcon {
+  return (
+    typeof node === "function" ||
+    (typeof node === "object" && node !== null && !isValidElement(node) && "$$typeof" in node)
+  );
+}
+
+function nodeContent(node: PipelineNode, logo = false): ReactNode {
+  if (!isIcon(node)) return node;
+  const Icon = node;
+  return logo ? (
+    <Icon className="size-5" strokeWidth={1.5} />
+  ) : (
+    <Icon className="size-4" strokeWidth={2} />
+  );
+}
+
+const NODE =
+  "flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background";
+const EMPTY_NODE =
+  "flex size-9 items-center justify-center rounded-xl border border-dashed border-muted-foreground/40 bg-card/60 ring-2 ring-background";
 
 const stage = {
   hidden: { opacity: 0 },
@@ -121,9 +155,12 @@ function PipelinePulse({
 }
 
 export interface PipelineProps extends VisualProps {
-  logo?: ReactNode;
-  inputs?: readonly ReactNode[];
-  outputs?: readonly ReactNode[];
+  /** The hub; `null` draws none. */
+  logo?: PipelineNode;
+  /** An empty list draws one empty, dashed slot. */
+  inputs?: readonly PipelineNode[];
+  /** An empty list draws one empty, dashed slot. */
+  outputs?: readonly PipelineNode[];
   pulse?: "dot" | "spike";
   hover?: boolean;
   isometric?: boolean;
@@ -146,6 +183,7 @@ export function Pipeline({
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
+  const loop = useLoopActive(ref, animated);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
@@ -153,10 +191,8 @@ export function Pipeline({
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
 
-  const inputList = (inputs.length ? inputs : pipelineDefaultCopy.inputs) as readonly ReactNode[];
-  const outputList = (
-    outputs.length ? outputs : pipelineDefaultCopy.outputs
-  ) as readonly ReactNode[];
+  const inputList: readonly PipelineNode[] = inputs.length ? inputs : [null];
+  const outputList: readonly PipelineNode[] = outputs.length ? outputs : [null];
   const inputDelay = (i: number) => INPUT_DELAY + i * DELAY_UNIT;
   const outputDelay = (i: number) => OUTPUT_DELAY + i * DELAY_UNIT;
   const inputPaths = inputList.map((_, i) =>
@@ -176,7 +212,7 @@ export function Pipeline({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative aspect-14/9 w-72"
+        className={cn("relative aspect-14/9 w-72", fill && "max-w-full self-center")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? stageIso : stage) : undefined}
         {...state}
@@ -229,7 +265,7 @@ export function Pipeline({
               {...state}
             />
           ))}
-          {animated && (
+          {animated && loop && (
             <motion.g
               initial={false}
               animate={{ opacity: +!!pulseVisible }}
@@ -239,26 +275,30 @@ export function Pipeline({
                 delay: pulseVisible && !hover ? pulseDelay : 0,
               }}
             >
-              {inputPaths.map((d, i) => (
-                <PipelinePulse
-                  key={`id${i}`}
-                  d={d}
-                  dur="2s"
-                  begin={`${-i * 0.7}s`}
-                  pulse={pulse}
-                  gradientId={gradientId}
-                />
-              ))}
-              {outputPaths.map((d, i) => (
-                <PipelinePulse
-                  key={`od${i}`}
-                  d={d}
-                  dur="2s"
-                  begin={`${-(i * 0.7 + 0.3)}s`}
-                  pulse={pulse}
-                  gradientId={gradientId}
-                />
-              ))}
+              {inputPaths.map((d, i) =>
+                inputList[i] == null ? null : (
+                  <PipelinePulse
+                    key={`id${i}`}
+                    d={d}
+                    dur="2s"
+                    begin={`${-i * 0.7}s`}
+                    pulse={pulse}
+                    gradientId={gradientId}
+                  />
+                ),
+              )}
+              {outputPaths.map((d, i) =>
+                outputList[i] == null ? null : (
+                  <PipelinePulse
+                    key={`od${i}`}
+                    d={d}
+                    dur="2s"
+                    begin={`${-(i * 0.7 + 0.3)}s`}
+                    pulse={pulse}
+                    gradientId={gradientId}
+                  />
+                ),
+              )}
             </motion.g>
           )}
         </svg>
@@ -272,12 +312,12 @@ export function Pipeline({
             }}
           >
             <motion.div
-              className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
+              className={node == null ? EMPTY_NODE : NODE}
               variants={animated ? nodeAnim : undefined}
               custom={inputDelay(i)}
               {...state}
             >
-              {node}
+              {node == null ? null : nodeContent(node)}
             </motion.div>
           </div>
         ))}
@@ -291,7 +331,7 @@ export function Pipeline({
               variants={animated ? logoAnim : undefined}
               {...state}
             >
-              {logo}
+              {nodeContent(logo, true)}
             </motion.div>
           </div>
         )}
@@ -305,12 +345,12 @@ export function Pipeline({
             }}
           >
             <motion.div
-              className="flex size-9 items-center justify-center overflow-hidden rounded-xl border bg-card text-foreground shadow-xs ring-2 ring-background"
+              className={node == null ? EMPTY_NODE : NODE}
               variants={animated ? nodeAnim : undefined}
               custom={outputDelay(i)}
               {...state}
             >
-              {node}
+              {node == null ? null : nodeContent(node)}
             </motion.div>
           </div>
         ))}

@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface MonitorSeries {
   label: string;
+  /** Any CSS colour. */
   color: string;
+  /** Samples, oldest first, as fractions of the plot (0–1) or as percentages (0–100). */
   points: readonly number[];
+  /**
+   * Noise (0–1) that turns `points` into a simulated live signal, which keeps
+   * scrolling while animated. Leave it out to draw `points` as they are, with
+   * the last sample as the reading.
+   */
   jitter?: number;
 }
 
@@ -27,7 +34,6 @@ export const monitorDefaultSeries: MonitorSeries[] = [
 
 const DEFAULT_SAMPLES = 48;
 const DEFAULT_INTERVAL = 600;
-const DEFAULT_JITTER = 0.05;
 const MIN_INTERVAL = 200;
 const MIN_SAMPLES = 8;
 const EXTRA_POINTS = 3;
@@ -52,16 +58,40 @@ function interpolate(points: readonly number[], offset: number, total: number): 
   return points[i]! + (points[next]! - points[i]!) * (pos - i);
 }
 
+/** Finite samples as fractions of the plot; a series with a value above 1 is in percent. */
+function toFractions(points: readonly number[]): number[] {
+  const finite = points.filter((v) => Number.isFinite(v));
+  const percent = finite.some((v) => v > 1);
+  return finite.map((v) => Math.min(1, Math.max(0, percent ? v / 100 : v)));
+}
+
 function sampleValue(
-  entry: MonitorSeries,
+  points: readonly number[],
+  jitter: number,
   seriesIndex: number,
   offset: number,
   total: number,
 ): number {
-  const jitter = entry.jitter ?? DEFAULT_JITTER;
   const value =
-    interpolate(entry.points, offset, total) + noise(offset * NOISE_SCALE, seriesIndex) * jitter;
+    interpolate(points, offset, total) + noise(offset * NOISE_SCALE, seriesIndex) * jitter;
   return Math.min(Math.max(value, 0.04), 0.96);
+}
+
+interface SeriesLine {
+  entry: MonitorSeries;
+  /** Drawn from its samples as they are, outside the scrolling group. */
+  exact: boolean;
+  points: string;
+  reading: number | null;
+}
+
+/** The samples spread over the plot, oldest at the left edge, newest at the right. */
+function exactLine(points: readonly number[]): string {
+  const values = points.length === 1 ? [points[0]!, points[0]!] : points;
+  const step = VIEW_WIDTH / Math.max(values.length - 1, 1);
+  return values
+    .map((v, i) => `${(i * step).toFixed(2)},${((1 - v) * 80 + 2).toFixed(2)}`)
+    .join(" ");
 }
 
 const card = {
@@ -161,6 +191,8 @@ export interface ResourceMonitorProps extends VisualProps {
   showGrid?: boolean;
   showAxis?: boolean;
   hover?: boolean;
+  /** Shown over the plot when no series has a sample. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -174,6 +206,7 @@ export function ResourceMonitor({
   showGrid = true,
   showAxis = true,
   hover = false,
+  emptyLabel = "No data",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -188,12 +221,17 @@ export function ResourceMonitor({
   const lastTickRef = useRef<number | null>(null);
   const [hovered, setHovered] = useState(false);
   const [tick, setTick] = useState(0);
+  const loop = useLoopActive(ref, animated);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
-  const live = animated && inView && (!hover || hovered);
-  const tickMs = Math.max(interval, MIN_INTERVAL);
-  const sampleCount = Math.max(Math.round(samples), MIN_SAMPLES);
+  const simulated = series.some((entry) => (entry.jitter ?? 0) > 0);
+  const live = animated && inView && (!hover || hovered) && loop && simulated;
+  const tickMs = Math.max(Number.isFinite(interval) ? interval : DEFAULT_INTERVAL, MIN_INTERVAL);
+  const sampleCount = Math.max(
+    Math.round(Number.isFinite(samples) ? samples : DEFAULT_SAMPLES),
+    MIN_SAMPLES,
+  );
   const totalPoints = sampleCount + EXTRA_POINTS;
   const step = VIEW_WIDTH / sampleCount;
   const duration = tickMs / 1000;
@@ -215,12 +253,23 @@ export function ResourceMonitor({
     return () => clearTimeout(timer);
   }, [live, tickMs]);
 
-  const seriesData = series.map((entry, si) => {
+  const seriesData = series.map((entry, si): SeriesLine => {
+    const fractions = toFractions(entry.points);
+    const jitter = entry.jitter ?? 0;
+    if (jitter <= 0) {
+      return {
+        entry,
+        exact: true,
+        points: fractions.length ? exactLine(fractions) : "",
+        reading: fractions.length ? Math.round(fractions[fractions.length - 1]! * 100) : null,
+      };
+    }
     const values = Array.from({ length: totalPoints }, (_, pi) =>
-      sampleValue(entry, si + 1, tick + pi, totalPoints),
+      sampleValue(fractions, jitter, si + 1, tick + pi, totalPoints),
     );
     return {
       entry,
+      exact: false,
       points: values
         .map((v, i) => {
           const x = (i - 1) * step;
@@ -231,6 +280,7 @@ export function ResourceMonitor({
       reading: Math.round(values[totalPoints - 2]! * 100),
     };
   });
+  const empty = !seriesData.some((d) => d.points);
 
   return (
     <div
@@ -246,6 +296,7 @@ export function ResourceMonitor({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
@@ -265,7 +316,12 @@ export function ResourceMonitor({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3 rounded-2xl border bg-card px-4 pt-3.5 pb-3 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3 rounded-2xl border bg-card px-4 pt-3.5 pb-3 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between gap-3"
             variants={animated ? headerAnim : undefined}
@@ -274,7 +330,12 @@ export function ResourceMonitor({
             <div className="flex min-w-0 items-center gap-2">
               {animated && (
                 <span className="relative flex size-2 shrink-0">
-                  <span className="absolute inset-0 animate-ping rounded-full bg-primary/60" />
+                  <span
+                    className={cn(
+                      "absolute inset-0 rounded-full bg-primary/60",
+                      loop && "animate-ping",
+                    )}
+                  />
                   <span className="relative size-2 rounded-full bg-primary" />
                 </span>
               )}
@@ -293,13 +354,13 @@ export function ResourceMonitor({
                   />
                   <span className="font-medium text-muted-foreground">{entry.label}</span>
                   <span className="min-w-[3ch] text-right font-semibold text-foreground tabular-nums">
-                    {reading}%
+                    {reading === null ? "—" : `${reading}%`}
                   </span>
                 </motion.span>
               ))}
             </div>
           </motion.div>
-          <div className="flex items-stretch gap-1.5">
+          <div className={cn("flex items-stretch gap-1.5", fill && "flex-1")}>
             {showAxis && (
               <motion.div
                 className="flex w-6 shrink-0 flex-col justify-between text-[9px] font-medium text-muted-foreground tabular-nums"
@@ -310,7 +371,7 @@ export function ResourceMonitor({
                 <span>0%</span>
               </motion.div>
             )}
-            <div className="relative h-24 min-w-0 flex-1">
+            <div className={cn("relative min-w-0 flex-1", fill ? "min-h-24" : "h-24")}>
               <motion.div className="h-full" variants={animated ? clipAnim : undefined} {...state}>
                 <svg
                   viewBox={`0 0 ${VIEW_WIDTH} ${VIEW_HEIGHT}`}
@@ -341,7 +402,23 @@ export function ResourceMonitor({
                     animate={animated ? { x: live || tick > 0 ? -step : 0 } : undefined}
                     transition={{ duration, ease: "linear" }}
                   >
-                    {seriesData.map(({ entry, points }, i) => (
+                    {seriesData.map(({ entry, points, exact }, i) =>
+                      exact ? null : (
+                        <polyline
+                          key={`${entry.label}-${i}`}
+                          points={points}
+                          fill="none"
+                          stroke={entry.color}
+                          strokeWidth={1.5}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          vectorEffect="non-scaling-stroke"
+                        />
+                      ),
+                    )}
+                  </motion.g>
+                  {seriesData.map(({ entry, points, exact }, i) =>
+                    exact && points ? (
                       <polyline
                         key={`${entry.label}-${i}`}
                         points={points}
@@ -352,8 +429,8 @@ export function ResourceMonitor({
                         strokeLinejoin="round"
                         vectorEffect="non-scaling-stroke"
                       />
-                    ))}
-                  </motion.g>
+                    ) : null,
+                  )}
                   <line
                     x1={0}
                     y1={1}
@@ -376,6 +453,13 @@ export function ResourceMonitor({
                   />
                 </svg>
               </motion.div>
+              {empty && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-[10px] font-medium text-muted-foreground">
+                    {emptyLabel}
+                  </span>
+                </div>
+              )}
               {animated && (
                 <motion.div className="absolute inset-0" variants={sweepAnim} {...state}>
                   <div className="absolute inset-y-0 right-0 w-12 bg-linear-to-l from-card via-card/80 to-transparent" />

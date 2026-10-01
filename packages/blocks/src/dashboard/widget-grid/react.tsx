@@ -105,7 +105,7 @@ export function WidgetGrid({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 will-change-transform ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 p-1.5 will-change-transform ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -125,7 +125,10 @@ export function WidgetGrid({
           </>
         )}
         <motion.div
-          className="relative grid h-60 grid-cols-4 grid-rows-[auto_1fr_auto] gap-1.5"
+          className={cn(
+            "relative grid grid-cols-4 grid-rows-[auto_1fr_auto] gap-1.5",
+            fill ? "flex-1" : "h-60",
+          )}
           variants={animated ? gridAnim : undefined}
           {...state}
         >

@@ -11,77 +11,23 @@
   },
   "2 in · 4 out": {
     "inputs": [
-      {
-        "$element": "lucide:Globe",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Smartphone",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      }
+      "lucide:Globe",
+      "lucide:Smartphone"
     ],
     "outputs": [
-      {
-        "$element": "lucide:ChartColumn",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Mail",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Bell",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Cloud",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      }
+      "lucide:ChartColumn",
+      "lucide:Mail",
+      "lucide:Bell",
+      "lucide:Cloud"
     ]
   },
   "isometric · 1 in · 2 out": {
     "inputs": [
-      {
-        "$element": "lucide:Globe",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      }
+      "lucide:Globe"
     ],
     "outputs": [
-      {
-        "$element": "lucide:ChartColumn",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      },
-      {
-        "$element": "lucide:Bell",
-        "props": {
-          "className": "size-4",
-          "strokeWidth": 2
-        }
-      }
+      "lucide:ChartColumn",
+      "lucide:Bell"
     ],
     "isometric": true
   },

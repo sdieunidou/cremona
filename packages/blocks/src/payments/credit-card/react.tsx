@@ -160,7 +160,7 @@ export function CreditCard({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className="relative w-72 will-change-transform"
+        className={cn("relative w-72 will-change-transform", fill && "max-w-full self-center")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}

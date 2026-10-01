@@ -14,7 +14,7 @@ export const statCardDefaultCopy = {
   trend: "up",
 } as const;
 
-type Trend = "up" | "down" | "neutral";
+export type Trend = "up" | "down" | "neutral";
 
 const trendStyles: Record<Trend, { icon: LucideIcon; pill: string }> = {
   up: {
@@ -90,6 +90,8 @@ export interface StatCardProps extends VisualProps {
   change?: string;
   period?: string;
   trend?: Trend;
+  /** Which trend is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -102,6 +104,7 @@ export function StatCard({
   change = statCardDefaultCopy.change,
   period = statCardDefaultCopy.period,
   trend = statCardDefaultCopy.trend,
+  positive = "up",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -122,9 +125,16 @@ export function StatCard({
             : "hidden",
       }
     : {};
-  const trendStyle = trendStyles[trend];
+  const trendStyle = trendStyles[trend] ?? trendStyles.neutral;
   const TrendIcon = trendStyle.icon;
-  const Icon = icon;
+  // the pill colour says good or bad news: swapped when going down is the good way
+  const pill =
+    positive === "down" && trendStyle !== trendStyles.neutral
+      ? trendStyle === trendStyles.up
+        ? trendStyles.down.pill
+        : trendStyles.up.pill
+      : trendStyle.pill;
+  const Icon = icon ?? statCardDefaultCopy.icon;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -134,6 +144,7 @@ export function StatCard({
           !fill && "max-w-72",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5 will-change-transform",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
@@ -153,7 +164,12 @@ export function StatCard({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-4 rounded-2xl border bg-card p-5 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-4 rounded-2xl border bg-card p-5 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <div className="flex items-center gap-2.5">
             <motion.div
               className="flex size-8 items-center justify-center rounded-lg bg-primary/10 text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0"
@@ -181,7 +197,7 @@ export function StatCard({
             <motion.span
               className={cn(
                 "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums",
-                trendStyle.pill,
+                pill,
               )}
               variants={animated ? pillAnim : undefined}
               {...state}

@@ -12,7 +12,7 @@ export const trendDefault = {
   points: [0.32, 0.28, 0.45, 0.4, 0.58, 0.55, 0.7, 0.82, 0.88],
 } as const;
 
-type Direction = "primary" | "up" | "down" | "warning";
+export type Direction = "primary" | "up" | "down" | "warning";
 
 const directionStyles: Record<
   Direction,
@@ -51,9 +51,46 @@ const directionStyles: Record<
 const W = 200;
 const H = 56;
 
-function toPoints(values: readonly number[]): [number, number][] {
+/**
+ * The series as heights between 0 (bottom) and 1 (top), `null` where a value is
+ * missing. `points` already in 0..1 are used as they are; `values` — and
+ * `points` outside 0..1 — are scaled to `min`..`max`, the series' own range by default.
+ */
+function toFractions(
+  points: readonly number[],
+  values?: readonly number[],
+  min?: number,
+  max?: number,
+): (number | null)[] {
+  const raw = values ?? points;
+  const finite = raw.filter((v) => Number.isFinite(v));
+  const fixedMin = typeof min === "number" && Number.isFinite(min);
+  const fixedMax = typeof max === "number" && Number.isFinite(max);
+  if (!values && !fixedMin && !fixedMax && finite.every((v) => v >= 0 && v <= 1))
+    return raw.map((v) => (Number.isFinite(v) ? v : null));
+  const lo = fixedMin ? min! : Math.min(...finite);
+  const hi = fixedMax ? max! : Math.max(...finite);
+  const span = hi - lo;
+  return raw.map((v) =>
+    Number.isFinite(v) ? (span > 0 ? Math.min(1, Math.max(0, (v - lo) / span)) : 0.5) : null,
+  );
+}
+
+function toPoints(values: readonly (number | null)[]): [number, number][] {
   const step = W / (values.length - 1);
-  return values.map((v, i) => [i * step, (1 - v) * H]);
+  const points: [number, number][] = [];
+  values.forEach((v, i) => {
+    if (v !== null) points.push([i * step, (1 - v) * H]);
+  });
+  // a single value is a constant: draw it across the plot
+  if (points.length === 1) {
+    const y = points[0]![1];
+    return [
+      [0, y],
+      [W, y],
+    ];
+  }
+  return points;
 }
 
 function toPath(points: [number, number][]): string {
@@ -68,8 +105,11 @@ function toPath(points: [number, number][]): string {
   return d;
 }
 
-function areaPath(points: [number, number][]): string {
-  return `${toPath(points)} L ${W},${H} L 0,${H} Z`;
+function areaPath(points: [number, number][], values: readonly (number | null)[]): string {
+  if (points.length < 2) return "";
+  const right = values[values.length - 1] === null ? points[points.length - 1]![0] : W;
+  const left = values[0] === null ? points[0]![0] : 0;
+  return `${toPath(points)} L ${right},${H} L ${left},${H} Z`;
 }
 
 const wrap = {
@@ -145,8 +185,21 @@ export interface TrendProps extends VisualProps {
   label?: string;
   value?: string;
   change?: string;
+  /** Colour and icon of the pill and the line; an unknown value reads as `primary`. */
   direction?: Direction;
+  /**
+   * The series as heights, 0 (bottom) to 1 (top). Values outside 0..1 are scaled
+   * to the series' own range, like `values`.
+   */
   points?: readonly number[];
+  /** The series in its own unit, scaled to `min`..`max`. Takes precedence over `points`. */
+  values?: readonly number[];
+  /** Value at the bottom of the plot (default: the smallest value). */
+  min?: number;
+  /** Value at the top of the plot (default: the largest value). */
+  max?: number;
+  /** Shown in place of the plot when the series has no finite value. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -159,6 +212,10 @@ export function Trend({
   change = trendDefault.change,
   direction = trendDefault.direction,
   points = trendDefault.points,
+  values,
+  min,
+  max,
+  emptyLabel = "No data",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -181,11 +238,12 @@ export function Trend({
       }
     : {};
   const gradientId = useId();
-  const styles = directionStyles[direction];
+  const styles = directionStyles[direction] ?? directionStyles.primary;
   const TrendIcon = styles.icon;
-  const pts = toPoints(points);
+  const series = toFractions(points, values, min, max);
+  const pts = toPoints(series);
   const line = toPath(pts);
-  const area = areaPath(pts);
+  const area = areaPath(pts, series);
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -195,6 +253,7 @@ export function Trend({
           !fill && "max-w-72",
           "will-change-transform",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? wrapIso : wrap) : undefined}
@@ -222,7 +281,12 @@ export function Trend({
             />
           </>
         )}
-        <div className="relative rounded-3xl border border-border/50 bg-muted/75 p-1.5">
+        <div
+          className={cn(
+            "relative rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           {gradient && !fadeOut && (
             <>
               <motion.div
@@ -237,7 +301,12 @@ export function Trend({
               />
             </>
           )}
-          <div className="relative flex flex-col overflow-hidden rounded-2xl border bg-card shadow-xs">
+          <div
+            className={cn(
+              "relative flex flex-col overflow-hidden rounded-2xl border bg-card shadow-xs",
+              fill && "flex-1",
+            )}
+          >
             <div className="flex items-center justify-between px-4 pt-4 pb-1">
               <motion.span
                 className="text-xs font-medium tracking-wide text-muted-foreground"
@@ -265,37 +334,52 @@ export function Trend({
             >
               {value}
             </motion.div>
-            <div className="relative mt-3">
-              <svg
-                viewBox={`0 0 ${W} ${H}`}
-                preserveAspectRatio="none"
-                className="block h-14 w-full"
-                aria-hidden="true"
+            {pts.length === 0 ? (
+              <motion.div
+                className={cn(
+                  "relative mt-3 flex items-center justify-center",
+                  fill ? "min-h-14 flex-1" : "h-14",
+                )}
+                variants={animated ? areaAnim : undefined}
+                {...state}
               >
-                <defs>
-                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={styles.fillTop} stopOpacity="0.25" />
-                    <stop offset="100%" stopColor={styles.fillBottom} stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                <motion.path
-                  d={area}
-                  fill={`url(#${gradientId})`}
-                  variants={animated ? areaAnim : undefined}
-                  {...state}
-                />
-                <motion.path
-                  d={line}
-                  fill="none"
-                  stroke={styles.stroke}
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  variants={animated ? lineAnim : undefined}
-                  {...state}
-                />
-              </svg>
-            </div>
+                <div className="absolute inset-x-4 bottom-2 border-t border-dashed border-border" />
+                <span className="text-[10px] font-medium text-muted-foreground">{emptyLabel}</span>
+              </motion.div>
+            ) : (
+              <div className={cn("relative mt-3", fill && "min-h-14 flex-1")}>
+                <svg
+                  viewBox={`0 0 ${W} ${H}`}
+                  preserveAspectRatio="none"
+                  className={cn("block w-full", fill ? "h-full" : "h-14")}
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor={styles.fillTop} stopOpacity="0.25" />
+                      <stop offset="100%" stopColor={styles.fillBottom} stopOpacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <motion.path
+                    d={area}
+                    fill={`url(#${gradientId})`}
+                    variants={animated ? areaAnim : undefined}
+                    {...state}
+                  />
+                  <motion.path
+                    d={line}
+                    fill="none"
+                    stroke={styles.stroke}
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    vectorEffect={fill ? "non-scaling-stroke" : undefined}
+                    variants={animated ? lineAnim : undefined}
+                    {...state}
+                  />
+                </svg>
+              </div>
+            )}
           </div>
         </div>
       </motion.div>

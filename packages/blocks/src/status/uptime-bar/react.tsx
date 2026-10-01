@@ -1,9 +1,16 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
-type UptimeStatus = "operational" | "degraded" | "outage";
+export type UptimeStatus = "operational" | "degraded" | "outage";
+
+/** The demo window, whose headline reports its past outage as current. */
+export const uptimeBarDefault = {
+  incidents: [13, 14, 31, 49],
+  outages: [22],
+  status: "outage",
+} as const;
 
 const barColors: Record<"ok" | "degraded" | "outage", string> = {
   ok: "bg-emerald-500/85 dark:bg-emerald-400/80",
@@ -96,10 +103,14 @@ const veilAnim = {
 
 export interface UptimeBarProps extends VisualProps {
   title?: string;
+  /** Days in the window; the last one is today. */
   days?: number;
   uptime?: string;
+  /** Day indexes (0 = oldest) with degraded performance. */
   incidents?: readonly number[];
+  /** Day indexes (0 = oldest) with an outage. */
   outages?: readonly number[];
+  /** The current status. Defaults to today's: the last day's outage or incident, else operational. */
   status?: UptimeStatus;
   showLegend?: boolean;
   isometric?: boolean;
@@ -110,8 +121,8 @@ export function UptimeBar({
   title = "Uptime",
   days = 60,
   uptime,
-  incidents = [13, 14, 31, 49],
-  outages = [22],
+  incidents,
+  outages,
   status,
   showLegend = true,
   animated = false,
@@ -133,22 +144,33 @@ export function UptimeBar({
             : "hidden",
       }
     : {};
-  const computedUptime =
-    (((days - incidents.length - outages.length) / days) * 100).toFixed(2) + "%";
+  const loop = useLoopActive(ref, animated);
+  const dayCount = Number.isFinite(days) && days > 0 ? Math.floor(days) : 0;
+  const inWindow = (day: number) => Number.isInteger(day) && day >= 0 && day < dayCount;
+  const incidentSet = new Set((incidents ?? uptimeBarDefault.incidents).filter(inWindow));
+  const outageSet = new Set((outages ?? uptimeBarDefault.outages).filter(inWindow));
+  const downDays = new Set([...incidentSet, ...outageSet]).size;
+  const computedUptime = dayCount
+    ? (((dayCount - downDays) / dayCount) * 100).toFixed(2) + "%"
+    : "—";
   const uptimeLabel = uptime ?? computedUptime;
-  const meta =
-    statusMeta[
-      status ?? (outages.length > 0 ? "outage" : incidents.length > 0 ? "degraded" : "operational")
-    ];
-  const incidentSet = new Set(incidents);
-  const outageSet = new Set(outages);
-  const hasIncidents = incidents.length > 0;
-  const hasOutages = outages.length > 0;
+  const today = dayCount - 1;
+  const current: UptimeStatus =
+    incidents === undefined && outages === undefined
+      ? uptimeBarDefault.status
+      : outageSet.has(today)
+        ? "outage"
+        : incidentSet.has(today)
+          ? "degraded"
+          : "operational";
+  const meta = (status && statusMeta[status]) || statusMeta[current];
+  const hasIncidents = [...incidentSet].some((day) => !outageSet.has(day));
+  const hasOutages = outageSet.size > 0;
   const footerAnim = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: { duration: 0.3, delay: 0.6 + days * 0.012, ease: "easeOut" },
+      transition: { duration: 0.3, delay: 0.6 + dayCount * 0.012, ease: "easeOut" },
     },
   } as const;
 
@@ -159,6 +181,7 @@ export function UptimeBar({
           "relative w-full",
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
@@ -178,7 +201,12 @@ export function UptimeBar({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3 rounded-2xl border bg-card p-3.5 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3 rounded-2xl border bg-card p-3.5 shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between"
             variants={animated ? headerAnim : undefined}
@@ -186,7 +214,9 @@ export function UptimeBar({
           >
             <div className="flex items-center gap-2">
               <span className="relative flex size-2">
-                <span className={cn("absolute inset-0 animate-ping rounded-full", meta.ping)} />
+                <span
+                  className={cn("absolute inset-0 rounded-full", loop && "animate-ping", meta.ping)}
+                />
                 <span className={cn("relative size-2 rounded-full", meta.dot)} />
               </span>
               <span className="text-xs font-semibold text-foreground">{title}</span>
@@ -204,11 +234,11 @@ export function UptimeBar({
             </motion.span>
           </motion.div>
           <motion.div
-            className="flex h-7 items-stretch gap-px"
+            className={cn("flex h-7 items-stretch gap-px", fill && "my-auto")}
             variants={animated ? barsAnim : undefined}
             {...state}
           >
-            {Array.from({ length: days }).map((_, i) => {
+            {Array.from({ length: dayCount }).map((_, i) => {
               const color = outageSet.has(i)
                 ? barColors.outage
                 : incidentSet.has(i)
@@ -228,7 +258,7 @@ export function UptimeBar({
             variants={animated ? footerAnim : undefined}
             {...state}
           >
-            <span>{days} days ago</span>
+            <span>{dayCount} days ago</span>
             {showLegend && (hasIncidents || hasOutages) && (
               <div className="flex items-center gap-2.5">
                 {hasIncidents && (

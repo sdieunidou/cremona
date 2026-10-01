@@ -9,8 +9,12 @@ export interface UsageItem {
   label: string;
   detail: string;
   amount: string;
+  /** Dot colour: a background class (`bg-chart-2`) or any CSS colour. */
   color?: string;
 }
+
+/** CSS colour forms that can never be a class name. */
+const CSS_COLOR = /^(var\(|#|rgba?\(|hsla?\(|okl(ch|ab)\(|l(ab|ch)\(|color(-mix)?\()/;
 
 export const usageMeterDefaultItems: UsageItem[] = [
   { label: "API requests", detail: "1.24M calls", amount: "$124.00", color: "bg-chart-1" },
@@ -109,6 +113,11 @@ export interface UsageMeterProps extends VisualProps {
   total?: string;
   totalLabel?: string;
   trend?: string;
+  /** From this `usedRatio` on, the meter turns to the warning colour (and destructive at 1). */
+  warnAt?: number;
+  actionLabel?: string;
+  /** Shown in place of the breakdown when `items` is empty. */
+  emptyLabel?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -125,6 +134,9 @@ export function UsageMeter({
   total = "$248.60",
   totalLabel = "Estimated total",
   trend = "+12%",
+  warnAt,
+  actionLabel = "Manage plan",
+  emptyLabel = "No usage yet",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -145,7 +157,14 @@ export function UsageMeter({
             : "hidden",
       }
     : {};
-  const meterWidth = `${Math.max(0, Math.min(usedRatio, 1)) * 100}%`;
+  const ratio = Number.isFinite(usedRatio) ? usedRatio : 0;
+  const meterWidth = `${Math.max(0, Math.min(ratio, 1)) * 100}%`;
+  const meterColor =
+    warnAt !== undefined && ratio >= 1
+      ? "bg-destructive"
+      : warnAt !== undefined && ratio >= warnAt
+        ? "bg-warning"
+        : "bg-primary";
   const down = trend.trim().startsWith("-");
   const TrendIcon: LucideIcon = down ? ArrowDown : ArrowUp;
   const trendPill = down
@@ -160,6 +179,7 @@ export function UsageMeter({
           !fill && "max-w-80",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
+          fill && "flex h-full flex-col",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
@@ -179,7 +199,12 @@ export function UsageMeter({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <motion.div
             className="flex items-center justify-between border-b px-4 py-3"
             variants={animated ? headerAnim : undefined}
@@ -202,7 +227,7 @@ export function UsageMeter({
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted">
               <motion.div
-                className="h-full origin-left rounded-full bg-primary"
+                className={cn("h-full origin-left rounded-full", meterColor)}
                 style={{ width: meterWidth }}
                 variants={animated ? meterAnim : undefined}
                 {...state}
@@ -211,10 +236,18 @@ export function UsageMeter({
             <span className="mt-1.5 block text-[10px] text-muted-foreground">{meterCaption}</span>
           </div>
           <motion.div
-            className="flex flex-col px-4 py-2"
+            className={cn("flex flex-col px-4 py-2", fill && "flex-1")}
             variants={animated ? listAnim : undefined}
             {...state}
           >
+            {items.length === 0 && (
+              <motion.span
+                className="py-1.5 text-[11px] text-muted-foreground"
+                variants={animated ? itemAnim : undefined}
+              >
+                {emptyLabel}
+              </motion.span>
+            )}
             {items.map((item, i) => (
               <motion.div
                 key={i}
@@ -225,9 +258,16 @@ export function UsageMeter({
                 variants={animated ? itemAnim : undefined}
               >
                 <div className="flex items-center gap-2 overflow-hidden">
-                  <span
-                    className={cn("size-2 shrink-0 rounded-full", item.color ?? "bg-primary")}
-                  />
+                  {item.color && CSS_COLOR.test(item.color) ? (
+                    <span
+                      className="size-2 shrink-0 rounded-full"
+                      style={{ backgroundColor: item.color }}
+                    />
+                  ) : (
+                    <span
+                      className={cn("size-2 shrink-0 rounded-full", item.color ?? "bg-primary")}
+                    />
+                  )}
                   <span className="shrink-0 text-[11px] font-medium text-foreground">
                     {item.label}
                   </span>
@@ -272,7 +312,7 @@ export function UsageMeter({
               tabIndex={-1}
               onMouseDown={(e) => e.preventDefault()}
             >
-              Manage plan
+              {actionLabel}
             </button>
           </motion.div>
         </div>
