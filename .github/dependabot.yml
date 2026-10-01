@@ -9,6 +9,10 @@ updates:
     # a library: move the lockfile, and a manifest range only when the new version is outside it
     # (otherwise every minor release would raise the minimum the packages ask of their hosts)
     versioning-strategy: increase-if-necessary
+    ignore:
+      # types of the Node versions CI runs (22, 24): a newer major would type APIs they lack
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
     groups:
       dev-tooling:
         dependency-type: development

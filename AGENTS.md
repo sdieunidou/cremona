@@ -117,7 +117,7 @@ also runs the package check before publishing.
 - `.mcp.json` / `opencode.json` register this repo's MCP server — start the
   session from the repo root.
 - `.claude/settings.json` pre-approves the main commands above (`pnpm check`,
-  `pnpm test`, `generate:stimulus`, `build:css`, targeted `vitest`…) and the
-  read-only MCP tools, denies hand edits of goldens, `preview-props.json`,
-  Stimulus templates and `cremona.css`, and formats every edited file with
-  Prettier.
+  `pnpm test`, `generate:stimulus`, `generate:api`, `build:css`, targeted
+  `vitest`…) and the read-only MCP tools, denies hand edits of goldens,
+  `preview-props.json`, `api.json`, Stimulus templates and `cremona.css`, and
+  formats every edited file with Prettier.

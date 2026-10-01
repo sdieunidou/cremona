@@ -52,8 +52,9 @@ category: animated product artwork).
 
 Call get_guide("react") for the derivation recipe, the props contract and the
 gotchas — the \`gradient\` veil hides the bottom 64px of a card, and entrance
-chains run ~1.3s, which screenshot tests must wait out. Before adding blocks,
-read get_guide("porting-guide") or get_guide("authoring-guide").
+chains run one to two seconds (ai/prompt-box finishes at ~1.8s), which
+screenshot tests must wait out. Before adding blocks, read
+get_guide("porting-guide") or get_guide("authoring-guide").
 
 Stimulus (Symfony, Rails…): each template is the block's final render, visible
 without JavaScript; the cremona-visual controller plays the entrance. A template
