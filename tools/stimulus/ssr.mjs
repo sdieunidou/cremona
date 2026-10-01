@@ -31,6 +31,7 @@ export async function createRenderer(root) {
     esbuild: { jsx: "automatic" },
     resolve: {
       alias: {
+        "@cremona/core/land-mask": join(root, "packages", "core", "src", "land-mask.ts"),
         "@cremona/core": join(root, "packages", "core", "src", "index.ts"),
         "@cremona/react": join(root, "packages", "react", "src", "index.ts"),
       },

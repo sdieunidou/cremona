@@ -62,6 +62,8 @@ export function stripResourceHints(html) {
   return html.replace(/<link rel="preload"[^>]*\/>/g, "");
 }
 
+const TEXT_ALTERNATIVES = ["alt", "aria-label"];
+
 /** The golden's visual root, extracted like the parity runner does. */
 function goldenRoot(golden, parity) {
   const start = golden.indexOf('<div aria-hidden="true" class="relative isolate flex size-full');
@@ -78,10 +80,13 @@ function goldenRoot(golden, parity) {
 export function buildTemplate(renderer, { Component, props, key, slug, golden }) {
   const initialProps = { ...props, animated: true, trigger: "inViewRepeat" };
   const reference = renderer.render(Component, initialProps);
-  const diffs = renderer.parity.compare(
-    renderer.parity.parseHtmlFragment(goldenRoot(golden, renderer.parity)),
-    renderer.parity.parseHtmlFragment(reference),
-  );
+  // text alternatives do not move; the parity tests own them (images/gallery corrects its alt text)
+  const diffs = renderer.parity
+    .compare(
+      renderer.parity.parseHtmlFragment(goldenRoot(golden, renderer.parity)),
+      renderer.parity.parseHtmlFragment(reference),
+    )
+    .filter((d) => !TEXT_ALTERNATIVES.some((a) => d.message.includes(`attr ${a}:`)));
   if (diffs.length)
     throw new Error(
       `initial render differs from its golden (${diffs.length} diffs, first: ${diffs[0].path}: ${diffs[0].message}) — run the block's parity test`,
