@@ -131,7 +131,10 @@ export function loadBlock(key: string): Promise<BlockEntry> {
   return promise;
 }
 
-/** The visual component = the PascalCase function export (every block has exactly one). */
+/**
+ * The visual component = the PascalCase function export (every block has exactly one). When that
+ * name is a deprecated alias (`export { ErrorState as Error }`), the name it aliases is used.
+ */
 function pickComponent(mod: Record<string, unknown>, key: string): BlockComponent {
   const functions = Object.entries(mod).filter(
     ([name, value]) => typeof value === "function" && /^[A-Z]/.test(name),
@@ -142,7 +145,9 @@ function pickComponent(mod: Record<string, unknown>, key: string): BlockComponen
     .split("-")
     .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
     .join("");
-  const [exportName, Component] = functions.find(([name]) => name === pascal) ?? functions[0] ?? [];
-  if (!exportName) throw new Error(`${key}/react.tsx exports no component`);
+  const match = functions.find(([name]) => name === pascal) ?? functions[0];
+  if (!match) throw new Error(`${key}/react.tsx exports no component`);
+  const [exportName, Component] =
+    functions.find(([name, value]) => value === match[1] && name !== match[0]) ?? match;
   return { exportName, Component: Component as Visual };
 }

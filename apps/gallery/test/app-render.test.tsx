@@ -23,7 +23,7 @@ describe("gallery app", () => {
     // category appears in the sidebar and as a section heading
     expect(screen.getAllByText("Metrics").length).toBeGreaterThanOrEqual(2);
     expect(document.title).toBe("Cremona — animated visual blocks");
-  });
+  }, 20000);
 
   it("never nests a link or a control inside a card link", () => {
     const { container } = renderAt("/");

@@ -635,7 +635,9 @@ function registerAuthoringTools() {
 
 /** react.tsx skeleton: the metrics/stat-card anatomy (frame, fill, card, glow, veil, entrance). */
 function reactSkeleton(Name) {
-  return `import { useRef } from "react";
+  return `"use client";
+
+import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";

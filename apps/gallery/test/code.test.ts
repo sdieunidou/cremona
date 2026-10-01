@@ -86,6 +86,9 @@ describe("Copy React usage snippets", () => {
     expect(reactUsage(pick("avatars/grid"), "default")).toContain(
       'import { AvatarGrid } from "@cremona/blocks/avatars/grid";',
     );
+    expect(reactUsage(pick("states/error"), "default")).toContain(
+      'import { ErrorState } from "@cremona/blocks/states/error";',
+    );
     const flow = reactUsage(pick("connections/flow"), "custom icons");
     expect(flow).toContain('<Smartphone className={"size-4"} strokeWidth={2} />');
     expect(flow).toMatch(/^import \{ .*Smartphone.* \} from "lucide-react";$/m);
