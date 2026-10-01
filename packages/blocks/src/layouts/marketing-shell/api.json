@@ -9,6 +9,12 @@
       "default": "false"
     },
     {
+      "name": "labels",
+      "type": "Partial<MarketingShellLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -34,5 +40,62 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "MarketingShellLabels",
+      "props": [
+        {
+          "name": "product",
+          "type": "string",
+          "optional": false,
+          "description": "Navigation links; `product`, `pricing` and `blog` also title or fill the footer."
+        },
+        { "name": "pricing", "type": "string", "optional": false },
+        { "name": "docs", "type": "string", "optional": false },
+        { "name": "blog", "type": "string", "optional": false },
+        {
+          "name": "getStarted",
+          "type": "string",
+          "optional": false,
+          "description": "Header and closing call-to-action button."
+        },
+        { "name": "heroTitle", "type": "string", "optional": false },
+        { "name": "heroDescription", "type": "string", "optional": false },
+        { "name": "startFree", "type": "string", "optional": false },
+        { "name": "bookDemo", "type": "string", "optional": false },
+        {
+          "name": "setupTitle",
+          "type": "string",
+          "optional": false,
+          "description": "Feature tiles: title and line."
+        },
+        { "name": "setupCopy", "type": "string", "optional": false },
+        { "name": "typesTitle", "type": "string", "optional": false },
+        { "name": "typesCopy", "type": "string", "optional": false },
+        { "name": "motionTitle", "type": "string", "optional": false },
+        { "name": "motionCopy", "type": "string", "optional": false },
+        {
+          "name": "trustedBy",
+          "type": "string",
+          "optional": false,
+          "description": "Caption above the customer logos."
+        },
+        { "name": "ctaTitle", "type": "string", "optional": false },
+        { "name": "ctaDescription", "type": "string", "optional": false },
+        {
+          "name": "company",
+          "type": "string",
+          "optional": false,
+          "description": "Footer columns and links."
+        },
+        { "name": "legal", "type": "string", "optional": false },
+        { "name": "features", "type": "string", "optional": false },
+        { "name": "changelog", "type": "string", "optional": false },
+        { "name": "about", "type": "string", "optional": false },
+        { "name": "careers", "type": "string", "optional": false },
+        { "name": "privacy", "type": "string", "optional": false },
+        { "name": "terms", "type": "string", "optional": false }
+      ]
+    }
+  ]
 }

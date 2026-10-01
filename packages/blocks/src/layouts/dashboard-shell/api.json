@@ -16,6 +16,26 @@
       "default": "\"desktop\""
     },
     {
+      "name": "stats",
+      "type": "readonly DashboardShellStat[]",
+      "optional": true,
+      "description": "KPI tiles (three in the demo).",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "invoices",
+      "type": "readonly DashboardShellInvoice[]",
+      "optional": true,
+      "description": "Rows of the recent invoices card (desktop).",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "labels",
+      "type": "Partial<DashboardShellLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -41,5 +61,95 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "DashboardShellInvoice",
+      "props": [
+        { "name": "name", "type": "string", "optional": false },
+        {
+          "name": "plan",
+          "type": "string",
+          "optional": false,
+          "description": "Plan name, shown through `labels.plan`."
+        },
+        {
+          "name": "status",
+          "type": "DashboardShellInvoiceStatus | (string & {})",
+          "optional": false,
+          "description": "`paid`, `sent` or `overdue` take their label and tint; another value shows as is, in a neutral pill."
+        },
+        {
+          "name": "amount",
+          "type": "string",
+          "optional": false,
+          "description": "Pre-formatted amount."
+        }
+      ]
+    },
+    { "name": "DashboardShellInvoiceStatus", "type": "\"paid\" | \"sent\" | \"overdue\"" },
+    {
+      "name": "DashboardShellLabels",
+      "props": [
+        {
+          "name": "overview",
+          "type": "string",
+          "optional": false,
+          "description": "Navigation items; `overview` is also the mobile page title."
+        },
+        { "name": "analytics", "type": "string", "optional": false },
+        { "name": "customers", "type": "string", "optional": false },
+        { "name": "billing", "type": "string", "optional": false },
+        { "name": "settings", "type": "string", "optional": false },
+        {
+          "name": "role",
+          "type": "string",
+          "optional": false,
+          "description": "Role under the user's name."
+        },
+        {
+          "name": "search",
+          "type": "string",
+          "optional": false,
+          "description": "Search field placeholder."
+        },
+        { "name": "chartTitle", "type": "string", "optional": false },
+        { "name": "chartRange", "type": "string", "optional": false },
+        { "name": "invoicesTitle", "type": "string", "optional": false },
+        { "name": "viewAll", "type": "string", "optional": false },
+        {
+          "name": "plan",
+          "type": "string",
+          "optional": false,
+          "description": "Plan of an invoice row; `{plan}` is replaced by the plan name."
+        },
+        { "name": "paid", "type": "string", "optional": false, "description": "Invoice statuses." },
+        { "name": "sent", "type": "string", "optional": false },
+        { "name": "overdue", "type": "string", "optional": false }
+      ]
+    },
+    {
+      "name": "DashboardShellStat",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false,
+          "description": "Pre-formatted value."
+        },
+        {
+          "name": "change",
+          "type": "string",
+          "optional": false,
+          "description": "Pre-formatted change."
+        },
+        {
+          "name": "trend",
+          "type": "\"up\" | \"down\"",
+          "optional": true,
+          "description": "Direction of `change` (default: \"down\" when `change` starts with a minus sign)."
+        }
+      ]
+    }
+  ]
 }

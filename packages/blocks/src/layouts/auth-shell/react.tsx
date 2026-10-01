@@ -6,9 +6,51 @@ import { useInView } from "@cremona/react";
 import { EyeOff, Globe, KeyRound } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface AuthShellLabels {
+  /** Testimonial quote, with its quotation marks. */
+  quote: string;
+  /** Role of the quoted person. */
+  quoteRole: string;
+  signInTitle: string;
+  signInDescription: string;
+  signUpTitle: string;
+  signUpDescription: string;
+  name: string;
+  email: string;
+  password: string;
+  /** Password strength caption (sign-up mode). */
+  strength: string;
+  remember: string;
+  forgot: string;
+  signInSubmit: string;
+  signUpSubmit: string;
+  /** Separator above the single sign-on buttons. */
+  or: string;
+}
+
+export const authShellDefaultLabels: AuthShellLabels = {
+  quote: "“Acme cut our design-to-ship time in half.”",
+  quoteRole: "Head of Design, Nova",
+  signInTitle: "Sign in",
+  signInDescription: "Welcome back — pick up where you left off.",
+  signUpTitle: "Create account",
+  signUpDescription: "Start your 14-day free trial.",
+  name: "Name",
+  email: "Email",
+  password: "Password",
+  strength: "Strength: good",
+  remember: "Remember me",
+  forgot: "Forgot?",
+  signInSubmit: "Sign in",
+  signUpSubmit: "Create account",
+  or: "or",
+};
+
 export interface AuthShellProps extends VisualProps {
   /** "signin" shows email + password, "signup" adds a name field and strength bar. */
   mode?: "signin" | "signup";
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<AuthShellLabels>;
 }
 
 const shell = {
@@ -43,7 +85,7 @@ function Field({ label, value, trailing }: { label: string; value: string; trail
   );
 }
 
-function StrengthBar() {
+function StrengthBar({ label }: { label: string }) {
   return (
     <motion.div className="flex flex-col gap-1" variants={region}>
       <div className="flex gap-0.5">
@@ -51,13 +93,14 @@ function StrengthBar() {
         <div className="h-0.75 flex-1 rounded-full bg-primary" />
         <div className="h-0.75 flex-1 rounded-full bg-muted" />
       </div>
-      <span className="text-[7px] leading-none text-muted-foreground">Strength: good</span>
+      <span className="text-[7px] leading-none text-muted-foreground">{label}</span>
     </motion.div>
   );
 }
 
 export function AuthShell({
   mode = "signin",
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -76,6 +119,7 @@ export function AuthShell({
       }
     : {};
   const signup = mode === "signup";
+  const text = { ...authShellDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -103,9 +147,7 @@ export function AuthShell({
             className="mt-auto flex flex-col gap-1.5 rounded-lg border bg-card p-2 shadow-xs"
             variants={region}
           >
-            <p className="text-[8px] leading-snug font-medium text-foreground">
-              “Acme cut our design-to-ship time in half.”
-            </p>
+            <p className="text-[8px] leading-snug font-medium text-foreground">{text.quote}</p>
             <div className="flex items-center gap-1.5">
               <div className="flex size-4 shrink-0 items-center justify-center rounded-full bg-primary/15 text-[7px] font-semibold text-primary">
                 MO
@@ -115,7 +157,7 @@ export function AuthShell({
                   Maya Ortiz
                 </span>
                 <span className="text-[7px] leading-none text-muted-foreground">
-                  Head of Design, Nova
+                  {text.quoteRole}
                 </span>
               </div>
             </div>
@@ -128,38 +170,36 @@ export function AuthShell({
         >
           <motion.div className="flex flex-col gap-1" variants={region}>
             <span className="text-[11px] leading-tight font-semibold tracking-tight text-foreground">
-              {signup ? "Create account" : "Sign in"}
+              {signup ? text.signUpTitle : text.signInTitle}
             </span>
             <span className="text-[8px] leading-tight text-muted-foreground">
-              {signup
-                ? "Start your 14-day free trial."
-                : "Welcome back — pick up where you left off."}
+              {signup ? text.signUpDescription : text.signInDescription}
             </span>
           </motion.div>
           <motion.div className="flex flex-col gap-1.5" variants={subRegions}>
-            {signup && <Field label="Name" value="Maya Ortiz" />}
-            <Field label="Email" value="maya@acme.com" />
-            <Field label="Password" value="••••••••" trailing />
-            {signup && <StrengthBar />}
+            {signup && <Field label={text.name} value="Maya Ortiz" />}
+            <Field label={text.email} value="maya@acme.com" />
+            <Field label={text.password} value="••••••••" trailing />
+            {signup && <StrengthBar label={text.strength} />}
           </motion.div>
           <motion.div className="flex items-center justify-between" variants={region}>
             <div className="flex items-center gap-1.5">
               <span className="flex h-3.5 w-6 items-center rounded-full bg-primary px-0.5">
                 <span className="ml-auto size-2.5 rounded-full bg-primary-foreground" />
               </span>
-              <span className="text-[8px] font-medium text-foreground">Remember me</span>
+              <span className="text-[8px] font-medium text-foreground">{text.remember}</span>
             </div>
-            <span className="text-[8px] font-medium text-primary">Forgot?</span>
+            <span className="text-[8px] font-medium text-primary">{text.forgot}</span>
           </motion.div>
           <motion.span
             className="flex h-6 items-center justify-center rounded-md bg-primary text-[9px] font-medium text-primary-foreground"
             variants={region}
           >
-            {signup ? "Create account" : "Sign in"}
+            {signup ? text.signUpSubmit : text.signInSubmit}
           </motion.span>
           <motion.div className="flex items-center gap-1.5" variants={region}>
             <div className="h-px flex-1 bg-border" />
-            <span className="text-[8px] text-muted-foreground">or</span>
+            <span className="text-[8px] text-muted-foreground">{text.or}</span>
             <div className="h-px flex-1 bg-border" />
           </motion.div>
           <motion.div className="mt-auto flex items-center gap-1.5" variants={region}>

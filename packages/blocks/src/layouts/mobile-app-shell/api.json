@@ -9,6 +9,33 @@
       "default": "false"
     },
     {
+      "name": "balance",
+      "type": "MobileAppShellBalance",
+      "optional": true,
+      "description": "Balance card.",
+      "default": "{…}"
+    },
+    {
+      "name": "transaction",
+      "type": "MobileAppShellTransaction",
+      "optional": true,
+      "description": "Latest transaction row.",
+      "default": "{…}"
+    },
+    {
+      "name": "weekTotal",
+      "type": "string",
+      "optional": true,
+      "description": "Pre-formatted total of the weekly activity card.",
+      "default": "\"32 runs\""
+    },
+    {
+      "name": "labels",
+      "type": "Partial<MobileAppShellLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -34,5 +61,75 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "MobileAppShellBalance",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false,
+          "description": "Pre-formatted balance."
+        },
+        {
+          "name": "change",
+          "type": "string",
+          "optional": false,
+          "description": "Pre-formatted change."
+        },
+        {
+          "name": "trend",
+          "type": "\"up\" | \"down\"",
+          "optional": true,
+          "description": "Direction of `change` (default: \"down\" when `change` starts with a minus sign)."
+        }
+      ]
+    },
+    {
+      "name": "MobileAppShellLabels",
+      "props": [
+        { "name": "greeting", "type": "string", "optional": false },
+        {
+          "name": "balance",
+          "type": "string",
+          "optional": false,
+          "description": "Caption of the balance card."
+        },
+        {
+          "name": "thisWeek",
+          "type": "string",
+          "optional": false,
+          "description": "Caption of the weekly activity card."
+        },
+        {
+          "name": "home",
+          "type": "string",
+          "optional": false,
+          "description": "Tab bar items; the active one shows its label."
+        },
+        { "name": "explore", "type": "string", "optional": false },
+        { "name": "saved", "type": "string", "optional": false },
+        { "name": "profile", "type": "string", "optional": false }
+      ]
+    },
+    {
+      "name": "MobileAppShellTransaction",
+      "props": [
+        { "name": "name", "type": "string", "optional": false },
+        { "name": "initials", "type": "string", "optional": false },
+        {
+          "name": "detail",
+          "type": "string",
+          "optional": false,
+          "description": "Line under the name."
+        },
+        {
+          "name": "amount",
+          "type": "string",
+          "optional": false,
+          "description": "Pre-formatted amount."
+        }
+      ]
+    }
+  ]
 }

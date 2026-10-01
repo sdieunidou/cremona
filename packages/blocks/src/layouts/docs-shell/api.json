@@ -9,6 +9,12 @@
       "default": "false"
     },
     {
+      "name": "labels",
+      "type": "Partial<DocsShellLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -34,5 +40,58 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "DocsShellLabels",
+      "props": [
+        {
+          "name": "navigation",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the sidebar."
+        },
+        {
+          "name": "gettingStarted",
+          "type": "string",
+          "optional": false,
+          "description": "Sidebar group titles."
+        },
+        { "name": "apiReference", "type": "string", "optional": false },
+        { "name": "guides", "type": "string", "optional": false },
+        {
+          "name": "introduction",
+          "type": "string",
+          "optional": false,
+          "description": "Sidebar pages; `installation` is also the article title, `quickstart` and `authentication` the previous and next links."
+        },
+        { "name": "installation", "type": "string", "optional": false },
+        { "name": "quickstart", "type": "string", "optional": false },
+        { "name": "authentication", "type": "string", "optional": false },
+        { "name": "endpoints", "type": "string", "optional": false },
+        { "name": "migrations", "type": "string", "optional": false },
+        { "name": "theming", "type": "string", "optional": false },
+        {
+          "name": "intro",
+          "type": "string",
+          "optional": false,
+          "description": "Article lead paragraph."
+        },
+        {
+          "name": "onThisPage",
+          "type": "string",
+          "optional": false,
+          "description": "Title and accessible name of the table of contents."
+        },
+        {
+          "name": "tocOverview",
+          "type": "string",
+          "optional": false,
+          "description": "Table of contents entries."
+        },
+        { "name": "tocInstall", "type": "string", "optional": false },
+        { "name": "tocStyles", "type": "string", "optional": false },
+        { "name": "tocNextSteps", "type": "string", "optional": false }
+      ]
+    }
+  ]
 }

@@ -9,6 +9,12 @@
       "default": "false"
     },
     {
+      "name": "labels",
+      "type": "Partial<SettingsShellLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,
@@ -34,5 +40,51 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "SettingsShellLabels",
+      "props": [
+        {
+          "name": "navigation",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the section list."
+        },
+        { "name": "settings", "type": "string", "optional": false },
+        {
+          "name": "general",
+          "type": "string",
+          "optional": false,
+          "description": "Sections; `general` is also the page title."
+        },
+        { "name": "security", "type": "string", "optional": false },
+        { "name": "billing", "type": "string", "optional": false },
+        { "name": "notifications", "type": "string", "optional": false },
+        { "name": "generalDescription", "type": "string", "optional": false },
+        {
+          "name": "workspaceName",
+          "type": "string",
+          "optional": false,
+          "description": "Form rows: label and hint."
+        },
+        { "name": "workspaceNameHint", "type": "string", "optional": false },
+        { "name": "timeZone", "type": "string", "optional": false },
+        { "name": "timeZoneHint", "type": "string", "optional": false },
+        { "name": "emailDigests", "type": "string", "optional": false },
+        { "name": "emailDigestsHint", "type": "string", "optional": false },
+        { "name": "publicProfile", "type": "string", "optional": false },
+        { "name": "publicProfileHint", "type": "string", "optional": false },
+        {
+          "name": "deleteAccount",
+          "type": "string",
+          "optional": false,
+          "description": "Danger zone card (`danger`)."
+        },
+        { "name": "deleteAccountHint", "type": "string", "optional": false },
+        { "name": "delete", "type": "string", "optional": false },
+        { "name": "cancel", "type": "string", "optional": false },
+        { "name": "save", "type": "string", "optional": false }
+      ]
+    }
+  ]
 }

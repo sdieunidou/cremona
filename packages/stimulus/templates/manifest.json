@@ -5206,6 +5206,11 @@
         "label": "signup",
         "slug": "001-signup",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
+        "size": null
       }
     ]
   },
@@ -5231,6 +5236,11 @@
         "label": "mobile",
         "slug": "002-mobile",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
+        "size": null
       }
     ]
   },
@@ -5250,6 +5260,11 @@
       {
         "label": "with code block",
         "slug": "001-with-code-block",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
         "size": null
       }
     ]
@@ -5271,6 +5286,11 @@
         "label": "dark hero",
         "slug": "001-dark-hero",
         "size": "xl"
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
+        "size": "xl"
       }
     ]
   },
@@ -5291,6 +5311,11 @@
         "label": "dark",
         "slug": "001-dark",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
+        "size": null
       }
     ]
   },
@@ -5310,6 +5335,11 @@
       {
         "label": "danger zone",
         "slug": "001-danger-zone",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
         "size": null
       }
     ]

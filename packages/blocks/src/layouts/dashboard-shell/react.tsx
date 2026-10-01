@@ -17,19 +17,107 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface DashboardShellLabels {
+  /** Navigation items; `overview` is also the mobile page title. */
+  overview: string;
+  analytics: string;
+  customers: string;
+  billing: string;
+  settings: string;
+  /** Role under the user's name. */
+  role: string;
+  /** Search field placeholder. */
+  search: string;
+  chartTitle: string;
+  chartRange: string;
+  invoicesTitle: string;
+  viewAll: string;
+  /** Plan of an invoice row; `{plan}` is replaced by the plan name. */
+  plan: string;
+  /** Invoice statuses. */
+  paid: string;
+  sent: string;
+  overdue: string;
+}
+
+export const dashboardShellDefaultLabels: DashboardShellLabels = {
+  overview: "Overview",
+  analytics: "Analytics",
+  customers: "Customers",
+  billing: "Billing",
+  settings: "Settings",
+  role: "Admin",
+  search: "Search…",
+  chartTitle: "Revenue overview",
+  chartRange: "Last 30 days",
+  invoicesTitle: "Recent invoices",
+  viewAll: "View all",
+  plan: "{plan} plan",
+  paid: "Paid",
+  sent: "Sent",
+  overdue: "Overdue",
+};
+
+export interface DashboardShellStat {
+  label: string;
+  /** Pre-formatted value. */
+  value: string;
+  /** Pre-formatted change. */
+  change: string;
+  /** Direction of `change` (default: "down" when `change` starts with a minus sign). */
+  trend?: "up" | "down";
+}
+
+export type DashboardShellInvoiceStatus = "paid" | "sent" | "overdue";
+
+export interface DashboardShellInvoice {
+  name: string;
+  /** Plan name, shown through `labels.plan`. */
+  plan: string;
+  /** `paid`, `sent` or `overdue` take their label and tint; another value shows as is, in a neutral pill. */
+  status: DashboardShellInvoiceStatus | (string & {});
+  /** Pre-formatted amount. */
+  amount: string;
+}
+
+export const dashboardShellDefaultStats: DashboardShellStat[] = [
+  { label: "Revenue", value: "$48.2k", change: "+12.4%", trend: "up" },
+  { label: "Active users", value: "8,102", change: "+3.1%", trend: "up" },
+  { label: "Conversion", value: "4.7%", change: "-0.8%", trend: "down" },
+];
+
+export const dashboardShellDefaultInvoices: DashboardShellInvoice[] = [
+  { name: "Nova Labs", plan: "Pro", status: "paid", amount: "$120.00" },
+  { name: "Hopper Co.", plan: "Team", status: "sent", amount: "$84.00" },
+  { name: "Orbit AI", plan: "Pro", status: "overdue", amount: "$220.00" },
+];
+
 export interface DashboardShellProps extends VisualProps {
   /** Collapse the sidebar rail to icon-only width. */
   collapsed?: boolean;
   /** Render the mobile chrome: stacked KPI cards and a bottom tab bar. */
   viewport?: "desktop" | "mobile";
+  /** KPI tiles (three in the demo). */
+  stats?: readonly DashboardShellStat[];
+  /** Rows of the recent invoices card (desktop). */
+  invoices?: readonly DashboardShellInvoice[];
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<DashboardShellLabels>;
 }
 
-const navItems: { icon: LucideIcon; label: string; active?: boolean }[] = [
-  { icon: LayoutDashboard, label: "Overview", active: true },
-  { icon: TrendingUp, label: "Analytics" },
-  { icon: Users, label: "Customers" },
-  { icon: CreditCard, label: "Billing" },
-  { icon: Settings, label: "Settings" },
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
+const navItems: { icon: LucideIcon; id: keyof DashboardShellLabels; active?: boolean }[] = [
+  { icon: LayoutDashboard, id: "overview", active: true },
+  { icon: TrendingUp, id: "analytics" },
+  { icon: Users, id: "customers" },
+  { icon: CreditCard, id: "billing" },
+  { icon: Settings, id: "settings" },
 ];
 
 const tabItems: { icon: LucideIcon; active?: boolean }[] = [
@@ -38,18 +126,6 @@ const tabItems: { icon: LucideIcon; active?: boolean }[] = [
   { icon: Users },
   { icon: Settings },
 ];
-
-const kpis = [
-  { label: "Revenue", value: "$48.2k", delta: "+12.4%", up: true },
-  { label: "Active users", value: "8,102", delta: "+3.1%", up: true },
-  { label: "Conversion", value: "4.7%", delta: "-0.8%", up: false },
-];
-
-const invoices = [
-  { name: "Nova Labs", plan: "Pro", status: "Paid", tone: "ok", amount: "$120.00" },
-  { name: "Hopper Co.", plan: "Team", status: "Sent", tone: "warn", amount: "$84.00" },
-  { name: "Orbit AI", plan: "Pro", status: "Overdue", tone: "bad", amount: "$220.00" },
-] as const;
 
 const sparkPath = "M0 22 L10 18 L20 20 L30 14 L40 16 L50 10 L60 12 L70 7 L80 9 L90 5 L100 6";
 
@@ -85,11 +161,12 @@ const tile = {
 } as const;
 
 /* status tints and marks; the text stays foreground so it reads in every theme */
-const statusTones = {
-  ok: { pill: "bg-success/10", mark: "bg-success" },
-  warn: { pill: "bg-warning/10", mark: "bg-warning" },
-  bad: { pill: "bg-destructive/10", mark: "bg-destructive" },
-} as const;
+const statusTones: Record<DashboardShellInvoiceStatus, { pill: string; mark: string }> = {
+  paid: { pill: "bg-success/10", mark: "bg-success" },
+  sent: { pill: "bg-warning/10", mark: "bg-warning" },
+  overdue: { pill: "bg-destructive/10", mark: "bg-destructive" },
+};
+const neutralTone = { pill: "bg-muted", mark: "bg-muted-foreground" };
 
 function DeltaPill({ delta, up }: { delta: string; up: boolean }) {
   const Icon = up ? ArrowUpRight : ArrowDownRight;
@@ -109,7 +186,7 @@ function DeltaPill({ delta, up }: { delta: string; up: boolean }) {
   );
 }
 
-function Rail({ collapsed }: { collapsed: boolean }) {
+function Rail({ collapsed, text }: { collapsed: boolean; text: DashboardShellLabels }) {
   return (
     <motion.aside
       className={cn(
@@ -136,9 +213,9 @@ function Rail({ collapsed }: { collapsed: boolean }) {
           className={cn("flex flex-col", collapsed ? "mt-1 gap-2.5" : "mt-0.5 gap-0.5")}
           variants={tiles}
         >
-          {navItems.map(({ icon: Icon, label, active }) => (
+          {navItems.map(({ icon: Icon, id, active }) => (
             <motion.div
-              key={label}
+              key={id}
               className={cn(
                 "flex items-center rounded-md",
                 collapsed ? "size-5 justify-center" : "gap-1.5 px-1.5 py-1",
@@ -149,7 +226,9 @@ function Rail({ collapsed }: { collapsed: boolean }) {
               variants={tile}
             >
               <Icon className={cn("shrink-0", collapsed ? "size-2.5" : "size-3")} strokeWidth={2} />
-              {!collapsed && <span className="text-[9px] leading-none font-medium">{label}</span>}
+              {!collapsed && (
+                <span className="text-[9px] leading-none font-medium">{text[id]}</span>
+              )}
             </motion.div>
           ))}
         </motion.div>
@@ -166,7 +245,9 @@ function Rail({ collapsed }: { collapsed: boolean }) {
           {!collapsed && (
             <div className="flex min-w-0 flex-col gap-px">
               <span className="truncate text-[9px] leading-tight font-medium">Ana Kova</span>
-              <span className="truncate text-[8px] leading-tight text-muted-foreground">Admin</span>
+              <span className="truncate text-[8px] leading-tight text-muted-foreground">
+                {text.role}
+              </span>
             </div>
           )}
         </motion.div>
@@ -175,12 +256,14 @@ function Rail({ collapsed }: { collapsed: boolean }) {
   );
 }
 
-function Topbar({ mobile }: { mobile: boolean }) {
+function Topbar({ mobile, text }: { mobile: boolean; text: DashboardShellLabels }) {
   return (
     <motion.div className="flex h-9 shrink-0 items-center gap-2 border-b px-2.5" variants={region}>
       {mobile ? (
         <>
-          <span className="text-[11px] font-semibold tracking-tight text-foreground">Overview</span>
+          <span className="text-[11px] font-semibold tracking-tight text-foreground">
+            {text.overview}
+          </span>
           <div className="ml-auto flex items-center gap-1.5">
             <Bell className="size-3 text-muted-foreground" strokeWidth={2} />
             <div className="flex size-5 items-center justify-center rounded-full bg-primary/15 text-[8px] font-semibold text-primary">
@@ -192,7 +275,7 @@ function Topbar({ mobile }: { mobile: boolean }) {
         <>
           <div className="flex flex-1 items-center gap-1.5 rounded-full bg-muted px-2 py-1">
             <Search className="size-2.5 text-muted-foreground" strokeWidth={2} />
-            <span className="text-[9px] text-muted-foreground">Search…</span>
+            <span className="text-[9px] text-muted-foreground">{text.search}</span>
           </div>
           <Bell className="size-3 text-muted-foreground" strokeWidth={2} />
           <div className="flex size-5 items-center justify-center rounded-full bg-primary/15 text-[8px] font-semibold text-primary">
@@ -204,15 +287,15 @@ function Topbar({ mobile }: { mobile: boolean }) {
   );
 }
 
-function ChartCard({ className }: { className?: string }) {
+function ChartCard({ className, text }: { className?: string; text: DashboardShellLabels }) {
   return (
     <motion.div
       className={cn("flex flex-col rounded-lg border bg-card p-2", className)}
       variants={region}
     >
       <div className="flex items-center justify-between">
-        <span className="text-[9px] font-semibold text-foreground">Revenue overview</span>
-        <span className="text-[8px] text-muted-foreground">Last 30 days</span>
+        <span className="text-[9px] font-semibold text-foreground">{text.chartTitle}</span>
+        <span className="text-[8px] text-muted-foreground">{text.chartRange}</span>
       </div>
       <div className="mt-1.5 min-h-0 flex-1">
         <svg
@@ -236,55 +319,67 @@ function ChartCard({ className }: { className?: string }) {
   );
 }
 
-function TableCard() {
+function TableCard({
+  invoices,
+  text,
+}: {
+  invoices: readonly DashboardShellInvoice[];
+  text: DashboardShellLabels;
+}) {
   return (
     <motion.div className="rounded-lg border bg-card p-2" variants={region}>
       <div className="flex items-center justify-between">
-        <span className="text-[9px] font-semibold text-foreground">Recent invoices</span>
-        <span className="text-[8px] font-medium text-primary">View all</span>
+        <span className="text-[9px] font-semibold text-foreground">{text.invoicesTitle}</span>
+        <span className="text-[8px] font-medium text-primary">{text.viewAll}</span>
       </div>
       <div className="mt-1 flex flex-col">
-        {invoices.map((row) => (
-          <div
-            key={row.name}
-            className="flex items-center gap-2 border-t border-border/60 py-1.25 first:border-t-0"
-          >
-            <div className="flex size-4 shrink-0 items-center justify-center rounded-full bg-muted text-[7px] font-semibold text-muted-foreground">
-              {row.name.charAt(0)}
-            </div>
-            <div className="flex min-w-0 flex-1 flex-col">
-              <span className="truncate text-[9px] leading-tight font-medium text-foreground">
-                {row.name}
-              </span>
-              <span className="text-[7px] leading-tight text-muted-foreground">
-                {row.plan} plan
-              </span>
-            </div>
-            <span
-              className={cn(
-                "inline-flex items-center gap-0.5 rounded-full px-1 py-px text-[7px] font-semibold text-foreground",
-                statusTones[row.tone].pill,
-              )}
+        {invoices.map((row, i) => {
+          const known = Object.hasOwn(statusTones, row.status)
+            ? (row.status as DashboardShellInvoiceStatus)
+            : undefined;
+          const tone = known ? statusTones[known] : neutralTone;
+          return (
+            <div
+              key={i}
+              className="flex items-center gap-2 border-t border-border/60 py-1.25 first:border-t-0"
             >
-              <span className={cn("size-1 rounded-full", statusTones[row.tone].mark)} />
-              {row.status}
-            </span>
-            <span className="w-10 text-right text-[9px] font-semibold text-foreground tabular-nums">
-              {row.amount}
-            </span>
-          </div>
-        ))}
+              <div className="flex size-4 shrink-0 items-center justify-center rounded-full bg-muted text-[7px] font-semibold text-muted-foreground">
+                {row.name.charAt(0)}
+              </div>
+              <div className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate text-[9px] leading-tight font-medium text-foreground">
+                  {row.name}
+                </span>
+                <span className="text-[7px] leading-tight text-muted-foreground">
+                  {interpolate(text.plan, { plan: row.plan })}
+                </span>
+              </div>
+              <span
+                className={cn(
+                  "inline-flex items-center gap-0.5 rounded-full px-1 py-px text-[7px] font-semibold text-foreground",
+                  tone.pill,
+                )}
+              >
+                <span className={cn("size-1 rounded-full", tone.mark)} />
+                {known ? text[known] : row.status}
+              </span>
+              <span className="w-10 text-right text-[9px] font-semibold text-foreground tabular-nums">
+                {row.amount}
+              </span>
+            </div>
+          );
+        })}
       </div>
     </motion.div>
   );
 }
 
-function KpiRow({ stacked }: { stacked: boolean }) {
+function KpiRow({ stacked, stats }: { stacked: boolean; stats: readonly DashboardShellStat[] }) {
   return (
     <motion.div className={cn("flex gap-1.5", stacked && "flex-col")} variants={tiles}>
-      {kpis.map((kpi) => (
+      {stats.map((kpi, i) => (
         <motion.div
-          key={kpi.label}
+          key={i}
           className={cn(
             "flex rounded-lg border bg-card",
             stacked
@@ -299,7 +394,14 @@ function KpiRow({ stacked }: { stacked: boolean }) {
               {kpi.value}
             </span>
           </div>
-          <DeltaPill delta={kpi.delta} up={kpi.up} />
+          <DeltaPill
+            delta={kpi.change}
+            up={
+              kpi.trend === "up" || kpi.trend === "down"
+                ? kpi.trend === "up"
+                : !/^\s*[-−]/.test(kpi.change)
+            }
+          />
         </motion.div>
       ))}
     </motion.div>
@@ -330,6 +432,9 @@ function TabBar() {
 export function DashboardShell({
   collapsed = false,
   viewport = "desktop",
+  stats = dashboardShellDefaultStats,
+  invoices = dashboardShellDefaultInvoices,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -348,6 +453,7 @@ export function DashboardShell({
       }
     : {};
   const mobile = viewport === "mobile";
+  const text = { ...dashboardShellDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -365,13 +471,13 @@ export function DashboardShell({
           variants={animated ? regions : undefined}
           {...state}
         >
-          {!mobile && <Rail collapsed={collapsed} />}
+          {!mobile && <Rail collapsed={collapsed} text={text} />}
           <motion.div className="flex min-h-0 min-w-0 flex-1 flex-col" variants={subRegions}>
-            <Topbar mobile={mobile} />
+            <Topbar mobile={mobile} text={text} />
             <motion.div className="flex min-h-0 flex-1 flex-col gap-2 p-2" variants={subRegions}>
-              <KpiRow stacked={mobile} />
-              <ChartCard className="min-h-0 flex-1" />
-              {!mobile && <TableCard />}
+              <KpiRow stacked={mobile} stats={stats} />
+              <ChartCard className="min-h-0 flex-1" text={text} />
+              {!mobile && <TableCard invoices={invoices} text={text} />}
             </motion.div>
             {mobile && <TabBar />}
           </motion.div>
