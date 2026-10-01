@@ -1,6 +1,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 const blocksSrc = new URL("../../packages/blocks/src/", import.meta.url);
 
@@ -26,6 +27,8 @@ function countVariants(): number {
 
 export default defineConfig({
   plugins: [
+    // gallery.css: one Tailwind build for the gallery and the blocks it renders
+    tailwindcss(),
     react({
       // blocks live outside this app's root (monorepo) — transform them too
       include: [/\/apps\/gallery\/src\/.*\.[tj]sx?$/, /\/packages\/blocks\/src\/.*\.tsx$/],

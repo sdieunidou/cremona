@@ -1,7 +1,20 @@
 /*
- * Gallery-only CSS. Utility classes come from cremona.css, which `pnpm build:css`
- * compiles from the gallery sources too; keep here only what is not a utility.
+ * The gallery's stylesheet: one Tailwind build for its own markup and the blocks it renders,
+ * set up as a Tailwind host (docs/getting-started.md). Gallery-only rules follow.
  */
+@import "tailwindcss" source(none);
+@import "@cremona/tokens/css/tailwind.css";
+
+@source "./**/*.{ts,tsx}";
+@source "../../../packages/blocks/src/**/{react.tsx,block.json,preview-props.json}";
+@source "../../../packages/blocks/src/**/golden/*.html";
+@source "../../../packages/core/src/**/*.ts";
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+}
 
 /* sidebar category items indent */
 .gallery-submenu {

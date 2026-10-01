@@ -39,11 +39,14 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
 One entry per block, `@cremona/blocks/<category>/<file>` (ESM + types, marked
 `"use client"`, so Server Components can render them). The stylesheet ships
 the fonts, the tokens and every class the blocks use: the blocks need no
-Tailwind build, but the classes of your own markup need your own CSS or your
-own Tailwind build. [docs/getting-started.md](docs/getting-started.md) covers
-the rest of a new app: the template CSS to remove, panels (`fill`,
-`gradient={false}`), dark mode and themes, reduced motion, placeholder images,
-Server Components and Tailwind hosts.
+Tailwind build, but the classes of your own markup need your own CSS. An app
+with its own Tailwind v4 build compiles the blocks in it with
+`@cremona/tokens/css/tailwind.css` instead, and a page with CSS of its own
+(Bootstrap…) loads `cremona.scoped.css`, which styles `.cremona` elements only.
+[docs/getting-started.md](docs/getting-started.md) covers the rest of a new
+app: the template CSS to remove, panels (`fill`, `gradient={false}`), dark mode
+and themes, reduced motion, placeholder images, Server Components and Tailwind
+hosts.
 
 ## Quick start — Symfony / Stimulus
 

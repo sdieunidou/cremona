@@ -1,4 +1,7 @@
-/** Every class a block renders has a rule in cremona.css (compiled from them by `pnpm build:css`). */
+/**
+ * Every class a block renders has a rule in cremona.css (compiled from them by `pnpm build:css`):
+ * the goldens hold the initial render, the Stimulus templates the final one (`animated={false}`).
+ */
 import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -7,8 +10,9 @@ import { describe, it, expect } from "vitest";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const css = readFileSync(join(root, "css", "cremona.css"), "utf8");
 const blocks = join(root, "../blocks/src");
+const templates = join(root, "../stimulus/templates");
 
-// selectors used by animation code, and a class kept by a POC golden that Tailwind v4 does not define
+// selectors used by animation code
 const NO_RULE = new Set([
   "file-card",
   "arrow-badge",
@@ -22,7 +26,6 @@ const NO_RULE = new Set([
   "key-ripple-0",
   "key-ripple-1",
   "key-ripple-2",
-  "ring-1.5",
 ]);
 const MARKER = /^(group|peer)(\/.+)?$|^lucide(-.+)?$|^dark$/;
 
@@ -40,12 +43,13 @@ function definedClasses(source: string): Set<string> {
   return out;
 }
 
-function goldenClasses(): Map<string, string> {
+/** class → the block that renders it, over `<category>/<block>/<sub>/*.html` files */
+function renderedClasses(base: string, sub: string): Map<string, string> {
   const used = new Map<string, string>();
-  for (const category of readdirSync(blocks, { withFileTypes: true })) {
+  for (const category of readdirSync(base, { withFileTypes: true })) {
     if (!category.isDirectory()) continue;
-    for (const block of readdirSync(join(blocks, category.name), { withFileTypes: true })) {
-      const dir = join(blocks, category.name, block.name, "golden");
+    for (const block of readdirSync(join(base, category.name), { withFileTypes: true })) {
+      const dir = join(base, category.name, block.name, sub);
       let files: string[] = [];
       try {
         files = readdirSync(dir).filter((f) => f.endsWith(".html"));
@@ -55,7 +59,12 @@ function goldenClasses(): Map<string, string> {
       for (const file of files) {
         const html = readFileSync(join(dir, file), "utf8");
         for (const m of html.matchAll(/\sclass="([^"]*)"/g)) {
-          const value = m[1]!.replace(/&amp;/g, "&").replace(/&gt;/g, ">").replace(/&lt;/g, "<");
+          const value = m[1]!
+            .replace(/&gt;/g, ">")
+            .replace(/&lt;/g, "<")
+            .replace(/&quot;/g, '"')
+            .replace(/&#x27;|&#39;/g, "'")
+            .replace(/&amp;/g, "&");
           for (const cls of value.split(/\s+/))
             if (cls) used.set(cls, `${category.name}/${block.name}`);
         }
@@ -65,12 +74,21 @@ function goldenClasses(): Map<string, string> {
   return used;
 }
 
+function missingRules(used: Map<string, string>): string[] {
+  const defined = definedClasses(css);
+  return [...used]
+    .filter(([cls]) => !defined.has(cls) && !NO_RULE.has(cls) && !MARKER.test(cls))
+    .map(([cls, block]) => `${cls} (${block})`);
+}
+
 describe("cremona.css coverage", () => {
   it("defines every class the goldens render", () => {
-    const defined = definedClasses(css);
-    const missing = [...goldenClasses()]
-      .filter(([cls]) => !defined.has(cls) && !NO_RULE.has(cls) && !MARKER.test(cls))
-      .map(([cls, block]) => `${cls} (${block})`);
-    expect(missing, "run `pnpm build:css`").toEqual([]);
+    expect(missingRules(renderedClasses(blocks, "golden")), "run `pnpm build:css`").toEqual([]);
+  });
+
+  it("defines every class the Stimulus templates render", () => {
+    const used = renderedClasses(templates, "");
+    expect(used.size).toBeGreaterThan(1000);
+    expect(missingRules(used), "run `pnpm build:css`").toEqual([]);
   });
 });

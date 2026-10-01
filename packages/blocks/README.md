@@ -71,10 +71,17 @@ cp -R node_modules/@cremona/blocks/public/media public/
 ## Tailwind
 
 The blocks need no Tailwind build: `@cremona/tokens/css/cremona.css` holds
-every class they use. If your app runs its own Tailwind v4 build, load
-`cremona.css` before your stylesheet and give your theme Cremona's variants,
-theme and base layer — see
-[Your own CSS, or Tailwind](https://github.com/sdieunidou/cremona/blob/main/docs/getting-started.md#9-your-own-css-or-tailwind).
+every class they use. If your app runs its own Tailwind v4 build, compile the
+blocks in it instead of loading `cremona.css`:
+
+```css
+@import "tailwindcss";
+@import "@cremona/tokens/css/tailwind.css";
+@source "../node_modules/@cremona/blocks/dist";
+```
+
+See [Your own CSS, or Tailwind](https://github.com/sdieunidou/cremona/blob/main/docs/getting-started.md#9-your-own-css-or-tailwind);
+for a page with CSS of its own (Bootstrap…), `@cremona/tokens/css/cremona.scoped.css`.
 
 ## Documentation
 

@@ -56,7 +56,7 @@ Every block has a `scale` (MCP `list_blocks`, `search_blocks`, `get_block`):
      - `react.tsx` (React implementation)
      - `golden/<slug>.html` (SSR render reference)
    - Stimulus templates: `packages/stimulus/templates/<category>/<file>/<slug>.html` + `manifest.json`
-   - Design tokens: `packages/tokens/css/cremona.css` (complete stylesheet, compiled by `pnpm build:css`), `css/themes.css` (tokens only), `themes.json`
+   - Design tokens: `packages/tokens/css/cremona.css` (complete stylesheet, compiled by `pnpm build:css`), `css/cremona.scoped.css` (the same, confined to `.cremona` elements, for pages with CSS of their own), `css/tailwind.css` (Cremona's additions for a host's own Tailwind v4 build), `css/themes.css` (tokens only), `themes.json`
 
 ## Using blocks in a React app (Next.js, Vite, …)
 
@@ -71,7 +71,12 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
 
 1. The stylesheet holds the fonts, all tokens and every utility class the blocks
    use — no Tailwind build required. A class that no block uses has no rule in
-   it: code you write around the blocks needs your own CSS or Tailwind build.
+   it: code you write around the blocks needs your own CSS. An app with its own
+   Tailwind v4 build does not load `cremona.css`: its stylesheet imports
+   `tailwindcss`, then `@cremona/tokens/css/tailwind.css`, with
+   `@source "../node_modules/@cremona/blocks/dist"`. A page with CSS of its own
+   (Bootstrap) loads `@cremona/tokens/css/cremona.scoped.css` and wraps the
+   blocks in a `class="cremona"` element.
 2. Dark mode: toggle `.dark` on `<html>`; theme: add `.theme-<name>` (see `themes.json`).
 3. Render `<StatCard animated trigger="inView" />`. Props:
    - `animated` (default false = static final state), `trigger`: `"mount" | "inView" | "inViewRepeat"`
@@ -165,7 +170,7 @@ renders one button with one label.
 
 - Never hand-edit generated files: `packages/blocks/src/*/*/golden/**`,
   `preview-props.json`, `api.json`, `packages/stimulus/templates/**`,
-  `packages/tokens/css/cremona.css`.
+  `packages/tokens/css/cremona.css`, `packages/tokens/css/cremona.scoped.css`.
 - Never bypass parity tests. The renders ARE the product.
 - Keep class strings intact when porting or deriving: parity compares the DOM
   structure, the classes and the text.

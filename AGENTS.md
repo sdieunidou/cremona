@@ -17,7 +17,7 @@ pnpm check:use-client   # fail unless every block's react.tsx starts with "use c
 node tools/use-client.mjs                     # add or move the directive where it is missing
 pnpm generate:stimulus  # regenerate packages/stimulus/templates/**
 pnpm generate:api       # regenerate every block's api.json (props reference); check:api fails when one is stale
-pnpm build:css          # recompile packages/tokens/css/cremona.css (Tailwind v4, dev only)
+pnpm build:css          # recompile packages/tokens/css/cremona{,.scoped}.css (Tailwind v4, dev only)
 pnpm build              # compile core, react, blocks (dist/, one entry per block) and the gallery
 pnpm --filter @cremona/blocks check:package   # pack @cremona/blocks, check it with publint + attw
 pnpm gallery:build && pnpm e2e   # Playwright (E2E_PORT, default 4179): block pages, axe, keyboard, routing
@@ -29,8 +29,8 @@ CI (`.github/workflows/ci.yml`) runs on Node 22 and 24: lint, format check,
 typecheck, `check:use-client`, tests, then `pnpm generate:stimulus`,
 `pnpm generate:api` and `pnpm build:css` again, and fails on any changed **or
 untracked** file under `packages/blocks`, `packages/stimulus` and
-`packages/tokens` (a golden, `preview-props.json`, `api.json`, template or
-`cremona.css` left uncommitted), then `validate`. The gallery e2e job (Node 24)
+`packages/tokens` (a golden, `preview-props.json`, `api.json`, template,
+`cremona.css` or `cremona.scoped.css` left uncommitted), then `validate`. The gallery e2e job (Node 24)
 fails when a block page shows an error card, throws or logs a console error (a
 failed image or font request logs one), or when axe finds a violation on the
 gallery chrome, in light or dark. The release workflow (`docs/releasing.md`)
@@ -48,9 +48,10 @@ also runs the package check before publishing.
 2. **Generated files are never hand-edited**: `preview-props.json` (rewritten by
    `pnpm test`), `api.json` (rewritten by `pnpm generate:api` from the props
    interface and its JSDoc), `packages/stimulus/templates/**` (rewritten by
-   `pnpm generate:stimulus`) and `packages/tokens/css/cremona.css` (rewritten by
-   `pnpm build:css`). Change the source block, `packages/tokens/src/cremona.css`
-   or the generator, rerun, commit the result.
+   `pnpm generate:stimulus`) and `packages/tokens/css/cremona.css` and
+   `cremona.scoped.css` (rewritten by `pnpm build:css`). Change the source
+   block, `packages/tokens/css/tailwind.css`, `packages/tokens/src/*.css` or the
+   generator, rerun, commit the result.
 3. **Parity is a gate**: a block change that breaks its parity test is a
    regression unless the golden is deliberately regenerated. The comparator
    (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
@@ -83,8 +84,12 @@ also runs the package check before publishing.
   cases, loops, `fill`…).
 - `packages/tokens/css/` — `cremona.css` (the stylesheet shipped to hosts,
   compiled by `pnpm build:css` from `packages/tokens/src/cremona.css`: Tailwind
-  v4 over the blocks, their goldens and the gallery, so a block that adds a
-  class needs a rebuild) + `themes.css` (tokens only).
+  v4 over the blocks and their goldens, so a block that adds a class needs a
+  rebuild), `cremona.scoped.css` (the same confined to `.cremona` elements,
+  `packages/tokens/scripts/build-css.mjs`), `tailwind.css` (what Cremona adds to
+  Tailwind: the source both compile from, shipped to Tailwind hosts),
+  `themes.css` (tokens only), `fonts.css`. The gallery compiles its own
+  stylesheet (`apps/gallery/src/gallery.css`, `@tailwindcss/vite`).
 - `packages/stimulus/{src,templates}/` — controllers (with their `.d.ts`) +
   generated templates.
 - `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS).
@@ -120,5 +125,6 @@ also runs the package check before publishing.
 - `.claude/settings.json` pre-approves the main commands above (`pnpm check`,
   `pnpm test`, `generate:stimulus`, `generate:api`, `build:css`, targeted
   `vitest`…) and the read-only MCP tools, denies hand edits of goldens,
-  `preview-props.json`, `api.json`, Stimulus templates and `cremona.css`, and
+  `preview-props.json`, `api.json`, Stimulus templates, `cremona.css` and
+  `cremona.scoped.css`, and
   formats every edited file with Prettier.
