@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { Coffee, Plane, Sparkles, Users, Video } from "lucide-react";
+import { CalendarDays, Coffee, Plane, Sparkles, Users, Video } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -85,6 +85,13 @@ const categoryStyles: Record<EventCategory, { icon: LucideIcon; accent: string; 
   },
 };
 
+/** Any other category (data outside the union): a neutral row. */
+const otherCategory = {
+  icon: CalendarDays,
+  accent: "bg-muted border-border text-muted-foreground",
+  bar: "bg-muted-foreground/40",
+};
+
 const container = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.25, ease: "easeOut" } },
@@ -164,7 +171,7 @@ export function EventList({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
@@ -183,7 +190,7 @@ export function EventList({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-3 py-2.75">
             <span className="text-xs font-semibold text-foreground">{title}</span>
             <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/10 px-1.25 text-[9px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
@@ -192,7 +199,7 @@ export function EventList({
           </div>
           <motion.div className="flex flex-col" variants={animated ? list : undefined} {...state}>
             {rows.flatMap(({ item, showHeader }, i) => {
-              const { icon: Icon, accent, bar } = categoryStyles[item.category];
+              const { icon: Icon, accent, bar } = categoryStyles[item.category] ?? otherCategory;
               const isLast = i === rows.length - 1;
               const out = [];
               if (showHeader) {

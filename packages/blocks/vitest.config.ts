@@ -10,6 +10,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      "@cremona/core/land-mask": new URL("../core/src/land-mask.ts", import.meta.url).pathname,
       "@cremona/core": new URL("../core/src/index.ts", import.meta.url).pathname,
       "@cremona/react": new URL("../react/src/index.ts", import.meta.url).pathname,
     },

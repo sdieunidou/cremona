@@ -605,13 +605,17 @@ export function SimpleFile({
       }
     : {};
 
-  const badgeStyle = badgeStyles[extension];
-  const Preview = previews[extension];
+  // any other extension renders as a generic document
+  const badgeStyle = badgeStyles[extension] ?? badgeStyles.docx;
+  const Preview = previews[extension] ?? previews.docx;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className="relative flex flex-col rounded-lg rounded-tr-2xl border border-muted bg-muted p-0.75 shadow-xs dark:shadow-none"
+        className={cn(
+          "relative flex flex-col rounded-lg rounded-tr-2xl border border-muted bg-muted p-0.75 shadow-xs dark:shadow-none",
+          fill && "self-center",
+        )}
         variants={animated ? container : undefined}
         {...state}
       >

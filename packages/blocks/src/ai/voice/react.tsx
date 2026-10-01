@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const voiceDefaultCopy = {
@@ -431,12 +431,14 @@ export function Voice({
   const gate =
     animated &&
     (trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const loop = useLoopActive(ref, animated);
   const active = (hover ? hovered : gate) && ticked;
+  const looping = active && loop;
   const drifting = gate && ticked;
   const noExplicitState = !stateProp;
 
   useEffect(() => {
-    if (!animated || !noExplicitState || !active) return;
+    if (!animated || !noExplicitState || !looping) return;
     let cancelled = false;
     let timer: ReturnType<typeof setTimeout> | undefined;
     const step = (i: number) => {
@@ -451,7 +453,7 @@ export function Voice({
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [animated, noExplicitState, active]);
+  }, [animated, noExplicitState, looping]);
 
   const current = stateProp ?? cycled;
   const isThinking = current === "thinking";
@@ -557,12 +559,12 @@ export function Voice({
           <motion.div
             className="absolute inset-0"
             animate={
-              active
+              looping
                 ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
                 : { scale: 1, opacity: 0.85 }
             }
             transition={
-              active
+              looping
                 ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
                 : { duration: 0.6, ease: "easeOut" }
             }
@@ -586,16 +588,16 @@ export function Voice({
               >
                 <motion.div
                   animate={
-                    drifting
+                    drifting && loop
                       ? {
                           x: [0, p.driftX, 0],
                           y: [0, -p.driftY, 0],
                           opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
                         }
-                      : { x: 0, y: 0, opacity: 0 }
+                      : { x: 0, y: 0, opacity: drifting ? p.opacity * 0.7 : 0 }
                   }
                   transition={
-                    drifting
+                    drifting && loop
                       ? {
                           duration: p.duration,
                           delay: p.delay,
@@ -636,12 +638,12 @@ export function Voice({
                   className="absolute size-28 rounded-full border border-primary/30"
                   initial={{ scale: 1, opacity: 0.28 }}
                   animate={
-                    active
+                    looping
                       ? { scale: [1, 1.12, 1], opacity: [0.3, 0.12, 0.3] }
                       : { scale: 1, opacity: 0.28 }
                   }
                   transition={
-                    active
+                    looping
                       ? { duration: 2, ease: "easeInOut", repeat: Infinity }
                       : { duration: 0.4, ease: "easeOut" }
                   }
@@ -653,12 +655,12 @@ export function Voice({
                     className="absolute size-24 rounded-full border border-primary/30"
                     initial={{ scale: isListening ? 2.2 : 1, opacity: 0 }}
                     animate={
-                      active
+                      looping
                         ? { scale: isListening ? [2.2, 1] : [1, 2.2], opacity: [0, 0.4, 0] }
                         : { scale: isListening ? 2.2 : 1, opacity: 0 }
                     }
                     transition={
-                      active
+                      looping
                         ? {
                             duration: ring.duration,
                             delay: ring.delay,
@@ -682,9 +684,9 @@ export function Voice({
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 {isThinking ? (
-                  <ThinkingDots animated loopActive={active} />
+                  <ThinkingDots animated loopActive={looping} />
                 ) : (
-                  <Equalizer animated loopActive={active} />
+                  <Equalizer animated loopActive={looping} />
                 )}
               </motion.div>
             </AnimatePresence>
@@ -700,10 +702,10 @@ export function Voice({
           <motion.span
             className="size-1.5 shrink-0 rounded-full bg-primary"
             animate={
-              active ? { opacity: [1, 0.3, 1], scale: [1, 0.8, 1] } : { opacity: 1, scale: 1 }
+              looping ? { opacity: [1, 0.3, 1], scale: [1, 0.8, 1] } : { opacity: 1, scale: 1 }
             }
             transition={
-              active ? { duration: 1.4, ease: "easeInOut", repeat: Infinity } : { duration: 0.4 }
+              looping ? { duration: 1.4, ease: "easeInOut", repeat: Infinity } : { duration: 0.4 }
             }
           />
           <AnimatePresence initial={false} mode="popLayout">
@@ -727,7 +729,7 @@ export function Voice({
           )}
         >
           {isThinking ? (
-            <Shimmer key={current} animated loopActive={active} />
+            <Shimmer key={current} animated loopActive={looping} />
           ) : (
             <p key={current} className="text-center text-sm leading-relaxed text-foreground">
               {tokens.map((token, t) =>

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowUp, Copy, Sparkles, ThumbsUp } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -97,6 +97,7 @@ const caretVariants = (index: number): Variants => ({
       ease: "easeInOut",
     },
   },
+  rest: { opacity: 1, transition: { duration: 0.2, delay: wordDelay(index) + 0.05 } },
 });
 
 const avatarAnim = {
@@ -130,6 +131,7 @@ const veilAnim = {
 const dotsAnim = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.18 } },
+  rest: {},
 } as const;
 
 const dotAnim: Variants = {
@@ -138,6 +140,7 @@ const dotAnim: Variants = {
     opacity: [0.25, 1, 0.25],
     transition: { duration: 1.1, repeat: Infinity, ease: "easeInOut" },
   },
+  rest: { opacity: 1 },
 };
 
 export interface AiChatProps extends VisualProps {
@@ -172,14 +175,12 @@ export function AiChat({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  // looping pieces rest (steady caret, still dots) while the loop is paused
+  const loopState = animated
+    ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
     : {};
 
   let wordIndex = 0;
@@ -197,7 +198,7 @@ export function AiChat({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -216,7 +217,12 @@ export function AiChat({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center gap-2 border-b px-3 py-2.5">
             <span className="text-xs font-semibold text-foreground">{title}</span>
             <span className="ml-auto flex items-center gap-1 text-[10px] font-medium text-muted-foreground">
@@ -224,7 +230,7 @@ export function AiChat({
                 <motion.span
                   className="flex items-center gap-0.5"
                   variants={animated ? dotsAnim : undefined}
-                  {...state}
+                  {...loopState}
                 >
                   {[0, 1, 2].map((i) => (
                     <motion.span
@@ -235,7 +241,9 @@ export function AiChat({
                   ))}
                 </motion.span>
               ) : (
-                <span className={`size-1.5 rounded-full ${statusDot[statusKind]}`} />
+                <span
+                  className={`size-1.5 rounded-full ${statusDot[statusKind] ?? statusDot.offline}`}
+                />
               )}
               {status}
             </span>
@@ -289,7 +297,7 @@ export function AiChat({
                     <motion.span
                       className="ml-0.5 inline-block h-2.5 w-[2px] -translate-y-px bg-primary align-middle"
                       variants={animated ? caretVariantsFinal : undefined}
-                      {...state}
+                      {...loopState}
                     />
                   );
                   return block.kind === "bullet" ? (
@@ -338,7 +346,7 @@ export function AiChat({
               )}
             </div>
           </div>
-          <div className="flex items-center gap-2 border-t px-3 py-2">
+          <div className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}>
             <div className="flex-1 truncate rounded-full bg-muted px-3 py-1.25 text-[10px] text-muted-foreground">
               Ask anything…
             </div>

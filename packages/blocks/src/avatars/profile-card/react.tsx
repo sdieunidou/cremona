@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const profileCardDefaultCopy = {
@@ -123,21 +123,21 @@ export function ProfileCard({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
-    : {};
-  const style = statusStyles[status];
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  const pulseState = { initial: "hidden", animate: shown && loop ? "visible" : "hidden" };
+  // any other status (data outside the union) reads as offline, with its own label
+  const style = statusStyles[status] ?? { ...statusStyles.offline, label: String(status) };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("relative flex w-full", !fill && "max-w-56", "flex-col items-center gap-3")}
+        className={cn(
+          "relative flex w-full",
+          fill ? "h-full" : "max-w-56",
+          "flex-col items-center gap-3",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -156,7 +156,12 @@ export function ProfileCard({
             />
           </>
         )}
-        <div className="relative flex w-full flex-col items-center gap-2.5 rounded-2xl border bg-card px-4 pt-5 pb-4 shadow-xs">
+        <div
+          className={cn(
+            "relative flex w-full flex-col items-center gap-2.5 rounded-2xl border bg-card px-4 pt-5 pb-4 shadow-xs",
+            fill && "flex-1 justify-center",
+          )}
+        >
           <div className="relative">
             <motion.div
               className="flex size-14 items-center justify-center rounded-full shadow-xs ring-2 ring-muted"
@@ -183,7 +188,7 @@ export function ProfileCard({
                   <motion.span
                     className={`absolute inset-0 inline-flex size-2.5 rounded-full ${style.pulse}`}
                     variants={animated ? pulse : undefined}
-                    {...state}
+                    {...(animated ? pulseState : {})}
                   />
                 )}
                 <span

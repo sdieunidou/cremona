@@ -281,13 +281,17 @@ export function Stacked({
     : {};
 
   const { angles, zIndices, frontIndex } = stackLayout(count);
-  const badgeStyle = badgeStyles[category];
-  const Preview = previews[category];
+  const badgeStyle = badgeStyles[category] ?? badgeStyles.default;
+  const Preview = previews[category] ?? previews.default;
   const text = labelText ?? `${count} files`;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
-      <motion.div className="relative" variants={animated ? container : undefined} {...state}>
+      <motion.div
+        className={cn("relative", fill && "self-center")}
+        variants={animated ? container : undefined}
+        {...state}
+      >
         {angles.map((angle, i) => (
           <motion.div
             key={i}

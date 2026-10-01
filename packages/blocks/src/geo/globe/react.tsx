@@ -1,8 +1,8 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { motion, MotionConfigContext, cancelFrame, frame } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
-import { LAND_MASK_BASE64 } from "./land-mask.js";
+import { isLand as isLandAt } from "@cremona/core/land-mask";
 
 type Vec3 = { x: number; y: number; z: number };
 
@@ -26,19 +26,19 @@ export interface GlobeProps extends VisualProps {
   wrapperClassName?: string;
 }
 
-/** Reusable rAF loop shared by the canvas globe (mirrors the POC `useGlobeFrame`). */
-function useGlobeFrame(callback: (time: number, delta: number) => void) {
+/** rAF loop of the canvas globe (mirrors the POC `useGlobeFrame`), running while `enabled`. */
+function useGlobeFrame(callback: (time: number, delta: number) => void, enabled: boolean) {
   const start = useRef(0);
   const { isStatic } = useContext(MotionConfigContext);
   useEffect(() => {
-    if (isStatic) return;
+    if (isStatic || !enabled) return;
     const onFrame = ({ timestamp, delta: d }: { timestamp: number; delta: number }) => {
       start.current ||= timestamp;
       callback(timestamp - start.current, d);
     };
     frame.update(onFrame, true);
     return () => cancelFrame(onFrame);
-  }, [callback, isStatic]);
+  }, [callback, isStatic, enabled]);
 }
 
 const TILTS = { top: 0.45, equator: 0, bottom: -0.45 };
@@ -132,39 +132,10 @@ function fibonacciSphere(count: number): Vec3[] {
   return points;
 }
 
-const MASK_WIDTH = 256;
-const MASK_HEIGHT = 128;
-const BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-let decodedMask: Uint8Array | null = null;
-
-function landMask(): Uint8Array {
-  if (decodedMask) return decodedMask;
-  const body = LAND_MASK_BASE64.replace(/=+$/, "");
-  const bytes = new Uint8Array((body.length * 3) >> 2);
-  let buffer = 0;
-  let bits = 0;
-  let index = 0;
-  for (let i = 0; i < body.length; i++) {
-    buffer = (buffer << 6) | BASE64_CHARS.indexOf(body[i]!);
-    bits += 6;
-    if (bits >= 8) {
-      bits -= 8;
-      bytes[index++] = (buffer >> bits) & 255;
-    }
-  }
-  decodedMask = bytes;
-  return bytes;
-}
-
 function isLand(p: Vec3): boolean {
   const lat = (Math.asin(Math.max(-1, Math.min(1, p.y))) * 180) / Math.PI;
   const lng = (Math.atan2(p.z, p.x) * 180) / Math.PI;
-  let col = Math.floor(((lng + 180) / 360) * MASK_WIDTH);
-  let row = Math.floor(((90 - lat) / 180) * MASK_HEIGHT);
-  col = col < 0 ? 0 : col >= MASK_WIDTH ? 255 : col;
-  row = row < 0 ? 0 : row >= MASK_HEIGHT ? 127 : row;
-  const bitIndex = row * MASK_WIDTH + col;
-  return ((landMask()[bitIndex >> 3]! >> (7 - (bitIndex & 7))) & 1) === 1;
+  return isLandAt(lat, lng);
 }
 
 const globeAnim = {
@@ -234,7 +205,8 @@ export function Globe({
   const [hovering, setHovering] = useState(false);
   const visible =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const pulsing = (hover ? hovering : visible) && inViewRepeat;
+  const loop = useLoopActive(rootRef, animated);
+  const pulsing = (hover ? hovering : visible) && inViewRepeat && loop;
   const state = animated ? { initial: "hidden", animate: visible ? "visible" : "hidden" } : {};
   const resolvedMarkers = markers ?? defaultMarkers;
   const landSamples = useMemo(() => fibonacciSphere(CONFIG.landSampleCount).filter(isLand), []);
@@ -521,7 +493,7 @@ export function Globe({
       dirtyRef.current = false;
       drawRef.current();
     }
-  });
+  }, animated && loop);
   useEffect(() => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
@@ -535,6 +507,14 @@ export function Globe({
     onResize();
     return () => observer.disconnect();
   }, [animated]);
+  useEffect(() => {
+    if (!animated || loop) return;
+    // paused (off-screen, hidden page, reduced motion): hold a still frame, arcs drawn in
+    activityRef.current = 0;
+    drawStartRef.current = visible ? Number.MAX_SAFE_INTEGER : 0;
+    dirtyRef.current = true;
+    drawRef.current();
+  }, [animated, loop, visible]);
   useEffect(() => {
     const observer = new MutationObserver(() => {
       recolorRef.current = true;

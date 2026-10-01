@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ChevronRight } from "lucide-react";
@@ -174,6 +174,14 @@ export interface LaptopProps extends VisualProps {
   name?: string;
 }
 
+/**
+ * With `fill`, a block box around the aspect-ratio stage: the stage then fits the
+ * panel (contain) instead of stretching; without it, nothing is rendered.
+ */
+function Contain({ fill, children }: { fill: boolean; children: ReactNode }) {
+  return fill ? <div className="max-h-full flow-root">{children}</div> : <>{children}</>;
+}
+
 export function Laptop({
   animated = false,
   trigger = "inView",
@@ -203,125 +211,142 @@ export function Laptop({
     variant === "windows" || variant === "mac" || variant === "lockscreen" || isScreenshot;
 
   return (
-    <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
-      <motion.div
-        className={cn("w-full", !fill && "max-w-80", "perspective-distant")}
-        variants={animated ? container : undefined}
-        {...state}
-      >
+    <div
+      ref={ref}
+      aria-hidden="true"
+      className={cn(frameClasses(fill), fill && "flex-col justify-center", className)}
+    >
+      <Contain fill={fill}>
         <motion.div
-          className="origin-bottom rounded-t-xl border border-b-0 border-border/50 bg-muted p-1.5"
-          variants={animated ? screenLid : undefined}
+          className={cn(
+            fill ? "mx-auto flex aspect-16/10 max-h-full min-h-0 flex-col" : "w-full max-w-80",
+            "perspective-distant",
+          )}
+          variants={animated ? container : undefined}
+          {...state}
         >
-          <div className="aspect-video w-full overflow-hidden rounded-md bg-background">
-            <motion.div
-              className={`h-full will-change-transform ${isFullScreen ? `` : `flex gap-1.5 p-2`}`}
-              variants={animated ? screenContent : undefined}
+          <motion.div
+            className={cn(
+              "origin-bottom rounded-t-xl border border-b-0 border-border/50 bg-muted p-1.5",
+              fill && "flex min-h-0 flex-1 flex-col",
+            )}
+            variants={animated ? screenLid : undefined}
+          >
+            <div
+              className={cn(
+                "w-full overflow-hidden rounded-md bg-background",
+                fill ? "min-h-0 flex-1" : "aspect-video",
+              )}
             >
-              {isScreenshot ? (
-                <img src={image} alt="" className="size-full object-cover object-top" />
-              ) : variant === "lockscreen" ? (
-                <div className="relative size-full">
-                  {image ? (
-                    <>
-                      <img
-                        src={image}
-                        alt=""
-                        className="absolute inset-0 size-full object-cover object-top"
-                      />
-                      <div className="absolute inset-0 size-full bg-linear-to-b from-black/40 via-transparent to-black/40" />
-                    </>
-                  ) : (
-                    <div className="absolute inset-0 size-full bg-linear-to-br from-indigo-950 via-purple-900 to-slate-950" />
-                  )}
-                  <motion.div
-                    className="absolute inset-x-0 top-5 flex flex-col items-center"
-                    variants={animated ? lockClock : undefined}
-                  >
-                    <span className="text-xl font-light tracking-tight text-white drop-shadow-sm">
-                      {time}
-                    </span>
-                    <span className="text-[9px] font-medium text-white/80 drop-shadow-sm">
-                      {date}
-                    </span>
-                  </motion.div>
-                  <motion.div
-                    className="absolute inset-x-0 bottom-5 flex flex-col items-center gap-1.5"
-                    variants={animated ? lockUser : undefined}
-                  >
-                    <div className="size-6 rounded-full bg-white/20 ring-2 ring-white/30 backdrop-blur-sm" />
-                    <span className="text-[10px] font-semibold text-white drop-shadow-sm">
-                      {name}
-                    </span>
-                    <div className="mt-0.5 flex h-4 w-28 items-center justify-between rounded-full bg-white/15 pr-1 pl-2 backdrop-blur-sm">
-                      <div className="flex gap-0.75">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <div key={i} className="size-0.75 rounded-full bg-white/60" />
+              <motion.div
+                className={`h-full will-change-transform ${isFullScreen ? `` : `flex gap-1.5 p-2`}`}
+                variants={animated ? screenContent : undefined}
+              >
+                {isScreenshot ? (
+                  <img src={image} alt="" className="size-full object-cover object-top" />
+                ) : variant === "lockscreen" ? (
+                  <div className="relative size-full">
+                    {image ? (
+                      <>
+                        <img
+                          src={image}
+                          alt=""
+                          className="absolute inset-0 size-full object-cover object-top"
+                        />
+                        <div className="absolute inset-0 size-full bg-linear-to-b from-black/40 via-transparent to-black/40" />
+                      </>
+                    ) : (
+                      <div className="absolute inset-0 size-full bg-linear-to-br from-indigo-950 via-purple-900 to-slate-950" />
+                    )}
+                    <motion.div
+                      className="absolute inset-x-0 top-5 flex flex-col items-center"
+                      variants={animated ? lockClock : undefined}
+                    >
+                      <span className="text-xl font-light tracking-tight text-white drop-shadow-sm">
+                        {time}
+                      </span>
+                      <span className="text-[9px] font-medium text-white/80 drop-shadow-sm">
+                        {date}
+                      </span>
+                    </motion.div>
+                    <motion.div
+                      className="absolute inset-x-0 bottom-5 flex flex-col items-center gap-1.5"
+                      variants={animated ? lockUser : undefined}
+                    >
+                      <div className="size-6 rounded-full bg-white/20 ring-2 ring-white/30 backdrop-blur-sm" />
+                      <span className="text-[10px] font-semibold text-white drop-shadow-sm">
+                        {name}
+                      </span>
+                      <div className="mt-0.5 flex h-4 w-28 items-center justify-between rounded-full bg-white/15 pr-1 pl-2 backdrop-blur-sm">
+                        <div className="flex gap-0.75">
+                          {Array.from({ length: 5 }).map((_, i) => (
+                            <div key={i} className="size-0.75 rounded-full bg-white/60" />
+                          ))}
+                        </div>
+                        <ChevronRight className="size-2.5 text-white/70" strokeWidth={2.5} />
+                      </div>
+                    </motion.div>
+                  </div>
+                ) : variant === "landing" ? (
+                  <LandingContent />
+                ) : variant === "windows" ? (
+                  <WindowsContent />
+                ) : variant === "mac" ? (
+                  <MacContent />
+                ) : variant === "dashboard" ? (
+                  <>
+                    <div className="flex w-10 flex-col gap-1 border-r border-muted pr-1.5">
+                      <div className="h-1.5 w-full rounded-full bg-primary" />
+                      <div className="h-1.5 w-4/5 rounded-full bg-muted-foreground/15" />
+                      <div className="h-1.5 w-3/5 rounded-full bg-muted-foreground/15" />
+                      <div className="h-1.5 w-4/5 rounded-full bg-muted-foreground/15" />
+                      <div className="h-1.5 w-3/5 rounded-full bg-muted-foreground/15" />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-1.5">
+                      <div className="grid grid-cols-3 gap-1">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                          <div key={i} className="flex flex-col gap-0.5 rounded-md bg-muted/60 p-1">
+                            <div className="h-0.5 w-3/5 rounded-full bg-muted-foreground/20" />
+                            <div className="h-1.5 w-4/5 rounded-full bg-muted-foreground/35" />
+                          </div>
                         ))}
                       </div>
-                      <ChevronRight className="size-2.5 text-white/70" strokeWidth={2.5} />
+                      <div className="flex flex-1 items-end justify-between gap-0.5 rounded-md bg-muted/60 p-1.5">
+                        {DASHBOARD_BARS.map((height, i) => (
+                          <motion.div
+                            key={i}
+                            custom={i}
+                            variants={animated ? chartBarVariants[i] : undefined}
+                            className="w-1 origin-bottom rounded-sm bg-chart-3"
+                            style={{ height: `${height}%` }}
+                          />
+                        ))}
+                      </div>
+                      <div className="flex flex-col gap-0.5">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                          <div key={i} className="flex items-center gap-1">
+                            <div className="size-1.25 rounded-full bg-primary" />
+                            <div className="h-1.25 flex-1 rounded-full bg-muted-foreground/15" />
+                            <div className="h-1.25 w-6 rounded-full bg-muted-foreground/15" />
+                            <div className="h-1.25 w-6 rounded-full bg-muted-foreground/15" />
+                            <div className="h-1.25 w-6 rounded-full bg-muted-foreground/15" />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </motion.div>
-                </div>
-              ) : variant === "landing" ? (
-                <LandingContent />
-              ) : variant === "windows" ? (
-                <WindowsContent />
-              ) : variant === "mac" ? (
-                <MacContent />
-              ) : variant === "dashboard" ? (
-                <>
-                  <div className="flex w-10 flex-col gap-1 border-r border-muted pr-1.5">
-                    <div className="h-1.5 w-full rounded-full bg-primary" />
-                    <div className="h-1.5 w-4/5 rounded-full bg-muted-foreground/15" />
-                    <div className="h-1.5 w-3/5 rounded-full bg-muted-foreground/15" />
-                    <div className="h-1.5 w-4/5 rounded-full bg-muted-foreground/15" />
-                    <div className="h-1.5 w-3/5 rounded-full bg-muted-foreground/15" />
-                  </div>
-                  <div className="flex flex-1 flex-col gap-1.5">
-                    <div className="grid grid-cols-3 gap-1">
-                      {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="flex flex-col gap-0.5 rounded-md bg-muted/60 p-1">
-                          <div className="h-0.5 w-3/5 rounded-full bg-muted-foreground/20" />
-                          <div className="h-1.5 w-4/5 rounded-full bg-muted-foreground/35" />
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex flex-1 items-end justify-between gap-0.5 rounded-md bg-muted/60 p-1.5">
-                      {DASHBOARD_BARS.map((height, i) => (
-                        <motion.div
-                          key={i}
-                          custom={i}
-                          variants={animated ? chartBarVariants[i] : undefined}
-                          className="w-1 origin-bottom rounded-sm bg-chart-3"
-                          style={{ height: `${height}%` }}
-                        />
-                      ))}
-                    </div>
-                    <div className="flex flex-col gap-0.5">
-                      {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="flex items-center gap-1">
-                          <div className="size-1.25 rounded-full bg-primary" />
-                          <div className="h-1.25 flex-1 rounded-full bg-muted-foreground/15" />
-                          <div className="h-1.25 w-6 rounded-full bg-muted-foreground/15" />
-                          <div className="h-1.25 w-6 rounded-full bg-muted-foreground/15" />
-                          <div className="h-1.25 w-6 rounded-full bg-muted-foreground/15" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <></>
-              )}
-            </motion.div>
-          </div>
+                  </>
+                ) : (
+                  <></>
+                )}
+              </motion.div>
+            </div>
+          </motion.div>
+          <motion.div className="relative origin-top" variants={animated ? base : undefined}>
+            <div className="-mx-4 h-2.5 rounded-b-lg bg-muted-foreground/20" />
+            <div className="absolute top-0 left-1/2 h-1 w-16 -translate-x-1/2 rounded-b-lg bg-muted-foreground/30" />
+          </motion.div>
         </motion.div>
-        <motion.div className="relative origin-top" variants={animated ? base : undefined}>
-          <div className="-mx-4 h-2.5 rounded-b-lg bg-muted-foreground/20" />
-          <div className="absolute top-0 left-1/2 h-1 w-16 -translate-x-1/2 rounded-b-lg bg-muted-foreground/30" />
-        </motion.div>
-      </motion.div>
+      </Contain>
     </div>
   );
 }

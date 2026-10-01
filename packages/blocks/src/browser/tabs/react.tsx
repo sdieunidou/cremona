@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowRight, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -167,7 +167,8 @@ export function Tabs({
   const [activeTab, setActiveTab] = useState(0);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const isActive = hover ? isHovering : inView;
+  const loop = useLoopActive(ref, animated);
+  const isActive = (hover ? isHovering : inView) && loop;
 
   useEffect(() => {
     if (!animated || !isActive) return;
@@ -194,7 +195,7 @@ export function Tabs({
       onMouseLeave={animated && hover ? () => setIsHovering(false) : undefined}
     >
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
@@ -213,7 +214,7 @@ export function Tabs({
             />
           </>
         )}
-        <div className="relative flex flex-col">
+        <div className={cn("relative flex flex-col", fill && "min-h-0 flex-1")}>
           <motion.div
             className="flex items-center gap-2 px-1.5 pt-1.5"
             variants={animated ? chrome : undefined}
@@ -265,7 +266,10 @@ export function Tabs({
             </motion.button>
           </div>
           <motion.div
-            className="relative h-56 overflow-hidden rounded-xl border bg-background p-3"
+            className={cn(
+              "relative overflow-hidden rounded-xl border bg-background p-3",
+              fill ? "min-h-0 flex-1" : "h-56",
+            )}
             variants={animated ? viewport : undefined}
             {...state}
           >

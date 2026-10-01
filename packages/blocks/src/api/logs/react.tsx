@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import type { ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Database, Globe, Server } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -216,6 +216,35 @@ export interface LogsProps extends VisualProps {
   isometric?: boolean;
 }
 
+/** Scales the fixed-size canvas down to the frame's width on narrow screens (client only). */
+function useFitWidth(
+  frame: RefObject<HTMLElement | null>,
+  canvas: RefObject<HTMLElement | null>,
+  width: number,
+) {
+  useEffect(() => {
+    const root = frame.current;
+    const el = canvas.current;
+    if (!root || !el || typeof ResizeObserver === "undefined") return;
+    let raf = 0;
+    const fit = () => {
+      const style = getComputedStyle(root);
+      const room =
+        root.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (room > 0) el.style.zoom = room < width ? String(room / width) : "";
+    };
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(fit);
+    });
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [frame, canvas, width]);
+}
+
 export function Logs({
   variant = "api",
   service,
@@ -231,12 +260,23 @@ export function Logs({
   className,
 }: LogsProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  useFitWidth(ref, canvasRef, CANVAS.w);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
+  const loop = useLoopActive(ref, animated);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pulsing = pulseVisible && loop;
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pulsing) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pulsing]);
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
@@ -257,7 +297,8 @@ export function Logs({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative shrink-0"
+        ref={canvasRef}
+        className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric
             ? { width: CANVAS.w, height: CANVAS.h, transform: "rotateX(45deg) rotateZ(-45deg)" }
@@ -267,6 +308,7 @@ export function Logs({
         {...state}
       >
         <svg
+          ref={svgRef}
           className="pointer-events-none absolute inset-0 size-full"
           viewBox={`0 0 ${CANVAS.w} ${CANVAS.h}`}
           fill="none"
@@ -287,11 +329,11 @@ export function Logs({
           {animated && (
             <motion.g
               initial={false}
-              animate={{ opacity: +!!pulseVisible }}
+              animate={{ opacity: +!!pulsing }}
               transition={{
                 duration: 0.5,
                 ease: "easeOut",
-                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+                delay: pulsing && !hover ? PULSE_DELAY : 0,
               }}
             >
               {paths.map((d, t) => (
@@ -364,9 +406,9 @@ export function Logs({
                   {animated && t === lastRow && (
                     <motion.span
                       className="absolute inset-0 bg-primary/6"
-                      animate={pulseVisible ? { opacity: [0, 1, 0] } : { opacity: 0 }}
+                      animate={pulsing ? { opacity: [0, 1, 0] } : { opacity: 0 }}
                       transition={
-                        pulseVisible
+                        pulsing
                           ? {
                               duration: 2.4,
                               ease: "easeInOut",
@@ -382,11 +424,13 @@ export function Logs({
                       {line2.time}
                     </span>
                     <span
-                      className={`w-9 shrink-0 rounded px-0.75 py-px text-center text-[8px] font-semibold ring-1 ring-inset ${LEVEL_PILL[line2.level]}`}
+                      className={`w-9 shrink-0 rounded px-0.75 py-px text-center text-[8px] font-semibold ring-1 ring-inset ${LEVEL_PILL[line2.level] ?? LEVEL_PILL.debug}`}
                     >
-                      {LEVEL_LABELS[line2.level]}
+                      {LEVEL_LABELS[line2.level] ?? String(line2.level).toUpperCase()}
                     </span>
-                    <span className={`truncate ${LEVEL_TEXT[line2.level]}`}>{line2.message}</span>
+                    <span className={`truncate ${LEVEL_TEXT[line2.level] ?? LEVEL_TEXT.info}`}>
+                      {line2.message}
+                    </span>
                   </span>
                 </motion.div>
               ))}

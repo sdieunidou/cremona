@@ -1,6 +1,6 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Boxes, Cloud, CodeXml, Database, Globe, Mail, MessageSquare } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -144,12 +144,21 @@ export function Hub({
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
+  const loop = useLoopActive(ref, animated);
+  const looping = active && loop;
+  const beamRef = useRef<SVGSVGElement>(null);
+  useEffect(() => {
+    const svg = beamRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (looping) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [looping]);
   const state = animated ? { initial: "hidden", animate: inView ? "visible" : "hidden" } : {};
   const cfg = spreads[spread];
   const isBeam = variant === "beam";
   const beamDelayTotal = beamDelay(satellites.length - 1) + 0.45;
   const spinning = animated && spin && !isBeam;
-  const pause = active ? "" : " paused";
+  const pause = looping ? "" : " paused";
   const orbitSpin = spinning ? `animate-[spin_120s_linear_infinite]${pause}` : "";
   const counterSpin = spinning ? `animate-[spin_120s_linear_infinite_reverse]${pause}` : "";
 
@@ -162,7 +171,10 @@ export function Hub({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className={`relative flex ${cfg.frame} items-center justify-center`}
+        className={cn(
+          `relative flex ${cfg.frame} items-center justify-center`,
+          fill && "self-center",
+        )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? frameIso : frameAnim) : undefined}
         {...state}
@@ -200,14 +212,14 @@ export function Hub({
                 variants={pulseAnim}
                 custom={0.5}
                 initial="hidden"
-                animate="visible"
+                animate={looping ? "visible" : "hidden"}
               />
               <motion.div
                 className="absolute size-20 rounded-full border-2 border-primary/20"
                 variants={pulseAnim}
                 custom={2}
                 initial="hidden"
-                animate="visible"
+                animate={looping ? "visible" : "hidden"}
               />
             </motion.div>
           </>
@@ -224,6 +236,7 @@ export function Hub({
         {isBeam ? (
           <>
             <svg
+              ref={beamRef}
               className="pointer-events-none absolute inset-0 size-full"
               viewBox="-100 -100 200 200"
               fill="none"
@@ -249,11 +262,11 @@ export function Hub({
               {animated && (
                 <motion.g
                   initial={false}
-                  animate={{ opacity: +!!active }}
+                  animate={{ opacity: +!!looping }}
                   transition={{
                     duration: 0.5,
                     ease: "easeOut",
-                    delay: active && !hover ? beamDelayTotal : 0,
+                    delay: looping && !hover ? beamDelayTotal : 0,
                   }}
                 >
                   {satellites.map((_, i) => {

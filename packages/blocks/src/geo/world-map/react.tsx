@@ -1,8 +1,8 @@
-import { useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
-import { LAND_MASK_BASE64 } from "../globe/land-mask.js";
+import { isLand } from "@cremona/core/land-mask";
 
 export interface WorldMapMarker {
   lat: number;
@@ -67,6 +67,7 @@ const SLOT_OFFSETS = [0, -1, 1, -2, 2, -3];
 const SPLIT_SLOTS = 2;
 const LABEL_MAX_DIST = 11.765999999999998;
 const DEFAULT_DENSITY = "normal";
+const NO_REGIONS: WorldMapRegion[] = [];
 const DEFAULT_REVEAL = "bloom";
 
 const defaultMarkers: WorldMapMarker[] = [
@@ -86,39 +87,6 @@ const defaultArcPairs: [number, number][] = [
   [4, 5],
   [4, 6],
 ];
-
-const MASK_WIDTH = 256;
-const MASK_HEIGHT = 128;
-const BASE64_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-let decodedMask: Uint8Array | null = null;
-
-function landMask(): Uint8Array {
-  if (decodedMask) return decodedMask;
-  const body = LAND_MASK_BASE64.replace(/=+$/, "");
-  const bytes = new Uint8Array((body.length * 3) >> 2);
-  let buffer = 0;
-  let bits = 0;
-  let index = 0;
-  for (let i = 0; i < body.length; i++) {
-    buffer = (buffer << 6) | BASE64_CHARS.indexOf(body[i]!);
-    bits += 6;
-    if (bits >= 8) {
-      bits -= 8;
-      bytes[index++] = (buffer >> bits) & 255;
-    }
-  }
-  decodedMask = bytes;
-  return bytes;
-}
-
-function isLand(lat: number, lng: number): boolean {
-  let col = Math.floor(((lng + 180) / 360) * MASK_WIDTH);
-  let row = Math.floor(((90 - lat) / 180) * MASK_HEIGHT);
-  col = col < 0 ? 0 : col >= MASK_WIDTH ? 255 : col;
-  row = row < 0 ? 0 : row >= MASK_HEIGHT ? 127 : row;
-  const bitIndex = row * MASK_WIDTH + col;
-  return ((landMask()[bitIndex >> 3]! >> (7 - (bitIndex & 7))) & 1) === 1;
-}
 
 interface Dot {
   x: number;
@@ -346,9 +314,17 @@ const labelAnim: Variants = {
   }),
 };
 
+/**
+ * With `fill`, a block box around the aspect-ratio stage: the stage then fits the
+ * panel (contain) instead of stretching; without it, nothing is rendered.
+ */
+function Contain({ fill, children }: { fill: boolean; children: ReactNode }) {
+  return fill ? <div className="max-h-full flow-root">{children}</div> : <>{children}</>;
+}
+
 export function WorldMap({
   markers = defaultMarkers,
-  regions = [],
+  regions = NO_REGIONS,
   arcs = true,
   arcPairs = defaultArcPairs,
   labels = false,
@@ -369,7 +345,15 @@ export function WorldMap({
   const reactId = useId();
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const pinging = hover ? hovering : triggered;
+  const loop = useLoopActive(ref, animated);
+  const pinging = (hover ? hovering : triggered) && loop;
+  const arcsRef = useRef<SVGSVGElement>(null);
+  useEffect(() => {
+    const svg = arcsRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pinging) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pinging]);
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const { landPath, regionPaths } = useMemo(() => {
     const cols = DENSITY[density];
@@ -433,231 +417,248 @@ export function WorldMap({
     <div
       ref={ref}
       aria-hidden="true"
-      className={cn(frameClasses(fill), className)}
+      className={cn(frameClasses(fill), fill && "flex-col justify-center", className)}
       onMouseEnter={animated && hover ? () => setHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >
-      <motion.div
-        className={cn(
-          "@container relative aspect-180/67 w-full",
-          !/(?:^|\s)max-w-\S+/.test(wrapperClassName ?? "") && "max-w-140",
-          wrapperClassName,
-        )}
-        variants={animated ? containerAnim : undefined}
-        {...state}
-      >
-        <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="absolute inset-0 size-full">
-          {animated && (
-            <defs>
-              {reveal === "bloom" && (
-                <radialGradient id={fadeId}>
-                  <stop offset={SWEEP_START} stopColor="white" />
-                  <stop offset={1} stopColor="black" />
-                </radialGradient>
-              )}
-              {reveal === "split" && (
-                <linearGradient id={fadeId} x1="0" y1="0" x2="1" y2="0">
-                  <stop offset={0} stopColor="black" />
-                  <stop offset={SPLIT_SOFTNESS} stopColor="white" />
-                  <stop offset={0.9} stopColor="white" />
-                  <stop offset={1} stopColor="black" />
-                </linearGradient>
-              )}
-              {reveal === "sweep" && (
-                <linearGradient id={fadeId} x1="0" y1="0" x2="1" y2="0">
-                  <stop offset={SWEEP_WIDTH} stopColor="white" />
-                  <stop offset={1} stopColor="black" />
-                </linearGradient>
-              )}
-              <mask id={maskId}>
+      <Contain fill={fill}>
+        <motion.div
+          className={cn(
+            "@container relative aspect-180/67",
+            fill ? "mx-auto max-h-full" : "w-full",
+            !fill && !/(?:^|\s)max-w-\S+/.test(wrapperClassName ?? "") && "max-w-140",
+            wrapperClassName,
+          )}
+          variants={animated ? containerAnim : undefined}
+          {...state}
+        >
+          <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="absolute inset-0 size-full">
+            {animated && (
+              <defs>
                 {reveal === "bloom" && (
-                  <motion.circle
-                    cx={revealCenter.x}
-                    cy={revealCenter.y}
-                    r={bloomRadius}
-                    fill={`url(#${fadeId})`}
-                    variants={bloomMaskAnim}
-                    {...state}
-                  />
+                  <radialGradient id={fadeId}>
+                    <stop offset={SWEEP_START} stopColor="white" />
+                    <stop offset={1} stopColor="black" />
+                  </radialGradient>
                 )}
                 {reveal === "split" && (
-                  <motion.g variants={splitMaskAnim} {...state}>
-                    <rect x={-25 / 2} width={sweepWidth} height={HEIGHT} fill={`url(#${fadeId})`} />
-                  </motion.g>
+                  <linearGradient id={fadeId} x1="0" y1="0" x2="1" y2="0">
+                    <stop offset={0} stopColor="black" />
+                    <stop offset={SPLIT_SOFTNESS} stopColor="white" />
+                    <stop offset={0.9} stopColor="white" />
+                    <stop offset={1} stopColor="black" />
+                  </linearGradient>
                 )}
                 {reveal === "sweep" && (
-                  <motion.rect
-                    width={sweepWidth}
-                    height={HEIGHT}
-                    fill={`url(#${fadeId})`}
-                    custom={sweepWidth}
-                    variants={sweepMaskAnim}
-                    {...state}
-                  />
+                  <linearGradient id={fadeId} x1="0" y1="0" x2="1" y2="0">
+                    <stop offset={SWEEP_WIDTH} stopColor="white" />
+                    <stop offset={1} stopColor="black" />
+                  </linearGradient>
                 )}
-              </mask>
-            </defs>
-          )}
-          <g mask={animated ? `url(#${maskId})` : undefined}>
-            <path d={landPath} className="fill-muted-foreground/30" />
-            {regionPaths.map((path, i) => (
-              <path
-                key={i}
-                d={path}
-                className={cn("fill-current", regions[i]?.color ?? "text-primary")}
-              />
-            ))}
-          </g>
-        </svg>
-        {arcs && arcsList.length > 0 && (
-          <svg
-            viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-            fill="none"
-            className="absolute inset-0 size-full overflow-visible"
-          >
-            {arcsList.map((arc, i) => (
-              <motion.path
-                key={i}
-                d={arc.d}
-                fill="none"
-                strokeWidth={0.22}
-                strokeLinecap="round"
-                className="stroke-primary/30"
-                custom={arc.delay}
-                variants={animated ? arcAnim : undefined}
-                {...state}
-              />
-            ))}
-            {animated && (
-              <motion.g
-                initial={{ opacity: 0 }}
-                animate={{ opacity: +!!pinging }}
-                transition={{
-                  duration: 0.5,
-                  ease: "easeOut",
-                  delay: pinging && !hover ? arcsDoneAt : 0,
-                }}
-              >
-                {arcsList.map((arc, i) => (
-                  <path
-                    key={i}
-                    d={arc.d}
-                    fill="none"
-                    pathLength={1}
-                    strokeDasharray={ARC_DASH}
-                    strokeWidth={0.34}
-                    strokeLinecap="round"
-                    className="stroke-primary"
-                  >
-                    <animate
-                      attributeName="stroke-dashoffset"
-                      values="1;0"
-                      dur={`${ARC_DASH_DURATION}s`}
-                      repeatCount="indefinite"
-                      begin={`${-(i * ARC_DASH_STAGGER)}s`}
+                <mask id={maskId}>
+                  {reveal === "bloom" && (
+                    <motion.circle
+                      cx={revealCenter.x}
+                      cy={revealCenter.y}
+                      r={bloomRadius}
+                      fill={`url(#${fadeId})`}
+                      variants={bloomMaskAnim}
+                      {...state}
                     />
-                  </path>
-                ))}
-              </motion.g>
+                  )}
+                  {reveal === "split" && (
+                    <motion.g variants={splitMaskAnim} {...state}>
+                      <rect
+                        x={-25 / 2}
+                        width={sweepWidth}
+                        height={HEIGHT}
+                        fill={`url(#${fadeId})`}
+                      />
+                    </motion.g>
+                  )}
+                  {reveal === "sweep" && (
+                    <motion.rect
+                      width={sweepWidth}
+                      height={HEIGHT}
+                      fill={`url(#${fadeId})`}
+                      custom={sweepWidth}
+                      variants={sweepMaskAnim}
+                      {...state}
+                    />
+                  )}
+                </mask>
+              </defs>
             )}
+            <g mask={animated ? `url(#${maskId})` : undefined}>
+              <path d={landPath} className="fill-muted-foreground/30" />
+              {regionPaths.map((path, i) => (
+                <path
+                  key={i}
+                  d={path}
+                  className={cn("fill-current", regions[i]?.color ?? "text-primary")}
+                />
+              ))}
+            </g>
           </svg>
-        )}
-        {markers.map((marker, i) => (
-          <div
-            key={i}
-            className={cn("absolute", marker.color ?? "text-primary")}
-            style={{
-              left: `${(points[i]!.x / WIDTH) * 100}%`,
-              top: `${(points[i]!.y / HEIGHT) * 100}%`,
-            }}
-          >
-            <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-              <motion.span
-                className={cn(
-                  "block rounded-full bg-current/25 blur-[2.14cqw]",
-                  marker.active ? "size-[6.43cqw]" : "size-[3.57cqw]",
-                )}
-                custom={markerDelays[i]! + GLOW_DELAY_PAD}
-                variants={animated ? glowAnim : undefined}
-                {...state}
-              />
-            </div>
-            {animated && (
-              <div
-                className={cn(
-                  "absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2",
-                  marker.active ? "size-[2.86cqw]" : "size-[2.14cqw]",
-                )}
-              >
-                <motion.div
-                  className="absolute inset-0"
+          {arcs && arcsList.length > 0 && (
+            <svg
+              ref={arcsRef}
+              viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
+              fill="none"
+              className="absolute inset-0 size-full overflow-visible"
+            >
+              {arcsList.map((arc, i) => (
+                <motion.path
+                  key={i}
+                  d={arc.d}
+                  fill="none"
+                  strokeWidth={0.22}
+                  strokeLinecap="round"
+                  className="stroke-primary/30"
+                  custom={arc.delay}
+                  variants={animated ? arcAnim : undefined}
+                  {...state}
+                />
+              ))}
+              {animated && (
+                <motion.g
                   initial={{ opacity: 0 }}
                   animate={{ opacity: +!!pinging }}
                   transition={{
                     duration: 0.5,
                     ease: "easeOut",
-                    delay: pinging && !hover ? markerDoneAt : 0,
+                    delay: pinging && !hover ? arcsDoneAt : 0,
                   }}
                 >
-                  {PING_DELAYS.map((delay, p) => (
-                    <motion.span
-                      key={p}
-                      className="absolute inset-0 rounded-full border-[max(1px,0.18cqw)] border-current"
-                      initial={{ scale: 0.5, opacity: 0 }}
-                      animate={{ scale: [0.5, 0.8, 2.6], opacity: [0, 0.45, 0] }}
-                      transition={{
-                        duration: PING_DURATION,
-                        ease: "easeOut",
-                        repeat: 1 / 0,
-                        delay: i * PING_STAGGER + delay,
-                        times: [0, 0.12, 1],
-                      }}
-                    />
+                  {arcsList.map((arc, i) => (
+                    <path
+                      key={i}
+                      d={arc.d}
+                      fill="none"
+                      pathLength={1}
+                      strokeDasharray={ARC_DASH}
+                      strokeWidth={0.34}
+                      strokeLinecap="round"
+                      className="stroke-primary"
+                    >
+                      <animate
+                        attributeName="stroke-dashoffset"
+                        values="1;0"
+                        dur={`${ARC_DASH_DURATION}s`}
+                        repeatCount="indefinite"
+                        begin={`${-(i * ARC_DASH_STAGGER)}s`}
+                      />
+                    </path>
                   ))}
-                </motion.div>
+                </motion.g>
+              )}
+            </svg>
+          )}
+          {markers.map((marker, i) => (
+            <div
+              key={i}
+              className={cn("absolute", marker.color ?? "text-primary")}
+              style={{
+                left: `${(points[i]!.x / WIDTH) * 100}%`,
+                top: `${(points[i]!.y / HEIGHT) * 100}%`,
+              }}
+            >
+              <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+                <motion.span
+                  className={cn(
+                    "block rounded-full bg-current/25 blur-[2.14cqw]",
+                    marker.active ? "size-[6.43cqw]" : "size-[3.57cqw]",
+                  )}
+                  custom={markerDelays[i]! + GLOW_DELAY_PAD}
+                  variants={animated ? glowAnim : undefined}
+                  {...state}
+                />
               </div>
-            )}
-            <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
-              <motion.span
-                className={cn(
-                  "block rounded-full bg-current ring-[max(1px,0.36cqw)] ring-background",
-                  marker.active ? "size-[1.79cqw]" : "size-[1.07cqw]",
-                )}
-                custom={markerDelays[i]!}
-                variants={animated ? dotAnim : undefined}
-                {...state}
-              />
-            </div>
-          </div>
-        ))}
-        {labels &&
-          markers.map((marker, i) => {
-            const slot = labelSlotsByMarker[i];
-            if (!slot) return null;
-            return (
-              <div
-                key={i}
-                className="absolute z-10 @max-md:hidden"
-                style={{
-                  left: `${(slot.x / WIDTH) * 100}%`,
-                  bottom: `${100 - (slot.y / HEIGHT) * 100}%`,
-                }}
-              >
-                <div style={{ transform: `translateX(${-slot.anchor * 100}%)` }}>
+              {animated && (
+                <div
+                  className={cn(
+                    "absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2",
+                    marker.active ? "size-[2.86cqw]" : "size-[2.14cqw]",
+                  )}
+                >
                   <motion.div
-                    custom={markerDelays[i]! + LABEL_DELAY_PAD}
-                    variants={animated ? labelAnim : undefined}
-                    {...state}
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: +!!pinging }}
+                    transition={{
+                      duration: 0.5,
+                      ease: "easeOut",
+                      delay: pinging && !hover ? markerDoneAt : 0,
+                    }}
                   >
-                    <div className="rounded-[0.6em] border-[max(1px,0.18cqw)] bg-card px-[0.6em] py-[0.2em] text-[1.79cqw] leading-[1.2] font-medium whitespace-nowrap text-foreground shadow-xs">
-                      {marker.label}
-                    </div>
+                    {PING_DELAYS.map((delay, p) => (
+                      <motion.span
+                        key={p}
+                        className="absolute inset-0 rounded-full border-[max(1px,0.18cqw)] border-current"
+                        initial={{ scale: 0.5, opacity: 0 }}
+                        animate={
+                          pinging
+                            ? { scale: [0.5, 0.8, 2.6], opacity: [0, 0.45, 0] }
+                            : { scale: 0.5, opacity: 0 }
+                        }
+                        transition={
+                          pinging
+                            ? {
+                                duration: PING_DURATION,
+                                ease: "easeOut",
+                                repeat: 1 / 0,
+                                delay: i * PING_STAGGER + delay,
+                                times: [0, 0.12, 1],
+                              }
+                            : { duration: 0.3 }
+                        }
+                      />
+                    ))}
                   </motion.div>
                 </div>
+              )}
+              <div className="absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2">
+                <motion.span
+                  className={cn(
+                    "block rounded-full bg-current ring-[max(1px,0.36cqw)] ring-background",
+                    marker.active ? "size-[1.79cqw]" : "size-[1.07cqw]",
+                  )}
+                  custom={markerDelays[i]!}
+                  variants={animated ? dotAnim : undefined}
+                  {...state}
+                />
               </div>
-            );
-          })}
-      </motion.div>
+            </div>
+          ))}
+          {labels &&
+            markers.map((marker, i) => {
+              const slot = labelSlotsByMarker[i];
+              if (!slot) return null;
+              return (
+                <div
+                  key={i}
+                  className="absolute z-10 @max-md:hidden"
+                  style={{
+                    left: `${(slot.x / WIDTH) * 100}%`,
+                    bottom: `${100 - (slot.y / HEIGHT) * 100}%`,
+                  }}
+                >
+                  <div style={{ transform: `translateX(${-slot.anchor * 100}%)` }}>
+                    <motion.div
+                      custom={markerDelays[i]! + LABEL_DELAY_PAD}
+                      variants={animated ? labelAnim : undefined}
+                      {...state}
+                    >
+                      <div className="rounded-[0.6em] border-[max(1px,0.18cqw)] bg-card px-[0.6em] py-[0.2em] text-[1.79cqw] leading-[1.2] font-medium whitespace-nowrap text-foreground shadow-xs">
+                        {marker.label}
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              );
+            })}
+        </motion.div>
+      </Contain>
     </div>
   );
 }

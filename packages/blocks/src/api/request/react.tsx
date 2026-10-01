@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Globe, Server, Timer } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -215,6 +215,35 @@ export interface RequestProps extends VisualProps {
   isometric?: boolean;
 }
 
+/** Scales the fixed-size canvas down to the frame's width on narrow screens (client only). */
+function useFitWidth(
+  frame: RefObject<HTMLElement | null>,
+  canvas: RefObject<HTMLElement | null>,
+  width: number,
+) {
+  useEffect(() => {
+    const root = frame.current;
+    const el = canvas.current;
+    if (!root || !el || typeof ResizeObserver === "undefined") return;
+    let raf = 0;
+    const fit = () => {
+      const style = getComputedStyle(root);
+      const room =
+        root.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (room > 0) el.style.zoom = room < width ? String(room / width) : "";
+    };
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(fit);
+    });
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [frame, canvas, width]);
+}
+
 export function Request({
   variant = "get",
   method,
@@ -233,12 +262,23 @@ export function Request({
   className,
 }: RequestProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  useFitWidth(ref, canvasRef, CANVAS.w);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovered, setHovered] = useState(false);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const pulseVisible = hover ? hovered : inView;
+  const loop = useLoopActive(ref, animated);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const pulsing = pulseVisible && loop;
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pulsing) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pulsing]);
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
@@ -263,7 +303,8 @@ export function Request({
       onMouseLeave={animated && hover ? () => setHovered(false) : undefined}
     >
       <motion.div
-        className="relative shrink-0"
+        ref={canvasRef}
+        className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric
             ? { width: CANVAS.w, height: CANVAS.h, transform: "rotateX(45deg) rotateZ(-45deg)" }
@@ -273,6 +314,7 @@ export function Request({
         {...state}
       >
         <svg
+          ref={svgRef}
           className="pointer-events-none absolute inset-0 size-full"
           viewBox={`0 0 ${CANVAS.w} ${CANVAS.h}`}
           fill="none"
@@ -300,11 +342,11 @@ export function Request({
           {animated && (
             <motion.g
               initial={false}
-              animate={{ opacity: +!!pulseVisible }}
+              animate={{ opacity: +!!pulsing }}
               transition={{
                 duration: 0.5,
                 ease: "easeOut",
-                delay: pulseVisible && !hover ? PULSE_DELAY : 0,
+                delay: pulsing && !hover ? PULSE_DELAY : 0,
               }}
             >
               <RequestPulse d={CURVE_IN} dur="2.6s" begin="0s" pulse={pulse} />
@@ -348,7 +390,7 @@ export function Request({
             {...state}
           >
             <span
-              className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] font-bold ring-1 ring-inset ${METHOD_STYLES[methodLabel]}`}
+              className={`rounded-md px-1.5 py-0.5 font-mono text-[9px] font-bold ring-1 ring-inset ${METHOD_STYLES[methodLabel.toUpperCase()] ?? "bg-muted text-muted-foreground ring-border"}`}
             >
               {methodLabel}
             </span>

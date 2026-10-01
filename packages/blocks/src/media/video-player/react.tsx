@@ -252,6 +252,7 @@ export function VideoPlayer({
         className={cn(
           "relative w-full",
           !fill && "max-w-90",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
         )}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
@@ -272,8 +273,18 @@ export function VideoPlayer({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
-          <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
+          <div
+            className={cn(
+              "relative w-full overflow-hidden rounded-2xl",
+              fill ? "min-h-0 flex-1" : "aspect-video",
+            )}
+          >
             <motion.div
               className="absolute inset-0 will-change-transform"
               variants={animated ? mediaAnim : undefined}

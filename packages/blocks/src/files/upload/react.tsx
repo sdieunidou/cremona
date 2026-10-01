@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useAnimate } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowUp, Check, LoaderCircle } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -180,8 +180,9 @@ export function Upload({
   const [isHovering, setIsHovering] = useState(false);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const active = hover ? isHovering : inView;
-  const Preview = previews[variant];
+  const loop = useLoopActive(rootRef, animated);
+  const active = (hover ? isHovering : inView) && loop;
+  const Preview = previews[variant] ?? previews.document;
 
   useEffect(() => {
     if (!animated) return;
@@ -308,14 +309,20 @@ export function Upload({
           <motion.div
             key={side}
             className={`absolute inset-y-0 w-px bg-[repeating-linear-gradient(to_bottom,var(--color-border)_0px,var(--color-border)_4px,transparent_4px,transparent_8px)] ${side === 0 ? `left-0` : `right-0`}`}
-            animate={animated && active ? { backgroundPositionY: [0, -8] } : undefined}
+            animate={
+              animated
+                ? active
+                  ? { backgroundPositionY: [0, -8] }
+                  : { backgroundPositionY: 0 }
+                : undefined
+            }
             transition={
               animated && active ? { duration: 0.5, repeat: Infinity, ease: "linear" } : undefined
             }
           />
         ))}
       </div>
-      <div ref={scope}>
+      <div ref={scope} className={fill ? "self-center" : undefined}>
         <div
           className="file-card relative flex flex-col rounded-lg rounded-tr-2xl border border-muted bg-muted p-0.75 shadow-xs dark:shadow-none"
           style={animated ? { opacity: 0, transform: "translateY(60px)" } : undefined}
@@ -327,7 +334,7 @@ export function Upload({
             className="spinner-badge absolute bottom-5.75 -left-1.75 z-1 flex items-center justify-center rounded-lg border border-primary bg-primary p-1 text-primary-foreground shadow-sm"
             style={animated ? { opacity: 0 } : { display: "none" }}
           >
-            <LoaderCircle size={14} className="animate-spin" strokeWidth={2.5} />
+            <LoaderCircle size={14} className={cn(loop && "animate-spin")} strokeWidth={2.5} />
           </div>
           <div
             className="check-badge absolute bottom-5.75 -left-1.75 z-1 flex items-center justify-center rounded-lg border border-emerald-800/20 bg-emerald-500 p-1 shadow-sm"

@@ -1,7 +1,14 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { GitCommitHorizontal, Rocket, GitMerge, FileText, CircleCheck } from "lucide-react";
+import {
+  Activity,
+  GitCommitHorizontal,
+  Rocket,
+  GitMerge,
+  FileText,
+  CircleCheck,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -41,6 +48,9 @@ const actionStyles: Record<FeedAction, { icon: LucideIcon; accent: string }> = {
     accent: "bg-rose-50 border-rose-500/20 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400",
   },
 };
+
+/** Any other action (data outside the union): a neutral badge. */
+const otherAction = { icon: Activity, accent: "bg-muted border-border text-muted-foreground" };
 
 export const feedDefaultItems: FeedItem[] = [
   {
@@ -179,6 +189,7 @@ export function Feed({
         className={cn(
           "relative w-full",
           !fill && "max-w-80",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
@@ -200,7 +211,7 @@ export function Feed({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-3 py-2.75">
             <span className="text-xs font-semibold text-foreground">{title}</span>
             {meta && <span className="text-[10px] font-medium text-muted-foreground">{meta}</span>}
@@ -211,7 +222,7 @@ export function Feed({
             {...state}
           >
             {items.map((item, i) => {
-              const { icon: Icon, accent } = actionStyles[item.action];
+              const { icon: Icon, accent } = actionStyles[item.action] ?? otherAction;
               return (
                 <motion.div
                   key={i}

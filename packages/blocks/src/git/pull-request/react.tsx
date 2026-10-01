@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowRight, Check, GitPullRequest, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -263,15 +263,17 @@ export function PullRequest({
   }, []);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const cycling = animated && (hover ? hovering : triggered) && ready;
-  const spinning = animated && triggered && ready;
+  const loop = useLoopActive(ref, animated);
+  const cycling = animated && (hover ? hovering : triggered) && ready && loop;
+  const spinning = animated && triggered && ready && loop;
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const rows = (checks?.length ? checks : defaultChecks).slice(0, MAX_CHECKS);
   const checkCount = rows.length;
   const failing = variant === "failing";
   const buttonLabel = mergeLabel ?? mergeLabels[variant];
   const reviewerInitials = initials(reviewer);
-  const progress = cycling ? cursor : animated ? (hover ? -1 : 0) : checkCount;
+  // paused: every check settled, as in the static render
+  const progress = cycling ? cursor : animated && loop ? (hover ? -1 : 0) : checkCount;
   const allDone = progress >= checkCount;
   const anyRunning = progress >= 0 && progress < checkCount;
   const changedTotal = additions + deletions;
@@ -328,6 +330,7 @@ export function PullRequest({
         className={cn(
           "relative w-full",
           !fill && "max-w-96",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
@@ -349,7 +352,12 @@ export function PullRequest({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <motion.div
             className="flex flex-col gap-1.5 border-b px-3 py-2.5"
             variants={animated ? headerAnim : undefined}
@@ -423,7 +431,7 @@ export function PullRequest({
             ))}
           </div>
           <motion.div
-            className="flex items-center gap-2 border-t px-3 py-2"
+            className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}
             variants={animated ? riseAnim : undefined}
             custom={FOOTER_DELAY}
             {...state}

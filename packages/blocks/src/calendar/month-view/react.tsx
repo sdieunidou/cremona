@@ -213,7 +213,7 @@ export function MonthView({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
@@ -232,7 +232,7 @@ export function MonthView({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card p-3 shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card p-3 shadow-xs", fill && "flex-1")}>
           <motion.div
             className="flex items-center justify-between pb-2.5"
             variants={animated ? header : undefined}
@@ -319,7 +319,7 @@ export function MonthView({
                       {dayEvents.slice(0, 3).map((tone, j) => (
                         <motion.span
                           key={j}
-                          className={`size-1 rounded-full ${toneStyles[tone]}`}
+                          className={`size-1 rounded-full ${toneStyles[tone] ?? "bg-muted-foreground"}`}
                           variants={animated ? dot : undefined}
                         />
                       ))}

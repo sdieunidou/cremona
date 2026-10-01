@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { GitBranch, GitMerge } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -201,6 +201,35 @@ function branchPath(branch: LaidOutBranch, x: (lane: number) => number): string 
   return d;
 }
 
+/** Scales the fixed-size canvas down to the frame's width on narrow screens (client only). */
+function useFitWidth(
+  frame: RefObject<HTMLElement | null>,
+  canvas: RefObject<HTMLElement | null>,
+  width: number,
+) {
+  useEffect(() => {
+    const root = frame.current;
+    const el = canvas.current;
+    if (!root || !el || typeof ResizeObserver === "undefined") return;
+    let raf = 0;
+    const fit = () => {
+      const style = getComputedStyle(root);
+      const room =
+        root.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
+      if (room > 0) el.style.zoom = room < width ? String(room / width) : "";
+    };
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(fit);
+    });
+    observer.observe(root);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(raf);
+    };
+  }, [frame, canvas, width]);
+}
+
 export function BranchGraph({
   base = "main",
   commits = 7,
@@ -215,12 +244,22 @@ export function BranchGraph({
   className,
 }: BranchGraphProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLDivElement>(null);
+  useFitWidth(ref, canvasRef, W);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
   const [hovering, setHovering] = useState(false);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const pulsing = animated && (hover ? hovering : triggered);
+  const loop = useLoopActive(ref, animated);
+  const pulsing = animated && (hover ? hovering : triggered) && loop;
+  const svgRef = useRef<SVGSVGElement>(null);
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg || typeof svg.pauseAnimations !== "function") return;
+    if (pulsing) svg.unpauseAnimations();
+    else svg.pauseAnimations();
+  }, [pulsing]);
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const total = Math.min(Math.max(Math.round(commits), 2), MAX_COMMITS);
   const x0 = railStart(total);
@@ -244,7 +283,8 @@ export function BranchGraph({
       onMouseLeave={animated && hover ? () => setHovering(false) : undefined}
     >
       <motion.div
-        className="relative shrink-0"
+        ref={canvasRef}
+        className={cn("relative shrink-0", fill && "self-center")}
         style={
           !animated && isometric
             ? { width: W, height: H, transform: "rotateX(45deg) rotateZ(-45deg)" }
@@ -254,6 +294,7 @@ export function BranchGraph({
         {...state}
       >
         <svg
+          ref={svgRef}
           className="pointer-events-none absolute inset-0 size-full"
           viewBox={`0 0 ${W} ${H}`}
           fill="none"

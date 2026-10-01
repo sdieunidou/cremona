@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowUp, Check, CheckCheck } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -79,6 +79,7 @@ const veilAnim = {
 const typingDotsAnim = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.18 } },
+  rest: {},
 } as const;
 
 const typingDotAnim: Variants = {
@@ -87,6 +88,7 @@ const typingDotAnim: Variants = {
     opacity: [0.25, 1, 0.25],
     transition: { duration: 1.1, repeat: Infinity, ease: "easeInOut" },
   },
+  rest: { opacity: 1 },
 };
 
 export interface BubblesProps extends VisualProps {
@@ -117,20 +119,18 @@ export function Bubbles({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  // looping pieces rest (still typing dots) while the loop is paused
+  const loopState = animated
+    ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
     : {};
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -149,7 +149,12 @@ export function Bubbles({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center gap-2.5 border-b px-3 py-2.5">
             <div className="relative">
               <div className="flex size-7 items-center justify-center rounded-full bg-primary/10 text-[10px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
@@ -209,6 +214,7 @@ export function Bubbles({
                 <motion.div
                   className="flex items-center gap-1 rounded-2xl rounded-bl-md border bg-muted px-2.5 py-2"
                   variants={animated ? typingDotsAnim : undefined}
+                  {...loopState}
                 >
                   {[0, 1, 2].map((i) => (
                     <motion.span
@@ -221,7 +227,7 @@ export function Bubbles({
               </motion.div>
             )}
           </motion.div>
-          <div className="flex items-center gap-2 border-t px-3 py-2">
+          <div className={cn("flex items-center gap-2 border-t px-3 py-2", fill && "mt-auto")}>
             <div className="flex-1 truncate rounded-full bg-muted px-3 py-1.25 text-[10px] text-muted-foreground">
               Type a message…
             </div>

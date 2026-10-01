@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Check } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -154,15 +154,10 @@ export function Timeline({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
-    : {};
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  const pulseState = { initial: "hidden", animate: shown && loop ? "visible" : "hidden" };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -170,6 +165,7 @@ export function Timeline({
         className={cn(
           "relative w-full",
           !fill && "max-w-80",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
@@ -191,7 +187,7 @@ export function Timeline({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-3 py-2.75">
             <span className="text-xs font-semibold text-foreground">{title}</span>
             {meta && (
@@ -207,7 +203,7 @@ export function Timeline({
           >
             {steps.map((step, i) => {
               const isLast = i === steps.length - 1;
-              const s = statusStyles[step.status];
+              const s = statusStyles[step.status] ?? statusStyles.pending;
               return (
                 <motion.div
                   key={i}
@@ -231,6 +227,7 @@ export function Timeline({
                             <motion.div
                               className="absolute inset-0 rounded-full bg-primary"
                               variants={pulseAnim}
+                              {...pulseState}
                             />
                           )}
                         </>

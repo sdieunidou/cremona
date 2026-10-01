@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { FileDiff } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -356,7 +356,8 @@ export function Diff({
   }, []);
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
-  const sweeping = animated && (hover ? hovering : triggered) && ready;
+  const loop = useLoopActive(ref, animated);
+  const sweeping = animated && (hover ? hovering : triggered) && ready && loop;
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const marked = markKinds((lines?.length ? lines : defaultLines).slice(0, MAX_LINES));
   const changed = marked.filter((l) => l.kind !== "context");
@@ -407,6 +408,7 @@ export function Diff({
         className={cn(
           "relative w-full",
           !fill && "max-w-96",
+          fill && "flex h-full flex-col",
           "rounded-3xl border border-border/50 bg-muted/75 p-1.5",
           fadeOut && "mask-b-from-60%",
         )}
@@ -428,7 +430,12 @@ export function Diff({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <motion.div
             className="flex items-center gap-2 border-b px-3 py-2.5"
             variants={animated ? headerAnim : undefined}

@@ -158,7 +158,7 @@ export function Simple({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
@@ -177,7 +177,7 @@ export function Simple({
             />
           </>
         )}
-        <div className="relative flex flex-col">
+        <div className={cn("relative flex flex-col", fill && "min-h-0 flex-1")}>
           <div className="flex items-center gap-2 px-1.5 py-1.5">
             <div className="flex gap-1.5">
               <div className="size-2 rounded-full bg-rose-400" />
@@ -201,7 +201,7 @@ export function Simple({
             </motion.button>
           </div>
           <motion.div
-            className="h-56 rounded-xl border bg-background p-3"
+            className={cn("rounded-xl border bg-background p-3", fill ? "min-h-0 flex-1" : "h-56")}
             variants={animated ? viewport : undefined}
             {...state}
           >

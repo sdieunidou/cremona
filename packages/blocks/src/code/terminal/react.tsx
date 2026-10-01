@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Terminal as TerminalIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -81,6 +81,7 @@ const caretAnim: Variants = {
     opacity: [0, 1, 1, 0],
     transition: { duration: 1, repeat: Infinity, ease: "linear" },
   },
+  rest: { opacity: 1 },
 };
 
 const glowAnim = {
@@ -131,14 +132,12 @@ export function Terminal({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  // the caret holds steady while the loop is paused
+  const caretState = animated
+    ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
     : {};
   const resolvedTitle = title ?? terminalTitles[variant];
   const activeLines = lines ?? terminalDefaultLines[variant];
@@ -146,7 +145,7 @@ export function Terminal({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-90"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-90"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -165,7 +164,12 @@ export function Terminal({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+            fill && "flex-1",
+          )}
+        >
           <div className="flex items-center gap-2 border-b bg-muted/40 px-2.5 py-1.5">
             <div className="flex gap-1.25">
               <div className="size-2 rounded-full bg-rose-400" />
@@ -197,19 +201,23 @@ export function Terminal({
                   {isCommand ? (
                     <>
                       <span className="text-primary">{line.prompt ?? prompt}</span>
-                      <span className={`whitespace-pre-wrap ${kindColors[line.kind]}`}>
+                      <span
+                        className={`whitespace-pre-wrap ${kindColors[line.kind] ?? kindColors.output}`}
+                      >
                         {line.text}
                       </span>
                       {isEmptyCommand && caret && (
                         <motion.span
                           className="inline-block h-2.5 w-1.25 bg-primary"
                           variants={animated ? caretAnim : undefined}
-                          {...state}
+                          {...caretState}
                         />
                       )}
                     </>
                   ) : (
-                    <span className={`pl-3 whitespace-pre-wrap ${kindColors[line.kind]}`}>
+                    <span
+                      className={`pl-3 whitespace-pre-wrap ${kindColors[line.kind] ?? kindColors.output}`}
+                    >
                       {line.text}
                     </span>
                   )}

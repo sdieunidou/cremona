@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { FileCode, GitBranch, Search } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -69,6 +69,7 @@ const caretAnim: Variants = {
     opacity: [0, 1, 1, 0],
     transition: { duration: 1, delay: 0.9, repeat: Infinity, ease: "linear" },
   },
+  rest: { opacity: 1, transition: { duration: 0.2, delay: 0.9 } },
 };
 
 const glowAnim = {
@@ -509,7 +510,7 @@ function EditorCodeLine({
           line.tokens.map((token, i) => (
             <div
               key={i}
-              className={`h-1.25 rounded-sm ${tokenColors[token.color]}`}
+              className={`h-1.25 rounded-sm ${tokenColors[token.color] ?? tokenColors.punct}`}
               style={{ width: `${token.width * 0.75}%` }}
             />
           ))
@@ -547,14 +548,12 @@ export function Editor({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
-  const state = animated
-    ? {
-        initial: "hidden",
-        animate:
-          trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce)
-            ? "visible"
-            : "hidden",
-      }
+  const shown = trigger === "mount" || (trigger === "inViewRepeat" ? inViewRepeat : inViewOnce);
+  const state = animated ? { initial: "hidden", animate: shown ? "visible" : "hidden" } : {};
+  const loop = useLoopActive(ref, animated);
+  // the caret holds steady while the loop is paused
+  const caretState = animated
+    ? { initial: "hidden", animate: shown ? (loop ? "visible" : "rest") : "hidden" }
     : {};
   const activeTabs = tabs ?? editorDefaultTabs[language];
   const activeLines = lines ?? editorDefaultLines[language];
@@ -564,7 +563,7 @@ export function Editor({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-90"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-90"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? "mask-b-from-60%" : ""}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...state}
@@ -583,7 +582,12 @@ export function Editor({
             />
           </>
         )}
-        <div className="relative overflow-hidden rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center gap-2 border-b bg-muted/40 px-2.5 py-1.5">
             <div className="flex gap-1.25">
               <div className="size-2 rounded-full bg-rose-400" />
@@ -641,13 +645,18 @@ export function Editor({
                   <motion.div
                     className="h-2.5 w-px bg-primary"
                     variants={animated ? caretAnim : undefined}
-                    {...state}
+                    {...caretState}
                   />
                 </div>
               )}
             </motion.div>
           </div>
-          <div className="flex items-center justify-between border-t bg-background px-2.5 py-1.5 text-[8px] font-medium text-muted-foreground">
+          <div
+            className={cn(
+              "flex items-center justify-between border-t bg-background px-2.5 py-1.5 text-[8px] font-medium text-muted-foreground",
+              fill && "mt-auto",
+            )}
+          >
             <div className="flex items-center gap-2">
               <span className="tracking-wide uppercase">{language}</span>
               <span className="text-muted-foreground/60">UTF-8</span>

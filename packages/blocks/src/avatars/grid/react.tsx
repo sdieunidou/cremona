@@ -110,7 +110,7 @@ export function AvatarGrid({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className="relative"
+        className={cn("relative", fill && "self-center")}
         style={{
           width,
           height,

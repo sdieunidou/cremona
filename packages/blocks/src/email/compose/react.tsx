@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Image, Paperclip, Smile, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -78,6 +78,7 @@ const caret: Variants = {
     opacity: [1, 0, 1],
     transition: { duration: 1, repeat: Infinity, ease: "linear" },
   },
+  rest: { opacity: 1 },
 };
 
 const glow = {
@@ -150,6 +151,7 @@ export function Compose({
   const ref = useRef<HTMLDivElement>(null);
   const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
   const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const loop = useLoopActive(ref, animated);
   const state = animated
     ? {
         initial: "hidden",
@@ -169,7 +171,7 @@ export function Compose({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-80"} rounded-3xl border border-border/50 bg-muted/75 p-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
@@ -188,7 +190,12 @@ export function Compose({
             />
           </>
         )}
-        <div className="relative rounded-2xl border bg-card shadow-xs">
+        <div
+          className={cn(
+            "relative rounded-2xl border bg-card shadow-xs",
+            fill && "flex flex-1 flex-col",
+          )}
+        >
           <div className="flex items-center justify-between gap-2 border-b px-3 py-2.75">
             <span className="truncate text-xs font-semibold text-foreground">{title}</span>
             <div className="flex shrink-0 items-center gap-2 text-muted-foreground">
@@ -253,12 +260,12 @@ export function Compose({
                 <motion.div
                   className="h-2 w-px bg-foreground"
                   variants={animated ? caret : undefined}
-                  animate={animated ? "visible" : undefined}
+                  animate={animated ? (loop ? "visible" : "rest") : undefined}
                 />
               </div>
             </motion.div>
           </motion.div>
-          <div className="flex items-center justify-between px-3 py-2">
+          <div className={cn("flex items-center justify-between px-3 py-2", fill && "mt-auto")}>
             <motion.button
               type="button"
               className="flex items-center gap-1 rounded-md bg-primary px-2 py-1 text-[10px] font-semibold text-primary-foreground"

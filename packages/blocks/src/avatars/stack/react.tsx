@@ -121,7 +121,7 @@ export function Stack({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className="relative flex flex-col items-center gap-3"
+        className={cn("relative flex flex-col items-center gap-3", fill && "self-center")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}

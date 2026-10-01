@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { Check, LoaderCircle } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -351,12 +351,17 @@ export function AgentFlow({
   }, []);
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
+  const loop = useLoopActive(ref, animated);
   const active = (hover ? hovered : inView) && ticked;
+  const looping = active && loop;
   const drifting = inView && ticked;
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" } as const;
+  // paused: hold the current step (the first one if the cycle never ran), settled
+  const shownStep = loop ? current : Math.max(current, 0);
+  const shownSettled = settled || !loop;
 
   useEffect(() => {
-    if (!animated || !active) return;
+    if (!animated || !looping) return;
     if (stepRef.current >= count) stepRef.current = 0;
     let intervalId: ReturnType<typeof setInterval> | undefined;
     let settleId: ReturnType<typeof setTimeout> | undefined;
@@ -379,7 +384,7 @@ export function AgentFlow({
       clearTimeout(settleId);
       if (intervalId) clearInterval(intervalId);
     };
-  }, [animated, active, hover, count]);
+  }, [animated, looping, hover, count]);
 
   if (!animated) {
     return (
@@ -451,12 +456,12 @@ export function AgentFlow({
           <motion.div
             className="absolute inset-0"
             animate={
-              active
+              looping
                 ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
                 : { scale: 1, opacity: 0.85 }
             }
             transition={
-              active
+              looping
                 ? { duration: 4.5, ease: "easeInOut", repeat: Infinity }
                 : { duration: 0.6, ease: "easeOut" }
             }
@@ -480,16 +485,16 @@ export function AgentFlow({
               >
                 <motion.div
                   animate={
-                    drifting
+                    drifting && loop
                       ? {
                           x: [0, p.driftX, 0],
                           y: [0, -p.driftY, 0],
                           opacity: [p.opacity * 0.5, p.opacity, p.opacity * 0.5],
                         }
-                      : { x: 0, y: 0, opacity: 0 }
+                      : { x: 0, y: 0, opacity: drifting ? p.opacity * 0.7 : 0 }
                   }
                   transition={
-                    drifting
+                    drifting && loop
                       ? {
                           duration: p.duration,
                           delay: p.delay,
@@ -511,8 +516,8 @@ export function AgentFlow({
       )}
       <motion.div className="relative flex flex-col items-start" variants={column} {...state}>
         {stepsList.map((step, i) => {
-          const isCurrent = active && current === i;
-          const isSettled = isCurrent && settled;
+          const isCurrent = active && shownStep === i;
+          const isSettled = isCurrent && shownSettled;
           return (
             <Fragment key={i}>
               <div className="flex items-center">

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, type HTMLMotionProps } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowRight } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -38,13 +38,16 @@ const veil = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.5, ease: "easeOut" } },
 } as const;
 
-function Skeleton({ pulse }: { pulse: boolean }) {
-  const pulseProps: HTMLMotionProps<"div"> = pulse
-    ? {
-        animate: { opacity: [0.4, 1, 0.4] },
-        transition: { duration: 1.6, repeat: Infinity, ease: "easeInOut" },
-      }
-    : {};
+/** `pulse`: the loading skeleton, pulsing while `looping`, else at rest. */
+function Skeleton({ pulse, looping = true }: { pulse: boolean; looping?: boolean }) {
+  const pulseProps: HTMLMotionProps<"div"> = !pulse
+    ? {}
+    : looping
+      ? {
+          animate: { opacity: [0.4, 1, 0.4] },
+          transition: { duration: 1.6, repeat: Infinity, ease: "easeInOut" },
+        }
+      : { animate: { opacity: 1 }, transition: { duration: 0.3 } };
   return (
     <div className="mx-auto flex h-full w-full max-w-56 flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -70,10 +73,12 @@ function Skeleton({ pulse }: { pulse: boolean }) {
           <motion.div
             key={i}
             className="flex flex-col gap-1 rounded-lg bg-muted p-1.5"
-            animate={pulse ? { opacity: [0.4, 1, 0.4] } : undefined}
+            animate={pulse ? (looping ? { opacity: [0.4, 1, 0.4] } : { opacity: 1 }) : undefined}
             transition={
               pulse
-                ? { duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 }
+                ? looping
+                  ? { duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: i * 0.1 }
+                  : { duration: 0.3 }
                 : undefined
             }
           >
@@ -120,6 +125,8 @@ export function Loading({
   const inView =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const loaded = hover ? isHovering : inView;
+  const loop = useLoopActive(ref, animated);
+  const looping = loaded && loop;
   const state = animated
     ? {
         initial: "hidden",
@@ -136,7 +143,7 @@ export function Loading({
       onMouseLeave={animated && hover ? () => setIsHovering(false) : undefined}
     >
       <motion.div
-        className={`relative w-full${fill ? "" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
+        className={`relative w-full${fill ? " flex h-full flex-col" : " max-w-90"} rounded-2xl border border-border/50 bg-muted/75 px-1.5 pb-1.5 ${fadeOut ? `mask-b-from-60%` : ``}`}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? containerIso : container) : undefined}
         {...state}
@@ -155,7 +162,7 @@ export function Loading({
             />
           </>
         )}
-        <div className="relative flex flex-col">
+        <div className={cn("relative flex flex-col", fill && "min-h-0 flex-1")}>
           <div className="flex items-center gap-2 px-1.5 py-1.5">
             <div className="flex gap-1.5">
               <div className="size-2 rounded-full bg-rose-400" />
@@ -179,7 +186,10 @@ export function Loading({
             </motion.button>
           </div>
           <motion.div
-            className="relative h-56 overflow-hidden rounded-xl border bg-background p-3"
+            className={cn(
+              "relative overflow-hidden rounded-xl border bg-background p-3",
+              fill ? "min-h-0 flex-1" : "h-56",
+            )}
             variants={animated ? viewport : undefined}
             {...state}
           >
@@ -199,13 +209,17 @@ export function Loading({
                   <motion.div
                     className="h-full bg-primary"
                     initial={{ width: "0%" }}
-                    animate={{ width: ["0%", "70%", "70%", "100%"] }}
-                    transition={{
-                      duration: 3,
-                      times: [0, 0.5, 0.7, 1],
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
+                    animate={looping ? { width: ["0%", "70%", "70%", "100%"] } : { width: "70%" }}
+                    transition={
+                      looping
+                        ? {
+                            duration: 3,
+                            times: [0, 0.5, 0.7, 1],
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }
+                        : { duration: 0.3 }
+                    }
                   />
                 </motion.div>
               </>
@@ -226,7 +240,7 @@ export function Loading({
                   animate={{ opacity: Number(!!loaded) }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 >
-                  <Skeleton pulse={true} />
+                  <Skeleton pulse looping={looping} />
                 </motion.div>
               </>
             ) : (

@@ -152,7 +152,7 @@ export function AudioWaveform({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("relative flex w-full", !fill && "max-w-80", "flex-col")}
+        className={cn("relative flex w-full", fill ? "h-full" : "max-w-80", "flex-col")}
         style={!animated && isometric ? { transform: "rotateX(45deg) rotateZ(-45deg)" } : undefined}
         variants={animated ? (isometric ? cardIso : card) : undefined}
         {...motionState}
@@ -171,7 +171,12 @@ export function AudioWaveform({
             />
           </>
         )}
-        <div className="relative flex flex-col gap-3.25 rounded-xl border bg-card p-3 shadow-xs">
+        <div
+          className={cn(
+            "relative flex flex-col gap-3.25 rounded-xl border bg-card p-3 shadow-xs",
+            fill && "flex-1 justify-between",
+          )}
+        >
           <motion.div
             className="flex items-center gap-2.5"
             variants={animated ? headerAnim : undefined}
