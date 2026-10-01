@@ -723,7 +723,8 @@
           "php",
           "html",
           "css",
-          "go"
+          "go",
+          "french"
         ],
         "cols": 2
       },
@@ -747,7 +748,8 @@
           "css",
           "sql",
           "yaml",
-          "md"
+          "md",
+          "french"
         ],
         "cols": 2
       },

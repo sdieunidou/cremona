@@ -1979,6 +1979,11 @@
         "label": "go",
         "slug": "015-go",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "016-french",
+        "size": null
       }
     ]
   },
@@ -2058,6 +2063,11 @@
       {
         "label": "md",
         "slug": "012-md",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "013-french",
         "size": null
       }
     ]

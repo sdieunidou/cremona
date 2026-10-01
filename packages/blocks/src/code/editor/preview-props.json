@@ -235,5 +235,23 @@
   },
   "go": {
     "language": "go"
+  },
+  "french": {
+    "language": "tsx",
+    "tabs": [
+      {
+        "name": "Panier.tsx",
+        "active": true
+      },
+      {
+        "name": "prix.ts"
+      }
+    ],
+    "code": "import { formaterPrix } from './prix';\n\n// Total du panier, TVA comprise\nexport function Total({ montant }: Props) {\n  const total = montant * 1.2;\n  return <p>Total : {formaterPrix(total)}</p>;\n}",
+    "labels": {
+      "encoding": "UTF-8",
+      "position": "Ligne {line}, col. {column}",
+      "indentation": "Espaces : 2"
+    }
   }
 }

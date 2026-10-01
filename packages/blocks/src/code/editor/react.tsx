@@ -26,6 +26,28 @@ export interface EditorLine {
 
 type EditorLanguage = "tsx" | "js" | "py" | "php" | "html" | "css" | "go";
 
+export interface EditorLabels {
+  /** File encoding in the status bar. */
+  encoding: string;
+  /** Caret position in the status bar; `{line}` and `{column}` are replaced. */
+  position: string;
+  /** Indentation setting in the status bar. */
+  indentation: string;
+}
+
+export const editorDefaultLabels: EditorLabels = {
+  encoding: "UTF-8",
+  position: "Ln {line}, Col {column}",
+  indentation: "Spaces: 2",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 const editorDefaultTabs: Record<EditorLanguage, EditorTab[]> = {
   tsx: [{ name: "App.tsx", active: true }, { name: "Button.tsx" }, { name: "utils.ts" }],
   js: [{ name: "index.js", active: true }, { name: "config.js" }],
@@ -526,8 +548,14 @@ export interface EditorProps extends VisualProps {
   language?: EditorLanguage;
   tabs?: readonly EditorTab[];
   lines?: readonly EditorLine[];
+  /** Real code shown as monospace text lines instead of the token bars (`lines`). */
+  code?: string;
+  /** Branch name in the title bar. */
+  branch?: string;
   lineNumbers?: boolean;
   caret?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<EditorLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -537,8 +565,11 @@ export function Editor({
   language = "tsx",
   tabs,
   lines,
+  code,
+  branch = "main",
   lineNumbers = true,
   caret = true,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -559,8 +590,12 @@ export function Editor({
     : {};
   const activeTabs = tabs ?? editorDefaultTabs[language];
   const activeLines = lines ?? editorDefaultLines[language];
-  const hasDiff = activeLines.some((line) => !!line.diff);
+  const codeLines = code === undefined ? undefined : code.split("\n");
+  const tokenLines = codeLines ? [] : activeLines;
+  const lineCount = codeLines ? codeLines.length : activeLines.length;
+  const hasDiff = !codeLines && activeLines.some((line) => !!line.diff);
   const showGutter = lineNumbers || hasDiff;
+  const text = { ...editorDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -598,7 +633,7 @@ export function Editor({
             </div>
             <div className="flex flex-1 items-center justify-center gap-1 text-[9px] font-medium text-muted-foreground">
               <GitBranch className="size-2.5" strokeWidth={2.5} />
-              <span>main</span>
+              <span>{branch}</span>
             </div>
             <Search className="size-2.5 text-muted-foreground" strokeWidth={2.5} />
           </div>
@@ -623,11 +658,29 @@ export function Editor({
           <div className="flex">
             <div className="w-1 shrink-0 bg-muted/30" />
             <motion.div
-              className="flex flex-1 flex-col gap-1.5 py-3"
+              className={
+                codeLines
+                  ? "flex min-w-0 flex-1 flex-col py-3"
+                  : "flex flex-1 flex-col gap-1.5 py-3"
+              }
               variants={animated ? linesAnim : undefined}
               {...state}
             >
-              {activeLines.map((line, i) => (
+              {codeLines?.map((line, i) => (
+                <motion.div key={i} variants={animated ? lineAnim : undefined}>
+                  <div className="flex items-center gap-1.5 border-l-2 border-transparent px-2.5">
+                    {showGutter && (
+                      <span className="w-3 shrink-0 text-right text-[8px] font-medium text-muted-foreground/60 tabular-nums">
+                        {lineNumbers ? i + 1 : ""}
+                      </span>
+                    )}
+                    <span className="min-w-0 flex-1 overflow-hidden font-mono text-[9px]/3.5 text-ellipsis whitespace-pre text-foreground">
+                      {line || " "}
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+              {tokenLines.map((line, i) => (
                 <motion.div key={i} variants={animated ? lineAnim : undefined}>
                   <EditorCodeLine
                     line={line}
@@ -641,7 +694,7 @@ export function Editor({
                 <div className="flex items-center gap-1.5 border-l-2 border-transparent px-2.5">
                   {showGutter && (
                     <span className="w-3 shrink-0 text-right text-[8px] font-medium text-muted-foreground/60 tabular-nums">
-                      {lineNumbers ? activeLines.length + 1 : ""}
+                      {lineNumbers ? lineCount + 1 : ""}
                     </span>
                   )}
                   <motion.div
@@ -661,11 +714,13 @@ export function Editor({
           >
             <div className="flex items-center gap-2">
               <span className="tracking-wide uppercase">{language}</span>
-              <span className="text-muted-foreground/60">UTF-8</span>
+              <span className="text-muted-foreground/60">{text.encoding}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>Ln {activeLines.length + 1}, Col 1</span>
-              <span className="text-muted-foreground/60">Spaces: 2</span>
+              <span>
+                {interpolate(text.position, { line: String(lineCount + 1), column: "1" })}
+              </span>
+              <span className="text-muted-foreground/60">{text.indentation}</span>
             </div>
           </div>
         </div>
