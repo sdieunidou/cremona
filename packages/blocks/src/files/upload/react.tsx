@@ -189,7 +189,10 @@ export function Upload({
   useEffect(() => {
     if (!animated) return;
     if (!inView) {
+      // out of view: back to the initial frame
       animate(".file-card", { y: 60, opacity: 0 }, { duration: 0 });
+      animate(".file-content", { clipPath: "inset(0 0 100% 0)" }, { duration: 0 });
+      animate(".progress-fill", { width: "0%" }, { duration: 0 });
       return;
     }
     if (!active) {
