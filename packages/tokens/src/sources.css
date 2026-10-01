@@ -1,0 +1,4 @@
+/* What the stylesheets compile: every class the blocks render, in any state or variant. */
+@source "../../blocks/src/**/{react.tsx,block.json,preview-props.json}";
+@source "../../blocks/src/**/golden/*.html";
+@source "../../core/src/**/*.ts";
