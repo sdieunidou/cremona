@@ -12,7 +12,10 @@ locked by a golden reference: parity tests compare the SSR DOM structurally
 adapters:
 
 - **React** (`@cremona/blocks` + `@cremona/react`) — motion-based animations, the primary adapter.
-- **Stimulus** (`@cremona/stimulus`) — the same static markup + the `cremona-visual` controller, for Symfony/Hotwire apps.
+- **Stimulus** (`@cremona/stimulus`) — for Symfony/Hotwire apps: a static template of each
+  variant's final React render (readable without JavaScript), whose entrance the
+  `cremona-visual` controller plays with Web Animations. Loops and JavaScript-driven effects
+  stay React-only.
 
 ## What's inside: three scales
 
@@ -103,14 +106,23 @@ renders one button with one label.
    import { registerCremona } from "@cremona/stimulus";
    registerCremona(yourStimulusApp);
    ```
-2. Copy the variant markup you need from
-   `packages/stimulus/templates/<category>/<file>/<slug>.html`
-   (see `manifest.json` for labels). Markup is identical to the React render.
-3. The root carries `data-controller="cremona-visual"`; the controller plays the
-   entrance animation on scroll (values: `trigger`, `duration`, `stagger`, `delay`).
-4. Theme switching: `data-controller="cremona-theme"` on `<html>` (values
-   `appearance`, `theme`; the choice persists to localStorage when storage is
-   available; API: `toggle()`, `apply()`).
+2. Include the variant you need from
+   `packages/stimulus/templates/<category>/<file>/<slug>.html` (`manifest.json` lists
+   labels, slugs and sizes). The template is the block's final React render
+   (`animated={false}`): it reads correctly without JavaScript. Ids are prefixed per
+   template, and the controller makes them unique per copy on the page.
+3. Wrap it in a container with a height: the template fills its box. The variant's
+   `size` gives it: `xs` h-48, `sm` h-64, `md` (the default, `null` in `manifest.json`)
+   h-96, `lg` h-[28rem], `xl` h-[32rem].
+4. The root carries `data-controller="cremona-visual"`, which plays the entrance with Web
+   Animations from each element's `data-anim-from` start state (values: `trigger`,
+   `duration`, `stagger`, `delay`…). Blocks whose manifest entry says
+   `"effects": "entrance-only"` keep their loops and JavaScript effects in React only
+   (`reactOnly` lists them); the template shows their resting frame.
+5. Theme switching: `data-controller="cremona-theme"` on `<html>` (values `appearance`,
+   `theme`; the choice persists to localStorage when storage is available; actions
+   `toggle`, `setAppearance`, `setTheme`). The head partial in `docs/stimulus.md` applies
+   the theme before the first paint.
 
 ## Creating new visuals (categories, blocks, variants)
 

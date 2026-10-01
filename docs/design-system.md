@@ -91,7 +91,10 @@ the classes in sync afterwards, but connects too late to prevent the flash):
 Change the two defaults to force a mode or a theme. In a React app rendered on
 the server (Next.js `app/layout.tsx`), render the same script in `<head>` and
 put `suppressHydrationWarning` on `<html>`, since the script changes its
-classes before hydration.
+classes before hydration ([getting-started.md](getting-started.md#5-dark-mode-and-themes)).
+In a Stimulus app, use the [head partial](stimulus.md#before-the-first-paint)
+instead: the same logic, which also falls back to the values `cremona-theme`
+renders on `<html>` and keeps visuals hidden until `cremona-visual` connects.
 
 ## Contrast guarantees
 

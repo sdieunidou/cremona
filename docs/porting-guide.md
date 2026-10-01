@@ -108,8 +108,12 @@ needed.
 
 ## Stimulus templates
 
-Stimulus templates are **generated** from the golden files by
-`tools/generate-stimulus.mjs` — do not write them by hand.
+Stimulus templates are **generated**: `pnpm generate:stimulus`
+(`tools/generate-stimulus.mjs`) server-renders every block. A template is the
+block's final render (`animated={false}`); the start state of each animated
+element comes from the initial render, which must match the golden, or the run
+stops. Never write templates by hand
+([Regenerating](stimulus.md#regenerating)).
 
 ## Checklist before done
 

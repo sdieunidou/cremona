@@ -200,17 +200,20 @@ cremona_get_guide "react", and keep their class strings and motion variants.
 ```text
 I have a Symfony app with Stimulus. Use cremona_get_block for
 "metrics/stat-card" and "status/health-check" with include ["stimulus"] to
-get the static templates, and cremona_get_controller "visual" + "theme".
-Then produce: templates/visuals/stat_card.html.twig and
-templates/visuals/health_check.html.twig with the cremona-visual
-data-attributes, plus the Stimulus bootstrap snippet registering the
-controllers. Tokens CSS will be bundled separately.
+get the static templates, their sizes and effects. Then produce a Twig macro
+that includes a template with source() inside a container of the variant's
+height, the two includes, and the Stimulus bootstrap snippet registering
+cremona-visual and cremona-theme into my existing application
+(cremona_get_guide "stimulus"). Tell me which effects stay React-only.
+Tokens CSS will be bundled separately.
 ```
 
 ```text
-Using cremona_get_theme for "sakura", wire a cremona-theme controller
-default on <html> for my Symfony base template, with a toggle button that
-switches appearance and persists to localStorage. Show me the twig + js.
+Using cremona_get_guide "stimulus" and cremona_get_theme for "sakura", wire
+the cremona-theme controller on <html> in my Symfony base template with
+"sakura" as the default theme, a light/dark toggle (the toggle action) and a
+System button (setAppearance), plus the head partial that applies the theme
+before the first paint. Show me the Twig.
 ```
 
 ### Theming

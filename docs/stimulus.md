@@ -229,13 +229,30 @@ Every change dispatches `cremona-theme:changed` on `<html>`, with
 the server:
 `data-action="cremona-theme:changed@document->preferences#save"`.
 
+## TypeScript
+
+`@cremona/stimulus` ships type declarations: `registerCremona(application)`,
+both controller classes with their typed values (`triggerValue`,
+`appearanceValue: CremonaAppearance`…) and actions, and `CremonaThemeChange`,
+the detail of `cremona-theme:changed`:
+
+```ts
+import type { CremonaThemeChange } from "@cremona/stimulus";
+
+document.addEventListener("cremona-theme:changed", (event) => {
+  const { appearance, theme, dark } = (event as CustomEvent<CremonaThemeChange>).detail;
+});
+```
+
 ## Before the first paint
 
 The controllers run once the JavaScript has loaded, which comes after the first
 paint. To avoid a flash of the light theme, and of final states that then jump
 back to their initial state, put this partial first in `<head>`. It applies the
-same theme as `cremona-theme`. It also hides visuals until `cremona-visual`
-connects: at most 3 s, and never under reduced motion.
+same theme as `cremona-theme`: the design system's
+[anti-flash script](design-system.md#dark-mode), falling back to the values
+rendered on `<html>`. It also hides visuals until `cremona-visual` connects: at
+most 3 s, and never under reduced motion.
 
 ```twig
 {# templates/cremona/_head.html.twig #}

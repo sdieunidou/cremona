@@ -58,8 +58,11 @@ registerCremona(yourStimulusApp); // cremona-visual + cremona-theme
 ```
 
 Every variant ships as a static HTML template,
-`@cremona/stimulus/templates/<category>/<file>/<slug>.html`, generated from the
-same references as the React render: [docs/stimulus.md](docs/stimulus.md).
+`@cremona/stimulus/templates/<category>/<file>/<slug>.html`: the block's final
+React render, readable without JavaScript, whose entrance `cremona-visual`
+plays with Web Animations. A template fills a container you size; loops and
+JavaScript-driven effects stay React-only. Setup, Twig includes and the theme
+controller: [docs/stimulus.md](docs/stimulus.md).
 
 ## Quick start — AI sessions
 
@@ -82,8 +85,9 @@ location: [docs/mcp.md](docs/mcp.md).
 - **Locked server renders** — every variant's server render is compared with a
   committed golden reference (DOM structure, attributes, sorted classes, text;
   not pixels), so a change that alters a block's markup fails a test.
-- **Two adapters** — React (motion) and Stimulus (the same markup, CSS-driven
-  motion).
+- **Two adapters** — React (motion), and Stimulus: static templates of the
+  React final render, with the entrance played by Web Animations (loops and
+  JavaScript-driven effects are React-only).
 
 ## Working on the repo
 
