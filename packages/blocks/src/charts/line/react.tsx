@@ -4,7 +4,7 @@ import { useId, useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { cn, frameClasses, type VisualProps } from "@cremona/core";
+import { cn, frameClasses, toFractions, type VisualProps } from "@cremona/core";
 
 export const lineDefault = {
   title: "Active users",
@@ -19,31 +19,6 @@ const W = 240;
 const H = 90;
 const MAX_TICKS = 8;
 const TICK_CHARS = 40;
-
-/**
- * The series as heights between 0 (bottom) and 1 (top), `null` where a value is
- * missing. `points` already in 0..1 are used as they are; `values` — and
- * `points` outside 0..1 — are scaled to `min`..`max`, the series' own range by default.
- */
-function toFractions(
-  points: readonly number[],
-  values?: readonly number[],
-  min?: number,
-  max?: number,
-): (number | null)[] {
-  const raw = values ?? points;
-  const finite = raw.filter((v) => Number.isFinite(v));
-  const fixedMin = typeof min === "number" && Number.isFinite(min);
-  const fixedMax = typeof max === "number" && Number.isFinite(max);
-  if (!values && !fixedMin && !fixedMax && finite.every((v) => v >= 0 && v <= 1))
-    return raw.map((v) => (Number.isFinite(v) ? v : null));
-  const lo = fixedMin ? min! : Math.min(...finite);
-  const hi = fixedMax ? max! : Math.max(...finite);
-  const span = hi - lo;
-  return raw.map((v) =>
-    Number.isFinite(v) ? (span > 0 ? Math.min(1, Math.max(0, (v - lo) / span)) : 0.5) : null,
-  );
-}
 
 function toPoints(values: readonly (number | null)[]): [number, number][] {
   if (values.length === 1 && values[0] !== null) {
