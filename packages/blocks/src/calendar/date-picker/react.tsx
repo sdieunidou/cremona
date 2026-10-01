@@ -92,7 +92,8 @@ const pill = (daysInMonth: number): Variants => ({
 const pillText = (daysInMonth: number): Variants => ({
   hidden: { color: "var(--color-foreground)" },
   visible: {
-    color: "var(--color-primary-foreground)",
+    // the theme token itself, like text-primary-foreground (themed subtrees included)
+    color: "var(--primary-foreground)",
     transition: {
       duration: 0.15,
       delay: PILL_BASE + Math.max(daysInMonth - 1, 0) * PILL_STEP + PILL_OFFSET,

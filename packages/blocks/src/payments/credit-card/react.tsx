@@ -66,13 +66,19 @@ const chipAnim = {
   },
 } as const;
 
+// settle at the opacity-80 / opacity-90 of the wifi glyph and the brand
 const wifiAnim = {
   hidden: { scale: 0.5, opacity: 0 },
   visible: {
     scale: 1,
-    opacity: 1,
+    opacity: 0.8,
     transition: { type: "spring", stiffness: 380, damping: 16, delay: 0.18 },
   },
+} as const;
+
+const brandAnim = {
+  hidden: wifiAnim.hidden,
+  visible: { ...wifiAnim.visible, opacity: 0.9 },
 } as const;
 
 const numberRowAnim = {
@@ -103,6 +109,7 @@ const stripAnim = {
       delay: 0.12,
       ease: [0.65, 0, 0.35, 1] as [number, number, number, number],
     },
+    transitionEnd: { clipPath: "none" },
   },
 } as const;
 
@@ -272,7 +279,7 @@ export function CreditCard({
               </div>
               <motion.span
                 className="text-[10px] font-semibold tracking-[0.2em] opacity-90"
-                variants={animated ? wifiAnim : undefined}
+                variants={animated ? brandAnim : undefined}
               >
                 {brand}
               </motion.span>

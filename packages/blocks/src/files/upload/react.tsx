@@ -193,17 +193,23 @@ export function Upload({
       return;
     }
     if (!active) {
+      // at rest: the static render — no clip left over the page, the bg-primary theme token
+      let resting = true;
       animate(".file-card", { y: 0, opacity: 1 }, { duration: 0.3, ease: [0, 0, 0.2, 1] });
-      animate(".file-content", { clipPath: "inset(0 0 0% 0)" }, { duration: 0.3 });
+      animate(".file-content", { clipPath: "inset(0 0 0% 0)" }, { duration: 0.3 }).then(() => {
+        if (resting) animate(".file-content", { clipPath: "none" }, { duration: 0 });
+      });
       animate(
         ".progress-fill",
-        { width: "65%", backgroundColor: "var(--color-primary)" },
+        { width: "65%", backgroundColor: "var(--primary)" },
         { duration: 0.3 },
       );
       animate(".arrow-badge", { scale: 1, opacity: 1 }, { duration: 0.2 });
       animate(".spinner-badge", { scale: 0, opacity: 0 }, { duration: 0 });
       animate(".check-badge", { scale: 0, opacity: 0 }, { duration: 0 });
-      return;
+      return () => {
+        resting = false;
+      };
     }
     let cancelled = false;
     async function run() {
@@ -213,7 +219,7 @@ export function Upload({
           animate(".file-content", { clipPath: "inset(0 0 100% 0)" }, { duration: 0 });
           animate(
             ".progress-fill",
-            { width: "0%", backgroundColor: "var(--color-primary)" },
+            { width: "0%", backgroundColor: "var(--primary)" },
             { duration: 0 },
           );
           animate(".arrow-badge", { scale: 1, opacity: 1 }, { duration: 0 });
@@ -224,7 +230,7 @@ export function Upload({
           animate(".file-content", { clipPath: "inset(0 0 100% 0)" }, { duration: 0 });
           animate(
             ".progress-fill",
-            { width: "0%", backgroundColor: "var(--color-primary)" },
+            { width: "0%", backgroundColor: "var(--primary)" },
             { duration: 0 },
           );
           animate(".arrow-badge", { scale: 1, opacity: 1 }, { duration: 0 });

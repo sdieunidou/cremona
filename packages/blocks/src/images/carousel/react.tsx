@@ -226,6 +226,12 @@ const slideAnim = {
   },
 } as const;
 
+// side slides settle at their opacity-50
+const sideSlideAnim = {
+  hidden: slideAnim.hidden,
+  visible: { ...slideAnim.visible, opacity: 0.5 },
+} as const;
+
 const captionAnim = {
   hidden: { opacity: 0, y: 6 },
   visible: {
@@ -355,14 +361,14 @@ export function Carousel({
               <motion.div
                 aria-hidden="true"
                 className="absolute top-1/2 left-1 h-24 w-16 -translate-y-1/2 overflow-hidden rounded-lg border-2 border-card bg-background opacity-50"
-                variants={animated ? slideAnim : undefined}
+                variants={animated ? sideSlideAnim : undefined}
               >
                 <Slide slide={leftSlide} />
               </motion.div>
               <motion.div
                 aria-hidden="true"
                 className="absolute top-1/2 right-1 h-24 w-16 -translate-y-1/2 overflow-hidden rounded-lg border-2 border-card bg-background opacity-50"
-                variants={animated ? slideAnim : undefined}
+                variants={animated ? sideSlideAnim : undefined}
               >
                 <Slide slide={rightSlide} />
               </motion.div>

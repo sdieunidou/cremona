@@ -31,6 +31,7 @@ const screenContent = {
   visible: {
     clipPath: "circle(150% at 50% 100%)",
     transition: { duration: 1, delay: 0.4, ease: "easeOut" },
+    transitionEnd: { clipPath: "none" },
   },
 } as const;
 

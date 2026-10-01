@@ -349,6 +349,11 @@ export function WorldMap({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const loop = useLoopActive(ref, animated);
   const pinging = (hover ? hovering : triggered) && loop;
+  // the reveal mask goes once the map is revealed (as in the static render), back when hidden
+  const [revealed, setRevealed] = useState(false);
+  if (revealed && !triggered) setRevealed(false);
+  const masked = animated && !revealed;
+  const onRevealed = (definition: unknown) => definition === "visible" && setRevealed(true);
   const arcsRef = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const svg = arcsRef.current;
@@ -435,7 +440,7 @@ export function WorldMap({
           {...state}
         >
           <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} className="absolute inset-0 size-full">
-            {animated && (
+            {masked && (
               <defs>
                 {reveal === "bloom" && (
                   <radialGradient id={fadeId}>
@@ -466,10 +471,11 @@ export function WorldMap({
                       fill={`url(#${fadeId})`}
                       variants={bloomMaskAnim}
                       {...state}
+                      onAnimationComplete={onRevealed}
                     />
                   )}
                   {reveal === "split" && (
-                    <motion.g variants={splitMaskAnim} {...state}>
+                    <motion.g variants={splitMaskAnim} {...state} onAnimationComplete={onRevealed}>
                       <rect
                         x={-25 / 2}
                         width={sweepWidth}
@@ -486,12 +492,13 @@ export function WorldMap({
                       custom={sweepWidth}
                       variants={sweepMaskAnim}
                       {...state}
+                      onAnimationComplete={onRevealed}
                     />
                   )}
                 </mask>
               </defs>
             )}
-            <g mask={animated ? `url(#${maskId})` : undefined}>
+            <g mask={masked ? `url(#${maskId})` : undefined}>
               <path d={landPath} className="fill-muted-foreground/30" />
               {regionPaths.map((path, i) => (
                 <path
@@ -576,7 +583,7 @@ export function WorldMap({
                   {...state}
                 />
               </div>
-              {animated && (
+              {animated && loop && (
                 <div
                   className={cn(
                     "absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2",

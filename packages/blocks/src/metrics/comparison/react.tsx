@@ -34,6 +34,7 @@ const gridAnim = {
   visible: {
     clipPath: "inset(0 0 0% 0)",
     transition: { duration: 0.4, delay: 0.2, ease: "easeOut" },
+    transitionEnd: { clipPath: "none" },
   },
 } as const;
 
