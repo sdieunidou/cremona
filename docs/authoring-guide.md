@@ -11,7 +11,7 @@ motion language, same tokens, same test machinery.
 | File | Rule |
 |---|---|
 | `block.json` | metadata + variants (scaffolded by MCP `add_block` or manually) |
-| `react.tsx` | the implementation (self-contained, complete defaults) |
+| `react.tsx` | the implementation (self-contained, complete defaults); its first line is `"use client";` |
 | `preview-props.json` | **generated** by the parity test run — never hand-write |
 | `golden/*.html` | **generated** by `test/generate-goldens.test.tsx` — never hand-write |
 
@@ -52,10 +52,16 @@ pnpm vitest run test/generate-goldens.test.tsx        # 1. write the golden
 pnpm vitest run test/<category>-<file>.parity.test.tsx # 2. parity vs golden (+ writes preview-props.json)
 pnpm vitest run                                        # 3. whole suite stays green
 cd ../..
-pnpm build:css                                         # 4. compile the new classes into cremona.css
-pnpm generate:stimulus                                 # 5. stimulus templates
-pnpm validate                                          # 6. coherence
+node tools/use-client.mjs                              # 4. "use client" first (add_block's skeleton has it)
+pnpm build:css                                         # 5. compile the new classes into cremona.css
+pnpm generate:stimulus                                 # 6. stimulus templates
+pnpm check                                             # 7. lint, format, types, tests, validate
 ```
+
+`pnpm check` runs `pnpm check:use-client` (`node tools/use-client.mjs --check`),
+which fails on a block whose `react.tsx` does not start with `"use client";`.
+Commit everything the steps wrote — goldens, `preview-props.json`, templates and
+`cremona.css`: CI regenerates them and fails on a changed or untracked file.
 
 `cremona.css` only contains the classes it was compiled from: until
 `pnpm build:css` runs, a class the block introduces renders unstyled (the tokens
