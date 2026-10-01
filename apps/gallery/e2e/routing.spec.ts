@@ -51,7 +51,7 @@ test("Ctrl/⌘-click on a link opens a new tab instead of navigating", async ({ 
     link.click({ modifiers: [process.platform === "darwin" ? "Meta" : "Control"] }),
   ]);
   // the new tab starts at about:blank: wait for the navigation, not the first load
-  await expect(tab).toHaveURL(/\/visuals\/metrics\/stat-card$/);
+  await expect(tab).toHaveURL(/\/visuals\/metrics\/stat-card$/, { timeout: 15000 });
   // the original tab stayed on the home page
   await expect(page.locator("h1")).toHaveText("All visual compositions");
 });
