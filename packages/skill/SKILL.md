@@ -46,7 +46,7 @@ Every block has a `scale` (MCP `list_blocks`, `search_blocks`, `get_block`):
    → use the tools. `get_block` returns the install line, the import, the props
    reference (`api`: type, default and description of every prop), exact variant
    props and the React source (add `include: ["stimulus"]` for the Stimulus
-   templates); `get_css` returns the stylesheet's path and import line.
+   templates); `get_css` says which stylesheet a host takes (plain, Tailwind v4, scoped) and its import line.
 2. **No MCP, repo available?** Read the same data from the filesystem:
    - Catalog: `packages/blocks/catalog.json` (37 categories, names, descriptions)
    - Per block: `packages/blocks/src/<category>/<file>/`
