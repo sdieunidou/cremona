@@ -1,6 +1,25 @@
 {
   "component": "MiniPanel",
   "props": [
+    {
+      "name": "stats",
+      "type": "readonly MiniPanelStat[]",
+      "optional": true,
+      "description": "Stat tiles, side by side (three in the demo).",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "values",
+      "type": "readonly number[]",
+      "optional": true,
+      "description": "Chart bars in their own unit, scaled to the largest; zero, negative and non-finite values draw no bar."
+    },
+    {
+      "name": "labels",
+      "type": "Partial<MiniPanelLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -30,5 +49,45 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "MiniPanelLabels",
+      "props": [
+        { "name": "title", "type": "string", "optional": false, "description": "Panel title." },
+        {
+          "name": "otherPeriod",
+          "type": "string",
+          "optional": false,
+          "description": "Period pills: the plain one, then the highlighted one."
+        },
+        { "name": "period", "type": "string", "optional": false },
+        {
+          "name": "empty",
+          "type": "string",
+          "optional": false,
+          "description": "Shown in the chart when `values` is empty."
+        }
+      ]
+    },
+    {
+      "name": "MiniPanelStat",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "value", "type": "string", "optional": false },
+        { "name": "change", "type": "string", "optional": false },
+        {
+          "name": "trend",
+          "type": "\"up\" | \"down\"",
+          "optional": true,
+          "description": "Direction of `change` (default: \"down\" when `change` starts with a minus sign)."
+        },
+        {
+          "name": "positive",
+          "type": "\"up\" | \"down\"",
+          "optional": true,
+          "description": "Which way of `change` is good news, coloured green (default \"up\"; \"down\" for churn, latency…)."
+        }
+      ]
+    }
+  ]
 }

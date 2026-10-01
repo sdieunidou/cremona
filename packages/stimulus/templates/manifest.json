@@ -3092,6 +3092,11 @@
         "label": "isometric · no gradient",
         "slug": "005-isometric-no-gradient",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "006-french",
+        "size": null
       }
     ]
   },
@@ -3131,6 +3136,11 @@
       {
         "label": "isometric · no gradient",
         "slug": "005-isometric-no-gradient",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "006-french",
         "size": null
       }
     ]

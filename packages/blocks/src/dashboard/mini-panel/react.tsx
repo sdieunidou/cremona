@@ -6,19 +6,59 @@ import { useInView } from "@cremona/react";
 import { Activity, TrendingDown, TrendingUp } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface MiniPanelStat {
+  label: string;
+  value: string;
+  change: string;
+  /** Direction of `change` (default: "down" when `change` starts with a minus sign). */
+  trend?: "up" | "down";
+  /** Which way of `change` is good news, coloured green (default "up"; "down" for churn, latency…). */
+  positive?: "up" | "down";
+}
+
+export interface MiniPanelLabels {
+  /** Panel title. */
+  title: string;
+  /** Period pills: the plain one, then the highlighted one. */
+  otherPeriod: string;
+  period: string;
+  /** Shown in the chart when `values` is empty. */
+  empty: string;
+}
+
+export const miniPanelDefaultLabels: MiniPanelLabels = {
+  title: "Overview",
+  otherPeriod: "7d",
+  period: "30d",
+  empty: "No data",
+};
+
+export const miniPanelDefaultStats: MiniPanelStat[] = [
+  { label: "Revenue", value: "$48.2k", trend: "up", change: "+12.4%" },
+  { label: "Users", value: "2,418", trend: "up", change: "+8.1%" },
+  { label: "Churn", value: "1.2%", trend: "down", change: "-0.4%" },
+];
+
 export interface MiniPanelProps extends VisualProps {
+  /** Stat tiles, side by side (three in the demo). */
+  stats?: readonly MiniPanelStat[];
+  /** Chart bars in their own unit, scaled to the largest; zero, negative and non-finite values draw no bar. */
+  values?: readonly number[];
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<MiniPanelLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
 }
 
-const stats = [
-  { label: "Revenue", value: "$48.2k", trend: "up", change: "+12.4%" },
-  { label: "Users", value: "2,418", trend: "up", change: "+8.1%" },
-  { label: "Churn", value: "1.2%", trend: "down", change: "-0.4%" },
-] as const;
-
+/** Demo bar heights, in % of the chart. */
 const bars = [55, 40, 75, 50, 70, 35, 45, 48, 85, 60, 90, 45, 78, 95, 65];
+
+function barHeights(values: readonly number[]): number[] {
+  const clean = values.map((v) => (Number.isFinite(v) && v > 0 ? v : 0));
+  const max = Math.max(0, ...clean);
+  return clean.map((v) => (max > 0 && v > 0 ? Math.max(4, (v / max) * 100) : 0));
+}
 
 const card = {
   hidden: { opacity: 0 },
@@ -87,6 +127,9 @@ const skeletonRows = [
 ] as const;
 
 export function MiniPanel({
+  stats = miniPanelDefaultStats,
+  values,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -107,6 +150,8 @@ export function MiniPanel({
             : "hidden",
       }
     : {};
+  const text = { ...miniPanelDefaultLabels, ...labels };
+  const heights = values === undefined ? bars : barHeights(values);
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -139,26 +184,37 @@ export function MiniPanel({
             <div className="flex items-center justify-between border-b border-border/50 px-3 py-2">
               <div className="flex items-center gap-1.5">
                 <Activity className="size-3 text-primary" strokeWidth={2.5} />
-                <span className="text-[10px] font-semibold text-foreground">Overview</span>
+                <span className="text-[10px] font-semibold text-foreground">{text.title}</span>
               </div>
               <div className="flex gap-1">
                 <span className="rounded-full px-1.5 py-px text-[9px] font-medium text-muted-foreground">
-                  7d
+                  {text.otherPeriod}
                 </span>
                 <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/10 px-1.25 text-[9px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">
-                  30d
+                  {text.period}
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-2 border-b border-border/50 px-3 py-2.5">
-              {stats.map((stat) => {
-                const TrendIcon = stat.trend === "up" ? TrendingUp : TrendingDown;
-                const trendColor =
-                  stat.trend === "up"
-                    ? "text-emerald-600 dark:text-emerald-400"
-                    : "text-rose-600 dark:text-rose-400";
+            <div
+              className="grid grid-cols-3 gap-2 border-b border-border/50 px-3 py-2.5"
+              style={
+                stats.length === 3
+                  ? undefined
+                  : { gridTemplateColumns: `repeat(${Math.max(1, stats.length)}, minmax(0, 1fr))` }
+              }
+            >
+              {stats.map((stat, i) => {
+                const down =
+                  stat.trend === "up" || stat.trend === "down"
+                    ? stat.trend === "down"
+                    : /^\s*[-−]/.test(stat.change);
+                const good = stat.positive === "down" ? down : !down;
+                const TrendIcon = down ? TrendingDown : TrendingUp;
+                const trendColor = good
+                  ? "text-emerald-600 dark:text-emerald-400"
+                  : "text-rose-600 dark:text-rose-400";
                 return (
-                  <div key={stat.label} className="flex flex-col gap-0.5">
+                  <div key={i} className="flex flex-col gap-0.5">
                     <span className="text-[8px] font-medium tracking-wider text-muted-foreground uppercase">
                       {stat.label}
                     </span>
@@ -175,7 +231,12 @@ export function MiniPanel({
             </div>
             <div className="flex flex-1 border-b border-border/50 px-3 py-2">
               <div className="flex flex-1 items-end justify-between gap-0.5 rounded-md bg-muted/60 p-3">
-                {bars.map((height, i) => (
+                {heights.length === 0 && (
+                  <span className="m-auto text-[9px] font-medium text-muted-foreground">
+                    {text.empty}
+                  </span>
+                )}
+                {heights.map((height, i) => (
                   <motion.div
                     key={i}
                     custom={i}

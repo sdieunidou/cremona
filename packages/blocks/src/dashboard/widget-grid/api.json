@@ -1,6 +1,39 @@
 {
   "component": "WidgetGrid",
   "props": [
+    {
+      "name": "stats",
+      "type": "readonly WidgetGridStat[]",
+      "optional": true,
+      "description": "Stat tiles (four in the demo, which share the first row).",
+      "default": "[…] (4 items)"
+    },
+    {
+      "name": "values",
+      "type": "readonly number[]",
+      "optional": true,
+      "description": "Chart bars in their own unit, scaled to the largest; zero, negative and non-finite values draw no bar."
+    },
+    {
+      "name": "percent",
+      "type": "number",
+      "optional": true,
+      "description": "Ring fill, 0–100 (default 61); a non-finite value draws no arc and reads \"—\".",
+      "default": "61"
+    },
+    {
+      "name": "labels",
+      "type": "Partial<WidgetGridLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the ring percentage (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -30,5 +63,43 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "WidgetGridLabels",
+      "props": [
+        {
+          "name": "chartTitle",
+          "type": "string",
+          "optional": false,
+          "description": "Title and period of the bar chart."
+        },
+        { "name": "chartPeriod", "type": "string", "optional": false },
+        {
+          "name": "percentLabel",
+          "type": "string",
+          "optional": false,
+          "description": "Under the ring."
+        },
+        {
+          "name": "empty",
+          "type": "string",
+          "optional": false,
+          "description": "Shown in the chart when `values` is empty."
+        }
+      ]
+    },
+    {
+      "name": "WidgetGridStat",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "value", "type": "string", "optional": false },
+        {
+          "name": "icon",
+          "type": "LucideIcon",
+          "optional": true,
+          "description": "A lucide icon component (default: the demo icon of that position)."
+        }
+      ]
+    }
+  ]
 }

@@ -4,22 +4,66 @@ import { useRef } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { ShoppingCart, TrendingUp, Users, Zap } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface WidgetGridStat {
+  label: string;
+  value: string;
+  /** A lucide icon component (default: the demo icon of that position). */
+  icon?: LucideIcon;
+}
+
+export interface WidgetGridLabels {
+  /** Title and period of the bar chart. */
+  chartTitle: string;
+  chartPeriod: string;
+  /** Under the ring. */
+  percentLabel: string;
+  /** Shown in the chart when `values` is empty. */
+  empty: string;
+}
+
+export const widgetGridDefaultLabels: WidgetGridLabels = {
+  chartTitle: "Traffic",
+  chartPeriod: "Last 9d",
+  percentLabel: "Capacity",
+  empty: "No data",
+};
+
+export const widgetGridDefaultStats: WidgetGridStat[] = [
+  { icon: Users, label: "Users", value: "2.4k" },
+  { icon: TrendingUp, label: "Growth", value: "+12%" },
+  { icon: ShoppingCart, label: "Orders", value: "184" },
+  { icon: Zap, label: "Active", value: "64" },
+];
+
 export interface WidgetGridProps extends VisualProps {
+  /** Stat tiles (four in the demo, which share the first row). */
+  stats?: readonly WidgetGridStat[];
+  /** Chart bars in their own unit, scaled to the largest; zero, negative and non-finite values draw no bar. */
+  values?: readonly number[];
+  /** Ring fill, 0–100 (default 61); a non-finite value draws no arc and reads "—". */
+  percent?: number;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<WidgetGridLabels>;
+  /** BCP 47 locale of the ring percentage (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
 }
 
-const stats = [
-  { icon: Users, label: "Users", value: "2.4k" },
-  { icon: TrendingUp, label: "Growth", value: "+12%" },
-  { icon: ShoppingCart, label: "Orders", value: "184" },
-  { icon: Zap, label: "Active", value: "64" },
-] as const;
+const demoIcons: LucideIcon[] = [Users, TrendingUp, ShoppingCart, Zap];
 
+/** Demo bar heights, in % of the chart. */
 const bars = [50, 65, 40, 80, 55, 50, 35, 46, 75, 60, 90, 70];
+
+function barHeights(values: readonly number[]): number[] {
+  const clean = values.map((v) => (Number.isFinite(v) && v > 0 ? v : 0));
+  const max = Math.max(0, ...clean);
+  return clean.map((v) => (max > 0 && v > 0 ? Math.max(4, (v / max) * 100) : 0));
+}
 
 const skeletonRows = [
   { tail: "h-1 w-10 rounded-full bg-muted-foreground/25", width: "80%" },
@@ -57,13 +101,14 @@ const cellAnim = {
   },
 } as const;
 
-const donutArcAnim = {
-  hidden: { strokeDasharray: "0 100" },
-  visible: {
-    strokeDasharray: "61 100",
-    transition: { duration: 0.8, delay: 0.7, ease: "easeOut" },
-  },
-} as const;
+const donutArcAnim = (arc: number) =>
+  ({
+    hidden: { strokeDasharray: "0 100" },
+    visible: {
+      strokeDasharray: `${arc} 100`,
+      transition: { duration: 0.8, delay: 0.7, ease: "easeOut" },
+    },
+  }) as const;
 
 const glowAnim = {
   hidden: { opacity: 0, scaleX: 0.6 },
@@ -83,6 +128,11 @@ const veilAnim = {
 } as const;
 
 export function WidgetGrid({
+  stats = widgetGridDefaultStats,
+  values,
+  percent = 61,
+  labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -103,6 +153,31 @@ export function WidgetGrid({
             : "hidden",
       }
     : {};
+  const text = { ...widgetGridDefaultLabels, ...labels };
+  const heights = values === undefined ? bars : barHeights(values);
+  const known = Number.isFinite(percent);
+  const arc = known ? Math.max(0, Math.min(100, percent)) : 0;
+  const percentText = known
+    ? new Intl.NumberFormat(locale, { style: "unit", unit: "percent", useGrouping: false }).format(
+        Math.round(percent) || 0,
+      )
+    : "—";
+  const tiles = stats.map((stat, i) => {
+    const Icon = stat.icon ?? demoIcons[i % demoIcons.length]!;
+    return (
+      <motion.div
+        key={i}
+        variants={animated ? cellAnim : undefined}
+        className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-background px-3 py-2"
+      >
+        <Icon className="size-3 text-primary" strokeWidth={2.5} />
+        <span className="text-xs font-semibold text-foreground">{stat.value}</span>
+        <span className="text-[8px] font-medium tracking-wider text-muted-foreground uppercase">
+          {stat.label}
+        </span>
+      </motion.div>
+    );
+  });
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -134,32 +209,32 @@ export function WidgetGrid({
           variants={animated ? gridAnim : undefined}
           {...state}
         >
-          {stats.map((stat) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={stat.label}
-                variants={animated ? cellAnim : undefined}
-                className="flex flex-col gap-0.5 rounded-xl border border-border/50 bg-background px-3 py-2"
-              >
-                <Icon className="size-3 text-primary" strokeWidth={2.5} />
-                <span className="text-xs font-semibold text-foreground">{stat.value}</span>
-                <span className="text-[8px] font-medium tracking-wider text-muted-foreground uppercase">
-                  {stat.label}
-                </span>
-              </motion.div>
-            );
-          })}
+          {stats.length === 4 ? (
+            tiles
+          ) : (
+            // other counts share the first row in a grid of their own
+            <div
+              className="col-span-4 grid gap-1.5"
+              style={{
+                gridTemplateColumns: `repeat(${Math.max(1, stats.length)}, minmax(0, 1fr))`,
+              }}
+            >
+              {tiles}
+            </div>
+          )}
           <motion.div
             variants={animated ? cellAnim : undefined}
             className="col-span-3 flex flex-col gap-1.5 rounded-xl border border-border/50 bg-background p-2"
           >
             <div className="flex items-center justify-between">
-              <span className="text-[9px] font-semibold text-foreground">Traffic</span>
-              <span className="text-[8px] text-muted-foreground">Last 9d</span>
+              <span className="text-[9px] font-semibold text-foreground">{text.chartTitle}</span>
+              <span className="text-[8px] text-muted-foreground">{text.chartPeriod}</span>
             </div>
             <div className="flex flex-1 items-end justify-between gap-0.5 rounded-md bg-muted/60 p-3">
-              {bars.map((height, i) => (
+              {heights.length === 0 && (
+                <span className="m-auto text-[8px] text-muted-foreground">{text.empty}</span>
+              )}
+              {heights.map((height, i) => (
                 <div
                   key={i}
                   className="w-1 rounded-sm bg-chart-3"
@@ -190,17 +265,19 @@ export function WidgetGrid({
                   fill="none"
                   strokeWidth="5"
                   pathLength="100"
-                  strokeLinecap="round"
+                  strokeLinecap={arc > 0 ? "round" : "butt"}
                   className="stroke-primary"
-                  strokeDasharray={animated ? undefined : "61 100"}
-                  variants={animated ? donutArcAnim : undefined}
+                  strokeDasharray={animated ? undefined : `${arc} 100`}
+                  variants={animated ? donutArcAnim(arc) : undefined}
                 />
               </svg>
               <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-[9px] font-semibold text-foreground">61%</span>
+                <span className="text-[9px] font-semibold text-foreground">{percentText}</span>
               </div>
             </div>
-            <span className="text-[8px] font-medium text-muted-foreground">Capacity</span>
+            <span className="text-[8px] font-medium text-muted-foreground">
+              {text.percentLabel}
+            </span>
           </motion.div>
           <motion.div
             variants={animated ? cellAnim : undefined}

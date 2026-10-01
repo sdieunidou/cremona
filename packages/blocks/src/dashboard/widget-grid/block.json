@@ -53,6 +53,12 @@
       "slug": "005-isometric-no-gradient",
       "size": null,
       "propsRaw": "{isometric:!0,gradient:!1}"
+    },
+    {
+      "label": "french",
+      "slug": "006-french",
+      "size": null,
+      "propsRaw": "{stats:[{label:`Membres`,value:`2,4 k`},{label:`Évolution`,value:`+12 %`},{label:`Commandes`,value:`184`},{label:`Actifs`,value:`64`}],values:[1240,1610,980,1980,1370,1250,870,1150,1860,1490,2230,1740],percent:73,labels:{chartTitle:`Trafic`,chartPeriod:`12 derniers jours`,percentLabel:`Capacité`,empty:`Aucune donnée`},locale:`fr-FR`}"
     }
   ]
 }

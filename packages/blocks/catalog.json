@@ -1004,7 +1004,8 @@
           "isometric",
           "isometric · fadeOut",
           "default · no gradient",
-          "isometric · no gradient"
+          "isometric · no gradient",
+          "french"
         ],
         "cols": 2
       },
@@ -1021,7 +1022,8 @@
           "isometric",
           "isometric · fadeOut",
           "default · no gradient",
-          "isometric · no gradient"
+          "isometric · no gradient",
+          "french"
         ],
         "cols": 2
       }
