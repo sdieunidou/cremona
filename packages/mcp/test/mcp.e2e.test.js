@@ -132,7 +132,22 @@ describe("cremona MCP server", () => {
     expect(block.reactSource).toBeUndefined();
     expect(block.stimulus.templates.length).toBeGreaterThan(0);
     expect(block.stimulus.sample).toContain('data-controller="cremona-visual"');
+    expect(block.stimulus.effects).toBe("full");
+    expect(block.stimulus.reactOnly).toEqual([]);
+    expect(block.stimulus.templates[0].size).toBeTruthy();
+    expect(block.stimulus.container).toContain("h-96");
     expect(block.goldenSlugs).toContain("000-default.html");
+  });
+
+  it("says which Stimulus templates are entrance-only", async () => {
+    const block = textOf(
+      await client.callTool({
+        name: "get_block",
+        arguments: { key: "geo/globe", include: ["stimulus"] },
+      }),
+    );
+    expect(block.stimulus.effects).toBe("entrance-only");
+    expect(block.stimulus.reactOnly).toContain("canvas");
   });
 
   it("tells how to install and import a block from its public path", async () => {
@@ -234,8 +249,9 @@ describe("cremona MCP server", () => {
     expect(block.reactSource).toContain("export function Button");
     expect(block.reactSourceNote.kind).toBe("preview composition");
     expect(block.reactSourceNote.derive).toContain(
-      "keep the class strings and the motion variants untouched",
+      'keep the "use client" directive, the class strings and the motion variants untouched',
     );
+    expect(block.reactSource.startsWith('"use client";')).toBe(true);
   });
 
   it("gives every block a scale", async () => {
