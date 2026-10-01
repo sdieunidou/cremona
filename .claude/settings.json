@@ -10,8 +10,11 @@
       "Bash(pnpm format:check)",
       "Bash(pnpm validate)",
       "Bash(pnpm check)",
+      "Bash(pnpm check:use-client)",
+      "Bash(pnpm check:api)",
       "Bash(pnpm generate:stimulus)",
       "Bash(pnpm build:css)",
+      "Bash(pnpm generate:api)",
       "Bash(pnpm gallery:build)",
       "Bash(pnpm e2e)",
       "Bash(pnpm vitest run *)",
@@ -40,7 +43,9 @@
       "Edit(**/stimulus/templates/**)",
       "Write(**/stimulus/templates/**)",
       "Edit(**/tokens/css/cremona.css)",
-      "Write(**/tokens/css/cremona.css)"
+      "Write(**/tokens/css/cremona.css)",
+      "Edit(**/blocks/src/*/*/api.json)",
+      "Write(**/blocks/src/*/*/api.json)"
     ]
   },
   "hooks": {
