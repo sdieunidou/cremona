@@ -19,8 +19,10 @@ motion language, same tokens, same test machinery.
 ## Rules (non-negotiable)
 
 1. **Tokens only** — semantic colors (`bg-card`, `text-muted-foreground`,
-   `bg-primary/10`…), never raw palette colors for UI surfaces. Palette colors
-   are allowed only for the rainbow glow / status semantics the POC already uses.
+   `bg-primary/10`…), status included (`text-success`, `bg-warning/10`,
+   `bg-info text-info-foreground`, `text-destructive-foreground` on a solid
+   destructive surface), never raw palette colors. The rainbow glow is the one
+   palette gradient.
 2. **Complete defaults, documented props** — the component must render fully
    with zero props (that's what the generated golden captures). Export its
    props interface (`<Name>Props extends VisualProps`), give every prop a JSDoc
@@ -28,10 +30,12 @@ motion language, same tokens, same test machinery.
    turns them into `api.json` — type, default and description of each prop —
    which the gallery shows as the block's props table and `get_block` returns
    as `api`.
-3. **Variant props must be JSON-parseable** (strings, numbers, booleans,
-   arrays, plain objects). **Never pass components/icons as props** — if a
-   variant needs a different icon, make it a component-internal concern
-   (e.g. an `iconSet?: "commerce" | "dev"` prop or data-driven).
+3. **Variant props survive JSON** — strings, numbers, booleans, arrays, plain
+   objects, and lucide icons: `preview-props.json` stores a component as
+   `"lucide:Name"` and an element as `{ "$element": "lucide:Name", "props": … }`.
+   Any other component or function fails the parity test. Prefer icon keys
+   mapped inside the block (`icon: "share"`), as the kits do: such a prop also
+   crosses the Server Component boundary.
 4. **Motion language** — entrance: `opacity 0→1, y 8→0, .35s easeOut`
    (or springs `stiffness 300–420, damping 14–18`); stagger `.07–.15`;
    hover/focus feedback `transition-all duration-200`; respect the shared
@@ -40,8 +44,14 @@ motion language, same tokens, same test machinery.
    timers, rAF, SMIL, CSS `animate-*`) run only while
    `useLoopActive(ref, animated)` is true; otherwise render their resting frame.
 5. **Accessibility mirror** — real text (not lorem), semantic elements
-   (`button`, `input`, `table`…), `aria-*` on interactive parts. Blocks stay
-   `aria-hidden="true"` at the scene root like the POC.
+   (`button`, `input`, `table`…), labels and `aria-*` wired with `useId`, and
+   the focus recipe in the class strings
+   (`focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring`,
+   without `outline-none` on the same element). Blocks stay
+   `aria-hidden="true"` at the scene root; outside `components/*`, a control
+   spreads `noFocus` (`tabIndex: -1`, `mousedown` `preventDefault`) to stay out
+   of the tab order. A derived component removes both
+   ([accessibility.md](accessibility.md)).
 6. **Scale** — the category decides it (`blockScale()` in
    `packages/mcp/src/store.js`, reported as the MCP `scale`): **real-size**
    for `components/*`, `forms/*`, `mobile/*`, `notices/*` and
@@ -51,8 +61,13 @@ motion language, same tokens, same test machinery.
    `cart-drawer` — thumbnail wireframes (7–10 px text) in a `max-w-*` wrapper;
    **illustration** for every other category. A block in a new category is an
    illustration until `store.js` lists the category.
-7. **Variants** — the 6 core ones + 2–6 custom ones per visual. Labels follow
-   `aspect · aspect` ordering (`isometric · custom copy`).
+7. **Variants** — `default` first; then the style variants the block takes
+   (`add_block` scaffolds five for a card block: `fadeOut`, `isometric`,
+   `isometric · fadeOut`, `default · no gradient`, `isometric · no gradient`;
+   drop those whose props the block lacks); then states and content (`error`,
+   `loading`, `empty`, `custom copy`). Labels join aspects with ` · `
+   (`isometric · custom copy`). Each new variant gets its golden from the
+   generator and its Stimulus template from `pnpm generate:stimulus`.
 8. **Dark mode** — every visual must read correctly in all 9 themes ×
    light/dark (check in the gallery with the theme picker).
 
