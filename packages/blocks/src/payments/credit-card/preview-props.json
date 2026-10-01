@@ -37,5 +37,13 @@
     "isometric": true,
     "stacked": true,
     "flipped": true
+  },
+  "french": {
+    "name": "CAMILLE MARTIN",
+    "labels": {
+      "cardHolder": "TITULAIRE",
+      "cardExpires": "EXPIRE FIN",
+      "signature": "SIGNATURE AUTORISÉE · NON VALABLE SANS SIGNATURE"
+    }
   }
 }

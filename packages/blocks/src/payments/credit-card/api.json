@@ -8,6 +8,12 @@
     { "name": "brand", "type": "string", "optional": true, "default": "\"PLATINUM\"" },
     { "name": "stacked", "type": "boolean", "optional": true, "default": "false" },
     { "name": "flipped", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "labels",
+      "type": "Partial<CreditCardLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     {
       "name": "animated",
@@ -35,5 +41,24 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "CreditCardLabels",
+      "props": [
+        {
+          "name": "cardHolder",
+          "type": "string",
+          "optional": false,
+          "description": "Captions on the front face."
+        },
+        { "name": "cardExpires", "type": "string", "optional": false },
+        {
+          "name": "signature",
+          "type": "string",
+          "optional": false,
+          "description": "Strip under the signature panel on the back (`flipped`)."
+        }
+      ]
+    }
+  ]
 }

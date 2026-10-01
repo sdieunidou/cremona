@@ -77,6 +77,12 @@
       "slug": "009-isometric-stacked-flipped",
       "size": null,
       "propsRaw": "{isometric:!0,stacked:!0,flipped:!0}"
+    },
+    {
+      "label": "french",
+      "slug": "010-french",
+      "size": null,
+      "propsRaw": "{name:`CAMILLE MARTIN`,labels:{cardHolder:`TITULAIRE`,cardExpires:`EXPIRE FIN`,signature:`SIGNATURE AUTORISÉE · NON VALABLE SANS SIGNATURE`}}"
     }
   ]
 }

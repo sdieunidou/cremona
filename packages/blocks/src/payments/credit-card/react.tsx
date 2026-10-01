@@ -120,6 +120,20 @@ const cvcAnim = {
   },
 } as const;
 
+export interface CreditCardLabels {
+  /** Captions on the front face. */
+  cardHolder: string;
+  cardExpires: string;
+  /** Strip under the signature panel on the back (`flipped`). */
+  signature: string;
+}
+
+export const creditCardDefaultLabels: CreditCardLabels = {
+  cardHolder: "CARD HOLDER",
+  cardExpires: "EXPIRES",
+  signature: "AUTHORIZED SIGNATURE · NOT VALID UNLESS SIGNED",
+};
+
 export interface CreditCardProps extends VisualProps {
   name?: string;
   number?: string;
@@ -128,6 +142,8 @@ export interface CreditCardProps extends VisualProps {
   brand?: string;
   stacked?: boolean;
   flipped?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<CreditCardLabels>;
   isometric?: boolean;
 }
 
@@ -139,6 +155,7 @@ export function CreditCard({
   brand = "PLATINUM",
   stacked = false,
   flipped = false,
+  labels,
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -158,6 +175,7 @@ export function CreditCard({
       }
     : {};
   const groups = number.split(" ");
+  const text = { ...creditCardDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -218,9 +236,7 @@ export function CreditCard({
               className="relative mt-auto flex items-end justify-between px-5 pb-5"
               variants={animated ? bottomAnim : undefined}
             >
-              <span className="text-[7px] tracking-[0.15em] opacity-50">
-                AUTHORIZED SIGNATURE · NOT VALID UNLESS SIGNED
-              </span>
+              <span className="text-[7px] tracking-[0.15em] opacity-50">{text.signature}</span>
               <span className="text-[10px] font-semibold tracking-[0.2em] opacity-90">{brand}</span>
             </motion.div>
           </motion.div>
@@ -277,11 +293,11 @@ export function CreditCard({
               variants={animated ? bottomAnim : undefined}
             >
               <div className="flex flex-col gap-0.5">
-                <span className="text-[8px] tracking-[0.15em] opacity-70">CARD HOLDER</span>
+                <span className="text-[8px] tracking-[0.15em] opacity-70">{text.cardHolder}</span>
                 <span className="text-xs font-semibold tracking-wider">{name}</span>
               </div>
               <div className="flex flex-col items-end gap-0.5">
-                <span className="text-[8px] tracking-[0.15em] opacity-70">EXPIRES</span>
+                <span className="text-[8px] tracking-[0.15em] opacity-70">{text.cardExpires}</span>
                 <span className="font-mono text-xs font-semibold tracking-wider">{expiry}</span>
               </div>
             </motion.div>

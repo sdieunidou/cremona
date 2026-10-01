@@ -101,6 +101,12 @@
       "slug": "013-card-custom-content",
       "size": null,
       "propsRaw": "{card:!0,name:`ADA LOVELACE`,cardNumber:`4000 0566 5566 5556`,expiry:`06/30`,cvc:`456`,brand:`GOLD`}"
+    },
+    {
+      "label": "french",
+      "slug": "014-french",
+      "size": null,
+      "propsRaw": "{amount:`42,00 €`,buttonLabel:`Payer`,name:`CAMILLE MARTIN`,labels:{title:`Payer par carte`,secure:`Sécurisé`,cardHolder:`TITULAIRE`,cardExpires:`EXPIRE FIN`,changeCard:`Utiliser une autre carte`,cardNumber:`Numéro de carte`,expires:`Expiration`,cvc:`Cryptogramme`}}"
     }
   ]
 }

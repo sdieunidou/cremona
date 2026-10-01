@@ -2023,7 +2023,8 @@
           "card · isometric · fadeOut",
           "card · no gradient",
           "card · isometric · no gradient",
-          "card · custom content"
+          "card · custom content",
+          "french"
         ],
         "cols": 2
       },
@@ -2044,7 +2045,8 @@
           "flipped",
           "stacked · flipped",
           "isometric · flipped",
-          "isometric · stacked · flipped"
+          "isometric · stacked · flipped",
+          "french"
         ],
         "cols": 2
       },

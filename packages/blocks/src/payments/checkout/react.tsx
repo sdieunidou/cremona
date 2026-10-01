@@ -86,6 +86,33 @@ const veilAnim = {
   },
 } as const;
 
+export interface CheckoutLabels {
+  /** Header of the payment form. */
+  title: string;
+  /** Next to the lock in the header. */
+  secure: string;
+  /** Captions on the card face (`card` mode). */
+  cardHolder: string;
+  cardExpires: string;
+  /** Link under the card (`card` mode). */
+  changeCard: string;
+  /** Field labels of the form. */
+  cardNumber: string;
+  expires: string;
+  cvc: string;
+}
+
+export const checkoutDefaultLabels: CheckoutLabels = {
+  title: "Pay with card",
+  secure: "Secure",
+  cardHolder: "CARD HOLDER",
+  cardExpires: "EXPIRES",
+  changeCard: "Use a different card",
+  cardNumber: "Card number",
+  expires: "Expires",
+  cvc: "CVC",
+};
+
 export interface CheckoutProps extends VisualProps {
   amount?: string;
   buttonLabel?: string;
@@ -95,6 +122,8 @@ export interface CheckoutProps extends VisualProps {
   expiry?: string;
   cvc?: string;
   card?: boolean;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<CheckoutLabels>;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -109,6 +138,7 @@ export function Checkout({
   expiry = "12/29",
   cvc = "•••",
   card = false,
+  labels,
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -129,6 +159,7 @@ export function Checkout({
             : "hidden",
       }
     : {};
+  const text = { ...checkoutDefaultLabels, ...labels };
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -161,11 +192,11 @@ export function Checkout({
         <div className={cn("relative rounded-2xl border bg-card shadow-xs", fill && "flex-1")}>
           <div className="flex items-center justify-between border-b px-4 py-3">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-foreground">Pay with card</span>
+              <span className="text-xs font-semibold text-foreground">{text.title}</span>
             </div>
             <div className="flex items-center gap-1 text-muted-foreground">
               <Lock className="size-3" strokeWidth={2.25} />
-              <span className="text-[10px] font-medium">Secure</span>
+              <span className="text-[10px] font-medium">{text.secure}</span>
             </div>
           </div>
           <div className="flex flex-col gap-3 p-4">
@@ -198,11 +229,15 @@ export function Checkout({
                   </div>
                   <div className="relative flex items-end justify-between">
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-[6px] tracking-[0.15em] opacity-70">CARD HOLDER</span>
+                      <span className="text-[6px] tracking-[0.15em] opacity-70">
+                        {text.cardHolder}
+                      </span>
                       <span className="text-[9px] font-semibold tracking-wider">{name}</span>
                     </div>
                     <div className="flex flex-col items-end gap-0.5">
-                      <span className="text-[6px] tracking-[0.15em] opacity-70">EXPIRES</span>
+                      <span className="text-[6px] tracking-[0.15em] opacity-70">
+                        {text.cardExpires}
+                      </span>
                       <span className="font-mono text-[9px] font-semibold tracking-wider tabular-nums">
                         {expiry}
                       </span>
@@ -221,7 +256,7 @@ export function Checkout({
                     tabIndex={-1}
                     onMouseDown={(e) => e.preventDefault()}
                   >
-                    Use a different card
+                    {text.changeCard}
                   </motion.button>
                   <motion.button
                     type="button"
@@ -246,7 +281,7 @@ export function Checkout({
                   variants={animated ? fieldAnim : undefined}
                 >
                   <label className="text-[10px] font-medium text-muted-foreground">
-                    Card number
+                    {text.cardNumber}
                   </label>
                   <div className="flex items-center justify-between gap-2 rounded-md border bg-background px-2.5 py-2 shadow-xs">
                     <span className="font-mono text-xs tracking-wider text-foreground">
@@ -260,7 +295,9 @@ export function Checkout({
                   variants={animated ? fieldAnim : undefined}
                 >
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-medium text-muted-foreground">Expires</label>
+                    <label className="text-[10px] font-medium text-muted-foreground">
+                      {text.expires}
+                    </label>
                     <div className="rounded-md border bg-background px-2.5 py-2 shadow-xs">
                       <span className="font-mono text-xs tracking-wider text-foreground">
                         {expiry}
@@ -268,7 +305,9 @@ export function Checkout({
                     </div>
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-medium text-muted-foreground">CVC</label>
+                    <label className="text-[10px] font-medium text-muted-foreground">
+                      {text.cvc}
+                    </label>
                     <div className="rounded-md border bg-background px-2.5 py-2 shadow-xs">
                       <span className="font-mono text-xs tracking-wider text-foreground">
                         {cvc}

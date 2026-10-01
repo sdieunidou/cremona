@@ -5960,6 +5960,11 @@
         "label": "card · custom content",
         "slug": "013-card-custom-content",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "014-french",
+        "size": null
       }
     ]
   },
@@ -6019,6 +6024,11 @@
       {
         "label": "isometric · stacked · flipped",
         "slug": "009-isometric-stacked-flipped",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
         "size": null
       }
     ]
