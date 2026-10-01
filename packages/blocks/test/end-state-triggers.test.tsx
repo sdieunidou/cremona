@@ -1,7 +1,9 @@
 /**
  * `trigger="inView"` and `"inViewRepeat"` reach the end that `"mount"` reaches — the static
- * render — once in view, and `"inViewRepeat"` again after leaving the viewport and coming back.
+ * render — once in view; `"inViewRepeat"` goes back to its initial frame when it leaves the
+ * viewport, and reaches that end again when it comes back.
  */
+import { createElement } from "react";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import {
   cleanup,
@@ -9,14 +11,16 @@ import {
   format,
   installEndStateEnvironment,
   loadBlock,
+  mount,
   restoreEndStateEnvironment,
   setInView,
   settle,
 } from "./helpers/end-state.js";
+import { compareRenders } from "./helpers/end-state-compare.js";
 
 // end states that depend on what the trigger did: connectors swapped once drawn, a reveal
 // mask dropped once revealed, a step cycle at rest, buttons handing opacity back to :hover,
-// an imperative upload sequence, a dashed line drawn on
+// an imperative upload sequence, a dashed line drawn on, text typed then made plain
 const SPOT = [
   "search/semantic",
   "geo/world-map",
@@ -24,6 +28,9 @@ const SPOT = [
   "payments/checkout",
   "files/upload",
   "charts/line",
+  "search/command-palette",
+  "ai/prompt-box",
+  "ai/voice",
 ];
 
 beforeAll(installEndStateEnvironment);
@@ -54,6 +61,24 @@ describe.each(SPOT)("%s", (key) => {
         await settle(host);
       },
     );
+    expect(diffs, format(diffs)).toEqual([]);
+  });
+
+  it("trigger=inViewRepeat goes back to its initial frame when it leaves the viewport", async () => {
+    const { Component, labels, props } = await loadBlock(key);
+    const element = createElement(Component, {
+      ...props(labels[0]!),
+      animated: true,
+      trigger: "inViewRepeat",
+    });
+    const played = await mount(element);
+    await settle(played.host);
+    await setInView(false);
+    await settle(played.host);
+    // a render that never entered the viewport
+    const fresh = await mount(element);
+    await settle(fresh.host);
+    const diffs = compareRenders(played.host.firstElementChild!, fresh.host.firstElementChild!);
     expect(diffs, format(diffs)).toEqual([]);
   });
 });

@@ -145,6 +145,11 @@ export function installEndStateEnvironment() {
   (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
   vi.stubGlobal("IntersectionObserver", ViewObserver);
   vi.spyOn(window, "matchMedia").mockImplementation(reducedMotion);
+  // happy-dom computes no styles, so motion cannot read a start value from the DOM (browsers can)
+  const warn = console.warn.bind(console);
+  vi.spyOn(console, "warn").mockImplementation((...args: unknown[]) => {
+    if (!/from "undefined" to .* is not an animatable value/.test(String(args[0]))) warn(...args);
+  });
   MotionGlobalConfig.skipAnimations = true;
   // happy-dom's partial Web Animations make motion's skipped animations reject on cancel;
   // without them motion applies the same final values from its own frame loop
