@@ -46,6 +46,22 @@ jobs:
           fi
       - run: pnpm validate
 
+  motion-13:
+    # @cremona/blocks accepts motion ^12 || ^13; the lockfile pins 12, this job runs the block
+    # gates (parity, end state, triggers) on the newest 13 as well
+    name: Blocks on motion 13
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @cremona/blocks add -D motion@^13
+      - run: pnpm --filter @cremona/blocks test
+
   e2e:
     name: Gallery e2e
     runs-on: ubuntu-latest

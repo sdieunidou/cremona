@@ -96,6 +96,17 @@ const pathAnim: Variants = {
   }),
 };
 
+// branch lanes end at their class's opacity-40: motion 13 writes SVG opacity as an inline style,
+// which a class cannot override, where motion 12 wrote an attribute
+const laneAnim: Variants = {
+  hidden: { pathLength: 0, opacity: 0 },
+  visible: (delay: number) => ({
+    pathLength: 1,
+    opacity: 0.4,
+    transition: { duration: 0.6, delay, ease: "easeOut" },
+  }),
+};
+
 const nodeAnim: Variants = {
   hidden: { scale: 0, opacity: 0 },
   visible: (delay: number) => ({
@@ -319,7 +330,7 @@ export function BranchGraph({
               strokeWidth={1.5}
               strokeLinecap="round"
               className={cn("opacity-40", branch.color ?? "text-primary")}
-              variants={animated ? pathAnim : undefined}
+              variants={animated ? laneAnim : undefined}
               custom={BRANCH_BASE + i * BRANCH_STAGGER}
               {...state}
             />

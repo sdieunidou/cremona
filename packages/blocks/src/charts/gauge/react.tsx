@@ -117,6 +117,12 @@ const trackAnim = {
   visible: { opacity: 1, transition: { duration: 0.3, delay: 0.25, ease: "easeOut" } },
 } as const;
 
+// zone tracks end at their class's opacity-30 (motion 13 writes SVG opacity inline)
+const zoneTrackAnim = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 0.3, transition: { duration: 0.3, delay: 0.25, ease: "easeOut" } },
+} as const;
+
 const arcAnim: Variants = {
   hidden: { pathLength: 0 },
   visible: (progress: number) => ({
@@ -291,7 +297,7 @@ export function Gauge({
                     pathLength={1}
                     strokeDasharray={`${zone.span} 1`}
                     strokeDashoffset={zone.offset}
-                    variants={animated ? trackAnim : undefined}
+                    variants={animated ? zoneTrackAnim : undefined}
                     {...state}
                   />
                 );
