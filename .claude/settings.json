@@ -44,6 +44,8 @@
       "Write(**/stimulus/templates/**)",
       "Edit(**/tokens/css/cremona.css)",
       "Write(**/tokens/css/cremona.css)",
+      "Edit(**/tokens/css/cremona.scoped.css)",
+      "Write(**/tokens/css/cremona.scoped.css)",
       "Edit(**/blocks/src/*/*/api.json)",
       "Write(**/blocks/src/*/*/api.json)"
     ]

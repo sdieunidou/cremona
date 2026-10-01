@@ -1,0 +1,100 @@
+/*
+ * Source of css/cremona.scoped.css (scripts/build-css.mjs): cremona.css for pages whose own CSS
+ * (Bootstrap, a legacy theme…) must neither reach the blocks nor be reached by them. The build
+ * confines every rule to `.cremona` elements and their content, and marks utilities !important.
+ */
+@import "tailwindcss" source(none) important;
+@import "../css/tailwind.css";
+@import "./sources.css";
+
+@layer base {
+  /* the wrapper starts from Cremona's defaults, not from what it inherits from the page */
+  .cremona {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+    font-size: 1rem;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-align: start;
+    text-indent: 0;
+    text-transform: none;
+    text-shadow: none;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: normal;
+  }
+
+  /* what page resets such as Bootstrap's Reboot set and Tailwind's preflight leaves to the
+     browser: back to the browser's values (classes still win) */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: inherit;
+    color: inherit;
+  }
+  dt {
+    font-weight: inherit;
+  }
+  th,
+  caption {
+    text-align: revert;
+  }
+  table {
+    caption-side: revert;
+  }
+  caption,
+  code,
+  kbd,
+  samp,
+  pre {
+    color: inherit;
+  }
+  kbd {
+    background-color: transparent;
+    border-radius: 0;
+  }
+  mark {
+    color: revert;
+    background-color: revert;
+  }
+  pre {
+    overflow: revert;
+  }
+  label,
+  output {
+    display: revert;
+  }
+  fieldset {
+    min-width: revert;
+  }
+  legend {
+    float: none;
+    width: auto;
+    font-size: inherit;
+    line-height: inherit;
+  }
+  legend + * {
+    clear: none;
+  }
+  [type="search"] {
+    appearance: revert;
+    outline-offset: revert;
+  }
+  :is(button, [type="button"], [type="reset"], [type="submit"], [role="button"]):not(:disabled),
+  abbr[title] {
+    cursor: revert;
+  }
+}
+
+/* a page's `border` class may set the whole `border` shorthand !important, colour included
+   (Bootstrap): the blocks' `border` keeps its colour, under any border colour class */
+@layer defaults {
+  .border {
+    border-color: var(--border) !important;
+  }
+}
