@@ -215,6 +215,21 @@ describe("cremona MCP server", () => {
     expect(full.css.length).toBe(summary.bytes);
   });
 
+  it("offers a stylesheet for each kind of host", async () => {
+    const summary = textOf(await client.callTool({ name: "get_css", arguments: {} }));
+    expect(summary.stylesheets.map((s) => s.path)).toEqual([
+      "@cremona/tokens/css/cremona.css",
+      "@cremona/tokens/css/tailwind.css",
+      "@cremona/tokens/css/cremona.scoped.css",
+    ]);
+    expect(summary.stylesheets[2].usage).toContain('class="cremona"');
+    const tailwind = textOf(
+      await client.callTool({ name: "get_css", arguments: { kind: "tailwind" } }),
+    );
+    expect(tailwind.recipe).toContain('@import "@cremona/tokens/css/tailwind.css";');
+    expect(tailwind.css).toContain("@custom-variant dark");
+  });
+
   it("registers every tool with a title and annotations", async () => {
     const { tools } = await client.listTools();
     expect(tools.length).toBe(14);

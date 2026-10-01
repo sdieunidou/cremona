@@ -116,6 +116,11 @@ export function designSystemCss() {
   return readText(join(TOKENS_DIR, "css", "cremona.css"));
 }
 
+/** One stylesheet of @cremona/tokens/css (cremona.css, tailwind.css, cremona.scoped.css…). */
+export function tokensCss(file) {
+  return readText(join(TOKENS_DIR, "css", file));
+}
+
 /** All docs (name -> markdown) from docs/. */
 export function docs() {
   const dir = join(REPO_ROOT, "docs");
