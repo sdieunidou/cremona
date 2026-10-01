@@ -29,7 +29,7 @@
   },
   "lockscreen · image": {
     "variant": "lockscreen",
-    "image": "../../media/placeholders/photo-01.jpg"
+    "image": "/media/placeholders/photo-01.jpg"
   },
   "lockscreen · isometric": {
     "variant": "lockscreen",
@@ -37,13 +37,13 @@
   },
   "lockscreen · isometric · fadeOut": {
     "variant": "lockscreen",
-    "image": "../../media/placeholders/photo-02.jpg",
+    "image": "/media/placeholders/photo-02.jpg",
     "isometric": true,
     "fadeOut": true
   },
   "lockscreen · custom copy": {
     "variant": "lockscreen",
-    "image": "../../media/placeholders/photo-01.jpg",
+    "image": "/media/placeholders/photo-01.jpg",
     "time": "14:08",
     "date": "Friday, June 6",
     "notifications": [
@@ -61,11 +61,11 @@
   },
   "screenshot": {
     "variant": "screenshot",
-    "image": "../../media/placeholders/photo-01.jpg"
+    "image": "/media/placeholders/photo-01.jpg"
   },
   "lockscreen · no notifications": {
     "variant": "lockscreen",
-    "image": "../../media/placeholders/photo-03.jpg",
+    "image": "/media/placeholders/photo-03.jpg",
     "time": "7:30",
     "date": "Saturday, March 15",
     "notifications": []

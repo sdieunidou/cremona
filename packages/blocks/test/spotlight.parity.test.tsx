@@ -16,6 +16,6 @@ runGoldenParity("branding/spotlight", {
     // `logo:(0,a.jsx)(n,...)` identifier in propsRaw — pass the element explicitly
     { label: "custom logo", props: { logo: <Sparkles className="size-6" strokeWidth={1.5} /> } },
     // `image:e(...)` cdn call — resolve the golden path explicitly
-    { label: "image", props: { image: "../../media/placeholders/photo-08.jpg" } },
+    { label: "image", props: { image: "/media/placeholders/photo-08.jpg" } },
   ],
 });

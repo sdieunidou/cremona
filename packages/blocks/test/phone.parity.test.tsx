@@ -11,9 +11,9 @@ const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/devices/p
 
 // image paths resolved from the golden HTML (`use-cdn` helper in the POC page chunk)
 const photos = {
-  photo01: "../../media/placeholders/photo-01.jpg",
-  photo02: "../../media/placeholders/photo-02.jpg",
-  photo03: "../../media/placeholders/photo-03.jpg",
+  photo01: "/media/placeholders/photo-01.jpg",
+  photo02: "/media/placeholders/photo-02.jpg",
+  photo03: "/media/placeholders/photo-03.jpg",
 };
 
 runGoldenParity("devices/phone", {

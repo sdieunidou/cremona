@@ -18,7 +18,7 @@ runGoldenParity("ai/presence", {
             name: "You",
             kind: "user",
             initials: "JC",
-            avatar: "../../media/placeholders/avatar-01.jpg",
+            avatar: "/media/placeholders/avatar-01.jpg",
           },
           { name: "Research Agent", kind: "agent", color: "text-purple-600 dark:text-purple-500" },
           { name: "Coding Agent", kind: "agent", color: "text-sky-600 dark:text-sky-500" },

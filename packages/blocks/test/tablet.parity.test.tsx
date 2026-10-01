@@ -10,7 +10,7 @@ import { runGoldenParity } from "./helpers/run-golden-parity.js";
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/devices/tablet");
 
 // image paths resolved from the golden HTML (`use-cdn` helper in the POC page chunk)
-const photo01 = "../../media/placeholders/photo-01.jpg";
+const photo01 = "/media/placeholders/photo-01.jpg";
 
 runGoldenParity("devices/tablet", {
   blockDir,

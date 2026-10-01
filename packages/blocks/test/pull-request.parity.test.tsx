@@ -15,7 +15,7 @@ runGoldenParity("git/pull-request", {
     // propsRaw contains an identifier (image path via e(...)); resolved manually
     {
       label: "avatar image",
-      props: { reviewer: "Emma Wallace", reviewerImage: "../../media/placeholders/avatar-04.jpg" },
+      props: { reviewer: "Emma Wallace", reviewerImage: "/media/placeholders/avatar-04.jpg" },
     },
   ],
 });

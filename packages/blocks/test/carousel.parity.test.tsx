@@ -11,17 +11,17 @@ const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/images/ca
 // photo roster from the POC page chunk (`slides:a` identifier)
 const slides = [
   {
-    src: "../../media/placeholders/photo-07.jpg",
+    src: "/media/placeholders/photo-07.jpg",
     title: "Beach",
     caption: "A beautiful tropical beach",
   },
   {
-    src: "../../media/placeholders/photo-08.jpg",
+    src: "/media/placeholders/photo-08.jpg",
     title: "City",
     caption: "Train station in the city",
   },
   {
-    src: "../../media/placeholders/photo-09.jpg",
+    src: "/media/placeholders/photo-09.jpg",
     title: "Paris",
     caption: "The capital of France",
   },

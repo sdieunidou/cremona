@@ -22,6 +22,6 @@
     "iconClassName": "bg-indigo-700 dark:bg-indigo-400"
   },
   "image": {
-    "image": "../../media/placeholders/photo-08.jpg"
+    "image": "/media/placeholders/photo-08.jpg"
   }
 }

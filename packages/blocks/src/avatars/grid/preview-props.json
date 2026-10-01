@@ -7,27 +7,27 @@
     "members": [
       {
         "initials": "JC",
-        "image": "../../media/placeholders/avatar-01.jpg"
+        "image": "/media/placeholders/avatar-01.jpg"
       },
       {
         "initials": "AM",
-        "image": "../../media/placeholders/avatar-02.jpg"
+        "image": "/media/placeholders/avatar-02.jpg"
       },
       {
         "initials": "KL",
-        "image": "../../media/placeholders/avatar-06.jpg"
+        "image": "/media/placeholders/avatar-06.jpg"
       },
       {
         "initials": "DP",
-        "image": "../../media/placeholders/avatar-03.jpg"
+        "image": "/media/placeholders/avatar-03.jpg"
       },
       {
         "initials": "SR",
-        "image": "../../media/placeholders/avatar-04.jpg"
+        "image": "/media/placeholders/avatar-04.jpg"
       },
       {
         "initials": "TN",
-        "image": "../../media/placeholders/avatar-05.jpg"
+        "image": "/media/placeholders/avatar-05.jpg"
       }
     ]
   },
@@ -36,27 +36,27 @@
     "members": [
       {
         "initials": "JC",
-        "image": "../../media/placeholders/avatar-01.jpg"
+        "image": "/media/placeholders/avatar-01.jpg"
       },
       {
         "initials": "AM",
-        "image": "../../media/placeholders/avatar-02.jpg"
+        "image": "/media/placeholders/avatar-02.jpg"
       },
       {
         "initials": "KL",
-        "image": "../../media/placeholders/avatar-06.jpg"
+        "image": "/media/placeholders/avatar-06.jpg"
       },
       {
         "initials": "DP",
-        "image": "../../media/placeholders/avatar-03.jpg"
+        "image": "/media/placeholders/avatar-03.jpg"
       },
       {
         "initials": "SR",
-        "image": "../../media/placeholders/avatar-04.jpg"
+        "image": "/media/placeholders/avatar-04.jpg"
       },
       {
         "initials": "TN",
-        "image": "../../media/placeholders/avatar-05.jpg"
+        "image": "/media/placeholders/avatar-05.jpg"
       }
     ]
   },

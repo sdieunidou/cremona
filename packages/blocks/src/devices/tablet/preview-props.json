@@ -29,7 +29,7 @@
   },
   "lockscreen · image": {
     "variant": "lockscreen",
-    "image": "../../media/placeholders/photo-01.jpg"
+    "image": "/media/placeholders/photo-01.jpg"
   },
   "lockscreen · isometric": {
     "variant": "lockscreen",
@@ -37,11 +37,11 @@
   },
   "screenshot": {
     "variant": "screenshot",
-    "image": "../../media/placeholders/photo-01.jpg"
+    "image": "/media/placeholders/photo-01.jpg"
   },
   "lockscreen · custom copy": {
     "variant": "lockscreen",
-    "image": "../../media/placeholders/photo-01.jpg",
+    "image": "/media/placeholders/photo-01.jpg",
     "time": "14:08",
     "date": "Friday, June 6",
     "notifications": []

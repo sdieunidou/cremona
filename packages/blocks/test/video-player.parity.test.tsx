@@ -15,13 +15,13 @@ runGoldenParity("media/video-player", {
     // propsRaw contains an identifier (image path via e(...)); resolved manually
     {
       label: "real image",
-      props: { image: "../../media/placeholders/photo-06.jpg", title: "Behind the scenes" },
+      props: { image: "/media/placeholders/photo-06.jpg", title: "Behind the scenes" },
     },
     {
       label: "isometric · real image",
       props: {
         isometric: true,
-        image: "../../media/placeholders/photo-06.jpg",
+        image: "/media/placeholders/photo-06.jpg",
         title: "Behind the scenes",
       },
     },

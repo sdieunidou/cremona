@@ -10,12 +10,12 @@ const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/avatars/g
 
 // photo roster from the POC page chunk (`members:a` identifier)
 const photoMembers = [
-  { initials: "JC", image: "../../media/placeholders/avatar-01.jpg" },
-  { initials: "AM", image: "../../media/placeholders/avatar-02.jpg" },
-  { initials: "KL", image: "../../media/placeholders/avatar-06.jpg" },
-  { initials: "DP", image: "../../media/placeholders/avatar-03.jpg" },
-  { initials: "SR", image: "../../media/placeholders/avatar-04.jpg" },
-  { initials: "TN", image: "../../media/placeholders/avatar-05.jpg" },
+  { initials: "JC", image: "/media/placeholders/avatar-01.jpg" },
+  { initials: "AM", image: "/media/placeholders/avatar-02.jpg" },
+  { initials: "KL", image: "/media/placeholders/avatar-06.jpg" },
+  { initials: "DP", image: "/media/placeholders/avatar-03.jpg" },
+  { initials: "SR", image: "/media/placeholders/avatar-04.jpg" },
+  { initials: "TN", image: "/media/placeholders/avatar-05.jpg" },
 ];
 
 runGoldenParity("avatars/grid", {
