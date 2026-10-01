@@ -1,9 +1,8 @@
 /*
  * Source of css/cremona.css: `pnpm build:css` compiles it with Tailwind v4 from the classes the
- * blocks and the gallery use. Never edit css/cremona.css by hand: Cremona's additions to
- * Tailwind live in css/tailwind.css, shared with Tailwind hosts.
+ * blocks use (the gallery compiles its own stylesheet). Never edit css/cremona.css by hand:
+ * Cremona's additions to Tailwind live in css/tailwind.css, shared with Tailwind hosts.
  */
 @import "tailwindcss" source(none);
 @import "../css/tailwind.css";
 @import "./sources.css";
-@source "../../../apps/gallery/src/**/*.{ts,tsx}";

@@ -1,6 +1,6 @@
 /**
  * css/tailwind.css drives a host's own Tailwind v4 build: imported next to `tailwindcss`, it
- * compiles Cremona's theme mapping, variants and utilities.
+ * compiles the blocks' classes to the very rules of cremona.css.
  */
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -10,6 +10,7 @@ import { describe, it, expect } from "vitest";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const preset = readFileSync(join(root, "css", "tailwind.css"), "utf8");
+const full = readFileSync(join(root, "css", "cremona.css"), "utf8");
 
 /** Compiles a host stylesheet; it sits in the package so `@cremona/tokens` resolves via `exports`. */
 function hostBuild(lines: string[]): string {
@@ -25,6 +26,17 @@ function hostBuild(lines: string[]): string {
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+}
+
+function layer(css: string, name: string): string {
+  const start = css.indexOf(`@layer ${name}{`);
+  expect(start, `@layer ${name}`).toBeGreaterThanOrEqual(0);
+  let depth = 0;
+  for (let i = start; i < css.length; i++) {
+    if (css[i] === "{") depth++;
+    else if (css[i] === "}" && --depth === 0) return css.slice(start, i + 1);
+  }
+  throw new Error(`unclosed @layer ${name}`);
 }
 
 describe("css/tailwind.css", () => {
@@ -55,5 +67,15 @@ describe("css/tailwind.css", () => {
     expect(css).toContain(".theme-sakura:not(.dark){");
     expect(css.match(/@font-face\{/g)).toHaveLength(7);
     expect(css).toContain(":root{color-scheme:light}.dark{color-scheme:dark}");
+  });
+
+  it("compiles the blocks to the rules of cremona.css", { timeout: 30000 }, () => {
+    const css = hostBuild([
+      '@import "tailwindcss" source(none);',
+      '@import "@cremona/tokens/css/tailwind.css";',
+      '@import "../src/sources.css";',
+    ]);
+    for (const name of ["theme", "base", "utilities"])
+      expect(layer(css, name), `@layer ${name}`).toBe(layer(full, name));
   });
 });

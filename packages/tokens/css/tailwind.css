@@ -112,7 +112,6 @@
   }
   html {
     background-color: var(--background);
-    scrollbar-gutter: stable;
     font-family: "Inter Variable", sans-serif;
   }
   body {

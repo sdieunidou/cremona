@@ -1,7 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { MotionConfig } from "motion/react";
-import "@cremona/tokens/css/cremona.css";
 import "./gallery.css";
 import { App } from "./app.js";
 
