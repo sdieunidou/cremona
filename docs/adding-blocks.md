@@ -17,9 +17,11 @@
    from `packages/blocks` must be green (golden parity).
    Passing tests also write `preview-props.json`.
 5. **Propagate** — `pnpm build:css` (the block's classes into `cremona.css`),
-   `pnpm generate:stimulus` (templates), then `pnpm check` (which includes
-   `check:use-client` and `validate`). Commit every generated file: CI
-   regenerates them and fails on a changed or untracked one.
+   `pnpm generate:stimulus` (templates), `pnpm generate:api` (`api.json`, the
+   props reference built from the props interface and its JSDoc), then
+   `pnpm check` (which includes `check:use-client`, `check:api` and
+   `validate`). Commit every generated file: CI regenerates them and fails on
+   a changed or untracked one.
 
 ## Naming rules
 
@@ -52,7 +54,8 @@ category: see rule 6 of the [authoring guide](authoring-guide.md#rules-non-negot
 
 - Catalog (`catalog.json`) lists the block; folder exists; `block.json` matches.
 - Every variant has a golden, a `preview-props.json` entry and a Stimulus
-  template; the block has a parity test (`pnpm validate` checks all of it).
+  template; the block has an `api.json` and a parity test (`pnpm validate`
+  checks all of it).
 - `react.tsx` starts with `"use client";` (`pnpm check:use-client`).
 - The visual uses only the semantic tokens (no hardcoded colors) and renders
   correctly in all 9 themes × light/dark — check it in the gallery

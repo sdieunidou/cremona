@@ -47,7 +47,9 @@ import { Donut } from "@cremona/blocks/charts/donut";
 ```
 
 - One entry per block: `@cremona/blocks/<category>/<file>`, ESM with types,
-  exporting the component and its props type (`Donut`, `DonutProps`).
+  exporting the component and its props type (`Donut`, `DonutProps`). The
+  type declarations keep the props' JSDoc; the gallery shows every block's
+  props as a table, with types and defaults.
 - Every entry starts with `"use client"`: Next.js Server Components render
   blocks directly, with serializable props. Pass component props such as
   `icon={Users}` from a client module.

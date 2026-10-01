@@ -12,6 +12,7 @@ motion language, same tokens, same test machinery.
 |---|---|
 | `block.json` | metadata + variants (scaffolded by MCP `add_block` or manually) |
 | `react.tsx` | the implementation (self-contained, complete defaults); its first line is `"use client";` |
+| `api.json` | **generated** by `pnpm generate:api` from the props interface — never hand-write |
 | `preview-props.json` | **generated** by the parity test run — never hand-write |
 | `golden/*.html` | **generated** by `test/generate-goldens.test.tsx` — never hand-write |
 
@@ -20,8 +21,13 @@ motion language, same tokens, same test machinery.
 1. **Tokens only** — semantic colors (`bg-card`, `text-muted-foreground`,
    `bg-primary/10`…), never raw palette colors for UI surfaces. Palette colors
    are allowed only for the rainbow glow / status semantics the POC already uses.
-2. **Complete defaults** — the component must render fully with zero props
-   (that's what the generated golden captures).
+2. **Complete defaults, documented props** — the component must render fully
+   with zero props (that's what the generated golden captures). Export its
+   props interface (`<Name>Props extends VisualProps`), give every prop a JSDoc
+   comment and its default in the component's parameters: `pnpm generate:api`
+   turns them into `api.json` — type, default and description of each prop —
+   which the gallery shows as the block's props table and `get_block` returns
+   as `api`.
 3. **Variant props must be JSON-parseable** (strings, numbers, booleans,
    arrays, plain objects). **Never pass components/icons as props** — if a
    variant needs a different icon, make it a component-internal concern
@@ -61,12 +67,14 @@ cd ../..
 node tools/use-client.mjs                              # 4. "use client" first (add_block's skeleton has it)
 pnpm build:css                                         # 5. compile the new classes into cremona.css
 pnpm generate:stimulus                                 # 6. stimulus templates
-pnpm check                                             # 7. lint, format, types, tests, validate
+pnpm generate:api                                      # 7. props reference (api.json)
+pnpm check                                             # 8. lint, format, types, tests, validate
 ```
 
 `pnpm check` runs `pnpm check:use-client` (`node tools/use-client.mjs --check`),
-which fails on a block whose `react.tsx` does not start with `"use client";`.
-Commit everything the steps wrote — goldens, `preview-props.json`, templates and
+which fails on a block whose `react.tsx` does not start with `"use client";`,
+and `pnpm check:api`, which fails on a stale `api.json`. Commit everything the
+steps wrote — goldens, `preview-props.json`, `api.json`, templates and
 `cremona.css`: CI regenerates them and fails on a changed or untracked file.
 
 `cremona.css` only contains the classes it was compiled from: until

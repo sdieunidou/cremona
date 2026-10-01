@@ -94,7 +94,7 @@ location: [docs/mcp.md](docs/mcp.md).
 
 ```bash
 pnpm install
-pnpm dev          # the gallery, http://localhost:5173 (View code / Copy React / Stimulus on every preview)
+pnpm dev          # the gallery, http://localhost:5173 (View code / Copy React / Stimulus, a props table per block)
 pnpm test         # golden parity, MCP e2e, tokens, stimulus…
 pnpm check        # lint + format + typecheck + tests + validate, before finishing
 pnpm build        # compiles @cremona/core, @cremona/react, @cremona/blocks and the gallery

@@ -5,15 +5,16 @@ Instructions for AI sessions (Claude Code, opencode…) contributing to this rep
 ## Commands
 
 ```bash
-pnpm check              # lint + format check + typecheck + check:use-client + tests + validate — run before finishing
+pnpm check              # lint + format check + typecheck + check:use-client + check:api + tests + validate — run before finishing
 pnpm test               # every package's tests (block parity, MCP e2e, tokens, stimulus…)
 pnpm typecheck          # tsc --noEmit per package
 pnpm lint               # ESLint (errors fail CI; block a11y findings are warnings)
 pnpm format             # Prettier (a hook formats files you edit in Claude Code)
-pnpm validate           # library coherence (catalog ↔ blocks ↔ goldens ↔ preview props ↔ stimulus ↔ parity tests)
+pnpm validate           # library coherence (catalog ↔ blocks ↔ goldens ↔ preview props ↔ api.json ↔ stimulus ↔ parity tests)
 pnpm check:use-client   # fail unless every block's react.tsx starts with "use client" (node tools/use-client.mjs --check)
 node tools/use-client.mjs                     # add or move the directive where it is missing
 pnpm generate:stimulus  # regenerate packages/stimulus/templates/**
+pnpm generate:api       # regenerate every block's api.json (props reference); check:api fails when one is stale
 pnpm build:css          # recompile packages/tokens/css/cremona.css (Tailwind v4, dev only)
 pnpm build              # compile core, react, blocks (dist/, one entry per block) and the gallery
 pnpm --filter @cremona/blocks check:package   # pack @cremona/blocks, check it with publint + attw
@@ -23,15 +24,15 @@ pnpm mcp                # run the MCP server over stdio
 ```
 
 CI (`.github/workflows/ci.yml`) runs on Node 22 and 24: lint, format check,
-typecheck, `check:use-client`, tests, then `pnpm generate:stimulus` and
-`pnpm build:css` again, and fails on any changed **or untracked** file under
-`packages/blocks`, `packages/stimulus` and `packages/tokens` (a golden,
-`preview-props.json`, template or `cremona.css` left uncommitted), then
-`validate`. The gallery e2e job (Node 24) fails when a block page shows an
-error card, throws or logs a console error (a failed image or font request
-logs one), or when axe finds a violation on the gallery chrome, in light or
-dark. The release workflow (`docs/releasing.md`) also runs the package check
-before publishing.
+typecheck, `check:use-client`, tests, then `pnpm generate:stimulus`,
+`pnpm generate:api` and `pnpm build:css` again, and fails on any changed **or
+untracked** file under `packages/blocks`, `packages/stimulus` and
+`packages/tokens` (a golden, `preview-props.json`, `api.json`, template or
+`cremona.css` left uncommitted), then `validate`. The gallery e2e job (Node 24)
+fails when a block page shows an error card, throws or logs a console error (a
+failed image or font request logs one), or when axe finds a violation on the
+gallery chrome, in light or dark. The release workflow (`docs/releasing.md`)
+also runs the package check before publishing.
 
 ## Non-negotiable invariants
 
@@ -43,7 +44,8 @@ before publishing.
    goldens change only on purpose: delete that block's `golden/*.html`,
    regenerate, review the diff, run its parity test.
 2. **Generated files are never hand-edited**: `preview-props.json` (rewritten by
-   `pnpm test`), `packages/stimulus/templates/**` (rewritten by
+   `pnpm test`), `api.json` (rewritten by `pnpm generate:api` from the props
+   interface and its JSDoc), `packages/stimulus/templates/**` (rewritten by
    `pnpm generate:stimulus`) and `packages/tokens/css/cremona.css` (rewritten by
    `pnpm build:css`). Change the source block, `packages/tokens/src/cremona.css`
    or the generator, rerun, commit the result.
@@ -64,8 +66,9 @@ before publishing.
 ## Layout map
 
 - `packages/blocks/src/<category>/<block>/` — source of truth: `block.json`,
-  `react.tsx`, `preview-props.json`, `golden/`; some blocks also keep a
-  `sources/` directory, which nothing reads at runtime.
+  `react.tsx`, and the generated `api.json` (props reference: type, default and
+  JSDoc of every prop), `preview-props.json` and `golden/`; some blocks also
+  keep a `sources/` directory, which nothing reads at runtime.
 - `packages/blocks/{scripts,dist,public}/` — the published `@cremona/blocks`:
   `scripts/build.mjs` compiles each block to `dist/<category>/<file>/react.{js,d.ts}`
   (the entry behind `@cremona/blocks/<category>/<file>`), `prepack` also copies
@@ -84,7 +87,8 @@ before publishing.
 - `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS).
 - `apps/gallery/` — docs app with live previews; Playwright specs in `e2e/`.
 - `tools/generate-stimulus.mjs` (+ `tools/stimulus/`) — template generator.
-  `tools/use-client.mjs` — the `"use client"` directive of every block.
+  `tools/generate-api.mjs` — the props references. `tools/use-client.mjs` —
+  the `"use client"` directive of every block.
 
 ## Conventions
 
@@ -92,6 +96,9 @@ before publishing.
   `add_block` creates); the POC blocks' tests keep their `<file>.parity.test.tsx`
   names. `validate` finds a block's test by its `runGoldenParity("<key>", …)`
   call, not by its name.
+- Give every prop of a block's props interface (and of the types it uses) a
+  JSDoc comment: it becomes the prop's description in `api.json`, the
+  gallery's props table and the MCP `get_block` response.
 - Every block's `react.tsx` starts with `"use client";` (blocks use hooks; a
   copied block and a Server Component import both need it): run
   `node tools/use-client.mjs` after adding a block. The build also adds it to the
@@ -108,6 +115,7 @@ before publishing.
 - `.mcp.json` / `opencode.json` register this repo's MCP server — start the
   session from the repo root.
 - `.claude/settings.json` pre-approves the main commands above (`pnpm check`,
-  `pnpm test`, the generators, targeted `vitest`…) and the read-only MCP tools,
-  denies hand edits of goldens, `preview-props.json`, Stimulus templates and
-  `cremona.css`, and formats every edited file with Prettier.
+  `pnpm test`, `generate:stimulus`, `build:css`, targeted `vitest`…) and the
+  read-only MCP tools, denies hand edits of goldens, `preview-props.json`,
+  Stimulus templates and `cremona.css`, and formats every edited file with
+  Prettier.

@@ -43,13 +43,15 @@ Every block has a `scale` (MCP `list_blocks`, `search_blocks`, `get_block`):
    `get_css`, `get_controller`, `get_design_system`, `validate`, `get_guide`;
    from a cremona checkout also the authoring tools `add_category` and
    `add_block`, which the published `npx -y @cremona/mcp` server does not register)
-   → use the tools. `get_block` returns the install line, the import, exact
-   variant props and the React source (add `include: ["stimulus"]` for the
-   Stimulus templates); `get_css` returns the stylesheet's path and import line.
+   → use the tools. `get_block` returns the install line, the import, the props
+   reference (`api`: type, default and description of every prop), exact variant
+   props and the React source (add `include: ["stimulus"]` for the Stimulus
+   templates); `get_css` returns the stylesheet's path and import line.
 2. **No MCP, repo available?** Read the same data from the filesystem:
    - Catalog: `packages/blocks/catalog.json` (37 categories, names, descriptions)
    - Per block: `packages/blocks/src/<category>/<file>/`
      - `block.json` (metadata + variant labels)
+     - `api.json` (props reference: type, default and description of every prop)
      - `preview-props.json` (exact props per variant; `"lucide:X"` = lucide-react icon)
      - `react.tsx` (React implementation)
      - `golden/<slug>.html` (SSR render reference)
@@ -132,9 +134,12 @@ renders one button with one label.
   implement + test from `packages/blocks`: `pnpm vitest run test/generate-goldens.test.tsx`
   (writes only missing goldens), then `pnpm vitest run test/<category>-<file>.parity.test.tsx`.
 - Every block MUST pass golden parity; `pnpm validate` checks that each block has a
-  `react.tsx`, a golden, a preview-props entry and a Stimulus template per variant,
-  and a parity test.
-- From the repo root: `pnpm generate:stimulus` after changes, then `pnpm check`.
+  `react.tsx`, an `api.json`, a golden, a preview-props entry and a Stimulus template
+  per variant, and a parity test.
+- Write a JSDoc comment on every prop: `pnpm generate:api` turns the props interface
+  into `api.json`, the props reference the gallery and `get_block` show.
+- From the repo root, after changes: `pnpm generate:stimulus`, `pnpm generate:api`,
+  `pnpm build:css`, then `pnpm check`.
 
 ## Design system quick facts
 
@@ -149,7 +154,8 @@ renders one button with one label.
 ## Hard rules
 
 - Never hand-edit generated files: `packages/blocks/src/*/*/golden/**`,
-  `preview-props.json`, `packages/stimulus/templates/**`, `packages/tokens/css/cremona.css`.
+  `preview-props.json`, `api.json`, `packages/stimulus/templates/**`,
+  `packages/tokens/css/cremona.css`.
 - Never bypass parity tests. The renders ARE the product.
 - Keep class strings intact when porting or deriving: parity compares the DOM
   structure, the classes and the text.
