@@ -402,27 +402,29 @@ export function Spotlight({
         >
           {glow && (
             <div className="absolute inset-x-0 top-1/6 bottom-0">
-              <Glow />
+              <div className="absolute inset-0">
+                <Glow />
+              </div>
             </div>
           )}
           {particles && (
             <div className="absolute inset-x-0 inset-y-10">
-              {PARTICLES.map((particle, i) => (
-                <div
-                  key={i}
-                  className="absolute -translate-x-1/2 -translate-y-1/2"
-                  style={{ left: `${particle.x}%`, top: `${particle.y}%` }}
-                >
+              <div className="absolute inset-0">
+                {PARTICLES.map((particle, i) => (
                   <div
-                    className={`rotate-45 rounded-[1px] ${particle.color}`}
-                    style={{
-                      width: particle.size,
-                      height: particle.size,
-                      opacity: particle.opacity * 0.7,
-                    }}
-                  />
-                </div>
-              ))}
+                    key={i}
+                    className="absolute -translate-x-1/2 -translate-y-1/2"
+                    style={{ left: `${particle.x}%`, top: `${particle.y}%` }}
+                  >
+                    <div style={{ opacity: particle.opacity * 0.7 }}>
+                      <div
+                        className={`rotate-45 rounded-[1px] ${particle.color}`}
+                        style={{ width: particle.size, height: particle.size }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
           <div className="relative z-10 flex h-44 items-end justify-center gap-2.5 pb-4">
@@ -454,6 +456,8 @@ export function Spotlight({
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const active = hover ? hovered : inView;
   const looping = active && loop;
+  // paused or reduced motion: rest on the static frame, hover or not
+  const shown = active || (inView && !loop);
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" };
 
   return (
@@ -484,7 +488,7 @@ export function Spotlight({
               animate={
                 looping
                   ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
-                  : { scale: 1, opacity: 0.85 }
+                  : { scale: 1, opacity: 1 }
               }
               transition={
                 looping
@@ -500,7 +504,7 @@ export function Spotlight({
           <motion.div className="absolute inset-x-0 inset-y-10" variants={particlesWrap} {...state}>
             <motion.div
               className="absolute inset-0"
-              animate={{ opacity: +!!active }}
+              animate={{ opacity: +!!shown }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               {PARTICLES.map((particle, i) => (

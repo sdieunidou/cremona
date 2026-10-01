@@ -129,6 +129,8 @@ export function Loading({
   const loaded = hover ? isHovering : inView;
   const loop = useLoopActive(ref, animated);
   const looping = loaded && loop;
+  // paused or reduced motion: rest on the static frame (loaded), hover or not
+  const shown = loaded || (inView && !loop);
   const state = animated
     ? {
         initial: "hidden",
@@ -200,12 +202,12 @@ export function Loading({
                 <motion.div
                   className="absolute top-0 left-0 h-0.5 bg-primary"
                   style={{ width: "70%" }}
-                  animate={{ opacity: Number(!loaded) }}
+                  animate={{ opacity: Number(!shown) }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 />
                 <motion.div
                   className="absolute top-0 left-0 h-0.5 w-full"
-                  animate={{ opacity: Number(!!loaded) }}
+                  animate={{ opacity: Number(shown) }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 >
                   <motion.div
@@ -226,27 +228,31 @@ export function Loading({
                 </motion.div>
               </>
             ) : (
-              <div className="absolute top-0 left-0 h-0.5 bg-primary" style={{ width: "70%" }} />
+              <div className="absolute top-0 left-0 h-0.5 w-full">
+                <div className="h-full bg-primary" style={{ width: "70%" }} />
+              </div>
             )}
             {animated ? (
               <>
                 <motion.div
                   className="absolute inset-3"
-                  animate={{ opacity: Number(!loaded) }}
+                  animate={{ opacity: Number(!shown) }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 >
                   <Skeleton pulse={false} />
                 </motion.div>
                 <motion.div
                   className="absolute inset-3"
-                  animate={{ opacity: Number(!!loaded) }}
+                  animate={{ opacity: Number(shown) }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
                 >
                   <Skeleton pulse looping={looping} />
                 </motion.div>
               </>
             ) : (
-              <Skeleton pulse={false} />
+              <div className="absolute inset-3">
+                <Skeleton pulse={false} />
+              </div>
             )}
           </motion.div>
         </div>

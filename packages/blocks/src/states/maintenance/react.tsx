@@ -351,7 +351,9 @@ export function Maintenance({
                     <Settings className="size-3.5" strokeWidth={2.5} />
                   </motion.span>
                 ) : (
-                  <Settings className="size-3.5" strokeWidth={2.5} />
+                  <span className="flex">
+                    <Settings className="size-3.5" strokeWidth={2.5} />
+                  </span>
                 )}
               </span>
               <div className="flex flex-1 flex-col gap-1.5">

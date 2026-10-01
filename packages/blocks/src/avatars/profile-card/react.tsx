@@ -203,11 +203,11 @@ export function ProfileCard({
               {...state}
             >
               <span className="relative flex">
-                {status === "online" && (
+                {animated && status === "online" && (
                   <motion.span
                     className={`absolute inset-0 inline-flex size-2.5 rounded-full ${style.pulse}`}
-                    variants={animated ? pulse : undefined}
-                    {...(animated ? pulseState : {})}
+                    variants={pulse}
+                    {...pulseState}
                   />
                 )}
                 <span

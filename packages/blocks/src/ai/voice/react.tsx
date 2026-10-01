@@ -349,8 +349,8 @@ function ThinkingDots({ animated, loopActive }: { animated: boolean; loopActive:
         ) : (
           <div
             key={n}
-            className="size-2 rounded-full bg-primary-foreground opacity-80"
-            style={{ transform: "scale(0.85)" }}
+            className="size-2 rounded-full bg-primary-foreground"
+            style={{ opacity: 0.8, transform: "scale(0.85)" }}
           />
         ),
       )}
@@ -366,7 +366,7 @@ function Shimmer({ animated, loopActive }: { animated: boolean; loopActive: bool
           key={r}
           className={`relative h-2 ${w} overflow-hidden rounded-full border border-border/75 bg-muted`}
         >
-          {animated && (
+          {animated ? (
             <motion.div
               className="absolute inset-y-px w-1/2 bg-linear-to-r from-transparent via-primary/25 to-transparent"
               animate={loopActive ? { x: ["-120%", "320%"] } : { x: "-120%" }}
@@ -382,10 +382,32 @@ function Shimmer({ animated, loopActive }: { animated: boolean; loopActive: bool
                   : { duration: 0.3 }
               }
             />
+          ) : (
+            <div
+              className="absolute inset-y-px w-1/2 bg-linear-to-r from-transparent via-primary/25 to-transparent"
+              style={{ transform: "translateX(-120%)" }}
+            />
           )}
         </div>
       ))}
     </div>
+  );
+}
+
+/** The rings around the orb at rest: the static render, and a paused loop. */
+function RestRings({ thinking }: { thinking: boolean }) {
+  return (
+    <>
+      <div className="absolute size-24 rounded-full border border-primary/30" />
+      {thinking ? (
+        <div className="absolute size-28 rounded-full border border-primary/15" />
+      ) : (
+        <Fragment>
+          <div className="absolute size-36 rounded-full border border-primary/15" />
+          <div className="absolute size-48 rounded-full border border-primary/10" />
+        </Fragment>
+      )}
+    </>
   );
 }
 
@@ -437,6 +459,9 @@ export function Voice({
   const active = (hover ? hovered : gate) && ticked;
   const looping = active && loop;
   const drifting = gate && ticked;
+  // paused or reduced motion: rest on the static frame, hover or not
+  const resting = drifting && !loop;
+  const shown = active || resting;
   const noExplicitState = !stateProp;
 
   useEffect(() => {
@@ -473,52 +498,60 @@ export function Voice({
     transcript ??
     voiceDefaultCopy[`${current}Transcript` as const];
 
+  const words = (transcriptLabel ?? "").split(/(\s+)/).filter(Boolean);
+  let wordIndex = 0;
+  const tokens = words.map((text) =>
+    /^\s+$/.test(text) ? { type: "space", text } : { type: "word", text, index: wordIndex++ },
+  );
+
   if (!animated) {
     return (
       <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
         {glow && (
           <div className="absolute inset-0 -z-10">
-            <GlowScene />
+            <div className="absolute inset-0">
+              <GlowScene />
+            </div>
           </div>
         )}
         {particles && (
           <div className="absolute inset-0 -z-10">
-            {PARTICLES.map((p, i) => (
-              <div
-                key={i}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              >
+            <div className="absolute inset-0">
+              {PARTICLES.map((p, i) => (
                 <div
-                  className={`rotate-45 rounded-[1px] ${p.color}`}
-                  style={{ width: p.size, height: p.size, opacity: p.opacity * 0.7 }}
-                />
-              </div>
-            ))}
+                  key={i}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${p.x}%`, top: `${p.y}%` }}
+                >
+                  <div style={{ opacity: p.opacity * 0.7 }}>
+                    <div
+                      className={`rotate-45 rounded-[1px] ${p.color}`}
+                      style={{ width: p.size, height: p.size }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
         <div className="relative z-10 flex flex-col items-center gap-5">
           <div className="relative flex items-center justify-center">
-            <div className="absolute size-24 rounded-full border border-primary/30" />
-            {isThinking ? (
-              <div className="absolute size-28 rounded-full border border-primary/15" />
-            ) : (
-              <Fragment>
-                <div className="absolute size-36 rounded-full border border-primary/15" />
-                <div className="absolute size-48 rounded-full border border-primary/10" />
-              </Fragment>
-            )}
+            <RestRings thinking={isThinking} />
             <Orb>
-              {isThinking ? (
-                <ThinkingDots animated={false} loopActive={false} />
-              ) : (
-                <Equalizer animated={false} loopActive={false} />
-              )}
+              <div>
+                {isThinking ? (
+                  <ThinkingDots animated={false} loopActive={false} />
+                ) : (
+                  <Equalizer animated={false} loopActive={false} />
+                )}
+              </div>
             </Orb>
           </div>
           <div className="relative z-10 flex items-center gap-1.5 rounded-full border bg-card px-2.5 py-1">
-            <span className="size-1.5 rounded-full bg-primary" />
-            <span className="text-[11px] font-medium text-foreground">{statusLabel}</span>
+            <span className="size-1.5 shrink-0 rounded-full bg-primary" />
+            <span className="text-[11px] font-medium whitespace-nowrap text-foreground">
+              {statusLabel}
+            </span>
           </div>
           <div
             className={cn(
@@ -531,7 +564,15 @@ export function Voice({
               <Shimmer animated={false} loopActive={false} />
             ) : (
               <p className="text-center text-sm leading-relaxed text-foreground">
-                {transcriptLabel}
+                {tokens.map((token, t) =>
+                  token.type === "space" ? (
+                    <span key={t}>{token.text}</span>
+                  ) : (
+                    <span key={t} className="inline-block">
+                      {token.text}
+                    </span>
+                  ),
+                )}
               </p>
             )}
           </div>
@@ -541,12 +582,7 @@ export function Voice({
   }
 
   const state = { initial: "hidden", animate: gate ? "visible" : "hidden" } as const;
-  const wordsState = { initial: "hidden", animate: active ? "visible" : "hidden" } as const;
-  const words = (transcriptLabel ?? "").split(/(\s+)/).filter(Boolean);
-  let wordIndex = 0;
-  const tokens = words.map((text) =>
-    /^\s+$/.test(text) ? { type: "space", text } : { type: "word", text, index: wordIndex++ },
-  );
+  const wordsState = { initial: "hidden", animate: shown ? "visible" : "hidden" } as const;
 
   return (
     <div
@@ -561,9 +597,7 @@ export function Voice({
           <motion.div
             className="absolute inset-0"
             animate={
-              looping
-                ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
-                : { scale: 1, opacity: 0.85 }
+              looping ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 1 }
             }
             transition={
               looping
@@ -579,7 +613,7 @@ export function Voice({
         <motion.div className="absolute inset-0 -z-10" variants={particlesVariant} {...state}>
           <motion.div
             className="absolute inset-0"
-            animate={{ opacity: +!!active }}
+            animate={{ opacity: +!!shown }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             {PARTICLES.map((p, i) => (
@@ -625,57 +659,63 @@ export function Voice({
         {...state}
       >
         <motion.div className="relative flex items-center justify-center" variants={orb} {...state}>
-          <div className="absolute size-24 rounded-full border border-primary/20" />
-          <AnimatePresence initial={false}>
-            <motion.div
-              key={isThinking ? "thinking" : isListening ? "listening" : "speaking"}
-              className="absolute inset-0 flex items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              {isThinking ? (
+          {resting ? (
+            <RestRings thinking={isThinking} />
+          ) : (
+            <>
+              <div className="absolute size-24 rounded-full border border-primary/20" />
+              <AnimatePresence initial={false}>
                 <motion.div
-                  className="absolute size-28 rounded-full border border-primary/30"
-                  initial={{ scale: 1, opacity: 0.28 }}
-                  animate={
-                    looping
-                      ? { scale: [1, 1.12, 1], opacity: [0.3, 0.12, 0.3] }
-                      : { scale: 1, opacity: 0.28 }
-                  }
-                  transition={
-                    looping
-                      ? { duration: 2, ease: "easeInOut", repeat: Infinity }
-                      : { duration: 0.4, ease: "easeOut" }
-                  }
-                />
-              ) : (
-                RINGS.map((ring, t) => (
-                  <motion.div
-                    key={t}
-                    className="absolute size-24 rounded-full border border-primary/30"
-                    initial={{ scale: isListening ? 2.2 : 1, opacity: 0 }}
-                    animate={
-                      looping
-                        ? { scale: isListening ? [2.2, 1] : [1, 2.2], opacity: [0, 0.4, 0] }
-                        : { scale: isListening ? 2.2 : 1, opacity: 0 }
-                    }
-                    transition={
-                      looping
-                        ? {
-                            duration: ring.duration,
-                            delay: ring.delay,
-                            ease: "easeOut",
-                            repeat: Infinity,
-                          }
-                        : { duration: 0.4, ease: "easeOut" }
-                    }
-                  />
-                ))
-              )}
-            </motion.div>
-          </AnimatePresence>
+                  key={isThinking ? "thinking" : isListening ? "listening" : "speaking"}
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                >
+                  {isThinking ? (
+                    <motion.div
+                      className="absolute size-28 rounded-full border border-primary/30"
+                      initial={{ scale: 1, opacity: 0.28 }}
+                      animate={
+                        looping
+                          ? { scale: [1, 1.12, 1], opacity: [0.3, 0.12, 0.3] }
+                          : { scale: 1, opacity: 0.28 }
+                      }
+                      transition={
+                        looping
+                          ? { duration: 2, ease: "easeInOut", repeat: Infinity }
+                          : { duration: 0.4, ease: "easeOut" }
+                      }
+                    />
+                  ) : (
+                    RINGS.map((ring, t) => (
+                      <motion.div
+                        key={t}
+                        className="absolute size-24 rounded-full border border-primary/30"
+                        initial={{ scale: isListening ? 2.2 : 1, opacity: 0 }}
+                        animate={
+                          looping
+                            ? { scale: isListening ? [2.2, 1] : [1, 2.2], opacity: [0, 0.4, 0] }
+                            : { scale: isListening ? 2.2 : 1, opacity: 0 }
+                        }
+                        transition={
+                          looping
+                            ? {
+                                duration: ring.duration,
+                                delay: ring.delay,
+                                ease: "easeOut",
+                                repeat: Infinity,
+                              }
+                            : { duration: 0.4, ease: "easeOut" }
+                        }
+                      />
+                    ))
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </>
+          )}
           <Orb>
             <AnimatePresence initial={false} mode="popLayout">
               <motion.div

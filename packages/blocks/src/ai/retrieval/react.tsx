@@ -569,6 +569,8 @@ export function Retrieval({
   const active = (hover ? hovered : inView) && ticked;
   const looping = active && loop;
   const drifting = inView && ticked;
+  // paused or reduced motion: rest on the static frame, hover or not
+  const shown = active || (drifting && !loop);
   const state = animated
     ? { initial: "hidden", animate: inView ? "visible" : "hidden" }
     : ({} as Record<string, unknown>);
@@ -644,7 +646,7 @@ export function Retrieval({
               animate={
                 looping
                   ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
-                  : { scale: 1, opacity: 0.85 }
+                  : { scale: 1, opacity: 1 }
               }
               transition={
                 looping
@@ -657,7 +659,9 @@ export function Retrieval({
           </motion.div>
         ) : (
           <div className="absolute inset-0 -z-10">
-            <GlowScene />
+            <div className="absolute inset-0">
+              <GlowScene />
+            </div>
           </div>
         ))}
       {particles &&
@@ -665,7 +669,7 @@ export function Retrieval({
           <motion.div className="absolute inset-0 -z-10" variants={particlesVariant} {...state}>
             <motion.div
               className="absolute inset-0"
-              animate={{ opacity: +!!active }}
+              animate={{ opacity: +!!shown }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
               {PARTICLES.map((p, i) => (
@@ -706,18 +710,22 @@ export function Retrieval({
           </motion.div>
         ) : (
           <div className="absolute inset-0 -z-10">
-            {PARTICLES.map((p, i) => (
-              <div
-                key={i}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              >
+            <div className="absolute inset-0">
+              {PARTICLES.map((p, i) => (
                 <div
-                  className={`rotate-45 rounded-[1px] ${p.color}`}
-                  style={{ width: p.size, height: p.size, opacity: p.opacity * 0.7 }}
-                />
-              </div>
-            ))}
+                  key={i}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${p.x}%`, top: `${p.y}%` }}
+                >
+                  <div style={{ opacity: p.opacity * 0.7 }}>
+                    <div
+                      className={`rotate-45 rounded-[1px] ${p.color}`}
+                      style={{ width: p.size, height: p.size }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       <motion.div

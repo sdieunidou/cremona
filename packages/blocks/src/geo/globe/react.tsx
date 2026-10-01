@@ -568,7 +568,7 @@ export function Globe({
               animated
                 ? pulsing
                   ? { scale: [1, 1.06, 1], opacity: [0.9, 1, 0.9] }
-                  : { scale: 1, opacity: 0.9 }
+                  : { scale: 1, opacity: 1 }
                 : undefined
             }
             transition={

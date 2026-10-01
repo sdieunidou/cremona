@@ -257,19 +257,23 @@ export function CommandPalette({
           <Search className="size-3.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />
           <span className="flex min-w-0 flex-1 items-center">
             <span className="min-w-0 truncate text-xs font-medium text-foreground">
-              {animated
-                ? chars.map((char, i) => (
-                    <motion.span
-                      key={i}
-                      className="inline-block whitespace-pre"
-                      variants={charAnim}
-                      custom={i}
-                      {...state}
-                    >
-                      {char}
-                    </motion.span>
-                  ))
-                : query}
+              {chars.map((char, i) =>
+                animated ? (
+                  <motion.span
+                    key={i}
+                    className="inline-block whitespace-pre"
+                    variants={charAnim}
+                    custom={i}
+                    {...state}
+                  >
+                    {char}
+                  </motion.span>
+                ) : (
+                  <span key={i} className="inline-block whitespace-pre">
+                    {char}
+                  </span>
+                ),
+              )}
             </span>
             {caret && (
               <motion.span

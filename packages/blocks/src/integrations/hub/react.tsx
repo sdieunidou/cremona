@@ -184,7 +184,8 @@ export function Hub({
   const cfg = spreads[spread];
   const isBeam = variant === "beam";
   const beamDelayTotal = beamDelay(satellites.length - 1) + 0.45;
-  const spinning = animated && spin && !isBeam;
+  // paused or reduced motion once in view: rest on the static frame, unrotated
+  const spinning = animated && spin && !isBeam && !(inView && !loop);
   const pause = looping ? "" : " paused";
   const orbitSpin = spinning ? `animate-[spin_120s_linear_infinite]${pause}` : "";
   const counterSpin = spinning ? `animate-[spin_120s_linear_infinite_reverse]${pause}` : "";
@@ -219,7 +220,7 @@ export function Hub({
           <>
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
-              animate={{ opacity: +!active }}
+              animate={{ opacity: +!looping }}
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <div
@@ -231,7 +232,7 @@ export function Hub({
             </motion.div>
             <motion.div
               className="absolute inset-0 flex items-center justify-center"
-              animate={{ opacity: +!!active }}
+              animate={{ opacity: +!!looping }}
               transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <motion.div
@@ -251,14 +252,14 @@ export function Hub({
             </motion.div>
           </>
         ) : (
-          <>
+          <div className="absolute inset-0 flex items-center justify-center">
             <div
               className={`absolute ${cfg.staticRings[0]} rounded-full border-2 border-primary/20 opacity-30`}
             />
             <div
               className={`absolute ${cfg.staticRings[1]} rounded-full border-2 border-primary/10 opacity-20`}
             />
-          </>
+          </div>
         )}
         {isBeam ? (
           <>

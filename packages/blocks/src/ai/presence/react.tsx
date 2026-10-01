@@ -452,6 +452,8 @@ export function Presence({
   const active = (hover ? hovered : inView) && ticked;
   const looping = active && loop;
   const drifting = inView && ticked;
+  // paused or reduced motion: rest on the static frame, hover or not
+  const shown = active || (drifting && !loop);
   const state = { initial: "hidden", animate: inView ? "visible" : "hidden" } as const;
 
   let colorSeed = 0;
@@ -468,23 +470,29 @@ export function Presence({
       <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
         {glow && (
           <div className="absolute inset-0 -z-10">
-            <GlowScene />
+            <div className="absolute inset-0">
+              <GlowScene />
+            </div>
           </div>
         )}
         {particles && (
           <div className="absolute inset-0 -z-10">
-            {PARTICLES.map((p, i) => (
-              <div
-                key={i}
-                className="absolute -translate-x-1/2 -translate-y-1/2"
-                style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              >
+            <div className="absolute inset-0">
+              {PARTICLES.map((p, i) => (
                 <div
-                  className={`rotate-45 rounded-[1px] ${p.color}`}
-                  style={{ width: p.size, height: p.size, opacity: p.opacity * 0.7 }}
-                />
-              </div>
-            ))}
+                  key={i}
+                  className="absolute -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${p.x}%`, top: `${p.y}%` }}
+                >
+                  <div style={{ opacity: p.opacity * 0.7 }}>
+                    <div
+                      className={`rotate-45 rounded-[1px] ${p.color}`}
+                      style={{ width: p.size, height: p.size }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
         <div className={cn("relative z-10 aspect-video w-full", !fill && "max-w-md")}>
@@ -495,13 +503,22 @@ export function Presence({
           </div>
           {cursors.map((c, i) => {
             const start = CURSOR_PATHS[i % CURSOR_PATHS.length]!.points[0]!;
+            // placed like the animated cursors at rest
             return (
               <div
                 key={i}
-                className={cn("absolute", c.kind === "user" && "z-10")}
-                style={{ left: `${start.x}%`, top: `${start.y}%` }}
+                className={cn("absolute inset-0", c.kind === "user" && "z-10")}
+                style={{ transform: `translateX(${start.x}%) translateY(${start.y}%)` }}
               >
-                <div className={cn("origin-top-left", c.color)}>
+                <div className={cn("relative origin-top-left", c.color)}>
+                  {c.kind === "user" && (
+                    <span className="absolute top-[3px] left-[3px] -translate-x-1/2 -translate-y-1/2">
+                      <span
+                        className="block size-5 rounded-full border-2 border-current"
+                        style={{ opacity: 0, transform: "scale(0.3)" }}
+                      />
+                    </span>
+                  )}
                   <CursorArrow />
                   <div className="mt-0.5 ml-2.5">
                     <CursorChip collaborator={c} />
@@ -528,9 +545,7 @@ export function Presence({
           <motion.div
             className="absolute inset-0"
             animate={
-              looping
-                ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] }
-                : { scale: 1, opacity: 0.85 }
+              looping ? { scale: [1, 1.08, 1], opacity: [0.85, 1, 0.85] } : { scale: 1, opacity: 1 }
             }
             transition={
               looping
@@ -546,7 +561,7 @@ export function Presence({
         <motion.div className="absolute inset-0 -z-10" variants={particlesVariant} {...state}>
           <motion.div
             className="absolute inset-0"
-            animate={{ opacity: +!!active }}
+            animate={{ opacity: +!!shown }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             {PARTICLES.map((p, i) => (
