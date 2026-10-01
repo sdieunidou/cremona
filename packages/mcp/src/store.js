@@ -63,6 +63,12 @@ export function blockPreviewProps(categorySlug, file) {
   return existsSync(p) ? readJson(p) : null;
 }
 
+/** The block's props reference (api.json, written by tools/generate-api.mjs). */
+export function blockApi(categorySlug, file) {
+  const p = join(blockDir(categorySlug, file), "api.json");
+  return existsSync(p) ? readJson(p) : null;
+}
+
 export function blockReactSource(categorySlug, file) {
   const p = join(blockDir(categorySlug, file), "react.tsx");
   return existsSync(p) ? readText(p) : null;
@@ -368,7 +374,7 @@ export function parityTestKeys() {
   return keys;
 }
 
-/** Coherence validation across catalog, blocks, goldens, preview props, stimulus templates and parity tests. */
+/** Coherence validation across catalog, blocks, goldens, preview props, props references, stimulus templates and parity tests. */
 export function validate() {
   const issues = [];
   const index = blockIndex();
@@ -386,6 +392,8 @@ export function validate() {
     const props = blockPreviewProps(b.categorySlug, b.file);
     if (!props)
       issues.push(`MISSING_PREVIEW_PROPS: ${b.key} (run the blocks test suite to generate)`);
+    if (!blockApi(b.categorySlug, b.file))
+      issues.push(`MISSING_API: ${b.key} (run pnpm generate:api)`);
     const stim = manifest[b.key];
     if (!stim) issues.push(`MISSING_STIMULUS: ${b.key} (run pnpm generate:stimulus)`);
     for (const v of meta.variants) {

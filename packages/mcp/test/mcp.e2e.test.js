@@ -122,6 +122,18 @@ describe("cremona MCP server", () => {
     expect(block.goldenSlugs).toBeUndefined();
   });
 
+  it("returns the props reference read from the source", async () => {
+    const block = textOf(
+      await client.callTool({ name: "get_block", arguments: { key: "metrics/stat-card" } }),
+    );
+    expect(block.api.component).toBe("StatCard");
+    const label = block.api.props.find((p) => p.name === "label");
+    expect(label).toMatchObject({ type: "string", optional: true, default: '"Revenue"' });
+    const animated = block.api.props.find((p) => p.name === "animated");
+    expect(animated).toMatchObject({ from: "VisualProps", default: "false" });
+    expect(block.api.types.map((t) => t.name)).toContain("Trend");
+  });
+
   it("returns the Stimulus templates and goldens on request", async () => {
     const block = textOf(
       await client.callTool({
