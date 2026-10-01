@@ -147,6 +147,27 @@ describe("cremona tokens", () => {
     }
   });
 
+  it("var(--color-*) follows a .dark subtree and a themed element, as the utilities do", () => {
+    // the aliases are computed where they are declared: wherever the tokens change
+    const preset = readFileSync(join(root, "css", "tailwind.css"), "utf8");
+    const inline = preset.slice(preset.indexOf("@theme inline {"));
+    const aliases = [
+      ...inline.slice(0, inline.indexOf("}")).matchAll(/(--color-[\w-]+): (var\(--[\w-]+\));/g),
+    ].map((m) => `${m[1]}:${m[2]}`);
+    expect(aliases).toHaveLength(38);
+    const selectors = [".dark", ...THEMES.slice(1).map((t) => `.theme-${t}`)].join(",");
+    const rule = full.match(
+      new RegExp(`(?:^|[{}])${selectors.replace(/\./g, "\\.")}\\{([^}]*)\\}`),
+    );
+    expect(rule, `${selectors} {--color-*}`).not.toBeNull();
+    expect(rule![1]!.split(";")).toEqual(aliases);
+    // in that subtree the tokens themselves are the theme's dark ones
+    const blocks = tokenBlocks(css);
+    expect(resolveTheme(blocks, "zen", "dark-subtree")["--primary"]).toBe(
+      resolveTheme(blocks, "zen", "dark")["--primary"],
+    );
+  });
+
   it("native controls follow the mode (color-scheme)", () => {
     expect(full).toContain(":root{color-scheme:light}.dark{color-scheme:dark}");
   });
