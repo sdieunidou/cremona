@@ -202,6 +202,9 @@ responsive grid with `fill` and `gradient={false}`, each with a text
 equivalent. Dark mode must work (I already have .dark toggling).
 ```
 
+The Server Component and icon pattern this recipe asks for is in
+[getting-started.md](getting-started.md#8-nextjs-app-router-and-server-components).
+
 ```text
 Build me a pricing page. sections/pricing is a miniature wireframe: use it at
 most as an illustration, and write the real pricing cards with the design

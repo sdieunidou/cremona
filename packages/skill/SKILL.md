@@ -78,9 +78,15 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
    - `fill` (default false): fill the box instead of centring a capped-width
      card — use it for any block that is a panel in a layout
    - `fadeOut`, `isometric`, `gradient` — the three cross-block style props
-   - per-block copy props (see `preview-props.json` for exact shapes)
+   - per-block content and data props: `api.json` (`get_block`'s `api`) lists them
+     with types and defaults, `preview-props.json` has each variant's exact props,
+     and "Block data props" in `docs/react.md` says how blocks treat real data
+     (an empty array renders empty, never the demo data)
 4. Icons come from `lucide-react`. For reduced motion, wrap the app in
-   `<MotionConfig reducedMotion="user">` (from `motion/react`).
+   `<MotionConfig reducedMotion="user">` (from `motion/react`); loops pause on their own.
+5. Every block module starts with `"use client"`: a Next.js Server Component renders
+   blocks directly, with serializable props. Icon components are functions: pass them
+   from a `"use client"` module of your own (`docs/getting-started.md`).
 
 ### Blocks are preview compositions, not production components
 
@@ -94,10 +100,11 @@ renders one button with one label.
   equivalent next to it since the root is `aria-hidden`.
 - **Derived**, for anything interactive: take the source (`get_block` with
   `include: ["react"]`, or `packages/blocks/src/<category>/<block>/react.tsx`),
-  remove the preview frame wrapper and the `useInView` plumbing, add
-  children/handlers/ref/ARIA/keyboard, and **keep** the class strings and the
-  `motion` variants. Rewriting from the class strings silently drops every
-  entrance animation in the library.
+  remove the preview frame wrapper, the `useInView` plumbing and the `noFocus`
+  spreads, add children/handlers/ref/ARIA/keyboard, and **keep** the class strings and the
+  `motion` variants (with `"use client"` and the `useLoopActive` gate on loops).
+  Rewriting from the class strings silently drops every entrance animation in the
+  library.
 
 `docs/react.md` has the full recipe, the props contract and the gotchas.
 

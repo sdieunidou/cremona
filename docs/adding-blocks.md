@@ -3,7 +3,8 @@
 ## TL;DR workflow
 
 1. **Scaffold** — MCP `add_block` (or copy an existing block folder):
-   creates `block.json` (the six style variants of a card block), a `react.tsx`
+   creates `block.json` (`default` and the five style variants of a card
+   block), a `react.tsx`
    skeleton that starts with `"use client";`, and a parity test. A new category
    comes first, from `add_category`.
 2. **Implement** — follow `docs/authoring-guide.md` (new visuals) or
@@ -31,8 +32,8 @@
 - Variant labels: free text, aspects separated by ` · `
   (`isometric · no gradient · custom copy`); the slug is
   `<three-digit index>-<label in kebab case>` (`005-isometric-no-gradient`).
-  The first variant is usually `default`. Card blocks carry the six style
-  variants `add_block` scaffolds — `default`, `fadeOut`, `isometric`,
+  The first variant is usually `default`. Card blocks then carry the five
+  style variants `add_block` scaffolds — `fadeOut`, `isometric`,
   `isometric · fadeOut`, `default · no gradient`, `isometric · no gradient` —
   when they take those props; other variants show states and content
   (`error`, `loading`, `custom copy`).

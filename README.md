@@ -72,14 +72,14 @@ claude mcp add cremona -s user -- npx -y @cremona/mcp
 ```
 
 The server searches the catalog, returns a block's install line, import,
-exact variant props and source, the design system and the stylesheet's
-location: [docs/mcp.md](docs/mcp.md).
+props reference, exact variant props and source, the design system and the
+stylesheet's location: [docs/mcp.md](docs/mcp.md).
 
 ## What's inside
 
 - **160 blocks in 37 categories** — metrics, charts, AI scenes, states,
   dashboards, git, geo, payments, components, forms, mobile, marketing
-  sections… — with about 1 250 ready-made variants (default, fadeOut,
+  sections… — with about 1,250 ready-made variants (default, fadeOut,
   isometric, custom copy, custom data, states…).
 - **9 themes × light/dark** on shadcn-style semantic tokens and status tokens,
   Inter Variable.
@@ -96,7 +96,7 @@ location: [docs/mcp.md](docs/mcp.md).
 pnpm install
 pnpm dev          # the gallery, http://localhost:5173 (View code / Copy React / Stimulus, a props table per block)
 pnpm test         # golden parity, MCP e2e, tokens, stimulus…
-pnpm check        # lint + format + typecheck + tests + validate, before finishing
+pnpm check        # lint, format, types, "use client" and api.json checks, tests, validate
 pnpm build        # compiles @cremona/core, @cremona/react, @cremona/blocks and the gallery
 pnpm mcp          # the MCP server over stdio, with the authoring tools
 ```
@@ -109,16 +109,16 @@ MCP tools `add_category` / `add_block`.
 ```
 cremona/
 ├── packages/
-│   ├── blocks/      the source of truth: 160 blocks (react.tsx, block.json, goldens) — @cremona/blocks
+│   ├── blocks/      the source of truth: 160 blocks (react.tsx, block.json, api.json, goldens) — @cremona/blocks
 │   ├── tokens/      design system CSS (themes, tokens, fonts) — @cremona/tokens
 │   ├── core/        shared types and helpers — @cremona/core
-│   ├── react/       hooks (useInView, useLoopActive) — @cremona/react
+│   ├── react/       hooks (useInView, useLoopActive, useFitScale) — @cremona/react
 │   ├── stimulus/    controllers + generated static templates — @cremona/stimulus
 │   ├── mcp/         MCP server + CLI — @cremona/mcp
 │   └── skill/       SKILL.md for AI sessions
 ├── apps/
 │   └── gallery/     docs app: live previews + one-click React/Stimulus code
-├── tools/           generators (Stimulus templates, "use client" directive)
+├── tools/           generators (Stimulus templates, props references, "use client" directive)
 └── docs/            guides
 ```
 
@@ -135,17 +135,17 @@ cremona/
 | [docs/architecture.md](docs/architecture.md) | monorepo, data flow, invariants |
 | [docs/authoring-guide.md](docs/authoring-guide.md) | authoring contract for new visuals |
 | [docs/adding-blocks.md](docs/adding-blocks.md) | adding a block, step by step |
-| [docs/porting-guide.md](docs/porting-guide.md) | porting contract for POC visuals |
+| [docs/porting-guide.md](docs/porting-guide.md) | the contract of the POC blocks |
 | [docs/releasing.md](docs/releasing.md) | versioning, npm publishing, repository settings |
 
 ## Provenance
 
-The library started as a tested reconstruction of the *Cremona* POC: the
-catalog, goldens, themes and animation parameters were extracted from its
-build, and the React implementations were re-authored from its minified chunks
-against the extracted server renders. The component, layout, ecommerce, forms,
-mobile and notices layers extend it under the same contract (authoring guide,
-generated goldens, parity tests).
+115 blocks are a tested reconstruction of the *Cremona* POC: their catalog
+entries, goldens, themes and animation parameters come from its build, and
+their React implementations are re-authored from its minified chunks (kept in
+their `sources/` folders) against its server renders. The component, layout,
+ecommerce, forms, mobile and notices layers extend it under the same contract
+(authoring guide, generated goldens, parity tests).
 
 ## License
 

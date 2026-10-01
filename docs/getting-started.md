@@ -86,8 +86,9 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
 
 - **Import path**: `@cremona/blocks/<category>/<file>`, one entry per block
   (ESM and types), exporting the component named after the block
-  (`charts/donut` → `Donut`) and its props type (`DonutProps`). The gallery's
-  *Copy React* and the MCP `get_block` give the exact line.
+  (`charts/donut` → `Donut`) and its props type (`DonutProps`); a few names
+  differ (`sections/headers` → `Header`, `states/error` → `ErrorState`). The
+  gallery's *Copy React* and the MCP `get_block` give the exact line.
 - **Size**: a block fills the box you give it. Give that box a height.
 - **Content**: pass every text prop. The defaults are demo copy ("Pro Plan",
   "of 100GB"), so a prop you leave out shows it. Data goes in props too:
@@ -138,25 +139,13 @@ Both are classes on `<html>`: `dark` for dark mode, and `theme-<name>` for the
 eight themes besides the default — `claude-plus`, `light-green`, `zen`,
 `sakura`, `tiesen`, `deep-purple`, `indigo-clean`, `brutalism` (see
 [design-system.md](design-system.md)). Apply them before the first paint, or the
-page flashes light first. With the choice kept in `localStorage`, and the OS
-setting as the default:
+page flashes light first: put the design system's
+[anti-flash script](design-system.md#dark-mode) first in `<head>`. It reads the
+choice from `localStorage` (`cremona-appearance`, `cremona-theme`) and follows
+the OS setting by default.
 
-```html
-<script>
-  (function () {
-    var root = document.documentElement;
-    var saved = localStorage.getItem("appearance") || "system";
-    var dark = saved === "dark" || (saved === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
-    root.classList.toggle("dark", dark);
-    root.style.colorScheme = dark ? "dark" : "light";
-    var theme = localStorage.getItem("theme");
-    if (theme) root.classList.add("theme-" + theme);
-  })();
-</script>
-```
-
-- **Vite**: put it in the `<head>` of `index.html`.
-- **Next.js**: render it in the root layout (the function above as a string,
+- **Vite**: in the `<head>` of `index.html`.
+- **Next.js**: render it in the root layout (the script as a string,
   `appearanceScript`), and mark `<html>` so React accepts the classes it adds
   before hydration:
 
@@ -169,13 +158,20 @@ setting as the default:
   </html>
   ```
 
-A toggle only flips the class and saves the choice:
+A toggle flips the class and saves the choice under the same key:
 
 ```ts
 const dark = document.documentElement.classList.toggle("dark");
 document.documentElement.style.colorScheme = dark ? "dark" : "light";
-localStorage.setItem("appearance", dark ? "dark" : "light");
+try {
+  localStorage.setItem("cremona-appearance", dark ? "dark" : "light");
+} catch {
+  // storage blocked: the choice lasts for the page
+}
 ```
+
+`dark` on an inner element renders that subtree with the dark tokens of the
+page's theme, in a light page too.
 
 ## 6. Reduced motion
 
@@ -188,16 +184,18 @@ import { MotionConfig } from "motion/react";
 ```
 
 For users who ask for reduced motion, entrance transforms then jump to their
-end state and fades remain; looping animations pause on their own. In Next.js,
+end state and fades remain; looping animations pause on their own (also
+off-screen and in a hidden tab). In Next.js,
 `MotionConfig` can wrap `{children}` directly in `app/layout.tsx`: motion ships
 it as a client component.
 
 ## 7. Placeholder images
 
-A few blocks fall back to demo photos under `/media/placeholders/`
-(`components/avatar`, `ecommerce/product-card`, `ecommerce/order-row`,
-`ecommerce/cart-drawer`…). The images ship in the package; copy them into the
-directory your app serves at its root:
+Some blocks show demo photos from `/media/placeholders/`:
+`ecommerce/product-card`, `order-row` and `cart-drawer` by default,
+`components/avatar` with its deprecated `img` prop, and the photo variants of
+`images/*`. The images ship in the package; copy them into the directory your
+app serves at its root:
 
 ```bash
 cp -R node_modules/@cremona/blocks/public/media public/

@@ -170,7 +170,7 @@ frame    group/preview relative flex flex-col overflow-hidden rounded-lg
          border border-border/50 bg-muted/20 dark:bg-muted/15
 stage    flex grow items-center gap-2 + h-48|h-64|h-96|h-[28rem]|h-[32rem]
 footer   bg-muted/25 px-2 py-2.25 text-center text-xs font-medium text-muted-foreground
-grid     grid grid-cols-1 gap-2 lg:grid-cols-2 (+ xl:grid-cols-3)
+grid     grid grid-cols-1 gap-2 lg:grid-cols-2 (+ xl:grid-cols-3 or xl:grid-cols-4)
 ```
 
 Inside the frame, visuals render a scene:
@@ -204,6 +204,8 @@ as-is or derive a component from it.
 - Pills/values: spring `360/18` or `y 8` easeOut with `.25–.5` delays.
 - Glow: `opacity 0→.6, scaleX .6→1, duration .5, delay .5`.
 - Stagger groups: `staggerChildren .07–.15, delayChildren .2–.25`.
+- Loops: only while `useLoopActive(ref, animated)` is true — in view, tab
+  visible, no reduced-motion preference — with a resting frame otherwise.
 
 `@cremona/core` exports the shared constants (`RAINBOW_GRADIENT`, `ISO_*`,
 `FRAME_HEIGHTS`, `gridCols`).

@@ -38,8 +38,9 @@ Every visual extends `VisualProps`:
 | `fill` | `false` | fill the box instead of sitting in the preview frame — see [Using a block as a panel](#using-a-block-as-a-panel) |
 | `className` | — | added to the root's classes (see [Gotchas](#gotchas) for overrides) |
 
-Cross-block style props (when present in the POC): `fadeOut` (mask fade at the
-card bottom), `isometric` (3D tilt), `gradient` (rainbow glow + veil).
+Cross-block style props, on the blocks with a card wrapper: `fadeOut` (mask
+fade at the card bottom), `isometric` (3D tilt), `gradient` (rainbow glow +
+veil).
 
 Per-block content and data props default to the gallery's demo content
 (`label`, `value`, `change`, `trend` for stat-card). Each block's generated
@@ -85,8 +86,9 @@ There are two correct ways to use one.
 
 ### The components layer
 
-`components/*` render at their real size and take JSON-serializable content
-props whose defaults reproduce the gallery's demo content — pass yours:
+`components/*` render at their real size and take their content as props —
+strings, arrays and plain objects, with lucide components for icons — whose
+defaults reproduce the gallery's demo content: pass yours.
 
 | Block | Content props |
 |---|---|
@@ -313,9 +315,9 @@ in French), comments a preformatted `count`.
 
 ### Kits: forms, ecommerce, mobile, notices
 
-- A `labels` object overrides any of the kit's English strings, and tokens in
-  them (`{step}`, `{total}`, `{count}`, `{score}`, `{rating}`, `{email}`) are
-  replaced.
+- A `labels` object overrides any of the kit's English strings; placeholders
+  such as `{step}`, `{score}` and `{rating}` in them, and `{count}` in
+  product-grid's `countLabel`, are replaced.
 - Icons are keys mapped inside the block (`icon: "share"`), so every prop is
   serializable, from a Server Component too.
 - `ecommerce/cart-drawer` and `checkout-summary` take amounts as numbers: line
@@ -490,7 +492,7 @@ Blocks import only `react`, `motion/react`, `lucide-react`, `@cremona/core` and
 | Export | Use |
 |---|---|
 | `useInView(ref, { once, initial, margin, amount })` | `true` while the element is in view (from its first entry with `once`). `amount` is the share that must show (`0.5` in blocks), capped at the share the element can show. Blocks start their entrance with it |
-| `observeInView(targets, onEnter, options)` | the same observer outside React; `onEnter` may return a cleanup, run when the target leaves |
+| `observeInView(targets, onEnter, options)` | the same observer outside React; `onEnter` may return a cleanup, run when the target leaves — without one, the target is observed until its first entry |
 | `useLoopActive(ref, enabled)` | `true` while a loop should run: `enabled`, the element intersects the viewport, the page is visible and the user does not ask for reduced motion. `true` on the server and while hydrating, so server markup shows the looping state. Blocks gate every loop with it — `enabled` is `animated`, or `true` for a spinner that is the loading state — and render a resting frame when it is `false` |
 | `usePrefersReducedMotion()` | the `prefers-reduced-motion: reduce` media query; `false` on the server and while hydrating |
 | `useFitScale(frame, stage, layout?)` | scales `stage` down (CSS `scale`, never up) to fit `frame`'s content box, again when either resizes or `layout` changes; client-only |

@@ -104,7 +104,9 @@ wrapper in one place:
 
 Templates are the gallery's preview compositions, with their sample copy baked
 in. Change the text in your copy of a file if needed, and keep the classes and
-`data-anim-*` attributes.
+`data-anim-*` attributes. Like a React block, a template's root is
+`aria-hidden`: put a text equivalent next to it
+([accessibility.md](accessibility.md)).
 
 Ids inside a template carry a per-template prefix (`cr-<category>-<file>-<index>-`),
 so different templates never collide on a page.
@@ -308,7 +310,7 @@ storage keys of `cremona-theme`, change them in the partial too. Drop the
 ## Images
 
 Templates that show pictures reference `/media/placeholders/*.jpg`, relative to
-the site root. Copy `apps/gallery/public/media/placeholders/` (880 KB) into
+the site root. Copy `apps/gallery/public/media/placeholders/` (about 840 KB) into
 `public/media/placeholders/`. To serve the images from elsewhere, rewrite the
 prefix in the macro: `source(…)|replace({'"/media/': '"/assets/cremona/'})`.
 
