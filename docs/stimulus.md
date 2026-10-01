@@ -104,7 +104,9 @@ wrapper in one place:
 
 Templates are the gallery's preview compositions, with their sample copy baked
 in. Change the text in your copy of a file if needed, and keep the classes and
-`data-anim-*` attributes.
+`data-anim-*` attributes. Like a React block, a template's root is
+`aria-hidden`: put a text equivalent next to it
+([accessibility.md](accessibility.md)).
 
 Ids inside a template carry a per-template prefix (`cr-<category>-<file>-<index>-`),
 so different templates never collide on a page.
@@ -229,13 +231,30 @@ Every change dispatches `cremona-theme:changed` on `<html>`, with
 the server:
 `data-action="cremona-theme:changed@document->preferences#save"`.
 
+## TypeScript
+
+`@cremona/stimulus` ships type declarations: `registerCremona(application)`,
+both controller classes with their typed values (`triggerValue`,
+`appearanceValue: CremonaAppearance`…) and actions, and `CremonaThemeChange`,
+the detail of `cremona-theme:changed`:
+
+```ts
+import type { CremonaThemeChange } from "@cremona/stimulus";
+
+document.addEventListener("cremona-theme:changed", (event) => {
+  const { appearance, theme, dark } = (event as CustomEvent<CremonaThemeChange>).detail;
+});
+```
+
 ## Before the first paint
 
 The controllers run once the JavaScript has loaded, which comes after the first
 paint. To avoid a flash of the light theme, and of final states that then jump
 back to their initial state, put this partial first in `<head>`. It applies the
-same theme as `cremona-theme`. It also hides visuals until `cremona-visual`
-connects: at most 3 s, and never under reduced motion.
+same theme as `cremona-theme`: the design system's
+[anti-flash script](design-system.md#dark-mode), falling back to the values
+rendered on `<html>`. It also hides visuals until `cremona-visual` connects: at
+most 3 s, and never under reduced motion.
 
 ```twig
 {# templates/cremona/_head.html.twig #}
@@ -291,7 +310,7 @@ storage keys of `cremona-theme`, change them in the partial too. Drop the
 ## Images
 
 Templates that show pictures reference `/media/placeholders/*.jpg`, relative to
-the site root. Copy `apps/gallery/public/media/placeholders/` (880 KB) into
+the site root. Copy `apps/gallery/public/media/placeholders/` (about 840 KB) into
 `public/media/placeholders/`. To serve the images from elsewhere, rewrite the
 prefix in the macro: `source(…)|replace({'"/media/': '"/assets/cremona/'})`.
 

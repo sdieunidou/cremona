@@ -91,7 +91,10 @@ the classes in sync afterwards, but connects too late to prevent the flash):
 Change the two defaults to force a mode or a theme. In a React app rendered on
 the server (Next.js `app/layout.tsx`), render the same script in `<head>` and
 put `suppressHydrationWarning` on `<html>`, since the script changes its
-classes before hydration.
+classes before hydration ([getting-started.md](getting-started.md#5-dark-mode-and-themes)).
+In a Stimulus app, use the [head partial](stimulus.md#before-the-first-paint)
+instead: the same logic, which also falls back to the values `cremona-theme`
+renders on `<html>` and keeps visuals hidden until `cremona-visual` connects.
 
 ## Contrast guarantees
 
@@ -131,6 +134,9 @@ Outside the budget, by design:
   theme × mode combinations: draw keyboard focus with the full-opacity
   `outline-ring` above.
 
+What the blocks guarantee beyond colour, and what the host adds:
+[accessibility.md](accessibility.md).
+
 ## Fonts
 
 Inter Variable (`--font-sans`), weights 100–900, woff2 subsets shipped in
@@ -164,7 +170,7 @@ frame    group/preview relative flex flex-col overflow-hidden rounded-lg
          border border-border/50 bg-muted/20 dark:bg-muted/15
 stage    flex grow items-center gap-2 + h-48|h-64|h-96|h-[28rem]|h-[32rem]
 footer   bg-muted/25 px-2 py-2.25 text-center text-xs font-medium text-muted-foreground
-grid     grid grid-cols-1 gap-2 lg:grid-cols-2 (+ xl:grid-cols-3)
+grid     grid grid-cols-1 gap-2 lg:grid-cols-2 (+ xl:grid-cols-3 or xl:grid-cols-4)
 ```
 
 Inside the frame, visuals render a scene:
@@ -175,10 +181,20 @@ the rainbow glow (`opacity-60 blur-sm`), the bottom veil
 
 ## Scales
 
-- **Real-size components** (`components/*`, parts of `ecommerce/forms/mobile/notices`)
-  render full-size UI centered in the stage — usable directly in an app.
-- **Miniature mocks** (`sections/*`, `layouts/*`, some ecommerce) are scaled-down
-  wireframes of whole pages, in the POC product-illustration style.
+Every block renders at one of three scales (the MCP `scale`):
+
+- **illustration** — product artwork in the POC style (metrics, charts, scenes,
+  states…): every category not listed below;
+- **real-size** — `components/*`, `forms/*`, `mobile/*`, `notices/*`,
+  `ecommerce/product-card`, `order-row` and `checkout-summary`: UI at its real
+  size (12–16 px text), the templates interactive components are derived from;
+- **miniature** — `sections/*`, `layouts/*`, `ecommerce/product-grid` and
+  `cart-drawer`: thumbnail-scale wireframes of a page or a section (7–10 px
+  text), never the page itself.
+
+All three are preview compositions:
+[react.md](react.md#preview-compositions-vs-production-ui) says how to use one
+as-is or derive a component from it.
 
 ## Motion conventions
 
@@ -188,6 +204,8 @@ the rainbow glow (`opacity-60 blur-sm`), the bottom veil
 - Pills/values: spring `360/18` or `y 8` easeOut with `.25–.5` delays.
 - Glow: `opacity 0→.6, scaleX .6→1, duration .5, delay .5`.
 - Stagger groups: `staggerChildren .07–.15, delayChildren .2–.25`.
+- Loops: only while `useLoopActive(ref, animated)` is true — in view, tab
+  visible, no reduced-motion preference — with a resting frame otherwise.
 
 `@cremona/core` exports the shared constants (`RAINBOW_GRADIENT`, `ISO_*`,
 `FRAME_HEIGHTS`, `gridCols`).

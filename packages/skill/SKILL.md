@@ -12,7 +12,10 @@ locked by a golden reference: parity tests compare the SSR DOM structurally
 adapters:
 
 - **React** (`@cremona/blocks` + `@cremona/react`) — motion-based animations, the primary adapter.
-- **Stimulus** (`@cremona/stimulus`) — the same static markup + the `cremona-visual` controller, for Symfony/Hotwire apps.
+- **Stimulus** (`@cremona/stimulus`) — for Symfony/Hotwire apps: a static template of each
+  variant's final React render (readable without JavaScript), whose entrance the
+  `cremona-visual` controller plays with Web Animations. Loops and JavaScript-driven effects
+  stay React-only.
 
 ## What's inside: three scales
 
@@ -40,13 +43,15 @@ Every block has a `scale` (MCP `list_blocks`, `search_blocks`, `get_block`):
    `get_css`, `get_controller`, `get_design_system`, `validate`, `get_guide`;
    from a cremona checkout also the authoring tools `add_category` and
    `add_block`, which the published `npx -y @cremona/mcp` server does not register)
-   → use the tools. `get_block` returns the install line, the import, exact
-   variant props and the React source (add `include: ["stimulus"]` for the
-   Stimulus templates); `get_css` returns the stylesheet's path and import line.
+   → use the tools. `get_block` returns the install line, the import, the props
+   reference (`api`: type, default and description of every prop), exact variant
+   props and the React source (add `include: ["stimulus"]` for the Stimulus
+   templates); `get_css` returns the stylesheet's path and import line.
 2. **No MCP, repo available?** Read the same data from the filesystem:
    - Catalog: `packages/blocks/catalog.json` (37 categories, names, descriptions)
    - Per block: `packages/blocks/src/<category>/<file>/`
      - `block.json` (metadata + variant labels)
+     - `api.json` (props reference: type, default and description of every prop)
      - `preview-props.json` (exact props per variant; `"lucide:X"` = lucide-react icon)
      - `react.tsx` (React implementation)
      - `golden/<slug>.html` (SSR render reference)
@@ -73,9 +78,15 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
    - `fill` (default false): fill the box instead of centring a capped-width
      card — use it for any block that is a panel in a layout
    - `fadeOut`, `isometric`, `gradient` — the three cross-block style props
-   - per-block copy props (see `preview-props.json` for exact shapes)
+   - per-block content and data props: `api.json` (`get_block`'s `api`) lists them
+     with types and defaults, `preview-props.json` has each variant's exact props,
+     and "Block data props" in `docs/react.md` says how blocks treat real data
+     (an empty array renders empty, never the demo data)
 4. Icons come from `lucide-react`. For reduced motion, wrap the app in
-   `<MotionConfig reducedMotion="user">` (from `motion/react`).
+   `<MotionConfig reducedMotion="user">` (from `motion/react`); loops pause on their own.
+5. Every block module starts with `"use client"`: a Next.js Server Component renders
+   blocks directly, with serializable props. Icon components are functions: pass them
+   from a `"use client"` module of your own (`docs/getting-started.md`).
 
 ### Blocks are preview compositions, not production components
 
@@ -89,10 +100,11 @@ renders one button with one label.
   equivalent next to it since the root is `aria-hidden`.
 - **Derived**, for anything interactive: take the source (`get_block` with
   `include: ["react"]`, or `packages/blocks/src/<category>/<block>/react.tsx`),
-  remove the preview frame wrapper and the `useInView` plumbing, add
-  children/handlers/ref/ARIA/keyboard, and **keep** the class strings and the
-  `motion` variants. Rewriting from the class strings silently drops every
-  entrance animation in the library.
+  remove the preview frame wrapper, the `useInView` plumbing and the `noFocus`
+  spreads, add children/handlers/ref/ARIA/keyboard, and **keep** the class strings and the
+  `motion` variants (with `"use client"` and the `useLoopActive` gate on loops).
+  Rewriting from the class strings silently drops every entrance animation in the
+  library.
 
 `docs/react.md` has the full recipe, the props contract and the gotchas.
 
@@ -103,14 +115,23 @@ renders one button with one label.
    import { registerCremona } from "@cremona/stimulus";
    registerCremona(yourStimulusApp);
    ```
-2. Copy the variant markup you need from
-   `packages/stimulus/templates/<category>/<file>/<slug>.html`
-   (see `manifest.json` for labels). Markup is identical to the React render.
-3. The root carries `data-controller="cremona-visual"`; the controller plays the
-   entrance animation on scroll (values: `trigger`, `duration`, `stagger`, `delay`).
-4. Theme switching: `data-controller="cremona-theme"` on `<html>` (values
-   `appearance`, `theme`; the choice persists to localStorage when storage is
-   available; API: `toggle()`, `apply()`).
+2. Include the variant you need from
+   `packages/stimulus/templates/<category>/<file>/<slug>.html` (`manifest.json` lists
+   labels, slugs and sizes). The template is the block's final React render
+   (`animated={false}`): it reads correctly without JavaScript. Ids are prefixed per
+   template, and the controller makes them unique per copy on the page.
+3. Wrap it in a container with a height: the template fills its box. The variant's
+   `size` gives it: `xs` h-48, `sm` h-64, `md` (the default, `null` in `manifest.json`)
+   h-96, `lg` h-[28rem], `xl` h-[32rem].
+4. The root carries `data-controller="cremona-visual"`, which plays the entrance with Web
+   Animations from each element's `data-anim-from` start state (values: `trigger`,
+   `duration`, `stagger`, `delay`…). Blocks whose manifest entry says
+   `"effects": "entrance-only"` keep their loops and JavaScript effects in React only
+   (`reactOnly` lists them); the template shows their resting frame.
+5. Theme switching: `data-controller="cremona-theme"` on `<html>` (values `appearance`,
+   `theme`; the choice persists to localStorage when storage is available; actions
+   `toggle`, `setAppearance`, `setTheme`). The head partial in `docs/stimulus.md` applies
+   the theme before the first paint.
 
 ## Creating new visuals (categories, blocks, variants)
 
@@ -120,9 +141,12 @@ renders one button with one label.
   implement + test from `packages/blocks`: `pnpm vitest run test/generate-goldens.test.tsx`
   (writes only missing goldens), then `pnpm vitest run test/<category>-<file>.parity.test.tsx`.
 - Every block MUST pass golden parity; `pnpm validate` checks that each block has a
-  `react.tsx`, a golden, a preview-props entry and a Stimulus template per variant,
-  and a parity test.
-- From the repo root: `pnpm generate:stimulus` after changes, then `pnpm check`.
+  `react.tsx`, an `api.json`, a golden, a preview-props entry and a Stimulus template
+  per variant, and a parity test.
+- Write a JSDoc comment on every prop: `pnpm generate:api` turns the props interface
+  into `api.json`, the props reference the gallery and `get_block` show.
+- From the repo root, after changes: `pnpm generate:stimulus`, `pnpm generate:api`,
+  `pnpm build:css`, then `pnpm check`.
 
 ## Design system quick facts
 
@@ -137,7 +161,8 @@ renders one button with one label.
 ## Hard rules
 
 - Never hand-edit generated files: `packages/blocks/src/*/*/golden/**`,
-  `preview-props.json`, `packages/stimulus/templates/**`, `packages/tokens/css/cremona.css`.
+  `preview-props.json`, `api.json`, `packages/stimulus/templates/**`,
+  `packages/tokens/css/cremona.css`.
 - Never bypass parity tests. The renders ARE the product.
 - Keep class strings intact when porting or deriving: parity compares the DOM
   structure, the classes and the text.

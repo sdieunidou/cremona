@@ -1,7 +1,7 @@
 # MCP server
 
 The `@cremona/mcp` package exposes the whole library to AI sessions over
-stdio: **160 blocks / 37 categories / 1247 variants**, the design system,
+stdio: 160 blocks in 37 categories (about 1,250 variants), the design system,
 authoring tools and coherence validation. The `cremona` skill
 (`packages/skill/SKILL.md`) tells a session how to use them.
 
@@ -78,22 +78,35 @@ tools, which write files and rewrite `catalog.json` (`destructiveHint`).
 | `list_categories` | 37 categories with slugs and block names |
 | `list_blocks` | blocks filtered by category (slug or name), kind or scale, with variant labels |
 | `search_blocks` | word search over names, descriptions and variants; plurals, synonyms (`pie chart` → donut, `404` → not-found, `sign in` → login) and category/kind/scale filters |
-| `get_block` | install line, public import, metadata (with `scale`), **exact variant props** and the **full React source**; Stimulus templates and goldens on request |
+| `get_block` | install line, public import, metadata (`scale`, each variant's `size`), the **props reference**, **exact variant props** and the **full React source**; Stimulus templates and goldens on request |
 | `get_golden` | the SSR render reference HTML of one variant (hidden initial state) |
 | `get_themes` / `get_theme` | the 9 themes; one theme's full light+dark CSS |
 | `get_css` | the stylesheet's path, size, import lines and fonts; the whole file (`full`) or the tokens (`tokens`) on request |
 | `get_controller` | Stimulus controller source (`visual`, `theme`) |
 | `get_design_system` | token list, conventions, frame anatomy |
 | `add_category` / `add_block` | scaffold new categories/blocks with conventions (repo only) |
-| `validate` | catalog ↔ blocks (block.json, react.tsx) ↔ goldens ↔ preview props ↔ Stimulus templates ↔ parity tests |
-| `get_guide` | repo guides (porting-guide, authoring-guide…) |
+| `validate` | catalog ↔ blocks (block.json, react.tsx, api.json) ↔ goldens ↔ preview props ↔ Stimulus templates ↔ parity tests |
+| `get_guide` | the guides of `docs/` (react, getting-started, stimulus, authoring-guide…) |
 
 ### `get_block`
 
-`include` selects the sections: `meta`, `props` and `react` by default,
-`stimulus` (the template list and one sample) and `golden` on request.
-`variant` (label or slug) scopes the props, the Stimulus sample and the golden
-to one variant. Every response starts with:
+`include` selects the sections: `meta`, `api`, `props` and `react` by default,
+`stimulus` and `golden` on request. `variant` (a label or a slug, matched
+regardless of case and spacing) scopes the props, the Stimulus sample and the
+golden to one variant; an unknown variant is an error that lists the valid
+labels.
+
+| Field | Content |
+|---|---|
+| `key`, `install`, `import`, `stylesheet` | always: the block key, the npm install line, the import of its component from `@cremona/blocks/<category>/<file>`, the stylesheet import |
+| `meta` | name, description, `kind`, `scale`, `added`, `page`, `sourcePath`, and the variants with their `label`, `slug` and `size` (`xs` to `xl`, `md` by default: the height of their preview stage) |
+| `api` | the props reference (`api.json`): each prop's type as written, whether it is optional, its default and its JSDoc description; the shared `VisualProps` marked `from`; then the fields of the block's own types |
+| `props`, `propsNote` | each variant's exact props; `"lucide:Users"` stands for an icon component, `{ "$element": "lucide:Users", "props": {…} }` for an element |
+| `reactSource`, `reactSourceNote` | the full `react.tsx`, and the recipe to derive a component from it (drop the preview frame, the `useInView` plumbing and the `noFocus` spreads; keep `"use client"`, the classes and the motion variants) |
+| `stimulus` | the Stimulus install line; `effects` (`full` or `entrance-only`) and `reactOnly` (the effects that stay React-only); the rule that a template needs a container of its variant's height; the templates (label, slug, size) and one sample |
+| `goldenSlugs`, `golden` | the golden files, and the golden HTML of the chosen variant |
+
+Every response starts with:
 
 ```json
 {
@@ -117,9 +130,10 @@ Each block has a `scale` that says what it can be used for:
 ### Output size
 
 `get_css` without arguments returns a summary of a few hundred tokens; the
-whole minified stylesheet (`kind: "full"`) is about 67k tokens, above Claude
-Code's default 25k-token cap on MCP output (`MAX_MCP_OUTPUT_TOKENS`). The
-largest default `get_block` is about 7k tokens (`geo/world-map`).
+whole minified stylesheet (`kind: "full"`) is well above Claude Code's default
+25k-token cap on MCP output (`MAX_MCP_OUTPUT_TOKENS`): read the file from
+`node_modules` instead. The largest default `get_block` is about 8.5k tokens
+(`geo/world-map`); `include: ["api"]` or `["react"]` alone is smaller.
 
 ## Prompt recipes
 
@@ -158,9 +172,9 @@ List every variant with its exact props so I can pick one.
 ```
 
 ```text
-Call cremona_get_block for "components/button" including react, then tell me:
-which props does Button accept, what are the defaults, and which lucide
-icons does it import? Do not render anything yet.
+Call cremona_get_block for "components/button" with include ["api", "react"],
+then tell me: which props does Button accept, what are their defaults, and
+which lucide icons does it import? Do not render anything yet.
 ```
 
 ```text
@@ -176,15 +190,20 @@ I'm building a SaaS overview page in Next.js (App Router). Use the cremona
 MCP to pick and fetch:
 - a stat card (metrics/stat-card, variant "users · custom copy", with my own
   copy: revenue $84k)
-- a line chart (charts/line)
+- a line chart (charts/line) fed with my own values
 - a data table (components/table)
 - buttons and badges for the header (components/button, components/badge)
-Call cremona_get_block for each, then write app/page.tsx: "use client",
-install and import as the responses say, import @cremona/tokens/css/cremona.css
-once in app/layout.tsx, render the blocks in a responsive grid with `fill`,
-pass the exact variant props from the MCP. Dark mode must work (I already
-have .dark toggling).
+Call cremona_get_block for each and follow cremona_get_guide "getting-started":
+app/page.tsx stays a Server Component (no "use client"), and the icon props
+go through a small "use client" module that maps an icon name to its lucide
+component. Install and import as the responses say, import
+@cremona/tokens/css/cremona.css once in app/layout.tsx, render the blocks in a
+responsive grid with `fill` and `gradient={false}`, each with a text
+equivalent. Dark mode must work (I already have .dark toggling).
 ```
+
+The Server Component and icon pattern this recipe asks for is in
+[getting-started.md](getting-started.md#8-nextjs-app-router-and-server-components).
 
 ```text
 Build me a pricing page. sections/pricing is a miniature wireframe: use it at
@@ -200,17 +219,20 @@ cremona_get_guide "react", and keep their class strings and motion variants.
 ```text
 I have a Symfony app with Stimulus. Use cremona_get_block for
 "metrics/stat-card" and "status/health-check" with include ["stimulus"] to
-get the static templates, and cremona_get_controller "visual" + "theme".
-Then produce: templates/visuals/stat_card.html.twig and
-templates/visuals/health_check.html.twig with the cremona-visual
-data-attributes, plus the Stimulus bootstrap snippet registering the
-controllers. Tokens CSS will be bundled separately.
+get the static templates, their sizes and effects. Then produce a Twig macro
+that includes a template with source() inside a container of the variant's
+height, the two includes, and the Stimulus bootstrap snippet registering
+cremona-visual and cremona-theme into my existing application
+(cremona_get_guide "stimulus"). Tell me which effects stay React-only.
+Tokens CSS will be bundled separately.
 ```
 
 ```text
-Using cremona_get_theme for "sakura", wire a cremona-theme controller
-default on <html> for my Symfony base template, with a toggle button that
-switches appearance and persists to localStorage. Show me the twig + js.
+Using cremona_get_guide "stimulus" and cremona_get_theme for "sakura", wire
+the cremona-theme controller on <html> in my Symfony base template with
+"sakura" as the default theme, a light/dark toggle (the toggle action) and a
+System button (setAppearance), plus the head partial that applies the theme
+before the first paint. Show me the Twig.
 ```
 
 ### Theming
@@ -256,10 +278,10 @@ the documented commands: pnpm vitest run test/generate-goldens.test.tsx
 ### Auditing
 
 ```text
-Call cremona_list_blocks with kind "component" and audit each against
-cremona_get_design_system conventions: do the variant names follow the
-"aspect · aspect" pattern? Any block missing the core state variants?
-Report a table.
+Call cremona_list_blocks with kind "component", then cremona_get_block for
+each with include ["api"]. Report a table: the props without a description,
+and the components that have a disabled, loading or error state but no
+variant showing it.
 ```
 
 ## Gallery parity
@@ -267,8 +289,9 @@ Report a table.
 The gallery (docs app) exposes the same data visually: every preview has a
 **View code** panel (Usage / React source / Stimulus template) and one-click
 copy of the variant's exact JSX, imported from the public path
-`@cremona/blocks/<category>/<file>` — convenient for humans, same source of
-truth as the MCP.
+`@cremona/blocks/<category>/<file>`, and every block page ends with the props
+table built from the same `api.json` as `get_block`'s `api` — convenient for
+humans, same source of truth as the MCP.
 
 ## Notes
 

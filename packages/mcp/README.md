@@ -2,9 +2,9 @@
 
 An [MCP](https://modelcontextprotocol.io) server that gives AI coding sessions
 (Claude Code, opencode…) the [Cremona](https://github.com/sdieunidou/cremona)
-library: the block catalog, each block's install line, import, exact variant
-props and source, the design system, the themes and the stylesheet's
-location. It runs over stdio from a snapshot of the library bundled in the
+library: the block catalog, each block's install line, import, props
+reference (type, default and description of every prop), exact variant props
+and source, the design system, the themes and the stylesheet's location. It runs over stdio from a snapshot of the library bundled in the
 package.
 
 ```bash

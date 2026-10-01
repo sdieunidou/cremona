@@ -11,7 +11,7 @@ npm i @cremona/react
 ```
 
 ```ts
-import { useInView, useLoopActive, usePrefersReducedMotion } from "@cremona/react";
+import { useInView, useLoopActive, usePrefersReducedMotion, useFitScale } from "@cremona/react";
 ```
 
 - `useInView(ref, { once, initial, margin, amount })` — `true` while (or once)
@@ -23,8 +23,11 @@ import { useInView, useLoopActive, usePrefersReducedMotion } from "@cremona/reac
   hydrating, so server markup shows the looping state.
 - `usePrefersReducedMotion()` — the `prefers-reduced-motion: reduce` media
   query; `false` on the server and while hydrating.
+- `useFitScale(frame, stage, layout?)` — scales `stage` down (CSS `scale`,
+  never up) to fit the content box of `frame`; client-only, so the server
+  markup is unscaled.
 - `cn` and the `VisualProps`, `TriggerMode`, `BlockMeta`, `VariantDef` types,
   re-exported from `@cremona/core`.
 
-Peer dependencies: `react` and `react-dom` 18 or 19. ESM only, with type
+Peer dependencies: `react` and `react-dom` 18.2+ or 19. ESM only, with type
 declarations. MIT license.
