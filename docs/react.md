@@ -40,10 +40,14 @@ Every visual extends `VisualProps`:
 Cross-block style props (when present in the POC): `fadeOut` (mask fade at the
 card bottom), `isometric` (3D tilt), `gradient` (rainbow glow + veil).
 
-Per-block content props come from the POC defaults (e.g. `label`, `value`,
-`change`, `trend` for stat-card). **The exact prop shape per variant** is in
-each block's `preview-props.json` — values like `"lucide:Users"` mean "pass the
-lucide-react icon component with that name", and
+Per-block content and data props default to the gallery's demo content
+(`label`, `value`, `change`, `trend` for stat-card). Each block's generated
+props reference lists them with their types, defaults and descriptions: the
+_Props_ table of its gallery page, `get_block`'s `api`, or `api.json` in the
+block's folder; [Block data props](#block-data-props) says how blocks treat
+real data. **The exact props of each variant** are in the block's
+`preview-props.json` — values like `"lucide:Users"` mean "pass the lucide-react
+icon component with that name", and
 `{ "$element": "lucide:Users", "props": { "className": "size-4" } }` means "pass
 the element `<Users className="size-4" />`".
 
@@ -177,18 +181,158 @@ three edits every time:
 Keep a header comment naming the source block and what you changed: the
 derivation stays auditable, and you can re-sync when the block moves.
 
+## Block data props
+
+Every block has a generated props reference: each prop's type, default and
+description, read from its source into
+`packages/blocks/src/<category>/<file>/api.json`. The gallery shows it as the
+_Props_ table at the bottom of each block page, `get_block` returns it as
+`api`, and the TypeScript declarations carry the same JSDoc. This section is
+the contract those tables do not spell out: how blocks treat real data.
+
+- Every text and data prop defaults to the gallery's demo content, which only
+  fills in for a prop you leave out: pass your own.
+- An empty array renders empty, never as the demo data — charts, data and
+  status blocks say so with their `emptyLabel`, search blocks with
+  `labels.empty`.
+- Values outside a prop's range (NaN, a negative count, an unknown enum value)
+  render a neutral fallback instead of breaking the block.
+- Icon props take a lucide component (`icon={Users}`) and, where the type says
+  so, an element; the kits take icon keys (`icon: "share"`) instead, which
+  stay serializable.
+
+### Charts and metrics
+
+- `charts/line`, `charts/sparkline` and `metrics/trend` take `values` in their
+  own unit, scaled to `min`..`max` (default: the series' range), or `points`,
+  heights from 0 to 1 — `points` outside 0–1 are rescaled like `values`.
+  Non-finite samples are skipped and the line joins across the gap; one sample
+  draws a flat line; `line` keeps at most 8 `ticks`.
+- `charts/bar` hangs negative `items` from a zero baseline and draws no bar for
+  0 or NaN; `charts/donut` gives zero, negative and non-finite `segments` no
+  share, and a segment without `color` the next chart colour; `charts/funnel`
+  reads negative counts as 0 and counts from a million compact (`1.2M`, en-US);
+  `charts/heatmap` draws a non-finite value as an empty, outlined cell.
+- `charts/gauge` clamps the arc to 0–100 while `value` (default: the rounded
+  `percent`) shows the real figure; a non-finite `percent` draws no arc and
+  reads "—". A zone's `className` is a text colour class: the arc strokes
+  `currentColor`.
+- `positive: "down"` (bar, line, sparkline, funnel, gauge, heatmap,
+  stat-card) makes a fall the good news, drawn green: churn, latency, costs. A
+  `change` that starts with `-` or `−` reads as a fall.
+
+### Data, status and payments
+
+- `data/query`: no `conditions` hides the WHERE panel; without `columns`, the
+  `rows` set the column count. `data/import`: a mapping without `target` reads
+  `skipLabel`. `data/table`: rows are objects read by each column's `key`; an
+  `avatar` column also shows `initials` and `subtitle`, a `badge` column
+  colours `active` and `pending`.
+- `status/uptime-bar`: `incidents` and `outages` are day indexes (0 = oldest;
+  the last of `days` is today). `status` defaults to today's — an outage or an
+  incident on the last day, else operational — except for the demo window
+  (neither prop passed), which reads "Major outage". `uptime` defaults to the
+  share of days with neither.
+- `status/health-check`: an item's `status` is `operational`, `degraded` or
+  `down`; another value renders neutral, with its own text.
+- `status/resource-monitor`: a series without `jitter` is drawn as given
+  (fractions 0–1 or percentages 0–100), its last sample the reading; with
+  `jitter`, it is a simulated live signal that keeps scrolling while animated.
+- `payments/usage-meter`: from `warnAt` on, the meter turns to the warning
+  colour, and destructive at a `usedRatio` of 1; an item's `color` is a `bg-*`
+  class or any CSS colour.
+
+### Connections
+
+`connections/converge` (`nodes`, up to 4), `flow` (`sources`, `transforms` and
+`destinations`: three, two and three slots), `pipeline` (`logo`, `inputs`,
+`outputs`) and `sync` (`pairs` of `[left, right]`, up to 4) take each node as a
+lucide icon component, drawn at the node's icon size, or any element. A missing
+node is an empty, dashed slot that no pulse goes to; `logo={null}` draws no hub.
+
+### States
+
+`states/empty`, `error`, `maintenance` and `not-found` become real screens when
+you pass `title`, `description` or `actions`. The illustration, still
+`aria-hidden`, sits above an accessible heading (`titleAs`: `h2` by default,
+`h1`, `h3` or `p`), the text and a row of actions,
+`{ label, href?, onClick? }` — a link with `href`, a button otherwise; the
+first one is the primary action. `className` then applies to that column.
+
+```tsx
+<NotFound
+  fill
+  titleAs="h1"
+  title="Page not found"
+  description="This page moved or never existed."
+  actions={[{ label: "Back home", href: "/" }, { label: "Search", href: "/search" }]}
+/>
+```
+
+`states/error` exports `ErrorState` (`ErrorStateProps`) and `sections/error`
+exports `ErrorSection`; both modules keep `Error` as a deprecated alias.
+`onClick` is a function, which a Server Component cannot pass: use `href` there.
+
+### Sections
+
+Section wireframes draw bars where text would go; a text prop draws your text
+in place of its bars. List props — pricing `plans`, stats `values`, faq
+`items`, features `features`, process `steps`, timeline `items`, team
+`members`, logos `logos` — take strings or objects, and most also a count (up
+to 12) of blank items. Testimonials take their `quotes` marks (`["« ", " »"]`
+in French), comments a preformatted `count`.
+
+### Images, keyboard, search, notifications
+
+- `images/carousel`: `activeIndex` (default 1) centres that slide and lights its
+  dot, the neighbours wrap around `slides`; `count`, the number of dots,
+  defaults to `slides.length`. A slide's `alt` defaults to its `title`; in
+  `images/gallery`, `title` names the tile and `alt` describes the photo when
+  it should differ.
+- `keyboard/half`: `keymap: "azerty"` lays out the French left half; `labels`
+  maps key names to captions (`{ shift: "maj", "caps lock": "verr. maj" }`)
+  while `keys` keep using the key names.
+- `search/command-palette` and `search/results`: an item's `icon` is a lucide
+  component or an element; a palette over 8 items is clipped with a fade;
+  `labels` holds the footer hints and the empty text.
+- `notifications/list`: an item's `icon` is a kind (`message`, `heart`,
+  `follow`, `pr`, `star`); `notifications/toast` has an `error` variant;
+  `notifications/bell` reads "99+" above 99.
+
+### Kits: forms, ecommerce, mobile, notices
+
+- A `labels` object overrides any of the kit's English strings, and tokens in
+  them (`{step}`, `{total}`, `{count}`, `{score}`, `{rating}`, `{email}`) are
+  replaced.
+- Icons are keys mapped inside the block (`icon: "share"`), so every prop is
+  serializable, from a Server Component too.
+- `ecommerce/cart-drawer` and `checkout-summary` take amounts as numbers: line
+  totals, subtotal, discount, tax (on the discounted subtotal) and total are
+  computed, rounded to cents and formatted with
+  `Intl.NumberFormat(locale, { style: "currency", currency })`.
+- `forms/login` `providers={[]}` hides the social buttons and the divider;
+  `notices/callout` `link=""` and `notices/update-banner` `linkLabel=""` hide
+  the link.
+- `mobile/tab-bar` `dark`, `layouts/mobile-app-shell` `dark` and
+  `layouts/marketing-shell` `darkHero` put the `dark` class on the block's own
+  element: that subtree takes the dark tokens of the page's theme, in a light
+  page too ([Dark mode](design-system.md#dark-mode)).
+
 ## Using a block as a panel
 
 By default a visual renders for the gallery: the preview frame centres it
 (`flex items-center justify-center … px-2`) and the card inside caps at a
-`max-w-*` — 10 different values across the 118 blocks that cap. Drop three in a
-grid and you get three widths, three left edges and three top edges.
+`max-w-*` that varies from block to block (`max-w-72`, `max-w-80`,
+`max-w-96`…). Drop three in a grid and you get three widths, three left edges
+and three top edges.
 
 `fill` turns the frame into a plain box the visual occupies entirely: no side
 padding, no module cap, and the card stretched to the box's height (the card
 wrapper becomes `h-full flex flex-col`, the card `flex-1`). Stages with a fixed
-aspect — maps, devices, scenes — keep it: they are centred and contained in the
-box, not distorted.
+aspect keep it, never distorted: the `geo/world-map` and `geo/pin-drop` maps
+and the `devices/tablet` and `devices/laptop` frames are contained in the box
+(as large as fits, centred); other fixed-size stages (connections, the credit
+card, file and avatar stacks…) stay at their natural size, centred.
 
 ```tsx
 <div className="grid gap-3 lg:grid-cols-3">
@@ -210,6 +354,23 @@ card around the same dial, not a stretched one.
 
 Pair it with `gradient={false}`: the glow is drawn outside the card, in the gap
 `fill` removes (see Gotchas).
+
+Give a panel the height its content needs: below it, the content is clipped.
+Taller than `h-72` (18rem): `data/query` (about 330 px), `data/filters` (about
+320 px), `data/import` (about 310 px), `payments/usage-meter` and
+`status/health-check`. A `connections/*` stage needs about 185–200 px of
+height.
+
+On the client, after hydration, blocks adapt to small boxes without changing
+their server markup:
+
+- fixed-size stages scale down to fit their box — `states/*`,
+  `search/semantic` and `keyboard/half` (CSS `scale`, by width and height,
+  `useFitScale`), and the 416 × 288 canvases of `ai/retrieval`, `api/*` and
+  `git/branch-graph` (CSS `zoom`, by width);
+- a block taller than twice the viewport still plays its entrance: the
+  `inView` and `inViewRepeat` triggers wait for the largest share of the block
+  that fits in the viewport, up to half of it.
 
 ## Gotchas
 

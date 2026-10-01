@@ -90,9 +90,12 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
   *Copy React* and the MCP `get_block` give the exact line.
 - **Size**: a block fills the box you give it. Give that box a height.
 - **Content**: pass every text prop. The defaults are demo copy ("Pro Plan",
-  "of 100GB"), so a prop you leave out shows it. Components take their data
-  as JSON props too (`items`, `columns` and `rows`, `options`…): see
-  [the components layer](react.md#the-components-layer).
+  "of 100GB"), so a prop you leave out shows it. Data goes in props too:
+  `values` for a line chart, `segments` for a donut, `rows` for a table. Each
+  block's props, with types and defaults, are in the _Props_ table of its
+  gallery page; how blocks treat real data is in
+  [Block data props](react.md#block-data-props). An empty array renders
+  empty, never as the demo data.
 - **Accessibility**: the block's root is `aria-hidden`. Say what it shows in
   text next to it.
 - **Animation**: `animated={false}` (the default) renders the final state.
