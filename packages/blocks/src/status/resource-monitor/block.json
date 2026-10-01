@@ -89,6 +89,12 @@
       "slug": "011-no-axis",
       "size": null,
       "propsRaw": "{showAxis:!1}"
+    },
+    {
+      "label": "french",
+      "slug": "012-french",
+      "size": null,
+      "propsRaw": "{title:`Application`,series:[{label:`MÉM`,color:`var(--color-emerald-500)`,points:[0.52,0.57,0.5,0.58,0.53,0.49,0.56,0.51,0.57,0.54]},{label:`CPU`,color:`var(--color-primary)`,points:[0.16,0.21,0.19,0.27,0.34,0.47,0.6,0.73,0.85,0.9]}],emptyLabel:`Aucune donnée`,locale:`fr-FR`}"
     }
   ]
 }

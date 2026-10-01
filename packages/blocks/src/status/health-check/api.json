@@ -15,6 +15,12 @@
       "description": "Shown in place of the list when `items` is empty.",
       "default": "\"No services\""
     },
+    {
+      "name": "labels",
+      "type": "Partial<HealthCheckLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
@@ -63,6 +69,37 @@
           "description": "Any other value renders as a neutral status labelled with the value itself."
         },
         { "name": "latency", "type": "string", "optional": false }
+      ]
+    },
+    {
+      "name": "HealthCheckLabels",
+      "props": [
+        {
+          "name": "operational",
+          "type": "string",
+          "optional": false,
+          "description": "Status of each service, by status value."
+        },
+        { "name": "degraded", "type": "string", "optional": false },
+        { "name": "down", "type": "string", "optional": false },
+        {
+          "name": "summaryOperational",
+          "type": "string",
+          "optional": false,
+          "description": "Header summary when every service is operational."
+        },
+        {
+          "name": "summaryDegraded",
+          "type": "string",
+          "optional": false,
+          "description": "Header summary when a service is degraded and none is down."
+        },
+        {
+          "name": "summaryDown",
+          "type": "string",
+          "optional": false,
+          "description": "Header summary when a service is down."
+        }
       ]
     },
     { "name": "ServiceStatus", "type": "\"operational\" | \"degraded\" | \"down\"" }

@@ -2755,7 +2755,8 @@
           "isometric · no gradient",
           "e-commerce · partial degradation",
           "ai stack · outage",
-          "minimal stack · all operational"
+          "minimal stack · all operational",
+          "french"
         ],
         "cols": 2
       },
@@ -2778,7 +2779,8 @@
           "single series · isometric",
           "fast · 96 samples",
           "no grid",
-          "no axis"
+          "no axis",
+          "french"
         ],
         "cols": 2
       },
@@ -2798,7 +2800,8 @@
           "outage · isometric",
           "45 days · clean",
           "30 days · incident",
-          "no legend"
+          "no legend",
+          "french"
         ],
         "cols": 2
       }

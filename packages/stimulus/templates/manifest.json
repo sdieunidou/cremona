@@ -7893,6 +7893,11 @@
         "label": "minimal stack · all operational",
         "slug": "008-minimal-stack-all-operational",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
+        "size": null
       }
     ]
   },
@@ -7968,6 +7973,11 @@
         "label": "no axis",
         "slug": "011-no-axis",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
+        "size": null
       }
     ]
   },
@@ -8025,6 +8035,11 @@
       {
         "label": "no legend",
         "slug": "008-no-legend",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "009-french",
         "size": null
       }
     ]

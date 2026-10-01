@@ -52,5 +52,28 @@
   },
   "no legend": {
     "showLegend": false
+  },
+  "french": {
+    "title": "Disponibilité",
+    "days": 90,
+    "incidents": [
+      23,
+      61,
+      62
+    ],
+    "outages": [
+      47
+    ],
+    "labels": {
+      "operational": "Systèmes opérationnels",
+      "degraded": "Performances dégradées",
+      "outage": "Panne majeure",
+      "legendDegraded": "Dégradé",
+      "legendOutage": "Panne",
+      "daysAgo": "il y a {count} jours",
+      "daysAgoOne": "il y a {count} jour",
+      "today": "Aujourd’hui"
+    },
+    "locale": "fr-FR"
   }
 }

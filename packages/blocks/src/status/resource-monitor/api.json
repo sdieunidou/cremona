@@ -20,6 +20,13 @@
       "description": "Shown over the plot when no series has a sample.",
       "default": "\"No data\""
     },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the readings and the axis (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
