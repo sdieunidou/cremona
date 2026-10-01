@@ -21,6 +21,15 @@ export interface DialogChange {
   status: string;
 }
 
+export interface DialogLabels {
+  /** Accessible name of the close button. */
+  close: string;
+}
+
+export const dialogDefaultLabels: DialogLabels = {
+  close: "Close",
+};
+
 export interface DialogProps extends VisualProps {
   title?: string;
   description?: string;
@@ -37,6 +46,8 @@ export interface DialogProps extends VisualProps {
   fields?: DialogField[];
   /** Changes summary (default: three files when `width` is "wide"). */
   changes?: DialogChange[];
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<DialogLabels>;
   /** The scrim fills the box; the dialog stays centred at its own size. */
   fill?: boolean;
 }
@@ -106,6 +117,7 @@ export function Dialog({
   cancelLabel = "Cancel",
   fields,
   changes,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -131,6 +143,7 @@ export function Dialog({
       }
     : {};
 
+  const text = { ...dialogDefaultLabels, ...labels };
   const destructive = variant === "destructive" || variant === "danger";
   const resolvedDescription =
     description ??
@@ -167,7 +180,7 @@ export function Dialog({
       >
         <button
           type="button"
-          aria-label="Close"
+          aria-label={text.close}
           className={cn(
             "absolute top-3 right-3 flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
             focusRing,

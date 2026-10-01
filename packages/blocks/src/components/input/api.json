@@ -20,6 +20,12 @@
     { "name": "disabled", "type": "boolean", "optional": true, "default": "false" },
     { "name": "defaultValue", "type": "string", "optional": true, "default": "\"\"" },
     {
+      "name": "labels",
+      "type": "Partial<InputLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "fill",
       "type": "boolean",
       "optional": true,
@@ -44,5 +50,17 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "InputLabels",
+      "props": [
+        {
+          "name": "showPassword",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the password visibility toggle (its state is `aria-pressed`)."
+        }
+      ]
+    }
+  ]
 }

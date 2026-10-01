@@ -43,6 +43,12 @@
       "description": "Visually hidden table caption."
     },
     {
+      "name": "labels",
+      "type": "Partial<TableLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "fill",
       "type": "boolean",
       "optional": true,
@@ -82,6 +88,29 @@
           "type": "\"left\" | \"right\"",
           "optional": true,
           "description": "\"right\" also sets tabular figures, for amounts."
+        }
+      ]
+    },
+    {
+      "name": "TableLabels",
+      "props": [
+        {
+          "name": "selectAll",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the header checkbox."
+        },
+        {
+          "name": "selectRow",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of a row checkbox; `{row}` is replaced by the row's first cell, or by `row`."
+        },
+        {
+          "name": "row",
+          "type": "string",
+          "optional": false,
+          "description": "Row name when its first cell is empty; `{index}` is replaced by the row number."
         }
       ]
     },

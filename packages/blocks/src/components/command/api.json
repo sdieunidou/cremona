@@ -47,6 +47,12 @@
       "description": "Empty-state hint (default: a hint for the demo catalog)."
     },
     {
+      "name": "labels",
+      "type": "Partial<CommandLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "fill",
       "type": "boolean",
       "optional": true,
@@ -91,6 +97,31 @@
           "optional": true,
           "description": "Extra words the search matches."
         }
+      ]
+    },
+    {
+      "name": "CommandLabels",
+      "props": [
+        {
+          "name": "search",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the search input."
+        },
+        {
+          "name": "escape",
+          "type": "string",
+          "optional": false,
+          "description": "Key cap that closes the menu."
+        },
+        {
+          "name": "commands",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the list of commands."
+        },
+        { "name": "navigate", "type": "string", "optional": false, "description": "Footer hints." },
+        { "name": "select", "type": "string", "optional": false }
       ]
     }
   ]

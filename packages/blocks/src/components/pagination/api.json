@@ -3,6 +3,12 @@
   "props": [
     { "name": "page", "type": "number", "optional": true, "default": "2" },
     { "name": "total", "type": "number", "optional": true, "default": "9" },
+    {
+      "name": "labels",
+      "type": "Partial<PaginationLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "compact", "type": "boolean", "optional": true, "default": "false" },
     { "name": "rounded", "type": "boolean", "optional": true, "default": "false" },
     {
@@ -30,5 +36,30 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": []
+  "types": [
+    {
+      "name": "PaginationLabels",
+      "props": [
+        {
+          "name": "navigation",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the navigation landmark."
+        },
+        {
+          "name": "previous",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible names of the arrow buttons."
+        },
+        { "name": "next", "type": "string", "optional": false },
+        {
+          "name": "page",
+          "type": "string",
+          "optional": false,
+          "description": "Status of the compact layout; `{page}` (emphasized) and `{total}` are replaced."
+        }
+      ]
+    }
+  ]
 }

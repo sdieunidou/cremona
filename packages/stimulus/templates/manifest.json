@@ -2500,6 +2500,11 @@
         "label": "nested",
         "slug": "003-nested",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "004-french",
+        "size": null
       }
     ]
   },
@@ -2665,6 +2670,11 @@
       {
         "label": "rounded",
         "slug": "002-rounded",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
         "size": null
       }
     ]

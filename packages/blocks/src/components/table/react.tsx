@@ -24,6 +24,28 @@ export interface TableRow {
   checked?: boolean;
 }
 
+export interface TableLabels {
+  /** Accessible name of the header checkbox. */
+  selectAll: string;
+  /** Accessible name of a row checkbox; `{row}` is replaced by the row's first cell, or by `row`. */
+  selectRow: string;
+  /** Row name when its first cell is empty; `{index}` is replaced by the row number. */
+  row: string;
+}
+
+export const tableDefaultLabels: TableLabels = {
+  selectAll: "Select all rows",
+  selectRow: "Select {row}",
+  row: "row {index}",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 export interface TableProps extends VisualProps {
   /** Selection column. */
   checkboxes?: boolean;
@@ -37,6 +59,8 @@ export interface TableProps extends VisualProps {
   loadingRows?: number;
   /** Visually hidden table caption. */
   caption?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<TableLabels>;
   /** Full width and height of the box. */
   fill?: boolean;
 }
@@ -148,6 +172,7 @@ export function Table({
   rows = demoRows,
   loadingRows = 3,
   caption,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -174,6 +199,7 @@ export function Table({
       }
     : {};
 
+  const text = { ...tableDefaultLabels, ...labels };
   const cellPad = "px-3 py-2.5";
   const headPad = "px-3 py-2";
   const count = rows.length;
@@ -203,7 +229,7 @@ export function Table({
                 <th scope="col" className="w-9 py-2 pr-0 pl-3">
                   <CheckboxBox
                     checked={all}
-                    label="Select all rows"
+                    label={text.selectAll}
                     onToggle={() => setSelected(rows.map(() => all !== true))}
                   />
                 </th>
@@ -268,7 +294,11 @@ export function Table({
                       <td className="py-2.5 pr-0 pl-3">
                         <CheckboxBox
                           checked={selected[r] ?? false}
-                          label={`Select ${cellText(row.cells[columns[0]?.key ?? ""]) || `row ${r + 1}`}`}
+                          label={interpolate(text.selectRow, {
+                            row:
+                              cellText(row.cells[columns[0]?.key ?? ""]) ||
+                              interpolate(text.row, { index: String(r + 1) }),
+                          })}
                           onToggle={() =>
                             setSelected((prev) =>
                               rows.map((_, j) => (j === r ? !prev[j] : !!prev[j])),

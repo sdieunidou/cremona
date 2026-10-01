@@ -33,6 +33,12 @@
       "propsRaw": "{rounded:!0}",
       "size": null,
       "slug": "002-rounded"
+    },
+    {
+      "label": "french",
+      "slug": "003-french",
+      "size": null,
+      "propsRaw": "{compact:!0,page:4,total:12,labels:{navigation:`Pagination`,previous:`Page précédente`,next:`Page suivante`,page:`Page {page} sur {total}`}}"
     }
   ]
 }

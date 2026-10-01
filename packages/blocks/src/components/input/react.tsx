@@ -6,6 +6,15 @@ import { useInView } from "@cremona/react";
 import { Search, Eye, EyeOff } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface InputLabels {
+  /** Accessible name of the password visibility toggle (its state is `aria-pressed`). */
+  showPassword: string;
+}
+
+export const inputDefaultLabels: InputLabels = {
+  showPassword: "Show password",
+};
+
 export interface InputProps extends VisualProps {
   type?: "text" | "email" | "password" | "search";
   label?: string;
@@ -15,6 +24,8 @@ export interface InputProps extends VisualProps {
   errorText?: string;
   disabled?: boolean;
   defaultValue?: string;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<InputLabels>;
   /** Full width, at the top of the box. */
   fill?: boolean;
 }
@@ -38,6 +49,7 @@ export function Input({
   errorText = "This name is already taken.",
   disabled = false,
   defaultValue = "",
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -65,6 +77,7 @@ export function Input({
       }
     : {};
 
+  const text = { ...inputDefaultLabels, ...labels };
   const isPassword = type === "password";
   const effectiveType = isPassword && show ? "text" : type;
   const inputId = `${id}-input`;
@@ -112,7 +125,7 @@ export function Input({
           {isPassword && (
             <button
               type="button"
-              aria-label="Show password"
+              aria-label={text.showPassword}
               aria-pressed={show}
               disabled={disabled}
               onClick={() => setShow((v) => !v)}

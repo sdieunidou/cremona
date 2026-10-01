@@ -18,6 +18,12 @@
     { "name": "img", "type": "boolean", "optional": true, "deprecated": true, "default": "false" },
     { "name": "size", "type": "\"sm\" | \"md\" | \"lg\"", "optional": true, "default": "\"lg\"" },
     { "name": "presence", "type": "Presence", "optional": true },
+    {
+      "name": "labels",
+      "type": "Partial<AvatarLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "ring", "type": "boolean", "optional": true, "default": "false" },
     {
       "name": "sizes",
@@ -51,5 +57,21 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": [{ "name": "Presence", "type": "\"online\" | \"away\" | \"busy\" | \"offline\"" }]
+  "types": [
+    {
+      "name": "AvatarLabels",
+      "props": [
+        {
+          "name": "online",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible names of the presence dot."
+        },
+        { "name": "away", "type": "string", "optional": false },
+        { "name": "busy", "type": "string", "optional": false },
+        { "name": "offline", "type": "string", "optional": false }
+      ]
+    },
+    { "name": "Presence", "type": "\"online\" | \"away\" | \"busy\" | \"offline\"" }
+  ]
 }

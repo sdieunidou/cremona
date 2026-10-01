@@ -10,5 +10,16 @@
   },
   "rounded": {
     "rounded": true
+  },
+  "french": {
+    "compact": true,
+    "page": 4,
+    "total": 12,
+    "labels": {
+      "navigation": "Pagination",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "page": "Page {page} sur {total}"
+    }
   }
 }

@@ -44,6 +44,12 @@
       "description": "Changes summary (default: three files when `width` is \"wide\")."
     },
     {
+      "name": "labels",
+      "type": "Partial<DialogLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
+    {
       "name": "fill",
       "type": "boolean",
       "optional": true,
@@ -89,6 +95,17 @@
           "description": "Choices of a `select` field."
         },
         { "name": "value", "type": "string", "optional": true, "description": "Initial value." }
+      ]
+    },
+    {
+      "name": "DialogLabels",
+      "props": [
+        {
+          "name": "close",
+          "type": "string",
+          "optional": false,
+          "description": "Accessible name of the close button."
+        }
       ]
     }
   ]

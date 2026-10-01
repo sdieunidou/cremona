@@ -12,12 +12,26 @@ export interface BreadcrumbItem {
   href?: string;
 }
 
+export interface BreadcrumbLabels {
+  /** Accessible name of the navigation landmark. */
+  navigation: string;
+  /** Screen-reader text of the collapsed "…" item. */
+  more: string;
+}
+
+export const breadcrumbDefaultLabels: BreadcrumbLabels = {
+  navigation: "Breadcrumb",
+  more: "More pages",
+};
+
 export interface BreadcrumbProps extends VisualProps {
   separator?: "chevron" | "slash";
   /** Collapse the middle of the trail into "…" (before the last two items). */
   ellipsis?: boolean;
   /** The trail, as labels or `{ label, href }` (default: a four-level demo path). */
   items?: (string | BreadcrumbItem)[];
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<BreadcrumbLabels>;
   /** Full width, at the top of the box. */
   fill?: boolean;
 }
@@ -38,6 +52,7 @@ export function Breadcrumb({
   separator = "chevron",
   ellipsis = false,
   items = demoItems,
+  labels,
   animated = false,
   trigger = "inView",
   fill = false,
@@ -62,6 +77,7 @@ export function Breadcrumb({
       }
     : {};
 
+  const text = { ...breadcrumbDefaultLabels, ...labels };
   const crumbs: (BreadcrumbItem | null)[] = items.map((item) =>
     typeof item === "string" ? { label: item } : item,
   );
@@ -71,7 +87,7 @@ export function Breadcrumb({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.nav
-        aria-label="Breadcrumb"
+        aria-label={text.navigation}
         className={cn("text-sm", fill && "w-full self-start")}
         variants={animated ? entrance : undefined}
         {...state}
@@ -92,7 +108,7 @@ export function Breadcrumb({
                 {crumb === null ? (
                   <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-md border border-border px-1 text-[11px] font-medium text-muted-foreground">
                     <span aria-hidden="true">…</span>
-                    <span className="sr-only">More pages</span>
+                    <span className="sr-only">{text.more}</span>
                   </span>
                 ) : i === last ? (
                   <span

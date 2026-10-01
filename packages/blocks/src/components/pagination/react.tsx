@@ -6,9 +6,35 @@ import { useInView } from "@cremona/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface PaginationLabels {
+  /** Accessible name of the navigation landmark. */
+  navigation: string;
+  /** Accessible names of the arrow buttons. */
+  previous: string;
+  next: string;
+  /** Status of the compact layout; `{page}` (emphasized) and `{total}` are replaced. */
+  page: string;
+}
+
+export const paginationDefaultLabels: PaginationLabels = {
+  navigation: "Pagination",
+  previous: "Previous page",
+  next: "Next page",
+  page: "Page {page} of {total}",
+};
+
+/** Replaces each `{key}` of a label with its value. */
+function interpolate(label: string, values: Record<string, string>): string {
+  return label.replace(/\{(\w+)\}/g, (match, key: string) =>
+    Object.hasOwn(values, key) ? values[key]! : match,
+  );
+}
+
 export interface PaginationProps extends VisualProps {
   page?: number;
   total?: number;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<PaginationLabels>;
   compact?: boolean;
   rounded?: boolean;
   /** Full width, at the top of the box. */
@@ -37,6 +63,7 @@ function pageWindow(page: number, total: number): (number | "ellipsis")[] {
 export function Pagination({
   page = 2,
   total = 9,
+  labels,
   compact = false,
   rounded = false,
   animated = false,
@@ -63,6 +90,8 @@ export function Pagination({
       }
     : {};
 
+  const text = { ...paginationDefaultLabels, ...labels };
+  const [beforePage = "", afterPage = ""] = text.page.split("{page}");
   const shape = rounded ? "rounded-full" : "rounded-md";
   const arrowClasses = cn(
     "inline-flex size-8 items-center justify-center border border-border bg-background text-muted-foreground shadow-xs transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-50",
@@ -82,7 +111,7 @@ export function Pagination({
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.nav
-        aria-label="Pagination"
+        aria-label={text.navigation}
         className={fill ? "flex w-full justify-center self-start" : undefined}
         variants={animated ? entrance : undefined}
         {...state}
@@ -91,18 +120,20 @@ export function Pagination({
           <div className="flex items-center gap-3">
             <button
               type="button"
-              aria-label="Previous page"
+              aria-label={text.previous}
               disabled={page <= 1}
               className={arrowClasses}
             >
               <ChevronLeft className="size-4" />
             </button>
             <span className="text-sm text-muted-foreground">
-              Page <span className="font-medium text-foreground">{page}</span> of {total}
+              {interpolate(beforePage, { total: String(total) })}
+              <span className="font-medium text-foreground">{page}</span>
+              {interpolate(afterPage, { total: String(total) })}
             </span>
             <button
               type="button"
-              aria-label="Next page"
+              aria-label={text.next}
               disabled={page >= total}
               className={arrowClasses}
             >
@@ -114,7 +145,7 @@ export function Pagination({
             <li>
               <button
                 type="button"
-                aria-label="Previous page"
+                aria-label={text.previous}
                 disabled={page <= 1}
                 className={arrowClasses}
               >
@@ -141,7 +172,7 @@ export function Pagination({
             <li>
               <button
                 type="button"
-                aria-label="Next page"
+                aria-label={text.next}
                 disabled={page >= total}
                 className={arrowClasses}
               >
