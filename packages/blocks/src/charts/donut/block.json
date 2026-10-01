@@ -65,6 +65,12 @@
       "slug": "007-plans-isometric-custom-copy",
       "size": null,
       "propsRaw": "{isometric:!0,title:`Plans`,badge:`1,340+ Accounts`,centerValue:`1,284`,centerLabel:`customers`,segments:[{label:`Free`,value:60,color:`var(--color-muted-foreground)`},{label:`Pro`,value:28,color:`var(--color-chart-1)`},{label:`Team`,value:12,color:`var(--color-chart-2)`}]}"
+    },
+    {
+      "label": "french",
+      "slug": "008-french",
+      "size": null,
+      "propsRaw": "{title:`Stockage`,badge:`Offre Pro`,centerValue:`82 %`,centerLabel:`sur 100 Go`,segments:[{label:`Documents`,value:38,color:`var(--color-chart-1)`},{label:`Médias`,value:26,color:`var(--color-chart-2)`},{label:`Applis`,value:18,color:`var(--color-chart-3)`},{label:`Libre`,value:18,color:`var(--color-primary)`}],emptyLabel:`Aucune donnée`,locale:`fr-FR`}"
     }
   ]
 }

@@ -77,6 +77,12 @@
       "slug": "009-three-stages-custom-copy",
       "size": null,
       "propsRaw": "{title:`Trial conversion`,badge:`14d`,change:`+4.8%`,stages:[{label:`Trials`,value:3620},{label:`Active`,value:2140},{label:`Converted`,value:742}]}"
+    },
+    {
+      "label": "french",
+      "slug": "010-french",
+      "size": null,
+      "propsRaw": "{title:`Entonnoir d’inscription`,badge:`30 j`,change:`+2,4 %`,stages:[{label:`Visiteurs`,value:24800},{label:`Inscrits`,value:9420},{label:`Activés`,value:4120},{label:`Payants`,value:1580}],emptyLabel:`Aucune donnée`,locale:`fr-FR`}"
     }
   ]
 }

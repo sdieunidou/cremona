@@ -167,6 +167,8 @@ export interface GaugeProps extends VisualProps {
   maxLabel?: string;
   color?: string;
   zones?: readonly GaugeZone[];
+  /** BCP 47 locale of the value computed from `percent` (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -184,6 +186,7 @@ export function Gauge({
   maxLabel = gaugeDefault.maxLabel,
   color = "var(--color-primary)",
   zones,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -207,7 +210,11 @@ export function Gauge({
   const known = Number.isFinite(percent);
   const clamped = known ? Math.max(0, Math.min(100, percent)) : 0;
   const progress = clamped / 100;
-  const valueText = value ?? (known ? String(Math.round(percent)) : "—");
+  const valueText =
+    value ??
+    (known
+      ? new Intl.NumberFormat(locale, { useGrouping: false }).format(Math.round(percent) || 0)
+      : "—");
   const zoneSpans = zones ? computeZones(zones) : [];
   const needlePos = needle(progress);
   const down = /^\s*[-−]/.test(change);

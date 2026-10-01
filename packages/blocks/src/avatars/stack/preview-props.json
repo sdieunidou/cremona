@@ -126,5 +126,12 @@
       "count": 3,
       "label": "founding designers"
     }
+  },
+  "french": {
+    "status": {
+      "count": 1284,
+      "label": "membres en ligne"
+    },
+    "locale": "fr-FR"
   }
 }

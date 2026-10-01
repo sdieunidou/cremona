@@ -16,25 +16,21 @@ const statusStyles = {
   online: {
     dot: "bg-emerald-500",
     pulse: "bg-emerald-500/40",
-    label: "Online",
     pill: "text-emerald-600 dark:text-emerald-400",
   },
   away: {
     dot: "bg-amber-500",
     pulse: "bg-amber-500/40",
-    label: "Away",
     pill: "text-amber-600 dark:text-amber-400",
   },
   busy: {
     dot: "bg-rose-500",
     pulse: "bg-rose-500/40",
-    label: "Busy",
     pill: "text-rose-600 dark:text-rose-400",
   },
   offline: {
     dot: "bg-muted-foreground/60",
     pulse: "bg-muted-foreground/20",
-    label: "Offline",
     pill: "text-muted-foreground",
   },
 } as const;
@@ -97,6 +93,21 @@ const veil = {
 
 export type ProfileStatus = keyof typeof statusStyles;
 
+export interface ProfileCardLabels {
+  /** Status words, by `status`. */
+  online: string;
+  away: string;
+  busy: string;
+  offline: string;
+}
+
+export const profileCardDefaultLabels: ProfileCardLabels = {
+  online: "Online",
+  away: "Away",
+  busy: "Busy",
+  offline: "Offline",
+};
+
 export interface ProfileCardProps extends VisualProps {
   initials?: string;
   image?: string;
@@ -104,6 +115,8 @@ export interface ProfileCardProps extends VisualProps {
   role?: string;
   tint?: string;
   status?: ProfileStatus;
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<ProfileCardLabels>;
   isometric?: boolean;
   gradient?: boolean;
 }
@@ -115,6 +128,7 @@ export function ProfileCard({
   role = profileCardDefaultCopy.role,
   tint = profileCardDefaultCopy.tint,
   status = "online",
+  labels,
   animated = false,
   trigger = "inView",
   isometric = false,
@@ -130,7 +144,10 @@ export function ProfileCard({
   const loop = useLoopActive(ref, animated);
   const pulseState = { initial: "hidden", animate: shown && loop ? "visible" : "hidden" };
   // any other status (data outside the union) reads as offline, with its own label
-  const style = statusStyles[status] ?? { ...statusStyles.offline, label: String(status) };
+  const text = { ...profileCardDefaultLabels, ...labels };
+  const known = Object.hasOwn(statusStyles, status);
+  const style = known ? statusStyles[status] : statusStyles.offline;
+  const statusLabel = known ? text[status] : String(status);
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -213,7 +230,7 @@ export function ProfileCard({
             {...state}
           >
             <span className={`inline-flex size-1.5 rounded-full ${style.dot}`} />
-            <span className={`text-[10px] font-medium ${style.pill}`}>{style.label}</span>
+            <span className={`text-[10px] font-medium ${style.pill}`}>{statusLabel}</span>
           </motion.div>
         </div>
       </motion.div>

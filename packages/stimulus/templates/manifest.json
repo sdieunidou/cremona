@@ -772,6 +772,11 @@
         "label": "away · isometric · custom copy",
         "slug": "009-away-isometric-custom-copy",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -841,6 +846,11 @@
       {
         "label": "three avatars · custom copy",
         "slug": "011-three-avatars-custom-copy",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
         "size": null
       }
     ]
@@ -1345,6 +1355,11 @@
         "label": "plans · isometric · custom copy",
         "slug": "007-plans-isometric-custom-copy",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "008-french",
+        "size": null
       }
     ]
   },
@@ -1405,6 +1420,11 @@
         "label": "three stages · custom copy",
         "slug": "009-three-stages-custom-copy",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -1464,6 +1484,11 @@
       {
         "label": "score · isometric · custom copy",
         "slug": "009-score-isometric-custom-copy",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
         "size": null
       }
     ]

@@ -149,6 +149,8 @@ export interface DonutProps extends VisualProps {
   segments?: readonly DonutSegment[];
   /** Shown in place of the legend when `segments` is empty. */
   emptyLabel?: string;
+  /** BCP 47 locale of the legend percentages (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -161,6 +163,7 @@ export function Donut({
   centerLabel = donutDefault.centerLabel,
   segments = donutDefault.segments,
   emptyLabel = "No data",
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -182,6 +185,7 @@ export function Donut({
       }
     : {};
   const arcs = computeArcs(segments);
+  const percent = new Intl.NumberFormat(locale, { style: "unit", unit: "percent" });
   const empty = arcs.every((arc) => arc.value === 0);
 
   return (
@@ -312,7 +316,7 @@ export function Donut({
                     </span>
                   </div>
                   <span className="text-[10px] text-muted-foreground tabular-nums">
-                    {arc.percent}%
+                    {percent.format(arc.percent)}
                   </span>
                 </motion.div>
               ))}

@@ -24,6 +24,13 @@
     { "name": "maxLabel", "type": "string", "optional": true, "default": "\"100\"" },
     { "name": "color", "type": "string", "optional": true, "default": "\"var(--color-primary)\"" },
     { "name": "zones", "type": "readonly GaugeZone[]", "optional": true },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the value computed from `percent` (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },

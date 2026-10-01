@@ -12,6 +12,12 @@
       "default": "\"bg-primary text-primary-foreground\""
     },
     { "name": "status", "type": "ProfileStatus", "optional": true, "default": "\"online\"" },
+    {
+      "name": "labels",
+      "type": "Partial<ProfileCardLabels>",
+      "optional": true,
+      "description": "UI text; every key is optional and falls back to the English default."
+    },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
     {
@@ -40,5 +46,21 @@
     },
     { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
   ],
-  "types": [{ "name": "ProfileStatus", "type": "keyof typeof statusStyles" }]
+  "types": [
+    {
+      "name": "ProfileCardLabels",
+      "props": [
+        {
+          "name": "online",
+          "type": "string",
+          "optional": false,
+          "description": "Status words, by `status`."
+        },
+        { "name": "away", "type": "string", "optional": false },
+        { "name": "busy", "type": "string", "optional": false },
+        { "name": "offline", "type": "string", "optional": false }
+      ]
+    },
+    { "name": "ProfileStatus", "type": "keyof typeof statusStyles" }
+  ]
 }

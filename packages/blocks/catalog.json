@@ -281,7 +281,8 @@
           "photos",
           "photos · isometric",
           "custom roster",
-          "three avatars · custom copy"
+          "three avatars · custom copy",
+          "french"
         ],
         "cols": 2
       },
@@ -302,7 +303,8 @@
           "away",
           "busy",
           "offline",
-          "away · isometric · custom copy"
+          "away · isometric · custom copy",
+          "french"
         ],
         "cols": 2
       }
@@ -505,7 +507,8 @@
           "default · no gradient",
           "isometric · no gradient",
           "traffic · custom copy",
-          "plans · isometric · custom copy"
+          "plans · isometric · custom copy",
+          "french"
         ],
         "cols": 2
       },
@@ -526,7 +529,8 @@
           "checkout · custom copy",
           "negative change · custom copy",
           "highlighted stage · isometric · custom copy",
-          "three stages · custom copy"
+          "three stages · custom copy",
+          "french"
         ],
         "cols": 2
       },
@@ -547,7 +551,8 @@
           "capacity · custom copy",
           "zones · custom copy",
           "low value · custom copy",
-          "score · isometric · custom copy"
+          "score · isometric · custom copy",
+          "french"
         ],
         "cols": 2
       },

@@ -21,19 +21,22 @@ export const funnelDefault = {
 const MIN_WIDTH = 14;
 const MIN_COLOR = 34;
 const COLOR_STEP = 18;
-const numberFormat = new Intl.NumberFormat("en-US");
-const compactFormat = new Intl.NumberFormat("en-US", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
-
-function formatCount(value: number): string {
-  return value >= 1e6 ? compactFormat.format(value) : numberFormat.format(value);
+function formatCount(value: number, locale: string): string {
+  return value >= 1e6
+    ? new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: 1 }).format(value)
+    : new Intl.NumberFormat(locale).format(value);
 }
 
-function formatPercent(p: number | null): string {
+function formatPercent(p: number | null, locale: string): string {
   if (p === null) return "—";
-  return `${p >= 10 ? Math.round(p) : p.toFixed(1)}%`;
+  const digits = p >= 10 ? 0 : 1;
+  return new Intl.NumberFormat(locale, {
+    style: "unit",
+    unit: "percent",
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+    useGrouping: false,
+  }).format(p >= 10 ? Math.round(p) : Number(p.toFixed(1)));
 }
 
 export interface FunnelStage {
@@ -143,6 +146,8 @@ export interface FunnelProps extends VisualProps {
   stages?: readonly FunnelStage[];
   /** Shown in place of the stages when `stages` is empty. */
   emptyLabel?: string;
+  /** BCP 47 locale of the counts and percentages (default `"en-US"`). */
+  locale?: string;
   fadeOut?: boolean;
   isometric?: boolean;
   gradient?: boolean;
@@ -156,6 +161,7 @@ export function Funnel({
   positive = "up",
   stages = funnelDefault.stages,
   emptyLabel = "No data",
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fadeOut = false,
@@ -177,7 +183,7 @@ export function Funnel({
       }
     : {};
   const rows = computeStages(stages);
-  const valueText = value ?? formatPercent(rows.length ? rows.at(-1)!.percent : null);
+  const valueText = value ?? formatPercent(rows.length ? rows.at(-1)!.percent : null, locale);
   const down = /^\s*[-−]/.test(change);
   const good = positive === "down" ? down : !down;
   const TrendIcon = down ? ArrowDownRight : ArrowUpRight;
@@ -283,10 +289,10 @@ export function Funnel({
                   </div>
                   <div className="flex w-14 shrink-0 flex-col leading-tight">
                     <span className="text-[10px] font-semibold text-foreground tabular-nums">
-                      {formatCount(row.value)}
+                      {formatCount(row.value, locale)}
                     </span>
                     <span className="text-[9px] text-muted-foreground tabular-nums">
-                      {formatPercent(row.percent)}
+                      {formatPercent(row.percent, locale)}
                     </span>
                   </div>
                 </motion.div>

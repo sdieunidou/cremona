@@ -114,5 +114,30 @@
         "value": 742
       }
     ]
+  },
+  "french": {
+    "title": "Entonnoir d’inscription",
+    "badge": "30 j",
+    "change": "+2,4 %",
+    "stages": [
+      {
+        "label": "Visiteurs",
+        "value": 24800
+      },
+      {
+        "label": "Inscrits",
+        "value": 9420
+      },
+      {
+        "label": "Activés",
+        "value": 4120
+      },
+      {
+        "label": "Payants",
+        "value": 1580
+      }
+    ],
+    "emptyLabel": "Aucune donnée",
+    "locale": "fr-FR"
   }
 }
