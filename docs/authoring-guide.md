@@ -43,6 +43,13 @@ motion language, same tokens, same test machinery.
    whenever the visual lives in a card wrapper). Loops (infinite transitions,
    timers, rAF, SMIL, CSS `animate-*`) run only while
    `useLoopActive(ref, animated)` is true; otherwise render their resting frame.
+   **The entrance ends on the static render**: once it has played (and with
+   loops paused), the block shows exactly what `animated={false}` renders —
+   same elements, classes, text and effective styles. Let classes own the
+   resting values (`opacity-40`, `opacity-50`): animate to the same value, or
+   hand the property back with `transitionEnd`, since motion writes SVG
+   opacity as an inline style that a class cannot override. The end-state
+   tests check every variant.
 5. **Accessibility mirror** — real text (not lorem), semantic elements
    (`button`, `input`, `table`…), labels and `aria-*` wired with `useId`, and
    the focus recipe in the class strings
@@ -119,6 +126,15 @@ coverage test fails on it).
 The parity test for a new block uses the standard runner — since goldens are
 generated from the component itself, parity is a **regression lock** (any
 markup change must be deliberate: regenerate the golden, review the diff).
+
+The end-state tests (`test/end-state-*.test.tsx`) render every variant
+animated — motion skipped to its end, reduced motion on, timers run out — and
+compare it with `animated={false}`; they also fail an entrance that never
+settles and an inline style left on an element whose state classes set the
+same property. They are sharded by category: a new category goes into
+`END_STATE_SHARDS` (`test/helpers/end-state.ts`), which fails until every
+category belongs to exactly one shard. CI also runs the blocks suite on
+motion 13 (the peer range is `^12 || ^13`).
 
 ## Registry & discovery
 
