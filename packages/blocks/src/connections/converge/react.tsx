@@ -12,9 +12,9 @@ export type ConvergeNode = ReactNode | LucideIcon;
 
 export const convergeDefaultCopy = {
   nodes: [
-    <FileText className="size-4" strokeWidth={2} />,
-    <Image className="size-4" strokeWidth={2} />,
-    <Database className="size-4" strokeWidth={2} />,
+    <FileText key="file-text" className="size-4" strokeWidth={2} />,
+    <Image key="image" className="size-4" strokeWidth={2} />,
+    <Database key="database" className="size-4" strokeWidth={2} />,
   ],
 } as const;
 

@@ -22,18 +22,18 @@ export type FlowNode = ReactNode | LucideIcon;
 
 export const flowDefaultCopy = {
   sources: [
-    <Database className="size-4" strokeWidth={2} />,
-    <Globe className="size-4" strokeWidth={2} />,
-    <Rss className="size-4" strokeWidth={2} />,
+    <Database key="database" className="size-4" strokeWidth={2} />,
+    <Globe key="globe" className="size-4" strokeWidth={2} />,
+    <Rss key="rss" className="size-4" strokeWidth={2} />,
   ],
   transforms: [
-    <Funnel className="size-4.5" strokeWidth={1.5} />,
-    <GitMerge className="size-4.5" strokeWidth={1.5} />,
+    <Funnel key="funnel" className="size-4.5" strokeWidth={1.5} />,
+    <GitMerge key="git-merge" className="size-4.5" strokeWidth={1.5} />,
   ],
   destinations: [
-    <ChartColumn className="size-4" strokeWidth={2} />,
-    <HardDrive className="size-4" strokeWidth={2} />,
-    <Bell className="size-4" strokeWidth={2} />,
+    <ChartColumn key="chart-column" className="size-4" strokeWidth={2} />,
+    <HardDrive key="hard-drive" className="size-4" strokeWidth={2} />,
+    <Bell key="bell" className="size-4" strokeWidth={2} />,
   ],
 } as const;
 

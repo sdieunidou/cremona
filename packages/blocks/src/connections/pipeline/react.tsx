@@ -22,14 +22,14 @@ export type PipelineNode = ReactNode | LucideIcon;
 export const pipelineDefaultCopy = {
   logo: <Cpu className="size-5" strokeWidth={1.5} />,
   inputs: [
-    <Database className="size-4" strokeWidth={2} />,
-    <FileText className="size-4" strokeWidth={2} />,
-    <Image className="size-4" strokeWidth={2} />,
+    <Database key="database" className="size-4" strokeWidth={2} />,
+    <FileText key="file-text" className="size-4" strokeWidth={2} />,
+    <Image key="image" className="size-4" strokeWidth={2} />,
   ],
   outputs: [
-    <ChartColumn className="size-4" strokeWidth={2} />,
-    <Mail className="size-4" strokeWidth={2} />,
-    <Cloud className="size-4" strokeWidth={2} />,
+    <ChartColumn key="chart-column" className="size-4" strokeWidth={2} />,
+    <Mail key="mail" className="size-4" strokeWidth={2} />,
+    <Cloud key="cloud" className="size-4" strokeWidth={2} />,
   ],
 } as const;
 

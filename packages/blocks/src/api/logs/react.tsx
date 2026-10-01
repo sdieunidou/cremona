@@ -46,9 +46,9 @@ export const logsDefaultCopy = {
 } as const;
 
 const DEFAULT_SOURCES: ReactNode[] = [
-  <Globe className="size-3.5" strokeWidth={2} />,
-  <Server className="size-3.5" strokeWidth={2} />,
-  <Database className="size-3.5" strokeWidth={2} />,
+  <Globe key="globe" className="size-3.5" strokeWidth={2} />,
+  <Server key="server" className="size-3.5" strokeWidth={2} />,
+  <Database key="database" className="size-3.5" strokeWidth={2} />,
 ];
 
 /** The level pill of each log level. */

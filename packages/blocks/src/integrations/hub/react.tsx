@@ -56,12 +56,12 @@ const spreads: Record<HubSpread, { radius: number; frame: string; staticRings: [
 const defaultLogo = <Boxes className="size-6" strokeWidth={1.25} />;
 
 const defaultSatellites = [
-  <Cloud className="size-4" strokeWidth={2} />,
-  <Database className="size-4" strokeWidth={2} />,
-  <MessageSquare className="size-4" strokeWidth={2} />,
-  <Mail className="size-4" strokeWidth={2} />,
-  <Globe className="size-4" strokeWidth={2} />,
-  <CodeXml className="size-4" strokeWidth={2} />,
+  <Cloud key="cloud" className="size-4" strokeWidth={2} />,
+  <Database key="database" className="size-4" strokeWidth={2} />,
+  <MessageSquare key="message-square" className="size-4" strokeWidth={2} />,
+  <Mail key="mail" className="size-4" strokeWidth={2} />,
+  <Globe key="globe" className="size-4" strokeWidth={2} />,
+  <CodeXml key="code-xml" className="size-4" strokeWidth={2} />,
 ];
 
 function polarToCartesian(angleDeg: number, radius: number) {
