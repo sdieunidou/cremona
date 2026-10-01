@@ -146,10 +146,11 @@ files; keep it with them if you copy the fonts elsewhere.
 
 ## Keyframes, variants & custom utilities
 
-`cremona.css` holds what the blocks use: the `spin`, `ping` and `pulse`
-keyframes (tw-animate-css `enter`/`exit` are generated as soon as a block uses
-`animate-in`/`animate-out`), the `no-scrollbar` utility, and shadcn's state
-variants — `data-open:`, `data-closed:`, `data-checked:`, `data-unchecked:`,
+`css/tailwind.css` adds to Tailwind the `no-scrollbar`, `paused` (stops a CSS
+animation loop) and `ring-1.5` utilities and shadcn's state variants;
+`cremona.css` holds those the blocks use, with the `spin`, `ping` and `pulse`
+keyframes (`cremona-spin`… in `cremona.scoped.css`). The variants —
+`data-open:`, `data-closed:`, `data-checked:`, `data-unchecked:`,
 `data-active:`, `data-disabled:` match `data-state="…"` or the boolean data
 attribute; `data-selected:`, `data-horizontal:`, `data-vertical:` match
 `data-selected="true"` and `data-orientation`. Tailwind v4 native utilities
@@ -160,8 +161,87 @@ used by blocks: `mask-t-from-*`, `mask-b-from-*`, `bg-linear-to-*`,
 
 | File | Use |
 |---|---|
-| `@cremona/tokens/css/cremona.css` | complete stylesheet: fonts + tokens + every utility the blocks use. Include once; no build on the host. It holds the blocks' classes only: classes of your own need your own CSS or Tailwind build. |
-| `@cremona/tokens/css/themes.css` | semantic tokens only — for hosts compiling their own Tailwind v4 styles. |
+| `@cremona/tokens/css/cremona.css` | the complete stylesheet, for a page whose CSS is Cremona's: fonts, tokens, Tailwind's preflight and every utility the blocks use. No build. Its reset styles the whole page, and it holds the blocks' classes only: classes of your own need your own CSS. |
+| `@cremona/tokens/css/tailwind.css` | for an app with its own Tailwind CSS v4 build: what Cremona adds to Tailwind (fonts, tokens, the theme mapping, variants, utilities, base styles), compiled by that build with its own classes — [setup](getting-started.md#9-your-own-css-or-tailwind). `cremona.css` is compiled from it. |
+| `@cremona/tokens/css/cremona.scoped.css` | for a page with CSS of its own (Bootstrap, a theme, an existing app): `cremona.css` confined to `.cremona` elements — [Next to other CSS](#next-to-other-css). |
+| `@cremona/tokens/css/themes.css` | the semantic token blocks only (`tailwind.css` imports it). |
+| `@cremona/tokens/css/fonts.css` | the Inter `@font-face` rules only. |
+
+### Next to other CSS
+
+Cascade layers decide before specificity: an unlayered rule beats every layered
+one, and among `!important` declarations a layered one beats an unlayered one.
+
+- **`cremona.css`** puts its reset and utilities in Tailwind's layers (`base`,
+  `utilities`) and its tokens on `:root`. Any unlayered rule of the page beats
+  them: Bootstrap's Reboot (paragraph and heading margins, heading sizes, link
+  colours), its `!important` utilities with the same names (`p-3`, `border`,
+  `rounded`, `bg-primary`, `shadow-sm`…), a template's `body { font-family }`.
+  Its reset also restyles the page's own elements. Keep it for pages whose CSS
+  is Cremona's; with a Tailwind build, use `tailwind.css` instead: two Tailwind
+  outputs override each other class by class.
+- **`cremona.scoped.css`** applies to an element with the `cremona` class and
+  its content, nothing else:
+
+  ```html
+  <div class="cremona h-96"><!-- a block, or a Stimulus template --></div>
+  ```
+
+  - The page outside keeps its styles: tokens and Tailwind's theme variables
+    are set on the `.cremona` element, not on `:root`, so a page defining
+    `--primary` or `--background` (Bootstrap 4, a theme) keeps its values and
+    the blocks keep theirs. To change a token for the blocks, set it on
+    `.cremona` in your own CSS (Cremona's are in a layer: yours win).
+  - The wrapper takes Cremona's font, text size, line height and colours
+    instead of inheriting the page's, and keeps its own margins, padding and
+    borders.
+  - Inside, the reset and base styles are unlayered and one class more specific
+    than an element selector (`.cremona p`): they win over the page's element
+    rules. They also put back the browser's values where a page reset such as
+    Bootstrap's Reboot changes what Tailwind's preflight leaves alone (heading
+    line height and colour, `dt` weight, `th` alignment, `label` display,
+    `legend` float, `kbd` colours, search input appearance, button cursor…).
+  - The utilities are `!important` in `@layer cremona.utilities`, so the page's
+    `!important` utilities with the same names (`p-3`, `bg-primary`,
+    `rounded`…) do not reach the blocks; a page's `border` class that sets the
+    whole `border` shorthand (Bootstrap's) does not recolour them either.
+    Two exceptions keep the blocks' inline styles and animations working:
+    - the `opacity`, `display` and `transform-origin` utilities stay normal and
+      unlayered (`.flex:is(.cremona, .cremona *)`, two classes of
+      specificity): blocks set these inline (`display: none`, a transform
+      origin) and animate them (fades), and an `!important` class would win
+      over both. No Bootstrap utility uses their names with other values;
+    - the `color` and `background-color` utilities do not apply where the
+      element sets that property inline (`:where(:not([style*="background-color:"]))`):
+      a block script animates it (a progress bar turning green).
+  - Layers: `cremona.properties`, `cremona.theme`, `cremona.base`,
+    `cremona.utilities`, `cremona.defaults`. A layer the page declares before
+    them wins over their `!important` declarations: if your CSS goes in a layer
+    (`@import url(bootstrap.css) layer(bootstrap)`), load
+    `cremona.scoped.css` first, or start your CSS with
+    `@layer cremona, bootstrap;`.
+  - Keyframes are named `cremona-spin`, `cremona-ping` and `cremona-pulse`: a
+    page's own `@keyframes pulse` (Animate.css) does not replace them. The
+    `@font-face` rules (Inter Variable) and `@property` registrations
+    (`--tw-*`) are global by nature and style nothing by themselves.
+  - Dark mode and themes: `dark` and `theme-<name>` on `<html>`, on the wrapper
+    or on any ancestor; a `.dark` element inside the wrapper renders that part
+    dark. A theme class inside the wrapper has no effect.
+  - Shadow DOM: put the `.cremona` element and `cremona.scoped.css` inside the
+    shadow root, with `dark` or `theme-<name>` on that element (page classes do
+    not cross the shadow boundary), and load `@cremona/tokens/css/fonts.css` in
+    the page (browsers ignore `@font-face` in a shadow root). The `--tw-*`
+    properties get their initial values without `@property`, which shadow
+    roots ignore.
+  - Limits: page rules more specific than `.cremona <element>` (an id,
+    `.content p`) still reach the blocks' elements for properties no Cremona
+    class sets — scope them, or put them in a layer. A page's `!important`
+    utility with one of a block's class names wins over that block's normal
+    ones on the same element: Bootstrap's `opacity-25` over a `dark:opacity-30`
+    variant (`branding/spotlight` in dark mode: two glows at .25 instead of
+    .30), Bootstrap's `bg-primary` on an element whose colour the block animates
+    inline. Sizes are in `rem`: keep the root font size at the browser default
+    (`html { font-size: 62.5% }` shrinks the blocks).
 
 ## Preview frame system
 

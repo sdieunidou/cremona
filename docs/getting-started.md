@@ -40,6 +40,14 @@ yourself only when your own code imports them (a derived component does).
 
 ## 2. Load the stylesheet, once
 
+`@cremona/tokens` ships three stylesheets. Load one, once:
+
+| Your app | Stylesheet |
+|---|---|
+| no Tailwind, no CSS framework (a new Vite or Next.js app) | `css/cremona.css`, below |
+| its own Tailwind CSS v4 build (create-next-app's default) | `css/tailwind.css`, inside that build: [section 9](#9-your-own-css-or-tailwind) |
+| CSS of its own that must keep working (Bootstrap, a theme, an existing app) | `css/cremona.scoped.css`, with the blocks inside a `.cremona` element: [Next to other CSS](design-system.md#next-to-other-css) |
+
 ```tsx
 // Vite: src/main.tsx — Next.js: app/layout.tsx
 import "@cremona/tokens/css/cremona.css";
@@ -48,15 +56,14 @@ import "@cremona/tokens/css/cremona.css";
 `cremona.css` holds the Inter Variable font (its seven `.woff2` files sit next
 to it; Vite and Next.js bundle them), the tokens of the 9 themes in light and
 dark, Tailwind's preflight reset and every utility class the blocks use. The
-blocks need no Tailwind build.
+blocks need no Tailwind build. Its reset applies to the whole page.
 
 Remove what the app template ships, because it overrides the same names:
 
 - **Vite**: delete `src/index.css` and `src/App.css` and their imports.
 - **create-next-app**: without Tailwind, delete `app/globals.css` and its
-  import. With Tailwind (the default), keep only `@import "tailwindcss";` in
-  it — delete the `:root`, `@theme inline`, `prefers-color-scheme` and `body`
-  rules — and finish with [Your own CSS, or Tailwind](#9-your-own-css-or-tailwind).
+  import. With Tailwind (the default), do not load `cremona.css`: turn
+  `app/globals.css` into the stylesheet of [section 9](#9-your-own-css-or-tailwind).
   The Geist `next/font` setup can go: blocks use Inter.
 
 Those rules are unlayered, so they beat the layered ones in `cremona.css`
@@ -273,31 +280,45 @@ modules…) on Cremona's tokens, so it follows the theme and dark mode:
 }
 ```
 
-**With Tailwind CSS v4** (create-next-app's default), the page carries two
-Tailwind stylesheets that define the same class names, and on the same class
-the one loaded last wins. Loaded after yours, `cremona.css` breaks your
-responsive classes (its `sm:grid-cols-2` beats your `lg:grid-cols-4`); loaded
-before yours without more setup, your build redefines the blocks' `border`,
-`rounded-*` and `font-*` classes with Tailwind's defaults. The setup that keeps
-both right:
+**With Tailwind CSS v4** (create-next-app's default), let your build compile the
+blocks' classes along with yours, and do not load `cremona.css`: two Tailwind
+outputs on one page override each other class by class (its `sm:grid-cols-2`
+would beat your `lg:grid-cols-4`). `@cremona/tokens/css/tailwind.css` brings
+what Cremona adds to Tailwind — the Inter font, the tokens of the 9 themes, the
+theme mapping (`bg-card`, `text-muted-foreground`, the radius and weight
+scales), the `dark` variant on the `.dark` class, the `data-*` state variants, a
+few utilities and the base styles — without Tailwind itself:
 
-1. Import `cremona.css` **before** your own stylesheet:
+```css
+/* app/globals.css (Next.js) — src/index.css (Vite with @tailwindcss/vite) */
+@import "tailwindcss";
+@import "@cremona/tokens/css/tailwind.css";
+@source "../node_modules/@cremona/blocks/dist";
+```
 
-   ```tsx
-   // app/layout.tsx
-   import "@cremona/tokens/css/cremona.css";
-   import "./globals.css";
-   ```
+- `@source` points Tailwind at the compiled blocks, which it does not scan on
+  its own (`node_modules`); the path is relative to the stylesheet. To compile
+  only the blocks you use, list their folders instead
+  (`@source "../node_modules/@cremona/blocks/dist/metrics/stat-card";`).
+- Delete the template's `:root`, `@theme inline`, `prefers-color-scheme` and
+  `body` rules: `tailwind.css` defines the same names (`--background`,
+  `--foreground`…).
+- The blocks render as with `cremona.css`, and your markup shares their
+  values: `bg-card`, `rounded-3xl` or `font-medium` (510) resolve to Cremona's,
+  and your `dark:` classes follow the `.dark` class.
+- `@tailwindcss/vite` and `@tailwindcss/postcss` rebase the font URLs, so Vite
+  and Next.js bundle the Inter files from `node_modules`.
 
-2. In your stylesheet, after `@import "tailwindcss";`, paste everything that
-   follows the `@source` lines of
-   [`packages/tokens/src/cremona.css`](../packages/tokens/src/cremona.css): the
-   `dark` and `data-*` variants, the `no-scrollbar` utility, the `@theme` and
-   `@theme inline` blocks (font, weights, radius scale, the semantic colours)
-   and the `@layer base` rules. Your build then compiles the classes you share
-   with the blocks to the same values, `bg-card` or `text-muted-foreground`
-   work in your markup, and your `dark:` classes follow the `.dark` class.
-3. Keep the template's `:root` and `body` rules out (step 2 of this guide).
+Checked with Vite 8.3 + `@tailwindcss/vite` 4.3 and Next.js 16.3 (Turbopack and
+webpack) + `@tailwindcss/postcss` 4.3, from the packed packages: every element of
+18 blocks gets the computed style it has with `cremona.css`, in light and dark
+(Next.js writes a few colours and gradient stops in another notation).
+
+**With CSS of its own** that must keep working (Bootstrap, a theme, an existing
+app), load `@cremona/tokens/css/cremona.scoped.css` instead of `cremona.css` and
+render the blocks inside an element with the `cremona` class: the page and the
+blocks then keep their own styles. See
+[Next to other CSS](design-system.md#next-to-other-css).
 
 ## Next
 

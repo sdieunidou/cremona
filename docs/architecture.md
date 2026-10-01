@@ -11,7 +11,7 @@ packages are built from the same sources (`pnpm build`, `prepack`):
 |---|---|
 | `@cremona/core`, `@cremona/react` | `dist/` compiled by `tsc` (ESM + `.d.ts`) |
 | `@cremona/blocks` | one entry per block, `dist/<category>/<file>/react.{js,d.ts}`, each starting with `"use client"`, exported as `@cremona/blocks/<category>/<file>`; react, react-dom, motion and lucide-react are peer dependencies; the placeholder images in `public/media/` |
-| `@cremona/tokens` | `css/cremona.css` (compiled by `pnpm build:css`, committed), `css/themes.css`, the fonts, `themes.json` |
+| `@cremona/tokens` | `css/cremona.css` and `css/cremona.scoped.css` (compiled by `pnpm build:css`, committed), `css/tailwind.css` (for hosts' Tailwind builds), `css/themes.css`, `css/fonts.css`, the fonts, `themes.json` |
 | `@cremona/stimulus` | JS controllers (with `.d.ts` declarations) + the generated HTML templates |
 | `@cremona/mcp` | plain ESM JS + a snapshot of the library data (`data/`) |
 
@@ -39,7 +39,7 @@ packages/blocks/src/** (block.json + golden + react.tsx)
         ├── packages/blocks/src/*/*/api.json      (pnpm generate:api: the props references)
         ├── packages/blocks/src/*/*/preview-props.json (via the test suite)
         ├── packages/stimulus/templates/**        (pnpm generate:stimulus)
-        ├── packages/tokens/css/cremona.css       (pnpm build:css: the classes the blocks use)
+        ├── packages/tokens/css/cremona{,.scoped}.css (pnpm build:css: the classes the blocks use)
         ├── packages/blocks/dist/**               (pnpm build: the published entries, not committed)
         ├── MCP server reads                       (packages/mcp/src/store.js)
         └── Gallery discovers                      (import.meta.glob)
@@ -114,18 +114,27 @@ fails the test.
 ## Design tokens
 
 `packages/tokens/css/cremona.css` is the complete, self-sufficient stylesheet
-(fonts + tokens + every utility the blocks and the gallery use). `pnpm build:css`
-compiles it with Tailwind v4 (a dev dependency of `@cremona/tokens`) from
-`packages/tokens/src/cremona.css`, which scans the blocks' sources, their
-goldens and the gallery; CI fails when the committed file is stale, and a test
-checks that every class a golden renders has a rule.
+(fonts + tokens + every utility the blocks use). `pnpm build:css`
+(`packages/tokens/scripts/build-css.mjs`) compiles it with Tailwind v4 (a dev
+dependency of `@cremona/tokens`) from `packages/tokens/src/cremona.css`:
+`tailwindcss`, `css/tailwind.css` (Cremona's fonts, tokens, theme mapping,
+variants, utilities and base styles, also shipped to Tailwind hosts) and an
+`@source` on the blocks' sources and goldens. The same run compiles
+`css/cremona.scoped.css`, the same classes confined to `.cremona` elements for
+pages with CSS of their own (selectors rewritten with Lightning CSS). CI fails
+when a committed file is stale; tests check that every class a golden or a
+Stimulus template renders has a rule, that a host build of `tailwind.css`
+compiles the blocks to the rules of `cremona.css`, and that the scoped file
+reaches nothing outside `.cremona`.
 `css/themes.css` holds only the semantic token blocks (`:root`, `.dark`,
-`.theme-*:not(.dark)`, `.theme-*.dark`) for hosts that compile their own CSS.
+`.theme-*:not(.dark)`, `.theme-*.dark`, `.theme-* .dark`).
 
 ## Gallery app
 
 Vite + React with no UI dependency: the shell uses Tailwind utilities on the
-same tokens as the blocks. `main.tsx` wraps the app in
+same tokens as the blocks, compiled with the blocks' classes in one build
+(`src/gallery.css`: `tailwindcss` + `@cremona/tokens/css/tailwind.css`, through
+`@tailwindcss/vite`) — the gallery is set up as a Tailwind host. `main.tsx` wraps the app in
 `<MotionConfig reducedMotion="user">`, so every preview honours reduced
 motion.
 

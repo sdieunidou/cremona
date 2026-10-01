@@ -13,12 +13,12 @@ come with the templates:
 | Templates, one per variant | `packages/stimulus/templates/<category>/<file>/<slug>.html` |
 | Index (labels, slugs, sizes, effects) | `packages/stimulus/templates/manifest.json` |
 | Controllers | `packages/stimulus/src/cremona-{visual,theme}_controller.js` (`index.js` exports `registerCremona`) |
-| Stylesheet | `packages/tokens/css/cremona.css` and its `*.woff2` fonts (about 270 KB, 35 KB gzipped) |
+| Stylesheet | `packages/tokens/css/cremona.scoped.css` (about 350 KB, 34 KB gzipped) or `cremona.css` (about 255 KB, 32 KB gzipped), and their `*.woff2` fonts: see [Which stylesheet](#which-stylesheet) |
 | Placeholder images | `apps/gallery/public/media/placeholders/` |
 
 The packages are not published to npm yet: copy the files. Once they are, the
 same files come from `@cremona/stimulus` (`@cremona/stimulus/templates/*`) and
-`@cremona/tokens/css/cremona.css`.
+`@cremona/tokens/css/*`.
 
 ## Setup
 
@@ -26,14 +26,46 @@ The controllers import `@hotwired/stimulus` and must be registered in the
 application your app already starts. Never call `Application.start()` a second
 time.
 
+### Which stylesheet
+
+| Your app's CSS | Load |
+|---|---|
+| Bootstrap, a theme, any CSS of its own | `cremona.scoped.css`, and put each template inside an element with the `cremona` class |
+| none of its own (the page is styled with Cremona's tokens) | `cremona.css`; its reset also styles the page |
+| a Tailwind CSS v4 build | `tailwind.css` inside that build, with `@source` on the copied templates: [Tailwind](getting-started.md#9-your-own-css-or-tailwind) |
+
+With `cremona.scoped.css`, Cremona's rules apply to `.cremona` elements and
+their content only: Bootstrap keeps styling the page, and its Reboot (margins,
+heading sizes, link colours) and its `!important` utilities (`p-3`, `border`,
+`rounded`…) do not reach the templates. Load it before any stylesheet that puts
+its rules in a cascade layer, or start your CSS with `@layer cremona, bootstrap;`
+(see [Next to other CSS](design-system.md#next-to-other-css)):
+
+```twig
+<link rel="stylesheet" href="{{ asset('styles/cremona/cremona.scoped.css') }}">
+<link rel="stylesheet" href="{{ asset('styles/app.css') }}"> {# Bootstrap and your CSS #}
+
+<div class="cremona h-96">
+  {{ source('cremona/metrics/stat-card/000-default.html') }}
+</div>
+```
+
+The `cremona` element takes Cremona's font, text size, line height and colours
+instead of inheriting the page's, and keeps the margins and borders you give it.
+Dark mode and themes (`dark`, `theme-<name>`) go on `<html>`, as the
+`cremona-theme` controller sets them, or on the `cremona` element. Tailwind's
+CLI does not rebase `url()`s: with `tailwind.css`, keep the `.woff2` files next
+to the compiled stylesheet.
+
 ### Symfony AssetMapper
 
 1. Copy `cremona-visual_controller.js` and `cremona-theme_controller.js` into
    `assets/controllers/`. StimulusBundle registers them as `cremona-visual` and
    `cremona-theme` from their file names.
-2. Copy `cremona.css` and its `*.woff2` files into `assets/styles/cremona/`. Then
-   load it from `assets/app.js` (`import './styles/cremona/cremona.css';`, which
-   AssetMapper turns into a `<link>` tag), or from a `<link>` in your layout.
+2. Copy the stylesheet ([which one](#which-stylesheet)) and its `*.woff2` files
+   into `assets/styles/cremona/`. Then load it from `assets/app.js`
+   (`import './styles/cremona/cremona.scoped.css';`, which AssetMapper turns
+   into a `<link>` tag), or from a `<link>` in your layout.
 3. Copy `packages/stimulus/templates/` into `templates/cremona/` (see
    [Placing a template](#placing-a-template)).
 4. Copy the placeholder images into `public/media/placeholders/` (see
@@ -59,7 +91,7 @@ registerCremona(app); // cremona-visual + cremona-theme
 ```js
 // assets/app.js
 import "./bootstrap.js";
-import "./styles/cremona/cremona.css";
+import "./styles/cremona/cremona.scoped.css"; // or cremona.css: see "Which stylesheet"
 ```
 
 Any other bundler works the same way: import `registerCremona` and pass it the
@@ -81,13 +113,14 @@ designed height of each variant is its `size` in `manifest.json`:
 
 Include templates with Twig's `source()`. It inserts the file as-is, without
 parsing or escaping it, and templates contain no Twig syntax. A macro keeps the
-wrapper in one place:
+wrapper in one place (its `cremona` class is what `cremona.scoped.css` styles
+inside; `cremona.css` ignores it):
 
 ```twig
 {# templates/cremona/_visual.html.twig #}
 {% macro visual(path, size = null) %}
   {%- set heights = { xs: 'h-48', sm: 'h-64', lg: 'h-[28rem]', xl: 'h-[32rem]' } -%}
-  <div class="{{ heights[size] ?? 'h-96' }}">
+  <div class="cremona {{ heights[size] ?? 'h-96' }}">
     {{- source('cremona/' ~ path ~ '.html') -}}
   </div>
 {% endmacro %}
