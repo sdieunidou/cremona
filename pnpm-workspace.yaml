@@ -6,3 +6,7 @@ allowBuilds:
   esbuild: true
 onlyBuiltDependencies:
   - esbuild
+overrides:
+  # one @types/node for every importer: the Node versions CI runs (vite's optional peer would
+  # otherwise resolve the newest major)
+  "@types/node": ^24.0.0

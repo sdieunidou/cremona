@@ -8,7 +8,7 @@ everyone.
 
 ```bash
 pnpm check              # lint + format check + typecheck + check:use-client + check:api + tests + validate — run before finishing
-pnpm test               # every package's tests (block parity, MCP e2e, tokens, stimulus…)
+pnpm test               # every package's tests (block parity and end state, MCP e2e, tokens, stimulus…)
 pnpm typecheck          # tsc --noEmit per package
 pnpm lint               # ESLint (errors fail CI; block a11y findings are warnings)
 pnpm format             # Prettier (a hook formats files you edit in Claude Code)
@@ -54,7 +54,8 @@ also runs the package check before publishing.
 3. **Parity is a gate**: a block change that breaks its parity test is a
    regression unless the golden is deliberately regenerated. The comparator
    (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
-   normalizations only with a real justification.
+   normalizations only with a real justification. The end-state tests are a
+   gate too: every entrance ends on the `animated={false}` render.
 4. **New blocks** follow `docs/authoring-guide.md` and must pass parity +
    `pnpm validate`. MCP `add_block` scaffolds them, in an existing category
    (`add_category` first otherwise); it refuses a key that already exists.

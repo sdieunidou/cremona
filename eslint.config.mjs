@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import { defineConfig, globalIgnores } from "eslint/config";
 import jsxA11y from "eslint-plugin-jsx-a11y";
+import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import globals from "globals";
 import tseslint from "typescript-eslint";
@@ -46,6 +47,13 @@ export default defineConfig(
   {
     files: ["**/*.tsx"],
     ...jsxA11y.flatConfigs.recommended,
+  },
+  {
+    // Next.js lints copied blocks with react/jsx-key: keep the sources clean for it
+    files: ["packages/*/src/**/*.tsx", "apps/gallery/src/**/*.tsx"],
+    plugins: { react },
+    settings: { react: { version: "detect" } },
+    rules: { "react/jsx-key": ["error", { checkFragmentShorthand: true }] },
   },
   {
     // Blocks render aria-hidden preview compositions whose markup is locked by golden

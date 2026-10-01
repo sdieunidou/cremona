@@ -20,14 +20,17 @@ export type SyncNode = ReactNode | LucideIcon;
 
 export const syncDefaultCopy = {
   pairs: [
-    [<Cloud className="size-4" strokeWidth={2} />, <Server className="size-4" strokeWidth={2} />],
     [
-      <Database className="size-4" strokeWidth={2} />,
-      <HardDrive className="size-4" strokeWidth={2} />,
+      <Cloud key="cloud" className="size-4" strokeWidth={2} />,
+      <Server key="server" className="size-4" strokeWidth={2} />,
     ],
     [
-      <FileText className="size-4" strokeWidth={2} />,
-      <Archive className="size-4" strokeWidth={2} />,
+      <Database key="database" className="size-4" strokeWidth={2} />,
+      <HardDrive key="hard-drive" className="size-4" strokeWidth={2} />,
+    ],
+    [
+      <FileText key="file-text" className="size-4" strokeWidth={2} />,
+      <Archive key="archive" className="size-4" strokeWidth={2} />,
     ],
   ],
 } as const;
