@@ -15,8 +15,9 @@ import { Line, type LineProps } from "@cremona/blocks/charts/line";
 One entry per block, `@cremona/blocks/<category>/<file>`: compiled ESM with its
 type declarations, starting with `"use client"`. `react`, `react-dom`, `motion`
 and `lucide-react` are peer dependencies (React 18.2+ or 19, motion 12 or 13,
-lucide-react 1.47+); `@cremona/core` (constants, types, `cn`, `frameClasses`)
-and `@cremona/react` (`useInView`, `useLoopActive`) come as dependencies.
+lucide-react 1.47+); `@cremona/core` (types, `cn`, `frameClasses`,
+constants) and `@cremona/react` (`useInView`, `useLoopActive`, `useFitScale`…)
+come as dependencies ([Shared helpers](#shared-helpers)).
 Tested with React 19.3 and 18.3, Next.js 16.3, Vite 8.3, TypeScript 6.0,
 motion 13.4 and lucide-react 1.49. The setup of a new app — stylesheet, dark
 mode, images, Server Components, Tailwind — is in
@@ -35,7 +36,7 @@ Every visual extends `VisualProps`:
 | `animated` | `false` | play the entrance timeline. `false` = static final state |
 | `trigger` | `"inView"` | `"mount"` (immediately), `"inView"` (once at 50% visible), `"inViewRepeat"` (replays) |
 | `fill` | `false` | fill the box instead of sitting in the preview frame — see [Using a block as a panel](#using-a-block-as-a-panel) |
-| `className` | — | merged onto the scene root |
+| `className` | — | added to the root's classes (see [Gotchas](#gotchas) for overrides) |
 
 Cross-block style props (when present in the POC): `fadeOut` (mask fade at the
 card bottom), `isometric` (3D tilt), `gradient` (rainbow glow + veil).
@@ -70,7 +71,8 @@ Every block is written for the gallery. Three consequences, none of them
 obvious from the import:
 
 1. its root is `aria-hidden="true"` — the content does not exist for a screen
-   reader;
+   reader (the copy of `states/*` screens is the exception:
+   [States](#states));
 2. that root is a **preview frame**
    (`relative isolate flex size-full items-center justify-center overflow-hidden px-2`)
    that centres a `max-w-*` card inside whatever box you give it;
@@ -99,6 +101,11 @@ props whose defaults reproduce the gallery's demo content — pass yours:
 | `table` | `columns`, `rows` (text, two-line or status-pill cells), `caption`, `checkboxes`, `loading` + `loadingRows` |
 | `tabs` | `items` (label, icon and body per tab), `active`, `label` (the tab list's name) |
 | `tooltip`, `toast`, `kbd` | `content`, `side`, `triggerLabel`; `title`, `description`, `action`, `variant`, `dismissible`; `keys`, `caption` |
+
+The other components (`alert`, `avatar`, `badge`, `checkbox`, `dropdown-menu`,
+`pagination`, `progress`, `skeleton`, `switch`) take their content the same
+way. Every component's full props are in the _Props_ table of its gallery page
+and in `get_block`'s `api`.
 
 Inside the preview they behave like the real thing — keyboard focus with one
 ring recipe (`focus-visible:outline-2 focus-visible:outline-offset-2
@@ -152,9 +159,9 @@ three edits every time:
 
 | | |
 |---|---|
-| **remove** | the preview frame wrapper and its `aria-hidden="true"`, and the `useInView` plumbing (`inViewOnce` / `inViewRepeat` / `state`) |
+| **remove** | the preview frame wrapper and its `aria-hidden="true"`; the `useInView` plumbing (`inViewOnce` / `inViewRepeat` / `state`); the `noFocus` spreads (`tabIndex: -1` and a `mousedown` `preventDefault`) and the `tabIndex={-1}` that keep preview controls out of the tab order |
 | **add** | real props — `children`, handlers, forwarded `ref`, ARIA, keyboard |
-| **keep** | everything else: class strings, `motion` variants, transitions, SVG markup |
+| **keep** | everything else: class strings (the focus recipe included), `motion` variants, transitions, SVG markup, and the `useLoopActive` gate on every loop |
 
 ```tsx
 // before — packages/blocks/src/components/button/react.tsx
@@ -177,6 +184,11 @@ three edits every time:
   {children}
 </button>
 ```
+
+A loop you keep — a spinner, a pulse, a typing caret — stays behind
+`useLoopActive(ref, enabled)`, so it pauses off-screen, in a hidden tab and
+under reduced motion; pass `true` for a loading spinner that is the state
+itself, `animated` for decoration ([Shared helpers](#shared-helpers)).
 
 Keep a header comment naming the source block and what you changed: the
 derivation stays auditable, and you can re-sync when the block moves.
@@ -390,6 +402,13 @@ their server markup:
   only thing that differs between otherwise identical tiles.
 - **A block centres a capped-width card in your box** — unless you pass `fill`.
   See [Using a block as a panel](#using-a-block-as-a-panel).
+- **`className` adds classes; it does not replace the block's.** `cn` joins
+  class names without resolving conflicts, so between your `p-0` and the
+  root's `px-2` the rule that comes later in the stylesheets wins, whatever
+  the order in the attribute. Put size, margins and position on a wrapper
+  element of your own. To change one of the block's classes, use your Tailwind
+  build's important modifier (`px-0!`) or a more specific selector of your
+  own.
 - **`trigger="mount"` replays on every remount.** In a filtered list that
   re-keys its children, the entrance runs again on each change. Prefer
   `"inView"` (the default, once) unless the panel really is mounted once.
@@ -419,9 +438,20 @@ import { FRAME_HEIGHTS, gridCols, cn } from "@cremona/core";
 ## SSR / RSC notes
 
 - Blocks render deterministically server-side (that's how parity is verified).
-- SVG gradient/mask ids come from `useId`: unique within one React root, so
-  many blocks can share a page. With several roots on one page (islands,
-  micro-frontends), give each root its own `identifierPrefix`.
+- Ids — SVG gradients, masks and clip paths, and the `for` and `aria-*`
+  references of the components and kits — come from `useId`: unique within one
+  React root, so many blocks can share it. Separate roots number their ids from
+  the same start: with several roots on one page (islands, micro-frontends, a
+  root per widget that a Stimulus controller mounts), two blocks get the same
+  ids, and a gradient or a label resolves into the other root. Give each root
+  its own `identifierPrefix`, the same on the server and in the browser:
+
+  ```tsx
+  createRoot(el, { identifierPrefix: "pricing-" }).render(<Pricing />);
+  // server-rendered root
+  renderToString(<Pricing />, { identifierPrefix: "pricing-" });
+  hydrateRoot(el, <Pricing />, { identifierPrefix: "pricing-" });
+  ```
 - Blocks that show a demo photo by default load it from
   `/media/placeholders/…`; the images ship in `@cremona/blocks/public/media/`,
   to copy into your app's public directory
@@ -430,6 +460,9 @@ import { FRAME_HEIGHTS, gridCols, cn } from "@cremona/core";
   Components freely, with serializable props. A component-typed prop
   (`icon={Users}`) cannot cross that boundary — pass it from a client module of
   your own ([the pattern](getting-started.md#8-nextjs-app-router-and-server-components)).
+- `geo/globe` and `geo/world-map` draw their land dots from
+  `@cremona/core/land-mask`, a subpath of `@cremona/core`: a copied source
+  resolves it through the package's `exports`.
 
 ## Reduced motion
 
@@ -445,13 +478,31 @@ For users who ask for reduced motion, entrance transforms then jump to their
 end state (fades remain). Looping animations stop on their own: blocks run them
 only while `useLoopActive` allows it.
 
-## Hooks
+## Shared helpers
 
-- `useInView(ref, { once, initial, margin, amount })` — port of the POC hook;
-  `observeInView(targets, onEnter, options)` for non-React contexts.
-- `useLoopActive(ref, enabled)` — `true` while a looping animation should run:
-  `enabled`, the element intersects the viewport, the page is visible and the
-  user does not ask for reduced motion. It is `true` on the server and while
-  hydrating, so a block's server markup stays its looping state.
-- `usePrefersReducedMotion()` — the media query, `false` on the server and while
-  hydrating.
+Blocks import only `react`, `motion/react`, `lucide-react`, `@cremona/core` and
+`@cremona/react`; a component derived from one uses the same helpers.
+
+`@cremona/react` (React 18.2+ or 19):
+
+| Export | Use |
+|---|---|
+| `useInView(ref, { once, initial, margin, amount })` | `true` while the element is in view (from its first entry with `once`). `amount` is the share that must show (`0.5` in blocks), capped at the share the element can show. Blocks start their entrance with it |
+| `observeInView(targets, onEnter, options)` | the same observer outside React; `onEnter` may return a cleanup, run when the target leaves |
+| `useLoopActive(ref, enabled)` | `true` while a loop should run: `enabled`, the element intersects the viewport, the page is visible and the user does not ask for reduced motion. `true` on the server and while hydrating, so server markup shows the looping state. Blocks gate every loop with it — `enabled` is `animated`, or `true` for a spinner that is the loading state — and render a resting frame when it is `false` |
+| `usePrefersReducedMotion()` | the `prefers-reduced-motion: reduce` media query; `false` on the server and while hydrating |
+| `useFitScale(frame, stage, layout?)` | scales `stage` down (CSS `scale`, never up) to fit `frame`'s content box, again when either resizes or `layout` changes; client-only |
+
+`@cremona/core` (framework-agnostic; `@cremona/react` re-exports `cn` and its
+types):
+
+| Export | Use |
+|---|---|
+| `VisualProps`, `TriggerMode` | the props every block takes (`animated`, `trigger`, `fill`, `className`) |
+| `cn(...classes)` | joins the truthy class names; it does not resolve conflicting utilities (see [Gotchas](#gotchas)) |
+| `frameClasses(fill)` | a block root's classes: the preview frame, or a plain box with `fill` |
+| `toFractions(points, values?, min?, max?)` | a series as heights from 0 to 1, `null` for a missing value: the contract of `line`, `sparkline` and `trend` |
+| `FRAME_HEIGHTS`, `gridCols(cols)` | the gallery's stage height per variant `size`, and its grid columns |
+| `ISO_HIDDEN`, `ISO_VISIBLE`, `ISO_TRANSITION`, `RAINBOW_GRADIENT`, `EASE_OUT` | the isometric transform and its transition, the glow gradient, the entrance easing |
+| `BlockMeta`, `VariantDef` | the shape of a block's `block.json` |
+| `@cremona/core/land-mask` | `isLand(lat, lng)`, `landMask()` and the `LAND_MASK_*` constants: the land mask the `geo/*` maps draw from |

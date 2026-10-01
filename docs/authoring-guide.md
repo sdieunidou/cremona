@@ -56,6 +56,26 @@ motion language, same tokens, same test machinery.
 8. **Dark mode** — every visual must read correctly in all 9 themes ×
    light/dark (check in the gallery with the theme picker).
 
+## What a block imports
+
+`react`, `motion/react`, `lucide-react`, `@cremona/core` and
+`@cremona/react` — never another block, so that its source works on its own
+once copied (`get_block` returns that one file):
+
+- root: `cn(frameClasses(fill), className)`, and the module's `max-w-*` only
+  without `fill` (`!fill && "max-w-72"`);
+- entrance: `useInView(ref, { once, amount: 0.5 })` per trigger, as in the
+  `add_block` skeleton;
+- loops: `useLoopActive(ref, animated)` (rule 4);
+- a fixed-size stage that must fit narrow boxes: `useFitScale(frameRef, stageRef)`;
+- a numeric series: `toFractions` (`@cremona/core`); world geography:
+  `@cremona/core/land-mask`.
+
+`cn` joins class names without resolving conflicts: never put two utilities
+for the same property on one element (`border-input` and
+`border-destructive`) — choose one with a condition, or the stylesheet order
+decides. The full API is in [react.md](react.md#shared-helpers).
+
 ## Test flow (per block)
 
 ```bash

@@ -247,8 +247,10 @@ The same applies to any prop typed as a component (`LucideIcon`,
 `ComponentType`) or a callback.
 
 Blocks render the same markup on the server and in the browser, so static
-prerendering and hydration are clean. SVG gradient ids come from `useId`,
-unique within one React root.
+prerendering and hydration are clean. Their ids (SVG gradients, label and ARIA
+references) come from `useId`, unique within one React root: with several
+roots on one page — islands, micro-frontends — give each its own
+`identifierPrefix` ([SSR / RSC notes](react.md#ssr--rsc-notes)).
 
 ## 9. Your own CSS, or Tailwind
 

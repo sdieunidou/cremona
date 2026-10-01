@@ -63,8 +63,10 @@ No `NPM_TOKEN` secret is used; delete one if it exists.
 
 ## Checking packages before a release
 
-- `pnpm build`, then `pnpm pack` in a package directory, show exactly what a
-  package ships (with pnpm 11, `pnpm publish --dry-run` prints no file list).
+- `pnpm pack` in a package directory shows exactly what it ships (with pnpm
+  11, `pnpm publish --dry-run` prints no file list). Each `prepack` builds what
+  its package compiles: `dist/` for core, react and blocks (plus the blocks'
+  placeholder images), the data snapshot for mcp.
 - `pnpm --filter @cremona/blocks check:package` packs `@cremona/blocks` and
   checks the tarball: a compiled `"use client"` entry and types for every
   block, the placeholder images, publint, and attw on every entry (ESM-only
@@ -78,9 +80,9 @@ No `NPM_TOKEN` secret is used; delete one if it exists.
 
 | Package | Content |
 |---|---|
-| `@cremona/tokens` | `css/cremona.css`, `css/themes.css`, the Inter woff2 files, `themes.json` |
-| `@cremona/core` | compiled `dist/` (JS + `.d.ts`) |
-| `@cremona/react` | compiled `dist/` (JS + `.d.ts`), React as a peer dependency |
+| `@cremona/tokens` | `css/cremona.css`, `css/themes.css`, the Inter woff2 files and their `OFL.txt`, `themes.json` |
+| `@cremona/core` | compiled `dist/` (JS + `.d.ts`), with the `land-mask` subpath |
+| `@cremona/react` | compiled `dist/` (JS + `.d.ts`); React 18.2+ or 19 as a peer dependency |
 | `@cremona/blocks` | `dist/<category>/<file>/react.{js,d.ts}` (one `"use client"` entry per block, `pnpm build`), `public/media/placeholders/` (copied from the gallery at pack time), `catalog.json`; react, react-dom, motion and lucide-react as peer dependencies |
-| `@cremona/stimulus` | controllers (`src/`) and generated templates; `@hotwired/stimulus` as a peer dependency |
+| `@cremona/stimulus` | controllers (`src/`, with their `.d.ts`) and generated templates; `@hotwired/stimulus` as a peer dependency |
 | `@cremona/mcp` | the server plus a snapshot of blocks, tokens, templates and docs (`data/`, written by `prepack`); authoring tools are only registered inside a cremona checkout |
