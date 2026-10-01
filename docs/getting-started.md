@@ -21,7 +21,8 @@ not the block itself: see [Preview compositions vs production UI](react.md#previ
 
 Tested with React 19.3 and 18.3, Next.js 16.3 (Turbopack and webpack), Vite 8.3,
 TypeScript 6.0 (`strict`, `noUncheckedIndexedAccess`), motion 13.4 and
-lucide-react 1.49.
+lucide-react 1.49. The stylesheet is Tailwind v4 output (cascade layers, `oklch()`
+colours, `color-mix()`): Safari 16.4+, Chrome 111+, Firefox 128+.
 
 ## 1. Install
 
@@ -91,8 +92,8 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
 - **Accessibility**: the block's root is `aria-hidden`. Say what it shows in
   text next to it.
 - **Animation**: `animated={false}` (the default) renders the final state.
-  `animated` plays the entrance once the block is half visible
-  (`trigger="inView"`), `trigger="mount"` plays it on mount.
+  `animated` plays the entrance when the block scrolls into view
+  (`trigger="inView"`); `trigger="mount"` plays it on mount.
 
 The full props contract is in [react.md](react.md#props-contract). The next
 examples lay the page out with Tailwind classes; without Tailwind, use CSS of
@@ -106,9 +107,15 @@ and `gradient={false}` so its rainbow glow does not spill outside the card:
 
 ```tsx
 <div className="grid gap-4 lg:grid-cols-3">
-  <div className="h-80"><Gauge fill gradient={false} title="Uptime" value="99.2%" percent={99} label="SLA met" /></div>
-  <div className="h-80"><Donut fill gradient={false} title="Sprint load" centerValue="90 d" centerLabel="planned" segments={segments} /></div>
-  <div className="h-80"><WorldMap fill markers={offices} /></div>
+  <div className="h-80">
+    <Gauge fill gradient={false} title="Uptime" badge="30 days" percent={99} value="99.2%" label="SLA met" change="+0.4%" />
+  </div>
+  <div className="h-80">
+    <Donut fill gradient={false} title="Sprint load" badge="Week 40" centerValue="90 d" centerLabel="planned" segments={segments} />
+  </div>
+  <div className="h-80">
+    <WorldMap fill markers={offices} />
+  </div>
 </div>
 ```
 
