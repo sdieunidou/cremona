@@ -17,7 +17,7 @@ runGoldenParity("avatars/profile-card", {
       label: "online · photo",
       props: {
         initials: "SR",
-        image: "../../media/placeholders/avatar-08.jpg",
+        image: "/media/placeholders/avatar-08.jpg",
         name: "Sara Ruiz",
         role: "Design Lead",
       },

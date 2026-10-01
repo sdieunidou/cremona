@@ -38,9 +38,11 @@ Two correct ways to use one:
 
 2. DERIVED, for anything interactive: take the source from
    get_block(include:["react"]), then remove the preview frame wrapper and the
-   useInView plumbing, add children/handlers/ref/ARIA/keyboard, and KEEP the
-   class strings and the motion variants. Rewriting a block from its class
-   strings silently drops every entrance animation in the library.
+   useInView plumbing, drop the noFocus spreads that keep preview controls out
+   of the tab order, add children/handlers/ref/ARIA/keyboard, and KEEP the
+   "use client" directive, the class strings and the motion variants.
+   Rewriting a block from its class strings silently drops every entrance
+   animation in the library.
 
 Each block has a \`scale\`: "real-size" (components, forms, mobile, notices, most
 ecommerce: templates to derive real UI from), "miniature" (sections/*, layouts/*,
@@ -52,6 +54,13 @@ Call get_guide("react") for the derivation recipe, the props contract and the
 gotchas — the \`gradient\` veil hides the bottom 64px of a card, and entrance
 chains run ~1.3s, which screenshot tests must wait out. Before adding blocks,
 read get_guide("porting-guide") or get_guide("authoring-guide").
+
+Stimulus (Symfony, Rails…): each template is the block's final render, visible
+without JavaScript; the cremona-visual controller plays the entrance. A template
+fills its container, so give it a height — the variant's \`size\` (xs h-48, sm h-64,
+md h-96 by default, lg h-[28rem], xl h-[32rem]). Blocks whose \`effects\` is
+"entrance-only" keep their loops and JS effects (canvas, pointer, sequences) in
+React only; get_block(include:["stimulus"]) says which.
 
 Ship @cremona/tokens/css/cremona.css once; no Tailwind build required.`;
 
@@ -244,17 +253,23 @@ tool(
         derive: [
           "remove the preview frame wrapper and its aria-hidden",
           "remove the useInView plumbing (inViewOnce / inViewRepeat / state)",
+          "drop the noFocus spreads (tabIndex -1, mousedown preventDefault) so controls take focus",
           "add children, handlers, forwarded ref, ARIA and keyboard",
-          "keep the class strings and the motion variants untouched",
+          'keep the "use client" directive, the class strings and the motion variants untouched',
         ],
         guide: 'get_guide("react")',
       };
     }
     if (wanted.has("stimulus")) {
       const variants = store.stimulusTemplates(categorySlug, file);
+      const entry = store.stimulusManifest()[key] ?? {};
       out.stimulus = {
         install: STIMULUS_INSTALL,
-        templates: variants.map((v) => ({ label: v.label, slug: v.slug })),
+        effects: entry.effects ?? null,
+        reactOnly: entry.reactOnly ?? [],
+        container:
+          "A template fills its container: give it the variant's height (size xs h-48, sm h-64, md h-96, lg h-[28rem], xl h-[32rem]).",
+        templates: variants.map((v) => ({ label: v.label, slug: v.slug, size: v.size ?? "md" })),
         sample: store.stimulusTemplate(
           categorySlug,
           file,

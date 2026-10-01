@@ -14,13 +14,13 @@
   },
   "lockscreen · image": {
     "variant": "lockscreen",
-    "image": "../../media/placeholders/photo-04.jpg",
+    "image": "/media/placeholders/photo-04.jpg",
     "time": "14:08",
     "date": "Friday, June 6",
     "name": "Sara Ruiz"
   },
   "screenshot": {
     "variant": "screenshot",
-    "image": "../../media/placeholders/photo-05.jpg"
+    "image": "/media/placeholders/photo-05.jpg"
   }
 }

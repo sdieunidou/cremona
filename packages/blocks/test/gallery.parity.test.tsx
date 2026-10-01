@@ -11,15 +11,15 @@ const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/images/ga
 // photo roster from the POC page chunk (`items:a` identifier). The POC reused the scene
 // names ("Alpine", "Dusk"…) as the photos' alt text; these describe the actual photos.
 const items = [
-  { src: "../../media/placeholders/photo-12.jpg", title: "Stream in a green forest" },
-  { src: "../../media/placeholders/photo-13.jpg", title: "Hiker facing a mountain lake" },
-  { src: "../../media/placeholders/photo-14.jpg", title: "Road through a green valley" },
-  { src: "../../media/placeholders/photo-15.jpg", title: "Fawn in a sunlit forest" },
-  { src: "../../media/placeholders/photo-16.jpg", title: "Golden Gate Bridge in the fog" },
-  { src: "../../media/placeholders/photo-17.jpg", title: "Pier on a misty lake" },
-  { src: "../../media/placeholders/photo-18.jpg", title: "Manhattan avenue from above" },
-  { src: "../../media/placeholders/photo-19.jpg", title: "Frosted berries" },
-  { src: "../../media/placeholders/photo-20.jpg", title: "Close-up of a cat's nose" },
+  { src: "/media/placeholders/photo-12.jpg", title: "Stream in a green forest" },
+  { src: "/media/placeholders/photo-13.jpg", title: "Hiker facing a mountain lake" },
+  { src: "/media/placeholders/photo-14.jpg", title: "Road through a green valley" },
+  { src: "/media/placeholders/photo-15.jpg", title: "Fawn in a sunlit forest" },
+  { src: "/media/placeholders/photo-16.jpg", title: "Golden Gate Bridge in the fog" },
+  { src: "/media/placeholders/photo-17.jpg", title: "Pier on a misty lake" },
+  { src: "/media/placeholders/photo-18.jpg", title: "Manhattan avenue from above" },
+  { src: "/media/placeholders/photo-19.jpg", title: "Frosted berries" },
+  { src: "/media/placeholders/photo-20.jpg", title: "Close-up of a cat's nose" },
 ];
 
 const photoVariants = [

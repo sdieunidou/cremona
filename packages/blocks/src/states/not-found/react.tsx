@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState, type RefObject } from "react";
+"use client";
+
+import { useRef, useState } from "react";
 import { motion, type Transition, type Variants } from "motion/react";
-import { useInView, useLoopActive } from "@cremona/react";
+import { useFitScale, useInView, useLoopActive } from "@cremona/react";
 import { FileQuestionMark, MousePointerClick } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
@@ -171,34 +173,6 @@ function Pulse({ pulse, active, delay }: { pulse: string; active: boolean; delay
       />
     </>
   );
-}
-
-/** Scale the fixed-size stage down to the frame's content box (client only). */
-function useFitScale(
-  frame: RefObject<HTMLElement | null>,
-  stage: RefObject<HTMLElement | null>,
-  layout?: unknown,
-) {
-  useEffect(() => {
-    const box = frame.current;
-    const el = stage.current;
-    if (!box || !el || typeof ResizeObserver === "undefined") return;
-    const px = (value: string) => parseFloat(value) || 0;
-    const fit = () => {
-      const style = getComputedStyle(box);
-      const width = box.clientWidth - px(style.paddingLeft) - px(style.paddingRight);
-      const height = box.clientHeight - px(style.paddingTop) - px(style.paddingBottom);
-      const ratio = Math.min(1, width / el.offsetWidth, height / el.offsetHeight);
-      el.style.scale = ratio > 0 && ratio < 1 ? String(ratio) : "";
-    };
-    const observer = new ResizeObserver(fit);
-    observer.observe(box);
-    observer.observe(el);
-    return () => {
-      observer.disconnect();
-      el.style.scale = "";
-    };
-  }, [frame, stage, layout]);
 }
 
 export interface NotFoundAction {

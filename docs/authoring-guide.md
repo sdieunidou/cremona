@@ -67,5 +67,5 @@ markup change must be deliberate: regenerate the golden, review the diff).
 
 ## Registry & discovery
 
-Nothing to register — gallery/MCP discover from the filesystem. Optionally
-`python3 tools/extract/gen_registry.py`.
+Nothing to register — the gallery and the MCP server discover blocks from the
+filesystem.

@@ -196,7 +196,10 @@ const FILLER = new Set(
   ),
 );
 
-/** Multi-word ways of saying one thing, folded into one term before splitting. */
+/**
+ * Multi-word ways of saying one thing, folded into one term before splitting.
+ * @type {[RegExp, string][]}
+ */
 const PHRASES = [
   [/\b(sign|log)[ -](in|on)\b/g, "login"],
   [/\bsign[ -]up\b/g, "signup"],
@@ -303,6 +306,11 @@ function scoreTerm(block, term) {
   );
 }
 
+/**
+ * Blocks matching every term of `query`, best first.
+ * @param {string} query
+ * @param {{ category?: string, kind?: string, scale?: string, limit?: number }} [options]
+ */
 export function searchBlocks(query, { category, kind, scale, limit = 30 } = {}) {
   let q = query.trim().toLowerCase().replace(/\s+/g, " ");
   for (const [pattern, term] of PHRASES) q = q.replace(pattern, term);

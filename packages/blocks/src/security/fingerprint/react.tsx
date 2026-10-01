@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef } from "react";
 import { motion, type Variants } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";

@@ -18,7 +18,7 @@ runGoldenParity("devices/laptop", {
       label: "lockscreen · image",
       props: {
         variant: "lockscreen",
-        image: "../../media/placeholders/photo-04.jpg",
+        image: "/media/placeholders/photo-04.jpg",
         time: "14:08",
         date: "Friday, June 6",
         name: "Sara Ruiz",
@@ -26,7 +26,7 @@ runGoldenParity("devices/laptop", {
     },
     {
       label: "screenshot",
-      props: { variant: "screenshot", image: "../../media/placeholders/photo-05.jpg" },
+      props: { variant: "screenshot", image: "/media/placeholders/photo-05.jpg" },
     },
   ],
 });

@@ -15,6 +15,12 @@ export interface PNode {
 }
 
 const SVG_ID_RE = /_(?:R|r)_[A-Za-z0-9]+_/g;
+// The POC pages lived at /visuals/<category>/<file>, so their ../../media/ is /media/.
+const MEDIA_RE = /(?:\.\.\/)+media\//g;
+
+function normValue(value: string): string {
+  return value.replace(SVG_ID_RE, "_ID_").replace(MEDIA_RE, "/media/");
+}
 
 export function parseHtmlFragment(html: string): PNode[] {
   const doc = parseDocument(html) as unknown as Record<string, unknown>;
@@ -97,7 +103,7 @@ function parseStyle(style: string): string[] {
     .split(";")
     .map((d) => d.trim())
     .filter(Boolean)
-    .map((d) => d.replace(SVG_ID_RE, "_ID_"));
+    .map(normValue);
 }
 
 function normAttrs(tag: string, attrs: Record<string, string>): Record<string, string> {
@@ -110,12 +116,11 @@ function normAttrs(tag: string, attrs: Record<string, string>): Record<string, s
       const k = key.toLowerCase();
       if (k === "style") continue;
       if (SVG_PRESENTATIONAL.has(k)) {
-        if (value !== "" && !value.includes(":"))
-          decls.add(`${k}:${value.replace(SVG_ID_RE, "_ID_")}`);
+        if (value !== "" && !value.includes(":")) decls.add(`${k}:${normValue(value)}`);
       } else if (key === "class") {
         out[key] = value.split(/\s+/).filter(Boolean).sort().join(" ");
       } else {
-        out[key] = value.replace(SVG_ID_RE, "_ID_");
+        out[key] = normValue(value);
       }
     }
     out["__decls"] = [...decls].sort().join(";");
@@ -128,7 +133,7 @@ function normAttrs(tag: string, attrs: Record<string, string>): Record<string, s
     } else if (key === "style") {
       value = parseStyle(raw).sort().join(";");
     } else {
-      value = value.replace(SVG_ID_RE, "_ID_");
+      value = normValue(value);
     }
     out[key] = value;
   }

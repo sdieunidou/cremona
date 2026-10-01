@@ -39,7 +39,7 @@
   },
   "avatar image": {
     "reviewer": "Emma Wallace",
-    "reviewerImage": "../../media/placeholders/avatar-04.jpg"
+    "reviewerImage": "/media/placeholders/avatar-04.jpg"
   },
   "failing": {
     "variant": "failing"

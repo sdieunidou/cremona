@@ -15,7 +15,7 @@
         "name": "You",
         "kind": "user",
         "initials": "JC",
-        "avatar": "../../media/placeholders/avatar-01.jpg"
+        "avatar": "/media/placeholders/avatar-01.jpg"
       },
       {
         "name": "Research Agent",
