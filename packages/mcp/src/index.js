@@ -186,7 +186,7 @@ tool(
   {
     title: "Get a block",
     description:
-      "Get a visual block: install line, public import, metadata (with scale), exact variant props and the React source. Add 'stimulus' to include for the Stimulus templates and one sample, 'golden' for the golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
+      "Get a visual block: install line, public import, metadata (with scale), its props reference (types, defaults, descriptions), exact variant props and the React source. Add 'stimulus' to include for the Stimulus templates and one sample, 'golden' for the golden references. The React source is a PREVIEW COMPOSITION (aria-hidden root, preview frame, content-only props) — derive it, do not drop it into an app as-is; the response carries the recipe.",
     inputSchema: {
       key: z.string().describe("block key as '<category>/<file>', e.g. 'metrics/stat-card'"),
       variant: z
@@ -194,9 +194,9 @@ tool(
         .optional()
         .describe("variant label (or slug) to scope props/template/golden to"),
       include: z
-        .array(z.enum(["meta", "props", "react", "stimulus", "golden"]))
+        .array(z.enum(["meta", "api", "props", "react", "stimulus", "golden"]))
         .optional()
-        .describe('sections to include (default ["meta", "props", "react"])'),
+        .describe('sections to include (default ["meta", "api", "props", "react"])'),
     },
   },
   async ({ key, variant, include }) => {
@@ -210,7 +210,7 @@ tool(
       return fail(`unknown variant '${variant}' for ${key}`, {
         variants: meta.variants.map((v) => v.label),
       });
-    const wanted = new Set(include ?? ["meta", "props", "react"]);
+    const wanted = new Set(include ?? ["meta", "api", "props", "react"]);
     const exportName = store.blockExportName(categorySlug, file);
     const out = {
       key,
@@ -235,6 +235,10 @@ tool(
           size: v.size ?? "md",
         })),
       };
+    }
+    if (wanted.has("api")) {
+      // props contract read from the source: type as written, optional, default, JSDoc
+      out.api = store.blockApi(categorySlug, file);
     }
     if (wanted.has("props")) {
       const all = store.blockPreviewProps(categorySlug, file) ?? {};
@@ -645,7 +649,7 @@ function registerAuthoringTools() {
           "From packages/blocks: pnpm vitest run test/generate-goldens.test.tsx, then pnpm vitest run test/" +
             testName +
             ".parity.test.tsx",
-          "From the repo root: pnpm generate:stimulus && pnpm check",
+          "From the repo root: pnpm generate:stimulus && pnpm generate:api && pnpm build:css && pnpm check",
         ],
       });
     },

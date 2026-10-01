@@ -1,0 +1,34 @@
+{
+  "component": "Pagination",
+  "props": [
+    { "name": "page", "type": "number", "optional": true, "default": "2" },
+    { "name": "total", "type": "number", "optional": true, "default": "9" },
+    { "name": "compact", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "rounded", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width, at the top of the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": []
+}

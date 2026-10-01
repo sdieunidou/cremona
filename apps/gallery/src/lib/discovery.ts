@@ -34,6 +34,25 @@ export interface CatalogGroup {
 
 type Visual = ComponentType<Record<string, unknown>>;
 
+/** One prop or field, as `tools/generate-api.mjs` reads it from the block's source. */
+export interface ApiMember {
+  name: string;
+  type: string;
+  optional: boolean;
+  default?: string;
+  description?: string;
+  deprecated?: boolean;
+  /** Interface the prop is inherited from (`VisualProps`). */
+  from?: string;
+}
+
+/** A block's props reference (`api.json`). */
+export interface BlockApi {
+  component: string;
+  props: ApiMember[];
+  types: { name: string; props?: ApiMember[]; type?: string }[];
+}
+
 const catalogModule = import.meta.glob<{ default: CatalogGroup[] }>(
   "../../../../packages/blocks/catalog.json",
   { eager: true },
@@ -53,6 +72,10 @@ const propsModules = import.meta.glob<Record<string, Record<string, unknown>>>(
   "../../../../packages/blocks/src/*/*/preview-props.json",
   { import: "default" },
 );
+
+const apiModules = import.meta.glob<BlockApi>("../../../../packages/blocks/src/*/*/api.json", {
+  import: "default",
+});
 
 const blockPath = (key: string, file: string) => `../../../../packages/blocks/src/${key}/${file}`;
 
@@ -97,6 +120,7 @@ export interface BlockEntry extends BlockComponent {
   key: string;
   meta: BlockJsonMeta;
   previewProps: Record<string, Record<string, unknown>>;
+  api: BlockApi | null;
 }
 
 const components = new Map<string, Promise<BlockComponent>>();
@@ -115,15 +139,22 @@ export function loadComponent(key: string): Promise<BlockComponent> {
   return promise;
 }
 
-/** Everything a block page needs: component, block.json and preview props. */
+/** Everything a block page needs: component, block.json, preview props and props reference. */
 export function loadBlock(key: string): Promise<BlockEntry> {
   let promise = entries.get(key);
   if (!promise) {
     const meta = metaModules[blockPath(key, "block.json")];
     const props = propsModules[blockPath(key, "preview-props.json")];
+    const api = apiModules[blockPath(key, "api.json")];
     promise = meta
-      ? Promise.all([loadComponent(key), meta(), props ? props() : {}]).then(
-          ([component, meta, previewProps]) => ({ key, ...component, meta, previewProps }),
+      ? Promise.all([loadComponent(key), meta(), props ? props() : {}, api ? api() : null]).then(
+          ([component, meta, previewProps, api]) => ({
+            key,
+            ...component,
+            meta,
+            previewProps,
+            api,
+          }),
         )
       : Promise.reject(new Error(`No visual named ${key}`));
     entries.set(key, promise);

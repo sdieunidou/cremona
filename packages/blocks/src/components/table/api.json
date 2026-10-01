@@ -1,0 +1,105 @@
+{
+  "component": "Table",
+  "props": [
+    {
+      "name": "checkboxes",
+      "type": "boolean",
+      "optional": true,
+      "description": "Selection column.",
+      "default": "false"
+    },
+    {
+      "name": "loading",
+      "type": "boolean",
+      "optional": true,
+      "description": "Placeholder rows instead of the data.",
+      "default": "false"
+    },
+    {
+      "name": "columns",
+      "type": "TableColumn[]",
+      "optional": true,
+      "description": "Columns (default: member, status, amount).",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "rows",
+      "type": "TableRow[]",
+      "optional": true,
+      "description": "Rows, keyed by column (default: four members).",
+      "default": "[…] (4 items)"
+    },
+    {
+      "name": "loadingRows",
+      "type": "number",
+      "optional": true,
+      "description": "Number of placeholder rows while loading.",
+      "default": "3"
+    },
+    {
+      "name": "caption",
+      "type": "string",
+      "optional": true,
+      "description": "Visually hidden table caption."
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width and height of the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "TableCell",
+      "type": "string | { text: string; secondary?: string; tone?: TableTone }"
+    },
+    {
+      "name": "TableColumn",
+      "props": [
+        { "name": "key", "type": "string", "optional": false },
+        { "name": "label", "type": "string", "optional": false },
+        {
+          "name": "align",
+          "type": "\"left\" | \"right\"",
+          "optional": true,
+          "description": "\"right\" also sets tabular figures, for amounts."
+        }
+      ]
+    },
+    {
+      "name": "TableRow",
+      "props": [
+        { "name": "cells", "type": "Record<string, TableCell>", "optional": false },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "optional": true,
+          "description": "Selected on first render."
+        }
+      ]
+    },
+    {
+      "name": "TableTone",
+      "type": "\"success\" | \"warning\" | \"destructive\" | \"info\" | \"neutral\""
+    }
+  ]
+}

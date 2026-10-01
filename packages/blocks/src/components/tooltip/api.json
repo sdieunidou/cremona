@@ -1,0 +1,63 @@
+{
+  "component": "Tooltip",
+  "props": [
+    {
+      "name": "rich",
+      "type": "boolean",
+      "optional": true,
+      "description": "Rich bubbles with a title and body.",
+      "default": "false"
+    },
+    {
+      "name": "title",
+      "type": "string",
+      "optional": true,
+      "description": "Title for rich bubbles.",
+      "default": "\"Pro tip\""
+    },
+    {
+      "name": "content",
+      "type": "string",
+      "optional": true,
+      "description": "Bubble text (the body of a rich bubble; default: a demo text per side)."
+    },
+    {
+      "name": "side",
+      "type": "Side",
+      "optional": true,
+      "description": "Show one side only (default: the four sides)."
+    },
+    {
+      "name": "triggerLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Text of the trigger buttons.",
+      "default": "\"Hover\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "The four-side showcase spreads over the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [{ "name": "Side", "type": "\"top\" | \"right\" | \"bottom\" | \"left\"" }]
+}

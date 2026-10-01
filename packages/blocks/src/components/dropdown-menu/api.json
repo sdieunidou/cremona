@@ -1,0 +1,69 @@
+{
+  "component": "DropdownMenu",
+  "props": [
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Trigger label.",
+      "default": "\"Project options\""
+    },
+    {
+      "name": "shortcuts",
+      "type": "boolean",
+      "optional": true,
+      "description": "Demo menu: show kbd shortcuts on the items.",
+      "default": "false"
+    },
+    {
+      "name": "danger",
+      "type": "boolean",
+      "optional": true,
+      "description": "Demo menu: emphasize the destructive zone with two red items.",
+      "default": "false"
+    },
+    {
+      "name": "checks",
+      "type": "boolean",
+      "optional": true,
+      "description": "Demo menu: render checkbox items.",
+      "default": "false"
+    },
+    {
+      "name": "items",
+      "type": "DropdownMenuEntry[]",
+      "optional": true,
+      "description": "Menu entries; replaces the demo menu."
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full-width trigger and menu, at the top of the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "DropdownMenuEntry",
+      "type": "| { type?: \"item\"; label: string; icon?: LucideIcon; shortcut?: string; variant?: \"default\" | \"destructive\"; disabled?: boolean; } | { type: \"checkbox\"; label: string; /** Checked on first render. */ checked?: boolean } | { type: \"label\"; label: string } | { type: \"separator\" }"
+    }
+  ]
+}

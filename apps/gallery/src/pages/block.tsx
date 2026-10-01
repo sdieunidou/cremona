@@ -2,6 +2,7 @@ import { use } from "react";
 import { PreviewGrid } from "../components/preview-frame.js";
 import { PreviewWithCode } from "../components/preview-with-code.js";
 import { PageHeading } from "../components/page-heading.js";
+import { PropsReference } from "../components/props-reference.js";
 import { BADGE_OUTLINE_MONO } from "../lib/shell-classes.js";
 import { loadBlock } from "../lib/discovery.js";
 import { importPath } from "../lib/code.js";
@@ -41,6 +42,7 @@ export default function BlockPage({ blockKey }: { blockKey: string }) {
             </PreviewWithCode>
           ))}
         </PreviewGrid>
+        {entry.api ? <PropsReference api={entry.api} name={meta.name} /> : null}
       </div>
     </section>
   );

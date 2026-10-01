@@ -1,0 +1,39 @@
+{
+  "component": "Switch",
+  "props": [
+    {
+      "name": "checked",
+      "type": "boolean",
+      "optional": true,
+      "description": "State on first render; clicking toggles it.",
+      "default": "false"
+    },
+    { "name": "label", "type": "string", "optional": true, "default": "\"Email notifications\"" },
+    { "name": "disabled", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "A full-width row: the label at the start, the switch at the end.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": []
+}

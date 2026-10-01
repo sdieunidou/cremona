@@ -1,0 +1,112 @@
+{
+  "component": "ProductCard",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"Aero Runner 2\"" },
+    { "name": "category", "type": "string", "optional": true, "default": "\"Running · Men\"" },
+    {
+      "name": "price",
+      "type": "string",
+      "optional": true,
+      "description": "Formatted price.",
+      "default": "\"$128.00\""
+    },
+    {
+      "name": "compareAt",
+      "type": "string",
+      "optional": true,
+      "description": "Formatted price before the sale, struck through on sale.",
+      "default": "\"$160.00\""
+    },
+    {
+      "name": "reviews",
+      "type": "string",
+      "optional": true,
+      "description": "Review count.",
+      "default": "\"214\""
+    },
+    {
+      "name": "rating",
+      "type": "number",
+      "optional": true,
+      "description": "Average rating out of 5: that many stars are filled (rounded).",
+      "default": "4"
+    },
+    { "name": "sale", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "discount",
+      "type": "string",
+      "optional": true,
+      "description": "Sale badge text.",
+      "default": "\"-20%\""
+    },
+    { "name": "stock", "type": "\"in\" | \"out\"", "optional": true, "default": "\"in\"" },
+    {
+      "name": "hoverAdd",
+      "type": "boolean",
+      "optional": true,
+      "description": "Reveal the add-to-cart button over the image on hover (always shown on touch screens).",
+      "default": "false"
+    },
+    {
+      "name": "image",
+      "type": "string",
+      "optional": true,
+      "description": "Product image URL; a neutral tile when empty.",
+      "default": "\"/media/placeholders/photo-01.jpg\""
+    },
+    {
+      "name": "alt",
+      "type": "string",
+      "optional": true,
+      "description": "Image alternative text; defaults to the title."
+    },
+    {
+      "name": "labels",
+      "type": "Partial<ProductCardLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "ProductCardLabels",
+      "props": [
+        { "name": "add", "type": "string", "optional": false },
+        { "name": "soldOut", "type": "string", "optional": false },
+        { "name": "notify", "type": "string", "optional": false },
+        { "name": "shipping", "type": "string", "optional": false },
+        {
+          "name": "rating",
+          "type": "string",
+          "optional": false,
+          "description": "`{rating}` is replaced by the rating value."
+        }
+      ]
+    }
+  ]
+}

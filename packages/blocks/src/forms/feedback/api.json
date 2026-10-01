@@ -1,0 +1,80 @@
+{
+  "component": "Feedback",
+  "props": [
+    {
+      "name": "score",
+      "type": "number",
+      "optional": true,
+      "description": "Selected score, 0 to 10.",
+      "default": "9"
+    },
+    {
+      "name": "comment",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the free-text comment field.",
+      "default": "false"
+    },
+    {
+      "name": "submitted",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the thank-you state instead of the form.",
+      "default": "false"
+    },
+    {
+      "name": "labels",
+      "type": "Partial<FeedbackLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "FeedbackLabels",
+      "props": [
+        { "name": "question", "type": "string", "optional": false },
+        { "name": "description", "type": "string", "optional": false },
+        { "name": "low", "type": "string", "optional": false },
+        { "name": "high", "type": "string", "optional": false },
+        {
+          "name": "scoreLabel",
+          "type": "string",
+          "optional": false,
+          "description": "`{score}` is replaced by the chip's value."
+        },
+        { "name": "comment", "type": "string", "optional": false },
+        { "name": "commentPlaceholder", "type": "string", "optional": false },
+        { "name": "submit", "type": "string", "optional": false },
+        { "name": "thanks", "type": "string", "optional": false },
+        { "name": "thanksDescription", "type": "string", "optional": false },
+        { "name": "back", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

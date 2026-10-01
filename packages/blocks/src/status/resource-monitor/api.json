@@ -1,0 +1,73 @@
+{
+  "component": "ResourceMonitor",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"App\"" },
+    {
+      "name": "series",
+      "type": "readonly MonitorSeries[]",
+      "optional": true,
+      "default": "[…] (2 items)"
+    },
+    { "name": "samples", "type": "number", "optional": true, "default": "48" },
+    { "name": "interval", "type": "number", "optional": true, "default": "600" },
+    { "name": "showGrid", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "showAxis", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Shown over the plot when no series has a sample.",
+      "default": "\"No data\""
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "MonitorSeries",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "color", "type": "string", "optional": false, "description": "Any CSS colour." },
+        {
+          "name": "points",
+          "type": "readonly number[]",
+          "optional": false,
+          "description": "Samples, oldest first, as fractions of the plot (0–1) or as percentages (0–100)."
+        },
+        {
+          "name": "jitter",
+          "type": "number",
+          "optional": true,
+          "description": "Noise (0–1) that turns `points` into a simulated live signal, which keeps scrolling while animated. Leave it out to draw `points` as they are, with the last sample as the reading."
+        }
+      ]
+    }
+  ]
+}

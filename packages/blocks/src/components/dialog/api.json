@@ -1,0 +1,95 @@
+{
+  "component": "Dialog",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"Publish changes\"" },
+    { "name": "description", "type": "string", "optional": true },
+    {
+      "name": "variant",
+      "type": "\"default\" | \"destructive\" | \"danger\"",
+      "optional": true,
+      "description": "Visual intent: neutral confirm or destructive (`danger` is a deprecated alias).",
+      "default": "\"default\""
+    },
+    {
+      "name": "form",
+      "type": "boolean",
+      "optional": true,
+      "description": "Form layout with inputs above the actions.",
+      "default": "false"
+    },
+    {
+      "name": "width",
+      "type": "\"default\" | \"wide\"",
+      "optional": true,
+      "description": "Extra-wide card with a changes summary.",
+      "default": "\"default\""
+    },
+    {
+      "name": "actionLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Confirm button text (default: \"Publish\", \"Send invite\" or \"Delete project\")."
+    },
+    { "name": "cancelLabel", "type": "string", "optional": true, "default": "\"Cancel\"" },
+    {
+      "name": "fields",
+      "type": "DialogField[]",
+      "optional": true,
+      "description": "Form fields (default: the invite form when `form`)."
+    },
+    {
+      "name": "changes",
+      "type": "DialogChange[]",
+      "optional": true,
+      "description": "Changes summary (default: three files when `width` is \"wide\")."
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "The scrim fills the box; the dialog stays centred at its own size.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "DialogChange",
+      "props": [
+        { "name": "file", "type": "string", "optional": false },
+        { "name": "status", "type": "string", "optional": false }
+      ]
+    },
+    {
+      "name": "DialogField",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "type", "type": "\"text\" | \"email\" | \"select\"", "optional": true },
+        { "name": "placeholder", "type": "string", "optional": true },
+        {
+          "name": "options",
+          "type": "string[]",
+          "optional": true,
+          "description": "Choices of a `select` field."
+        },
+        { "name": "value", "type": "string", "optional": true, "description": "Initial value." }
+      ]
+    }
+  ]
+}

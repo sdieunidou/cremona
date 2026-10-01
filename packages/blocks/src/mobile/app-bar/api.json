@@ -1,0 +1,68 @@
+{
+  "component": "AppBar",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"Photos\"" },
+    {
+      "name": "large",
+      "type": "boolean",
+      "optional": true,
+      "description": "iOS-style large title under the bar.",
+      "default": "false"
+    },
+    {
+      "name": "scrolled",
+      "type": "boolean",
+      "optional": true,
+      "description": "Content scrolled under the bar: it gets a shadow and a translucent background.",
+      "default": "false"
+    },
+    {
+      "name": "back",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the back button.",
+      "default": "true"
+    },
+    {
+      "name": "actions",
+      "type": "AppBarAction[]",
+      "optional": true,
+      "description": "Trailing icon buttons, in order.",
+      "default": "[…] (2 items)"
+    },
+    {
+      "name": "actionLabels",
+      "type": "Partial<Record<AppBarAction | \"back\", string>>",
+      "optional": true,
+      "description": "Accessible names of the icon buttons."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    { "name": "AppBarAction", "type": "\"search\" | \"more\" | \"share\" | \"bell\" | \"add\"" }
+  ]
+}

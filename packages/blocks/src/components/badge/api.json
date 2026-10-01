@@ -1,0 +1,39 @@
+{
+  "component": "Badge",
+  "props": [
+    {
+      "name": "variant",
+      "type": "\"default\" | \"secondary\" | \"outline\" | \"destructive\" | \"success\" | \"warning\"",
+      "optional": true,
+      "default": "\"default\""
+    },
+    { "name": "label", "type": "string", "optional": true, "default": "\"New\"" },
+    { "name": "withIcon", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "pill", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Stays centred in the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": []
+}

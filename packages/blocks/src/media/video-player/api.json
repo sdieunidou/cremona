@@ -1,0 +1,47 @@
+{
+  "component": "VideoPlayer",
+  "props": [
+    {
+      "name": "variant",
+      "type": "\"landscape\" | \"tutorial\" | \"podcast\" | \"livestream\"",
+      "optional": true,
+      "default": "\"landscape\""
+    },
+    { "name": "image", "type": "string", "optional": true },
+    { "name": "title", "type": "string", "optional": true, "default": "\"Mountain skyline · 4K\"" },
+    { "name": "duration", "type": "string", "optional": true, "default": "\"3:42\"" },
+    { "name": "current", "type": "string", "optional": true, "default": "\"1:24\"" },
+    { "name": "progress", "type": "number", "optional": true, "default": "38" },
+    { "name": "state", "type": "\"play\" | \"pause\"", "optional": true, "default": "\"play\"" },
+    { "name": "showInfo", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "showPlayButton", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": []
+}

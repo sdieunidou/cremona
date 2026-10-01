@@ -1,0 +1,54 @@
+{
+  "component": "Phone",
+  "props": [
+    { "name": "variant", "type": "PhoneVariant", "optional": true, "default": "\"app\"" },
+    { "name": "image", "type": "string", "optional": true },
+    { "name": "time", "type": "string", "optional": true, "default": "\"9:41\"" },
+    { "name": "date", "type": "string", "optional": true, "default": "\"Monday, May 25\"" },
+    {
+      "name": "notifications",
+      "type": "PhoneNotification[]",
+      "optional": true,
+      "default": "[…] (2 items)"
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "PhoneNotification",
+      "props": [
+        { "name": "app", "type": "string", "optional": false },
+        { "name": "title", "type": "string", "optional": false },
+        { "name": "body", "type": "string", "optional": false }
+      ]
+    },
+    { "name": "PhoneVariant", "type": "\"app\" | \"home\" | \"lockscreen\" | \"screenshot\"" }
+  ]
+}

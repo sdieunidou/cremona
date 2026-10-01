@@ -1,0 +1,88 @@
+{
+  "component": "Signup",
+  "props": [
+    {
+      "name": "name",
+      "type": "string",
+      "optional": true,
+      "description": "Prefilled full name.",
+      "default": "\"\""
+    },
+    {
+      "name": "email",
+      "type": "string",
+      "optional": true,
+      "description": "Prefilled email address.",
+      "default": "\"\""
+    },
+    {
+      "name": "strength",
+      "type": "1 | 2 | 3 | 4",
+      "optional": true,
+      "description": "Password strength, 1 (too weak) to 4 (strong): fills that many meter segments.",
+      "default": "3"
+    },
+    {
+      "name": "emailError",
+      "type": "string",
+      "optional": true,
+      "description": "Error shown under the email field, which is then marked invalid."
+    },
+    {
+      "name": "labels",
+      "type": "Partial<SignupLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "SignupLabels",
+      "props": [
+        { "name": "title", "type": "string", "optional": false },
+        { "name": "description", "type": "string", "optional": false },
+        { "name": "name", "type": "string", "optional": false },
+        { "name": "namePlaceholder", "type": "string", "optional": false },
+        { "name": "email", "type": "string", "optional": false },
+        { "name": "emailPlaceholder", "type": "string", "optional": false },
+        { "name": "password", "type": "string", "optional": false },
+        { "name": "passwordPlaceholder", "type": "string", "optional": false },
+        { "name": "showPassword", "type": "string", "optional": false },
+        { "name": "strength", "type": "string", "optional": false },
+        {
+          "name": "levels",
+          "type": "[string, string, string, string]",
+          "optional": false,
+          "description": "Strength words for levels 1 to 4."
+        },
+        { "name": "terms", "type": "string", "optional": false },
+        { "name": "submit", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "component": "CheckoutSummary",
+  "props": [
+    {
+      "name": "lines",
+      "type": "CheckoutLine[]",
+      "optional": true,
+      "description": "Order lines: the subtotal, discount, tax and total are computed from them.",
+      "default": "[…] (2 items)"
+    },
+    {
+      "name": "currency",
+      "type": "string",
+      "optional": true,
+      "description": "ISO 4217 currency of every amount.",
+      "default": "\"USD\""
+    },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "Locale used to format amounts.",
+      "default": "\"en-US\""
+    },
+    {
+      "name": "shipping",
+      "type": "number",
+      "optional": true,
+      "description": "Shipping cost; 0 reads \"Free\".",
+      "default": "5"
+    },
+    {
+      "name": "taxRate",
+      "type": "number",
+      "optional": true,
+      "description": "Tax rate applied to the discounted subtotal (0.08 = 8 %).",
+      "default": "0.08"
+    },
+    {
+      "name": "promo",
+      "type": "boolean",
+      "optional": true,
+      "description": "Apply the promo code: its chip and a discount line appear.",
+      "default": "false"
+    },
+    { "name": "promoCode", "type": "string", "optional": true, "default": "\"WELCOME10\"" },
+    {
+      "name": "promoPercent",
+      "type": "number",
+      "optional": true,
+      "description": "Promo discount, in percent of the subtotal.",
+      "default": "10"
+    },
+    {
+      "name": "labels",
+      "type": "Partial<CheckoutSummaryLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "CheckoutLine",
+      "props": [
+        { "name": "title", "type": "string", "optional": false },
+        {
+          "name": "price",
+          "type": "number",
+          "optional": false,
+          "description": "Unit price, in `currency`."
+        },
+        {
+          "name": "qty",
+          "type": "number",
+          "optional": true,
+          "description": "Quantity (default 1): the line shows price × qty."
+        }
+      ]
+    },
+    {
+      "name": "CheckoutSummaryLabels",
+      "props": [
+        { "name": "title", "type": "string", "optional": false },
+        { "name": "subtotal", "type": "string", "optional": false },
+        { "name": "discount", "type": "string", "optional": false },
+        { "name": "shipping", "type": "string", "optional": false },
+        { "name": "free", "type": "string", "optional": false },
+        { "name": "tax", "type": "string", "optional": false },
+        { "name": "total", "type": "string", "optional": false },
+        { "name": "removePromo", "type": "string", "optional": false },
+        { "name": "pay", "type": "string", "optional": false },
+        { "name": "secure", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

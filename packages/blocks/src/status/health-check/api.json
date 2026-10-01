@@ -1,0 +1,70 @@
+{
+  "component": "HealthCheck",
+  "props": [
+    { "name": "title", "type": "string", "optional": true, "default": "\"System Status\"" },
+    {
+      "name": "items",
+      "type": "readonly HealthCheckItem[]",
+      "optional": true,
+      "default": "[…] (5 items)"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Shown in place of the list when `items` is empty.",
+      "default": "\"No services\""
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "HealthCheckItem",
+      "props": [
+        {
+          "name": "icon",
+          "type": "LucideIcon",
+          "optional": true,
+          "description": "Defaults to a server icon."
+        },
+        { "name": "name", "type": "string", "optional": false },
+        { "name": "region", "type": "string", "optional": false },
+        {
+          "name": "status",
+          "type": "ServiceStatus",
+          "optional": false,
+          "description": "Any other value renders as a neutral status labelled with the value itself."
+        },
+        { "name": "latency", "type": "string", "optional": false }
+      ]
+    },
+    { "name": "ServiceStatus", "type": "\"operational\" | \"degraded\" | \"down\"" }
+  ]
+}

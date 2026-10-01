@@ -1,0 +1,51 @@
+{
+  "component": "Half",
+  "props": [
+    { "name": "keys", "type": "string[] | null", "optional": true, "default": "null" },
+    { "name": "layout", "type": "HalfLayout", "optional": true, "default": "\"mac\"" },
+    {
+      "name": "keymap",
+      "type": "HalfKeymap",
+      "optional": true,
+      "description": "Letter arrangement of the half (default `qwerty`).",
+      "default": "\"qwerty\""
+    },
+    {
+      "name": "labels",
+      "type": "Partial<Record<string, string>>",
+      "optional": true,
+      "description": "Captions by key name (`{ shift: \"maj\", \"caps lock\": \"verr. maj\", space: \"espace\" }`); `keys` still match the key names."
+    },
+    { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    { "name": "HalfKeymap", "type": "\"qwerty\" | \"azerty\"" },
+    { "name": "HalfLayout", "type": "\"mac\" | \"windows\"" }
+  ]
+}

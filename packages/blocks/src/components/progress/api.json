@@ -1,0 +1,56 @@
+{
+  "component": "Progress",
+  "props": [
+    {
+      "name": "value",
+      "type": "number",
+      "optional": true,
+      "description": "0–100. Omit for an indeterminate bar."
+    },
+    { "name": "thin", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "variant", "type": "ProgressVariant", "optional": true },
+    {
+      "name": "color",
+      "type": "\"primary\" | \"success\" | \"warning\" | \"destructive\"",
+      "optional": true,
+      "deprecated": true
+    },
+    {
+      "name": "label",
+      "type": "string",
+      "optional": true,
+      "description": "Accessible name of the bar.",
+      "default": "\"Progress\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width, at the top of the box.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "ProgressVariant",
+      "type": "\"default\" | \"success\" | \"warning\" | \"destructive\""
+    }
+  ]
+}

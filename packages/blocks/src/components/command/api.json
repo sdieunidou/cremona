@@ -1,0 +1,97 @@
+{
+  "component": "Command",
+  "props": [
+    {
+      "name": "query",
+      "type": "string",
+      "optional": true,
+      "description": "Initial search query; only matching items are rendered.",
+      "default": "\"\""
+    },
+    {
+      "name": "empty",
+      "type": "boolean",
+      "optional": true,
+      "description": "Force the empty state.",
+      "default": "false"
+    },
+    {
+      "name": "groups",
+      "type": "string[]",
+      "optional": true,
+      "description": "Headings of the groups shown while the query is empty (default: every group, or the first two of the demo catalog)."
+    },
+    {
+      "name": "catalog",
+      "type": "CommandGroup[]",
+      "optional": true,
+      "description": "The commands, by group; replaces the demo catalog."
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "optional": true,
+      "default": "\"Type a command or search…\""
+    },
+    {
+      "name": "emptyText",
+      "type": "string",
+      "optional": true,
+      "description": "Empty-state title.",
+      "default": "\"No results found\""
+    },
+    {
+      "name": "emptyHint",
+      "type": "string",
+      "optional": true,
+      "description": "Empty-state hint (default: a hint for the demo catalog)."
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "description": "Full width and height of the box; the list scrolls.",
+      "default": "false"
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "CommandGroup",
+      "props": [
+        { "name": "heading", "type": "string", "optional": false },
+        { "name": "items", "type": "CommandItem[]", "optional": false }
+      ]
+    },
+    {
+      "name": "CommandItem",
+      "props": [
+        { "name": "label", "type": "string", "optional": false },
+        { "name": "icon", "type": "LucideIcon", "optional": true },
+        { "name": "shortcut", "type": "string", "optional": true },
+        {
+          "name": "keywords",
+          "type": "string",
+          "optional": true,
+          "description": "Extra words the search matches."
+        }
+      ]
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, within } from "@testing-library/react";
 import { App } from "../src/app.js";
 import { stats, blockKeys, loadBlock } from "../src/lib/discovery.js";
 
@@ -54,6 +54,11 @@ describe("gallery app", () => {
     expect(screen.getAllByText("default").length).toBeGreaterThan(0);
     expect(screen.getAllByText("isometric").length).toBeGreaterThan(0);
     expect(document.title).toBe("Stat Card — Metrics — Cremona");
+    // the props reference generated from the source
+    const props = screen.getByRole("table", { name: "Stat Card props" });
+    const label = within(props).getByRole("rowheader", { name: "label" }).closest("tr")!;
+    expect(label.textContent).toContain('"Revenue"');
+    expect(screen.getByRole("heading", { level: 3, name: "Trend" })).toBeTruthy();
   });
 
   it("renders a not-found page for unknown routes", () => {

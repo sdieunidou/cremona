@@ -1,0 +1,97 @@
+{
+  "component": "SettingsForm",
+  "props": [
+    {
+      "name": "dirty",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the unsaved-changes bar with Cancel and Save.",
+      "default": "false"
+    },
+    {
+      "name": "saved",
+      "type": "boolean",
+      "optional": true,
+      "description": "Show the \"all changes saved\" confirmation.",
+      "default": "false"
+    },
+    {
+      "name": "workspace",
+      "type": "string",
+      "optional": true,
+      "description": "Workspace name field value.",
+      "default": "\"Acme Inc.\""
+    },
+    {
+      "name": "timezone",
+      "type": "string",
+      "optional": true,
+      "description": "Selected time zone (an option `value`).",
+      "default": "\"Europe/Paris\""
+    },
+    {
+      "name": "timezones",
+      "type": "{ value: string; label: string }[]",
+      "optional": true,
+      "description": "Time zone choices.",
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "notifications",
+      "type": "boolean",
+      "optional": true,
+      "description": "Email notifications switch state.",
+      "default": "true"
+    },
+    {
+      "name": "labels",
+      "type": "Partial<SettingsFormLabels>",
+      "optional": true,
+      "description": "UI copy; every key is optional and falls back to the English default."
+    },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "SettingsFormLabels",
+      "props": [
+        { "name": "title", "type": "string", "optional": false },
+        { "name": "description", "type": "string", "optional": false },
+        { "name": "workspace", "type": "string", "optional": false },
+        { "name": "workspaceHint", "type": "string", "optional": false },
+        { "name": "timezone", "type": "string", "optional": false },
+        { "name": "timezoneHint", "type": "string", "optional": false },
+        { "name": "notifications", "type": "string", "optional": false },
+        { "name": "notificationsHint", "type": "string", "optional": false },
+        { "name": "unsaved", "type": "string", "optional": false },
+        { "name": "cancel", "type": "string", "optional": false },
+        { "name": "save", "type": "string", "optional": false },
+        { "name": "saved", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

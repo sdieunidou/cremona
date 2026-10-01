@@ -1,0 +1,70 @@
+{
+  "component": "Query",
+  "props": [
+    { "name": "source", "type": "string", "optional": true, "default": "\"orders\"" },
+    { "name": "duration", "type": "string", "optional": true, "default": "\"24 ms\"" },
+    {
+      "name": "conditions",
+      "type": "readonly QueryCondition[]",
+      "optional": true,
+      "default": "[…] (2 items)"
+    },
+    {
+      "name": "columns",
+      "type": "readonly string[]",
+      "optional": true,
+      "default": "[…] (3 items)"
+    },
+    {
+      "name": "rows",
+      "type": "readonly (readonly string[])[]",
+      "optional": true,
+      "default": "[…] (4 items)"
+    },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Shown in the results table when `rows` is empty.",
+      "default": "\"No rows\""
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [
+    {
+      "name": "QueryCondition",
+      "props": [
+        { "name": "field", "type": "string", "optional": false },
+        { "name": "operator", "type": "string", "optional": false },
+        { "name": "value", "type": "string", "optional": false }
+      ]
+    }
+  ]
+}

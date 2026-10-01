@@ -1,0 +1,77 @@
+{
+  "component": "Trend",
+  "props": [
+    { "name": "label", "type": "string", "optional": true, "default": "\"Visitors\"" },
+    { "name": "value", "type": "string", "optional": true, "default": "\"12,481\"" },
+    { "name": "change", "type": "string", "optional": true, "default": "\"+18.2%\"" },
+    {
+      "name": "direction",
+      "type": "Direction",
+      "optional": true,
+      "description": "Colour and icon of the pill and the line; an unknown value reads as `primary`.",
+      "default": "\"primary\""
+    },
+    {
+      "name": "points",
+      "type": "readonly number[]",
+      "optional": true,
+      "description": "The series as heights, 0 (bottom) to 1 (top). Values outside 0..1 are scaled to the series' own range, like `values`.",
+      "default": "[…] (9 items)"
+    },
+    {
+      "name": "values",
+      "type": "readonly number[]",
+      "optional": true,
+      "description": "The series in its own unit, scaled to `min`..`max`. Takes precedence over `points`."
+    },
+    {
+      "name": "min",
+      "type": "number",
+      "optional": true,
+      "description": "Value at the bottom of the plot (default: the smallest value)."
+    },
+    {
+      "name": "max",
+      "type": "number",
+      "optional": true,
+      "description": "Value at the top of the plot (default: the largest value)."
+    },
+    {
+      "name": "emptyLabel",
+      "type": "string",
+      "optional": true,
+      "description": "Shown in place of the plot when the series has no finite value.",
+      "default": "\"No data\""
+    },
+    { "name": "fadeOut", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
+    { "name": "gradient", "type": "boolean", "optional": true, "default": "true" },
+    { "name": "stacked", "type": "boolean", "optional": true, "default": "false" },
+    {
+      "name": "animated",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Play the entrance animation (default false). When false, render the final state.",
+      "default": "false"
+    },
+    {
+      "name": "trigger",
+      "type": "TriggerMode",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "How the entrance is triggered.",
+      "default": "\"inView\""
+    },
+    {
+      "name": "fill",
+      "type": "boolean",
+      "optional": true,
+      "from": "VisualProps",
+      "description": "Make the visual fill the box it is given instead of sitting in the gallery preview frame: drops the frame's side padding, stretches on the cross axis and removes the module's `max-w-*` cap. Off by default, so the preview rendering — and every golden — is unchanged.\n\nTurn it on to use a visual as a panel in an app layout, where a centred, capped card gives mismatched widths and edges from one cell to the next.",
+      "default": "false"
+    },
+    { "name": "className", "type": "string", "optional": true, "from": "VisualProps" }
+  ],
+  "types": [{ "name": "Direction", "type": "\"primary\" | \"up\" | \"down\" | \"warning\"" }]
+}
