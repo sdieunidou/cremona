@@ -12,7 +12,7 @@ packages are built from the same sources (`pnpm build`, `prepack`):
 | `@cremona/core`, `@cremona/react` | `dist/` compiled by `tsc` (ESM + `.d.ts`) |
 | `@cremona/blocks` | one entry per block, `dist/<category>/<file>/react.{js,d.ts}`, each starting with `"use client"`, exported as `@cremona/blocks/<category>/<file>`; react, react-dom, motion and lucide-react are peer dependencies; the placeholder images in `public/media/` |
 | `@cremona/tokens` | `css/cremona.css` (compiled by `pnpm build:css`, committed), `css/themes.css`, the fonts, `themes.json` |
-| `@cremona/stimulus` | JS controllers + the generated HTML templates |
+| `@cremona/stimulus` | JS controllers (with `.d.ts` declarations) + the generated HTML templates |
 | `@cremona/mcp` | plain ESM JS + a snapshot of the library data (`data/`) |
 
 `@cremona/skill` and the gallery (`apps/gallery`) are private. Versioning and
@@ -94,9 +94,12 @@ fails the test.
 
 ## Animation model
 
-- **React**: `motion/react` variants, copied character-for-character from the
-  POC chunks (springs, durations, staggers). Entry control: `animated` +
-  `trigger` (`mount`, `inView` via `useInView` IntersectionObserver, `inViewRepeat`).
+- **React**: `motion/react` variants (copied character-for-character from the
+  POC chunks for the POC blocks: springs, durations, staggers). Entry control:
+  `animated` + `trigger` (`mount`, `inView` via `useInView`, `inViewRepeat`).
+  Loops run only while `useLoopActive` allows it: in view, tab visible, no
+  reduced-motion preference. Under `MotionConfig reducedMotion="user"`,
+  entrance transforms jump to their end state.
 - **Stimulus**: each template is the block's final render (`animated={false}`),
   so it reads correctly without JavaScript. The generator pairs its elements with
   the initial render (checked against the golden) and writes their initial state
@@ -105,7 +108,8 @@ fails the test.
   back to the markup with Web Animations, with a stagger by document order. Start
   and end states match React; timing is simplified (one duration and easing), and
   loops or JS-driven effects stay React-only (`effects: "entrance-only"` in the
-  manifest).
+  manifest). Ids are prefixed per template (`cr-<category>-<file>-<index>-`),
+  and the controller makes them unique per copy on the page.
 
 ## Design tokens
 
@@ -120,17 +124,34 @@ checks that every class a golden renders has a rule.
 
 ## Gallery app
 
-Vite + React, zero extra UI deps: the shell reuses the POC's own class strings,
-compiled into `packages/tokens/css/cremona.css` with the blocks. Discovers all blocks through
-`import.meta.glob`, renders live previews in faithful frames, theme picker +
-light/dark + Ctrl+K search.
+Vite + React with no UI dependency: the shell uses Tailwind utilities on the
+same tokens as the blocks. `main.tsx` wraps the app in
+`<MotionConfig reducedMotion="user">`, so every preview honours reduced
+motion.
 
-**Code access** — every preview frame carries a hover toolbar:
-- **View code** opens a panel with three tabs: *Usage* (import + exact JSX for
-  that variant, icons resolved to lucide imports), *React source* (the raw
-  `react.tsx`), *Stimulus* (the generated static template) — plus copy.
-- **Copy React** copies the usage snippet in one click.
-
-Sources/templates are lazy-loaded (`import.meta.glob` without `eager`, via
-Vite `?raw`), so nothing bloats the main bundle. E2E-covered
-(`apps/gallery/e2e/code.spec.ts`).
+- **Loading** — only `catalog.json` and `thumbnail-defaults.json` are bundled
+  eagerly. Each block's `react.tsx`, `block.json`, `preview-props.json` and
+  `api.json` load on demand, in their own chunks (`import.meta.glob`,
+  `lib/discovery.ts`); the block page is a lazy route; raw sources and
+  templates load with the code panel (`lib/sources.ts`); icons come from
+  `lib/icon-map.ts`, the icons the preview props name.
+- **Home** — a card per block, its title link stretched over the card. The
+  thumbnail mounts when the card nears the viewport, shows the static final
+  state, and plays the entrance while the card is hovered or focused.
+- **Block page** — every variant in a preview frame of its `size`, then the
+  _Props_ table generated from `api.json`.
+- **Code access** — each preview frame has a toolbar, shown on hover and on
+  keyboard focus (always on touch screens): _View code_ opens a panel with
+  three tabs — _Usage_ (the import and the variant's exact JSX, icons resolved
+  to lucide imports), _React source_ (the raw `react.tsx`) and _Stimulus_ (the
+  generated template) — and _Copy React_ copies the usage snippet.
+- **Chrome** — search (Ctrl/⌘ K: a dialog with a combobox and a listbox),
+  a theme menu (appearance and the 9 themes), a skip link, the mobile
+  navigation. Routes are `/` and `/visuals/<category>/<file>`; any other path
+  renders a 404 page that suggests blocks.
+- **Tests** — unit tests in `apps/gallery/test/`; Playwright in
+  `apps/gallery/e2e/`: every block page renders every variant without an error
+  card, an uncaught error or a console error (a failed image or font request
+  logs one); axe finds no violation on the chrome (home, search, theme menu,
+  block page, code panel, 404, mobile navigation) in light and dark; keyboard
+  navigation, routing, thumbnails and the code panel.
