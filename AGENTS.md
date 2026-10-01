@@ -69,8 +69,8 @@ package check before publishing.
 - `packages/stimulus/{src,templates}/` — controllers + generated templates.
 - `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS).
 - `apps/gallery/` — docs app with live previews; Playwright specs in `e2e/`.
-- `tools/generate-stimulus.mjs` — template generator. `tools/use-client.mjs` —
-  the `"use client"` directive of every block. `tools/extract/` is unused.
+- `tools/generate-stimulus.mjs` (+ `tools/stimulus/`) — template generator.
+  `tools/use-client.mjs` — the `"use client"` directive of every block.
 
 ## Conventions
 

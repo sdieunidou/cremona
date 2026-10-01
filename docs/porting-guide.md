@@ -104,11 +104,7 @@ runGoldenParity("<category>/<file>", {
 ## Step 4 — Registry
 
 The gallery and MCP discover blocks from the filesystem — no manual registration
-needed. Optionally regenerate the explicit registry with:
-
-```bash
-python3 tools/extract/gen_registry.py
-```
+needed.
 
 ## Stimulus templates
 
@@ -119,5 +115,4 @@ Stimulus templates are **generated** from the golden files by
 
 - [ ] `react.tsx` follows the pattern above
 - [ ] parity test passes for every variant that isn't explicitly skipped
-- [ ] registry regenerated (`python3 tools/extract/gen_registry.py`) — optional
 - [ ] `pnpm vitest run` (whole blocks package) still passes
