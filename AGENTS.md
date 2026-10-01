@@ -1,6 +1,8 @@
 # AGENTS.md — working on the Cremona repo
 
 Instructions for AI sessions (Claude Code, opencode…) contributing to this repo.
+Humans start with [CONTRIBUTING.md](CONTRIBUTING.md); the rules below apply to
+everyone.
 
 ## Commands
 

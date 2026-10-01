@@ -101,7 +101,8 @@ pnpm build        # compiles @cremona/core, @cremona/react, @cremona/blocks and 
 pnpm mcp          # the MCP server over stdio, with the authoring tools
 ```
 
-Rules for contributors and AI sessions: [AGENTS.md](AGENTS.md). New category,
+Setup, checks and pull requests: [CONTRIBUTING.md](CONTRIBUTING.md); commands
+and invariants, for AI sessions too: [AGENTS.md](AGENTS.md). New category,
 block or variant: [docs/authoring-guide.md](docs/authoring-guide.md) and the
 MCP tools `add_category` / `add_block`.
 
@@ -127,7 +128,8 @@ cremona/
 |---|---|
 | [docs/getting-started.md](docs/getting-started.md) | a new React / Next.js app, step by step |
 | [docs/react.md](docs/react.md) | React adapter: props, triggers, panels, gotchas, deriving a component |
-| [docs/design-system.md](docs/design-system.md) | tokens, 9 themes, dark mode, frames |
+| [docs/design-system.md](docs/design-system.md) | tokens, 9 themes, dark mode, contrast, frames |
+| [docs/accessibility.md](docs/accessibility.md) | what blocks guarantee, what the host app adds |
 | [docs/stimulus.md](docs/stimulus.md) | Stimulus adapter: controllers, templates |
 | [docs/mcp.md](docs/mcp.md) | MCP server: install, tools, prompt recipes |
 | [docs/architecture.md](docs/architecture.md) | monorepo, data flow, invariants |

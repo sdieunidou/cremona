@@ -97,7 +97,7 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
   [Block data props](react.md#block-data-props). An empty array renders
   empty, never as the demo data.
 - **Accessibility**: the block's root is `aria-hidden`. Say what it shows in
-  text next to it.
+  text next to it ([what blocks guarantee and what you add](accessibility.md)).
 - **Animation**: `animated={false}` (the default) renders the final state.
   `animated` plays the entrance when the block scrolls into view
   (`trigger="inView"`); `trigger="mount"` plays it on mount.
@@ -301,4 +301,5 @@ both right:
 
 - [react.md](react.md) — props, triggers, panels, gotchas, deriving a component.
 - [design-system.md](design-system.md) — tokens, themes, fonts.
+- [accessibility.md](accessibility.md) — what blocks guarantee, what your app adds.
 - [mcp.md](mcp.md) — the MCP server, for AI sessions that build with Cremona.

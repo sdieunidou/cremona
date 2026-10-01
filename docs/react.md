@@ -412,8 +412,10 @@ their server markup:
 - **`trigger="mount"` replays on every remount.** In a filtered list that
   re-keys its children, the entrance runs again on each change. Prefer
   `"inView"` (the default, once) unless the panel really is mounted once.
-- **Screenshot tests must wait out the choreography.** Entrances chain up to
-  ~1.3 s (the donut reveals its centre at 1.1 s and its legend at 1.2 s).
+- **Screenshot tests must wait out the choreography.** Entrances chain over one
+  to two seconds (the donut reveals its centre at 1.1 s and its legend at
+  1.2 s; `ai/prompt-box` types its prompt first and finishes its toolbar at
+  about 1.8 s).
   Playwright's `reducedMotion` disables transforms but not opacity, so a
   capture taken at `networkidle` shows half-drawn charts.
 

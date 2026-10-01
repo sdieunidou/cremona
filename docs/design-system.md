@@ -134,6 +134,9 @@ Outside the budget, by design:
   theme × mode combinations: draw keyboard focus with the full-opacity
   `outline-ring` above.
 
+What the blocks guarantee beyond colour, and what the host adds:
+[accessibility.md](accessibility.md).
+
 ## Fonts
 
 Inter Variable (`--font-sans`), weights 100–900, woff2 subsets shipped in
