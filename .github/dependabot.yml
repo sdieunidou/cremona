@@ -6,6 +6,9 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # a library: move the lockfile, and a manifest range only when the new version is outside it
+    # (otherwise every minor release would raise the minimum the packages ask of their hosts)
+    versioning-strategy: increase-if-necessary
     groups:
       dev-tooling:
         dependency-type: development
