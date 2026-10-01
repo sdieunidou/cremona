@@ -101,6 +101,12 @@ const item = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
+// once in place, the button's opacity is its hover:opacity-90 class's again
+const buttonItem = {
+  hidden: { ...item.hidden, transition: { opacity: { duration: 0 } } },
+  visible: { ...item.visible, transitionEnd: { opacity: "" } },
+} as const;
+
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 const stepper = cn(
@@ -313,7 +319,7 @@ export function CartDrawer({
                     "mt-1.5 flex h-7 items-center justify-center gap-1 rounded-md bg-primary text-[10px] font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.99]",
                     focusRing,
                   )}
-                  variants={animated ? item : undefined}
+                  variants={animated ? buttonItem : undefined}
                   {...noFocus}
                 >
                   <Lock className="size-2.5" strokeWidth={2.5} />

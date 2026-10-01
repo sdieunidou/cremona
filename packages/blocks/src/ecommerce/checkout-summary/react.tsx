@@ -86,6 +86,12 @@ const row = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
+// once in place, the button's opacity is its hover:opacity-90 class's again
+const buttonRow = {
+  hidden: { ...row.hidden, transition: { opacity: { duration: 0 } } },
+  visible: { ...row.visible, transitionEnd: { opacity: "" } },
+} as const;
+
 const focusRing =
   "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
@@ -229,7 +235,7 @@ export function CheckoutSummary({
               "mt-3.5 flex h-9 w-full items-center justify-center gap-1.5 rounded-md bg-primary text-xs font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.99]",
               focusRing,
             )}
-            variants={animated ? row : undefined}
+            variants={animated ? buttonRow : undefined}
             {...noFocus}
           >
             <Lock className="size-3.5" strokeWidth={2.5} />

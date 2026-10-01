@@ -67,6 +67,12 @@ const item = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
 } as const;
 
+// once in place, the button's opacity is its hover:opacity-90 class's again
+const submitItem = {
+  hidden: { ...item.hidden, transition: { opacity: { duration: 0 } } },
+  visible: { ...item.visible, transitionEnd: { opacity: "" } },
+} as const;
+
 const scores = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const focusRing =
@@ -197,7 +203,7 @@ export function Feedback({
                 "flex h-9 w-full items-center justify-center rounded-md bg-primary text-xs font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:opacity-90 active:scale-[0.99]",
                 focusRing,
               )}
-              variants={animated ? item : undefined}
+              variants={animated ? submitItem : undefined}
               {...noFocus}
             >
               {t.submit}
