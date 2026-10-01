@@ -3,14 +3,29 @@ import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+type Presence = "online" | "away" | "busy" | "offline";
+
 export interface AvatarProps extends VisualProps {
   /** Initials shown when there is no image. */
   fallback?: string;
+  /** Image URL. */
+  src?: string;
+  /** Image text alternative (default: `fallback`). */
+  alt?: string;
+  /** @deprecated Demo placeholder photo; use `src`. */
   img?: boolean;
-  presence?: "online" | "away" | "busy" | "offline";
+  size?: "sm" | "md" | "lg";
+  presence?: Presence;
   ring?: boolean;
+  /** Showcase: the three sizes side by side. */
   sizes?: boolean;
+  /** Stays centred in the box. */
+  fill?: boolean;
 }
+
+const NO_REF = { current: null };
+
+const PLACEHOLDER = "/media/placeholders/avatar-01.jpg";
 
 const sizeClasses: Record<string, string> = {
   sm: "size-6 text-[10px]",
@@ -18,11 +33,18 @@ const sizeClasses: Record<string, string> = {
   lg: "size-10 text-sm",
 };
 
-const presenceClasses: Record<string, string> = {
-  online: "bg-emerald-500",
-  away: "bg-amber-500",
-  busy: "bg-red-500",
+const presenceClasses: Record<Presence, string> = {
+  online: "bg-success",
+  away: "bg-warning",
+  busy: "bg-destructive",
   offline: "bg-muted-foreground",
+};
+
+const presenceLabels: Record<Presence, string> = {
+  online: "Online",
+  away: "Away",
+  busy: "Busy",
+  offline: "Offline",
 };
 
 const entrance = {
@@ -33,14 +55,16 @@ const entrance = {
 function Circle({
   size = "lg",
   fallback = "SC",
-  img = false,
+  src,
+  alt,
   presence,
   ring = false,
 }: {
   size?: "sm" | "md" | "lg";
   fallback?: string;
-  img?: boolean;
-  presence?: AvatarProps["presence"];
+  src?: string;
+  alt?: string;
+  presence?: Presence;
   ring?: boolean;
 }) {
   return (
@@ -53,18 +77,16 @@ function Circle({
           sizeClasses[size],
         )}
       >
-        {img ? (
-          <img
-            src="/media/placeholders/avatar-01.jpg"
-            alt={fallback}
-            className="size-full object-cover"
-          />
+        {src ? (
+          <img src={src} alt={alt ?? fallback} className="size-full object-cover" />
         ) : (
           fallback
         )}
       </span>
       {presence && (
         <span
+          role="img"
+          aria-label={presenceLabels[presence]}
           className={cn(
             "absolute right-0 bottom-0 size-2.5 rounded-full ring-2 ring-background",
             presenceClasses[presence],
@@ -77,7 +99,10 @@ function Circle({
 
 export function Avatar({
   fallback = "SC",
+  src,
+  alt,
   img = false,
+  size = "lg",
   presence,
   ring = false,
   sizes = false,
@@ -87,8 +112,14 @@ export function Avatar({
   className,
 }: AvatarProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const inViewOnce = useInView(animated && trigger === "inView" ? ref : NO_REF, {
+    once: true,
+    amount: 0.5,
+  });
+  const inViewRepeat = useInView(animated && trigger === "inViewRepeat" ? ref : NO_REF, {
+    once: false,
+    amount: 0.5,
+  });
   const state = animated
     ? {
         initial: "hidden",
@@ -101,7 +132,11 @@ export function Avatar({
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
-      <motion.div variants={animated ? entrance : undefined} {...state}>
+      <motion.div
+        className={fill ? "self-center" : undefined}
+        variants={animated ? entrance : undefined}
+        {...state}
+      >
         {sizes ? (
           <div className="flex items-end gap-2.5">
             <Circle size="sm" fallback={fallback} />
@@ -109,7 +144,14 @@ export function Avatar({
             <Circle size="lg" fallback={fallback} />
           </div>
         ) : (
-          <Circle size="lg" fallback={fallback} img={img} presence={presence} ring={ring} />
+          <Circle
+            size={size}
+            fallback={fallback}
+            src={src ?? (img ? PLACEHOLDER : undefined)}
+            alt={alt}
+            presence={presence}
+            ring={ring}
+          />
         )}
       </motion.div>
     </div>

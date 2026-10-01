@@ -1,19 +1,29 @@
 import { useRef } from "react";
 import { motion } from "motion/react";
-import { useInView } from "@cremona/react";
+import { useInView, useLoopActive } from "@cremona/react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+type ProgressVariant = "default" | "success" | "warning" | "destructive";
 
 export interface ProgressProps extends VisualProps {
   /** 0–100. Omit for an indeterminate bar. */
   value?: number;
   thin?: boolean;
+  variant?: ProgressVariant;
+  /** @deprecated Use `variant` ("primary" is `variant="default"`). */
   color?: "primary" | "success" | "warning" | "destructive";
+  /** Accessible name of the bar. */
+  label?: string;
+  /** Full width, at the top of the box. */
+  fill?: boolean;
 }
 
-const fillClasses: Record<string, string> = {
-  primary: "bg-primary",
-  success: "bg-emerald-500",
-  warning: "bg-amber-500",
+const NO_REF = { current: null };
+
+const fillClasses: Record<ProgressVariant, string> = {
+  default: "bg-primary",
+  success: "bg-success",
+  warning: "bg-warning",
   destructive: "bg-destructive",
 };
 
@@ -22,18 +32,36 @@ const entrance = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } },
 } as const;
 
+const fillIn = {
+  hidden: { scaleX: 0 },
+  visible: { scaleX: 1, transition: { duration: 0.8, delay: 0.2, ease: "easeOut" } },
+} as const;
+
+// Indeterminate bar (w-2/5): at rest it sits centred on the track; the loop sweeps it across.
+const REST = "75%";
+
 export function Progress({
   value,
   thin = false,
-  color = "primary",
+  variant,
+  color,
+  label = "Progress",
   animated = false,
   trigger = "inView",
   fill = false,
   className,
 }: ProgressProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const indeterminate = value === undefined;
+  const inViewOnce = useInView(animated && trigger === "inView" ? ref : NO_REF, {
+    once: true,
+    amount: 0.5,
+  });
+  const inViewRepeat = useInView(animated && trigger === "inViewRepeat" ? ref : NO_REF, {
+    once: false,
+    amount: 0.5,
+  });
+  const loop = useLoopActive(ref, animated && indeterminate);
   const state = animated
     ? {
         initial: "hidden",
@@ -44,19 +72,19 @@ export function Progress({
       }
     : {};
 
-  const indeterminate = value === undefined;
+  const tone: ProgressVariant = variant ?? (!color || color === "primary" ? "default" : color);
   const clamped = indeterminate ? 0 : Math.min(100, Math.max(0, value));
-  const pct = `${clamped}%`;
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className={cn("w-full", !fill && "max-w-64")}
+        className={cn("w-full", fill ? "self-start" : "max-w-64")}
         variants={animated ? entrance : undefined}
         {...state}
       >
         <div
           role="progressbar"
+          aria-label={label}
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={indeterminate ? undefined : clamped}
@@ -67,20 +95,23 @@ export function Progress({
         >
           {indeterminate ? (
             <motion.div
-              className="h-full w-2/5 rounded-full bg-primary"
-              initial={{ x: "-100%" }}
-              animate={{ x: ["-100%", "250%"] }}
-              transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-            />
-          ) : animated ? (
-            <motion.div
-              className={cn("h-full rounded-full", fillClasses[color])}
-              initial={{ width: "0%" }}
-              animate={{ width: pct }}
-              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+              className={cn("h-full w-2/5 rounded-full", fillClasses[tone])}
+              initial={{ x: REST }}
+              animate={loop ? { x: ["-100%", "250%"] } : { x: REST }}
+              transition={
+                loop ? { duration: 1.6, repeat: Infinity, ease: "easeInOut" } : { duration: 0 }
+              }
             />
           ) : (
-            <div className={cn("h-full rounded-full", fillClasses[color])} style={{ width: pct }} />
+            <motion.div
+              className={cn(
+                "h-full origin-left rounded-full transition-[width] duration-500 ease-out",
+                fillClasses[tone],
+              )}
+              style={{ width: `${clamped}%` }}
+              variants={animated ? fillIn : undefined}
+              {...state}
+            />
           )}
         </div>
       </motion.div>

@@ -5,7 +5,15 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export interface KbdProps extends VisualProps {
   keys?: string[];
+  /** Text under the keys ("" hides it; default: a caption for the demo shortcuts). */
+  caption?: string;
+  /** Stays centred in the box. */
+  fill?: boolean;
 }
+
+const NO_REF = { current: null };
+
+const ARROWS = new Set(["↑", "↓", "←", "→"]);
 
 const entrance = {
   hidden: { opacity: 0, y: 8 },
@@ -17,14 +25,21 @@ const keyClasses =
 
 export function Kbd({
   keys = ["⌘"],
+  caption,
   animated = false,
   trigger = "inView",
   fill = false,
   className,
 }: KbdProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const inViewOnce = useInView(animated && trigger === "inView" ? ref : NO_REF, {
+    once: true,
+    amount: 0.5,
+  });
+  const inViewRepeat = useInView(animated && trigger === "inViewRepeat" ? ref : NO_REF, {
+    once: false,
+    amount: 0.5,
+  });
   const state = animated
     ? {
         initial: "hidden",
@@ -35,19 +50,21 @@ export function Kbd({
       }
     : {};
 
-  const navigates = keys.some((k) => k === "↑" || k === "↓");
+  // Arrow keys are alternatives, not a chord: no "+" between them.
+  const arrows = keys.length > 0 && keys.every((k) => ARROWS.has(k));
+  const text = caption ?? (arrows ? "Navigate the results list" : "Open the command menu");
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
       <motion.div
-        className="flex flex-col items-center gap-2"
+        className={cn("flex flex-col items-center gap-2", fill && "self-center")}
         variants={animated ? entrance : undefined}
         {...state}
       >
         <div className="flex items-center gap-1">
           {keys.map((key, i) => (
             <Fragment key={`${key}-${i}`}>
-              {i > 0 && (
+              {i > 0 && !arrows && (
                 <span aria-hidden="true" className="text-xs text-muted-foreground">
                   +
                 </span>
@@ -56,9 +73,7 @@ export function Kbd({
             </Fragment>
           ))}
         </div>
-        <p className="text-xs text-muted-foreground">
-          {navigates ? "Navigate the results list" : "Open the command menu"}
-        </p>
+        {text && <p className="text-xs text-muted-foreground">{text}</p>}
       </motion.div>
     </div>
   );

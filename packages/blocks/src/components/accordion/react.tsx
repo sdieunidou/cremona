@@ -1,35 +1,53 @@
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { motion } from "motion/react";
 import { useInView } from "@cremona/react";
-import { ChevronDown, CreditCard, Users, Code, LifeBuoy } from "lucide-react";
+import { ChevronDown, CreditCard, Users, Code, LifeBuoy, type LucideIcon } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
+export interface AccordionItem {
+  title: string;
+  content: string;
+  icon?: LucideIcon;
+}
+
 export interface AccordionProps extends VisualProps {
-  /** Number of items (3 or 4). */
+  /** Number of items shown (default 3). */
   count?: number;
   /** Show a leading icon per item. */
   icons?: boolean;
+  /** The items (default: a billing FAQ). */
+  items?: AccordionItem[];
+  /** Index of the item open on first render (-1: none). */
+  active?: number;
+  /** Full width and height of the box. */
+  fill?: boolean;
 }
 
-const items = [
+const NO_REF = { current: null };
+
+const demoItems: AccordionItem[] = [
   {
     title: "Can I change plans later?",
-    body: "Yes — upgrades apply immediately and are prorated. Downgrades take effect on your next billing cycle.",
+    content:
+      "Yes — upgrades apply immediately and are prorated. Downgrades take effect on your next billing cycle.",
     icon: CreditCard,
   },
   {
     title: "How do seat limits work?",
-    body: "Every plan includes a base number of seats. Invited viewers are free and never count against your limit.",
+    content:
+      "Every plan includes a base number of seats. Invited viewers are free and never count against your limit.",
     icon: Users,
   },
   {
     title: "Is there an API?",
-    body: "A fully documented REST API ships with every plan, including webhooks and 30-day usage exports.",
+    content:
+      "A fully documented REST API ships with every plan, including webhooks and 30-day usage exports.",
     icon: Code,
   },
   {
     title: "Do you offer support?",
-    body: "Email support on every plan. Pro and above add a shared Slack channel with a four-hour first response.",
+    content:
+      "Email support on every plan. Pro and above add a shared Slack channel with a four-hour first response.",
     icon: LifeBuoy,
   },
 ];
@@ -40,17 +58,26 @@ const entrance = {
 } as const;
 
 export function Accordion({
-  count = 3,
+  count,
   icons = false,
+  items,
+  active = 0,
   animated = false,
   trigger = "inView",
   fill = false,
   className,
 }: AccordionProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState(0);
-  const inViewOnce = useInView(ref, { once: true, amount: 0.5 });
-  const inViewRepeat = useInView(ref, { once: false, amount: 0.5 });
+  const id = useId();
+  const [open, setOpen] = useState(active);
+  const inViewOnce = useInView(animated && trigger === "inView" ? ref : NO_REF, {
+    once: true,
+    amount: 0.5,
+  });
+  const inViewRepeat = useInView(animated && trigger === "inViewRepeat" ? ref : NO_REF, {
+    once: false,
+    amount: 0.5,
+  });
   const state = animated
     ? {
         initial: "hidden",
@@ -61,7 +88,8 @@ export function Accordion({
       }
     : {};
 
-  const shown = items.slice(0, Math.max(1, Math.min(count, items.length)));
+  const source = items ?? demoItems;
+  const shown = source.slice(0, Math.max(1, count ?? (items ? source.length : 3)));
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -69,51 +97,50 @@ export function Accordion({
         className={cn(
           "w-full",
           !fill && "max-w-sm",
-          "divide-y divide-border rounded-lg border bg-card text-card-foreground shadow-xs",
+          "divide-y divide-border overflow-hidden rounded-lg border bg-card text-card-foreground shadow-xs",
         )}
         variants={animated ? entrance : undefined}
         {...state}
       >
         {shown.map((item, i) => {
           const isOpen = open === i;
+          const Icon = item.icon;
+          const triggerId = `${id}-trigger-${i}`;
+          const panelId = `${id}-panel-${i}`;
           return (
-            <div key={item.title}>
+            <div key={`${item.title}-${i}`}>
               <h3>
                 <button
                   type="button"
-                  id={`cremona-accordion-trigger-${i}`}
+                  id={triggerId}
                   aria-expanded={isOpen}
-                  aria-controls={`cremona-accordion-panel-${i}`}
+                  aria-controls={panelId}
                   onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="flex w-full items-center gap-2 px-4 py-3.5 text-left text-sm font-medium text-foreground transition-colors outline-none hover:bg-muted/50 focus-visible:ring-3 focus-visible:ring-inset focus-visible:ring-ring/50"
+                  className="flex w-full items-center gap-2 px-4 py-3.5 text-left text-sm font-medium text-foreground transition-colors hover:bg-muted/50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
                 >
-                  {icons && (
-                    <item.icon
-                      className="size-4 shrink-0 text-muted-foreground"
-                      aria-hidden="true"
-                    />
-                  )}
+                  {icons && Icon && <Icon className="size-4 shrink-0 text-muted-foreground" />}
                   <span className="flex-1">{item.title}</span>
                   <motion.span
                     initial={{ rotate: isOpen ? 180 : 0 }}
                     animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 16 }}
+                    transition={{ duration: 0.2, ease: "easeOut" }}
                     className="shrink-0 text-muted-foreground"
                   >
-                    <ChevronDown className="size-4" aria-hidden="true" />
+                    <ChevronDown className="size-4" />
                   </motion.span>
                 </button>
               </h3>
               <motion.div
                 role="region"
-                id={`cremona-accordion-panel-${i}`}
-                aria-labelledby={`cremona-accordion-trigger-${i}`}
+                id={panelId}
+                aria-labelledby={triggerId}
+                aria-hidden={!isOpen || undefined}
                 className="overflow-hidden"
                 initial={isOpen ? false : { height: 0 }}
                 animate={{ height: isOpen ? "auto" : 0 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
               >
-                <p className="px-4 pb-4 text-xs leading-5 text-muted-foreground">{item.body}</p>
+                <p className="px-4 pb-4 text-xs leading-5 text-muted-foreground">{item.content}</p>
               </motion.div>
             </div>
           );
