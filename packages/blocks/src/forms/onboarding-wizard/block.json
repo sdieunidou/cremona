@@ -33,6 +33,12 @@
       "propsRaw": "{step:3}",
       "size": null,
       "slug": "002-step-3"
+    },
+    {
+      "label": "french",
+      "slug": "003-french",
+      "size": null,
+      "propsRaw": "{step:3,workspace:`Atelier Dupont`,invites:[{initials:`CM`,email:`camille@atelier.fr`,role:`Admin`},{initials:`LB`,email:`lucas@atelier.fr`,role:`Éditeur`}],roles:[`Admin`,`Éditeur`,`Lecteur`],labels:{progress:`Étape {step} sur {total}`,workspace:`Nom de l’espace de travail`,workspacePlaceholder:`Atelier Dupont`,icon:`Icône de l’espace`,icons:[`Fusée`,`Palette`,`Graphique`,`Blocs`],invite:`Invitez votre équipe`,roleFor:`Rôle de {email}`,inviteHint:`Vous pourrez ajouter d’autres membres plus tard.`,back:`Retour`,next:`Continuer`,finish:`Terminer`,created:`Espace « {workspace} » créé`,invited:`{count} membres invités`,invitedOne:`{count} membre invité`,configured:`Notifications configurées`},locale:`fr-FR`}"
     }
   ]
 }

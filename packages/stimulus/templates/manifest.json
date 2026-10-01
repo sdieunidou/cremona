@@ -3655,6 +3655,11 @@
         "label": "empty",
         "slug": "002-empty",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
+        "size": null
       }
     ]
   },
@@ -3674,6 +3679,11 @@
       {
         "label": "with promo",
         "slug": "001-with-promo",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "002-french",
         "size": null
       }
     ]
@@ -3729,6 +3739,11 @@
       {
         "label": "hover add",
         "slug": "003-hover-add",
+        "size": "lg"
+      },
+      {
+        "label": "french",
+        "slug": "004-french",
         "size": "lg"
       }
     ]
@@ -4276,6 +4291,11 @@
       {
         "label": "step 3",
         "slug": "002-step-3",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "003-french",
         "size": null
       }
     ]

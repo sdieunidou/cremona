@@ -67,6 +67,13 @@
       "description": "UI copy; every key is optional and falls back to the English default."
     },
     {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the rating in its accessible text (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
+    {
       "name": "animated",
       "type": "boolean",
       "optional": true,

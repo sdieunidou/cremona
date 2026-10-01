@@ -38,6 +38,8 @@ export interface ProductCardProps extends VisualProps {
   alt?: string;
   /** UI copy; every key is optional and falls back to the English default. */
   labels?: Partial<ProductCardLabels>;
+  /** BCP 47 locale of the rating in its accessible text (default `"en-US"`). */
+  locale?: string;
 }
 
 const defaultLabels: ProductCardLabels = {
@@ -92,6 +94,7 @@ export function ProductCard({
   image = "/media/placeholders/photo-01.jpg",
   alt,
   labels,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   fill = false,
@@ -210,7 +213,12 @@ export function ProductCard({
                 />
               ))}
             </span>
-            <span className="sr-only">{t.rating.replace("{rating}", String(rating))}</span>
+            <span className="sr-only">
+              {t.rating.replace(
+                "{rating}",
+                new Intl.NumberFormat(locale, { maximumFractionDigits: 20 }).format(rating || 0),
+              )}
+            </span>
             <span className="text-xs text-muted-foreground">({reviews})</span>
           </motion.div>
           <motion.div
