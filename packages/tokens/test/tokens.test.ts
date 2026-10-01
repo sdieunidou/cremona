@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
+import { deltaE, parseColor, resolveTheme, tokenBlocks } from "./color";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const css = readFileSync(join(root, "css", "themes.css"), "utf8");
@@ -90,18 +91,25 @@ describe("cremona tokens", () => {
   });
 
   it("themes.css and cremona.css define the same token blocks", () => {
-    // `.dark{` must be the bare rule, not the tail of `.theme-<name>.dark{`
-    const tokenBlocks = (source: string) =>
-      new Map(
-        [
-          ...source.matchAll(
-            /(?<![\w.-])(:root|\.dark|\.theme-[\w-]+(?::not\(\.dark\)|\.dark))\{(--background:[^}]*)\}/g,
-          ),
-        ].map((m) => [m[1], m[2]]),
-      );
     const tokens = tokenBlocks(css);
-    expect(tokens.size).toBe(18);
+    // :root and .dark, then per theme: light page, dark page, dark subtree
+    expect(tokens.size).toBe(2 + 3 * (THEMES.length - 1));
     expect(tokenBlocks(full)).toEqual(tokens);
+  });
+
+  it("a .dark element inside a themed page takes the theme's dark tokens", () => {
+    // `.theme-x .dark` outranks `.dark`; `.theme-x:not(.dark)` sits on the page root only, and
+    // every light token it sets is redefined in the subtree, so none leaks into it
+    const blocks = tokenBlocks(css);
+    for (const theme of THEMES) {
+      if (theme !== "default")
+        expect(blocks.get(`.theme-${theme} .dark`), theme).toEqual(
+          blocks.get(`.theme-${theme}.dark`),
+        );
+      expect(resolveTheme(blocks, theme, "dark-subtree"), theme).toEqual(
+        resolveTheme(blocks, theme, "dark"),
+      );
+    }
   });
 
   for (const theme of THEMES.slice(1)) {
@@ -121,6 +129,26 @@ describe("cremona tokens", () => {
   it("theme classes match themes.json", () => {
     const meta = JSON.parse(readFileSync(join(root, "themes.json"), "utf8"));
     expect(meta.map((t) => t.value)).toEqual(THEMES);
+  });
+
+  it("themes.json swatches are colours of their theme's light tokens", () => {
+    const meta: { value: string; swatches: string[] }[] = JSON.parse(
+      readFileSync(join(root, "themes.json"), "utf8"),
+    );
+    const blocks = tokenBlocks(css);
+    for (const theme of meta) {
+      const light = Object.values(resolveTheme(blocks, theme.value, "light"))
+        .filter((v) => /^(oklch\(|#)/.test(v))
+        .map(parseColor);
+      for (const swatch of theme.swatches) {
+        const nearest = Math.min(...light.map((c) => deltaE(parseColor(swatch), c)));
+        expect(nearest, `${theme.value} swatch ${swatch}`).toBeLessThan(0.5);
+      }
+    }
+  });
+
+  it("native controls follow the mode (color-scheme)", () => {
+    expect(full).toContain(":root{color-scheme:light}.dark{color-scheme:dark}");
   });
 
   it("the complete stylesheet embeds the tokens + Inter font", () => {

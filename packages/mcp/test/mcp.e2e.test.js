@@ -167,6 +167,7 @@ describe("cremona MCP server", () => {
     );
     expect(theme.css).toContain(".theme-claude-plus:not(.dark)");
     expect(theme.css).toContain(".theme-claude-plus.dark");
+    expect(theme.css).toContain(".theme-claude-plus .dark");
   });
 
   it("returns the design system overview", async () => {

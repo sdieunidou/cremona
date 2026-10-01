@@ -323,7 +323,7 @@ tool(
       return text({
         css,
         usage:
-          "Ship @cremona/tokens/css/cremona.css (complete) or css/themes.css (tokens only) and toggle .dark / .theme-<name> on <html>.",
+          "Ship @cremona/tokens/css/cremona.css (complete) or css/themes.css (tokens only) and toggle .dark / .theme-<name> on <html>; .dark on an inner element renders that subtree dark in the page's theme.",
         themes: store.themes(),
       });
     }
@@ -331,7 +331,11 @@ tool(
     if (!known.includes(theme)) return fail(`unknown theme '${theme}'`, { themes: known });
     const wanted = [`:root{--background`, `.dark{--background`];
     if (theme !== "default")
-      wanted.push(`.theme-${theme}:not(.dark){--background`, `.theme-${theme}.dark{--background`);
+      wanted.push(
+        `.theme-${theme}:not(.dark){--background`,
+        `.theme-${theme}.dark{--background`,
+        `.theme-${theme} .dark{--background`,
+      );
     const lines = css.split("\n\n").filter((block) => wanted.some((w) => block.startsWith(w)));
     return text({
       theme,

@@ -451,7 +451,9 @@ export function PullRequest({
               <motion.span
                 className={cn(
                   "absolute -right-0.5 -bottom-0.5 flex size-3 items-center justify-center rounded-full ring-2 ring-card",
-                  failing ? "bg-destructive text-white" : "bg-emerald-500 text-white",
+                  failing
+                    ? "bg-destructive text-destructive-foreground"
+                    : "bg-emerald-500 text-white",
                 )}
                 initial={false}
                 animate={{ opacity: +!!allDone, scale: allDone ? 1 : 0.5 }}
