@@ -107,9 +107,16 @@ in. Change the text in your copy of a file if needed, and keep the classes and
 `data-anim-*` attributes.
 
 Ids inside a template carry a per-template prefix (`cr-<category>-<file>-<index>-`),
-so different templates never collide on a page. Two copies of the same template
-share their ids. They still display correctly, because the duplicated definitions
-are identical. To make the ids unique anyway, replace the prefix:
+so different templates never collide on a page.
+
+The same template can be included several times. When `cremona-visual` connects,
+it gives each copy its own ids, and does it again after a Turbo morph. It also
+rewrites every reference to them: `for`, the `aria-*` id lists, `href="#…"`, and
+`url(#…)` in SVG paint, clip paths, masks and styles. Labels, tabs and gradients
+therefore resolve inside their own copy.
+
+Without JavaScript, the copies share their ids. To make them unique on the server,
+replace the prefix:
 `source(…)|replace({'cr-metrics-stat-card-000-': 'cr-metrics-stat-card-000-b-'})`.
 
 ## cremona-visual

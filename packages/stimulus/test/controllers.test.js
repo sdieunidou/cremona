@@ -363,6 +363,76 @@ describe("cremona-visual", () => {
     });
   });
 
+  describe("with the same template twice on a page", () => {
+    const COPY = `<div data-controller="cremona-visual">
+      <label for="cr-x-000-email">Email</label>
+      <input id="cr-x-000-email" aria-describedby="cr-x-000-hint">
+      <p id="cr-x-000-hint">hint</p>
+      <button aria-controls="cr-x-000-panel" aria-labelledby="cr-x-000-hint cr-x-000-email">tab</button>
+      <div id="cr-x-000-panel"></div>
+      <a href="#cr-x-000-panel">panel</a>
+      <svg><defs><linearGradient id="_cr-x-000-R_1_"></linearGradient><clipPath id="_cr-x-000-R_2_"></clipPath></defs>
+        <path fill="url(#_cr-x-000-R_1_)" clip-path="url(#_cr-x-000-R_2_)" data-anim-from="opacity:0"></path>
+        <use href="#_cr-x-000-R_1_"></use>
+      </svg>
+    </div>`;
+    const ids = () => [...document.querySelectorAll("[id]")].map((e) => e.id);
+    const refs = (copy) => {
+      const url = (attr) => /url\(#(.+)\)/.exec(copy.querySelector("path").getAttribute(attr))[1];
+      return [
+        copy.querySelector("label").htmlFor,
+        copy.querySelector("input").getAttribute("aria-describedby"),
+        copy.querySelector("button").getAttribute("aria-controls"),
+        ...copy.querySelector("button").getAttribute("aria-labelledby").split(" "),
+        copy.querySelector("a").getAttribute("href").slice(1),
+        copy.querySelector("use").getAttribute("href").slice(1),
+        url("fill"),
+        url("clip-path"),
+      ];
+    };
+    const copies = () => [...document.querySelectorAll('[data-controller~="cremona-visual"]')];
+
+    it("gives each copy its own ids, and every reference points into its own copy", async () => {
+      await start(COPY + COPY);
+      expect(new Set(ids()).size).toBe(ids().length);
+      for (const copy of copies())
+        for (const id of refs(copy)) expect(copy.querySelector(`[id="${id}"]`), id).not.toBeNull();
+    });
+
+    it("leaves a single copy as rendered", async () => {
+      await start(COPY);
+      expect(ids()).toEqual([
+        "cr-x-000-email",
+        "cr-x-000-hint",
+        "cr-x-000-panel",
+        "_cr-x-000-R_1_",
+        "_cr-x-000-R_2_",
+      ]);
+    });
+
+    it("also renames under reduced motion, and again after a Turbo morph", async () => {
+      mockMedia(["(prefers-reduced-motion: reduce)"]);
+      await start(COPY + COPY);
+      expect(new Set(ids()).size).toBe(ids().length);
+      // a morph puts the server's ids back on the elements it keeps
+      const [renamed] = copies().filter((c) => !c.querySelector('[id="cr-x-000-email"]'));
+      renamed.outerHTML = COPY.replace("data-controller", "data-was");
+      document.querySelector("[data-was]").setAttribute("data-controller", "cremona-visual");
+      document.querySelector("[data-was]").removeAttribute("data-was");
+      document.dispatchEvent(new CustomEvent("turbo:morph", { detail: {} }));
+      expect(new Set(ids()).size).toBe(ids().length);
+    });
+
+    it("works on a generated template", async () => {
+      const login = readFileSync(join(root, "templates/forms/login/000-default.html"), "utf8");
+      await start(login + login);
+      expect(new Set(ids()).size).toBe(ids().length);
+      for (const copy of copies())
+        for (const label of copy.querySelectorAll("label[for]"))
+          expect(copy.querySelector(`[id="${label.htmlFor}"]`)).not.toBeNull();
+    });
+  });
+
   it("animates every annotated element of a generated template", async () => {
     const template = readFileSync(
       join(root, "templates/metrics/stat-card/000-default.html"),

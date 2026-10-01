@@ -18,6 +18,9 @@ import { Controller } from "@hotwired/stimulus";
  * IntersectionObserver are missing, on a Turbo preview, or once the visual has
  * played (`played` value, set before Turbo caches the page).
  *
+ * When the same template is on the page more than once, each copy gets its own
+ * ids at connect (and after a Turbo morph), with every reference to them.
+ *
  * Values:
  *   trigger   "inView" (default) | "inViewRepeat" (replays on every entry) | "mount"
  *   duration  ms per element (450)
@@ -43,6 +46,7 @@ export default class CremonaVisualController extends Controller {
 
   connect() {
     watchTurbo();
+    uniqueIds(this.element);
     const revealed = releaseGuard();
     this.animations = [];
     this.state = "done";
@@ -206,6 +210,59 @@ function releaseGuard() {
   return revealed;
 }
 
+const ID_LISTS = new Set([
+  "for",
+  "headers",
+  "list",
+  "form",
+  "aria-activedescendant",
+  "aria-controls",
+  "aria-describedby",
+  "aria-details",
+  "aria-errormessage",
+  "aria-flowto",
+  "aria-labelledby",
+  "aria-owns",
+]);
+let copies = 0;
+
+/**
+ * Give this copy of a template its own ids when another element of the document
+ * uses one of them, and rewrite the references: id lists (for, aria-*),
+ * `href="#…"` and `url(#…)` (SVG paint, clip paths, masks, filters, styles).
+ */
+function uniqueIds(root) {
+  const owned = [...root.querySelectorAll("[id]")].filter((el) => el.id);
+  const taken = (id) =>
+    document.querySelectorAll(`[id="${id.replace(/["\\]/g, "\\$&")}"]`).length > 1;
+  if (!owned.some((el) => taken(el.id))) return;
+  const suffix = `-${++copies}`;
+  const ids = new Map(owned.map((el) => [el.id, `${el.id}${suffix}`]));
+  for (const el of owned) el.id = ids.get(el.id);
+  const urls = (value) =>
+    value.replace(/url\((['"]?)#([^'")]+)\1\)/g, (all, quote, id) =>
+      ids.has(id) ? `url(${quote}#${ids.get(id)}${quote})` : all,
+    );
+  for (const el of [root, ...root.querySelectorAll("*")]) {
+    for (const attr of [...el.attributes]) {
+      const { name, value } = attr;
+      let next = value;
+      if (ID_LISTS.has(name))
+        next = value
+          .split(/\s+/)
+          .map((token) => ids.get(token) ?? token)
+          .join(" ");
+      else if ((name === "href" || name === "xlink:href") && value.startsWith("#"))
+        next = ids.has(value.slice(1)) ? `#${ids.get(value.slice(1))}` : value;
+      else if (value.includes("url(")) next = urls(value);
+      if (next === value) continue;
+      if (name === "style")
+        el.style.cssText = next; // CSSOM: allowed by a strict style-src
+      else attr.value = next;
+    }
+  }
+}
+
 let turboWatched = false;
 let previewRendered = false;
 
@@ -216,6 +273,10 @@ let previewRendered = false;
 function watchTurbo() {
   if (turboWatched) return;
   turboWatched = true;
+  // a morph restores the server's ids on the elements it keeps
+  document.addEventListener("turbo:morph", () => {
+    for (const el of document.querySelectorAll(SELECTOR)) uniqueIds(el);
+  });
   document.addEventListener("turbo:visit", () => {
     previewRendered = false;
   });
