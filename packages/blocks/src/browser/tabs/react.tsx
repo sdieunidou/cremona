@@ -1,10 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, version as reactVersion } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useInView, useLoopActive } from "@cremona/react";
 import { ArrowRight, X } from "lucide-react";
 import { cn, frameClasses, type VisualProps } from "@cremona/core";
+
+// `inert` as each React major takes it: React 19 a boolean, React 18 the attribute string ("")
+const INERT = (Number(reactVersion.split(".")[0]) >= 19 ? true : "") as boolean;
 
 const container = {
   hidden: { opacity: 0 },
@@ -191,7 +194,7 @@ export function Tabs({
     <div
       ref={ref}
       aria-hidden="true"
-      inert={!animated}
+      inert={animated ? undefined : INERT}
       className={cn(frameClasses(fill), className)}
       onMouseEnter={animated && hover ? () => setIsHovering(true) : undefined}
       onMouseLeave={animated && hover ? () => setIsHovering(false) : undefined}
