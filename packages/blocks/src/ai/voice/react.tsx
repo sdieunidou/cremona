@@ -394,6 +394,44 @@ function Shimmer({ animated, loopActive }: { animated: boolean; loopActive: bool
   );
 }
 
+/** The transcript's words fade in one by one, then are plain text like the static render. */
+function Transcript({
+  text,
+  state,
+}: {
+  text: string;
+  state: { initial: string; animate: string };
+}) {
+  const [typed, setTyped] = useState(false);
+  if (typed && state.animate !== "visible") setTyped(false);
+  if (typed) return <>{text}</>;
+  let wordIndex = 0;
+  const tokens = text
+    .split(/(\s+)/)
+    .filter(Boolean)
+    .map((part) => ({ part, index: /^\s+$/.test(part) ? -1 : wordIndex++ }));
+  return tokens.map(({ part, index }, t) =>
+    index < 0 ? (
+      <span key={t}>{part}</span>
+    ) : (
+      <motion.span
+        key={t}
+        className="inline-block"
+        variants={word}
+        custom={index}
+        {...state}
+        onAnimationComplete={
+          index === wordIndex - 1
+            ? (definition) => definition === "visible" && setTyped(true)
+            : undefined
+        }
+      >
+        {part}
+      </motion.span>
+    ),
+  );
+}
+
 /** The rings around the orb at rest: the static render, and a paused loop. */
 function RestRings({ thinking }: { thinking: boolean }) {
   return (
@@ -498,12 +536,6 @@ export function Voice({
     transcript ??
     voiceDefaultCopy[`${current}Transcript` as const];
 
-  const words = (transcriptLabel ?? "").split(/(\s+)/).filter(Boolean);
-  let wordIndex = 0;
-  const tokens = words.map((text) =>
-    /^\s+$/.test(text) ? { type: "space", text } : { type: "word", text, index: wordIndex++ },
-  );
-
   if (!animated) {
     return (
       <div aria-hidden="true" className={cn(frameClasses(fill), className)}>
@@ -564,15 +596,7 @@ export function Voice({
               <Shimmer animated={false} loopActive={false} />
             ) : (
               <p className="text-center text-sm leading-relaxed text-foreground">
-                {tokens.map((token, t) =>
-                  token.type === "space" ? (
-                    <span key={t}>{token.text}</span>
-                  ) : (
-                    <span key={t} className="inline-block">
-                      {token.text}
-                    </span>
-                  ),
-                )}
+                {transcriptLabel}
               </p>
             )}
           </div>
@@ -774,21 +798,7 @@ export function Voice({
             <Shimmer key={current} animated loopActive={looping} />
           ) : (
             <p key={current} className="text-center text-sm leading-relaxed text-foreground">
-              {tokens.map((token, t) =>
-                token.type === "space" ? (
-                  <span key={t}>{token.text}</span>
-                ) : (
-                  <motion.span
-                    key={t}
-                    className="inline-block"
-                    variants={word}
-                    custom={token.index}
-                    {...wordsState}
-                  >
-                    {token.text}
-                  </motion.span>
-                ),
-              )}
+              <Transcript text={transcriptLabel ?? ""} state={wordsState} />
             </p>
           )}
         </div>

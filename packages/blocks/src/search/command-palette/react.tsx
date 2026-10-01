@@ -199,6 +199,9 @@ export function CommandPalette({
   const triggered =
     trigger === "mount" ? true : trigger === "inViewRepeat" ? inViewRepeat : inViewOnce;
   const cycling = animated && loop && (hover ? hovering : triggered);
+  // typed character by character, then the plain query (kerning, ellipsis) like the static render
+  const [typed, setTyped] = useState(false);
+  if (typed && !triggered) setTyped(false);
   const state = animated ? { initial: "hidden", animate: triggered ? "visible" : "hidden" } : {};
   const resolvedGroups = groups.map((group) => ({ ...group, items: group.items ?? [] }));
   const indexed = resolvedGroups.map((group, i) => ({
@@ -257,23 +260,24 @@ export function CommandPalette({
           <Search className="size-3.5 shrink-0 text-muted-foreground" strokeWidth={2.5} />
           <span className="flex min-w-0 flex-1 items-center">
             <span className="min-w-0 truncate text-xs font-medium text-foreground">
-              {chars.map((char, i) =>
-                animated ? (
-                  <motion.span
-                    key={i}
-                    className="inline-block whitespace-pre"
-                    variants={charAnim}
-                    custom={i}
-                    {...state}
-                  >
-                    {char}
-                  </motion.span>
-                ) : (
-                  <span key={i} className="inline-block whitespace-pre">
-                    {char}
-                  </span>
-                ),
-              )}
+              {animated && !typed
+                ? chars.map((char, i) => (
+                    <motion.span
+                      key={i}
+                      className="inline-block whitespace-pre"
+                      variants={charAnim}
+                      custom={i}
+                      {...state}
+                      onAnimationComplete={
+                        i === chars.length - 1
+                          ? (definition) => definition === "visible" && setTyped(true)
+                          : undefined
+                      }
+                    >
+                      {char}
+                    </motion.span>
+                  ))
+                : query}
             </span>
             {caret && (
               <motion.span

@@ -380,6 +380,9 @@ export function PromptBox({
     /^\s+$/.test(text) ? { type: "space", text } : { type: "word", text, index: wordIndex++ },
   );
   const wordCount = wordIndex;
+  // the words fade in one by one, then are plain text (kerning, wrapping) like the static render
+  const [typed, setTyped] = useState(false);
+  if (typed && !shown) setTyped(false);
   const meterWidth = `${Math.max(0, Math.min(contextUsed, 1)) * 100}%`;
 
   const cardInner = (motionContent: boolean) => (
@@ -387,22 +390,23 @@ export function PromptBox({
       <div className="min-h-16 px-4 pt-4 pb-2">
         <p className="text-sm leading-relaxed whitespace-pre-wrap text-foreground">
           {words.map((token, t) =>
-            token.type === "space" ? (
+            token.type === "space" || !motionContent || typed ? (
               <span key={t}>{token.text}</span>
-            ) : motionContent ? (
+            ) : (
               <motion.span
                 key={t}
                 className="inline-block"
                 variants={word}
                 custom={token.index}
                 {...innerState}
+                onAnimationComplete={
+                  token.index === wordCount - 1
+                    ? (definition) => definition === "visible" && setTyped(true)
+                    : undefined
+                }
               >
                 {token.text}
               </motion.span>
-            ) : (
-              <span key={t} className="inline-block">
-                {token.text}
-              </span>
             ),
           )}
           {caret &&

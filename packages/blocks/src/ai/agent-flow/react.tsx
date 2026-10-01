@@ -284,6 +284,30 @@ const letter = {
   visible: { opacity: 1, filter: "blur(0px)", transition: { duration: 0.25, ease: "easeOut" } },
 } as const;
 
+/** A step label typed letter by letter, then plain text (kerning, ligatures) like the static render. */
+function TypedLabel({ text }: { text: string }) {
+  const [typed, setTyped] = useState(false);
+  return (
+    <motion.span
+      className="text-sm font-medium whitespace-nowrap text-foreground"
+      variants={letters}
+      onAnimationComplete={(definition) => definition === "visible" && setTyped(true)}
+    >
+      {typed
+        ? text
+        : text.split("").map((ch, k) =>
+            ch === " " ? (
+              <span key={k}>&nbsp;</span>
+            ) : (
+              <motion.span key={k} className="inline-block" variants={letter}>
+                {ch}
+              </motion.span>
+            ),
+          )}
+    </motion.span>
+  );
+}
+
 function GlowScene() {
   return (
     <>
@@ -438,15 +462,7 @@ export function AgentFlow({
                       </span>
                     )}
                     <span className="text-sm font-medium whitespace-nowrap text-foreground">
-                      {step.split("").map((ch, k) =>
-                        ch === " " ? (
-                          <span key={k}>&nbsp;</span>
-                        ) : (
-                          <span key={k} className="inline-block">
-                            {ch}
-                          </span>
-                        ),
-                      )}
+                      {step}
                     </span>
                   </div>
                 </div>
@@ -590,20 +606,7 @@ export function AgentFlow({
                             </AnimatePresence>
                           </motion.span>
                         )}
-                        <motion.span
-                          className="text-sm font-medium whitespace-nowrap text-foreground"
-                          variants={letters}
-                        >
-                          {step.split("").map((ch, k) =>
-                            ch === " " ? (
-                              <span key={k}>&nbsp;</span>
-                            ) : (
-                              <motion.span key={k} className="inline-block" variants={letter}>
-                                {ch}
-                              </motion.span>
-                            ),
-                          )}
-                        </motion.span>
+                        <TypedLabel text={step} />
                       </motion.div>
                     )}
                   </AnimatePresence>
