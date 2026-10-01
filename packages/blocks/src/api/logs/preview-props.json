@@ -100,5 +100,48 @@
         }
       }
     ]
+  },
+  "french": {
+    "service": "passerelle-api",
+    "lines": [
+      {
+        "time": "12:04:01",
+        "level": "info",
+        "message": "GET /v1/clients 200"
+      },
+      {
+        "time": "12:04:02",
+        "level": "debug",
+        "message": "cache utilisé page 1"
+      },
+      {
+        "time": "12:04:04",
+        "level": "warn",
+        "message": "requête lente 812 ms"
+      },
+      {
+        "time": "12:04:06",
+        "level": "info",
+        "message": "POST /v1/paiements 201"
+      },
+      {
+        "time": "12:04:07",
+        "level": "error",
+        "message": "délai amont dépassé"
+      },
+      {
+        "time": "12:04:09",
+        "level": "success",
+        "message": "nouvel essai réussi"
+      }
+    ],
+    "labels": {
+      "info": "INFO",
+      "warn": "ALERTE",
+      "error": "ERREUR",
+      "debug": "DEBUG",
+      "success": "OK"
+    },
+    "trigger": "inViewRepeat"
   }
 }

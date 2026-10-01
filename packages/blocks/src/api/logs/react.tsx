@@ -51,7 +51,16 @@ const DEFAULT_SOURCES: ReactNode[] = [
   <Database className="size-3.5" strokeWidth={2} />,
 ];
 
-const LEVEL_LABELS: Record<LogLevel, string> = {
+/** The level pill of each log level. */
+export interface LogsLabels {
+  info: string;
+  warn: string;
+  error: string;
+  debug: string;
+  success: string;
+}
+
+export const logsDefaultLabels: LogsLabels = {
   info: "INFO",
   warn: "WARN",
   error: "ERROR",
@@ -213,6 +222,8 @@ export interface LogsProps extends VisualProps {
   lines?: readonly LogLine[];
   sources?: readonly ReactNode[];
   pulse?: "dot" | "line";
+  /** UI text; every key is optional and falls back to the English default. */
+  labels?: Partial<LogsLabels>;
   hover?: boolean;
   gradient?: boolean;
   isometric?: boolean;
@@ -253,6 +264,7 @@ export function Logs({
   lines: linesProp,
   sources = DEFAULT_SOURCES,
   pulse = "dot",
+  labels,
   animated = false,
   trigger = "inView",
   hover = false,
@@ -284,6 +296,7 @@ export function Logs({
     : ({} as Record<string, unknown>);
 
   const serviceLabel = service ?? logsDefaultCopy.services[variant];
+  const text = { ...logsDefaultLabels, ...labels };
   const logLines = (linesProp ?? logsDefaultCopy.lines[variant]) as readonly LogLine[];
   const sourceList = (sources.length ? sources : DEFAULT_SOURCES).slice(0, MAX_SOURCES);
   const count = sourceList.length;
@@ -428,7 +441,9 @@ export function Logs({
                     <span
                       className={`w-9 shrink-0 rounded px-0.75 py-px text-center text-[8px] font-semibold ring-1 ring-inset ${LEVEL_PILL[line2.level] ?? LEVEL_PILL.debug}`}
                     >
-                      {LEVEL_LABELS[line2.level] ?? String(line2.level).toUpperCase()}
+                      {Object.hasOwn(text, line2.level)
+                        ? text[line2.level]
+                        : String(line2.level).toUpperCase()}
                     </span>
                     <span className={`truncate ${LEVEL_TEXT[line2.level] ?? LEVEL_TEXT.info}`}>
                       {line2.message}

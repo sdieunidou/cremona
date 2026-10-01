@@ -77,6 +77,12 @@
       "slug": "009-hover",
       "size": null,
       "propsRaw": "{hover:!0}"
+    },
+    {
+      "label": "french",
+      "slug": "010-french",
+      "size": null,
+      "propsRaw": "{query:`nouv`,groups:[{label:`Actions`,items:[{label:`Nouveau projet`,shortcut:[`⌘`,`N`]},{label:`Nouveau document`,shortcut:[`⌘`,`D`]},{label:`Inviter un membre`,shortcut:[`⌘`,`I`]}]},{label:`Récents`,items:[{label:`Checklist de lancement`},{label:`Paramètres de l’espace`}]}],labels:{navigate:`Naviguer`,select:`Choisir`,close:`Fermer`,escape:`échap`,empty:`Aucun résultat`}}"
     }
   ]
 }

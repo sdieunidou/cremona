@@ -15,6 +15,8 @@ export interface SemanticProps extends VisualProps {
   query?: string;
   matches?: SemanticMatch[];
   spaceLabel?: string;
+  /** BCP 47 locale of the match scores (default `"en-US"`). */
+  locale?: string;
   hover?: boolean;
   isometric?: boolean;
 }
@@ -52,8 +54,13 @@ const SWEEP_DURATION = 2.4;
 const SWEEP_CYCLE_MS = 3899.9999999999995;
 const SWEEP_FIRST_DELAY = 1.8;
 
-function formatScore(score: number): string {
-  return typeof score === "number" ? score.toFixed(2) : String(score ?? "");
+function formatScore(score: number, locale: string): string {
+  if (typeof score !== "number") return String(score ?? "");
+  if (!Number.isFinite(score)) return score.toFixed(2);
+  return new Intl.NumberFormat(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(score.toFixed(2)));
 }
 
 function distanceFromCenter(x: number, y: number): number {
@@ -154,6 +161,7 @@ export function Semantic({
   query = defaultQuery,
   matches = defaultMatches,
   spaceLabel = defaultSpaceLabel,
+  locale = "en-US",
   animated = false,
   trigger = "inView",
   hover = false,
@@ -408,7 +416,7 @@ export function Semantic({
                 {resolvedMatches[i]!.label}
               </span>
               <span className="shrink-0 rounded-full bg-muted px-1.25 py-px text-[9px] font-semibold text-muted-foreground tabular-nums">
-                {formatScore(resolvedMatches[i]!.score)}
+                {formatScore(resolvedMatches[i]!.score, locale)}
               </span>
             </motion.div>
           </div>

@@ -4,6 +4,13 @@
     { "name": "query", "type": "string", "optional": true, "default": "\"upgrade my plan\"" },
     { "name": "matches", "type": "SemanticMatch[]", "optional": true, "default": "[…] (3 items)" },
     { "name": "spaceLabel", "type": "string", "optional": true, "default": "\"Embedding space\"" },
+    {
+      "name": "locale",
+      "type": "string",
+      "optional": true,
+      "description": "BCP 47 locale of the match scores (default `\"en-US\"`).",
+      "default": "\"en-US\""
+    },
     { "name": "hover", "type": "boolean", "optional": true, "default": "false" },
     { "name": "isometric", "type": "boolean", "optional": true, "default": "false" },
     {

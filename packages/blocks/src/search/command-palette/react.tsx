@@ -23,6 +23,8 @@ export const commandPaletteDefaultLabels = {
   navigate: "Navigate",
   select: "Select",
   close: "Close",
+  /** Key cap of the close hint. */
+  escape: "esc",
   /** Shown when `groups` holds no command. */
   empty: "No results",
 };
@@ -393,7 +395,7 @@ export function CommandPalette({
                 </span>
               </div>
               <span className="flex items-center gap-1">
-                <Key>esc</Key>
+                <Key>{text.escape}</Key>
                 <span className="text-[9px] text-muted-foreground">{text.close}</span>
               </span>
             </motion.div>

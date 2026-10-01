@@ -63,5 +63,24 @@
         "score": 0.98
       }
     ]
+  },
+  "french": {
+    "query": "changer d’offre",
+    "matches": [
+      {
+        "label": "Offre supérieure",
+        "score": 0.94
+      },
+      {
+        "label": "Comparer les offres",
+        "score": 0.88
+      },
+      {
+        "label": "Ajouter des sièges",
+        "score": 0.79
+      }
+    ],
+    "spaceLabel": "Espace vectoriel",
+    "locale": "fr-FR"
   }
 }

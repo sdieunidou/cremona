@@ -76,7 +76,8 @@
           "hover",
           "two sources",
           "support · custom copy",
-          "docs · isometric"
+          "docs · isometric",
+          "french"
         ],
         "cols": 2
       },
@@ -149,7 +150,8 @@
           "errors",
           "worker · isometric",
           "two sources",
-          "four sources"
+          "four sources",
+          "french"
         ],
         "cols": 2
       },
@@ -1555,7 +1557,8 @@
           "avatar image",
           "failing",
           "failing · custom copy",
-          "hover"
+          "hover",
+          "french"
         ],
         "cols": 2
       }
@@ -2107,7 +2110,8 @@
           "support · custom copy",
           "single group",
           "no caret",
-          "hover"
+          "hover",
+          "french"
         ],
         "cols": 2
       },
@@ -2145,7 +2149,8 @@
           "support · custom copy",
           "docs · isometric",
           "two matches",
-          "one match"
+          "one match",
+          "french"
         ],
         "cols": 2
       }

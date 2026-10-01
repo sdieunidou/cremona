@@ -324,6 +324,11 @@
         "label": "docs · isometric",
         "slug": "010-docs-isometric",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "011-french",
+        "size": null
       }
     ]
   },
@@ -538,6 +543,11 @@
       {
         "label": "four sources",
         "slug": "011-four-sources",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "012-french",
         "size": null
       }
     ]
@@ -4710,6 +4720,11 @@
         "label": "hover",
         "slug": "010-hover",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "011-french",
+        "size": null
       }
     ]
   },
@@ -6220,6 +6235,11 @@
         "label": "hover",
         "slug": "009-hover",
         "size": null
+      },
+      {
+        "label": "french",
+        "slug": "010-french",
+        "size": null
       }
     ]
   },
@@ -6323,6 +6343,11 @@
       {
         "label": "one match",
         "slug": "006-one-match",
+        "size": null
+      },
+      {
+        "label": "french",
+        "slug": "007-french",
         "size": null
       }
     ]
