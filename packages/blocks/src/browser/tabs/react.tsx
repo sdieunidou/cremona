@@ -225,9 +225,9 @@ export function Tabs({
             variants={animated ? chrome : undefined}
           >
             <div className="flex gap-1.5">
-              <div className="size-2 rounded-full bg-rose-400" />
-              <div className="size-2 rounded-full bg-amber-400" />
-              <div className="size-2 rounded-full bg-emerald-400" />
+              <div className="size-2 rounded-full bg-destructive" />
+              <div className="size-2 rounded-full bg-warning" />
+              <div className="size-2 rounded-full bg-success" />
             </div>
             <div className="flex flex-1 items-center gap-1 overflow-hidden">
               {tabs.map((tab, i) => {

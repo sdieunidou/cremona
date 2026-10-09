@@ -31,15 +31,15 @@ const defaultBranches = [
     from: 1,
     commits: 2,
     merge: true,
-    color: "text-violet-500",
-    pulseColor: "text-violet-800 dark:text-violet-200",
+    color: "text-chart-2",
+    pulseColor: "text-chart-2",
   },
   {
     name: "fix/auth",
     from: 4,
     commits: 2,
-    color: "text-amber-500",
-    pulseColor: "text-amber-800 dark:text-amber-200",
+    color: "text-chart-4",
+    pulseColor: "text-chart-4",
   },
 ] as const;
 

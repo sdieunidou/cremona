@@ -210,9 +210,7 @@ export function MiniPanel({
                     : /^\s*[-−]/.test(stat.change);
                 const good = stat.positive === "down" ? down : !down;
                 const TrendIcon = down ? TrendingDown : TrendingUp;
-                const trendColor = good
-                  ? "text-emerald-600 dark:text-emerald-400"
-                  : "text-rose-600 dark:text-rose-400";
+                const trendColor = good ? "text-success" : "text-destructive";
                 return (
                   <div key={i} className="flex flex-col gap-0.5">
                     <span className="text-[8px] font-medium tracking-wider text-muted-foreground uppercase">

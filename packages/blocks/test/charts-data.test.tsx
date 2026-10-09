@@ -207,8 +207,8 @@ describe("charts with real data", () => {
   });
 
   it("colours the change by its meaning, not only its sign", () => {
-    const GOOD = "bg-emerald-500/10";
-    const BAD = "bg-red-500/10";
+    const GOOD = "bg-success/10";
+    const BAD = "bg-destructive/10";
     // a Unicode minus is a minus
     expect(render(Line, { change: "−3.2%" })).toContain(BAD);
     expect(render(Line, { change: "−3.2%" })).toContain("lucide-arrow-down-right");
@@ -218,7 +218,7 @@ describe("charts with real data", () => {
       expect(render(C, { change: "+0.8%", positive: "down" })).toContain(BAD);
     }
     const churn = renderToStaticMarkup(<StatCard trend="down" positive="down" />);
-    expect(churn).toContain("bg-emerald-500/10");
+    expect(churn).toContain(GOOD);
     expect(churn).toContain("lucide-arrow-down-right");
   });
 });

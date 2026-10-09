@@ -33,7 +33,7 @@ export const checklistDefaultItems: readonly ChecklistItem[] = [
 
 const priorityStyles: Record<NonNullable<ChecklistItem["priority"]>, string> = {
   high: "text-destructive",
-  med: "text-amber-600 dark:text-amber-400",
+  med: "text-warning",
   low: "text-muted-foreground",
 };
 

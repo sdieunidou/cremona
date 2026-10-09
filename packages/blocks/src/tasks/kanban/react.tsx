@@ -47,8 +47,8 @@ export const kanbanDefaultColumns: readonly KanbanColumn[] = [
 const dotStyles: Record<NonNullable<KanbanColumn["dot"]>, string> = {
   neutral: "bg-muted-foreground/40",
   active: "bg-primary",
-  success: "bg-emerald-500",
-  warning: "bg-amber-500",
+  success: "bg-success",
+  warning: "bg-warning",
   destructive: "bg-destructive",
 };
 

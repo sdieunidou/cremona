@@ -22,7 +22,7 @@ export interface MonitorSeries {
 export const monitorDefaultSeries: MonitorSeries[] = [
   {
     label: "MEM",
-    color: "var(--color-emerald-500)",
+    color: "var(--color-success)",
     points: [0.52, 0.57, 0.5, 0.58, 0.53, 0.49, 0.56, 0.51, 0.57, 0.54],
     jitter: 0.05,
   },

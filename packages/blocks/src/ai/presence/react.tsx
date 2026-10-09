@@ -9,9 +9,9 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 export const presenceDefaultCopy = {
   collaborators: [
     { name: "You", kind: "user", color: "text-primary", initials: "JC" },
-    { name: "Research Agent", kind: "agent", color: "text-purple-600 dark:text-purple-500" },
-    { name: "Coding Agent", kind: "agent", color: "text-sky-600 dark:text-sky-500" },
-    { name: "Review Agent", kind: "agent", color: "text-pink-600 dark:text-pink-500" },
+    { name: "Research Agent", kind: "agent", color: "text-chart-2" },
+    { name: "Coding Agent", kind: "agent", color: "text-chart-1" },
+    { name: "Review Agent", kind: "agent", color: "text-chart-5" },
   ],
 } as const;
 
@@ -79,11 +79,11 @@ const GLOW_DURATION = 1.2;
 const PARTICLES_DELAY = 1.02;
 
 const AGENT_COLORS = [
-  "text-purple-600 dark:text-purple-500",
-  "text-sky-600 dark:text-sky-500",
-  "text-pink-600 dark:text-pink-500",
-  "text-green-600 dark:text-green-500",
-  "text-rose-600 dark:text-rose-500",
+  "text-chart-2",
+  "text-chart-1",
+  "text-chart-5",
+  "text-chart-3",
+  "text-chart-5",
 ];
 
 interface Particle {
@@ -349,7 +349,7 @@ function CursorChip({ collaborator }: { collaborator: Collaborator }) {
     <div className="relative inline-flex items-center gap-1 overflow-hidden rounded-full rounded-tl-none bg-current py-1 pr-2 pl-1 shadow-sm">
       <span className="absolute inset-0 bg-black/15 dark:bg-black/25" />
       {isUser ? (
-        <span className="relative flex size-5 items-center justify-center overflow-hidden rounded-full bg-white/25 text-[8px] font-semibold text-white ring-1 ring-white/40">
+        <span className="relative flex size-5 items-center justify-center overflow-hidden rounded-full bg-background/25 text-[8px] font-semibold text-background ring-1 ring-background/40">
           {collaborator.avatar ? (
             <img
               src={collaborator.avatar}
@@ -361,11 +361,11 @@ function CursorChip({ collaborator }: { collaborator: Collaborator }) {
           )}
         </span>
       ) : (
-        <span className="relative flex size-4 items-center justify-center rounded-full bg-white/20">
-          <Bot className="size-2.5 text-white" strokeWidth={2.5} />
+        <span className="relative flex size-4 items-center justify-center rounded-full bg-background/20">
+          <Bot className="size-2.5 text-background" strokeWidth={2.5} />
         </span>
       )}
-      <span className="relative text-[10px] leading-none font-medium whitespace-nowrap text-white">
+      <span className="relative text-[10px] leading-none font-medium whitespace-nowrap text-background">
         {collaborator.name}
       </span>
     </div>

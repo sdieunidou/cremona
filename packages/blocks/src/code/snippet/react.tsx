@@ -42,14 +42,14 @@ const snippetLabels: Record<SnippetLanguage, string> = {
 };
 
 const tokenColors: Record<SnippetToken["color"], string> = {
-  keyword: "bg-violet-400/50 dark:bg-violet-400/40",
-  func: "bg-blue-400/50 dark:bg-blue-400/40",
-  string: "bg-emerald-400/50 dark:bg-emerald-400/40",
-  variable: "bg-sky-400/50 dark:bg-sky-400/40",
-  type: "bg-amber-400/50 dark:bg-amber-400/40",
+  keyword: "bg-chart-2/50 dark:bg-chart-2/40",
+  func: "bg-chart-1/50 dark:bg-chart-1/40",
+  string: "bg-chart-3/50 dark:bg-chart-3/40",
+  variable: "bg-chart-1/50 dark:bg-chart-1/40",
+  type: "bg-chart-4/50 dark:bg-chart-4/40",
   punct: "bg-muted-foreground/30",
-  tag: "bg-rose-400/50 dark:bg-rose-400/40",
-  prop: "bg-cyan-400/50 dark:bg-cyan-400/40",
+  tag: "bg-chart-5/50 dark:bg-chart-5/40",
+  prop: "bg-chart-1/50 dark:bg-chart-1/40",
   comment: "bg-muted-foreground/20",
 };
 
@@ -339,25 +339,25 @@ function SnippetCodeLine({
 }) {
   const bg =
     line.diff === "add"
-      ? "bg-emerald-500/8 dark:bg-emerald-500/10"
+      ? "bg-success/8"
       : line.diff === "remove"
-        ? "bg-rose-500/8 dark:bg-rose-500/10"
+        ? "bg-destructive/8"
         : line.highlight
           ? "bg-primary/8"
           : "";
   const border =
     line.diff === "add"
-      ? "border-emerald-500/60"
+      ? "border-success/60"
       : line.diff === "remove"
-        ? "border-rose-500/60"
+        ? "border-destructive/60"
         : line.highlight
           ? "border-primary"
           : "border-transparent";
   const gutterColor =
     line.diff === "add"
-      ? "text-emerald-600 dark:text-emerald-400"
+      ? "text-success"
       : line.diff === "remove"
-        ? "text-rose-600 dark:text-rose-400"
+        ? "text-destructive"
         : "text-muted-foreground/60";
   const gutterText =
     line.diff === "add" ? "+" : line.diff === "remove" ? "−" : lineNumbers ? index + 1 : "";
@@ -485,10 +485,7 @@ export function Snippet({
               onMouseDown={(e) => e.preventDefault()}
             >
               {copied ? (
-                <Check
-                  className="size-2.5 text-emerald-500 dark:text-emerald-400"
-                  strokeWidth={3}
-                />
+                <Check className="size-2.5 text-success" strokeWidth={3} />
               ) : (
                 <Copy className="size-2.5" strokeWidth={2.5} />
               )}

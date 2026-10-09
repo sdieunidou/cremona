@@ -271,7 +271,7 @@ export function Upload({
           if (cancelled) return;
           await animate(
             ".progress-fill",
-            { backgroundColor: "var(--color-emerald-500)" },
+            { backgroundColor: "var(--color-success)" },
             { duration: TIMING.colorChange, ease: "easeOut" },
           );
           if (cancelled) return;
@@ -348,10 +348,10 @@ export function Upload({
             <LoaderCircle size={14} className={cn(loop && "animate-spin")} strokeWidth={2.5} />
           </div>
           <div
-            className="check-badge absolute bottom-5.75 -left-1.75 z-1 flex items-center justify-center rounded-lg border border-emerald-800/20 bg-emerald-500 p-1 shadow-sm"
+            className="check-badge absolute bottom-5.75 -left-1.75 z-1 flex items-center justify-center rounded-lg border border-success/20 bg-success p-1 text-success-foreground shadow-sm"
             style={animated ? { opacity: 0 } : { display: "none" }}
           >
-            <Check size={14} className="text-white" strokeWidth={2.5} />
+            <Check size={14} strokeWidth={2.5} />
           </div>
           <div className="flex h-22 w-16 flex-col gap-1.5 rounded-md rounded-tr-xl bg-card p-3 shadow-sm dark:shadow-none dark:ring-1 dark:ring-border/50">
             <div

@@ -59,31 +59,28 @@ export const eventListDefaultCopy: { title: string; items: EventItem[] } = {
 const categoryStyles: Record<EventCategory, { icon: LucideIcon; accent: string; bar: string }> = {
   meeting: {
     icon: Video,
-    accent: "bg-sky-50 border-sky-500/20 text-sky-600 dark:bg-sky-950/40 dark:text-sky-400",
-    bar: "bg-sky-500",
+    accent: "bg-chart-1/10 border-chart-1/20 text-chart-1",
+    bar: "bg-chart-1",
   },
   team: {
     icon: Users,
-    accent:
-      "bg-violet-50 border-violet-500/20 text-violet-600 dark:bg-violet-950/40 dark:text-violet-400",
-    bar: "bg-violet-500",
+    accent: "bg-chart-2/10 border-chart-2/20 text-chart-2",
+    bar: "bg-chart-2",
   },
   personal: {
     icon: Coffee,
-    accent:
-      "bg-amber-50 border-amber-500/20 text-amber-600 dark:bg-amber-950/40 dark:text-amber-400",
-    bar: "bg-amber-500",
+    accent: "bg-chart-4/10 border-chart-4/20 text-chart-4",
+    bar: "bg-chart-4",
   },
   focus: {
     icon: Sparkles,
-    accent:
-      "bg-emerald-50 border-emerald-500/20 text-emerald-600 dark:bg-emerald-950/40 dark:text-emerald-400",
-    bar: "bg-emerald-500",
+    accent: "bg-chart-3/10 border-chart-3/20 text-chart-3",
+    bar: "bg-chart-3",
   },
   travel: {
     icon: Plane,
-    accent: "bg-rose-50 border-rose-500/20 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400",
-    bar: "bg-rose-500",
+    accent: "bg-chart-5/10 border-chart-5/20 text-chart-5",
+    bar: "bg-chart-5",
   },
 };
 

@@ -60,7 +60,11 @@ also runs the package check before publishing.
    `pnpm validate`. MCP `add_block` scaffolds them, in an existing category
    (`add_category` first otherwise); it refuses a key that already exists.
 5. **Design tokens live only in `packages/tokens`** — blocks use semantic tokens
-   (`bg-card`, `text-muted-foreground`, `text-success`…), never raw colors.
+   (`bg-card`, `text-muted-foreground`, `text-success`…), never raw colors: a status
+   is `success`, `warning`, `info` or `destructive`, a category that only has to be
+   told apart is `chart-1`…`chart-5`. `test/tokens-only.test.ts` fails on a palette
+   colour (`bg-emerald-500`, `var(--color-rose-500)`) outside its list of artwork
+   (scenes, file-type glyphs, brand logos…), each entry with its reason.
 6. **No HTML from props**: blocks render text as JSX and never use
    `dangerouslySetInnerHTML` (ESLint error in `packages/blocks/src`). They never
    read the clock while rendering either (`new Date()`): take a prop with a

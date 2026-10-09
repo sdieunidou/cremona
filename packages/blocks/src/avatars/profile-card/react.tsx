@@ -14,19 +14,19 @@ export const profileCardDefaultCopy = {
 
 const statusStyles = {
   online: {
-    dot: "bg-emerald-500",
-    pulse: "bg-emerald-500/40",
-    pill: "text-emerald-600 dark:text-emerald-400",
+    dot: "bg-success",
+    pulse: "bg-success/40",
+    pill: "text-success",
   },
   away: {
-    dot: "bg-amber-500",
-    pulse: "bg-amber-500/40",
-    pill: "text-amber-600 dark:text-amber-400",
+    dot: "bg-warning",
+    pulse: "bg-warning/40",
+    pill: "text-warning",
   },
   busy: {
-    dot: "bg-rose-500",
-    pulse: "bg-rose-500/40",
-    pill: "text-rose-600 dark:text-rose-400",
+    dot: "bg-destructive",
+    pulse: "bg-destructive/40",
+    pill: "text-destructive",
   },
   offline: {
     dot: "bg-muted-foreground/60",

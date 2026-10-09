@@ -74,7 +74,7 @@
           "name": "className",
           "type": "string",
           "optional": true,
-          "description": "Class applied to the band. The arc strokes `currentColor`, so this is a **text** colour: `text-amber-300 dark:text-amber-400/30`."
+          "description": "Class applied to the band. The arc strokes `currentColor`, so this is a **text** colour: `text-warning/40`."
         },
         { "name": "color", "type": "string", "optional": true, "deprecated": true }
       ]

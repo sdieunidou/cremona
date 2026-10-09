@@ -375,7 +375,7 @@ function ToolRow({
             <span className="text-muted-foreground/50">{" }"}</span>
           </span>
           <motion.span
-            className="flex shrink-0 items-center gap-1 text-emerald-600 dark:text-emerald-400"
+            className="flex shrink-0 items-center gap-1 text-success"
             initial={false}
             animate={{ opacity: +!!done, x: done ? 0 : -4 }}
             transition={statusTransition}
@@ -417,7 +417,7 @@ function ToolRow({
           transition={done ? { type: "spring", stiffness: 420, damping: 18 } : statusTransition}
         >
           <span className="text-[9px] text-muted-foreground tabular-nums">{tool.duration}</span>
-          <span className="flex size-4 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600 ring-1 ring-emerald-500/20 ring-inset dark:text-emerald-400">
+          <span className="flex size-4 items-center justify-center rounded-full bg-success/10 text-success ring-1 ring-success/20 ring-inset">
             <Check className="size-2.5" strokeWidth={3} />
           </span>
         </motion.span>

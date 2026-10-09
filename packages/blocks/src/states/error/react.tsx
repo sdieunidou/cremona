@@ -338,7 +338,7 @@ export function ErrorState({
                       <div className="h-1 rounded-full bg-muted-foreground/30" />
                       <div className="h-1 w-2/3 rounded-full bg-muted-foreground/15" />
                     </div>
-                    <div className="size-1.5 shrink-0 rounded-full bg-emerald-500" />
+                    <div className="size-1.5 shrink-0 rounded-full bg-success" />
                   </div>
                   {!animated && (
                     <div className="absolute inset-0 flex items-center gap-1.5 rounded-md border border-destructive/40 bg-destructive/10 px-1.5">

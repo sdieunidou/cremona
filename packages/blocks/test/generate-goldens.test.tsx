@@ -87,7 +87,7 @@ describe("generate the missing goldens", () => {
         if (!props)
           throw new Error(`${path}: no props for "${v.label}" in preview-props.json, no golden`);
         const html = renderToStaticMarkup(
-          <Component animated trigger="mount" {...(hydrateProps(props) as Props)} />,
+          <Component animated trigger="inViewRepeat" {...(hydrateProps(props) as Props)} />,
         );
         writeFileSync(goldenPath, frame(html, v.label, v.size) + "\n");
         created += 1;

@@ -20,8 +20,14 @@ tokens and test machinery for every block of the library.
 1. **Tokens only** — semantic colors (`bg-card`, `text-muted-foreground`,
    `bg-primary/10`…), status included (`text-success`, `bg-warning/10`,
    `bg-info text-info-foreground`, `text-destructive-foreground` on a solid
-   destructive surface), never raw palette colors. The rainbow glow is the one
-   palette gradient.
+   destructive surface), never raw palette colors. What a colour means decides
+   its token: a status is `success`, `warning`, `info` or `destructive`; a
+   category that only has to be told apart is `chart-1`…`chart-5` (grey in the
+   default theme, hued in the others); a neutral is `muted`, `border`,
+   `foreground`. The rainbow glow is the one palette gradient. Where the colour
+   is the artwork itself (a scene, the identity colour of a file format, a
+   brand logo), the block is listed in `test/tokens-only.test.ts` with its
+   reason: the test fails on any other palette colour.
 2. **Complete defaults, documented props** — the component must render fully
    with zero props (that's what the generated golden captures). Export its
    props interface (`<Name>Props extends VisualProps`), give every prop a JSDoc

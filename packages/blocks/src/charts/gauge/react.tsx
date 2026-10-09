@@ -34,12 +34,12 @@ export interface GaugeZone {
   to: number;
   /**
    * Class applied to the band. The arc strokes `currentColor`, so this is a
-   * **text** colour: `text-amber-300 dark:text-amber-400/30`.
+   * **text** colour: `text-warning/40`.
    */
   className?: string;
   /**
    * @deprecated Use `className`. Kept for the same meaning — a class, not a
-   * CSS value. A CSS colour (`var(--color-red-500)`, `#f00`, `oklch(...)`) is
+   * CSS value. A CSS colour (`var(--color-destructive)`, `#f00`, `oklch(...)`) is
    * also accepted and applied as a stroke.
    */
   color?: string;
@@ -50,7 +50,7 @@ const CSS_COLOR = /^(var\(|#|rgba?\(|hsla?\(|okl(ch|ab)\(|l(ab|ch)\(|color(-mix)
 
 /**
  * A zone's paint is a class, not a CSS value — `color` was easy to read the
- * other way round, and passing `var(--color-red-500)` silently produced an
+ * other way round, and passing `var(--color-destructive)` silently produced an
  * unstyled band. Resolve both rather than dropping the value on the floor.
  */
 function zonePaint(zone: GaugeZone): { className?: string; style?: { stroke: string } } {
@@ -357,8 +357,8 @@ export function Gauge({
               className={cn(
                 "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold tabular-nums ring-1 ring-inset",
                 good
-                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
-                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
+                  ? "bg-success/10 text-success ring-success/15"
+                  : "bg-destructive/10 text-destructive ring-destructive/15",
               )}
               variants={animated ? pillAnim : undefined}
             >

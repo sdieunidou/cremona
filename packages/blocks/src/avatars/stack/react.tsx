@@ -7,19 +7,19 @@ import { cn, frameClasses, type VisualProps } from "@cremona/core";
 
 export const stackDefaultCopy: { avatars: StackAvatar[]; status: StackStatus } = {
   avatars: [
-    { initials: "JC", tint: "bg-sky-200/80 text-sky-700 dark:bg-sky-950/80 dark:text-sky-300" },
-    { initials: "AM", tint: "bg-rose-200/80 text-rose-700 dark:bg-rose-950/80 dark:text-rose-300" },
+    { initials: "JC", tint: "bg-chart-1/20 text-foreground" },
+    { initials: "AM", tint: "bg-chart-5/20 text-foreground" },
     {
       initials: "KL",
-      tint: "bg-emerald-200/80 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-300",
+      tint: "bg-chart-3/20 text-foreground",
     },
     {
       initials: "DP",
-      tint: "bg-violet-200/80 text-violet-700 dark:bg-violet-950/80 dark:text-violet-300",
+      tint: "bg-chart-2/20 text-foreground",
     },
     {
       initials: "SR",
-      tint: "bg-amber-200/80 text-amber-700 dark:bg-amber-950/80 dark:text-amber-300",
+      tint: "bg-chart-4/20 text-foreground",
     },
   ],
   status: { count: 1284, label: "members online" },
@@ -28,9 +28,9 @@ export const stackDefaultCopy: { avatars: StackAvatar[]; status: StackStatus } =
 const MAX_VISIBLE = 8;
 
 const dotStyles = {
-  online: { dot: "bg-emerald-500", ring: "ring-emerald-500/20" },
-  away: { dot: "bg-amber-500", ring: "ring-amber-500/20" },
-  busy: { dot: "bg-rose-500", ring: "ring-rose-500/20" },
+  online: { dot: "bg-success", ring: "ring-success/20" },
+  away: { dot: "bg-warning", ring: "ring-warning/20" },
+  busy: { dot: "bg-destructive", ring: "ring-destructive/20" },
 } as const;
 
 const container = {

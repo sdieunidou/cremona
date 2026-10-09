@@ -22,11 +22,11 @@ export const requestDefaultCopy = {
 } as const;
 
 const METHOD_STYLES: Record<string, string> = {
-  GET: "bg-sky-500/10 text-sky-600 ring-sky-500/20 dark:text-sky-400",
-  POST: "bg-emerald-500/10 text-emerald-600 ring-emerald-500/20 dark:text-emerald-400",
-  PATCH: "bg-amber-500/10 text-amber-600 ring-amber-500/20 dark:text-amber-400",
-  PUT: "bg-violet-500/10 text-violet-600 ring-violet-500/20 dark:text-violet-400",
-  DELETE: "bg-rose-500/10 text-rose-600 ring-rose-500/20 dark:text-rose-400",
+  GET: "bg-info/10 text-info ring-info/20",
+  POST: "bg-success/10 text-success ring-success/20",
+  PATCH: "bg-warning/10 text-warning ring-warning/20",
+  PUT: "bg-chart-2/10 text-chart-2 ring-chart-2/20",
+  DELETE: "bg-destructive/10 text-destructive ring-destructive/20",
 };
 
 const CANVAS = { w: 416, h: 288 };
@@ -183,10 +183,10 @@ const JSON_TOKEN_RE =
   /("(?:[^"\\]|\\.)*"\s*:)|("(?:[^"\\]|\\.)*")|(-?\d+\.?\d*)|(true|false|null)|(\s+)|([^\s])/g;
 
 function tokenColor(token: string): string {
-  if (/^"/.test(token) && /:\s*$/.test(token)) return "text-violet-600 dark:text-violet-400";
-  if (/^"/.test(token)) return "text-emerald-600 dark:text-emerald-400";
-  if (/^-?\d/.test(token)) return "text-sky-600 dark:text-sky-400";
-  if (/^(true|false|null)$/.test(token)) return "text-amber-600 dark:text-amber-400";
+  if (/^"/.test(token) && /:\s*$/.test(token)) return "text-chart-2";
+  if (/^"/.test(token)) return "text-chart-3";
+  if (/^-?\d/.test(token)) return "text-chart-1";
+  if (/^(true|false|null)$/.test(token)) return "text-chart-4";
   return "text-muted-foreground";
 }
 
@@ -293,8 +293,8 @@ export function Request({
   const responseLines = (response ?? requestDefaultCopy.responses[variant]) as readonly string[];
   const isError = statusValue >= 400;
   const chipClass = isError
-    ? "bg-rose-500/10 text-rose-600 ring-rose-500/20 dark:text-rose-400"
-    : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/20 dark:text-emerald-400";
+    ? "bg-destructive/10 text-destructive ring-destructive/20"
+    : "bg-success/10 text-success ring-success/20";
 
   return (
     <div
@@ -431,7 +431,7 @@ export function Request({
                 {...state}
               >
                 <span
-                  className={`size-1.25 rounded-full ${isError ? "bg-rose-500" : "bg-emerald-500"}`}
+                  className={`size-1.25 rounded-full ${isError ? "bg-destructive" : "bg-success"}`}
                 />
                 {statusValue} {statusTextLabel}
               </motion.span>

@@ -157,9 +157,9 @@ export function Explorer({
         <div className={cn("relative flex flex-col", fill && "min-h-0 flex-1")}>
           <div className="flex items-center gap-2 px-1.5 py-1.5">
             <div className="flex gap-1.5">
-              <div className="size-2 rounded-full bg-rose-400" />
-              <div className="size-2 rounded-full bg-amber-400" />
-              <div className="size-2 rounded-full bg-emerald-400" />
+              <div className="size-2 rounded-full bg-destructive" />
+              <div className="size-2 rounded-full bg-warning" />
+              <div className="size-2 rounded-full bg-success" />
             </div>
             <motion.div
               className="flex items-center gap-0.5"
@@ -227,11 +227,11 @@ export function Explorer({
                     <div className="h-0.5 w-6 rounded-full bg-muted-foreground/30" />
                   </div>
                   <div className="flex items-center gap-1 px-1">
-                    <div className="size-1.5 rounded-full bg-amber-500/50" />
+                    <div className="size-1.5 rounded-full bg-warning/50" />
                     <div className="h-0.5 w-5 rounded-full bg-muted-foreground/30" />
                   </div>
                   <div className="flex items-center gap-1 px-1">
-                    <div className="size-1.5 rounded-full bg-emerald-500/50" />
+                    <div className="size-1.5 rounded-full bg-success/50" />
                     <div className="h-0.5 w-7 rounded-full bg-muted-foreground/30" />
                   </div>
                 </div>

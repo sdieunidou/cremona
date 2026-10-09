@@ -43,14 +43,14 @@ export const healthCheckDefaultLabels: HealthCheckLabels = {
 
 const statusMeta: Record<ServiceStatus, { dot: string; ping: string; text: string }> = {
   operational: {
-    dot: "bg-emerald-500",
-    ping: "bg-emerald-500/60",
-    text: "text-emerald-600 dark:text-emerald-400",
+    dot: "bg-success",
+    ping: "bg-success/60",
+    text: "text-success",
   },
   degraded: {
-    dot: "bg-amber-500",
-    ping: "bg-amber-500/60",
-    text: "text-amber-600 dark:text-amber-400",
+    dot: "bg-warning",
+    ping: "bg-warning/60",
+    text: "text-warning",
   },
   down: {
     dot: "bg-destructive",
@@ -71,7 +71,7 @@ function metaFor(status: string) {
 
 const latencyColor = (status: ServiceStatus): string =>
   status === "degraded"
-    ? "text-amber-600 dark:text-amber-400"
+    ? "text-warning"
     : status === "down"
       ? "text-muted-foreground/60"
       : "text-muted-foreground";

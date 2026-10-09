@@ -13,21 +13,21 @@ export interface GridMember {
 
 export const gridDefaultCopy: { members: GridMember[] } = {
   members: [
-    { initials: "JC", tint: "bg-sky-200/80 text-sky-700 dark:bg-sky-950/80 dark:text-sky-300" },
-    { initials: "AM", tint: "bg-rose-200/80 text-rose-700 dark:bg-rose-950/80 dark:text-rose-300" },
+    { initials: "JC", tint: "bg-chart-1/20 text-foreground" },
+    { initials: "AM", tint: "bg-chart-5/20 text-foreground" },
     {
       initials: "KL",
-      tint: "bg-emerald-200/80 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-300",
+      tint: "bg-chart-3/20 text-foreground",
     },
     {
       initials: "DP",
-      tint: "bg-violet-200/80 text-violet-700 dark:bg-violet-950/80 dark:text-violet-300",
+      tint: "bg-chart-2/20 text-foreground",
     },
     {
       initials: "SR",
-      tint: "bg-amber-200/80 text-amber-700 dark:bg-amber-950/80 dark:text-amber-300",
+      tint: "bg-chart-4/20 text-foreground",
     },
-    { initials: "TN", tint: "bg-cyan-200/80 text-cyan-700 dark:bg-cyan-950/80 dark:text-cyan-300" },
+    { initials: "TN", tint: "bg-chart-1/20 text-foreground" },
   ],
 };
 

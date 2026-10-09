@@ -393,9 +393,7 @@ export function Webhook({
               >
                 <span
                   className={`flex size-4 shrink-0 items-center justify-center rounded-full ${
-                    ok
-                      ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                      : "bg-rose-500/10 text-rose-600 dark:text-rose-400"
+                    ok ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"
                   }`}
                 >
                   {ok ? (
@@ -406,7 +404,7 @@ export function Webhook({
                 </span>
                 <span className="text-[10px] font-semibold text-foreground">#{t + 1}</span>
                 <span
-                  className={`text-[10px] font-medium ${ok ? "text-muted-foreground" : "text-rose-600/80 dark:text-rose-400/80"}`}
+                  className={`text-[10px] font-medium ${ok ? "text-muted-foreground" : "text-destructive/80"}`}
                 >
                   {attempt.label}
                 </span>
@@ -415,8 +413,8 @@ export function Webhook({
                     attempt.status === undefined
                       ? "bg-muted text-muted-foreground ring-border"
                       : ok
-                        ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/20 dark:text-emerald-400"
-                        : "bg-rose-500/10 text-rose-600 ring-rose-500/20 dark:text-rose-400"
+                        ? "bg-success/10 text-success ring-success/20"
+                        : "bg-destructive/10 text-destructive ring-destructive/20"
                   }`}
                 >
                   {attempt.status ?? "\u00B7\u00B7\u00B7"}

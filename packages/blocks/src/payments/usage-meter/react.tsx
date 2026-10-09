@@ -169,9 +169,7 @@ export function UsageMeter({
         : "bg-primary";
   const down = trend.trim().startsWith("-");
   const TrendIcon: LucideIcon = down ? ArrowDown : ArrowUp;
-  const trendPill = down
-    ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400"
-    : "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400";
+  const trendPill = down ? "bg-success/10 text-success" : "bg-warning/10 text-warning";
 
   return (
     <div ref={ref} aria-hidden="true" className={cn(frameClasses(fill), className)}>

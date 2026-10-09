@@ -36,10 +36,10 @@ const sidebarIcons: { icon: LucideIcon; active: boolean }[] = [
 ];
 
 const alertStyles = [
-  { accent: "bg-sky-500/20", dot: "bg-sky-500" },
-  { accent: "bg-violet-500/20", dot: "bg-violet-500" },
-  { accent: "bg-emerald-500/20", dot: "bg-emerald-500" },
-  { accent: "bg-amber-500/20", dot: "bg-amber-500" },
+  { accent: "bg-chart-1/20", dot: "bg-chart-1" },
+  { accent: "bg-chart-2/20", dot: "bg-chart-2" },
+  { accent: "bg-chart-3/20", dot: "bg-chart-3" },
+  { accent: "bg-chart-4/20", dot: "bg-chart-4" },
 ];
 
 const container = {

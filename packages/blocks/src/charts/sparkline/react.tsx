@@ -253,8 +253,8 @@ export function Sparkline({
               className={cn(
                 "inline-flex w-fit items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[9px] font-semibold tabular-nums ring-1 ring-inset",
                 good
-                  ? "bg-emerald-500/10 text-emerald-600 ring-emerald-500/15 dark:text-emerald-400"
-                  : "bg-red-500/10 text-red-600 ring-red-500/15 dark:text-red-400",
+                  ? "bg-success/10 text-success ring-success/15"
+                  : "bg-destructive/10 text-destructive ring-destructive/15",
               )}
               variants={animated ? pillAnim : undefined}
               {...state}

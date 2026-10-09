@@ -69,17 +69,17 @@ export const logsDefaultLabels: LogsLabels = {
 };
 
 const LEVEL_PILL: Record<LogLevel, string> = {
-  info: "bg-sky-500/10 text-sky-600 ring-sky-500/20 dark:text-sky-400",
-  warn: "bg-amber-500/10 text-amber-600 ring-amber-500/20 dark:text-amber-400",
-  error: "bg-rose-500/10 text-rose-600 ring-rose-500/20 dark:text-rose-400",
+  info: "bg-info/10 text-info ring-info/20",
+  warn: "bg-warning/10 text-warning ring-warning/20",
+  error: "bg-destructive/10 text-destructive ring-destructive/20",
   debug: "bg-muted text-muted-foreground ring-border",
-  success: "bg-emerald-500/10 text-emerald-600 ring-emerald-500/20 dark:text-emerald-400",
+  success: "bg-success/10 text-success ring-success/20",
 };
 
 const LEVEL_TEXT: Record<LogLevel, string> = {
   info: "text-foreground",
   warn: "text-foreground",
-  error: "text-rose-600 dark:text-rose-400",
+  error: "text-destructive",
   debug: "text-muted-foreground/70",
   success: "text-foreground",
 };
@@ -401,9 +401,9 @@ export function Logs({
           >
             <div className="flex items-center gap-2 border-b bg-muted/40 px-2 py-1.5">
               <div className="flex gap-1">
-                <div className="size-1.5 rounded-full bg-rose-400" />
-                <div className="size-1.5 rounded-full bg-amber-400" />
-                <div className="size-1.5 rounded-full bg-emerald-400" />
+                <div className="size-1.5 rounded-full bg-destructive" />
+                <div className="size-1.5 rounded-full bg-warning" />
+                <div className="size-1.5 rounded-full bg-success" />
               </div>
               <span className="truncate text-[10px] text-muted-foreground">{serviceLabel}</span>
             </div>

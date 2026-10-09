@@ -99,10 +99,10 @@ const veilAnim = {
 const kindColors: Record<TerminalLine["kind"], string> = {
   command: "text-foreground",
   output: "text-muted-foreground",
-  success: "text-emerald-500 dark:text-emerald-400",
-  error: "text-rose-500 dark:text-rose-400",
-  warning: "text-amber-500 dark:text-amber-400",
-  info: "text-sky-500 dark:text-sky-400",
+  success: "text-success",
+  error: "text-destructive",
+  warning: "text-warning",
+  info: "text-info",
   muted: "text-muted-foreground/70",
 };
 
@@ -174,9 +174,9 @@ export function Terminal({
         >
           <div className="flex items-center gap-2 border-b bg-muted/40 px-2.5 py-1.5">
             <div className="flex gap-1.25">
-              <div className="size-2 rounded-full bg-rose-400" />
-              <div className="size-2 rounded-full bg-amber-400" />
-              <div className="size-2 rounded-full bg-emerald-400" />
+              <div className="size-2 rounded-full bg-destructive" />
+              <div className="size-2 rounded-full bg-warning" />
+              <div className="size-2 rounded-full bg-success" />
             </div>
             <div className="flex flex-1 items-center justify-center gap-1 text-[9px] font-medium text-muted-foreground">
               <TerminalIcon className="size-2.5" strokeWidth={2.5} />

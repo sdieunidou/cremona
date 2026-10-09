@@ -180,9 +180,9 @@ export function Simple({
         <div className={cn("relative flex flex-col", fill && "min-h-0 flex-1")}>
           <div className="flex items-center gap-2 px-1.5 py-1.5">
             <div className="flex gap-1.5">
-              <div className="size-2 rounded-full bg-rose-400" />
-              <div className="size-2 rounded-full bg-amber-400" />
-              <div className="size-2 rounded-full bg-emerald-400" />
+              <div className="size-2 rounded-full bg-destructive" />
+              <div className="size-2 rounded-full bg-warning" />
+              <div className="size-2 rounded-full bg-success" />
             </div>
             <motion.div
               className="flex h-5 min-w-40 flex-1 items-center rounded-xl bg-background/75 px-2"

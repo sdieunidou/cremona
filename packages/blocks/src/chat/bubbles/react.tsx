@@ -176,7 +176,7 @@ export function Bubbles({
                 {initials}
               </div>
               <motion.div
-                className="absolute -right-0.5 -bottom-0.5 size-2 rounded-full bg-emerald-500 ring-2 ring-card"
+                className="absolute -right-0.5 -bottom-0.5 size-2 rounded-full bg-success ring-2 ring-card"
                 variants={animated ? presenceAnim : undefined}
                 {...state}
               />

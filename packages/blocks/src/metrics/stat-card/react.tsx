@@ -21,11 +21,11 @@ export type Trend = "up" | "down" | "neutral";
 const trendStyles: Record<Trend, { icon: LucideIcon; pill: string }> = {
   up: {
     icon: ArrowUpRight,
-    pill: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 ring-1 ring-inset ring-emerald-500/15",
+    pill: "bg-success/10 text-success ring-1 ring-inset ring-success/15",
   },
   down: {
     icon: ArrowDownRight,
-    pill: "bg-rose-500/10 text-rose-600 dark:text-rose-400 ring-1 ring-inset ring-rose-500/15",
+    pill: "bg-destructive/10 text-destructive ring-1 ring-inset ring-destructive/15",
   },
   neutral: {
     icon: Minus,

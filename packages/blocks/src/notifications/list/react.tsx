@@ -52,27 +52,23 @@ export interface ListItem {
 const iconStyles: Record<IconKind, { icon: LucideIcon; accent: string }> = {
   message: {
     icon: MessageCircle,
-    accent: "bg-sky-50 border border-sky-500/15 text-sky-600 dark:text-sky-400 dark:bg-sky-950/30",
+    accent: "bg-chart-1/10 border border-chart-1/15 text-chart-1",
   },
   heart: {
     icon: Heart,
-    accent:
-      "bg-rose-50 border border-rose-500/15 text-rose-600 dark:text-rose-400 dark:bg-rose-950/30",
+    accent: "bg-chart-5/10 border border-chart-5/15 text-chart-5",
   },
   follow: {
     icon: UserPlus,
-    accent:
-      "bg-emerald-50 border border-emerald-500/15 text-emerald-600 dark:text-emerald-400 dark:bg-emerald-950/30",
+    accent: "bg-chart-3/10 border border-chart-3/15 text-chart-3",
   },
   pr: {
     icon: GitPullRequest,
-    accent:
-      "bg-violet-50 border border-violet-500/15 text-violet-600 dark:text-violet-400 dark:bg-violet-950/30",
+    accent: "bg-chart-2/10 border border-chart-2/15 text-chart-2",
   },
   star: {
     icon: Star,
-    accent:
-      "bg-amber-50 border border-amber-500/15 text-amber-600 dark:text-amber-400 dark:bg-amber-950/30",
+    accent: "bg-chart-4/10 border border-chart-4/15 text-chart-4",
   },
 };
 

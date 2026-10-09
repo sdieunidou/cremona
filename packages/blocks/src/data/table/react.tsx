@@ -81,9 +81,9 @@ export const tableDefaultLabels: TableLabels = {
 };
 
 const badgeStyles: Record<string, string> = {
-  active: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400",
+  active: "bg-success/10 text-success",
   inactive: "bg-muted text-muted-foreground",
-  pending: "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400",
+  pending: "bg-warning/10 text-warning",
 };
 
 const card = {

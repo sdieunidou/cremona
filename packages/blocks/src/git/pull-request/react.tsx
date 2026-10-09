@@ -231,7 +231,7 @@ function CheckRow({
             "absolute flex size-4 items-center justify-center rounded-full ring-1 ring-inset",
             isFailed
               ? "bg-destructive/10 text-destructive ring-destructive/20"
-              : "bg-emerald-500/10 text-emerald-600 ring-emerald-500/20 dark:text-emerald-400",
+              : "bg-success/10 text-success ring-success/20",
           )}
           initial={false}
           animate={{ opacity: +!!isDone, scale: isDone ? 1 : 0.7 }}
@@ -440,10 +440,8 @@ export function PullRequest({
                 { count: String(files) },
               )}
             </span>
-            <span className="text-[10px] font-medium text-emerald-600 tabular-nums dark:text-emerald-400">
-              +{additions}
-            </span>
-            <span className="text-[10px] font-medium text-rose-600 tabular-nums dark:text-rose-400">
+            <span className="text-[10px] font-medium text-success tabular-nums">+{additions}</span>
+            <span className="text-[10px] font-medium text-destructive tabular-nums">
               -{deletions}
             </span>
             <span className="ml-auto flex items-center gap-0.5">
@@ -452,7 +450,7 @@ export function PullRequest({
                   key={i}
                   className={cn(
                     "block size-1.5 rounded-xs",
-                    i < barUnits ? "bg-emerald-500/70" : "bg-rose-500/70",
+                    i < barUnits ? "bg-success/70" : "bg-destructive/70",
                   )}
                 />
               ))}
@@ -494,7 +492,7 @@ export function PullRequest({
                   "absolute -right-0.5 -bottom-0.5 flex size-3 items-center justify-center rounded-full ring-2 ring-card",
                   failing
                     ? "bg-destructive text-destructive-foreground"
-                    : "bg-emerald-500 text-white",
+                    : "bg-success text-success-foreground",
                 )}
                 initial={false}
                 animate={{ opacity: +!!allDone, scale: allDone ? 1 : 0.5 }}
@@ -523,7 +521,7 @@ export function PullRequest({
               <motion.span
                 className={cn(
                   "absolute inset-0 truncate text-[10px] leading-4 font-medium",
-                  failing ? "text-destructive" : "text-emerald-600 dark:text-emerald-400",
+                  failing ? "text-destructive" : "text-success",
                 )}
                 initial={false}
                 animate={{ opacity: +!!allDone }}

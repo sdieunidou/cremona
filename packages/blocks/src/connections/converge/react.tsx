@@ -278,9 +278,9 @@ export function Converge({
             {...state}
           >
             <div className="flex items-center gap-1 border-b px-1.5 py-1">
-              <div className="size-1 rounded-full bg-red-400/70" />
-              <div className="size-1 rounded-full bg-amber-400/70" />
-              <div className="size-1 rounded-full bg-emerald-400/70" />
+              <div className="size-1 rounded-full bg-destructive/70" />
+              <div className="size-1 rounded-full bg-warning/70" />
+              <div className="size-1 rounded-full bg-success/70" />
               <div className="ml-1 h-1.5 flex-1 rounded-sm bg-muted" />
             </div>
             <div className="flex items-center gap-1.5 border-b px-2 py-1.5">

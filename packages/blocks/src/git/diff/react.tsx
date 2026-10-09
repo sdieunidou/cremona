@@ -35,14 +35,14 @@ export interface DiffProps extends VisualProps {
 }
 
 const tokenColors: Record<TokenColor, string> = {
-  keyword: "bg-violet-400/50 dark:bg-violet-400/40",
-  func: "bg-blue-400/50 dark:bg-blue-400/40",
-  string: "bg-emerald-400/50 dark:bg-emerald-400/40",
-  variable: "bg-sky-400/50 dark:bg-sky-400/40",
-  type: "bg-amber-400/50 dark:bg-amber-400/40",
+  keyword: "bg-chart-2/50 dark:bg-chart-2/40",
+  func: "bg-chart-1/50 dark:bg-chart-1/40",
+  string: "bg-chart-3/50 dark:bg-chart-3/40",
+  variable: "bg-chart-1/50 dark:bg-chart-1/40",
+  type: "bg-chart-4/50 dark:bg-chart-4/40",
   punct: "bg-muted-foreground/30",
-  tag: "bg-rose-400/50 dark:bg-rose-400/40",
-  prop: "bg-cyan-400/50 dark:bg-cyan-400/40",
+  tag: "bg-chart-5/50 dark:bg-chart-5/40",
+  prop: "bg-chart-1/50 dark:bg-chart-1/40",
   comment: "bg-muted-foreground/20",
 };
 
@@ -238,26 +238,26 @@ function splitRows(lines: readonly MarkedLine[], start: number): SplitRow[] {
 }
 
 const rowTint: Record<MarkedLine["kind"], string> = {
-  add: "bg-emerald-500/8 dark:bg-emerald-500/10",
-  remove: "bg-rose-500/8 dark:bg-rose-500/10",
+  add: "bg-success/8",
+  remove: "bg-destructive/8",
   context: "",
 };
 
 const rowSweep: Record<MarkedLine["kind"], string> = {
-  add: "bg-emerald-500/14 dark:bg-emerald-500/16",
-  remove: "bg-rose-500/14 dark:bg-rose-500/16",
+  add: "bg-success/14",
+  remove: "bg-destructive/14",
   context: "",
 };
 
 const rowBorder: Record<MarkedLine["kind"], string> = {
-  add: "border-emerald-500/60",
-  remove: "border-rose-500/60",
+  add: "border-success/60",
+  remove: "border-destructive/60",
   context: "border-transparent",
 };
 
 const rowNumberColor: Record<MarkedLine["kind"], string> = {
-  add: "text-emerald-600 dark:text-emerald-400",
-  remove: "text-rose-600 dark:text-rose-400",
+  add: "text-success",
+  remove: "text-destructive",
   context: "text-muted-foreground/60",
 };
 
@@ -447,10 +447,10 @@ export function Diff({
             <span className="min-w-0 flex-1 truncate font-mono text-[10px] font-medium text-foreground">
               {file}
             </span>
-            <span className="shrink-0 text-[10px] font-medium text-emerald-600 tabular-nums dark:text-emerald-400">
+            <span className="shrink-0 text-[10px] font-medium text-success tabular-nums">
               +{adds}
             </span>
-            <span className="shrink-0 text-[10px] font-medium text-rose-600 tabular-nums dark:text-rose-400">
+            <span className="shrink-0 text-[10px] font-medium text-destructive tabular-nums">
               -{removes}
             </span>
             <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-primary/10 px-1.25 text-[9px] font-semibold text-primary ring-1 ring-primary/15 ring-inset dark:bg-primary dark:text-primary-foreground dark:ring-0">

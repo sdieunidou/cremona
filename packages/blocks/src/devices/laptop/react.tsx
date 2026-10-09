@@ -146,9 +146,9 @@ function MacContent() {
       <div className="relative flex flex-1 items-center justify-center bg-linear-to-br from-primary/20 via-primary/10 to-primary/20 pb-5">
         <div className="h-4/5 w-3/5 rounded-lg border bg-background/95">
           <div className="flex gap-0.75 border-b border-border/50 px-1.5 py-1">
-            <div className="size-1.25 rounded-full bg-rose-400" />
-            <div className="size-1.25 rounded-full bg-amber-400" />
-            <div className="size-1.25 rounded-full bg-emerald-400" />
+            <div className="size-1.25 rounded-full bg-destructive" />
+            <div className="size-1.25 rounded-full bg-warning" />
+            <div className="size-1.25 rounded-full bg-success" />
           </div>
           <div className="flex flex-col gap-1 p-1.5">
             <div className="h-1 w-3/4 rounded-full bg-muted-foreground/25" />

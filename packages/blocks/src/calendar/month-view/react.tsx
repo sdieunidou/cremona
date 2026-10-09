@@ -33,11 +33,11 @@ function weekdayHeaders(locale: string, weekStartsOn: number): string[] {
 export type MonthTone = "sky" | "rose" | "emerald" | "violet" | "amber";
 
 const toneStyles: Record<MonthTone, string> = {
-  sky: "bg-sky-500 dark:bg-sky-400",
-  rose: "bg-rose-500 dark:bg-rose-400",
-  emerald: "bg-emerald-500 dark:bg-emerald-400",
-  violet: "bg-violet-500 dark:bg-violet-400",
-  amber: "bg-amber-500 dark:bg-amber-400",
+  sky: "bg-chart-1",
+  rose: "bg-chart-5",
+  emerald: "bg-chart-3",
+  violet: "bg-chart-2",
+  amber: "bg-chart-4",
 };
 
 export interface MonthEvent {

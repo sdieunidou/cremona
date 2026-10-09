@@ -33,8 +33,8 @@ export const aiChatDefaultLabels: AiChatLabels = {
 type StatusKind = "online" | "busy" | "offline";
 
 const statusDot: Record<StatusKind, string> = {
-  online: "bg-emerald-500 dark:bg-emerald-400",
-  busy: "bg-amber-500 dark:bg-amber-400",
+  online: "bg-success",
+  busy: "bg-warning",
   offline: "bg-muted-foreground/40",
 };
 

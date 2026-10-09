@@ -15,8 +15,8 @@ export const uptimeBarDefault = {
 } as const;
 
 const barColors: Record<"ok" | "degraded" | "outage", string> = {
-  ok: "bg-emerald-500/85 dark:bg-emerald-400/80",
-  degraded: "bg-amber-500/90 dark:bg-amber-400/90",
+  ok: "bg-success/85 dark:bg-success/80",
+  degraded: "bg-warning/90",
   outage: "bg-destructive/85",
 };
 
@@ -56,14 +56,14 @@ function interpolate(label: string, values: Record<string, string>): string {
 
 const statusMeta: Record<UptimeStatus, { dot: string; ping: string; badge: string }> = {
   operational: {
-    dot: "bg-emerald-500",
-    ping: "bg-emerald-500/60",
-    badge: "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+    dot: "bg-success",
+    ping: "bg-success/60",
+    badge: "border-success/20 bg-success/10 text-success",
   },
   degraded: {
-    dot: "bg-amber-500",
-    ping: "bg-amber-500/60",
-    badge: "border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+    dot: "bg-warning",
+    ping: "bg-warning/60",
+    badge: "border-warning/20 bg-warning/10 text-warning",
   },
   outage: {
     dot: "bg-destructive",
@@ -311,7 +311,7 @@ export function UptimeBar({
               <div className="flex items-center gap-2.5">
                 {hasIncidents && (
                   <span className="flex items-center gap-1">
-                    <span className="size-1.5 rounded-full bg-amber-500" />
+                    <span className="size-1.5 rounded-full bg-warning" />
                     {text.legendDegraded}
                   </span>
                 )}

@@ -14,9 +14,9 @@ export const toastDefaultCopy = {
 type Variant = "success" | "warning" | "info" | "error";
 
 const variantStyles: Record<Variant, { icon: LucideIcon; accent: string }> = {
-  success: { icon: CircleCheck, accent: "text-emerald-500" },
-  warning: { icon: TriangleAlert, accent: "text-amber-500" },
-  info: { icon: Info, accent: "text-sky-500" },
+  success: { icon: CircleCheck, accent: "text-success" },
+  warning: { icon: TriangleAlert, accent: "text-warning" },
+  info: { icon: Info, accent: "text-info" },
   error: { icon: CircleX, accent: "text-destructive" },
 };
 

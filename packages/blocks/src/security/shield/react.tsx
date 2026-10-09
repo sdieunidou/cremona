@@ -41,11 +41,11 @@ const stateStyles = {
     pill: "border-primary/20 bg-primary/15 text-primary",
   },
   warning: {
-    glow: "bg-amber-500/40",
-    icon: "text-amber-500",
-    outerConnector: "border-amber-500/30",
-    innerConnector: "border-amber-500/25",
-    pill: "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400",
+    glow: "bg-warning/40",
+    icon: "text-warning",
+    outerConnector: "border-warning/30",
+    innerConnector: "border-warning/25",
+    pill: "border-warning/30 bg-warning/10 text-warning",
   },
   breached: {
     glow: "bg-destructive/40",
