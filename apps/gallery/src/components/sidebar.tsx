@@ -3,7 +3,8 @@ import { Search, Shapes, Folder, FolderOpen, ChevronRight } from "lucide-react";
 import { cn } from "@cremona/core";
 import { SHELL } from "../lib/shell-classes.js";
 import { SEARCH_SHORTCUT } from "../lib/platform.js";
-import { categories, type CatalogItem } from "../lib/discovery.js";
+import { categories } from "../lib/discovery.js";
+import { hasDemo, uiComponents } from "../lib/components.js";
 import { Link } from "./link.js";
 
 export interface NavProps {
@@ -12,8 +13,21 @@ export interface NavProps {
   onOpenSearch: () => void;
 }
 
+/** The UI components, after an overview: what the sidebar lists under "UI components". */
+const COMPONENT_ITEMS: GroupItem[] = [
+  { file: "", name: "Overview", description: "Every component, and how to take them" },
+  ...uiComponents
+    .filter((component) => hasDemo(component.name))
+    .map((component) => ({
+      file: component.name,
+      name: component.title,
+      description: component.description,
+    })),
+];
+
 export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
   const current = /^\/visuals\/([\w-]+)\/([\w-]+)/.exec(path);
+  const component = /^\/components(?:\/([\w-]+))?\/?$/.exec(path);
   const home = path === "/";
   return (
     <>
@@ -67,13 +81,20 @@ export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
           </ul>
           <div className={cn(SHELL.separator, "mx-0 my-2")} />
           <ul className={cn(SHELL.menu, "gap-0.5")}>
+            <NavGroup
+              label="UI components"
+              items={COMPONENT_ITEMS}
+              hrefFor={(file) => (file ? `/components/${file}` : "/components")}
+              activeFile={component ? (component[1] ?? "") : null}
+              onNavigate={onNavigate}
+            />
             {categories.map((cat) => (
-              <CategoryGroup
+              <NavGroup
                 key={cat.slug}
-                slug={cat.slug}
                 label={cat.category}
                 items={cat.items}
-                activeKey={current ? `${current[1]}/${current[2]}` : null}
+                hrefFor={(file) => `/visuals/${cat.slug}/${file}`}
+                activeFile={current && current[1] === cat.slug ? current[2]! : null}
                 onNavigate={onNavigate}
               />
             ))}
@@ -84,21 +105,29 @@ export function SidebarContent({ path, onNavigate, onOpenSearch }: NavProps) {
   );
 }
 
-function CategoryGroup({
-  slug,
+interface GroupItem {
+  file: string;
+  name: string;
+  description: string;
+}
+
+/** A collapsible list of links: a block category, or the UI components. It opens when its page is shown. */
+function NavGroup({
   label,
   items,
-  activeKey,
+  hrefFor,
+  activeFile,
   onNavigate,
 }: {
-  slug: string;
   label: string;
-  items: CatalogItem[];
-  activeKey: string | null;
+  items: GroupItem[];
+  hrefFor: (file: string) => string;
+  /** The item of this group whose page is shown, or null when the page is elsewhere. */
+  activeFile: string | null;
   onNavigate: (to: string) => void;
 }) {
   const listId = useId();
-  const containsActive = activeKey?.startsWith(`${slug}/`) ?? false;
+  const containsActive = activeFile !== null;
   const [open, setOpen] = useState(containsActive);
   const [hadActive, setHadActive] = useState(containsActive);
   if (containsActive !== hadActive) {
@@ -133,10 +162,10 @@ function CategoryGroup({
       {open && (
         <ul id={listId} className={cn(SHELL.menu, "gallery-submenu")}>
           {items.map((item) => {
-            const href = `/visuals/${slug}/${item.file}`;
-            const active = activeKey === `${slug}/${item.file}`;
+            const href = hrefFor(item.file);
+            const active = activeFile === item.file;
             return (
-              <li key={item.file} className={SHELL.menuItem}>
+              <li key={item.file || "overview"} className={SHELL.menuItem}>
                 <Link
                   to={href}
                   onNavigate={onNavigate}

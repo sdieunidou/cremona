@@ -12,10 +12,13 @@ import { Header } from "./components/header.js";
 import { SearchDialog } from "./components/search-dialog.js";
 import { ErrorBoundary } from "./components/error-boundary.js";
 import { Link } from "./components/link.js";
+import { findComponent, hasDemo } from "./lib/components.js";
 import { HomePage } from "./pages/home.js";
+import { ComponentsPage } from "./pages/components.js";
 import { NotFound } from "./pages/not-found.js";
 
 const BlockPage = lazy(() => import("./pages/block.js"));
+const ComponentPage = lazy(() => import("./pages/component.js"));
 
 const MOBILE = "(max-width: 767px)";
 
@@ -23,6 +26,10 @@ export function App() {
   const [path, navigate] = useRoute();
   const route = parseRoute(path);
   const found = route.name === "block" ? findItem(route.category, route.file) : undefined;
+  const uiComponent =
+    route.name === "component" && hasDemo(route.component)
+      ? findComponent(route.component)
+      : undefined;
   const { appearance, theme, isDark, updateAppearance, updateTheme, toggleDark } = useTheme();
   const [searchOpen, setSearchOpen] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
@@ -54,9 +61,13 @@ export function App() {
   const title =
     route.name === "home"
       ? "Cremona — animated visual blocks"
-      : found
-        ? `${found.item.name} — ${found.group.category} — Cremona`
-        : "Not found — Cremona";
+      : route.name === "components"
+        ? "UI components — Cremona"
+        : uiComponent
+          ? `${uiComponent.title} — UI components — Cremona`
+          : found
+            ? `${found.item.name} — ${found.group.category} — Cremona`
+            : "Not found — Cremona";
   useEffect(() => {
     document.title = title;
   }, [title]);
@@ -157,6 +168,12 @@ export function App() {
           >
             {route.name === "home" ? (
               <HomePage onNavigate={nav.onNavigate} />
+            ) : route.name === "components" ? (
+              <ComponentsPage onNavigate={nav.onNavigate} />
+            ) : uiComponent ? (
+              <Suspense fallback={<PageLoading />}>
+                <ComponentPage component={uiComponent} />
+              </Suspense>
             ) : found ? (
               <Suspense fallback={<PageLoading />}>
                 <BlockPage blockKey={`${found.group.slug}/${found.item.file}`} />

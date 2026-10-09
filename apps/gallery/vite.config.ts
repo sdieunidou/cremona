@@ -30,8 +30,12 @@ export default defineConfig({
     // gallery.css: one Tailwind build for the gallery and the blocks it renders
     tailwindcss(),
     react({
-      // blocks live outside this app's root (monorepo) — transform them too
-      include: [/\/apps\/gallery\/src\/.*\.[tj]sx?$/, /\/packages\/blocks\/src\/.*\.tsx$/],
+      // blocks and components live outside this app's root (monorepo) — transform them too
+      include: [
+        /\/apps\/gallery\/src\/.*\.[tj]sx?$/,
+        /\/packages\/blocks\/src\/.*\.tsx$/,
+        /\/packages\/ui\/src\/.*\.tsx$/,
+      ],
     }),
   ],
   define: {

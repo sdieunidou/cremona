@@ -3,12 +3,15 @@
  * set up as a Tailwind host (docs/getting-started.md). Gallery-only rules follow.
  */
 @import "tailwindcss" source(none);
+/* the enter and exit animations of the @cremona/ui components, as in a shadcn project */
+@import "tw-animate-css";
 @import "@cremona/tokens/css/tailwind.css";
 
 @source "./**/*.{ts,tsx}";
 @source "../../../packages/blocks/src/**/{react.tsx,block.json,preview-props.json}";
 @source "../../../packages/blocks/src/**/golden/*.html";
 @source "../../../packages/core/src/**/*.ts";
+@source "../../../packages/ui/src/**/*.tsx";
 
 @layer base {
   html {

@@ -29,7 +29,7 @@ function stimulusSlug(entry: BlockEntry, label: string): string {
 }
 
 /** Copies to the clipboard; the returned state drives the button label. */
-function useCopy(): ["idle" | "copied" | "failed", (text: string) => void] {
+export function useCopy(): ["idle" | "copied" | "failed", (text: string) => void] {
   const [state, setState] = useState<"idle" | "copied" | "failed">("idle");
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);

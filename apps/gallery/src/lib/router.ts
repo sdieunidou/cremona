@@ -2,7 +2,11 @@
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 
 export type Route =
-  { name: "home" } | { name: "block"; category: string; file: string } | { name: "not-found" };
+  | { name: "home" }
+  | { name: "block"; category: string; file: string }
+  | { name: "components" }
+  | { name: "component"; component: string }
+  | { name: "not-found" };
 
 /** Set by an in-app navigation so the next page moves focus to its heading. */
 let focusPending = false;
@@ -35,11 +39,14 @@ export function useRoute(): [string, (to: string) => void] {
   return [path, navigate];
 }
 
-/** Route parser: "/" | "/visuals/<category>/<file>" | anything else (not found). */
+/** Route parser: "/" | "/visuals/<category>/<file>" | "/components" | "/components/<name>" | anything else (not found). */
 export function parseRoute(path: string): Route {
   if (path === "/" || path === "") return { name: "home" };
   const m = /^\/visuals\/([\w-]+)\/([\w-]+)\/?$/.exec(path);
   if (m) return { name: "block", category: m[1]!, file: m[2]! };
+  if (/^\/components\/?$/.test(path)) return { name: "components" };
+  const c = /^\/components\/([\w-]+)\/?$/.exec(path);
+  if (c) return { name: "component", component: c[1]! };
   return { name: "not-found" };
 }
 

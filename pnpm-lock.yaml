@@ -68,6 +68,9 @@ importers:
       '@cremona/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+      '@cremona/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       lucide-react:
         specifier: ^1.47.0
         version: 1.52.0(@types/react@19.3.0)(react@19.3.0)
@@ -108,6 +111,9 @@ importers:
       tailwindcss:
         specifier: 4.3.3
         version: 4.3.3
+      tw-animate-css:
+        specifier: 1.4.0
+        version: 1.4.0
       vite:
         specifier: ^8.3.2
         version: 8.3.3(@types/node@24.19.1)(jiti@2.7.0)(yaml@2.9.1)
@@ -256,7 +262,7 @@ importers:
         version: 30.1.2
       lucide-react:
         specifier: ^1.47.0
-        version: 1.53.0(@types/react@19.3.0)(react@19.3.0)
+        version: 1.52.0(@types/react@19.3.0)(react@19.3.0)
       react:
         specifier: ^19.0.0
         version: 19.3.0

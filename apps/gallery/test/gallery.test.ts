@@ -17,6 +17,16 @@ describe("gallery routing", () => {
     expect(parseRoute("/visuals/metrics/stat-card/")).toMatchObject({ name: "block" });
   });
 
+  it("parses the component routes", () => {
+    expect(parseRoute("/components")).toEqual({ name: "components" });
+    expect(parseRoute("/components/")).toEqual({ name: "components" });
+    expect(parseRoute("/components/dropdown-menu")).toEqual({
+      name: "component",
+      component: "dropdown-menu",
+    });
+    expect(parseRoute("/components/a/b")).toEqual({ name: "not-found" });
+  });
+
   it("sends every other path to the not-found page", () => {
     for (const path of ["/anything-else", "/visuals/metrics", "/visuals/a/b/c", "/nope/404"])
       expect(parseRoute(path), path).toEqual({ name: "not-found" });
