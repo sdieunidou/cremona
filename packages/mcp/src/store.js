@@ -15,6 +15,7 @@ export const IN_REPO = existsSync(join(monorepoRoot, "packages", "blocks", "cata
 export const REPO_ROOT = IN_REPO ? monorepoRoot : join(here, "..", "data");
 export const BLOCKS_DIR = join(REPO_ROOT, "packages", "blocks", "src");
 export const TOKENS_DIR = join(REPO_ROOT, "packages", "tokens");
+export const UI_DIR = join(REPO_ROOT, "packages", "ui");
 
 export function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
@@ -119,6 +120,47 @@ export function designSystemCss() {
 /** One stylesheet of @cremona/tokens/css (cremona.css, tailwind.css, cremona.scoped.css…). */
 export function tokensCss(file) {
   return readText(join(TOKENS_DIR, "css", file));
+}
+
+/** What @cremona/ui publishes: its shadcn registry as authored (items, dependencies), or no items. */
+function uiRegistry() {
+  const p = join(UI_DIR, "registry.json");
+  return existsSync(p) ? readJson(p) : { items: [] };
+}
+
+/** The names a component source exports: `export { A, type B }` and `export function C`. */
+export function exportsOf(source) {
+  const names = [];
+  for (const match of source.matchAll(/^export\s*\{([^}]*)\}/gm))
+    for (const entry of match[1].split(","))
+      if (entry.trim()) names.push(entry.trim().replace(/^type\s+/, ""));
+  for (const match of source.matchAll(/^export\s+(?:function|const)\s+(\w+)/gm))
+    names.push(match[1]);
+  return names;
+}
+
+/** The ready-to-use components of @cremona/ui (not its theme item), in registry order. */
+export function uiComponents() {
+  return uiRegistry()
+    .items.filter((item) => item.type === "registry:ui")
+    .map((item) => ({
+      name: item.name,
+      title: item.title,
+      description: item.description,
+      categories: item.categories ?? [],
+      exports: exportsOf(uiItem(item.name)?.files?.[0]?.content ?? ""),
+      import: `@cremona/ui/${item.name}`,
+      dependencies: item.dependencies ?? [],
+      registryDependencies: item.registryDependencies ?? [],
+      docs: item.docs ?? null,
+    }));
+}
+
+/** An item of the registry as a project receives it (packages/ui/r/<name>.json), with the source of its files. */
+export function uiItem(name) {
+  if (!SLUG.test(name)) return null;
+  const p = join(UI_DIR, "r", `${name}.json`);
+  return existsSync(p) ? readJson(p) : null;
 }
 
 /** All docs (name -> markdown) from docs/. */

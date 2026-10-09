@@ -270,13 +270,75 @@ describe("cremona MCP server", () => {
 
   it("registers every tool with a title and annotations", async () => {
     const { tools } = await client.listTools();
-    expect(tools.length).toBe(14);
+    expect(tools.length).toBe(16);
     for (const tool of tools) {
       expect(tool.title, tool.name).toBeTruthy();
       const writes = tool.name.startsWith("add_");
       expect(tool.annotations?.readOnlyHint, tool.name).toBe(!writes);
       if (writes) expect(tool.annotations?.destructiveHint, tool.name).toBe(true);
     }
+  });
+
+  it("lists the UI components of @cremona/ui, with what an app needs to take them", async () => {
+    const listing = textOf(await client.callTool({ name: "list_components", arguments: {} }));
+    const names = listing.components.map((c) => c.name);
+    expect(names).toEqual(["label", "button", "field", "input", "checkbox", "switch", "dialog"]);
+    expect(listing.install.npm).toContain("@cremona/ui");
+    expect(listing.install.shadcn).toContain("registry add @cremona=https://");
+    const button = listing.components.find((c) => c.name === "button");
+    expect(button.exports).toEqual(["Button", "buttonVariants", "ButtonProps"]);
+    expect(button.import).toBe("@cremona/ui/button");
+
+    const modal = textOf(
+      await client.callTool({ name: "list_components", arguments: { query: "modal focus" } }),
+    );
+    expect(modal.components.map((c) => c.name)).toEqual(["dialog"]);
+    const none = textOf(
+      await client.callTool({ name: "list_components", arguments: { query: "carousel" } }),
+    );
+    expect(none.components).toEqual([]);
+  });
+
+  it("returns a component with its install lines, its dependencies and its source", async () => {
+    const field = textOf(
+      await client.callTool({ name: "get_component", arguments: { name: "field" } }),
+    );
+    expect(field.import).toContain('from "@cremona/ui/field"');
+    expect(field.import).toContain("useFieldControl");
+    expect(field.import).not.toContain("FieldProps");
+    expect(field.install.shadcn).toEqual([
+      expect.stringContaining("registry add @cremona="),
+      "npx shadcn@latest add @cremona/field",
+    ]);
+    expect(field.registryDependencies).toEqual(["@cremona/label"]);
+    expect(field.dependencies).toEqual(["class-variance-authority"]);
+    expect(field.files).toHaveLength(1);
+    expect(field.files[0].path).toBe("components/ui/field.tsx");
+    // the source a project receives: its siblings resolve through the shadcn aliases
+    expect(field.files[0].content).toContain('from "@/lib/utils"');
+    expect(field.files[0].content).toContain('from "@/components/ui/label"');
+    expect(field.files[0].content).not.toContain("./utils.js");
+
+    const dialog = textOf(
+      await client.callTool({ name: "get_component", arguments: { name: "dialog" } }),
+    );
+    expect(dialog.devDependencies).toEqual(["tw-animate-css"]);
+    expect(dialog.notes).toContain("tw-animate-css");
+  });
+
+  it("reports an unknown component with the ones that exist", async () => {
+    for (const name of ["carousel", "../registry", "r/button"]) {
+      const result = await client.callTool({ name: "get_component", arguments: { name } });
+      expect(result.isError, name).toBe(true);
+      expect(textOf(result).components).toContain("button");
+    }
+  });
+
+  it("tells a connecting session where real UI comes from", () => {
+    const instructions = client.getInstructions();
+    expect(instructions).toContain("REAL UI COMES FROM @cremona/ui");
+    expect(instructions).toContain("button, field, input, checkbox, switch, dialog");
+    expect(instructions).toContain("list_components");
   });
 
   it("validates coherence", async () => {

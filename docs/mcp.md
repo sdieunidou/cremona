@@ -1,8 +1,8 @@
 # MCP server
 
 The `@cremona/mcp` package exposes the whole library to AI sessions over
-stdio: 160 blocks in 37 categories (1,298 variants), the design system,
-authoring tools and coherence validation. The `cremona` skill
+stdio: the real UI components of `@cremona/ui`, 160 blocks in 37 categories
+(1,298 variants), the design system, authoring tools and coherence validation. The `cremona` skill
 (`packages/skill/SKILL.md`) tells a session how to use them.
 
 ## Install
@@ -79,6 +79,8 @@ tools, which write files and rewrite `catalog.json` (`destructiveHint`).
 | `list_blocks` | blocks filtered by category (slug or name), kind or scale, with variant labels |
 | `search_blocks` | word search over names, descriptions and variants: every word must match, in any order; plurals, synonyms (`pie chart` → donut, `404` → not-found, `sign in` → login) and category/kind/scale filters. When no block matches every word, the closest ones (at most 10) come back with `partial: true` and the `unmatched` words (`pricing table` → `sections/pricing`, unmatched `table`, next to the table blocks); an empty result means no block matches any word |
 | `get_block` | install line, public import, metadata (`scale`, each variant's `size`), the **props reference**, **exact variant props** and the **full React source**; Stimulus templates and goldens on request |
+| `list_components` | the components of `@cremona/ui` (name, description, exports, npm import) with the install lines; `query` keeps those whose name, description or category has every word |
+| `get_component` | one component: its import, the shadcn commands, `dependencies`, `registryDependencies`, notes and its source as a project receives it (`@/lib/utils`, `@/components/ui/…`) |
 | `get_golden` | the SSR render reference HTML of one variant (hidden initial state) |
 | `get_themes` / `get_theme` | the 9 themes; one theme's full light+dark CSS |
 | `get_css` | the three stylesheets and which host takes which (`cremona.css`, `tailwind.css` inside a host's Tailwind v4 build, `cremona.scoped.css` next to other CSS), with paths, sizes, import lines and fonts; `tailwind.css` itself (`tailwind`), the whole `cremona.css` (`full`) or the tokens (`tokens`) on request |
@@ -162,6 +164,13 @@ you'd use for a project-management app, with their keys and best variants.
 Call cremona_get_design_system and summarize: token names, how dark mode
 works, the motion conventions, and the preview-frame anatomy. Keep it under
 15 lines.
+```
+
+### Real UI components
+
+```text
+Call cremona_list_components. I need a sign-in form: say which components
+cover it, then cremona_get_component for each and give me the shadcn commands.
 ```
 
 ### Inspecting a block

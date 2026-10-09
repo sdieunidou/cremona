@@ -17,8 +17,15 @@ const { version } = JSON.parse(readFileSync(new URL("../package.json", import.me
  * here, not only in the docs.
  */
 const library = store.blockIndex();
-const INSTRUCTIONS = `Cremona — ${library.length} animated visual blocks (${store.catalog().length} categories, ${library.reduce((n, b) => n + b.variants.length, 0)} variants), a design
+const components = store.uiComponents();
+const INSTRUCTIONS = `Cremona — ${components.length} real UI components (@cremona/ui) and ${library.length} animated visual blocks (${store.catalog().length} categories, ${library.reduce((n, b) => n + b.variants.length, 0)} variants), a design
 system (${store.themes().length} themes x light/dark) and authoring tools.
+
+REAL UI COMES FROM @cremona/ui: ${components.map((c) => c.name).join(", ")}. Accessible (names,
+keyboard, focus, 24 px targets), responsive, on the Cremona tokens; an app takes them by copying
+their source (the shadcn CLI) or from npm. list_components, get_component. A button, a field, an
+input, a checkbox, a switch or a dialog is one of them: use it, do not rebuild it from a block (the
+blocks of the "components" category only illustrate them).
 
 BLOCKS ARE PREVIEW COMPOSITIONS, NOT PRODUCTION COMPONENTS. Every block:
 - has aria-hidden="true" on its root, so its content does not exist for a
@@ -123,6 +130,9 @@ const unknownCategory = (category) =>
 
 const REACT_INSTALL = "npm i @cremona/blocks @cremona/tokens motion lucide-react react react-dom";
 const STIMULUS_INSTALL = "npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus";
+const UI_INSTALL = "npm i @cremona/ui @cremona/tokens lucide-react react react-dom";
+const UI_REGISTRY =
+  "https://raw.githubusercontent.com/sdieunidou/cremona/main/packages/ui/r/{name}.json";
 const STYLESHEET = "@cremona/tokens/css/cremona.css";
 const TAILWIND_STYLESHEET = "@cremona/tokens/css/tailwind.css";
 const SCOPED_STYLESHEET = "@cremona/tokens/css/cremona.scoped.css";
@@ -514,6 +524,89 @@ tool(
       full: "get_css kind 'full' returns the whole cremona.css",
       guide:
         'get_guide("getting-started") §2 and §9, get_guide("design-system") "Next to other CSS"',
+    });
+  },
+);
+
+tool(
+  "list_components",
+  {
+    title: "List UI components",
+    description:
+      "List the real UI components of @cremona/ui: accessible, responsive React components on the Cremona tokens, for the controls, fields and dialogs an app is made of (blocks only illustrate). Returns name, description, exports and npm import. Optional query: every word must appear in a component's name, description or category.",
+    inputSchema: {
+      query: z.string().optional().describe("words to look for, e.g. 'form' or 'modal'"),
+    },
+  },
+  async ({ query }) => {
+    const words = (query ?? "").toLowerCase().split(/\s+/).filter(Boolean);
+    const items = components
+      .filter((c) => {
+        const haystack = [c.name, c.title, c.description, ...c.categories].join(" ").toLowerCase();
+        return words.every((word) => haystack.includes(word));
+      })
+      .map(({ name, title, description, categories, exports, import: path }) => ({
+        name,
+        title,
+        description,
+        categories,
+        exports,
+        import: path,
+      }));
+    return text({
+      install: {
+        npm: UI_INSTALL,
+        shadcn: `npx shadcn@latest registry add @cremona=${UI_REGISTRY}`,
+      },
+      components: items,
+      guide: 'get_guide("ui") — how a project takes them, and the conventions they follow',
+    });
+  },
+);
+
+tool(
+  "get_component",
+  {
+    title: "Get a UI component",
+    description:
+      "Get one @cremona/ui component: its npm import, the shadcn commands that copy its source into an app, the packages and registry items it needs, and its source as a project receives it (imports of @/lib/utils and @/components/ui/…). Controls inside a Field are labelled, described and marked invalid by it.",
+    inputSchema: {
+      name: z.string().describe("component name, e.g. 'button' (see list_components)"),
+    },
+  },
+  async ({ name }) => {
+    const component = components.find((c) => c.name === name);
+    const item = component && store.uiItem(name);
+    if (!component || !item)
+      return fail(`unknown component: ${name}`, {
+        components: components.map((c) => c.name),
+        hint: "list_components",
+      });
+    return text({
+      name,
+      title: component.title,
+      description: component.description,
+      exports: component.exports,
+      import: `import { ${component.exports.filter((e) => !e.endsWith("Props")).join(", ")} } from "${component.import}";`,
+      install: {
+        npm: UI_INSTALL,
+        shadcn: [
+          `npx shadcn@latest registry add @cremona=${UI_REGISTRY}`,
+          `npx shadcn@latest add @cremona/${name}`,
+        ],
+        note: "registry add once per project; add also installs the registry items below and the packages of dependencies",
+      },
+      dependencies: component.dependencies,
+      registryDependencies: component.registryDependencies,
+      devDependencies: item.devDependencies ?? [],
+      notes: component.docs,
+      stylesheet:
+        'cremona.css already holds the classes of every component. In a Tailwind v4 build, import @cremona/tokens/css/tailwind.css, add @source for node_modules/@cremona/ui/dist (npm) or let your own src/components/ui be scanned (shadcn), and import tw-animate-css for the dialog\'s animations: get_guide("ui").',
+      files: item.files.map((file) => ({
+        path: `components/ui/${file.path.split("/").pop()}`,
+        content: file.content,
+      })),
+      guide: 'get_guide("ui")',
     });
   },
 );

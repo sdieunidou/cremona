@@ -23,6 +23,8 @@ copy("packages/tokens/themes.json");
 copy("packages/tokens/css");
 copy("packages/stimulus/src");
 copy("packages/stimulus/templates");
+copy("packages/ui/registry.json");
+copy("packages/ui/r");
 mkdirSync(join(out, "docs"), { recursive: true });
 for (const file of readdirSync(join(repoRoot, "docs"))) {
   if (file.endsWith(".md")) copy(`docs/${file}`);

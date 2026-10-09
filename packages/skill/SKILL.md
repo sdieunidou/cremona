@@ -1,6 +1,6 @@
 ---
 name: cremona
-description: Build animated UI with Cremona — 160 animated visual blocks in 37 categories (product illustrations, real-size components and kits, miniature section and layout wireframes), a 9-theme light/dark design system, React + Stimulus adapters, consumable via MCP tools or direct repo reads. Use when the user asks to use Cremona, add a visual/component/layout, build marketing/dashboard/app UI from Cremona, port new visuals, or work with the cremona repo.
+description: Build UI with Cremona — accessible components (@cremona/ui: button, field, input, checkbox, switch, dialog) and 160 animated visual blocks in 37 categories (product illustrations, real-size components and kits, miniature section and layout wireframes), a 9-theme light/dark design system, React + Stimulus adapters, consumable via MCP tools or direct repo reads. Use when the user asks to use Cremona, add a visual/component/layout, build marketing/dashboard/app UI from Cremona, port new visuals, or work with the cremona repo.
 ---
 
 # Cremona — animated visual blocks
@@ -16,6 +16,25 @@ adapters:
   variant's final React render (readable without JavaScript), whose entrance the
   `cremona-visual` controller plays with Web Animations. Loops and JavaScript-driven effects
   stay React-only.
+
+## Real UI: `@cremona/ui`
+
+Button, label, field (label, control, help and error wired for assistive
+technology), input, checkbox, switch and dialog: accessible, responsive
+components on the same tokens. They are what an app ships for a control: **use
+one when it exists** instead of deriving a block (MCP `list_components` and
+`get_component`; `docs/ui.md`).
+
+```bash
+npx shadcn@latest registry add @cremona=https://raw.githubusercontent.com/sdieunidou/cremona/main/packages/ui/r/{name}.json  # once
+npx shadcn@latest add @cremona/button @cremona/field @cremona/input
+# or from npm: npm i @cremona/ui @cremona/tokens lucide-react — import { Button } from "@cremona/ui/button"
+```
+
+Inside a `Field`, `Input`, `Checkbox` and `Switch` are labelled, described and
+marked invalid by it; render a `DialogTitle` in every dialog; with
+`cremona.scoped.css`, give `DialogContent` a `container` inside `.cremona`. Source:
+`packages/ui/src/<name>.tsx`, items in `packages/ui/registry.json`.
 
 ## What's inside: three scales
 
@@ -38,7 +57,8 @@ Every block has a `scale` (MCP `list_blocks`, `search_blocks`, `get_block`):
 
 ## Workflow: pick the right entry point
 
-1. **MCP server available?** (`cremona` tools: `list_categories`, `list_blocks`,
+1. **MCP server available?** (`cremona` tools: `list_components`, `get_component`,
+   `list_categories`, `list_blocks`,
    `search_blocks`, `get_block`, `get_golden`, `get_themes`, `get_theme`,
    `get_css`, `get_controller`, `get_design_system`, `validate`, `get_guide`;
    from a cremona checkout also the authoring tools `add_category` and
@@ -170,7 +190,7 @@ renders one button with one label.
 ## Hard rules
 
 - Never hand-edit generated files: `packages/blocks/src/*/*/golden/**`,
-  `api.json`, `packages/stimulus/templates/**`,
+  `api.json`, `packages/stimulus/templates/**`, `packages/ui/r/**`,
   `packages/tokens/css/cremona.css`, `packages/tokens/css/cremona.scoped.css`.
 - Never bypass parity tests. The renders ARE the product.
 - Keep class strings intact when deriving: parity compares the DOM

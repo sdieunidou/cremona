@@ -58,5 +58,8 @@ describe("packaged @cremona/mcp", () => {
     expect((await json("get_css", { kind: "tokens" })).css).toContain(":root{--background");
     expect((await json("get_css")).fonts.files.length).toBeGreaterThan(0);
     expect((await json("validate")).ok).toBe(true);
+    expect((await json("list_components")).components.map((c) => c.name)).toContain("button");
+    const button = await json("get_component", { name: "button" });
+    expect(button.files[0].content).toContain("export { Button");
   });
 });
