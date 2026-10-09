@@ -16,9 +16,11 @@ come with the templates:
 | Stylesheet | `packages/tokens/css/cremona.scoped.css` (about 350 KB, 34 KB gzipped) or `cremona.css` (about 255 KB, 32 KB gzipped), and their `*.woff2` fonts: see [Which stylesheet](#which-stylesheet) |
 | Placeholder images | `apps/gallery/public/media/placeholders/` |
 
-The packages are not published to npm yet: copy the files. Once they are, the
-same files come from `@cremona/stimulus` (`@cremona/stimulus/templates/*`) and
-`@cremona/tokens/css/*`.
+The same files are in the npm packages: `npm i @cremona/stimulus @cremona/tokens
+@hotwired/stimulus` puts the templates in `node_modules/@cremona/stimulus/templates/`,
+the controllers in `node_modules/@cremona/stimulus/src/` and the stylesheets and fonts
+in `node_modules/@cremona/tokens/css/`. The setup below copies them into the app, which
+suits Symfony's AssetMapper; with a bundler, import them from the packages instead.
 
 ## Setup
 

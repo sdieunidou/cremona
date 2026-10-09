@@ -17,7 +17,7 @@ claude mcp add cremona -s user -- node /absolute/path/to/cremona/packages/mcp/bi
 Without `-s user` the server is registered for the current directory only.
 Inside the cremona repo itself, `.mcp.json` already registers it.
 
-Once `@cremona/mcp` is published, no checkout is needed:
+No checkout is needed, `@cremona/mcp` is on npm:
 
 ```bash
 claude mcp add cremona -s user -- npx -y @cremona/mcp

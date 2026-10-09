@@ -35,21 +35,30 @@ OIDC token.
 These are settings, not code; the workflow needs all of them.
 
 1. **npm scope**: the `cremona` organization on npmjs.com owns `@cremona/*`.
-2. **First publish, once per package.** npm attaches a trusted publisher only
-   to a package that exists, so the first version of each of the seven packages
-   is published by a maintainer, from a clean checkout of `main`:
+2. **First publish of a package, by a maintainer.** npm attaches a trusted
+   publisher only to a package that exists, so the first version of a package
+   that is not on npm yet is published by hand, from a clean checkout of `main`
+   (the seven packages listed at the top are on npm already; this is for one you
+   add):
 
    ```bash
    pnpm install --frozen-lockfile && pnpm check && pnpm build
-   pnpm login
-   pnpm -r publish --access public   # prompts for 2FA
+   npm login
+   pnpm -r publish --access public --otp=<code>   # a fresh 2FA code; a rerun skips what is on npm
    pnpm changeset git-tag && git push --tags
    ```
-3. **Trusted publisher, per package** — npmjs.com → the package → Settings →
-   Trusted publishing → GitHub Actions: owner `sdieunidou`, repository
+3. **Trusted publisher, per package** — for each package:
+
+   ```bash
+   npm trust github <package> --file release.yml --repo sdieunidou/cremona --env npm --allow-publish
+   npm access set mfa=publish <package>   # require 2FA, disallow tokens
+   ```
+
+   (each asks for a one-time password), or on npmjs.com → the package →
+   Settings → Trusted publishing → GitHub Actions: owner `sdieunidou`, repository
    `cremona`, workflow `release.yml`, environment `npm`, publishing with
-   `npm publish` allowed. Then, in the same page, "Require two-factor
-   authentication and disallow tokens".
+   `npm publish` allowed, then "Require two-factor authentication and disallow
+   tokens". `npm trust list <package>` shows what is set.
 4. **GitHub environment** — Settings → Environments → `npm`: deployment
    branches limited to `main` (optionally, required reviewers: a person then
    approves every publish).
