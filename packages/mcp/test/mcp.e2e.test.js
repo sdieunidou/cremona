@@ -102,13 +102,52 @@ describe("cremona MCP server", () => {
     // Word order must not matter.
     expect((await search("state empty")).map((b) => b.key)).toContain("states/empty");
 
-    // Terms are ANDed: a block matching only one of them is excluded.
-    const kanban = await search("kanban checklist");
-    expect(kanban).toHaveLength(0);
+    // Terms are ANDed: while a block matches every term, a block matching only
+    // some of them is left out and nothing is flagged partial.
+    const settings = await search("settings form");
+    expect(settings.map((b) => b.key)).toEqual(
+      expect.arrayContaining(["forms/settings-form", "layouts/settings-shell"]),
+    );
+    expect(settings.some((b) => b.partial)).toBe(false);
 
     // A contiguous match still outranks a scattered one.
     expect((await search("stat card"))[0].key).toBe("metrics/stat-card");
   });
+  it("falls back to the closest blocks, flagged partial, when none matches every term", async () => {
+    const search = async (query, extra = {}) =>
+      textOf(await client.callTool({ name: "search_blocks", arguments: { query, ...extra } }));
+
+    // tasks/kanban and tasks/checklist each answer one word of the query
+    const kanban = await search("kanban checklist");
+    expect(kanban.length).toBeGreaterThan(0);
+    expect(kanban.every((b) => b.partial === true)).toBe(true);
+    expect(kanban.find((b) => b.key === "tasks/kanban")?.unmatched).toEqual(["checklist"]);
+    expect(kanban.find((b) => b.key === "tasks/checklist")?.unmatched).toEqual(["kanban"]);
+
+    // "pricing table" is not a block, but the pricing section must not read as missing
+    const pricing = await search("pricing table");
+    expect(pricing.find((b) => b.key === "sections/pricing")).toMatchObject({
+      partial: true,
+      unmatched: ["table"],
+    });
+
+    // the blocks that answer more of the words come first
+    const three = await search("kanban checklist sidebar");
+    expect(three.every((b) => b.partial)).toBe(true);
+    const missing = three.map((b) => b.unmatched.length);
+    expect(missing).toEqual([...missing].sort((a, z) => a - z));
+
+    // a partial list is short, and nothing comes back when no word matches
+    expect((await search("zzzz card")).length).toBeLessThanOrEqual(10);
+    expect(await search("zzzz qqqq")).toEqual([]);
+    expect(await search("zzzz")).toEqual([]);
+    expect(await search("!!!")).toEqual([]);
+
+    // the filters still apply to the fallback
+    const real = await search("kanban checklist", { scale: "illustration" });
+    expect(real.every((b) => b.scale === "illustration")).toBe(true);
+  });
+
 
   it("returns a block with meta, props and react source by default", async () => {
     const block = textOf(

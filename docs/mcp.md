@@ -77,7 +77,7 @@ tools, which write files and rewrite `catalog.json` (`destructiveHint`).
 |---|---|
 | `list_categories` | 37 categories with slugs and block names |
 | `list_blocks` | blocks filtered by category (slug or name), kind or scale, with variant labels |
-| `search_blocks` | word search over names, descriptions and variants; plurals, synonyms (`pie chart` → donut, `404` → not-found, `sign in` → login) and category/kind/scale filters |
+| `search_blocks` | word search over names, descriptions and variants: every word must match, in any order; plurals, synonyms (`pie chart` → donut, `404` → not-found, `sign in` → login) and category/kind/scale filters. When no block matches every word, the closest ones (at most 10) come back with `partial: true` and the `unmatched` words (`pricing table` → `sections/pricing`, unmatched `table`, next to the table blocks); an empty result means no block matches any word |
 | `get_block` | install line, public import, metadata (`scale`, each variant's `size`), the **props reference**, **exact variant props** and the **full React source**; Stimulus templates and goldens on request |
 | `get_golden` | the SSR render reference HTML of one variant (hidden initial state) |
 | `get_themes` / `get_theme` | the 9 themes; one theme's full light+dark CSS |

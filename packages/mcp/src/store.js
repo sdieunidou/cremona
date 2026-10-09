@@ -316,9 +316,15 @@ function scoreTerm(block, term) {
     ...alternativesOf(term).map(({ spelling, weight }) => scoreSpelling(block, spelling) * weight),
   );
 }
+/** Most blocks a search returns when none matches every word and it falls back to partial matches. */
+const PARTIAL_LIMIT = 10;
+
 
 /**
- * Blocks matching every term of `query`, best first.
+ * Blocks matching every term of `query`, best first. When no block matches them
+ * all, the blocks matching the most terms come back instead, each flagged
+ * `partial: true` with the `unmatched` terms, so a two-word query that only one
+ * block half-answers ("pricing table") never reads as "nothing exists".
  * @param {string} query
  * @param {{ category?: string, kind?: string, scale?: string, limit?: number }} [options]
  */
@@ -330,28 +336,45 @@ export function searchBlocks(query, { category, kind, scale, limit = 30 } = {}) 
   if (category) items = items.filter((b) => b.categorySlug === group?.slug);
   if (kind) items = items.filter((b) => b.kind === kind);
   if (scale) items = items.filter((b) => b.scale === scale);
-  if (q) {
-    // Terms are matched individually (as words, in any order) and ANDed.
-    const words = q.split(/[^a-z0-9-]+/).filter(Boolean);
-    const meaningful = words.filter((w) => !FILLER.has(w));
-    const terms = meaningful.length ? meaningful : words;
-    items = items
-      .map((b) => {
-        let score = 0;
-        for (const term of terms) {
-          const termScore = scoreTerm(b, term);
-          if (termScore === 0) return { ...b, score: 0 };
-          score += termScore;
-        }
+  if (!q) return items.slice(0, limit);
+
+  // Terms are matched individually (as words, in any order) and ANDed.
+  const words = q.split(/[^a-z0-9-]+/).filter(Boolean);
+  const meaningful = words.filter((w) => !FILLER.has(w));
+  const terms = meaningful.length ? meaningful : words;
+  if (!terms.length) return [];
+  const scored = items.map((block) => {
+    const termScores = terms.map((term) => scoreTerm(block, term));
+    return { block, termScores, score: termScores.reduce((sum, s) => sum + s, 0) };
+  });
+
+  const matchesAll = scored.filter(({ termScores }) => termScores.every((s) => s > 0));
+  if (matchesAll.length || terms.length < 2) {
+    return matchesAll
+      .map(({ block, score }) => ({
+        ...block,
         // The whole query as one phrase stays the strongest signal, so "stat card"
         // ranks metrics/stat-card above blocks that merely mention both words.
-        if (terms.length > 1 && scoreSpelling(b, terms.join(" ")) > 0) score += 10;
-        return { ...b, score };
-      })
-      .filter((b) => b.score > 0)
-      .sort((a, z) => z.score - a.score);
+        score: terms.length > 1 && scoreSpelling(block, terms.join(" ")) > 0 ? score + 10 : score,
+      }))
+      .sort((a, z) => z.score - a.score)
+      .slice(0, limit);
   }
-  return items.slice(0, limit);
+
+  return scored
+    .filter(({ score }) => score > 0)
+    .map(({ block, termScores, score }) => ({
+      matched: termScores.filter((s) => s > 0).length,
+      result: {
+        ...block,
+        score,
+        partial: true,
+        unmatched: terms.filter((_, i) => termScores[i] === 0),
+      },
+    }))
+    .sort((a, z) => z.matched - a.matched || z.result.score - a.result.score)
+    .slice(0, Math.min(limit, PARTIAL_LIMIT))
+    .map(({ result }) => result);
 }
 
 export function categorySummary() {

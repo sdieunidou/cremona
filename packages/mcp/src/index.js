@@ -170,7 +170,7 @@ tool(
   {
     title: "Search blocks",
     description:
-      "Search block names, descriptions and variant labels. Every word must match, in any order; plurals and common synonyms count ('buttons', 'pie chart' → charts/donut, '404' → states/not-found, 'sign in' → forms/login), and filler words like 'page' are ignored. Optional category/kind/scale filters.",
+      "Search block names, descriptions and variant labels. Every word must match, in any order; plurals and common synonyms count ('buttons', 'pie chart' → charts/donut, '404' → states/not-found, 'sign in' → forms/login), and filler words like 'page' are ignored. When no block matches every word, the closest ones (at most 10) come back with `partial: true` and the `unmatched` words: an empty result means no block matches any word, so browse with list_categories or list_blocks. Optional category/kind/scale filters.",
     inputSchema: {
       query: z.string().describe("words to look for, e.g. 'settings page' or 'pie chart'"),
       category: z.string().optional().describe("category slug or name"),
