@@ -122,7 +122,7 @@ function BlockCard({
   );
 }
 
-/** The block itself, masked like the POC: its final state, or its entrance while `animated`. */
+/** The block itself, faded out at its edges: its final state, or its entrance while `animated`. */
 function Thumbnail({ blockKey, animated }: { blockKey: string; animated: boolean }) {
   const { Component } = use(loadComponent(blockKey));
   return (

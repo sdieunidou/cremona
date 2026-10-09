@@ -13,14 +13,14 @@ describe("@cremona/core", () => {
     expect(cn("a", false, null, undefined, "b", "c")).toBe("a b c");
   });
 
-  it("gridCols maps column counts (POC parity)", () => {
+  it("gridCols maps column counts", () => {
     expect(gridCols(1)).toBe("");
     expect(gridCols(2)).toBe("lg:grid-cols-2");
     expect(gridCols(3)).toBe("lg:grid-cols-2 xl:grid-cols-3");
     expect(gridCols(4)).toBe("lg:grid-cols-2 xl:grid-cols-4");
   });
 
-  it("frame heights match the POC presets", () => {
+  it("frame heights are the five size presets", () => {
     expect(FRAME_HEIGHTS.md).toBe("h-96");
     expect(FRAME_HEIGHTS.xl).toBe("h-[32rem]");
   });

@@ -1,6 +1,6 @@
 /**
  * Golden parity testing: compare the DOM output of our React components against
- * the SSR snapshots extracted from the POC.
+ * the SSR snapshots committed as goldens.
  *
  * Comparison is structural: tag tree, class multisets, style declarations,
  * attributes and text content. React useId values are normalized away.
@@ -15,7 +15,7 @@ export interface PNode {
 }
 
 const SVG_ID_RE = /_(?:R|r)_[A-Za-z0-9]+_/g;
-// The POC pages lived at /visuals/<category>/<file>, so their ../../media/ is /media/.
+// Goldens rendered on a /visuals/<category>/<file> page name their media ../../media/: that is /media/.
 const MEDIA_RE = /(?:\.\.\/)+media\//g;
 
 function normValue(value: string): string {

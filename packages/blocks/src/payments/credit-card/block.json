@@ -5,84 +5,66 @@
   "description": "A credit card visual with brand, number, and chip.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "payments/credit-card.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "credit-card-CVXeYllB.js",
-    "components": [
-      "credit-card-Cl_nUjfH.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "stacked",
       "slug": "001-stacked",
-      "size": null,
-      "propsRaw": "{stacked:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · stacked",
       "slug": "003-isometric-stacked",
-      "size": null,
-      "propsRaw": "{isometric:!0,stacked:!0}"
+      "size": null
     },
     {
       "label": "custom content",
       "slug": "004-custom-content",
-      "size": null,
-      "propsRaw": "{name:`ADA LOVELACE`,number:`•••• •••• •••• 1815`,expiry:`06/30`,brand:`GOLD`}"
+      "size": null
     },
     {
       "label": "alternate custom content",
       "slug": "005-alternate-custom-content",
-      "size": null,
-      "propsRaw": "{name:`GRACE HOPPER`,number:`1234 5678 9012 3456`,expiry:`12/52`,brand:`VISA`}"
+      "size": null
     },
     {
       "label": "flipped",
       "slug": "006-flipped",
-      "size": null,
-      "propsRaw": "{flipped:!0}"
+      "size": null
     },
     {
       "label": "stacked · flipped",
       "slug": "007-stacked-flipped",
-      "size": null,
-      "propsRaw": "{stacked:!0,flipped:!0}"
+      "size": null
     },
     {
       "label": "isometric · flipped",
       "slug": "008-isometric-flipped",
-      "size": null,
-      "propsRaw": "{isometric:!0,flipped:!0}"
+      "size": null
     },
     {
       "label": "isometric · stacked · flipped",
       "slug": "009-isometric-stacked-flipped",
-      "size": null,
-      "propsRaw": "{isometric:!0,stacked:!0,flipped:!0}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "010-french",
-      "size": null,
-      "propsRaw": "{name:`CAMILLE MARTIN`,labels:{cardHolder:`TITULAIRE`,cardExpires:`EXPIRE FIN`,signature:`SIGNATURE AUTORISÉE · NON VALABLE SANS SIGNATURE`}}"
+      "size": null
     }
   ]
 }

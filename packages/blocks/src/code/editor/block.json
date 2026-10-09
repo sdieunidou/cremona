@@ -5,120 +5,96 @@
   "description": "A code editor mockup with syntax highlighting and a file tab.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "code/editor.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "editor-DCZC6-KW.js",
-    "components": [
-      "editor-aOpPv7X2.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0,isometric:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "no line numbers",
       "slug": "006-no-line-numbers",
-      "size": null,
-      "propsRaw": "{lineNumbers:!1}"
+      "size": null
     },
     {
       "label": "no caret",
       "slug": "007-no-caret",
-      "size": null,
-      "propsRaw": "{caret:!1}"
+      "size": null
     },
     {
       "label": "highlighted line",
       "slug": "008-highlighted-line",
-      "size": null,
-      "propsRaw": "{lines:[{indent:0,tokens:[{width:18,color:`keyword`},{width:24,color:`variable`},{width:10,color:`punct`},{width:32,color:`string`}]},{indent:0,tokens:[{width:18,color:`keyword`},{width:30,color:`func`},{width:24,color:`variable`},{width:14,color:`type`}]},{indent:0,tokens:[],blank:!0},{indent:0,tokens:[{width:14,color:`keyword`},{width:22,color:`keyword`},{width:32,color:`func`},{width:10,color:`punct`}],highlight:!0},{indent:1,tokens:[{width:12,color:`keyword`},{width:14,color:`punct`},{width:18,color:`tag`},{width:22,color:`prop`}]},{indent:0,tokens:[{width:10,color:`punct`}]}]}"
+      "size": null
     },
     {
       "label": "diff",
       "slug": "009-diff",
-      "size": null,
-      "propsRaw": "{lines:[{indent:0,tokens:[{width:18,color:`keyword`},{width:24,color:`variable`},{width:10,color:`punct`},{width:32,color:`string`}]},{indent:0,tokens:[],blank:!0},{indent:0,tokens:[{width:14,color:`keyword`},{width:22,color:`func`},{width:16,color:`type`}],diff:`remove`},{indent:0,tokens:[{width:14,color:`keyword`},{width:28,color:`func`},{width:20,color:`type`},{width:10,color:`punct`}],diff:`add`},{indent:1,tokens:[{width:14,color:`keyword`},{width:22,color:`variable`}]},{indent:0,tokens:[{width:10,color:`punct`}]}]}"
+      "size": null
     },
     {
       "label": "js",
       "slug": "010-js",
-      "size": null,
-      "propsRaw": "{language:`js`}"
+      "size": null
     },
     {
       "label": "py",
       "slug": "011-py",
-      "size": null,
-      "propsRaw": "{language:`py`}"
+      "size": null
     },
     {
       "label": "php",
       "slug": "012-php",
-      "size": null,
-      "propsRaw": "{language:`php`}"
+      "size": null
     },
     {
       "label": "html",
       "slug": "013-html",
-      "size": null,
-      "propsRaw": "{language:`html`}"
+      "size": null
     },
     {
       "label": "css",
       "slug": "014-css",
-      "size": null,
-      "propsRaw": "{language:`css`}"
+      "size": null
     },
     {
       "label": "go",
       "slug": "015-go",
-      "size": null,
-      "propsRaw": "{language:`go`}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "016-french",
-      "size": null,
-      "propsRaw": "{language:`tsx`,tabs:[{name:`Panier.tsx`,active:!0},{name:`prix.ts`}],code:`import { formaterPrix } from './prix';\\n\\n// Total du panier, TVA comprise\\nexport function Total({ montant }: Props) {\\n  const total = montant * 1.2;\\n  return <p>Total : {formaterPrix(total)}</p>;\\n}`,labels:{encoding:`UTF-8`,position:`Ligne {line}, col. {column}`,indentation:`Espaces : 2`}}"
+      "size": null
     }
   ]
 }

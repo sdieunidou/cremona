@@ -12,7 +12,6 @@ export interface BlockJsonMeta {
   description: string;
   added: string;
   kind: string;
-  sourcePath: string;
   page: { cols: number; animated: boolean; trigger: string };
   variants: { label: string; slug: string; size?: string | null }[];
 }

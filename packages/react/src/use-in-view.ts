@@ -23,8 +23,7 @@ function reachable(entry: IntersectionObserverEntry, step: number): number {
 }
 
 /**
- * Observe an element and react to its visibility.
- * Faithful port of the POC's `use-in-view` (motion-style) hook.
+ * Observe an element and react to its visibility, like motion's `inView`.
  *
  * - `amount`: "some" | "all" | number (share of the element that must be visible),
  *   capped at the share the element can reach within the root

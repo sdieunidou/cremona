@@ -5,72 +5,56 @@
   "description": "An animated donut chart with a center total and legend.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "charts/donut.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "donut-Cx2CJNLn.js",
-    "components": [
-      "donut-Dqm08wnK.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{isometric:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "traffic · custom copy",
       "slug": "006-traffic-custom-copy",
-      "size": null,
-      "propsRaw": "{title:`Traffic sources`,badge:`30d`,centerValue:`48k`,centerLabel:`visits`,segments:[{label:`Organic`,value:52,color:`var(--color-chart-1)`},{label:`Direct`,value:24,color:`var(--color-chart-2)`},{label:`Referral`,value:14,color:`var(--color-chart-3)`},{label:`Social`,value:10,color:`var(--color-chart-4)`}]}"
+      "size": null
     },
     {
       "label": "plans · isometric · custom copy",
       "slug": "007-plans-isometric-custom-copy",
-      "size": null,
-      "propsRaw": "{isometric:!0,title:`Plans`,badge:`1,340+ Accounts`,centerValue:`1,284`,centerLabel:`customers`,segments:[{label:`Free`,value:60,color:`var(--color-muted-foreground)`},{label:`Pro`,value:28,color:`var(--color-chart-1)`},{label:`Team`,value:12,color:`var(--color-chart-2)`}]}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "008-french",
-      "size": null,
-      "propsRaw": "{title:`Stockage`,badge:`Offre Pro`,centerValue:`82 %`,centerLabel:`sur 100 Go`,segments:[{label:`Documents`,value:38,color:`var(--color-chart-1)`},{label:`Médias`,value:26,color:`var(--color-chart-2)`},{label:`Applis`,value:18,color:`var(--color-chart-3)`},{label:`Libre`,value:18,color:`var(--color-primary)`}],emptyLabel:`Aucune donnée`,locale:`fr-FR`}"
+      "size": null
     }
   ]
 }

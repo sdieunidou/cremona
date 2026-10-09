@@ -5,96 +5,76 @@
   "description": "A stack of overlapping file cards with depth.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "files/stacked.tsx",
   "page": {
     "cols": 4,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "stacked-DjPL1LTX.js",
-    "components": [
-      "stacked-DVOWpuIm.js"
-    ]
-  },
   "variants": [
     {
       "label": "files",
       "slug": "000-files",
-      "size": "sm",
-      "propsRaw": "{count:9}"
+      "size": "sm"
     },
     {
       "label": "documents",
       "slug": "001-documents",
-      "size": "sm",
-      "propsRaw": "{category:`documents`,label:`7 documents`,count:7}"
+      "size": "sm"
     },
     {
       "label": "spreadsheets",
       "slug": "002-spreadsheets",
-      "size": "sm",
-      "propsRaw": "{category:`spreadsheets`,label:`5 sheets`,count:5}"
+      "size": "sm"
     },
     {
       "label": "images",
       "slug": "003-images",
-      "size": "sm",
-      "propsRaw": "{category:`images`,label:`3 images`,count:3}"
+      "size": "sm"
     },
     {
       "label": "design",
       "slug": "004-design",
-      "size": "sm",
-      "propsRaw": "{category:`design`,label:`Design`}"
+      "size": "sm"
     },
     {
       "label": "code",
       "slug": "005-code",
-      "size": "sm",
-      "propsRaw": "{category:`code`,label:`Code`}"
+      "size": "sm"
     },
     {
       "label": "fonts",
       "slug": "006-fonts",
-      "size": "sm",
-      "propsRaw": "{category:`fonts`,label:`Fonts`}"
+      "size": "sm"
     },
     {
       "label": "media",
       "slug": "007-media",
-      "size": "sm",
-      "propsRaw": "{category:`media`,label:`Media`}"
+      "size": "sm"
     },
     {
       "label": "video",
       "slug": "008-video",
-      "size": "sm",
-      "propsRaw": "{category:`video`,label:`Video`}"
+      "size": "sm"
     },
     {
       "label": "audio",
       "slug": "009-audio",
-      "size": "sm",
-      "propsRaw": "{category:`audio`,label:`Audio`}"
+      "size": "sm"
     },
     {
       "label": "archives",
       "slug": "010-archives",
-      "size": "sm",
-      "propsRaw": "{category:`archives`,label:`Archives`}"
+      "size": "sm"
     },
     {
       "label": "mixed",
       "slug": "011-mixed",
-      "size": "sm",
-      "propsRaw": "{category:`mixed`,label:`Mixed`}"
+      "size": "sm"
     },
     {
       "label": "french",
       "slug": "012-french",
-      "size": null,
-      "propsRaw": "{category:`documents`,count:3,labels:{files:`{count} fichiers`,filesOne:`{count} fichier`},locale:`fr-FR`}"
+      "size": null
     }
   ]
 }

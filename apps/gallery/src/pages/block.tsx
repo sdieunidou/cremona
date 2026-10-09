@@ -33,7 +33,7 @@ export default function BlockPage({ blockKey }: { blockKey: string }) {
               label={variant.label}
               size={variant.size}
             >
-              {/* block-page previews: animated + trigger inViewRepeat (POC default) */}
+              {/* block-page previews: animated + trigger inViewRepeat */}
               <Component
                 animated
                 trigger="inViewRepeat"

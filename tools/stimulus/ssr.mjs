@@ -91,7 +91,9 @@ export async function createRenderer(root) {
       if (!Component) throw new Error(`${file}: no component export in react.tsx`);
       const variantProps = (label) => {
         if (!props || !(label in props))
-          throw new Error(`preview-props.json has no "${label}" entry (run the blocks tests)`);
+          throw new Error(
+            `preview-props.json has no "${label}" entry: add the props of the variant`,
+          );
         return hydrate(props[label]);
       };
       return { meta, Component, props: variantProps };

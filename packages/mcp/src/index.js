@@ -54,7 +54,7 @@ Call get_guide("react") for the derivation recipe, the props contract and the
 gotchas — the \`gradient\` veil hides the bottom 64px of a card, and entrance
 chains run one to two seconds (ai/prompt-box finishes at ~1.8s), which
 screenshot tests must wait out. Before adding blocks, read
-get_guide("porting-guide") or get_guide("authoring-guide").
+get_guide("authoring-guide") and get_guide("adding-blocks").
 
 Stimulus (Symfony, Rails…): each template is the block's final render, visible
 without JavaScript; the cremona-visual controller plays the entrance. A template
@@ -232,7 +232,6 @@ tool(
         description: meta.description,
         kind: meta.kind,
         scale: store.blockScale(categorySlug, file),
-        sourcePath: meta.sourcePath,
         added: meta.added,
         page: meta.page,
         variants: meta.variants.map((v) => ({
@@ -563,6 +562,24 @@ tool(
   async ({ name }) => text(store.doc(name)),
 );
 
+/** What add_block scaffolds: the default variant and the five style variants of a card block, with their props. */
+const SCAFFOLD_VARIANTS = [
+  { label: "default", slug: "000-default", props: {} },
+  { label: "fadeOut", slug: "001-fadeout", props: { fadeOut: true } },
+  { label: "isometric", slug: "002-isometric", props: { isometric: true } },
+  {
+    label: "isometric · fadeOut",
+    slug: "003-isometric-fadeout",
+    props: { isometric: true, fadeOut: true },
+  },
+  { label: "default · no gradient", slug: "004-default-no-gradient", props: { gradient: false } },
+  {
+    label: "isometric · no gradient",
+    slug: "005-isometric-no-gradient",
+    props: { isometric: true, gradient: false },
+  },
+];
+
 function registerAuthoringTools() {
   const catalogPath = join(REPO_ROOT, "packages", "blocks", "catalog.json");
   // the catalog is ordered by plain code-unit comparison of category names
@@ -606,7 +623,7 @@ function registerAuthoringTools() {
     {
       title: "Scaffold a block",
       description:
-        "Scaffold a NEW visual block inside an existing category: block.json + react.tsx skeleton + parity test skeleton, and a catalog.json entry; then follow docs/authoring-guide.md. Refuses a key that already exists.",
+        "Scaffold a NEW visual block inside an existing category: block.json + preview-props.json (the default and the five style variants) + react.tsx skeleton + parity test skeleton, and a catalog.json entry; then follow docs/authoring-guide.md. Refuses a key that already exists.",
       inputSchema: {
         category: z.string().describe("slug of an existing category (see list_categories)"),
         file: z.string().describe("new block slug, e.g. 'balance-card'"),
@@ -632,39 +649,6 @@ function registerAuthoringTools() {
         return fail(`${category}/${file} already exists: add_block only scaffolds new blocks`);
 
       await mkdir(join(dir, "golden"), { recursive: true });
-      const variants = [
-        { label: "default", slug: "000-default", size: null, propsRaw: "{}" },
-        {
-          label: "fadeOut",
-          slug: "001-fadeout",
-          size: null,
-          propsRaw: "{fadeOut:!0}",
-        },
-        {
-          label: "isometric",
-          slug: "002-isometric",
-          size: null,
-          propsRaw: "{isometric:!0}",
-        },
-        {
-          label: "isometric · fadeOut",
-          slug: "003-isometric-fadeout",
-          size: null,
-          propsRaw: "{isometric:!0,fadeOut:!0}",
-        },
-        {
-          label: "default · no gradient",
-          slug: "004-default-no-gradient",
-          size: null,
-          propsRaw: "{gradient:!1}",
-        },
-        {
-          label: "isometric · no gradient",
-          slug: "005-isometric-no-gradient",
-          size: null,
-          propsRaw: "{isometric:!0,gradient:!1}",
-        },
-      ];
       const meta = {
         category: group.category,
         file,
@@ -672,12 +656,15 @@ function registerAuthoringTools() {
         description,
         added: new Date().toISOString().slice(0, 10),
         kind: kind ?? "block",
-        sourcePath: `${category}/${file}.tsx`,
         page: { cols: 2, animated: true, trigger: "inViewRepeat" },
-        chunks: { page: null, components: [] },
-        variants,
+        variants: SCAFFOLD_VARIANTS.map(({ label, slug }) => ({ label, slug, size: null })),
       };
+      const previewProps = Object.fromEntries(SCAFFOLD_VARIANTS.map((v) => [v.label, v.props]));
       await writeFile(join(dir, "block.json"), JSON.stringify(meta, null, 2) + "\n");
+      await writeFile(
+        join(dir, "preview-props.json"),
+        JSON.stringify(previewProps, null, 2) + "\n",
+      );
       await writeFile(join(dir, "react.tsx"), reactSkeleton(pascal(file)));
       await writeFile(testPath, testSkeleton(pascal(file), category, file));
 
@@ -689,11 +676,12 @@ function registerAuthoringTools() {
         ok: true,
         files: [
           `packages/blocks/src/${category}/${file}/block.json`,
+          `packages/blocks/src/${category}/${file}/preview-props.json`,
           `packages/blocks/src/${category}/${file}/react.tsx`,
           `packages/blocks/test/${testName}.parity.test.tsx`,
         ],
         next: [
-          "Implement the visual following docs/authoring-guide.md",
+          "Implement the visual following docs/authoring-guide.md; keep the variants whose props it takes in block.json and preview-props.json (same labels), add yours",
           "From packages/blocks: pnpm vitest run test/generate-goldens.test.tsx, then pnpm vitest run test/" +
             testName +
             ".parity.test.tsx",

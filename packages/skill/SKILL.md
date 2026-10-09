@@ -22,7 +22,7 @@ adapters:
 Every block has a `scale` (MCP `list_blocks`, `search_blocks`, `get_block`):
 
 - **illustration** — `ai/*`, `metrics/*`, `charts/*`, `states/*` and every other
-  POC category: animated product artwork (miniature mocks of UI).
+  category: animated product artwork (miniature mocks of UI).
 - **real-size** — `components/*` (button, input, badge, card, tabs, dialog,
   dropdown-menu, command, tooltip, accordion, progress, skeleton, avatar,
   breadcrumb, alert, switch, checkbox, select, pagination, kbd, table, toast),
@@ -143,10 +143,11 @@ renders one button with one label.
 
 ## Creating new visuals (categories, blocks, variants)
 
-- Read `docs/authoring-guide.md` (new visuals) or `docs/porting-guide.md`
-  (POC visuals) — the full contracts: anatomy, motion conventions, parity testing.
-- Scaffold with MCP `add_block`/`add_category` (it refuses an existing key), then
-  implement + test from `packages/blocks`: `pnpm vitest run test/generate-goldens.test.tsx`
+- Read `docs/adding-blocks.md` (the workflow) and `docs/authoring-guide.md` (the
+  contract: anatomy, tokens, motion conventions, parity testing).
+- Scaffold with MCP `add_block`/`add_category` (it refuses an existing key; it writes
+  `block.json` and `preview-props.json` with the default variants), then implement +
+  test from `packages/blocks`: `pnpm vitest run test/generate-goldens.test.tsx`
   (writes only missing goldens), then `pnpm vitest run test/<category>-<file>.parity.test.tsx`.
 - Every block MUST pass golden parity; `pnpm validate` checks that each block has a
   `react.tsx`, an `api.json`, a golden, a preview-props entry and a Stimulus template
@@ -169,9 +170,9 @@ renders one button with one label.
 ## Hard rules
 
 - Never hand-edit generated files: `packages/blocks/src/*/*/golden/**`,
-  `preview-props.json`, `api.json`, `packages/stimulus/templates/**`,
+  `api.json`, `packages/stimulus/templates/**`,
   `packages/tokens/css/cremona.css`, `packages/tokens/css/cremona.scoped.css`.
 - Never bypass parity tests. The renders ARE the product.
-- Keep class strings intact when porting or deriving: parity compares the DOM
+- Keep class strings intact when deriving: parity compares the DOM
   structure, the classes and the text.
 - Don't add runtime deps to blocks; icons = `lucide-react`, motion = `motion/react`.

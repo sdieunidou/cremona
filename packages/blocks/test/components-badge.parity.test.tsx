@@ -5,4 +5,7 @@ import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/components/badge");
 
-runGoldenParity("components/badge", { blockDir, Component: Badge });
+runGoldenParity("components/badge", {
+  blockDir,
+  Component: Badge,
+});

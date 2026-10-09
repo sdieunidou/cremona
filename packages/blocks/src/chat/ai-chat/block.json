@@ -5,102 +5,81 @@
   "description": "An AI chat interface with streaming responses and a prompt box.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "chat/ai-chat.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "ai-chat-DoHa9wpv.js",
-    "components": [
-      "ai-chat-bdnGldZ0.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0,isometric:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "default · custom copy",
       "slug": "006-default-custom-copy",
-      "size": null,
-      "propsRaw": "{title:`Acme Copilot`,prompt:`Draft a launch email for our new pricing`,response:i}"
+      "size": null
     },
     {
       "label": "isometric · custom copy",
       "slug": "007-isometric-custom-copy",
-      "size": null,
-      "propsRaw": "{isometric:!0,title:`Acme Copilot`,prompt:`Draft a launch email for our new pricing`,response:i}"
+      "size": null
     },
     {
       "label": "paragraph only",
       "slug": "008-paragraph-only",
-      "size": null,
-      "propsRaw": "{prompt:`What is product-led growth?`,response:[{kind:`paragraph`,text:`Product-led growth is a strategy where the product drives acquisition, expansion, and retention.`},{kind:`paragraph`,text:`Users experience value before talking to sales, and the product itself becomes the primary growth channel.`}]}"
+      "size": null
     },
     {
       "label": "busy status",
       "slug": "009-busy-status",
-      "size": null,
-      "propsRaw": "{status:`Thinking…`,statusKind:`busy`,response:[{kind:`paragraph`,text:`Thinking…`}]}"
+      "size": null
     },
     {
       "label": "offline status",
       "slug": "010-offline-status",
-      "size": null,
-      "propsRaw": "{status:`Offline`,statusKind:`offline`}"
+      "size": null
     },
     {
       "label": "no caret",
       "slug": "011-no-caret",
-      "size": null,
-      "propsRaw": "{caret:!1}"
+      "size": null
     },
     {
       "label": "no actions",
       "slug": "012-no-actions",
-      "size": null,
-      "propsRaw": "{actions:!1}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "013-french",
-      "size": null,
-      "propsRaw": "{title:`Assistant IA`,prompt:`Résume les résultats du T3.`,response:[{kind:`paragraph`,text:`Voici un aperçu rapide du T3 :`},{kind:`bullet`,text:`Le chiffre d’affaires progresse de 24 % sur un an`},{kind:`bullet`,text:`L’offre Entreprise apporte 62 % du nouvel ARR`},{kind:`bullet`,text:`La rétention nette atteint un record de 118 %`}],status:`Prêt`,labels:{assistant:`Assistant`,placeholder:`Posez votre question…`}}"
+      "size": null
     }
   ]
 }

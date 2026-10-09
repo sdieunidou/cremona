@@ -13,7 +13,6 @@ export default defineConfig(
     "**/coverage/",
     "**/test-results/",
     "**/playwright-report/",
-    "packages/blocks/src/**/sources/",
     "packages/stimulus/templates/",
     "packages/mcp/data/",
   ]),

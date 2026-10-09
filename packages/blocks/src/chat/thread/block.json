@@ -5,84 +5,66 @@
   "description": "A threaded message view with replies and reactions.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "chat/thread.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "thread-DoLtSjTc.js",
-    "components": [
-      "thread-B5jF7tyo.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0,isometric:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "default · custom thread",
       "slug": "006-default-custom-thread",
-      "size": null,
-      "propsRaw": "{...i}"
+      "size": null
     },
     {
       "label": "isometric · custom thread",
       "slug": "007-isometric-custom-thread",
-      "size": null,
-      "propsRaw": "{isometric:!0,...i}"
+      "size": null
     },
     {
       "label": "no actions",
       "slug": "008-no-actions",
-      "size": null,
-      "propsRaw": "{actions:!1}"
+      "size": null
     },
     {
       "label": "custom likes",
       "slug": "009-custom-likes",
-      "size": null,
-      "propsRaw": "{likes:142}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "010-french",
-      "size": null,
-      "propsRaw": "{parentUser:`Lucas Bernard`,parentInitials:`LB`,parentTime:`10:24`,parentText:`Le nouveau parcours d’accueil est en ligne. La conversion grimpe déjà de 18 %.`,replies:[{user:`Camille Martin`,initials:`CM`,text:`Énorme. L’indicateur de progression a tout changé.`,time:`10:31`},{user:`Inès Moreau`,initials:`IM`,text:`On teste l’étape de bienvenue en A/B ensuite ?`,time:`10:42`}],labels:{placeholder:`Écrire une réponse…`}}"
+      "size": null
     }
   ]
 }

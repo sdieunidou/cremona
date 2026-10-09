@@ -5,66 +5,51 @@
   "description": "A shield visual conveying protection and trust.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "security/shield.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "shield-CqIsMLWR.js",
-    "components": [
-      "shield-yw1Xrxcq.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "001-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "label=\"End-to-end\"",
       "slug": "002-label-end-to-end",
-      "size": null,
-      "propsRaw": ""
+      "size": null
     },
     {
       "label": "no label",
       "slug": "003-no-label",
-      "size": null,
-      "propsRaw": "{label:``}"
+      "size": null
     },
     {
       "label": "state=\"warning\"",
       "slug": "004-state-warning",
-      "size": null,
-      "propsRaw": ""
+      "size": null
     },
     {
       "label": "isometric · state=\"warning\"",
       "slug": "005-isometric-state-warning",
-      "size": null,
-      "propsRaw": ""
+      "size": null
     },
     {
       "label": "state=\"breached\"",
       "slug": "006-state-breached",
-      "size": null,
-      "propsRaw": ""
+      "size": null
     },
     {
       "label": "isometric · state=\"breached\"",
       "slug": "007-isometric-state-breached",
-      "size": null,
-      "propsRaw": ""
+      "size": null
     }
   ]
 }

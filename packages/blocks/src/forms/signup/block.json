@@ -5,38 +5,29 @@
   "description": "Registration form with password strength meter.",
   "added": "2026-09-21",
   "kind": "block",
-  "sourcePath": "forms/signup.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": null,
-    "components": []
-  },
   "variants": [
     {
       "label": "default",
-      "propsRaw": "{}",
       "size": "lg",
       "slug": "000-default"
     },
     {
       "label": "strong",
-      "propsRaw": "{strength:4}",
       "size": "lg",
       "slug": "001-strong"
     },
     {
       "label": "weak",
-      "propsRaw": "{strength:1}",
       "size": "lg",
       "slug": "002-weak"
     },
     {
       "label": "email taken",
-      "propsRaw": "{name:`Ada Lovelace`,email:`ada@acme.dev`,emailError:`This email is already registered.`}",
       "size": "lg",
       "slug": "003-email-taken"
     }

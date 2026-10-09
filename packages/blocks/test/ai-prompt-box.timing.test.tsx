@@ -1,7 +1,6 @@
 /**
  * The prompt box's toolbar, caret, meter and send button follow the typed words
- * (~1.3 s for the default prompt), as in the POC — not the word count read as
- * seconds (14 s).
+ * (~1.3 s for the default prompt) — not the word count read as seconds (14 s).
  */
 import { describe, it, expect, vi } from "vitest";
 import { createElement } from "react";

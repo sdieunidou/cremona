@@ -5,108 +5,86 @@
   "description": "A checkout summary with line items and a pay button.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "payments/checkout.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "checkout-CN-hgKmX.js",
-    "components": [
-      "checkout-6jdwsyTY.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{isometric:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "custom amount",
       "slug": "006-custom-amount",
-      "size": null,
-      "propsRaw": "{amount:`$129.00`,buttonLabel:`Subscribe for`}"
+      "size": null
     },
     {
       "label": "card",
       "slug": "007-card",
-      "size": null,
-      "propsRaw": "{card:!0}"
+      "size": null
     },
     {
       "label": "card · fadeOut",
       "slug": "008-card-fadeout",
-      "size": null,
-      "propsRaw": "{card:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "card · isometric",
       "slug": "009-card-isometric",
-      "size": null,
-      "propsRaw": "{card:!0,isometric:!0}"
+      "size": null
     },
     {
       "label": "card · isometric · fadeOut",
       "slug": "010-card-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{card:!0,isometric:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "card · no gradient",
       "slug": "011-card-no-gradient",
-      "size": null,
-      "propsRaw": "{card:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "card · isometric · no gradient",
       "slug": "012-card-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{card:!0,isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "card · custom content",
       "slug": "013-card-custom-content",
-      "size": null,
-      "propsRaw": "{card:!0,name:`ADA LOVELACE`,cardNumber:`4000 0566 5566 5556`,expiry:`06/30`,cvc:`456`,brand:`GOLD`}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "014-french",
-      "size": null,
-      "propsRaw": "{amount:`42,00 €`,buttonLabel:`Payer`,name:`CAMILLE MARTIN`,labels:{title:`Payer par carte`,secure:`Sécurisé`,cardHolder:`TITULAIRE`,cardExpires:`EXPIRE FIN`,changeCard:`Utiliser une autre carte`,cardNumber:`Numéro de carte`,expires:`Expiration`,cvc:`Cryptogramme`}}"
+      "size": null
     }
   ]
 }

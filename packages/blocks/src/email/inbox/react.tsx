@@ -113,7 +113,7 @@ const glow = {
 
 const EMAIL_RE = /([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/;
 
-/** Auto-links email addresses inside a string (POC build renders them as mailto anchors). */
+/** Renders the email addresses inside a string as mailto anchors. */
 function EmailText({ text }: { text: string }) {
   const match = EMAIL_RE.exec(text);
   if (!match) return <>{text}</>;

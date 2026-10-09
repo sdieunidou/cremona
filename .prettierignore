@@ -5,12 +5,11 @@ test-results
 playwright-report
 pnpm-lock.yaml
 packages/mcp/data
-# generated or immutable artefacts
+# generated artefacts
 packages/blocks/src/**/golden
-packages/blocks/src/**/sources
 packages/stimulus/templates
 packages/tokens/css
-# JSON written by generators (JSON.stringify) — keep their output byte-stable
+# JSON data files, kept in the JSON.stringify(_, null, 2) form the MCP scaffold writes
 packages/blocks/catalog.json
 packages/blocks/src/**/block.json
 packages/blocks/src/**/preview-props.json

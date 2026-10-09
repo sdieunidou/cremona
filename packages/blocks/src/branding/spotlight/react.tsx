@@ -385,7 +385,7 @@ export function Spotlight({
   const [hovered, setHovered] = useState(false);
   const loop = useLoopActive(ref, animated);
   const logoEl = logo ?? defaultLogo;
-  // the POC merges classes with twMerge: an icon bg-* override drops bg-primary
+  // an icon bg-* override replaces bg-primary: cn() does not resolve conflicting utilities
   const bgOverride =
     !!iconClassName && iconClassName.split(/\s+/).some((cls) => cls.startsWith("bg-"));
   const heroTile = bgOverride ? HERO_TILE.replace(/\s*\bbg-primary\b/, "") : HERO_TILE;

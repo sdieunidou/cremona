@@ -7,11 +7,10 @@
 import { act, createElement, type ComponentType } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import { MotionGlobalConfig } from "motion/react";
-import * as lucide from "lucide-react";
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { compareRenders, ID_PREFIX, type EndStateDiff } from "./end-state-compare.js";
+import { hydrateProps, type Props } from "./preview-props.js";
 
-type Props = Record<string, unknown>;
 type Visual = ComponentType<Props>;
 
 interface BlockJson {
@@ -28,31 +27,6 @@ const previews = import.meta.glob<Record<string, Props>>("../../src/*/*/preview-
   import: "default",
 });
 const modules = import.meta.glob<Record<string, unknown>>("../../src/*/*/react.tsx");
-
-const ICONS = new Map(
-  Object.values(lucide)
-    .filter((v) => typeof (v as { displayName?: unknown }).displayName === "string")
-    .map((v) => [`lucide:${(v as { displayName: string }).displayName}`, v as never]),
-);
-
-/** preview-props.json back to props, as the gallery does: icons and `{ $element }` elements. */
-function hydrate(v: unknown): unknown {
-  if (typeof v === "string" && v.startsWith("lucide:")) return ICONS.get(v);
-  if (Array.isArray(v)) return v.map(hydrate);
-  if (v && typeof v === "object") {
-    const el = v as { $element?: string; props?: Props; children?: unknown[] };
-    if (typeof el.$element === "string") {
-      const type = el.$element.startsWith("lucide:") ? ICONS.get(el.$element) : el.$element;
-      return createElement(
-        type as never,
-        hydrate(el.props ?? {}) as never,
-        ...((el.children ?? []).map(hydrate) as never[]),
-      );
-    }
-    return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, hydrate(x)]));
-  }
-  return v;
-}
 
 function pickComponent(mod: Record<string, unknown>, file: string): Visual {
   const pascal = file
@@ -292,7 +266,7 @@ export async function loadBlock(key: string) {
     labels: block.meta.variants.map((v) => v.label),
     props: (label: string) => {
       if (!(label in preview)) throw new Error(`${key}: no preview props for "${label}"`);
-      return hydrate(preview[label]) as Props;
+      return hydrateProps(preview[label]) as Props;
     },
   };
 }

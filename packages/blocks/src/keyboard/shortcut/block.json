@@ -5,54 +5,41 @@
   "description": "A keyboard shortcut rendered as labeled keycaps.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "keyboard/shortcut.tsx",
   "page": {
     "cols": 3,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "shortcut-BznKbCde.js",
-    "components": [
-      "shortcut-BKOXmwwB.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": "sm",
-      "propsRaw": "{}"
+      "size": "sm"
     },
     {
       "label": "isometric",
       "slug": "001-isometric",
-      "size": "sm",
-      "propsRaw": "{isometric:!0}"
+      "size": "sm"
     },
     {
       "label": "Ctrl + Shift + P · custom keys",
       "slug": "002-ctrl-shift-p-custom-keys",
-      "size": "sm",
-      "propsRaw": "{keys:[`Ctrl`,`Shift`,`P`]}"
+      "size": "sm"
     },
     {
       "label": "⌘ + Shift + F · custom keys",
       "slug": "003-shift-f-custom-keys",
-      "size": "sm",
-      "propsRaw": "{keys:[`⌘`,`Shift`,`F`]}"
+      "size": "sm"
     },
     {
       "label": "Ctrl + Z · custom keys",
       "slug": "004-ctrl-z-custom-keys",
-      "size": "sm",
-      "propsRaw": "{keys:[`Ctrl`,`Z`]}"
+      "size": "sm"
     },
     {
       "label": "Ctrl + Z · custom keys · isometric",
       "slug": "005-ctrl-z-custom-keys-isometric",
-      "size": "sm",
-      "propsRaw": "{keys:[`Ctrl`,`Z`],isometric:!0}"
+      "size": "sm"
     }
   ]
 }

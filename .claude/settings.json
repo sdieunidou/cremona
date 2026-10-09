@@ -38,8 +38,6 @@
     "deny": [
       "Edit(**/golden/**)",
       "Write(**/golden/**)",
-      "Edit(**/preview-props.json)",
-      "Write(**/preview-props.json)",
       "Edit(**/stimulus/templates/**)",
       "Write(**/stimulus/templates/**)",
       "Edit(**/tokens/css/cremona.css)",

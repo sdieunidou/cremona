@@ -34,20 +34,20 @@ export const ISO_TRANSITION = { duration: 0.5, ease: "easeOut" } as const;
 export const RAINBOW_GRADIENT =
   "linear-gradient(to right,var(--color-red-500),var(--color-orange-500),var(--color-yellow-500),var(--color-green-500),var(--color-blue-500),var(--color-indigo-500),var(--color-violet-500))";
 
-/** Entry-state token set, common to many blocks (extracted from the POC). */
+/** The easing most entrance transitions use. */
 export const EASE_OUT = "easeOut";
 
+/** A variant in a block's block.json; its props are the entry of the same label in preview-props.json. */
 export interface VariantDef {
   /** Human label shown under the preview frame. */
   label: string;
   /** File slug of the golden reference (without extension). */
-  slug?: string;
-  /** Props passed to the visual for this variant. */
-  props?: Record<string, unknown>;
-  /** Preview frame height preset. */
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  slug: string;
+  /** Preview frame height preset (`null`: the default, `md`). */
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | null;
 }
 
+/** A block's block.json. */
 export interface BlockMeta {
   category: string;
   file: string;
@@ -55,7 +55,6 @@ export interface BlockMeta {
   description: string;
   added: string;
   kind: "block" | "layout" | "component";
-  sourcePath: string;
   page: { cols: number; animated: boolean; trigger: string };
   variants: VariantDef[];
 }
@@ -68,7 +67,7 @@ export const FRAME_HEIGHTS: Record<string, string> = {
   xl: "h-[32rem]",
 };
 
-/** Grid classes per column count (matches the POC preview pages). */
+/** Grid classes of a block page, per column count of its `page.cols`. */
 export function gridCols(cols: number): string {
   switch (cols) {
     case 1:

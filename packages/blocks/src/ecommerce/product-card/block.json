@@ -5,46 +5,36 @@
   "description": "Product card with image, price, rating and add-to-cart.",
   "added": "2026-09-21",
   "kind": "block",
-  "sourcePath": "ecommerce/product-card.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": null,
-    "components": []
-  },
   "variants": [
     {
       "label": "default",
-      "propsRaw": "{}",
       "size": "lg",
       "slug": "000-default"
     },
     {
       "label": "on sale",
-      "propsRaw": "{sale:!0}",
       "size": "lg",
       "slug": "001-on-sale"
     },
     {
       "label": "out of stock",
-      "propsRaw": "{stock:`out`}",
       "size": "lg",
       "slug": "002-out-of-stock"
     },
     {
       "label": "hover add",
-      "propsRaw": "{hoverAdd:!0}",
       "size": "lg",
       "slug": "003-hover-add"
     },
     {
       "label": "french",
       "slug": "004-french",
-      "size": "lg",
-      "propsRaw": "{title:`Aero Runner 2`,category:`Running · Homme`,price:`119,00 €`,compareAt:`149,00 €`,reviews:`214`,rating:4.5,sale:!0,discount:`-20 %`,labels:{add:`Ajouter au panier`,soldOut:`Épuisé`,notify:`M’avertir`,shipping:`Livraison offerte`,rating:`Noté {rating} sur 5`},locale:`fr-FR`}"
+      "size": "lg"
     }
   ]
 }

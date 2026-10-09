@@ -5,60 +5,46 @@
   "description": "A file explorer with a folder tree and file list.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "files/explorer.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "explorer-CvccsZgD.js",
-    "components": [
-      "explorer-CTtC-aCk.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0,isometric:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "006-french",
-      "size": null,
-      "propsRaw": "{labels:{search:`Rechercher des fichiers`,library:`Bibliothèque`,tags:`Étiquettes`,allFiles:`Fichiers`,starred:`Favoris`,photos:`Photos`,projects:`Projets`}}"
+      "size": null
     }
   ]
 }

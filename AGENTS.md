@@ -29,7 +29,7 @@ CI (`.github/workflows/ci.yml`) runs on Node 22 and 24: lint, format check,
 typecheck, `check:use-client`, tests, then `pnpm generate:stimulus`,
 `pnpm generate:api` and `pnpm build:css` again, and fails on any changed **or
 untracked** file under `packages/blocks`, `packages/stimulus` and
-`packages/tokens` (a golden, `preview-props.json`, `api.json`, template,
+`packages/tokens` (a golden, `api.json`, template,
 `cremona.css` or `cremona.scoped.css` left uncommitted), then `validate`. The gallery e2e job (Node 24)
 fails when a block page shows an error card, throws or logs a console error (a
 failed image or font request logs one), or when axe finds a violation on the
@@ -41,17 +41,16 @@ also runs the package check before publishing.
 1. **Goldens are regression locks**: never hand-edit
    `packages/blocks/src/*/*/golden/**`. New blocks and new variants get theirs
    from `pnpm vitest run test/generate-goldens.test.tsx` (from
-   `packages/blocks`), which only writes missing goldens. The goldens of POC
-   blocks (the folders with `sources/`) never change; an authored block's
-   goldens change only on purpose: delete that block's `golden/*.html`,
-   regenerate, review the diff, run its parity test.
-2. **Generated files are never hand-edited**: `preview-props.json` (rewritten by
-   `pnpm test`), `api.json` (rewritten by `pnpm generate:api` from the props
-   interface and its JSDoc), `packages/stimulus/templates/**` (rewritten by
-   `pnpm generate:stimulus`) and `packages/tokens/css/cremona.css` and
-   `cremona.scoped.css` (rewritten by `pnpm build:css`). Change the source
-   block, `packages/tokens/css/tailwind.css`, `packages/tokens/src/*.css` or the
-   generator, rerun, commit the result.
+   `packages/blocks`), which only writes missing goldens, from the variant's
+   props in `preview-props.json`. A golden changes only on purpose: delete
+   the `golden/*.html` that should change, regenerate, review the diff, run the
+   block's parity test.
+2. **Generated files are never hand-edited**: `api.json` (rewritten by
+   `pnpm generate:api` from the props interface and its JSDoc),
+   `packages/stimulus/templates/**` (rewritten by `pnpm generate:stimulus`) and
+   `packages/tokens/css/cremona.css` and `cremona.scoped.css` (rewritten by
+   `pnpm build:css`). Change the source block, `packages/tokens/css/tailwind.css`,
+   `packages/tokens/src/*.css` or the generator, rerun, commit the result.
 3. **Parity is a gate**: a block change that breaks its parity test is a
    regression unless the golden is deliberately regenerated. The comparator
    (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
@@ -69,10 +68,11 @@ also runs the package check before publishing.
 
 ## Layout map
 
-- `packages/blocks/src/<category>/<block>/` — source of truth: `block.json`,
-  `react.tsx`, and the generated `api.json` (props reference: type, default and
-  JSDoc of every prop), `preview-props.json` and `golden/`; some blocks also
-  keep a `sources/` directory, which nothing reads at runtime.
+- `packages/blocks/src/<category>/<block>/` — source of truth: `block.json`
+  (metadata and the variants: label, slug, stage size), `preview-props.json`
+  (the props of every variant, by label; icons are `"lucide:<Name>"`),
+  `react.tsx`, the generated `api.json` (props reference: type, default and
+  JSDoc of every prop) and `golden/` (one render reference per variant).
 - `packages/blocks/{scripts,dist,public}/` — the published `@cremona/blocks`:
   `scripts/build.mjs` compiles each block to `dist/<category>/<file>/react.{js,d.ts}`
   (the entry behind `@cremona/blocks/<category>/<file>`), `prepack` also copies
@@ -100,9 +100,8 @@ also runs the package check before publishing.
 
 ## Conventions
 
-- New parity tests are named `<category>-<file>.parity.test.tsx` (what
-  `add_block` creates); the POC blocks' tests keep their `<file>.parity.test.tsx`
-  names. `validate` finds a block's test by its `runGoldenParity("<key>", …)`
+- Parity tests are named `<category>-<file>.parity.test.tsx` (what `add_block`
+  creates). `validate` finds a block's test by its `runGoldenParity("<key>", …)`
   call, not by its name.
 - Give every prop of a block's props interface (and of the types it uses) a
   JSDoc comment: it becomes the prop's description in `api.json`, the
@@ -125,6 +124,5 @@ also runs the package check before publishing.
 - `.claude/settings.json` pre-approves the main commands above (`pnpm check`,
   `pnpm test`, `generate:stimulus`, `generate:api`, `build:css`, targeted
   `vitest`…) and the read-only MCP tools, denies hand edits of goldens,
-  `preview-props.json`, `api.json`, Stimulus templates, `cremona.css` and
-  `cremona.scoped.css`, and
+  `api.json`, Stimulus templates, `cremona.css` and `cremona.scoped.css`, and
   formats every edited file with Prettier.

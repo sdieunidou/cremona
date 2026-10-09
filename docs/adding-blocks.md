@@ -3,21 +3,24 @@
 ## TL;DR workflow
 
 1. **Scaffold** — MCP `add_block` (or copy an existing block folder):
-   creates `block.json` (`default` and the five style variants of a card
-   block), a `react.tsx`
-   skeleton that starts with `"use client";`, and a parity test. A new category
-   comes first, from `add_category`.
-2. **Implement** — follow `docs/authoring-guide.md` (new visuals) or
-   `docs/porting-guide.md` (POC blocks): scene root, card wrapper, motion
-   variants, exact class strings. A copied block keeps `"use client";` as its
+   creates `block.json` and `preview-props.json` (`default` and the five style
+   variants of a card block), a `react.tsx` skeleton that starts with
+   `"use client";`, and a parity test. A new category comes first, from
+   `add_category`.
+2. **Implement** — follow `docs/authoring-guide.md`: scene root, card wrapper,
+   motion variants, class strings. A copied block keeps `"use client";` as its
    first line (`node tools/use-client.mjs` puts it back).
-3. **Golden** — POC blocks already have theirs; for a new block or a new
-   variant run `pnpm vitest run test/generate-goldens.test.tsx` first (from
+3. **Variants** — a variant is an entry of `block.json` (`label`, `slug`, `size`)
+   and the props it renders with, under the same label, in
+   `preview-props.json` (a lucide icon is `"lucide:<Name>"`, an element
+   `{ "$element": "lucide:<Name>", "props": {…} }`). Drop the scaffolded
+   variants whose props the block lacks.
+4. **Golden** — for a new block or a new variant, run
+   `pnpm vitest run test/generate-goldens.test.tsx` first (from
    `packages/blocks`: it renders the missing goldens into `golden/<slug>.html`).
-4. **Prove** — `pnpm vitest run test/<category>-<file>.parity.test.tsx`
+5. **Prove** — `pnpm vitest run test/<category>-<file>.parity.test.tsx`
    from `packages/blocks` must be green (golden parity).
-   Passing tests also write `preview-props.json`.
-5. **Propagate** — `pnpm build:css` (the block's classes into `cremona.css`),
+6. **Propagate** — `pnpm build:css` (the block's classes into `cremona.css`),
    `pnpm generate:stimulus` (templates), `pnpm generate:api` (`api.json`, the
    props reference built from the props interface and its JSDoc), then
    `pnpm check` (which includes `check:use-client`, `check:api` and
@@ -38,7 +41,6 @@
   when they take those props; other variants show states and content
   (`error`, `loading`, `custom copy`).
 - Test files: `<category>-<file>.parity.test.tsx` (what `add_block` creates).
-  The POC blocks' tests are named `<file>.parity.test.tsx`.
 
 ## Kinds
 

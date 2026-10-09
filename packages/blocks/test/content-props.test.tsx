@@ -1,6 +1,6 @@
 /**
- * Behaviour of the optional content props added to POC blocks. Their default
- * render is locked by the parity tests; these check what the new props do.
+ * Behaviour of the optional content props. The default render of a block is
+ * locked by its parity test; these check what the props do.
  */
 import { describe, it, expect, afterEach } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";

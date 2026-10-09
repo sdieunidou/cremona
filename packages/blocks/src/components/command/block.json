@@ -5,46 +5,36 @@
   "description": "Command menu with search, groups, shortcuts and footer hints.",
   "added": "2026-09-21",
   "kind": "component",
-  "sourcePath": "components/command.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": null,
-    "components": []
-  },
   "variants": [
     {
       "label": "default",
-      "propsRaw": "{}",
       "size": null,
       "slug": "000-default"
     },
     {
       "label": "with results",
-      "propsRaw": "{query:`dep`}",
       "size": null,
       "slug": "001-with-results"
     },
     {
       "label": "empty",
-      "propsRaw": "{empty:!0}",
       "size": null,
       "slug": "002-empty"
     },
     {
       "label": "nested",
-      "propsRaw": "{groups:[`Actions`,`Navigation`,`Deploy`]}",
       "size": null,
       "slug": "003-nested"
     },
     {
       "label": "french",
       "slug": "004-french",
-      "size": null,
-      "propsRaw": "{placeholder:`Chercher une commande…`,emptyText:`Aucun résultat`,emptyHint:`Essayez « déployer » ou « paramètres ».`,catalog:[{heading:`Actions`,items:[{label:`Nouveau fichier`,shortcut:`⌘N`,keywords:`nouveau fichier créer`},{label:`Déployer en production`,shortcut:`⇧⌘D`,keywords:`déployer production publier`}]},{heading:`Navigation`,items:[{label:`Aller au tableau de bord`,shortcut:`G D`,keywords:`tableau de bord accueil`},{label:`Ouvrir les paramètres`,shortcut:`G S`,keywords:`paramètres préférences`}]}],labels:{search:`Rechercher une commande`,escape:`échap`,commands:`Commandes`,navigate:`Naviguer`,select:`Sélectionner`}}"
+      "size": null
     }
   ]
 }

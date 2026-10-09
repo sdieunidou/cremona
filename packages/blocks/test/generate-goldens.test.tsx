@@ -1,11 +1,13 @@
 /**
- * Generate goldens for NEW blocks (no POC source): renders each variant with
- * the standard preview-frame wrapper via SSR and writes golden/<slug>.html.
+ * Generates the missing goldens: renders each variant that has none, with the
+ * props of its preview-props.json and the standard preview-frame wrapper, and
+ * writes golden/<slug>.html.
  *
- * - Blocks WITH existing goldens (POC-extracted) are never touched.
- * - Run explicitly when authoring a new block:
- *     pnpm vitest run test/generate-goldens.test.ts   (from packages/blocks)
- * - Committed goldens become the regression reference for parity tests.
+ * - A golden that exists is never touched: it is the regression reference of the
+ *   block's parity test. To change one on purpose, delete it, run this test,
+ *   review the diff and run the parity test.
+ * - Run it explicitly when authoring a block or a variant (from packages/blocks):
+ *     pnpm vitest run test/generate-goldens.test.tsx
  */
 import { renderToStaticMarkup } from "react-dom/server";
 import { writeFileSync, mkdirSync, existsSync } from "node:fs";
@@ -13,45 +15,23 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
 import type { ComponentType } from "react";
+import { hydrateProps, type Props } from "./helpers/preview-props.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const blocksRoot = join(here, "../src");
 
 const reactModules = import.meta.glob<Record<string, unknown>>("../src/*/*/react.tsx", {
   eager: true,
 });
 const metaModules = import.meta.glob<{
   default: {
-    category: string;
     file: string;
-    name: string;
-    description: string;
-    kind: string;
-    variants: { label: string; slug: string; size?: string | null; propsRaw: string }[];
+    variants: { label: string; slug: string; size?: string | null }[];
   };
 }>("../src/*/*/block.json", { eager: true });
-const propsModules = import.meta.glob<{ default: Record<string, Record<string, unknown>> }>(
+const propsModules = import.meta.glob<{ default: Record<string, Props> }>(
   "../src/*/*/preview-props.json",
   { eager: true },
 );
-
-function parsePropsRaw(raw: string): Record<string, unknown> {
-  if (!raw || raw === "{}") return {};
-  let s = raw
-    .replace(/`/g, '"')
-    .replace(/!0\b/g, "true")
-    .replace(/!1\b/g, "false")
-    .replace(/([[,:]\s*)\.(\d)/g, "$10.$2");
-  s = s.replace(/([{,]\s*)([A-Za-z_$][\w$]*)(\s*:)/g, '$1"$2"$3');
-  try {
-    return JSON.parse(s);
-  } catch {
-    s = s.replace(/([{,]\s*"[A-Za-z_$][\w$]*"\s*:\s*)([A-Za-z_$][\w$.]*)/g, "$1null");
-    const parsed = JSON.parse(s) as Record<string, unknown>;
-    for (const k of Object.keys(parsed)) if (parsed[k] === null) delete parsed[k];
-    return parsed;
-  }
-}
 
 const FRAME =
   "group/preview relative flex flex-col overflow-hidden rounded-lg border border-border/50 bg-muted/20 dark:bg-muted/15 ";
@@ -74,16 +54,18 @@ function frame(content: string, label: string, size?: string | null): string {
   );
 }
 
-describe("generate goldens for new blocks", () => {
+describe("generate the missing goldens", () => {
   it("renders and writes every missing golden", () => {
     let created = 0;
     for (const [path, meta] of Object.entries(metaModules)) {
       const m = meta.default;
-      const dir = join(blocksRoot, m.category.toLowerCase(), m.file);
+      const dir = join(here, dirname(path));
       const goldenDir = join(dir, "golden");
       const mod = reactModules[path.replace("block.json", "react.tsx")];
       if (!mod) continue;
-      // component = PascalCase function export (fall back to last)
+      if (m.variants.every((v) => existsSync(join(goldenDir, `${v.slug}.html`)))) continue;
+
+      // component = the PascalCase function export named after the file (else the last one)
       const candidates = Object.entries(mod).filter(
         ([name, value]) => typeof value === "function" && /^[A-Z]/.test(name),
       );
@@ -94,26 +76,19 @@ describe("generate goldens for new blocks", () => {
         .join("");
       const named = candidates.find(([n]) => n === pascal);
       const Component = (named ??
-        candidates[candidates.length - 1]!)[1] as unknown as ComponentType<Record<string, unknown>>;
+        candidates[candidates.length - 1]!)[1] as unknown as ComponentType<Props>;
 
-      const propsAll =
-        propsModules[path.replace("block.json", "preview-props.json")]?.default ?? {};
-      const needsAny = m.variants.some((v) => !existsSync(join(goldenDir, `${v.slug}.html`)));
-      if (!needsAny) continue;
-      if (!existsSync(goldenDir)) {
-        // only synthesize for blocks that are NOT POC-extracted (no sources dir)
-        if (existsSync(join(dir, "sources"))) {
-          throw new Error(
-            `POC block ${m.category}/${m.file} missing goldens — extraction bug, refusing to synthesize`,
-          );
-        }
-        mkdirSync(goldenDir, { recursive: true });
-      }
+      const previews = propsModules[path.replace("block.json", "preview-props.json")]?.default;
+      mkdirSync(goldenDir, { recursive: true });
       for (const v of m.variants) {
         const goldenPath = join(goldenDir, `${v.slug}.html`);
         if (existsSync(goldenPath)) continue;
-        const props = propsAll[v.label] ?? parsePropsRaw(v.propsRaw ?? "");
-        const html = renderToStaticMarkup(<Component animated trigger="mount" {...props} />);
+        const props = previews?.[v.label];
+        if (!props)
+          throw new Error(`${path}: no props for "${v.label}" in preview-props.json, no golden`);
+        const html = renderToStaticMarkup(
+          <Component animated trigger="mount" {...(hydrateProps(props) as Props)} />,
+        );
         writeFileSync(goldenPath, frame(html, v.label, v.size) + "\n");
         created += 1;
       }

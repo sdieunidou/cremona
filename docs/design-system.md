@@ -263,8 +263,8 @@ the rainbow glow (`opacity-60 blur-sm`), the bottom veil
 
 Every block renders at one of three scales (the MCP `scale`):
 
-- **illustration** — product artwork in the POC style (metrics, charts, scenes,
-  states…): every category not listed below;
+- **illustration** — product artwork (metrics, charts, scenes, states…): every
+  category not listed below;
 - **real-size** — `components/*`, `forms/*`, `mobile/*`, `notices/*`,
   `ecommerce/product-card`, `order-row` and `checkout-summary`: UI at its real
   size (12–16 px text), the templates interactive components are derived from;

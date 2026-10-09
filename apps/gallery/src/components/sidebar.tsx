@@ -156,7 +156,7 @@ function CategoryGroup({
   );
 }
 
-/** The isometric cube mark (favicon.svg inline, POC-faithful). */
+/** The isometric cube mark (favicon.svg inline). */
 export function CremonaMark({
   className = "text-foreground will-change-transform size-6 shrink-0",
 }: {

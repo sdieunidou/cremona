@@ -5,4 +5,7 @@ import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/components/input");
 
-runGoldenParity("components/input", { blockDir, Component: Input });
+runGoldenParity("components/input", {
+  blockDir,
+  Component: Input,
+});

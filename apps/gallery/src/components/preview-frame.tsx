@@ -15,7 +15,7 @@ export interface PreviewFrameProps {
   children: ReactNode;
 }
 
-/** Faithful reproduction of the POC preview frame. */
+/** The frame a variant is previewed in: a stage of the variant's height, a toolbar and its label. */
 export function PreviewFrame({
   label,
   size,

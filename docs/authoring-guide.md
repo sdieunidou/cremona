@@ -1,19 +1,18 @@
-# Authoring guide — new visuals (components, layouts, ecommerce, forms…)
+# Authoring guide — visuals (components, layouts, ecommerce, forms…)
 
-This is the contract for authoring NEW visuals that have no POC source. The
-quality bar is identical to the 115 POC-ported blocks: same anatomy, same
-motion language, same tokens, same test machinery.
+This is the contract for authoring a visual: the same anatomy, motion language,
+tokens and test machinery for every block of the library.
 
-## Anatomy of a new visual
+## Anatomy of a visual
 
 `packages/blocks/src/<category>/<file>/`
 
 | File | Rule |
 |---|---|
-| `block.json` | metadata + variants (scaffolded by MCP `add_block` or manually) |
+| `block.json` | metadata + variants: label, slug, stage size (scaffolded by MCP `add_block` or by hand) |
+| `preview-props.json` | the props of every variant, keyed by its `block.json` label (scaffolded by `add_block` or by hand) |
 | `react.tsx` | the implementation (self-contained, complete defaults); its first line is `"use client";` |
 | `api.json` | **generated** by `pnpm generate:api` from the props interface — never hand-write |
-| `preview-props.json` | **generated** by the parity test run — never hand-write |
 | `golden/*.html` | **generated** by `test/generate-goldens.test.tsx` — never hand-write |
 
 ## Rules (non-negotiable)
@@ -30,10 +29,10 @@ motion language, same tokens, same test machinery.
    turns them into `api.json` — type, default and description of each prop —
    which the gallery shows as the block's props table and `get_block` returns
    as `api`.
-3. **Variant props survive JSON** — strings, numbers, booleans, arrays, plain
-   objects, and lucide icons: `preview-props.json` stores a component as
+3. **Variant props are JSON** — strings, numbers, booleans, arrays, plain
+   objects, and lucide icons: `preview-props.json` writes a component as
    `"lucide:Name"` and an element as `{ "$element": "lucide:Name", "props": … }`.
-   Any other component or function fails the parity test. Prefer icon keys
+   Any other component or function cannot be written there. Prefer icon keys
    mapped inside the block (`icon: "share"`), as the kits do: such a prop also
    crosses the Server Component boundary.
 4. **Motion language** — entrance: `opacity 0→1, y 8→0, .35s easeOut`
@@ -103,7 +102,7 @@ decides. The full API is in [react.md](react.md#shared-helpers).
 ```bash
 cd packages/blocks
 pnpm vitest run test/generate-goldens.test.tsx        # 1. write the golden
-pnpm vitest run test/<category>-<file>.parity.test.tsx # 2. parity vs golden (+ writes preview-props.json)
+pnpm vitest run test/<category>-<file>.parity.test.tsx # 2. parity vs golden
 pnpm vitest run                                        # 3. whole suite stays green
 cd ../..
 node tools/use-client.mjs                              # 4. "use client" first (add_block's skeleton has it)
@@ -116,8 +115,8 @@ pnpm check                                             # 8. lint, format, types,
 `pnpm check` runs `pnpm check:use-client` (`node tools/use-client.mjs --check`),
 which fails on a block whose `react.tsx` does not start with `"use client";`,
 and `pnpm check:api`, which fails on a stale `api.json`. Commit everything the
-steps wrote — goldens, `preview-props.json`, `api.json`, templates and
-`cremona.css`: CI regenerates them and fails on a changed or untracked file.
+steps wrote — goldens, `api.json`, templates and `cremona.css`: CI regenerates
+them and fails on a changed or untracked file.
 
 `cremona.css` only contains the classes it was compiled from: until
 `pnpm build:css` runs, a class the block introduces renders unstyled (the tokens

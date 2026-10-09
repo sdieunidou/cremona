@@ -5,72 +5,56 @@
   "description": "A half keyboard showing a key combination press.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "keyboard/half.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "half-B7zyJieI.js",
-    "components": [
-      "half-Ub031Glf.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "001-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "windows layout",
       "slug": "002-windows-layout",
-      "size": null,
-      "propsRaw": "{layout:`windows`}"
+      "size": null
     },
     {
       "label": "⌘ + S · shortcut",
       "slug": "003-s-shortcut",
-      "size": null,
-      "propsRaw": "{keys:[`⌘`,`S`]}"
+      "size": null
     },
     {
       "label": "⌘ + Shift + A · shortcut",
       "slug": "004-shift-a-shortcut",
-      "size": null,
-      "propsRaw": "{keys:[`⌘`,`Shift`,`A`]}"
+      "size": null
     },
     {
       "label": "⌘ + S · hover",
       "slug": "005-s-hover",
-      "size": null,
-      "propsRaw": "{keys:[`⌘`,`S`],hover:!0}"
+      "size": null
     },
     {
       "label": "⌘ + C · isometric",
       "slug": "006-c-isometric",
-      "size": null,
-      "propsRaw": "{keys:[`⌘`,`C`],isometric:!0}"
+      "size": null
     },
     {
       "label": "Ctrl + Z · windows",
       "slug": "007-ctrl-z-windows",
-      "size": null,
-      "propsRaw": "{keys:[`Ctrl`,`Z`],layout:`windows`}"
+      "size": null
     },
     {
       "label": "Ctrl + C · windows · isometric",
       "slug": "008-ctrl-c-windows-isometric",
-      "size": null,
-      "propsRaw": "{keys:[`Ctrl`,`C`],layout:`windows`,isometric:!0}"
+      "size": null
     }
   ]
 }

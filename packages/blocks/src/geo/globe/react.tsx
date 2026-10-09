@@ -28,7 +28,7 @@ export interface GlobeProps extends VisualProps {
   wrapperClassName?: string;
 }
 
-/** rAF loop of the canvas globe (mirrors the POC `useGlobeFrame`), running while `enabled`. */
+/** rAF loop of the canvas globe, running while `enabled`. */
 function useGlobeFrame(callback: (time: number, delta: number) => void, enabled: boolean) {
   const start = useRef(0);
   const { isStatic } = useContext(MotionConfigContext);

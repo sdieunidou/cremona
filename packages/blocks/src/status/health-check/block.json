@@ -5,78 +5,61 @@
   "description": "A service health check with status indicators.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "status/health-check.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "health-check-Bw8xdvx0.js",
-    "components": [
-      "health-check-Br0fTuwR.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{isometric:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "e-commerce · partial degradation",
       "slug": "006-e-commerce-partial-degradation",
-      "size": null,
-      "propsRaw": "{title:`Shop Status`,items:[{icon:l,name:`Checkout`,region:`us-east-1`,status:`operational`,latency:`68 ms`},{icon:n,name:`Payments`,region:`Stripe · primary`,status:`operational`,latency:`112 ms`},{icon:u,name:`Product Search`,region:`eu-west-1`,status:`degraded`,latency:`640 ms`},{icon:c,name:`Order Webhooks`,region:`queue · 3 retries`,status:`operational`,latency:`24 ms`}]}"
+      "size": null
     },
     {
       "label": "ai stack · outage",
       "slug": "007-ai-stack-outage",
-      "size": null,
-      "propsRaw": "{title:`Inference Stack`,items:[{icon:s,name:`LLM Gateway`,region:`us-east-1`,status:`operational`,latency:`184 ms`},{icon:p,name:`Embeddings`,region:`us-east-1`,status:`operational`,latency:`92 ms`},{icon:r,name:`Vector DB`,region:`Pinecone · prod`,status:`down`,latency:`n/a`},{icon:o,name:`Model Server`,region:`gpu-cluster-04`,status:`degraded`,latency:`1.2 s`}]}"
+      "size": null
     },
     {
       "label": "minimal stack · all operational",
       "slug": "008-minimal-stack-all-operational",
-      "size": null,
-      "propsRaw": "{title:`Production`,items:[{icon:a,name:`Web App`,region:`edge · global`,status:`operational`,latency:`38 ms`},{icon:o,name:`API`,region:`us-east-1`,status:`operational`,latency:`54 ms`},{icon:r,name:`Postgres`,region:`primary`,status:`operational`,latency:`6 ms`}]}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "009-french",
-      "size": null,
-      "propsRaw": "{title:`État des services`,items:[{name:`Passerelle API`,region:`eu-west-3`,status:`operational`,latency:`42 ms`},{name:`Base de données`,region:`primaire · réplique`,status:`operational`,latency:`8 ms`},{name:`Authentification`,region:`eu-west-3`,status:`operational`,latency:`31 ms`},{name:`Stockage`,region:`eu-central-1`,status:`degraded`,latency:`412 ms`},{name:`CDN`,region:`edge · 218 PoP`,status:`operational`,latency:`12 ms`}],emptyLabel:`Aucun service`,labels:{operational:`Opérationnel`,degraded:`Dégradé`,down:`Panne`,summaryOperational:`Tout fonctionne`,summaryDegraded:`Dégradation partielle`,summaryDown:`Panne détectée`}}"
+      "size": null
     }
   ]
 }

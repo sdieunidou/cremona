@@ -3,9 +3,6 @@ import { fileURLToPath } from "node:url";
 import { OrderRow } from "../src/ecommerce/order-row/react.js";
 import { runGoldenParity } from "./helpers/run-golden-parity.js";
 
-// React 19.3 hoists <link rel="preload" as="image"> for every <img>; strip that
-// version noise so the golden comparison stays structural (see components/avatar).
-
 const blockDir = join(dirname(fileURLToPath(import.meta.url)), "../src/ecommerce/order-row");
 
 runGoldenParity("ecommerce/order-row", {

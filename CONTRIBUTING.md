@@ -19,7 +19,7 @@ pnpm format           # fix formatting
 ```
 
 When you change a block, also run the generators and commit what they write:
-`pnpm test` (goldens of new variants, `preview-props.json`),
+`pnpm test` (it writes the goldens of new variants),
 `pnpm generate:api`, `pnpm generate:stimulus` and `pnpm build:css`. CI runs them
 again and fails on any changed or untracked generated file. For a gallery
 change, run `pnpm gallery:build && pnpm e2e` (`E2E_PORT` sets the port): every
@@ -41,8 +41,6 @@ current state.
 - [docs/adding-blocks.md](docs/adding-blocks.md) — the workflow, step by step.
 - [docs/authoring-guide.md](docs/authoring-guide.md) — the contract for a new
   block: anatomy, tokens, motion, scale, variants, tests.
-- [docs/porting-guide.md](docs/porting-guide.md) — the contract of the POC
-  blocks (the folders with `sources/`), whose goldens never change.
 
 The MCP server scaffolds a category or a block from a checkout (`add_category`,
 `add_block`): an MCP client started at the repo root picks the server up from

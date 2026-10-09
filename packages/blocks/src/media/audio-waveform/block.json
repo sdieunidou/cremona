@@ -5,96 +5,76 @@
   "description": "An audio player with an animated waveform and controls.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "media/audio-waveform.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "audio-waveform-Bg6173dn.js",
-    "components": [
-      "audio-waveform-B2pMMLKz.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "001-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "002-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "003-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "custom copy",
       "slug": "004-custom-copy",
-      "size": null,
-      "propsRaw": "{title:`Sunset drive`,subtitle:`Ada Lovelace · EP`,current:`2:14`,duration:`4:08`,progress:54}"
+      "size": null
     },
     {
       "label": "pause state",
       "slug": "005-pause-state",
-      "size": null,
-      "propsRaw": "{state:`pause`}"
+      "size": null
     },
     {
       "label": "custom meta",
       "slug": "006-custom-meta",
-      "size": null,
-      "propsRaw": "{meta:`Lossless · 24-bit`}"
+      "size": null
     },
     {
       "label": "voice note · custom icon · custom meta",
       "slug": "007-voice-note-custom-icon-custom-meta",
-      "size": null,
-      "propsRaw": "{icon:r,title:`Voice memo · Tuesday`,subtitle:`Recording`,current:`0:18`,duration:`0:42`,progress:42,meta:`Mono · 96kbps`}"
+      "size": null
     },
     {
       "label": "podcast · pause · isometric",
       "slug": "008-podcast-pause-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0,state:`pause`,icon:o,title:`On building in public`,subtitle:`Highlight · 10:35`,current:`2:03`,duration:`10:35`,progress:20,meta:`Episode 47`}"
+      "size": null
     },
     {
       "label": "bars · 26",
       "slug": "009-bars-26",
-      "size": null,
-      "propsRaw": "{bars:26}"
+      "size": null
     },
     {
       "label": "bars · 42",
       "slug": "010-bars-42",
-      "size": null,
-      "propsRaw": "{bars:42}"
+      "size": null
     },
     {
       "label": "bars · 56",
       "slug": "011-bars-56",
-      "size": null,
-      "propsRaw": "{bars:56}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "012-french",
-      "size": null,
-      "propsRaw": "{title:`Minuit à Lisbonne`,subtitle:`Léo Marques · Single`,meta:`Hi-Fi · 320 kbit/s`,labels:{play:`Lecture`,pause:`Pause`,playHint:`Touchez pour lire`,pauseHint:`Touchez pour mettre en pause`}}"
+      "size": null
     }
   ]
 }

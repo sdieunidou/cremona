@@ -5,96 +5,76 @@
   "description": "A live resource monitor streaming CPU and memory usage across a gridded plot, with a legend showing the current reading for each series.",
   "added": "2026-09-17",
   "kind": "block",
-  "sourcePath": "status/resource-monitor.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "resource-monitor-DusOfc8B.js",
-    "components": [
-      "resource-monitor-CyN8pEoP.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "hover",
       "slug": "001-hover",
-      "size": null,
-      "propsRaw": "{hover:!0}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "002-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "003-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "004-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{isometric:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "005-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "006-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "custom copy",
       "slug": "007-custom-copy",
-      "size": null,
-      "propsRaw": "{title:`api-prod-01`,series:[{label:`DISK`,color:`var(--color-amber-500)`,points:[.3,.34,.31,.38,.35,.33,.37,.34],jitter:.04},{label:`NET`,color:`var(--color-primary)`,points:[.62,.55,.68,.6,.72,.64,.7,.66],jitter:.07}]}"
+      "size": null
     },
     {
       "label": "single series · isometric",
       "slug": "008-single-series-isometric",
-      "size": null,
-      "propsRaw": "{title:`Queue throughput`,isometric:!0,series:[{label:`JOBS`,color:`var(--color-primary)`,points:[.2,.35,.28,.5,.44,.66,.58,.78],jitter:.06}]}"
+      "size": null
     },
     {
       "label": "fast · 96 samples",
       "slug": "009-fast-96-samples",
-      "size": null,
-      "propsRaw": "{samples:96,interval:260}"
+      "size": null
     },
     {
       "label": "no grid",
       "slug": "010-no-grid",
-      "size": null,
-      "propsRaw": "{showGrid:!1}"
+      "size": null
     },
     {
       "label": "no axis",
       "slug": "011-no-axis",
-      "size": null,
-      "propsRaw": "{showAxis:!1}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "012-french",
-      "size": null,
-      "propsRaw": "{title:`Application`,series:[{label:`MÉM`,color:`var(--color-emerald-500)`,points:[0.52,0.57,0.5,0.58,0.53,0.49,0.56,0.51,0.57,0.54]},{label:`CPU`,color:`var(--color-primary)`,points:[0.16,0.21,0.19,0.27,0.34,0.47,0.6,0.73,0.85,0.9]}],emptyLabel:`Aucune donnée`,locale:`fr-FR`}"
+      "size": null
     }
   ]
 }

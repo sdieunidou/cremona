@@ -41,7 +41,6 @@ describe("cremona MCP server", () => {
     );
     expect(blocks.map((b) => b.file)).toEqual(["comparison", "stat-card", "trend"]);
     const statCard = blocks.find((b) => b.file === "stat-card");
-    expect(statCard.ported).toBe(true);
     expect(statCard.variants).toContain("default");
   });
 
@@ -113,6 +112,7 @@ describe("cremona MCP server", () => {
     // A contiguous match still outranks a scattered one.
     expect((await search("stat card"))[0].key).toBe("metrics/stat-card");
   });
+
   it("falls back to the closest blocks, flagged partial, when none matches every term", async () => {
     const search = async (query, extra = {}) =>
       textOf(await client.callTool({ name: "search_blocks", arguments: { query, ...extra } }));
@@ -147,7 +147,6 @@ describe("cremona MCP server", () => {
     const real = await search("kanban checklist", { scale: "illustration" });
     expect(real.every((b) => b.scale === "illustration")).toBe(true);
   });
-
 
   it("returns a block with meta, props and react source by default", async () => {
     const block = textOf(
@@ -283,15 +282,16 @@ describe("cremona MCP server", () => {
   it("validates coherence", async () => {
     const v = textOf(await client.callTool({ name: "validate", arguments: {} }));
     expect(v.ok).toBe(true);
-    expect(v.ported).toBe(v.blocks);
+    expect(v.blocks).toBe(catalog.reduce((n, g) => n + g.items.length, 0));
+    expect(v.variants).toBeGreaterThan(v.blocks);
   });
 
   it("serves guides", async () => {
     const guide = await client.callTool({
       name: "get_guide",
-      arguments: { name: "porting-guide" },
+      arguments: { name: "authoring-guide" },
     });
-    expect(guide.content[0].text).toContain("# Porting Guide");
+    expect(guide.content[0].text).toContain("# Authoring guide");
   });
 
   it("tells a connecting session that blocks are preview compositions", () => {

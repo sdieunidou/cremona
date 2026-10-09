@@ -1,4 +1,4 @@
-/** Class strings of the gallery shell (sidebar, header, preview frames), from the POC. */
+/** Class strings of the gallery shell (sidebar, header, preview frames). */
 
 export const SHELL = {
   wrapper: "group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar",

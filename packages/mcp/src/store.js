@@ -141,7 +141,7 @@ export const SCALES = ["real-size", "miniature", "illustration"];
 
 // Measured sizes (text 12–16 px, controls 32–44 px vs 7–10 px text): the kit
 // categories are real-size templates, sections and layouts are thumbnail-scale
-// wireframes, and every POC category is animated product artwork.
+// wireframes, and every other category is animated product artwork.
 const REAL_SIZE_CATEGORIES = new Set(["components", "ecommerce", "forms", "mobile", "notices"]);
 const MINIATURE_CATEGORIES = new Set(["sections", "layouts"]);
 const SCALE_OVERRIDES = {
@@ -185,7 +185,6 @@ export function blockIndex() {
         kind: meta?.kind ?? item.kind ?? "block",
         scale: blockScale(group.slug, item.file),
         added: item.added,
-        ported: !!meta,
         variants: meta?.variants?.map((v) => v.label) ?? [],
         cols: meta?.page?.cols ?? 2,
       });
@@ -316,9 +315,9 @@ function scoreTerm(block, term) {
     ...alternativesOf(term).map(({ spelling, weight }) => scoreSpelling(block, spelling) * weight),
   );
 }
+
 /** Most blocks a search returns when none matches every word and it falls back to partial matches. */
 const PARTIAL_LIMIT = 10;
-
 
 /**
  * Blocks matching every term of `query`, best first. When no block matches them
@@ -418,8 +417,7 @@ export function validate() {
     if (!existsSync(join(dir, "react.tsx")))
       issues.push(`MISSING_REACT: ${b.key} has no react.tsx`);
     const props = blockPreviewProps(b.categorySlug, b.file);
-    if (!props)
-      issues.push(`MISSING_PREVIEW_PROPS: ${b.key} (run the blocks test suite to generate)`);
+    if (!props) issues.push(`MISSING_PREVIEW_PROPS: ${b.key} has no preview-props.json`);
     if (!blockApi(b.categorySlug, b.file))
       issues.push(`MISSING_API: ${b.key} (run pnpm generate:api)`);
     const stim = manifest[b.key];
@@ -428,11 +426,21 @@ export function validate() {
       if (!existsSync(join(dir, "golden", `${v.slug}.html`)))
         issues.push(`MISSING_GOLDEN: ${b.key} · ${v.label} (${v.slug})`);
       if (props && !Object.hasOwn(props, v.label))
-        issues.push(`MISSING_PREVIEW_PROPS: ${b.key} · ${v.label} (run the blocks test suite)`);
+        issues.push(
+          `MISSING_PREVIEW_PROPS: ${b.key} · ${v.label} (add its props to preview-props.json)`,
+        );
       if (!stim) continue;
       const template = stim.variants?.find((t) => t.label === v.label);
       if (!template || !stimulusTemplate(b.categorySlug, b.file, template.slug))
         issues.push(`MISSING_STIMULUS: ${b.key} · ${v.label} (run pnpm generate:stimulus)`);
+    }
+    if (props) {
+      const labels = new Set(meta.variants.map((v) => v.label));
+      for (const label of Object.keys(props))
+        if (!labels.has(label))
+          issues.push(
+            `ORPHAN_PREVIEW_PROPS: ${b.key} · ${label} has props but is not a variant of block.json`,
+          );
     }
     if (parity && !parity.has(b.key))
       issues.push(
@@ -443,7 +451,7 @@ export function validate() {
   for (const k of orphans) issues.push(`ORPHAN_BLOCK: ${k} exists on disk but not in catalog.json`);
   return {
     blocks: index.length,
-    ported: index.filter((b) => b.ported).length,
+    variants: index.reduce((n, b) => n + b.variants.length, 0),
     issues,
     ok: issues.length === 0,
   };

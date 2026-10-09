@@ -5,90 +5,71 @@
   "description": "A pull request card whose CI checks run one by one, then settle into an approval and a merge button that lights up.",
   "added": "2026-08-19",
   "kind": "block",
-  "sourcePath": "git/pull-request.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "pull-request-D5PJHd1a.js",
-    "components": [
-      "pull-request-DmFXZ7MM.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{isometric:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "custom copy",
       "slug": "006-custom-copy",
-      "size": null,
-      "propsRaw": "{title:`Migrate auth to passkeys`,number:`#1204`,source:`feat/passkeys`,target:`develop`,files:14,additions:486,deletions:92,reviewer:`Noah Bennett`,checks:[{name:`typecheck`,duration:`42s`},{name:`e2e`,duration:`3m 18s`}]}"
+      "size": null
     },
     {
       "label": "avatar image",
       "slug": "007-avatar-image",
-      "size": null,
-      "propsRaw": "{reviewer:`Emma Wallace`,reviewerImage:e(`media/placeholders/avatar-04.jpg`)}"
+      "size": null
     },
     {
       "label": "failing",
       "slug": "008-failing",
-      "size": null,
-      "propsRaw": "{variant:`failing`}"
+      "size": null
     },
     {
       "label": "failing · custom copy",
       "slug": "009-failing-custom-copy",
-      "size": null,
-      "propsRaw": "{variant:`failing`,title:`Refactor billing webhooks`,number:`#973`,source:`chore/webhooks`,files:5,additions:61,deletions:148,reviewer:`Ava Lindqvist`}"
+      "size": null
     },
     {
       "label": "hover",
       "slug": "010-hover",
-      "size": null,
-      "propsRaw": "{hover:!0}"
+      "size": null
     },
     {
       "label": "french",
       "slug": "011-french",
-      "size": null,
-      "propsRaw": "{title:`Ajouter le paiement par carte`,source:`feat/paiement`,checks:[{name:`build`,duration:`1 min 12 s`},{name:`tests`,duration:`2 min 04 s`},{name:`lint`,duration:`18 s`}],reviewer:`Camille Martin`,status:`Ouverte`,mergeLabel:`Fusionner`,labels:{checksQueued:`Vérifications en attente`,checksRunning:`Vérifications en cours`,checksFailed:`1 vérification en échec`,approved:`Approuvée par {reviewer}`,files:`{count} fichiers`,filesOne:`{count} fichier`},locale:`fr-FR`}"
+      "size": null
     }
   ]
 }

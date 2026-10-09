@@ -3,7 +3,7 @@
  * the monorepo layout, so the published package runs without a cremona checkout.
  */
 import { cpSync, existsSync, mkdirSync, readdirSync, rmSync } from "node:fs";
-import { dirname, join, sep } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const pkgRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -15,12 +15,10 @@ if (!existsSync(join(repoRoot, "packages", "blocks", "catalog.json"))) {
 }
 
 rmSync(out, { recursive: true, force: true });
-const copy = (from, filter) =>
-  cpSync(join(repoRoot, from), join(out, from), { recursive: true, filter });
+const copy = (from) => cpSync(join(repoRoot, from), join(out, from), { recursive: true });
 
 copy("packages/blocks/catalog.json");
-// sources/ holds reference chunks nothing reads at runtime
-copy("packages/blocks/src", (src) => !src.split(sep).includes("sources"));
+copy("packages/blocks/src");
 copy("packages/tokens/themes.json");
 copy("packages/tokens/css");
 copy("packages/stimulus/src");

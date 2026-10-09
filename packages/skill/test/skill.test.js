@@ -54,7 +54,8 @@ describe("cremona skill", () => {
     expect(skill).toContain("@cremona/stimulus");
     expect(skill).toContain('from "@cremona/blocks/metrics/stat-card"');
     expect(skill).toContain("npm i @cremona/blocks @cremona/tokens");
-    expect(skill).toContain("docs/porting-guide.md");
+    expect(skill).toContain("docs/adding-blocks.md");
+    expect(skill).not.toMatch(/porting|\bPOC\b/);
     expect(skill).toContain("cremona-visual");
     expect(skill).not.toMatch(/pixel-exact|byte-identical/);
   });

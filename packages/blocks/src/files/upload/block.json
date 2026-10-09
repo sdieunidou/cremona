@@ -5,72 +5,56 @@
   "description": "A file upload area with progress and drag and drop.",
   "added": "2026-06-18",
   "kind": "block",
-  "sourcePath": "files/upload.tsx",
   "page": {
     "cols": 3,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "upload-BpNmKJZ7.js",
-    "components": [
-      "upload-DNtasbr8.js"
-    ]
-  },
   "variants": [
     {
       "label": "document",
       "slug": "000-document",
-      "size": "sm",
-      "propsRaw": "{}"
+      "size": "sm"
     },
     {
       "label": "hover",
       "slug": "001-hover",
-      "size": "sm",
-      "propsRaw": "{hover:!0}"
+      "size": "sm"
     },
     {
       "label": "pdf",
       "slug": "002-pdf",
-      "size": "sm",
-      "propsRaw": "{variant:`pdf`}"
+      "size": "sm"
     },
     {
       "label": "image",
       "slug": "003-image",
-      "size": "sm",
-      "propsRaw": "{variant:`image`}"
+      "size": "sm"
     },
     {
       "label": "video",
       "slug": "004-video",
-      "size": "sm",
-      "propsRaw": "{variant:`video`}"
+      "size": "sm"
     },
     {
       "label": "audio",
       "slug": "005-audio",
-      "size": "sm",
-      "propsRaw": "{variant:`audio`}"
+      "size": "sm"
     },
     {
       "label": "spreadsheet",
       "slug": "006-spreadsheet",
-      "size": "sm",
-      "propsRaw": "{variant:`spreadsheet`}"
+      "size": "sm"
     },
     {
       "label": "code",
       "slug": "007-code",
-      "size": "sm",
-      "propsRaw": "{variant:`code`}"
+      "size": "sm"
     },
     {
       "label": "archive",
       "slug": "008-archive",
-      "size": "sm",
-      "propsRaw": "{variant:`archive`}"
+      "size": "sm"
     }
   ]
 }

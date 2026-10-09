@@ -132,8 +132,6 @@ export interface SimpleProps extends VisualProps {
 }
 
 export function Simple({
-  // NOTE: the extracted POC chunk says `example.com`, but every golden shows
-  // `app.example.com` — the goldens are the render reference, so they win.
   url = "app.example.com",
   animated = false,
   trigger = "inView",

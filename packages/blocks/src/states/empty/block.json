@@ -5,72 +5,56 @@
   "description": "An empty grid of dashed placeholder slots where an add action ripples out and one slot briefly materializes before dissolving back.",
   "added": "2026-08-07",
   "kind": "block",
-  "sourcePath": "states/empty.tsx",
   "page": {
     "cols": 2,
     "animated": true,
     "trigger": "inViewRepeat"
   },
-  "chunks": {
-    "page": "empty-CyBwKj9v.js",
-    "components": [
-      "empty-H6zfT8q7.js"
-    ]
-  },
   "variants": [
     {
       "label": "default",
       "slug": "000-default",
-      "size": null,
-      "propsRaw": "{}"
+      "size": null
     },
     {
       "label": "fadeOut",
       "slug": "001-fadeout",
-      "size": null,
-      "propsRaw": "{fadeOut:!0}"
+      "size": null
     },
     {
       "label": "isometric",
       "slug": "002-isometric",
-      "size": null,
-      "propsRaw": "{isometric:!0}"
+      "size": null
     },
     {
       "label": "isometric · fadeOut",
       "slug": "003-isometric-fadeout",
-      "size": null,
-      "propsRaw": "{isometric:!0,fadeOut:!0}"
+      "size": null
     },
     {
       "label": "default · no gradient",
       "slug": "004-default-no-gradient",
-      "size": null,
-      "propsRaw": "{gradient:!1}"
+      "size": null
     },
     {
       "label": "isometric · no gradient",
       "slug": "005-isometric-no-gradient",
-      "size": null,
-      "propsRaw": "{isometric:!0,gradient:!1}"
+      "size": null
     },
     {
       "label": "two slots",
       "slug": "006-two-slots",
-      "size": null,
-      "propsRaw": "{slots:2}"
+      "size": null
     },
     {
       "label": "three slots",
       "slug": "007-three-slots",
-      "size": null,
-      "propsRaw": "{slots:3}"
+      "size": null
     },
     {
       "label": "six slots · hover",
       "slug": "008-six-slots-hover",
-      "size": null,
-      "propsRaw": "{slots:6,hover:!0}"
+      "size": null
     }
   ]
 }

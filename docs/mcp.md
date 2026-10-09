@@ -1,7 +1,7 @@
 # MCP server
 
 The `@cremona/mcp` package exposes the whole library to AI sessions over
-stdio: 160 blocks in 37 categories (about 1,250 variants), the design system,
+stdio: 160 blocks in 37 categories (1,298 variants), the design system,
 authoring tools and coherence validation. The `cremona` skill
 (`packages/skill/SKILL.md`) tells a session how to use them.
 
@@ -99,7 +99,7 @@ labels.
 | Field | Content |
 |---|---|
 | `key`, `install`, `import`, `stylesheet` | always: the block key, the npm install line, the import of its component from `@cremona/blocks/<category>/<file>`, the stylesheet import |
-| `meta` | name, description, `kind`, `scale`, `added`, `page`, `sourcePath`, and the variants with their `label`, `slug` and `size` (`xs` to `xl`, `md` by default: the height of their preview stage) |
+| `meta` | name, description, `kind`, `scale`, `added`, `page`, and the variants with their `label`, `slug` and `size` (`xs` to `xl`, `md` by default: the height of their preview stage) |
 | `api` | the props reference (`api.json`): each prop's type as written, whether it is optional, its default and its JSDoc description; the shared `VisualProps` marked `from`; then the fields of the block's own types |
 | `props`, `propsNote` | each variant's exact props; `"lucide:Users"` stands for an icon component, `{ "$element": "lucide:Users", "props": {…} }` for an element |
 | `reactSource`, `reactSourceNote` | the full `react.tsx`, and the recipe to derive a component from it (drop the preview frame, the `useInView` plumbing and the `noFocus` spreads; keep `"use client"`, the classes and the motion variants) |
@@ -272,7 +272,8 @@ parity tests green and cremona_validate.
 Run cremona_validate and fix every issue it reports (missing goldens,
 missing stimulus templates, missing preview-props, missing parity tests). Use
 the documented commands: pnpm vitest run test/generate-goldens.test.tsx
-(from packages/blocks), pnpm generate:stimulus, and the blocks test suite.
+(from packages/blocks) and pnpm generate:stimulus; a missing preview-props entry
+is written by hand in the block's preview-props.json.
 ```
 
 ### Auditing

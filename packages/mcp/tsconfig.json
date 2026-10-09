@@ -6,7 +6,8 @@
     "allowJs": true,
     "checkJs": true,
     "strict": false,
-    "noUncheckedIndexedAccess": false
+    "noUncheckedIndexedAccess": false,
+    "types": ["node"]
   },
   "include": ["src/**/*.js", "bin/**/*.mjs", "scripts/**/*.mjs"]
 }
