@@ -15,6 +15,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
 import type { ComponentType } from "react";
+import { stripResourceHints } from "./helpers/parity.js";
 import { hydrateProps, type Props } from "./helpers/preview-props.js";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -86,8 +87,10 @@ describe("generate the missing goldens", () => {
         const props = previews?.[v.label];
         if (!props)
           throw new Error(`${path}: no props for "${v.label}" in preview-props.json, no golden`);
-        const html = renderToStaticMarkup(
-          <Component animated trigger="inViewRepeat" {...(hydrateProps(props) as Props)} />,
+        const html = stripResourceHints(
+          renderToStaticMarkup(
+            <Component animated trigger="inViewRepeat" {...(hydrateProps(props) as Props)} />,
+          ),
         );
         writeFileSync(goldenPath, frame(html, v.label, v.size) + "\n");
         created += 1;

@@ -52,24 +52,9 @@ export function namespaceIds(html, prefix) {
   });
 }
 
-/** Placeholder media (`../../media/…`, relative to the gallery pages) as `/media/…`. */
-export function absoluteMedia(html) {
-  return html.replace(/(["(\s,]|&quot;)(?:\.\.\/)+media\//g, "$1/media/");
-}
-
 /** React 19 hoists `<link rel="preload" as="image">` hints for images: not part of the visual. */
 export function stripResourceHints(html) {
   return html.replace(/<link rel="preload"[^>]*\/>/g, "");
-}
-
-const TEXT_ALTERNATIVES = ["alt", "aria-label"];
-
-/** The golden's visual root, extracted like the parity runner does. */
-function goldenRoot(golden, parity) {
-  const start = golden.indexOf('<div aria-hidden="true" class="relative isolate flex size-full');
-  return start === -1
-    ? parity.goldenVisual(golden)
-    : golden.slice(start, parity.findDivEnd(golden, start));
 }
 
 /**
@@ -79,14 +64,11 @@ function goldenRoot(golden, parity) {
  */
 export function buildTemplate(renderer, { Component, props, key, slug, golden }) {
   const initialProps = { ...props, animated: true, trigger: "inViewRepeat" };
-  const reference = renderer.render(Component, initialProps);
-  // text alternatives do not move; the parity tests own them (images/gallery corrects its alt text)
-  const diffs = renderer.parity
-    .compare(
-      renderer.parity.parseHtmlFragment(goldenRoot(golden, renderer.parity)),
-      renderer.parity.parseHtmlFragment(reference),
-    )
-    .filter((d) => !TEXT_ALTERNATIVES.some((a) => d.message.includes(`attr ${a}:`)));
+  const reference = stripResourceHints(renderer.render(Component, initialProps));
+  const diffs = renderer.parity.compare(
+    renderer.parity.parseHtmlFragment(renderer.parity.goldenStage(golden)),
+    renderer.parity.parseHtmlFragment(reference),
+  );
   if (diffs.length)
     throw new Error(
       `initial render differs from its golden (${diffs.length} diffs, first: ${diffs[0].path}: ${diffs[0].message}) — run the block's parity test`,
@@ -98,5 +80,5 @@ export function buildTemplate(renderer, { Component, props, key, slug, golden })
   );
   const initial = stripResourceHints(renderer.render(Component, initialProps, prefix));
   const result = annotate(final, initial);
-  return { ...result, final, html: absoluteMedia(namespaceIds(result.html, prefix)) };
+  return { ...result, final, html: namespaceIds(result.html, prefix) };
 }

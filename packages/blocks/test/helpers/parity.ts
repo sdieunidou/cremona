@@ -1,9 +1,12 @@
 /**
- * Golden parity testing: compare the DOM output of our React components against
- * the SSR snapshots committed as goldens.
+ * Golden parity testing: compare the DOM output of our React components against the SSR snapshots
+ * committed as goldens.
  *
- * Comparison is structural: tag tree, class multisets, style declarations,
- * attributes and text content. React useId values are normalized away.
+ * The comparison is structural — tag tree, class sets, style declarations, attributes, text — and
+ * ignores only what changes nothing on the page: the order of a class list or of style declarations,
+ * whitespace in text, React's `useId` values (their format changes with the React version) and how
+ * motion writes an SVG presentational property, an attribute or a style by version (motion 12, 13
+ * and 14 are supported).
  */
 import { parseDocument } from "htmlparser2";
 
@@ -14,12 +17,15 @@ export interface PNode {
   text?: string;
 }
 
-const SVG_ID_RE = /_(?:R|r)_[A-Za-z0-9]+_/g;
-// Goldens rendered on a /visuals/<category>/<file> page name their media ../../media/: that is /media/.
-const MEDIA_RE = /(?:\.\.\/)+media\//g;
+const USE_ID = /_(?:R|r)_[A-Za-z0-9]+_/g;
 
 function normValue(value: string): string {
-  return value.replace(SVG_ID_RE, "_ID_").replace(MEDIA_RE, "/media/");
+  return value.replace(USE_ID, "_ID_");
+}
+
+/** React 19 hoists `<link rel="preload" as="image">` hints for an `<img>`: they are not part of the visual. */
+export function stripResourceHints(html: string): string {
+  return html.replace(/<link rel="preload"[^>]*\/>/g, "");
 }
 
 export function parseHtmlFragment(html: string): PNode[] {
@@ -30,33 +36,21 @@ export function parseHtmlFragment(html: string): PNode[] {
 function childrenOf(node: Record<string, unknown>): PNode[] {
   const children = (node.children as Record<string, unknown>[] | null) ?? [];
   const out: PNode[] = [];
-  // Adjacent text nodes are one text run for the browser: React's `<!-- -->`
-  // separators (renderToString) are hydration markers, invisible.
-  let run = "";
-  const flush = () => {
-    const text = run.replace(/\s+/g, " ").trim();
-    if (text) out.push({ tag: "#text", attrs: {}, children: [], text });
-    run = "";
-  };
   for (const child of children) {
     const type = child.type as string;
     if (type === "text") {
-      run += String(child.data ?? "");
-      continue;
-    }
-    if (type === "comment") continue;
-    flush();
-    if (type === "tag" || type === "script" || type === "style") {
+      const text = String(child.data ?? "")
+        .replace(/\s+/g, " ")
+        .trim();
+      if (text) out.push({ tag: "#text", attrs: {}, children: [], text });
+    } else if (type === "tag" || type === "script" || type === "style") {
       const attrs: Record<string, string> = {};
       for (const [k, v] of Object.entries((child.attribs as Record<string, string>) ?? {})) {
         attrs[k] = String(v);
       }
-      // React 19 hoists resource hints for <img>; they are not part of the visual
-      if (child.name === "link" && attrs.rel === "preload") continue;
       out.push({ tag: child.name as string, attrs, children: childrenOf(child) });
     }
   }
-  flush();
   return out;
 }
 
@@ -215,19 +209,12 @@ export function findDivEnd(source: string, open: number): number {
 }
 
 /**
- * Extract the visual root element(s) from a golden preview frame:
- * the children of the `flex grow items-center gap-2` stage container.
+ * What a golden holds for the visual: everything inside the stage of its preview frame (the generator
+ * writes the frame around the render of the block).
  */
-export function goldenVisual(goldenHtml: string): string {
+export function goldenStage(goldenHtml: string): string {
   const stage = goldenHtml.indexOf('<div class="flex grow items-center gap-2');
   if (stage === -1) throw new Error("stage container not found in golden");
-  const open = goldenHtml.indexOf("<div", goldenHtml.indexOf(">", stage));
-  const end = findDivEnd(goldenHtml, open);
-  return goldenHtml.slice(open, end);
-}
-
-/** The frame footer label of a golden preview. */
-export function goldenLabel(goldenHtml: string): string {
-  const m = /<div class="bg-muted\/25 px-2 py-2\.25[^"]*">([\s\S]*?)<\/div>/.exec(goldenHtml);
-  return m ? m[1]! : "";
+  const inner = goldenHtml.indexOf(">", stage) + 1;
+  return goldenHtml.slice(inner, findDivEnd(goldenHtml, stage) - "</div>".length);
 }

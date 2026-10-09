@@ -7,7 +7,6 @@ import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { ANIMATED, HELD } from "../../../tools/stimulus/annotate.mjs";
 import { createRenderer } from "../../../tools/stimulus/ssr.mjs";
 import {
-  absoluteMedia,
   buildTemplate,
   namespaceIds,
   stripResourceHints,
@@ -157,7 +156,7 @@ describe("templates against the blocks (server-rendered)", () => {
         .replace(' data-controller="cremona-visual"', "")
         .replace(/ data-anim-(from|to|path)="[^"]*"/g, "");
       expect(withoutAnimation, `${key}/${v.slug}`).toBe(
-        absoluteMedia(namespaceIds(stripResourceHints(final), prefix)),
+        namespaceIds(stripResourceHints(final), prefix),
       );
       const generated = buildTemplate(renderer, {
         Component,

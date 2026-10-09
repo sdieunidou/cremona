@@ -9,11 +9,8 @@ import { renderToStaticMarkup } from "react-dom/server";
 import type { ComponentType } from "react";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { compare, findDivEnd, goldenVisual, parseHtmlFragment } from "./parity.js";
+import { compare, goldenStage, parseHtmlFragment, stripResourceHints } from "./parity.js";
 import { hydrateProps, readPreviewProps } from "./preview-props.js";
-
-/** The visual root inside a golden: the preview frame's stage holds it. */
-const ROOT = '<div aria-hidden="true" class="relative isolate flex size-full';
 
 export interface RunParityOptions {
   blockDir: string; // absolute path to packages/blocks/src/<cat>/<block>
@@ -47,20 +44,17 @@ export function runGoldenParity(
         const props = previews[variant.label];
         if (!props) throw new Error(`no props for "${variant.label}" in preview-props.json`);
 
-        const html = readFileSync(goldenPath, "utf8");
-        const rootStart = html.indexOf(ROOT);
-        const goldenInner =
-          rootStart === -1
-            ? goldenVisual(html)
-            : html.slice(rootStart, findDivEnd(html, rootStart));
-        const ours = renderToStaticMarkup(
-          <Component
-            animated
-            trigger="inViewRepeat"
-            {...(hydrateProps(props) as Record<string, unknown>)}
-          />,
+        const golden = goldenStage(readFileSync(goldenPath, "utf8"));
+        const ours = stripResourceHints(
+          renderToStaticMarkup(
+            <Component
+              animated
+              trigger="inViewRepeat"
+              {...(hydrateProps(props) as Record<string, unknown>)}
+            />,
+          ),
         );
-        const diffs = compare(parseHtmlFragment(goldenInner), parseHtmlFragment(ours));
+        const diffs = compare(parseHtmlFragment(golden), parseHtmlFragment(ours));
         if (diffs.length) {
           const shown = diffs
             .slice(0, maxDiffs)

@@ -69,18 +69,18 @@ renders each variant of `block.json` with its props from `preview-props.json`,
 DOM structure (tag tree, class multisets, style declarations, attributes, text)
 with the variant's golden.
 
-Differences that do not change what the page shows are normalized semantically
-(see `test/helpers/parity.ts`):
+The comparison ignores only what changes nothing on the page (see
+`test/helpers/parity.ts`):
 
-- A golden rendered with `renderToString` separates adjacent text nodes with
-  `<!-- -->`; `renderToStaticMarkup` does not. Those comments are hydration
-  markers with no rendering effect, so the comparator reads adjacent text nodes
-  as one run. Blocks render text as JSX and never use
-  `dangerouslySetInnerHTML` (a lint error in `packages/blocks/src`).
-- React 19 hoists `<link rel="preload" as="image">` hints for `<img>`; they are
-  resource hints, not part of the visual, and are ignored.
-- motion writes SVG presentational props as attributes or style depending on
-  version — the comparator coalesces them (visually equivalent).
+- the order of a class list and of style declarations, and whitespace in text;
+- React's `useId` values, whose format changes with the React version;
+- how motion writes an SVG presentational property, as an attribute or as a style
+  depending on the version (motion 12, 13 and 14 are supported).
+
+React 19 hoists `<link rel="preload" as="image">` hints in front of an `<img>`:
+the generator and the runner strip them, so a golden holds the visual only.
+Blocks render text as JSX and never use `dangerouslySetInnerHTML` (a lint error
+in `packages/blocks/src`).
 
 `preview-props.json` holds the props of every variant, by label, as JSON: an
 icon component is `"lucide:<Name>"`, an icon element
