@@ -20,7 +20,7 @@ miniature wireframes.
 npm i @cremona/blocks @cremona/tokens motion lucide-react
 ```
 
-Peer dependencies: `react` and `react-dom` 18.2+ or 19, `motion` 12 or 13,
+Peer dependencies: `react` and `react-dom` 18.2+ or 19, `motion` 12, 13 or 14,
 `lucide-react` 1.47+.
 
 ## Use

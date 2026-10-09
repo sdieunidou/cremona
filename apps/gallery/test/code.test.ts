@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { createElement, isValidElement } from "react";
 import * as lucide from "lucide-react";
-import { transformWithEsbuild } from "vite";
+import { transformWithOxc } from "vite";
 import { blockKeys, loadBlock, type BlockEntry } from "../src/lib/discovery.js";
 import { reactUsage } from "../src/lib/code.js";
 import { hydrateProps } from "../src/lib/icons.js";
@@ -14,10 +14,9 @@ async function evaluate(snippet: string, component: unknown) {
   )?.[1];
   const icons =
     /^import \{ ([^}]+) \} from "lucide-react";$/m.exec(imports)?.[1]?.split(", ") ?? [];
-  const { code } = await transformWithEsbuild(`const __el = (${rest.join("\n\n")});`, "u.jsx", {
-    loader: "jsx",
-    jsx: "transform",
-    jsxFactory: "__h",
+  const { code } = await transformWithOxc(`const __el = (${rest.join("\n\n")});`, "u.jsx", {
+    lang: "jsx",
+    jsx: { runtime: "classic", pragma: "__h" },
   });
   const icon = (n: string) => (lucide as Record<string, unknown>)[n];
   const el = new Function("__h", name ?? "_", ...icons, `${code}\nreturn __el;`)(

@@ -133,7 +133,7 @@ settles and an inline style left on an element whose state classes set the
 same property. They are sharded by category: a new category goes into
 `END_STATE_SHARDS` (`test/helpers/end-state.ts`), which fails until every
 category belongs to exactly one shard. CI also runs the blocks suite on
-motion 13 (the peer range is `^12 || ^13`).
+motion 12 and 13 (the peer range is `^12 || ^13 || ^14`).
 
 ## Registry & discovery
 

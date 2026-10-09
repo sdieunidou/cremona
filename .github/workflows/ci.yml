@@ -46,11 +46,15 @@ jobs:
           fi
       - run: pnpm validate
 
-  motion-13:
-    # @cremona/blocks accepts motion ^12 || ^13; the lockfile pins 12, this job runs the block
-    # gates (parity, end state, triggers) on the newest 13 as well
-    name: Blocks on motion 13
+  motion-compat:
+    # @cremona/blocks accepts motion ^12 || ^13 || ^14; the lockfile pins 14, this job runs the
+    # block gates (parity, end state, triggers) on the newest 12 and 13 as well
+    name: Blocks on motion ${{ matrix.motion }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        motion: [12, 13]
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -59,7 +63,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @cremona/blocks add -D motion@^13
+      - run: pnpm --filter @cremona/blocks add -D motion@^${{ matrix.motion }}
       - run: pnpm --filter @cremona/blocks test
 
   e2e:

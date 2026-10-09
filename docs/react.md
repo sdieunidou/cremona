@@ -14,7 +14,7 @@ import { Line, type LineProps } from "@cremona/blocks/charts/line";
 
 One entry per block, `@cremona/blocks/<category>/<file>`: compiled ESM with its
 type declarations, starting with `"use client"`. `react`, `react-dom`, `motion`
-and `lucide-react` are peer dependencies (React 18.2+ or 19, motion 12 or 13,
+and `lucide-react` are peer dependencies (React 18.2+ or 19, motion 12, 13 or 14,
 lucide-react 1.47+); `@cremona/core` (types, `cn`, `frameClasses`,
 constants) and `@cremona/react` (`useInView`, `useLoopActive`, `useFitScale`…)
 come as dependencies ([Shared helpers](#shared-helpers)).

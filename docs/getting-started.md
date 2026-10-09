@@ -32,7 +32,7 @@ colours, `color-mix()`): Safari 16.4+, Chrome 111+, Firefox 128+.
 npm i @cremona/blocks @cremona/tokens motion lucide-react
 ```
 
-`react` and `react-dom` (18.2+ or 19), `motion` (12 or 13) and `lucide-react`
+`react` and `react-dom` (18.2+ or 19), `motion` (12, 13 or 14) and `lucide-react`
 (1.47+) are peer dependencies: your app provides the one copy every
 block shares, which is what lets your `MotionConfig` reach them.
 `@cremona/core` and `@cremona/react` come with `@cremona/blocks`; add them

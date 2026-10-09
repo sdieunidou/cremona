@@ -2,6 +2,8 @@ version: 2
 updates:
   # Minor and patch updates come grouped; every major update gets its own pull request, so a
   # breaking release (motion, React, Tailwind, TypeScript…) is reviewed and tested on its own.
+  # The exception is the build and test toolchain: vite, its React plugin and vitest ask for each
+  # other's majors (plugin-react 6 needs vite 8, which vitest 3 does not run), so they move together.
   - package-ecosystem: npm
     directory: /
     schedule:
@@ -20,6 +22,9 @@ updates:
       runtime:
         dependency-type: production
         update-types: [minor, patch]
+      vite-toolchain:
+        patterns: ["vite", "@vitejs/*", "vitest", "@vitest/*"]
+        update-types: [major]
     open-pull-requests-limit: 10
   - package-ecosystem: github-actions
     directory: /
