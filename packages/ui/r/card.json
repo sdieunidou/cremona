@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card",
+  "type": "registry:ui",
+  "title": "Card",
+  "description": "A surface with a header, a title, a description, an action, a content and a footer; the header reflows with the width of the card.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "files": [
+    {
+      "path": "src/card.tsx",
+      "content": "import * as React from \"react\";\nimport { Slot } from \"radix-ui\";\n\nimport { cn } from \"@/lib/utils\";\n\ntype CardProps = React.ComponentProps<\"div\"> & {\n  /** Render the child element (`article`, `section`, a link…) with the card's styles. */\n  asChild?: boolean;\n};\n\n/**\n * A surface that groups related content: a `CardHeader` (with a `CardTitle`, a `CardDescription` and\n * a `CardAction`), a `CardContent` and a `CardFooter`. The header lays its action out beside the text\n * when the card is wide enough to hold both (a container query, not the viewport).\n */\nfunction Card({ className, asChild = false, ...props }: CardProps) {\n  const Comp = asChild ? Slot.Root : \"div\";\n  return (\n    <Comp\n      data-slot=\"card\"\n      className={cn(\n        \"flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction CardHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-header\"\n      className={cn(\n        \"@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\n/** The title is a `div`: render the heading that fits the page with `asChild`, `<CardTitle asChild><h2>…</h2></CardTitle>`. */\nfunction CardTitle({\n  className,\n  asChild = false,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  /** Render the child element, a heading, with the title's styles. */\n  asChild?: boolean;\n}) {\n  const Comp = asChild ? Slot.Root : \"div\";\n  return (\n    <Comp\n      data-slot=\"card-title\"\n      className={cn(\"leading-none font-semibold\", className)}\n      {...props}\n    />\n  );\n}\n\nfunction CardDescription({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  );\n}\n\n/** A control or a link at the end of the header, beside the title and the description. */\nfunction CardAction({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-action\"\n      className={cn(\"col-start-2 row-span-2 row-start-1 self-start justify-self-end\", className)}\n      {...props}\n    />\n  );\n}\n\nfunction CardContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"card-content\" className={cn(\"px-6\", className)} {...props} />;\n}\n\nfunction CardFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-footer\"\n      className={cn(\"flex items-center px-6 [.border-t]:pt-6\", className)}\n      {...props}\n    />\n  );\n}\n\nexport {\n  Card,\n  CardAction,\n  CardContent,\n  CardDescription,\n  CardFooter,\n  CardHeader,\n  CardTitle,\n  type CardProps,\n};\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "layout"
+  ]
+}

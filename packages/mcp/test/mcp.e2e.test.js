@@ -282,7 +282,28 @@ describe("cremona MCP server", () => {
   it("lists the UI components of @cremona/ui, with what an app needs to take them", async () => {
     const listing = textOf(await client.callTool({ name: "list_components", arguments: {} }));
     const names = listing.components.map((c) => c.name);
-    expect(names).toEqual(["label", "button", "field", "input", "checkbox", "switch", "dialog"]);
+    expect(names).toEqual([
+      "label",
+      "button",
+      "field",
+      "input",
+      "textarea",
+      "checkbox",
+      "radio-group",
+      "switch",
+      "select",
+      "badge",
+      "alert",
+      "card",
+      "table",
+      "tabs",
+      "accordion",
+      "dialog",
+      "popover",
+      "tooltip",
+      "dropdown-menu",
+      "toast",
+    ]);
     expect(listing.install.npm).toContain("@cremona/ui");
     expect(listing.install.shadcn).toContain("registry add @cremona=https://");
     const button = listing.components.find((c) => c.name === "button");
@@ -337,7 +358,8 @@ describe("cremona MCP server", () => {
   it("tells a connecting session where real UI comes from", () => {
     const instructions = client.getInstructions();
     expect(instructions).toContain("REAL UI COMES FROM @cremona/ui");
-    expect(instructions).toContain("button, field, input, checkbox, switch, dialog");
+    expect(instructions).toContain("label, button, field, input, textarea");
+    expect(instructions).toContain("dropdown-menu, toast");
     expect(instructions).toContain("list_components");
   });
 

@@ -161,6 +161,11 @@ motion.
   state, and plays the entrance while the card is hovered or focused.
 - **Block page** — every variant in a preview frame of its `size`, then the
   _Props_ table generated from `api.json`.
+- **UI components** — `/components` lists the `@cremona/ui` components (from
+  its `registry.json`) and `/components/<name>` shows one live: its install
+  lines, its examples and the file they come from. The examples are the default
+  and the named exports of `src/demos/<name>.tsx`, which the page also prints as
+  the code to copy.
 - **Code access** — each preview frame has a toolbar, shown on hover and on
   keyboard focus (always on touch screens): _View code_ opens a panel with
   three tabs — _Usage_ (the import and the variant's exact JSX, icons resolved
@@ -175,4 +180,7 @@ motion.
   card, an uncaught error or a console error (a failed image or font request
   logs one); axe finds no violation on the chrome (home, search, theme menu,
   block page, code panel, 404, mobile navigation) in light and dark; keyboard
-  navigation, routing, thumbnails and the code panel.
+  navigation, routing, thumbnails and the code panel. The component pages get
+  the same render check and axe, whole page, colour contrast included, in light
+  and dark, and the components are exercised in a real browser: overlays, focus,
+  keyboard, container-query layout, hit areas.

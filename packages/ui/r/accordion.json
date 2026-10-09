@@ -1,0 +1,25 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "accordion",
+  "type": "registry:ui",
+  "title": "Accordion",
+  "description": "Sections that open and close, each trigger a button inside a heading of the level you choose.",
+  "dependencies": [
+    "radix-ui",
+    "lucide-react"
+  ],
+  "devDependencies": [
+    "tw-animate-css"
+  ],
+  "files": [
+    {
+      "path": "src/accordion.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Accordion as AccordionPrimitive } from \"radix-ui\";\nimport { ChevronDownIcon } from \"lucide-react\";\n\nimport { cn } from \"@/lib/utils\";\n\n/**\n * A stack of sections that open and close. `type=\"single\"` keeps one open (add `collapsible` to let it\n * close), `type=\"multiple\"` any number. Each trigger is a button inside a heading; arrow keys, Home and\n * End move between them.\n */\nfunction Accordion(props: React.ComponentProps<typeof AccordionPrimitive.Root>) {\n  return <AccordionPrimitive.Root data-slot=\"accordion\" {...props} />;\n}\n\nfunction AccordionItem({\n  className,\n  ...props\n}: React.ComponentProps<typeof AccordionPrimitive.Item>) {\n  return (\n    <AccordionPrimitive.Item\n      data-slot=\"accordion-item\"\n      className={cn(\"border-b last:border-b-0\", className)}\n      {...props}\n    />\n  );\n}\n\n/**\n * The button that opens its section. It sits in a heading: `headingLevel` (default 3) should fit the\n * outline of the page.\n */\nfunction AccordionTrigger({\n  className,\n  children,\n  headingLevel = 3,\n  ...props\n}: React.ComponentProps<typeof AccordionPrimitive.Trigger> & {\n  /** Level of the heading around the button, 2 to 6. Default 3. */\n  headingLevel?: 2 | 3 | 4 | 5 | 6;\n}) {\n  const Heading = `h${headingLevel}` as const;\n  return (\n    <AccordionPrimitive.Header asChild>\n      <Heading className=\"flex\">\n        <AccordionPrimitive.Trigger\n          data-slot=\"accordion-trigger\"\n          className={cn(\n            \"flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium outline-none hover:underline\",\n            \"focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring\",\n            \"disabled:pointer-events-none disabled:opacity-50\",\n            \"[&[data-state=open]>svg]:rotate-180\",\n            className,\n          )}\n          {...props}\n        >\n          {children}\n          <ChevronDownIcon\n            aria-hidden=\"true\"\n            className=\"pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground motion-safe:transition-transform motion-safe:duration-200\"\n          />\n        </AccordionPrimitive.Trigger>\n      </Heading>\n    </AccordionPrimitive.Header>\n  );\n}\n\nfunction AccordionContent({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof AccordionPrimitive.Content>) {\n  return (\n    <AccordionPrimitive.Content\n      data-slot=\"accordion-content\"\n      className=\"overflow-hidden text-sm motion-safe:data-[state=closed]:animate-accordion-up motion-safe:data-[state=open]:animate-accordion-down\"\n      {...props}\n    >\n      <div className={cn(\"pt-0 pb-4\", className)}>{children}</div>\n    </AccordionPrimitive.Content>\n  );\n}\n\nexport { Accordion, AccordionContent, AccordionItem, AccordionTrigger };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "docs": "The animations use the accordion-down and accordion-up utilities of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+  "categories": [
+    "disclosure"
+  ]
+}

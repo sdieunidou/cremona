@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tabs",
+  "type": "registry:ui",
+  "title": "Tabs",
+  "description": "Tabs with arrow-key navigation, horizontal or vertical, that scroll instead of overflowing on a narrow screen.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "files": [
+    {
+      "path": "src/tabs.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Tabs as TabsPrimitive } from \"radix-ui\";\n\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Tabs: a `TabsList` of `TabsTrigger`s and one `TabsContent` per trigger (same `value`). Arrow keys move\n * between the triggers, Home and End jump to the first and the last, and the panel is a tab stop of its own.\n * `orientation=\"vertical\"` stacks the triggers and answers the up and down arrows.\n */\nfunction Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {\n  return (\n    <TabsPrimitive.Root\n      data-slot=\"tabs\"\n      className={cn(\"flex flex-col gap-2 data-[orientation=vertical]:flex-row\", className)}\n      {...props}\n    />\n  );\n}\n\n/** The row of triggers. On a narrow screen it scrolls instead of overflowing. */\nfunction TabsList({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.List>) {\n  return (\n    <TabsPrimitive.List\n      data-slot=\"tabs-list\"\n      className={cn(\n        \"inline-flex h-9 w-fit max-w-full items-center justify-start gap-1 overflow-x-auto rounded-lg bg-muted p-[3px] text-muted-foreground data-[orientation=vertical]:h-fit data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch data-[orientation=vertical]:overflow-x-visible\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {\n  return (\n    <TabsPrimitive.Trigger\n      data-slot=\"tabs-trigger\"\n      className={cn(\n        \"inline-flex h-7 flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-3 py-1 text-sm font-medium whitespace-nowrap transition-colors outline-none\",\n        \"focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring\",\n        \"disabled:pointer-events-none disabled:opacity-50\",\n        \"hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30\",\n        \"[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nfunction TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {\n  return (\n    <TabsPrimitive.Content\n      data-slot=\"tabs-content\"\n      className={cn(\n        \"flex-1 rounded-md outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring\",\n        className,\n      )}\n      {...props}\n    />\n  );\n}\n\nexport { Tabs, TabsContent, TabsList, TabsTrigger };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "navigation"
+  ]
+}

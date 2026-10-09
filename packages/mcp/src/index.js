@@ -23,9 +23,9 @@ system (${store.themes().length} themes x light/dark) and authoring tools.
 
 REAL UI COMES FROM @cremona/ui: ${components.map((c) => c.name).join(", ")}. Accessible (names,
 keyboard, focus, 24 px targets), responsive, on the Cremona tokens; an app takes them by copying
-their source (the shadcn CLI) or from npm. list_components, get_component. A button, a field, an
-input, a checkbox, a switch or a dialog is one of them: use it, do not rebuild it from a block (the
-blocks of the "components" category only illustrate them).
+their source (the shadcn CLI) or from npm. list_components, get_component. When the control, the
+field, the menu, the dialog or the table you need is in that list, use it: do not rebuild it from a
+block (the blocks of the "components" category only illustrate them).
 
 BLOCKS ARE PREVIEW COMPOSITIONS, NOT PRODUCTION COMPONENTS. Every block:
 - has aria-hidden="true" on its root, so its content does not exist for a

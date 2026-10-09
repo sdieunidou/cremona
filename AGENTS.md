@@ -107,7 +107,8 @@ also runs the package check before publishing.
   and axe), `registry.json` (the shadcn registry items, by hand) and `r/*.json`
   (generated). `docs/ui.md` is the contract.
 - `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS).
-- `apps/gallery/` — docs app with live previews; Playwright specs in `e2e/`.
+- `apps/gallery/` — docs app with live previews of the blocks and of the UI
+  components (`src/demos/<name>.tsx`); Playwright specs in `e2e/`.
 - `tools/generate-stimulus.mjs` (+ `tools/stimulus/`) — template generator.
   `tools/generate-api.mjs` — the props references. `tools/generate-registry.mjs` —
   the shadcn registry of `@cremona/ui`. `tools/use-client.mjs` — the `"use client"`
@@ -128,8 +129,8 @@ also runs the package check before publishing.
 - `@cremona/ui` components import each other and `./utils.js` relatively (the
   registry generator rewrites them to a shadcn project's aliases) and import no
   `@cremona/*` package; each is an item of `packages/ui/registry.json`, has
-  behaviour tests and an axe check, and starts with `"use client"` when it holds
-  state. `docs/ui.md` has the steps to add one.
+  behaviour tests, an axe check and a gallery demo, and starts with `"use client"`
+  when it holds state. `docs/ui.md` has the steps to add one.
 - Blocks are self-contained: no imports between blocks; shared helpers from
   `@cremona/core` and `@cremona/react` (`useLoopActive` gates every loop — see
   the authoring guide); icons from `lucide-react` (1.x); motion from

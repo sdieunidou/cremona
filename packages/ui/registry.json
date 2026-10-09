@@ -45,7 +45,12 @@
       "title": "Label",
       "description": "The text of a control. Clicking it focuses or toggles the control it is for.",
       "dependencies": ["radix-ui"],
-      "files": [{ "path": "src/label.tsx", "type": "registry:ui" }],
+      "files": [
+        {
+          "path": "src/label.tsx",
+          "type": "registry:ui"
+        }
+      ],
       "categories": ["forms"]
     },
     {
@@ -55,7 +60,12 @@
       "description": "A button: six variants, five sizes, and asChild to style a link.",
       "dependencies": ["radix-ui", "class-variance-authority"],
       "registryDependencies": ["@cremona/tokens"],
-      "files": [{ "path": "src/button.tsx", "type": "registry:ui" }],
+      "files": [
+        {
+          "path": "src/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
       "categories": ["actions"]
     },
     {
@@ -65,7 +75,12 @@
       "description": "A label, a control, a description and an error wired for assistive technology, with vertical, horizontal and container-responsive layouts.",
       "dependencies": ["class-variance-authority"],
       "registryDependencies": ["@cremona/label"],
-      "files": [{ "path": "src/field.tsx", "type": "registry:ui" }],
+      "files": [
+        {
+          "path": "src/field.tsx",
+          "type": "registry:ui"
+        }
+      ],
       "categories": ["forms"]
     },
     {
@@ -74,7 +89,26 @@
       "title": "Input",
       "description": "A text input, labelled, described and marked invalid by its Field.",
       "registryDependencies": ["@cremona/field"],
-      "files": [{ "path": "src/input.tsx", "type": "registry:ui" }],
+      "files": [
+        {
+          "path": "src/input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["forms"]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A multi-line text input that grows with its content, labelled, described and marked invalid by its Field.",
+      "registryDependencies": ["@cremona/field"],
+      "files": [
+        {
+          "path": "src/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ],
       "categories": ["forms"]
     },
     {
@@ -84,7 +118,27 @@
       "description": "A checkbox with an indeterminate state and a 24 px hit area, labelled and described by its Field.",
       "dependencies": ["radix-ui", "lucide-react"],
       "registryDependencies": ["@cremona/field"],
-      "files": [{ "path": "src/checkbox.tsx", "type": "registry:ui" }],
+      "files": [
+        {
+          "path": "src/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["forms"]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio group",
+      "description": "A set of radio buttons with arrow-key choice and a 24 px hit area per item, each labelled, described and marked invalid by its Field.",
+      "dependencies": ["radix-ui"],
+      "registryDependencies": ["@cremona/field"],
+      "files": [
+        {
+          "path": "src/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ],
       "categories": ["forms"]
     },
     {
@@ -94,8 +148,117 @@
       "description": "An on/off switch with a 24 px hit area, labelled and described by its Field.",
       "dependencies": ["radix-ui"],
       "registryDependencies": ["@cremona/field"],
-      "files": [{ "path": "src/switch.tsx", "type": "registry:ui" }],
+      "files": [
+        {
+          "path": "src/switch.tsx",
+          "type": "registry:ui"
+        }
+      ],
       "categories": ["forms"]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A custom select with keyboard and type-ahead choice that submits with a form; its list is never taller than the room it has. Labelled, described and marked invalid by its Field.",
+      "dependencies": ["radix-ui", "lucide-react"],
+      "devDependencies": ["tw-animate-css"],
+      "registryDependencies": ["@cremona/field"],
+      "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/select.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["forms"]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A short label: a count, a status, a category. Seven variants, the status ones tinted with the status tokens; asChild to style a link.",
+      "dependencies": ["radix-ui", "class-variance-authority"],
+      "registryDependencies": ["@cremona/tokens"],
+      "files": [
+        {
+          "path": "src/badge.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["display"]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "A message in the page, announced at once for errors and warnings and politely otherwise, in five variants.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["@cremona/tokens"],
+      "files": [
+        {
+          "path": "src/alert.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["feedback"]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "A surface with a header, a title, a description, an action, a content and a footer; the header reflows with the width of the card.",
+      "dependencies": ["radix-ui"],
+      "files": [
+        {
+          "path": "src/card.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["layout"]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A data table that scrolls sideways inside its own region, focusable while it overflows and named by its caption.",
+      "files": [
+        {
+          "path": "src/table.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["data"]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Tabs with arrow-key navigation, horizontal or vertical, that scroll instead of overflowing on a narrow screen.",
+      "dependencies": ["radix-ui"],
+      "files": [
+        {
+          "path": "src/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["navigation"]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Sections that open and close, each trigger a button inside a heading of the level you choose.",
+      "dependencies": ["radix-ui", "lucide-react"],
+      "devDependencies": ["tw-animate-css"],
+      "docs": "The animations use the accordion-down and accordion-up utilities of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["disclosure"]
     },
     {
       "name": "dialog",
@@ -105,8 +268,78 @@
       "dependencies": ["radix-ui", "lucide-react"],
       "devDependencies": ["tw-animate-css"],
       "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
-      "files": [{ "path": "src/dialog.tsx", "type": "registry:ui" }],
+      "files": [
+        {
+          "path": "src/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
       "categories": ["overlays"]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A panel next to its trigger that holds any content, with focus moved in and returned, capped to the room it has.",
+      "dependencies": ["radix-ui"],
+      "devDependencies": ["tw-animate-css"],
+      "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/popover.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["overlays"]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A hint shown on hover and keyboard focus, hidden by Escape and kept while the pointer is over it.",
+      "dependencies": ["radix-ui"],
+      "devDependencies": ["tw-animate-css"],
+      "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["overlays"]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown menu",
+      "description": "A menu of actions with checkbox and radio items, submenus, keyboard navigation and type-ahead.",
+      "dependencies": ["radix-ui", "lucide-react"],
+      "devDependencies": ["tw-animate-css"],
+      "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["overlays"]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Notifications with an imperative toast() and one Toaster to mount: announced to screen readers, paused on hover and focus, kept while an error or a choice is shown.",
+      "dependencies": ["radix-ui", "class-variance-authority", "lucide-react"],
+      "devDependencies": ["tw-animate-css"],
+      "registryDependencies": ["@cremona/tokens"],
+      "docs": "Mount <Toaster /> once, near the root of your app, then call toast({ title: \"Saved\" }) from anywhere. The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/toast.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": ["feedback"]
     }
   ]
 }

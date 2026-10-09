@@ -1,6 +1,6 @@
 ---
 name: cremona
-description: Build UI with Cremona — accessible components (@cremona/ui: button, field, input, checkbox, switch, dialog) and 160 animated visual blocks in 37 categories (product illustrations, real-size components and kits, miniature section and layout wireframes), a 9-theme light/dark design system, React + Stimulus adapters, consumable via MCP tools or direct repo reads. Use when the user asks to use Cremona, add a visual/component/layout, build marketing/dashboard/app UI from Cremona, port new visuals, or work with the cremona repo.
+description: Build UI with Cremona — accessible components (@cremona/ui: forms, select, dialog, menus, tabs, table, toast…) and 160 animated visual blocks in 37 categories (product illustrations, real-size components and kits, miniature section and layout wireframes), a 9-theme light/dark design system, React + Stimulus adapters, consumable via MCP tools or direct repo reads. Use when the user asks to use Cremona, add a visual/component/layout, build marketing/dashboard/app UI from Cremona, port new visuals, or work with the cremona repo.
 ---
 
 # Cremona — animated visual blocks
@@ -20,8 +20,9 @@ adapters:
 ## Real UI: `@cremona/ui`
 
 Button, label, field (label, control, help and error wired for assistive
-technology), input, checkbox, switch and dialog: accessible, responsive
-components on the same tokens. They are what an app ships for a control: **use
+technology), input, textarea, checkbox, radio group, switch, select, badge,
+alert, card, table, tabs, accordion, dialog, popover, tooltip, dropdown menu and
+toast: accessible, responsive components on the same tokens. They are what an app ships for a control: **use
 one when it exists** instead of deriving a block (MCP `list_components` and
 `get_component`; `docs/ui.md`).
 
@@ -31,9 +32,11 @@ npx shadcn@latest add @cremona/button @cremona/field @cremona/input
 # or from npm: npm i @cremona/ui @cremona/tokens lucide-react — import { Button } from "@cremona/ui/button"
 ```
 
-Inside a `Field`, `Input`, `Checkbox` and `Switch` are labelled, described and
-marked invalid by it; render a `DialogTitle` in every dialog; with
-`cremona.scoped.css`, give `DialogContent` a `container` inside `.cremona`. Source:
+Inside a `Field`, `Input`, `Textarea`, `Checkbox`, `RadioGroupItem`, `Switch` and
+`SelectTrigger` are labelled, described and marked invalid by it; render a
+`DialogTitle` in every dialog and name every `PopoverContent`; mount `<Toaster />`
+once and call `toast()`; with `cremona.scoped.css`, give the content of a dialog,
+popover, tooltip, select or menu a `container` inside `.cremona`. Source:
 `packages/ui/src/<name>.tsx`, items in `packages/ui/registry.json`.
 
 ## What's inside: three scales

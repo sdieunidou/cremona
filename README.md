@@ -1,8 +1,8 @@
 # Cremona
 
 **Cremona** is a library of **160 animated UI blocks** for React and Stimulus,
-with accessible **UI components** (`@cremona/ui`: button, field, input,
-checkbox, switch, dialog…), a **design system** of 9 themes in light and dark,
+with accessible **UI components** (`@cremona/ui`: button, field, select,
+dialog, table, toast…), a **design system** of 9 themes in light and dark,
 an **MCP server** and a **Skill** that let AI coding sessions (Claude Code,
 opencode…) find a block or a component, read its exact props and use it
 correctly.
@@ -53,8 +53,8 @@ hosts.
 ## Quick start — UI components
 
 Blocks illustrate; the controls an app is made of come from `@cremona/ui`:
-button, label, field, input, checkbox, switch and dialog, accessible and
-responsive, on the same tokens.
+button, field, input, select, checkbox, dialog, menu, tabs, table, toast…
+(20 components), accessible and responsive, on the same tokens.
 
 ```bash
 # copy the source into your app (the shadcn CLI)
@@ -108,9 +108,11 @@ stylesheet's location: [docs/mcp.md](docs/mcp.md).
   dashboards, git, geo, payments, components, forms, mobile, marketing
   sections… — with 1,298 ready-made variants (default, fadeOut,
   isometric, custom copy, custom data, states…).
-- **UI components** — `@cremona/ui`: button, label, field, input, checkbox,
-  switch and dialog, built on Radix UI, tested with Testing Library and axe,
-  taken as source with the shadcn CLI or imported from npm.
+- **UI components** — `@cremona/ui`: forms (field, input, textarea, select,
+  checkbox, radio group, switch), overlays (dialog, popover, tooltip, dropdown
+  menu, toast) and displays (button, badge, alert, card, table, tabs,
+  accordion), built on Radix UI, tested with Testing Library and axe, shown live
+  in the gallery, taken as source with the shadcn CLI or imported from npm.
 - **9 themes × light/dark** on shadcn-style semantic tokens and status tokens,
   Inter Variable.
 - **Locked server renders** — every variant's server render is compared with a

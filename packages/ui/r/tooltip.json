@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tooltip",
+  "type": "registry:ui",
+  "title": "Tooltip",
+  "description": "A hint shown on hover and keyboard focus, hidden by Escape and kept while the pointer is over it.",
+  "dependencies": [
+    "radix-ui"
+  ],
+  "devDependencies": [
+    "tw-animate-css"
+  ],
+  "files": [
+    {
+      "path": "src/tooltip.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\nimport { Tooltip as TooltipPrimitive } from \"radix-ui\";\n\nimport { cn } from \"@/lib/utils\";\n\n/**\n * Wraps tooltips to share their delays: moving from one trigger to another shows the next at once.\n * Optional, each `Tooltip` brings its own.\n */\nfunction TooltipProvider({\n  delayDuration = 200,\n  ...props\n}: React.ComponentProps<typeof TooltipPrimitive.Provider>) {\n  return (\n    <TooltipPrimitive.Provider\n      data-slot=\"tooltip-provider\"\n      delayDuration={delayDuration}\n      {...props}\n    />\n  );\n}\n\n/**\n * A short hint for a control, shown on hover and on keyboard focus, hidden by Escape, and kept while the\n * pointer is over it. The trigger is described by it. It never appears on touch screens and never\n * holds anything a user needs: say it in the page too.\n */\nfunction Tooltip(props: React.ComponentProps<typeof TooltipPrimitive.Root>) {\n  return (\n    <TooltipProvider>\n      <TooltipPrimitive.Root data-slot=\"tooltip\" {...props} />\n    </TooltipProvider>\n  );\n}\n\nfunction TooltipTrigger(props: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {\n  return <TooltipPrimitive.Trigger data-slot=\"tooltip-trigger\" {...props} />;\n}\n\nfunction TooltipContent({\n  className,\n  sideOffset = 6,\n  collisionPadding = 8,\n  children,\n  container,\n  ...props\n}: React.ComponentProps<typeof TooltipPrimitive.Content> & {\n  /**\n   * The element the tooltip is rendered in. Default `document.body`. With `cremona.scoped.css`, which\n   * styles only what is inside a `.cremona` element, pass an element inside it.\n   */\n  container?: HTMLElement | null;\n}) {\n  return (\n    <TooltipPrimitive.Portal container={container}>\n      <TooltipPrimitive.Content\n        data-slot=\"tooltip-content\"\n        sideOffset={sideOffset}\n        collisionPadding={collisionPadding}\n        className={cn(\n          \"z-50 w-fit max-w-xs origin-(--radix-tooltip-content-transform-origin) rounded-md bg-foreground px-3 py-1.5 text-xs text-balance text-background\",\n          \"motion-safe:animate-in motion-safe:fade-in-0 motion-safe:zoom-in-95 motion-safe:data-[state=closed]:animate-out motion-safe:data-[state=closed]:fade-out-0 motion-safe:data-[state=closed]:zoom-out-95\",\n          \"motion-safe:data-[side=bottom]:slide-in-from-top-2 motion-safe:data-[side=left]:slide-in-from-right-2 motion-safe:data-[side=right]:slide-in-from-left-2 motion-safe:data-[side=top]:slide-in-from-bottom-2\",\n          className,\n        )}\n        {...props}\n      >\n        {children}\n        <TooltipPrimitive.Arrow className=\"z-50 size-2.5 translate-y-[calc(-50%-2px)] rotate-45 rounded-[2px] bg-foreground fill-foreground\" />\n      </TooltipPrimitive.Content>\n    </TooltipPrimitive.Portal>\n  );\n}\n\nexport { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+  "categories": [
+    "overlays"
+  ]
+}
