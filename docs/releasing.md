@@ -7,11 +7,12 @@ the gallery are private.
 
 ## Flow
 
-1. In the PR that changes a published package: `pnpm changeset`, pick the bump,
-   commit the generated `.changeset/*.md`. A block change ships in
+1. With a change to a published package, in a pull request or straight on
+   `main`: `pnpm changeset`, pick the bump, commit the generated
+   `.changeset/*.md`. A block change ships in
    `@cremona/blocks` and in the `@cremona/mcp` snapshot, and the fixed group
    releases every package at the same version.
-2. After merge, the **Release** workflow opens (or updates) the
+2. Once it is on `main`, the **Release** workflow opens (or updates) the
    "chore: version packages" PR. Merging it bumps versions and changelogs.
 3. Publishing is manual: Actions → **Release** → Run workflow on `main` →
    `publish: true`. The job runs only on `main`, in the `npm` environment. It
@@ -65,9 +66,10 @@ These are settings, not code; the workflow needs all of them.
 5. **Workflow permissions** — Settings → Actions → General → "Allow GitHub
    Actions to create and approve pull requests", or the version PR cannot be
    opened.
-6. **Branch protection** — a ruleset on `main`: pull request required, status
-   checks required (the CI jobs "Lint, types, tests · Node 22", "… Node 24" and
-   "Gallery e2e"), no force push, no deletion.
+6. **Branch protection** — none is required: pull requests are optional and the
+   owner pushes to `main`. CI runs on every push, and publishing is manual from a
+   green `main` (step 3 of the flow). A ruleset that forbids force pushes and
+   deletion of `main` is still a good idea.
 
 No `NPM_TOKEN` secret is used; delete one if it exists.
 
