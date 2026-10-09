@@ -7,7 +7,7 @@ everyone.
 ## Commands
 
 ```bash
-pnpm check              # lint + format check + typecheck + check:use-client + check:api + tests + validate — run before finishing
+pnpm check              # lint + format check + typecheck + check:use-client + check:api + check:registry + tests + validate — run before finishing
 pnpm test               # every package's tests (block parity and end state, MCP e2e, tokens, stimulus…)
 pnpm typecheck          # tsc --noEmit per package
 pnpm lint               # ESLint (errors fail CI; block a11y findings are warnings)
@@ -17,9 +17,11 @@ pnpm check:use-client   # fail unless every block's react.tsx starts with "use c
 node tools/use-client.mjs                     # add or move the directive where it is missing
 pnpm generate:stimulus  # regenerate packages/stimulus/templates/**
 pnpm generate:api       # regenerate every block's api.json (props reference); check:api fails when one is stale
+pnpm generate:registry  # regenerate packages/ui/r/** (the shadcn registry of @cremona/ui); check:registry fails when it is stale
 pnpm build:css          # recompile packages/tokens/css/cremona{,.scoped}.css (Tailwind v4, dev only)
-pnpm build              # compile core, react, blocks (dist/, one entry per block) and the gallery
+pnpm build              # compile core, react, blocks (dist/, one entry per block), ui (dist/, one entry per component) and the gallery
 pnpm --filter @cremona/blocks check:package   # pack @cremona/blocks, check it with publint + attw
+pnpm --filter @cremona/ui check:package       # the same for @cremona/ui
 pnpm gallery:build && pnpm e2e   # Playwright (E2E_PORT, default 4179): block pages, axe, keyboard, routing
 pnpm dev                # gallery dev server
 pnpm mcp                # run the MCP server over stdio
@@ -27,10 +29,11 @@ pnpm mcp                # run the MCP server over stdio
 
 CI (`.github/workflows/ci.yml`) runs on Node 22 and 24: lint, format check,
 typecheck, `check:use-client`, tests, then `pnpm generate:stimulus`,
-`pnpm generate:api` and `pnpm build:css` again, and fails on any changed **or
-untracked** file under `packages/blocks`, `packages/stimulus` and
-`packages/tokens` (a golden, `api.json`, template,
-`cremona.css` or `cremona.scoped.css` left uncommitted), then `validate`. The gallery e2e job (Node 24)
+`pnpm generate:api`, `pnpm generate:registry` and `pnpm build:css` again, and
+fails on any changed **or untracked** file under `packages/blocks`,
+`packages/stimulus`, `packages/tokens` and `packages/ui` (a golden, `api.json`,
+template, registry item, `cremona.css` or `cremona.scoped.css` left uncommitted),
+then `validate`. The gallery e2e job (Node 24)
 fails when a block page shows an error card, throws or logs a console error (a
 failed image or font request logs one), or when axe finds a violation on the
 gallery chrome, in light or dark. The release workflow (`docs/releasing.md`)
@@ -47,10 +50,12 @@ also runs the package check before publishing.
    block's parity test.
 2. **Generated files are never hand-edited**: `api.json` (rewritten by
    `pnpm generate:api` from the props interface and its JSDoc),
-   `packages/stimulus/templates/**` (rewritten by `pnpm generate:stimulus`) and
-   `packages/tokens/css/cremona.css` and `cremona.scoped.css` (rewritten by
-   `pnpm build:css`). Change the source block, `packages/tokens/css/tailwind.css`,
-   `packages/tokens/src/*.css` or the generator, rerun, commit the result.
+   `packages/stimulus/templates/**` (rewritten by `pnpm generate:stimulus`),
+   `packages/ui/r/**` (rewritten by `pnpm generate:registry` from `registry.json`
+   and the component sources) and `packages/tokens/css/cremona.css` and
+   `cremona.scoped.css` (rewritten by `pnpm build:css`). Change the source block
+   or component, `packages/tokens/css/tailwind.css`, `packages/tokens/src/*.css` or
+   the generator, rerun, commit the result.
 3. **Parity is a gate**: a block change that breaks its parity test is a
    regression unless the golden is deliberately regenerated. The comparator
    (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
@@ -59,12 +64,13 @@ also runs the package check before publishing.
 4. **New blocks** follow `docs/authoring-guide.md` and must pass parity +
    `pnpm validate`. MCP `add_block` scaffolds them, in an existing category
    (`add_category` first otherwise); it refuses a key that already exists.
-5. **Design tokens live only in `packages/tokens`** — blocks use semantic tokens
-   (`bg-card`, `text-muted-foreground`, `text-success`…), never raw colors: a status
-   is `success`, `warning`, `info` or `destructive`, a category that only has to be
-   told apart is `chart-1`…`chart-5`. `test/tokens-only.test.ts` fails on a palette
-   colour (`bg-emerald-500`, `var(--color-rose-500)`) outside its list of artwork
-   (scenes, file-type glyphs, brand logos…), each entry with its reason.
+5. **Design tokens live only in `packages/tokens`** — blocks and `@cremona/ui`
+   components use semantic tokens (`bg-card`, `text-muted-foreground`,
+   `text-success`…), never raw colors: a status is `success`, `warning`, `info` or
+   `destructive`, a category that only has to be told apart is `chart-1`…`chart-5`.
+   `test/tokens-only.test.ts` (blocks) fails on a palette colour (`bg-emerald-500`,
+   `var(--color-rose-500)`) outside its list of artwork (scenes, file-type glyphs,
+   brand logos…), each entry with its reason; the one of `@cremona/ui` allows none.
 6. **No HTML from props**: blocks render text as JSX and never use
    `dangerouslySetInnerHTML` (ESLint error in `packages/blocks/src`). They never
    read the clock while rendering either (`new Date()`): take a prop with a
@@ -96,11 +102,16 @@ also runs the package check before publishing.
   stylesheet (`apps/gallery/src/gallery.css`, `@tailwindcss/vite`).
 - `packages/stimulus/{src,templates}/` — controllers (with their `.d.ts`) +
   generated templates.
+- `packages/ui/{src,test,scripts,r}/` — `@cremona/ui`: the components
+  (`src/*.tsx`, which import each other relatively), their tests (Testing Library
+  and axe), `registry.json` (the shadcn registry items, by hand) and `r/*.json`
+  (generated). `docs/ui.md` is the contract.
 - `packages/mcp/{src,bin,scripts,test}/` — MCP server (plain ESM JS).
 - `apps/gallery/` — docs app with live previews; Playwright specs in `e2e/`.
 - `tools/generate-stimulus.mjs` (+ `tools/stimulus/`) — template generator.
-  `tools/generate-api.mjs` — the props references. `tools/use-client.mjs` —
-  the `"use client"` directive of every block.
+  `tools/generate-api.mjs` — the props references. `tools/generate-registry.mjs` —
+  the shadcn registry of `@cremona/ui`. `tools/use-client.mjs` — the `"use client"`
+  directive of every block.
 
 ## Conventions
 
@@ -114,6 +125,11 @@ also runs the package check before publishing.
   copied block and a Server Component import both need it): run
   `node tools/use-client.mjs` after adding a block. The build also adds it to the
   compiled entry of a source that lacks it, with a warning.
+- `@cremona/ui` components import each other and `./utils.js` relatively (the
+  registry generator rewrites them to a shadcn project's aliases) and import no
+  `@cremona/*` package; each is an item of `packages/ui/registry.json`, has
+  behaviour tests and an axe check, and starts with `"use client"` when it holds
+  state. `docs/ui.md` has the steps to add one.
 - Blocks are self-contained: no imports between blocks; shared helpers from
   `@cremona/core` and `@cremona/react` (`useLoopActive` gates every loop — see
   the authoring guide); icons from `lucide-react` (1.x); motion from
@@ -126,7 +142,7 @@ also runs the package check before publishing.
 - `.mcp.json` / `opencode.json` register this repo's MCP server — start the
   session from the repo root.
 - `.claude/settings.json` pre-approves the main commands above (`pnpm check`,
-  `pnpm test`, `generate:stimulus`, `generate:api`, `build:css`, targeted
-  `vitest`…) and the read-only MCP tools, denies hand edits of goldens,
-  `api.json`, Stimulus templates, `cremona.css` and `cremona.scoped.css`, and
-  formats every edited file with Prettier.
+  `pnpm test`, `generate:stimulus`, `generate:api`, `generate:registry`,
+  `build:css`, targeted `vitest`…) and the read-only MCP tools, denies hand edits
+  of goldens, `api.json`, Stimulus templates, `packages/ui/r/**`, `cremona.css`
+  and `cremona.scoped.css`, and formats every edited file with Prettier.

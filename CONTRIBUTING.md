@@ -14,14 +14,15 @@ TypeScript sources ([architecture.md](docs/architecture.md)).
 ## Before you push
 
 ```bash
-pnpm check            # lint, format, types, "use client", api.json, tests, validate
+pnpm check            # lint, format, types, "use client", api.json, registry, tests, validate
 pnpm format           # fix formatting
 ```
 
 When you change a block, also run the generators and commit what they write:
 `pnpm test` (it writes the goldens of new variants),
-`pnpm generate:api`, `pnpm generate:stimulus` and `pnpm build:css`. CI runs them
-again and fails on any changed or untracked generated file. For a gallery
+`pnpm generate:api`, `pnpm generate:stimulus` and `pnpm build:css`; when you change a
+`@cremona/ui` component, `pnpm generate:registry`. CI runs them again and fails on
+any changed or untracked generated file. For a gallery
 change, run `pnpm gallery:build && pnpm e2e` (`E2E_PORT` sets the port): every
 block page must render without a console error, and the gallery chrome must
 pass axe in light and dark.
@@ -45,6 +46,12 @@ current state.
 The MCP server scaffolds a category or a block from a checkout (`add_category`,
 `add_block`): an MCP client started at the repo root picks the server up from
 `.mcp.json` or `opencode.json` ([docs/mcp.md](docs/mcp.md)).
+
+## Adding or changing a UI component
+
+[docs/ui.md](docs/ui.md) — what every `@cremona/ui` component guarantees and the
+steps to add one (source, registry item, behaviour and axe tests,
+`pnpm generate:registry`).
 
 ## Pull requests
 

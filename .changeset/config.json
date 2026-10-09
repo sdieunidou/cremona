@@ -9,6 +9,7 @@
       "@cremona/core",
       "@cremona/react",
       "@cremona/blocks",
+      "@cremona/ui",
       "@cremona/stimulus",
       "@cremona/mcp"
     ]

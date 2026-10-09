@@ -145,6 +145,9 @@ sized box and pair it with a text equivalent, since its root is `aria-hidden`:
 
 ### Derive it, for anything interactive
 
+If `@cremona/ui` has the component (button, field, input, checkbox, switch,
+dialog), use it instead ([ui.md](ui.md)). For the rest:
+
 Do **not** rewrite the component from its class strings: you lose the entrance
 variants, the easings and the details that make it feel finished — the spring
 on the switch knob (`stiffness: 400, damping: 28`), the tooltip arrow, the

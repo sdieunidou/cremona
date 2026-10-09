@@ -1,9 +1,11 @@
 # Cremona
 
 **Cremona** is a library of **160 animated UI blocks** for React and Stimulus,
-with a **design system** of 9 themes in light and dark, an **MCP server** and a
-**Skill** that let AI coding sessions (Claude Code, opencode…) find a block,
-read its exact props and use it correctly.
+with accessible **UI components** (`@cremona/ui`: button, field, input,
+checkbox, switch, dialog…), a **design system** of 9 themes in light and dark,
+an **MCP server** and a **Skill** that let AI coding sessions (Claude Code,
+opencode…) find a block or a component, read its exact props and use it
+correctly.
 
 What a block is, before you build with it: a **preview composition** — an
 animated, `aria-hidden` illustration that takes content props (`label`,
@@ -48,6 +50,28 @@ app: the template CSS to remove, panels (`fill`, `gradient={false}`), dark mode
 and themes, reduced motion, placeholder images, Server Components and Tailwind
 hosts.
 
+## Quick start — UI components
+
+Blocks illustrate; the controls an app is made of come from `@cremona/ui`:
+button, label, field, input, checkbox, switch and dialog, accessible and
+responsive, on the same tokens.
+
+```bash
+# copy the source into your app (the shadcn CLI)
+npx shadcn@latest registry add @cremona=https://raw.githubusercontent.com/sdieunidou/cremona/main/packages/ui/r/{name}.json
+npx shadcn@latest add @cremona/button @cremona/field @cremona/input
+
+# or import them
+npm i @cremona/ui @cremona/tokens lucide-react
+```
+
+```tsx
+import { Button } from "@cremona/ui/button";
+```
+
+Styles, what each component guarantees, `Field` and `Dialog`:
+[docs/ui.md](docs/ui.md).
+
 ## Quick start — Symfony / Stimulus
 
 ```bash
@@ -84,6 +108,9 @@ stylesheet's location: [docs/mcp.md](docs/mcp.md).
   dashboards, git, geo, payments, components, forms, mobile, marketing
   sections… — with 1,298 ready-made variants (default, fadeOut,
   isometric, custom copy, custom data, states…).
+- **UI components** — `@cremona/ui`: button, label, field, input, checkbox,
+  switch and dialog, built on Radix UI, tested with Testing Library and axe,
+  taken as source with the shadcn CLI or imported from npm.
 - **9 themes × light/dark** on shadcn-style semantic tokens and status tokens,
   Inter Variable.
 - **Locked server renders** — every variant's server render is compared with a
@@ -99,8 +126,8 @@ stylesheet's location: [docs/mcp.md](docs/mcp.md).
 pnpm install
 pnpm dev          # the gallery, http://localhost:5173 (View code / Copy React / Stimulus, a props table per block)
 pnpm test         # golden parity, MCP e2e, tokens, stimulus…
-pnpm check        # lint, format, types, "use client" and api.json checks, tests, validate
-pnpm build        # compiles @cremona/core, @cremona/react, @cremona/blocks and the gallery
+pnpm check        # lint, format, types, "use client", api.json and registry checks, tests, validate
+pnpm build        # compiles @cremona/core, @cremona/react, @cremona/blocks, @cremona/ui and the gallery
 pnpm mcp          # the MCP server over stdio, with the authoring tools
 ```
 
@@ -117,11 +144,12 @@ cremona/
 │   ├── core/        shared types and helpers — @cremona/core
 │   ├── react/       hooks (useInView, useLoopActive, useFitScale) — @cremona/react
 │   ├── stimulus/    controllers + generated static templates — @cremona/stimulus
+│   ├── ui/          accessible components + their shadcn registry — @cremona/ui
 │   ├── mcp/         MCP server + CLI — @cremona/mcp
 │   └── skill/       SKILL.md for AI sessions
 ├── apps/
 │   └── gallery/     docs app: live previews + one-click React/Stimulus code
-├── tools/           generators (Stimulus templates, props references, "use client" directive)
+├── tools/           generators (Stimulus templates, props references, shadcn registry, "use client" directive)
 └── docs/            guides
 ```
 
@@ -131,6 +159,7 @@ cremona/
 |---|---|
 | [docs/getting-started.md](docs/getting-started.md) | a new React / Next.js app, step by step |
 | [docs/react.md](docs/react.md) | React adapter: props, triggers, panels, gotchas, deriving a component |
+| [docs/ui.md](docs/ui.md) | `@cremona/ui`: install (shadcn CLI or npm), styles, what each component guarantees, `Field` and `Dialog` |
 | [docs/design-system.md](docs/design-system.md) | tokens, 9 themes, dark mode, contrast, frames |
 | [docs/accessibility.md](docs/accessibility.md) | what blocks guarantee, what the host app adds |
 | [docs/stimulus.md](docs/stimulus.md) | Stimulus adapter: controllers, templates |

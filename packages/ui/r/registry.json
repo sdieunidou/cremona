@@ -1,0 +1,190 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "cremona",
+  "homepage": "https://github.com/sdieunidou/cremona",
+  "items": [
+    {
+      "name": "tokens",
+      "type": "registry:theme",
+      "title": "Cremona tokens",
+      "description": "The status tokens (success, warning, info) and the destructive foreground that the Cremona components use, in light and dark. The shadcn tokens they sit next to are untouched.",
+      "cssVars": {
+        "theme": {
+          "color-success": "var(--success)",
+          "color-success-foreground": "var(--success-foreground)",
+          "color-warning": "var(--warning)",
+          "color-warning-foreground": "var(--warning-foreground)",
+          "color-info": "var(--info)",
+          "color-info-foreground": "var(--info-foreground)",
+          "color-destructive-foreground": "var(--destructive-foreground)"
+        },
+        "light": {
+          "success": "oklch(50.4% .138 150.069)",
+          "success-foreground": "oklch(98.5% 0 0)",
+          "warning": "oklch(53.2% .142 48.998)",
+          "warning-foreground": "oklch(98.5% 0 0)",
+          "info": "oklch(48.8% .243 264.376)",
+          "info-foreground": "oklch(98.5% 0 0)",
+          "destructive-foreground": "oklch(98.5% 0 0)"
+        },
+        "dark": {
+          "success": "oklch(79.2% .209 151.711)",
+          "success-foreground": "oklch(20.5% 0 0)",
+          "warning": "oklch(82.8% .189 84.429)",
+          "warning-foreground": "oklch(20.5% 0 0)",
+          "info": "oklch(70.7% .165 254.624)",
+          "info-foreground": "oklch(20.5% 0 0)",
+          "destructive-foreground": "oklch(20.5% 0 0)"
+        }
+      },
+      "categories": [
+        "tokens"
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "The text of a control. Clicking it focuses or toggles the control it is for.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "files": [
+        {
+          "path": "src/label.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "forms"
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A button: six variants, five sizes, and asChild to style a link.",
+      "dependencies": [
+        "radix-ui",
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@cremona/tokens"
+      ],
+      "files": [
+        {
+          "path": "src/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "actions"
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "A label, a control, a description and an error wired for assistive technology, with vertical, horizontal and container-responsive layouts.",
+      "dependencies": [
+        "class-variance-authority"
+      ],
+      "registryDependencies": [
+        "@cremona/label"
+      ],
+      "files": [
+        {
+          "path": "src/field.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "forms"
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "A text input, labelled, described and marked invalid by its Field.",
+      "registryDependencies": [
+        "@cremona/field"
+      ],
+      "files": [
+        {
+          "path": "src/input.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "forms"
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A checkbox with an indeterminate state and a 24 px hit area, labelled and described by its Field.",
+      "dependencies": [
+        "radix-ui",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "@cremona/field"
+      ],
+      "files": [
+        {
+          "path": "src/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "forms"
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "An on/off switch with a 24 px hit area, labelled and described by its Field.",
+      "dependencies": [
+        "radix-ui"
+      ],
+      "registryDependencies": [
+        "@cremona/field"
+      ],
+      "files": [
+        {
+          "path": "src/switch.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "forms"
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A modal dialog: focus trapped and returned, the page hidden from assistive technology, never taller or wider than the screen.",
+      "dependencies": [
+        "radix-ui",
+        "lucide-react"
+      ],
+      "devDependencies": [
+        "tw-animate-css"
+      ],
+      "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "overlays"
+      ]
+    }
+  ]
+}

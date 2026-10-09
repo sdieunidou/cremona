@@ -4,6 +4,7 @@
  * confines every rule to `.cremona` elements and their content, and marks utilities !important.
  */
 @import "tailwindcss" source(none) important;
+@import "tw-animate-css";
 @import "../css/tailwind.css";
 @import "./sources.css";
 

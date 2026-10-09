@@ -34,6 +34,7 @@ export default defineConfig(
   {
     files: [
       "packages/{blocks,react,core}/src/**/*.{ts,tsx}",
+      "packages/ui/{src,test}/**/*.{ts,tsx}",
       "packages/stimulus/{src,test}/**/*.js",
       "apps/gallery/src/**/*.{ts,tsx}",
     ],

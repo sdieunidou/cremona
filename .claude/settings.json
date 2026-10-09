@@ -12,9 +12,11 @@
       "Bash(pnpm check)",
       "Bash(pnpm check:use-client)",
       "Bash(pnpm check:api)",
+      "Bash(pnpm check:registry)",
       "Bash(pnpm generate:stimulus)",
       "Bash(pnpm build:css)",
       "Bash(pnpm generate:api)",
+      "Bash(pnpm generate:registry)",
       "Bash(pnpm gallery:build)",
       "Bash(pnpm e2e)",
       "Bash(pnpm vitest run *)",
@@ -22,6 +24,8 @@
       "Bash(pnpm exec eslint *)",
       "Bash(pnpm exec prettier *)",
       "Bash(pnpm --filter *)",
+      "mcp__cremona__list_components",
+      "mcp__cremona__get_component",
       "mcp__cremona__list_categories",
       "mcp__cremona__list_blocks",
       "mcp__cremona__search_blocks",
@@ -45,7 +49,9 @@
       "Edit(**/tokens/css/cremona.scoped.css)",
       "Write(**/tokens/css/cremona.scoped.css)",
       "Edit(**/blocks/src/*/*/api.json)",
-      "Write(**/blocks/src/*/*/api.json)"
+      "Write(**/blocks/src/*/*/api.json)",
+      "Edit(**/packages/ui/r/**)",
+      "Write(**/packages/ui/r/**)"
     ]
   },
   "hooks": {

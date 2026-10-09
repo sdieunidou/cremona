@@ -17,7 +17,9 @@ What the blocks guarantee, and what the host app adds.
   mobile, notices) and the other blocks keep their controls out of the tab
   order (`noFocus`, `tabIndex={-1}`), except the `mailto:` links they draw
   around e-mail addresses (`data/query`, `data/table`, `email/compose`).
-- For anything interactive, derive a component from the block's source
+- For a control a user operates, use the component of `@cremona/ui` when there
+  is one (button, field, input, checkbox, switch, dialog: [ui.md](ui.md)).
+  Otherwise derive a component from the block's source
   ([recipe](react.md#derive-it-for-anything-interactive)): remove the hidden
   root and the `noFocus` spreads, then add handlers, `ref` and state. The
   markup underneath is semantic: buttons, labelled inputs with
@@ -51,7 +53,7 @@ on the same tokens.
 
 ## Focus
 
-Components and kits draw keyboard focus with one recipe:
+Components and kits (and `@cremona/ui`) draw keyboard focus with one recipe:
 `focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring`,
 inset with `-outline-offset-2` on list and menu items. `--ring` reaches 3:1
 against the background and the card in every theme. Keep the recipe when you
@@ -62,7 +64,8 @@ Tailwind v4 it cancels the `focus-visible:outline-2`.
 
 1. A text equivalent next to every block shown as an illustration.
 2. `MotionConfig reducedMotion="user"` around the React app.
-3. Derived components, not blocks, for anything a user operates.
+3. `@cremona/ui` components or derived components, not blocks, for anything a
+   user operates.
 4. The page's own structure: `lang`, the title, headings and landmarks.
 5. With several React roots on one page, a distinct `identifierPrefix` per
    root, so that label and ARIA ids stay unique

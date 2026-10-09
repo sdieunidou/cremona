@@ -72,6 +72,8 @@ describe("css/tailwind.css", () => {
   it("compiles the blocks to the rules of cremona.css", { timeout: 30000 }, () => {
     const css = hostBuild([
       '@import "tailwindcss" source(none);',
+      // what a shadcn project has: the ui components animate with it
+      '@import "tw-animate-css";',
       '@import "@cremona/tokens/css/tailwind.css";',
       '@import "../src/sources.css";',
     ]);

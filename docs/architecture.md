@@ -11,6 +11,7 @@ packages are built from the same sources (`pnpm build`, `prepack`):
 |---|---|
 | `@cremona/core`, `@cremona/react` | `dist/` compiled by `tsc` (ESM + `.d.ts`) |
 | `@cremona/blocks` | one entry per block, `dist/<category>/<file>/react.{js,d.ts}`, each starting with `"use client"`, exported as `@cremona/blocks/<category>/<file>`; react, react-dom, motion and lucide-react are peer dependencies; the placeholder images in `public/media/` |
+| `@cremona/ui` | one entry per component, `dist/<name>.{js,d.ts}` (ESM + `.d.ts`, starting with `"use client"` where it holds state), exported as `@cremona/ui/<name>`; radix-ui, class-variance-authority, clsx and tailwind-merge as dependencies, react, react-dom and lucide-react as peers; the shadcn registry (`registry.json`, `r/`) |
 | `@cremona/tokens` | `css/cremona.css` and `css/cremona.scoped.css` (compiled by `pnpm build:css`, committed), `css/tailwind.css` (for hosts' Tailwind builds), `css/themes.css`, `css/fonts.css`, the fonts, `themes.json` |
 | `@cremona/stimulus` | JS controllers (with `.d.ts` declarations) + the generated HTML templates |
 | `@cremona/mcp` | plain ESM JS + a snapshot of the library data (`data/`) |
@@ -115,8 +116,9 @@ test.
 (`packages/tokens/scripts/build-css.mjs`) compiles it with Tailwind v4 (a dev
 dependency of `@cremona/tokens`) from `packages/tokens/src/cremona.css`:
 `tailwindcss`, `css/tailwind.css` (Cremona's fonts, tokens, theme mapping,
-variants, utilities and base styles, also shipped to Tailwind hosts) and an
-`@source` on the blocks' sources and goldens. The same run compiles
+variants, utilities and base styles, also shipped to Tailwind hosts),
+`tw-animate-css` (the enter and exit animations of the dialog) and an `@source` on
+the blocks' sources and goldens and on the components' sources. The same run compiles
 `css/cremona.scoped.css`, the same classes confined to `.cremona` elements for
 pages with CSS of their own (selectors rewritten with Lightning CSS). CI fails
 when a committed file is stale; tests check that every class a golden or a
@@ -125,6 +127,19 @@ compiles the blocks to the rules of `cremona.css`, and that the scoped file
 reaches nothing outside `.cremona`.
 `css/themes.css` holds only the semantic token blocks (`:root`, `.dark`,
 `.theme-*:not(.dark)`, `.theme-*.dark`, `.theme-* .dark`).
+
+## UI components
+
+`packages/ui` is the source of the `@cremona/ui` components and of their shadcn
+registry. The sources import each other relatively (`./utils.js`, `./field.js`), so
+that the npm package compiles with plain `tsc`. `tools/generate-registry.mjs` writes
+`r/<name>.json` from `registry.json` (the items, by hand) and the sources: it
+rewrites those imports to the aliases of a shadcn project (`@/lib/utils`,
+`@/components/ui/field`), and refuses an import a project could not resolve and a
+`dependencies` list that is not what the files import. The `tokens` item repeats the
+status tokens of `@cremona/tokens`, which a test compares with `themes.css`. The MCP
+server reads `registry.json` and `r/` (`list_components`, `get_component`). The
+conventions every component follows are in [ui.md](ui.md).
 
 ## Gallery app
 

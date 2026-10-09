@@ -183,8 +183,10 @@ function declarations(body) {
   return out.map((d) => d.trim()).filter(Boolean);
 }
 
-/** the rules of `css` reduced to the declarations whose property `keep` accepts, !important
- *  removed unless `important` or the class asks for it (Tailwind's `!` modifier) */
+/** the rules of `css` reduced to the declarations whose property `keep` accepts: all !important
+ *  when `important` (the `content: var(--tw-content)` that a `before:` or `after:` variant adds
+ *  to its utility is not, in Tailwind's output), else !important removed unless the class asks
+ *  for it (Tailwind's `!` modifier) */
 function pick(css, keep, important) {
   return chunks(css)
     .map((rule) => {
@@ -197,7 +199,11 @@ function pick(css, keep, important) {
       }
       const kept = declarations(body)
         .filter((d) => keep(d.slice(0, d.indexOf(":")).trim()))
-        .map((d) => (important || prelude.includes("\\!") ? d : d.replace(/\s*!important$/, "")));
+        .map((d) => {
+          const marked = /\s*!important$/.test(d);
+          if (important) return marked ? d : `${d}!important`;
+          return prelude.includes("\\!") || !marked ? d : d.replace(/\s*!important$/, "");
+        });
       return kept.length ? `${prelude}{${kept.join(";")}}` : "";
     })
     .join("");

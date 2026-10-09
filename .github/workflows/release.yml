@@ -68,6 +68,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm --filter @cremona/blocks check:package
+      - run: pnpm --filter @cremona/ui check:package
       - run: pnpm release
         env:
           PNPM_CONFIG_PROVENANCE: "true"

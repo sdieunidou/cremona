@@ -4,5 +4,7 @@
  * Cremona's additions to Tailwind live in css/tailwind.css, shared with Tailwind hosts.
  */
 @import "tailwindcss" source(none);
+/* the enter/exit animations of @cremona/ui (a dialog fades and zooms): shadcn projects have it too */
+@import "tw-animate-css";
 @import "../css/tailwind.css";
 @import "./sources.css";

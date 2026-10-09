@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "input",
+  "type": "registry:ui",
+  "title": "Input",
+  "description": "A text input, labelled, described and marked invalid by its Field.",
+  "registryDependencies": [
+    "@cremona/field"
+  ],
+  "files": [
+    {
+      "path": "src/input.tsx",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport { cn } from \"@/lib/utils\";\nimport { useFieldControl } from \"@/components/ui/field\";\n\n/**\n * A text input. 16 px text on small screens (a smaller size makes iOS zoom in on focus), 14 px from\n * `md`. Inside a `Field` it is labelled, described and marked invalid by the field.\n */\nfunction Input({ className, type, ...props }: React.ComponentProps<\"input\">) {\n  const control = useFieldControl(props);\n  return (\n    <input\n      type={type}\n      data-slot=\"input\"\n      {...props}\n      {...control}\n      className={cn(\n        \"h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-2.5 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm dark:bg-input/30\",\n        \"placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground\",\n        \"file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground\",\n        \"focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring\",\n        \"disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50\",\n        \"aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40\",\n        className,\n      )}\n    />\n  );\n}\n\nexport { Input };\n",
+      "type": "registry:ui"
+    }
+  ],
+  "categories": [
+    "forms"
+  ]
+}

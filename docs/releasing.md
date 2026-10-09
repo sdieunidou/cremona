@@ -1,7 +1,7 @@
 # Releasing
 
 Published packages: `@cremona/tokens`, `@cremona/core`, `@cremona/react`,
-`@cremona/blocks`, `@cremona/stimulus`, `@cremona/mcp` — versioned together
+`@cremona/blocks`, `@cremona/ui`, `@cremona/stimulus`, `@cremona/mcp` — versioned together
 (Changesets "fixed" group in `.changeset/config.json`). `@cremona/skill` and
 the gallery are private.
 
@@ -15,8 +15,9 @@ the gallery are private.
    "chore: version packages" PR. Merging it bumps versions and changelogs.
 3. Publishing is manual: Actions → **Release** → Run workflow on `main` →
    `publish: true`. The job runs only on `main`, in the `npm` environment. It
-   runs `pnpm check`, checks the `@cremona/blocks` tarball
-   (`pnpm --filter @cremona/blocks check:package`), then `pnpm release`
+   runs `pnpm check`, checks the `@cremona/blocks` and `@cremona/ui` tarballs
+   (`pnpm --filter @cremona/blocks check:package`, the same for `@cremona/ui`),
+   then `pnpm release`
    (`pnpm build` + `changeset publish`, which publishes every version not yet on
    npm and tags it), then pushes the tags.
 
@@ -35,7 +36,7 @@ These are settings, not code; the workflow needs all of them.
 
 1. **npm scope**: the `cremona` organization on npmjs.com owns `@cremona/*`.
 2. **First publish, once per package.** npm attaches a trusted publisher only
-   to a package that exists, so the first version of each of the six packages
+   to a package that exists, so the first version of each of the seven packages
    is published by a maintainer, from a clean checkout of `main`:
 
    ```bash
@@ -65,12 +66,15 @@ No `NPM_TOKEN` secret is used; delete one if it exists.
 
 - `pnpm pack` in a package directory shows exactly what it ships (with pnpm
   11, `pnpm publish --dry-run` prints no file list). Each `prepack` builds what
-  its package compiles: `dist/` for core, react and blocks (plus the blocks'
+  its package compiles: `dist/` for core, react, blocks and ui (plus the blocks'
   placeholder images), the data snapshot for mcp.
 - `pnpm --filter @cremona/blocks check:package` packs `@cremona/blocks` and
   checks the tarball: a compiled `"use client"` entry and types for every
   block, the placeholder images, publint, and attw on every entry (ESM-only
   profile).
+- `pnpm --filter @cremona/ui check:package` does the same for `@cremona/ui`: a
+  compiled entry and types for every component (`"use client"` where one holds
+  state), the registry files, publint, and attw on every entry.
 - To try tarballs in an app, install them together with npm:
   `npm i ./cremona-tokens-0.1.0.tgz ./cremona-core-0.1.0.tgz ./cremona-react-0.1.0.tgz ./cremona-blocks-0.1.0.tgz motion lucide-react`
   — npm resolves the packages' dependencies on each other from the tarballs;
@@ -84,5 +88,6 @@ No `NPM_TOKEN` secret is used; delete one if it exists.
 | `@cremona/core` | compiled `dist/` (JS + `.d.ts`), with the `land-mask` subpath |
 | `@cremona/react` | compiled `dist/` (JS + `.d.ts`); React 18.2+ or 19 as a peer dependency |
 | `@cremona/blocks` | `dist/<category>/<file>/react.{js,d.ts}` (one `"use client"` entry per block, `pnpm build`), `public/media/placeholders/` (copied from the gallery at pack time), `catalog.json`; react, react-dom, motion and lucide-react as peer dependencies |
+| `@cremona/ui` | `dist/<name>.{js,d.ts}` (one entry per component, `pnpm build`), `registry.json` and `r/` (the shadcn registry); react, react-dom and lucide-react as peer dependencies |
 | `@cremona/stimulus` | controllers (`src/`, with their `.d.ts`) and generated templates; `@hotwired/stimulus` as a peer dependency |
 | `@cremona/mcp` | the server plus a snapshot of blocks, tokens, templates and docs (`data/`, written by `prepack`); authoring tools are only registered inside a cremona checkout |
