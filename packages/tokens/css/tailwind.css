@@ -1,11 +1,8 @@
 /*
  * Cremona for Tailwind CSS v4 builds: the Inter font, the theme tokens and what Cremona adds to
  * Tailwind (the theme mapping, the `dark` and `data-*` variants, utilities, base styles). Import
- * it after Tailwind, then point Tailwind at the blocks:
- *
- *   @import "tailwindcss";
- *   @import "@cremona/tokens/css/tailwind.css";
- *   @source "../node_modules/@cremona/blocks/dist";
+ * it right after Tailwind itself, then add a source for the blocks (get_css "tailwind" has the
+ * snippet). This comment names no import on purpose: AssetMapper reads imports in comments too.
  *
  * cremona.css is compiled from this file (src/cremona.css).
  */

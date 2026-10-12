@@ -47,6 +47,13 @@ describe("css/tailwind.css", () => {
     expect(code).not.toMatch(/@import\s+["']tw-animate-css/);
   });
 
+  it("names no import inside its comments, which AssetMapper would try to download", () => {
+    const comments = preset.match(/\/\*[\s\S]*?\*\//g) ?? [];
+    for (const comment of comments) {
+      expect(comment).not.toMatch(/@import\s+["']/);
+    }
+  });
+
   it("maps Cremona's tokens, variants and utilities in a host build", { timeout: 30000 }, () => {
     const css = hostBuild([
       '@import "tailwindcss" source(none);',
