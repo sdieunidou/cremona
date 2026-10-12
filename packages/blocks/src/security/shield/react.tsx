@@ -59,29 +59,29 @@ const stateStyles = {
 const connectors = [
   {
     icon: Lock,
-    className: "top-2 left-1/2 -translate-x-1/2",
+    className: "-top-0.5 left-1/2 -translate-x-1/2",
     fromX: 0,
-    fromY: 72,
+    fromY: 78,
     delay: 0.55,
   },
   {
     icon: KeyRound,
-    className: "top-1/2 right-2 -translate-y-1/2",
-    fromX: -72,
+    className: "top-1/2 -right-0.5 -translate-y-1/2",
+    fromX: -78,
     fromY: 0,
     delay: 0.7,
   },
   {
     icon: Eye,
-    className: "bottom-2 left-1/2 -translate-x-1/2",
+    className: "-bottom-0.5 left-1/2 -translate-x-1/2",
     fromX: 0,
-    fromY: -72,
+    fromY: -78,
     delay: 0.85,
   },
   {
     icon: FingerprintPattern,
-    className: "top-1/2 left-2 -translate-y-1/2",
-    fromX: 72,
+    className: "top-1/2 -left-0.5 -translate-y-1/2",
+    fromX: 78,
     fromY: 0,
     delay: 1,
   },
@@ -246,7 +246,7 @@ export function Shield({
             return (
               <div key={i} className={cn("absolute", connector.className)}>
                 <motion.div
-                  className="flex size-8 items-center justify-center rounded-full border bg-card text-foreground shadow-xs ring-2 ring-background"
+                  className="flex size-10 items-center justify-center rounded-full border bg-card text-foreground shadow-xs ring-2 ring-background"
                   variants={
                     animated
                       ? connectorAnim(connector.delay, connector.fromX, connector.fromY)
@@ -254,7 +254,7 @@ export function Shield({
                   }
                   {...motionState}
                 >
-                  <Icon className="size-4" strokeWidth={2.25} />
+                  <Icon className="size-5" strokeWidth={2.25} />
                 </motion.div>
               </div>
             );
