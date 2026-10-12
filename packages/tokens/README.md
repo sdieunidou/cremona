@@ -13,7 +13,7 @@ Pick the stylesheet that fits the page:
 | The page | Load | |
 |---|---|---|
 | has no CSS of its own besides yours (a new React, Vite or Next.js app without Tailwind) | `css/cremona.css` | complete, no build |
-| runs its own Tailwind CSS v4 build | `css/tailwind.css`, in that build | one build for your classes and the blocks' |
+| runs its own Tailwind CSS v4 build | `css/tailwind.css`, in that build, and `css/themes/<name>.css` for each other theme you offer | one build for your classes and the blocks' |
 | has CSS of its own: Bootstrap, a theme, a legacy app | `css/cremona.scoped.css`, blocks inside a `.cremona` element | each side keeps its styles |
 
 ```ts
@@ -24,6 +24,8 @@ import "@cremona/tokens/css/cremona.css"; // once, in the app entry
 /* your Tailwind entry */
 @import "tailwindcss";
 @import "@cremona/tokens/css/tailwind.css";
+/* each theme you offer besides the default, one file each */
+@import "@cremona/tokens/css/themes/sakura.css";
 @source "../node_modules/@cremona/blocks/dist";
 ```
 
@@ -36,15 +38,18 @@ import "@cremona/tokens/css/cremona.css"; // once, in the app entry
 |---|---|
 | `css/cremona.css` | Inter Variable (`@font-face`, the woff2 files sit next to it), the tokens, Tailwind's preflight and every utility class the blocks use |
 | `css/cremona.scoped.css` | the same, applied to `.cremona` elements and their content only: tokens on the wrapper, utilities `!important` in `@layer cremona.utilities`, keyframes named `cremona-*` |
-| `css/tailwind.css` | for a Tailwind v4 build: the fonts, the tokens, the theme mapping (`bg-card`, `rounded-3xl`, `font-medium` = 510…), the `dark` and `data-*` variants, the `no-scrollbar`, `paused` and `ring-1.5` utilities and the base styles — no `@import "tailwindcss"`, no `@source` |
-| `css/themes.css` | the token blocks only (`:root`, `.dark`, `.theme-*`) |
+| `css/tailwind.css` | for a Tailwind v4 build: the fonts, the default theme's tokens (light and dark), the theme mapping (`bg-card`, `rounded-3xl`, `font-medium` = 510…), the `dark` and `data-*` variants, the `no-scrollbar`, `paused` and `ring-1.5` utilities and the base styles — no `@import "tailwindcss"`, no `@source` |
+| `css/themes/<name>.css` | one theme's token blocks: `default.css` (`:root`, `.dark`, which `tailwind.css` imports), `claude-plus.css`, `zen.css`… (`.theme-<name>` in light and dark) |
+| `css/themes.css` | the token blocks of every theme, in one file |
 | `css/fonts.css` | the `@font-face` rules only |
 | `themes.json` | the themes' names and swatches |
 
 - Dark mode is the `dark` class on `<html>`; a theme is a `theme-<name>` class
   on `<html>` (`claude-plus`, `light-green`, `zen`, `sakura`, `tiesen`,
   `deep-purple`, `indigo-clean`, `brutalism`). With `cremona.scoped.css` they
-  can also go on the `.cremona` element.
+  can also go on the `.cremona` element. `cremona.css`, `cremona.scoped.css`
+  and `themes.css` hold every theme; a Tailwind build has the default one and
+  those whose file it imports.
 - Tokens are CSS custom properties — `var(--background)`, `var(--card)`,
   `var(--muted-foreground)`, `var(--border)`, `var(--radius)`, the status
   tokens `var(--success)`, `var(--warning)`, `var(--info)`… — for your own CSS.

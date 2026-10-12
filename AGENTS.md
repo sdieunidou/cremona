@@ -18,7 +18,7 @@ node tools/use-client.mjs                     # add or move the directive where 
 pnpm generate:stimulus  # regenerate packages/stimulus/templates/**
 pnpm generate:api       # regenerate every block's api.json (props reference); check:api fails when one is stale
 pnpm generate:registry  # regenerate packages/ui/r/** (the shadcn registry of @cremona/ui); check:registry fails when it is stale
-pnpm build:css          # recompile packages/tokens/css/cremona{,.scoped}.css (Tailwind v4, dev only)
+pnpm build:css          # rewrite packages/tokens/css/themes.css, recompile css/cremona{,.scoped}.css (Tailwind v4, dev only)
 pnpm build              # compile core, react, blocks (dist/, one entry per block), ui (dist/, one entry per component) and the gallery
 pnpm --filter @cremona/blocks check:package   # pack @cremona/blocks, check it with publint + attw
 pnpm --filter @cremona/ui check:package       # the same for @cremona/ui
@@ -32,7 +32,7 @@ typecheck, `check:use-client`, tests, then `pnpm generate:stimulus`,
 `pnpm generate:api`, `pnpm generate:registry` and `pnpm build:css` again, and
 fails on any changed **or untracked** file under `packages/blocks`,
 `packages/stimulus`, `packages/tokens` and `packages/ui` (a golden, `api.json`,
-template, registry item, `cremona.css` or `cremona.scoped.css` left uncommitted),
+template, registry item, `themes.css`, `cremona.css` or `cremona.scoped.css` left uncommitted),
 then `validate`. The gallery e2e job (Node 24)
 fails when a block page shows an error card, throws or logs a console error (a
 failed image or font request logs one), or when axe finds a violation on the
@@ -52,10 +52,11 @@ also runs the package check before publishing.
    `pnpm generate:api` from the props interface and its JSDoc),
    `packages/stimulus/templates/**` (rewritten by `pnpm generate:stimulus`),
    `packages/ui/r/**` (rewritten by `pnpm generate:registry` from `registry.json`
-   and the component sources) and `packages/tokens/css/cremona.css` and
-   `cremona.scoped.css` (rewritten by `pnpm build:css`). Change the source block
-   or component, `packages/tokens/css/tailwind.css`, `packages/tokens/src/*.css` or
-   the generator, rerun, commit the result.
+   and the component sources) and `packages/tokens/css/themes.css`,
+   `cremona.css` and `cremona.scoped.css` (rewritten by `pnpm build:css`). Change
+   the source block or component, `packages/tokens/css/tailwind.css`,
+   `packages/tokens/css/themes/*.css`, `packages/tokens/src/*.css` or the
+   generator, rerun, commit the result.
 3. **Parity is a gate**: a block change that breaks its parity test is a
    regression unless the golden is deliberately regenerated. The comparator
    (`packages/blocks/test/helpers/parity.ts`) is strict — extend its _semantic_
@@ -97,8 +98,11 @@ also runs the package check before publishing.
   v4 over the blocks and their goldens, so a block that adds a class needs a
   rebuild), `cremona.scoped.css` (the same confined to `.cremona` elements,
   `packages/tokens/scripts/build-css.mjs`), `tailwind.css` (what Cremona adds to
-  Tailwind: the source both compile from, shipped to Tailwind hosts),
-  `themes.css` (tokens only), `fonts.css`. The gallery compiles its own
+  Tailwind: the source both compile from, shipped to Tailwind hosts, with the
+  default theme only), `themes/<name>.css` (one theme's tokens: the source of
+  truth; `src/themes.css` adds the non-default ones to the two compiled
+  stylesheets), `themes.css` (every theme's tokens, concatenated by
+  `pnpm build:css`), `fonts.css`. The gallery compiles its own
   stylesheet (`apps/gallery/src/gallery.css`, `@tailwindcss/vite`).
 - `packages/stimulus/{src,templates}/` — controllers (with their `.d.ts`) +
   generated templates.

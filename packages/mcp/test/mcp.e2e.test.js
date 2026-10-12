@@ -233,6 +233,12 @@ describe("cremona MCP server", () => {
     expect(theme.css).toContain(".theme-claude-plus:not(.dark)");
     expect(theme.css).toContain(".theme-claude-plus.dark");
     expect(theme.css).toContain(".theme-claude-plus .dark");
+    expect(theme.css).not.toContain(".theme-zen");
+    expect(theme.stylesheet).toBe("@cremona/tokens/css/themes/claude-plus.css");
+    expect(theme.usage).toContain("css/tailwind.css");
+    expect(themes.find((t) => t.value === "zen").stylesheet).toBe(
+      "@cremona/tokens/css/themes/zen.css",
+    );
   });
 
   it("returns the design system overview", async () => {
@@ -266,6 +272,9 @@ describe("cremona MCP server", () => {
     );
     expect(tailwind.recipe).toContain('@import "@cremona/tokens/css/tailwind.css";');
     expect(tailwind.css).toContain("@custom-variant dark");
+    expect(tailwind.css).toContain('@import "./themes/default.css";');
+    expect(tailwind.themes).toContain('@import "@cremona/tokens/css/themes/<name>.css";');
+    expect(tailwind.withoutNodeModules).toContain("url()");
   });
 
   it("registers every tool with a title and annotations", async () => {

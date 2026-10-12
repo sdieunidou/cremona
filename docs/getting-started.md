@@ -153,7 +153,8 @@ eight themes besides the default — `claude-plus`, `light-green`, `zen`,
 page flashes light first: put the design system's
 [anti-flash script](design-system.md#dark-mode) first in `<head>`. It reads the
 choice from `localStorage` (`cremona-appearance`, `cremona-theme`) and follows
-the OS setting by default.
+the OS setting by default. With your own Tailwind build, a theme also needs its
+file in that build ([section 9](#9-your-own-css-or-tailwind)).
 
 - **Vite**: in the `<head>` of `index.html`.
 - **Next.js**: render it in the root layout (the script as a string,
@@ -284,8 +285,8 @@ modules…) on Cremona's tokens, so it follows the theme and dark mode:
 blocks' classes along with yours, and do not load `cremona.css`: two Tailwind
 outputs on one page override each other class by class (its `sm:grid-cols-2`
 would beat your `lg:grid-cols-4`). `@cremona/tokens/css/tailwind.css` brings
-what Cremona adds to Tailwind — the Inter font, the tokens of the 9 themes, the
-theme mapping (`bg-card`, `text-muted-foreground`, the radius and weight
+what Cremona adds to Tailwind — the Inter font, the default theme's tokens
+(light and dark), the theme mapping (`bg-card`, `text-muted-foreground`, the radius and weight
 scales), the `dark` variant on the `.dark` class, the `data-*` state variants, a
 few utilities and the base styles — without Tailwind itself:
 
@@ -303,6 +304,17 @@ few utilities and the base styles — without Tailwind itself:
 - Delete the template's `:root`, `@theme inline`, `prefers-color-scheme` and
   `body` rules: `tailwind.css` defines the same names (`--background`,
   `--foreground`…).
+- `tailwind.css` brings the default theme only. To offer another one
+  (`theme-sakura` on `<html>`, a theme menu), import its file in the same
+  stylesheet, right after `tailwind.css`, one line per theme you offer:
+
+  ```css
+  @import "@cremona/tokens/css/themes/sakura.css";
+  @import "@cremona/tokens/css/themes/zen.css";
+  ```
+
+  A theme whose file the build does not import renders with the default
+  tokens. `cremona.css` and `cremona.scoped.css` carry every theme.
 - The blocks render as with `cremona.css`, and your markup shares their
   values: `bg-card`, `rounded-3xl` or `font-medium` (510) resolve to Cremona's,
   and your `dark:` classes follow the `.dark` class.

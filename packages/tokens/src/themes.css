@@ -1,0 +1,10 @@
+/* Every theme besides the default one, which css/tailwind.css brings: the precompiled stylesheets
+ * switch themes at runtime (the cremona-theme controller), so they carry them all. */
+@import "../css/themes/claude-plus.css";
+@import "../css/themes/light-green.css";
+@import "../css/themes/zen.css";
+@import "../css/themes/sakura.css";
+@import "../css/themes/tiesen.css";
+@import "../css/themes/deep-purple.css";
+@import "../css/themes/indigo-clean.css";
+@import "../css/themes/brutalism.css";

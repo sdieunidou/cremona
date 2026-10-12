@@ -82,8 +82,8 @@ tools, which write files and rewrite `catalog.json` (`destructiveHint`).
 | `list_components` | the components of `@cremona/ui` (name, description, exports, npm import) with the install lines; `query` keeps those whose name, description or category has every word |
 | `get_component` | one component: its import, the shadcn commands, `dependencies`, `registryDependencies`, notes and its source as a project receives it (`@/lib/utils`, `@/components/ui/…`) |
 | `get_golden` | the SSR render reference HTML of one variant (hidden initial state) |
-| `get_themes` / `get_theme` | the 9 themes; one theme's full light+dark CSS |
-| `get_css` | the three stylesheets and which host takes which (`cremona.css`, `tailwind.css` inside a host's Tailwind v4 build, `cremona.scoped.css` next to other CSS), with paths, sizes, import lines and fonts; `tailwind.css` itself (`tailwind`), the whole `cremona.css` (`full`) or the tokens (`tokens`) on request |
+| `get_themes` / `get_theme` | the 9 themes, each with its stylesheet (`css/themes/<name>.css`); one theme's full light+dark CSS and where it ships |
+| `get_css` | the three stylesheets and which host takes which (`cremona.css`, `tailwind.css` inside a host's Tailwind v4 build, `cremona.scoped.css` next to other CSS), with paths, sizes, import lines and fonts; `tailwind.css` itself and the host recipe, theme files and a setup without `node_modules` included (`tailwind`), the whole `cremona.css` (`full`) or the tokens (`tokens`) on request |
 | `get_controller` | Stimulus controller source (`visual`, `theme`) |
 | `get_design_system` | token list, conventions, frame anatomy |
 | `add_category` / `add_block` | scaffold new categories/blocks with conventions (repo only) |
@@ -315,7 +315,8 @@ humans, same source of truth as the MCP.
   use as-is or derive from (see docs/react.md). It imports `@cremona/core` and
   `@cremona/react`, which `@cremona/blocks` depends on.
 - Ship one stylesheet, once: `@cremona/tokens/css/cremona.css` (no Tailwind
-  build required), `css/tailwind.css` inside a host's own Tailwind v4 build, or
+  build required), `css/tailwind.css` inside a host's own Tailwind v4 build
+  (with the default theme; `css/themes/<name>.css` adds another), or
   `css/cremona.scoped.css` with the blocks inside a `.cremona` element on a page
   with CSS of its own — `get_css` gives the paths and import lines.
 - `pnpm validate` runs the same checks as the `validate` tool and exits

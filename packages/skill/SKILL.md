@@ -79,7 +79,7 @@ Every block has a `scale` (MCP `list_blocks`, `search_blocks`, `get_block`):
      - `react.tsx` (React implementation)
      - `golden/<slug>.html` (SSR render reference)
    - Stimulus templates: `packages/stimulus/templates/<category>/<file>/<slug>.html` + `manifest.json`
-   - Design tokens: `packages/tokens/css/cremona.css` (complete stylesheet, compiled by `pnpm build:css`), `css/cremona.scoped.css` (the same, confined to `.cremona` elements, for pages with CSS of their own), `css/tailwind.css` (Cremona's additions for a host's own Tailwind v4 build), `css/themes.css` (tokens only), `themes.json`
+   - Design tokens: `packages/tokens/css/cremona.css` (complete stylesheet, compiled by `pnpm build:css`), `css/cremona.scoped.css` (the same, confined to `.cremona` elements, for pages with CSS of their own), `css/tailwind.css` (Cremona's additions for a host's own Tailwind v4 build, with the default theme), `css/themes/<name>.css` (one theme's tokens, the source), `css/themes.css` (every theme's tokens, written by `pnpm build:css`), `themes.json`
 
 ## Using blocks in a React app (Next.js, Vite, …)
 
@@ -97,10 +97,13 @@ import { StatCard } from "@cremona/blocks/metrics/stat-card";
    it: code you write around the blocks needs your own CSS. An app with its own
    Tailwind v4 build does not load `cremona.css`: its stylesheet imports
    `tailwindcss`, then `@cremona/tokens/css/tailwind.css`, with
-   `@source "../node_modules/@cremona/blocks/dist"`. A page with CSS of its own
+   `@source "../node_modules/@cremona/blocks/dist"`; `tailwind.css` brings the
+   default theme only, so that stylesheet also imports
+   `@cremona/tokens/css/themes/<name>.css` for each other theme the app offers. A page with CSS of its own
    (Bootstrap) loads `@cremona/tokens/css/cremona.scoped.css` and wraps the
    blocks in a `class="cremona"` element.
-2. Dark mode: toggle `.dark` on `<html>`; theme: add `.theme-<name>` (see `themes.json`).
+2. Dark mode: toggle `.dark` on `<html>`; theme: add `.theme-<name>` (see `themes.json`),
+   whose tokens a Tailwind build has only when it imports `css/themes/<name>.css`.
 3. Render `<StatCard animated trigger="inView" />`. Props:
    - `animated` (default false = static final state), `trigger`: `"mount" | "inView" | "inViewRepeat"`
    - `fill` (default false): fill the box instead of centring a capped-width
@@ -162,7 +165,9 @@ renders one button with one label.
 5. Theme switching: `data-controller="cremona-theme"` on `<html>` (values `appearance`,
    `theme`; the choice persists to localStorage when storage is available; actions
    `toggle`, `setAppearance`, `setTheme`). The head partial in `docs/stimulus.md` applies
-   the theme before the first paint.
+   the theme before the first paint. `cremona.css` and `cremona.scoped.css` hold every
+   theme; a Tailwind build with `tailwind.css` has the default one, plus each
+   `css/themes/<name>.css` it imports: import the files of the themes you offer.
 
 ## Creating new visuals (categories, blocks, variants)
 
@@ -186,6 +191,8 @@ renders one button with one label.
 - 9 themes: `default`, `claude-plus`, `light-green`, `zen`, `sakura`, `tiesen`,
   `deep-purple`, `indigo-clean`, `brutalism` — each with light + dark.
 - Default theme: neutral in light and dark; the warm "Claude-like" dark is `claude-plus`.
+- Each theme's tokens are `@cremona/tokens/css/themes/<name>.css` (`default.css`: `:root`
+  and `.dark`); `css/themes.css` is all of them.
 - Font: Inter Variable. Motion: `motion/react`, springs stiffness 300–420 damping 14–18.
 - Preview stage height by variant `size`: `xs` h-48, `sm` h-64, `md` h-96 (default),
   `lg` h-[28rem], `xl` h-[32rem]; footer label; grid `lg:grid-cols-2`.
@@ -194,7 +201,8 @@ renders one button with one label.
 
 - Never hand-edit generated files: `packages/blocks/src/*/*/golden/**`,
   `api.json`, `packages/stimulus/templates/**`, `packages/ui/r/**`,
-  `packages/tokens/css/cremona.css`, `packages/tokens/css/cremona.scoped.css`.
+  `packages/tokens/css/cremona.css`, `packages/tokens/css/cremona.scoped.css`,
+  `packages/tokens/css/themes.css` (edit `css/themes/<name>.css`, then `pnpm build:css`).
 - Never bypass parity tests. The renders ARE the product.
 - Keep class strings intact when deriving: parity compares the DOM
   structure, the classes and the text.

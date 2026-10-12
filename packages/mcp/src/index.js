@@ -71,9 +71,10 @@ md h-96 by default, lg h-[28rem], xl h-[32rem]). Blocks whose \`effects\` is
 React only; get_block(include:["stimulus"]) says which.
 
 Stylesheet, loaded once: @cremona/tokens/css/cremona.css (no Tailwind build needed). An app
-with its own Tailwind v4 build imports css/tailwind.css inside that build instead; a page whose
-CSS must keep working (Bootstrap, a theme) loads css/cremona.scoped.css and puts the blocks inside
-a .cremona element. get_css says how.`;
+with its own Tailwind v4 build imports css/tailwind.css inside that build instead, which brings the
+default theme only: it also imports css/themes/<name>.css for each other theme it offers. A page
+whose CSS must keep working (Bootstrap, a theme) loads css/cremona.scoped.css and puts the blocks
+inside a .cremona element. cremona.css and cremona.scoped.css hold every theme. get_css says how.`;
 
 const server = new McpServer({ name: "cremona", version }, { instructions: INSTRUCTIONS });
 
@@ -136,6 +137,9 @@ const UI_REGISTRY =
 const STYLESHEET = "@cremona/tokens/css/cremona.css";
 const TAILWIND_STYLESHEET = "@cremona/tokens/css/tailwind.css";
 const SCOPED_STYLESHEET = "@cremona/tokens/css/cremona.scoped.css";
+const themeStylesheet = (name) => `@cremona/tokens/css/themes/${name}.css`;
+const TAILWIND_THEMES =
+  'tailwind.css brings the default theme (light + dark) only: to offer another theme (.theme-<name>, the cremona-theme controller), import its file in the same stylesheet, right after tailwind.css (imports come before @source): @import "@cremona/tokens/css/themes/<name>.css";';
 
 tool(
   "list_categories",
@@ -334,16 +338,17 @@ tool(
   "get_themes",
   {
     title: "List themes",
-    description: `List every design-system theme (${store.themes().length}) with labels and oklch swatches.`,
+    description: `List every design-system theme (${store.themes().length}) with labels, oklch swatches and the stylesheet of its tokens.`,
   },
-  async () => text(store.themes()),
+  async () => text(store.themes().map((t) => ({ ...t, stylesheet: themeStylesheet(t.value) }))),
 );
 
 tool(
   "get_theme",
   {
     title: "Get a theme's CSS",
-    description: "Get the full CSS token block of one theme (light + dark) plus usage notes.",
+    description:
+      "Get the CSS tokens of one theme (light + dark, after the default ones it builds on), its stylesheet and usage notes.",
     inputSchema: {
       theme: z
         .string()
@@ -357,23 +362,27 @@ tool(
       return text({
         css,
         usage:
-          "Ship @cremona/tokens/css/cremona.css (complete) or css/themes.css (tokens only) and toggle .dark / .theme-<name> on <html>; .dark on an inner element renders that subtree dark in the page's theme.",
-        themes: store.themes(),
+          "Ship @cremona/tokens/css/cremona.css (complete) or css/themes.css (tokens only, every theme) and toggle .dark / .theme-<name> on <html>; .dark on an inner element renders that subtree dark in the page's theme. css/themes/<name>.css holds one theme.",
+        tailwind: TAILWIND_THEMES,
+        themes: store.themes().map((t) => ({ ...t, stylesheet: themeStylesheet(t.value) })),
       });
     }
     const known = store.themes().map((t) => t.value);
     if (!known.includes(theme)) return fail(`unknown theme '${theme}'`, { themes: known });
-    const wanted = [`:root{--background`, `.dark{--background`];
-    if (theme !== "default")
-      wanted.push(
-        `.theme-${theme}:not(.dark){--background`,
-        `.theme-${theme}.dark{--background`,
-        `.theme-${theme} .dark{--background`,
-      );
-    const lines = css.split("\n\n").filter((block) => wanted.some((w) => block.startsWith(w)));
+    const rules = (name) =>
+      store
+        .themeCss(name)
+        .replace(/^\/\*[\s\S]*?\*\/\s*/, "")
+        .trim();
+    const own = [rules("default"), ...(theme === "default" ? [] : [rules(theme)])];
     return text({
       theme,
-      css: lines.join("\n\n"),
+      css: own.join("\n\n"),
+      stylesheet: themeStylesheet(theme),
+      usage:
+        theme === "default"
+          ? "The tokens of :root (light) and .dark. Every stylesheet has them: css/tailwind.css brings them to a Tailwind build."
+          : `.theme-${theme} on <html>, with .dark for its dark mode. cremona.css, cremona.scoped.css and css/themes.css have it; in a Tailwind build, import ${themeStylesheet(theme)} after css/tailwind.css.`,
       themes: store.themes().find((t) => t.value === theme) ?? null,
     });
   },
@@ -455,7 +464,7 @@ tool(
   {
     title: "Get the stylesheet",
     description:
-      "How to load the library's styles. kind 'summary' (default): the three stylesheets and which host takes which (plain cremona.css; tailwind.css inside a host's Tailwind v4 build; cremona.scoped.css next to Bootstrap or other CSS), with path, size and import snippets. 'tailwind': css/tailwind.css itself (small) and the host recipe. 'full': the whole minified cremona.css (large: prefer reading it from node_modules). 'tokens': css/themes.css only (semantic tokens). 'fonts': the font files.",
+      "How to load the library's styles. kind 'summary' (default): the three stylesheets and which host takes which (plain cremona.css; tailwind.css inside a host's Tailwind v4 build; cremona.scoped.css next to Bootstrap or other CSS), with path, size and import snippets. 'tailwind': css/tailwind.css itself (small) and the host recipe. 'full': the whole minified cremona.css (large: prefer reading it from node_modules). 'tokens': css/themes.css only (the semantic tokens of every theme). 'fonts': the font files.",
     inputSchema: {
       kind: z.enum(["summary", "tailwind", "full", "tokens", "fonts"]).optional(),
     },
@@ -481,7 +490,10 @@ tool(
         path: TAILWIND_STYLESHEET,
         recipe: tailwindRecipe,
         usage:
-          "In the app's own Tailwind v4 entry stylesheet (create-next-app: app/globals.css), instead of cremona.css: one Tailwind build compiles the blocks' classes and the app's together, with Cremona's theme. Adjust the @source path to where node_modules sits.",
+          "In the app's own Tailwind v4 entry stylesheet (create-next-app: app/globals.css), instead of cremona.css: one Tailwind build compiles the blocks' classes and the app's together, with Cremona's tokens. Adjust the @source path to where node_modules sits.",
+        themes: TAILWIND_THEMES,
+        withoutNodeModules:
+          "A host without node_modules (Symfony AssetMapper with symfonycasts/tailwind-bundle) copies the token files into its assets, keeping their relative paths (tailwind.css, fonts.css, themes/default.css and the theme files it offers), imports the copied tailwind.css by a relative path, points @source at the copied Stimulus templates, and keeps the .woff2 files next to the entry stylesheet the Tailwind CLI compiles: the CLI does not rebase url().",
         bytes: css.length,
         css,
       });
@@ -509,6 +521,7 @@ tool(
           host: "its own Tailwind CSS v4 build (create-next-app's default)",
           path: TAILWIND_STYLESHEET,
           recipe: tailwindRecipe,
+          themes: TAILWIND_THEMES,
           more: "get_css kind 'tailwind'",
         },
         {
@@ -520,7 +533,8 @@ tool(
         },
       ],
       fonts: { files: fonts, note: fontsNote },
-      tokensOnly: "@cremona/tokens/css/themes.css (get_css kind 'tokens')",
+      tokensOnly:
+        "@cremona/tokens/css/themes.css, every theme (get_css kind 'tokens'); one theme: css/themes/<name>.css (get_theme)",
       full: "get_css kind 'full' returns the whole cremona.css",
       guide:
         'get_guide("getting-started") §2 and §9, get_guide("design-system") "Next to other CSS"',
@@ -627,6 +641,10 @@ tool(
       name,
       install: STIMULUS_INSTALL,
       register: 'import { registerCremona } from "@cremona/stimulus"; registerCremona(app);',
+      ...(name === "theme" && {
+        stylesheet:
+          "cremona.css and cremona.scoped.css hold every theme. With css/tailwind.css, the build has the default theme only: import css/themes/<name>.css for each theme the controller offers.",
+      }),
       source: store.readText(file),
     });
   },

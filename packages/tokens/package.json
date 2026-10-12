@@ -20,6 +20,7 @@
     "./css/cremona.scoped.css": "./css/cremona.scoped.css",
     "./css/tailwind.css": "./css/tailwind.css",
     "./css/themes.css": "./css/themes.css",
+    "./css/themes/*.css": "./css/themes/*.css",
     "./css/fonts.css": "./css/fonts.css",
     "./themes.json": "./themes.json",
     "./package.json": "./package.json"

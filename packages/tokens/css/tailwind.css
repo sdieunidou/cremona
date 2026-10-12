@@ -1,13 +1,15 @@
 /*
- * Cremona for Tailwind CSS v4 builds: the Inter font, the theme tokens and what Cremona adds to
- * Tailwind (the theme mapping, the `dark` and `data-*` variants, utilities, base styles). Import
- * it right after Tailwind itself, then add a source for the blocks (get_css "tailwind" has the
- * snippet). This comment names no import on purpose: AssetMapper reads imports in comments too.
+ * Cremona for Tailwind CSS v4 builds: the Inter font, the default theme's tokens (light and dark)
+ * and what Cremona adds to Tailwind (the theme mapping, the `dark` and `data-*` variants,
+ * utilities, base styles). Import it right after Tailwind itself, then add a source for the
+ * blocks (get_css "tailwind" has the snippet). Another theme is its own file, themes/<name>.css,
+ * which the host adds to its build to offer that theme. This comment names no import on purpose:
+ * AssetMapper reads imports in comments too.
  *
- * cremona.css is compiled from this file (src/cremona.css).
+ * cremona.css is compiled from this file and every theme (src/cremona.css).
  */
 @import "./fonts.css";
-@import "./themes.css";
+@import "./themes/default.css";
 
 @custom-variant dark (&:is(.dark *));
 /* shadcn state variants: data-state="…" or a boolean data attribute */
@@ -99,7 +101,8 @@
 /*
  * The --color-* aliases are computed where they are declared: declared on :root only, they would
  * keep the page's values in a .dark subtree or a themed element. They are redeclared where the
- * tokens change, so var(--color-primary) follows the theme and mode as bg-primary does.
+ * tokens change, so var(--color-primary) follows the theme and mode as bg-primary does. Every
+ * theme class is listed, whether the build has its tokens or not: one rule either way.
  */
 @layer theme {
   .dark,

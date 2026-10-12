@@ -109,8 +109,9 @@ export function themes() {
   return readJson(join(TOKENS_DIR, "themes.json"));
 }
 
-export function themeCss() {
-  return readText(join(TOKENS_DIR, "css", "themes.css"));
+/** css/themes.css (every theme), or css/themes/<name>.css (one theme) */
+export function themeCss(name) {
+  return readText(join(TOKENS_DIR, "css", ...(name ? ["themes", `${name}.css`] : ["themes.css"])));
 }
 
 export function designSystemCss() {

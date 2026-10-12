@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
- * `pnpm build:css`: compiles the shipped stylesheets with Tailwind v4.
+ * `pnpm build:css`: writes the shipped stylesheets.
  *
- * - css/cremona.css from src/cremona.css;
+ * - css/themes.css: every theme, css/themes/default.css then the files of the other themes in
+ *   themes.json order;
+ * - css/cremona.css from src/cremona.css, with Tailwind v4;
  * - css/cremona.scoped.css from src/cremona.scoped.css, then confined to `.cremona` elements:
  *   - tokens and theme variables on the wrapper (`.cremona`) and on `.dark` elements inside it;
  *   - Tailwind's preflight and the base styles inside it, unlayered so that they win over the
@@ -16,7 +18,7 @@
  *     browser (shadow roots ignore @property), keyframes renamed `cremona-*`.
  */
 import { execFileSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Features, transform } from "lightningcss";
@@ -324,6 +326,24 @@ function confine(css) {
     rewrite(rest.join(""), (s) => s, keyframes),
   ].join("\n");
 }
+
+/** the token rules of css/themes/<name>.css, without its header comment */
+function themeRules(name) {
+  const css = readFileSync(join(root, "css", "themes", `${name}.css`), "utf8");
+  return css.replace(/^\/\*[\s\S]*?\*\/\s*/, "").trim();
+}
+
+const themes = JSON.parse(readFileSync(join(root, "themes.json"), "utf8")).map((t) => t.value);
+writeFileSync(
+  join(root, "css", "themes.css"),
+  `/* Cremona design tokens, every theme (:root, .dark, .theme-<name>), written by \`pnpm build:css\`
+ * from css/themes/*.css: edit those. Dark mode is .dark on <html>, or on an inner element for that
+ * subtree; a theme is .theme-<name> on <html>. */
+
+${themes.map(themeRules).join("\n\n")}
+`,
+);
+console.error("css/themes.css written");
 
 execFileSync(tailwind, ["-i", "src/cremona.css", "-o", "css/cremona.css", "--minify"], {
   cwd: root,

@@ -1,12 +1,14 @@
 /**
  * css/tailwind.css drives a host's own Tailwind v4 build: imported next to `tailwindcss`, it
- * compiles the blocks' classes to the very rules of cremona.css.
+ * compiles the blocks' classes to the very rules of cremona.css, with the default theme; the host
+ * adds another theme by importing its css/themes/<name>.css.
  */
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
+import { tokenBlocks } from "./color";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const preset = readFileSync(join(root, "css", "tailwind.css"), "utf8");
@@ -47,10 +49,16 @@ describe("css/tailwind.css", () => {
     expect(code).not.toMatch(/@import\s+["']tw-animate-css/);
   });
 
-  it("names no import inside its comments, which AssetMapper would try to download", () => {
-    const comments = preset.match(/\/\*[\s\S]*?\*\//g) ?? [];
-    for (const comment of comments) {
-      expect(comment).not.toMatch(/@import\s+["']/);
+  it("names no import inside the comments of a shipped stylesheet, which AssetMapper would try to download", () => {
+    const files = [
+      ...readdirSync(join(root, "css")).filter((f) => f.endsWith(".css")),
+      ...readdirSync(join(root, "css", "themes")).map((f) => join("themes", f)),
+    ];
+    expect(files).toContain("tailwind.css");
+    for (const file of files) {
+      const comments =
+        readFileSync(join(root, "css", file), "utf8").match(/\/\*[\s\S]*?\*\//g) ?? [];
+      for (const comment of comments) expect(comment, file).not.toMatch(/@import\s+["']/);
     }
   });
 
@@ -70,10 +78,41 @@ describe("css/tailwind.css", () => {
     expect(css).toContain(".data-open\\:flex:where([data-state=open])");
     expect(css).toContain("scrollbar-width:none");
     expect(css).toContain('--font-sans:"Inter Variable", sans-serif');
-    expect(css).toContain(":root{--background:");
-    expect(css).toContain(".theme-sakura:not(.dark){");
     expect(css.match(/@font-face\{/g)).toHaveLength(7);
     expect(css).toContain(":root{color-scheme:light}.dark{color-scheme:dark}");
+  });
+
+  it("brings the default theme only, in light and dark", { timeout: 30000 }, () => {
+    const css = hostBuild([
+      '@import "tailwindcss" source(none);',
+      '@import "@cremona/tokens/css/tailwind.css";',
+      '@source inline("bg-card");',
+    ]);
+    const blocks = tokenBlocks(css);
+    expect([...blocks.keys()]).toEqual([":root", ".dark"]);
+    expect(blocks).toEqual(
+      tokenBlocks(readFileSync(join(root, "css", "themes", "default.css"), "utf8")),
+    );
+    expect(css).not.toMatch(/\.theme-[\w-]+(:not\(\.dark\)|\.dark| \.dark)\{/);
+  });
+
+  it("adds a theme whose file the host imports", { timeout: 30000 }, () => {
+    const css = hostBuild([
+      '@import "tailwindcss" source(none);',
+      '@import "@cremona/tokens/css/tailwind.css";',
+      '@import "@cremona/tokens/css/themes/sakura.css";',
+      '@source inline("bg-card");',
+    ]);
+    const blocks = tokenBlocks(css);
+    expect([...blocks.keys()].filter((s) => s.includes(".theme-")).sort()).toEqual([
+      ".theme-sakura .dark",
+      ".theme-sakura.dark",
+      ".theme-sakura:not(.dark)",
+    ]);
+    const sakura = tokenBlocks(readFileSync(join(root, "css", "themes", "sakura.css"), "utf8"));
+    for (const [selector, tokens] of sakura) expect(blocks.get(selector), selector).toEqual(tokens);
+    // the --color-* aliases follow the theme's tokens on its element
+    expect(css).toMatch(/[,{]\.theme-sakura[,{][^}]*--color-primary:var\(--primary\)/);
   });
 
   it("compiles the blocks to the rules of cremona.css", { timeout: 30000 }, () => {

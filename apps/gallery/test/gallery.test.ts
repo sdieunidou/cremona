@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { parseRoute } from "../src/lib/router.js";
 import { readTheme, readAppearance, THEMES } from "../src/lib/theme.js";
@@ -61,5 +63,14 @@ describe("gallery theme storage", () => {
 
   it("offers exactly the themes of @cremona/tokens", () => {
     expect(THEMES).toEqual(themes);
+  });
+
+  it("compiles the tokens of every theme it offers", () => {
+    // tailwind.css brings the default theme only: each other one is its own file
+    const css = readFileSync(join(__dirname, "..", "src", "gallery.css"), "utf8");
+    const imported = [...css.matchAll(/@import "@cremona\/tokens\/css\/themes\/([\w-]+)\.css";/g)];
+    expect(imported.map((m) => m[1])).toEqual(
+      themes.filter((t) => t.value !== "default").map((t) => t.value),
+    );
   });
 });

@@ -95,7 +95,7 @@ No `NPM_TOKEN` secret is used; delete one if it exists.
 
 | Package | Content |
 |---|---|
-| `@cremona/tokens` | `css/cremona.css`, `css/themes.css`, the Inter woff2 files and their `OFL.txt`, `themes.json` |
+| `@cremona/tokens` | `css/cremona.css`, `css/themes.css`, `css/themes/<name>.css`, the Inter woff2 files and their `OFL.txt`, `themes.json` |
 | `@cremona/core` | compiled `dist/` (JS + `.d.ts`), with the `land-mask` subpath |
 | `@cremona/react` | compiled `dist/` (JS + `.d.ts`); React 18.2+ or 19 as a peer dependency |
 | `@cremona/blocks` | `dist/<category>/<file>/react.{js,d.ts}` (one `"use client"` entry per block, `pnpm build`), `public/media/placeholders/` (copied from the gallery at pack time), `catalog.json`; react, react-dom, motion and lucide-react as peer dependencies |

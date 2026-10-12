@@ -6,6 +6,15 @@
 /* the enter and exit animations of the @cremona/ui components, as in a shadcn project */
 @import "tw-animate-css";
 @import "@cremona/tokens/css/tailwind.css";
+/* tailwind.css brings the default theme; the theme menu offers every other one */
+@import "@cremona/tokens/css/themes/claude-plus.css";
+@import "@cremona/tokens/css/themes/light-green.css";
+@import "@cremona/tokens/css/themes/zen.css";
+@import "@cremona/tokens/css/themes/sakura.css";
+@import "@cremona/tokens/css/themes/tiesen.css";
+@import "@cremona/tokens/css/themes/deep-purple.css";
+@import "@cremona/tokens/css/themes/indigo-clean.css";
+@import "@cremona/tokens/css/themes/brutalism.css";
 
 @source "./**/*.{ts,tsx}";
 @source "../../../packages/blocks/src/**/{react.tsx,block.json,preview-props.json}";

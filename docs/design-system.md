@@ -38,6 +38,13 @@ dark backgrounds, and its foreground is dark.
 | indigo-clean | `.theme-indigo-clean` | `.5rem` | clean indigo, violet in dark |
 | brutalism | `.theme-brutalism` | `0px` | raw black, white, red and yellow, hard borders |
 
+Each theme's tokens are a file of their own, `css/themes/<name>.css`
+(`default.css` holds `:root` and `.dark`; every other file, the theme's light
+and dark rules). `cremona.css`, `cremona.scoped.css` and `themes.css` carry
+every theme, so a theme class works as soon as it is on `<html>`. A Tailwind
+build with `tailwind.css` carries the default theme only: it offers another
+theme by importing that theme's file ([Tailwind](getting-started.md#9-your-own-css-or-tailwind)).
+
 ## Charts
 
 `--chart-1..5` form a categorical palette in every theme × mode: each series
@@ -162,9 +169,10 @@ used by blocks: `mask-t-from-*`, `mask-b-from-*`, `bg-linear-to-*`,
 | File | Use |
 |---|---|
 | `@cremona/tokens/css/cremona.css` | the complete stylesheet, for a page whose CSS is Cremona's: fonts, tokens, Tailwind's preflight and every utility the blocks use. No build. Its reset styles the whole page, and it holds the blocks' classes only: classes of your own need your own CSS. |
-| `@cremona/tokens/css/tailwind.css` | for an app with its own Tailwind CSS v4 build: what Cremona adds to Tailwind (fonts, tokens, the theme mapping, variants, utilities, base styles), compiled by that build with its own classes — [setup](getting-started.md#9-your-own-css-or-tailwind). `cremona.css` is compiled from it. |
+| `@cremona/tokens/css/tailwind.css` | for an app with its own Tailwind CSS v4 build: what Cremona adds to Tailwind (fonts, the default theme's tokens, the theme mapping, variants, utilities, base styles), compiled by that build with its own classes — [setup](getting-started.md#9-your-own-css-or-tailwind). `cremona.css` is compiled from it and every theme. |
 | `@cremona/tokens/css/cremona.scoped.css` | for a page with CSS of its own (Bootstrap, a theme, an existing app): `cremona.css` confined to `.cremona` elements — [Next to other CSS](#next-to-other-css). |
-| `@cremona/tokens/css/themes.css` | the semantic token blocks only (`tailwind.css` imports it). |
+| `@cremona/tokens/css/themes/<name>.css` | one theme's token blocks: `default.css` (`:root`, `.dark`), which `tailwind.css` imports, and one file per other theme, which a Tailwind build imports to offer that theme. |
+| `@cremona/tokens/css/themes.css` | the token blocks of every theme, in one file: the theme files, concatenated by `pnpm build:css`. |
 | `@cremona/tokens/css/fonts.css` | the Inter `@font-face` rules only. |
 
 ### Next to other CSS

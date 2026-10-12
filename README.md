@@ -43,7 +43,8 @@ One entry per block, `@cremona/blocks/<category>/<file>` (ESM + types, marked
 the fonts, the tokens and every class the blocks use: the blocks need no
 Tailwind build, but the classes of your own markup need your own CSS. An app
 with its own Tailwind v4 build compiles the blocks in it with
-`@cremona/tokens/css/tailwind.css` instead, and a page with CSS of its own
+`@cremona/tokens/css/tailwind.css` instead (the default theme, plus the
+`css/themes/<name>.css` files of the themes it offers), and a page with CSS of its own
 (Bootstrap…) loads `cremona.scoped.css`, which styles `.cremona` elements only.
 [docs/getting-started.md](docs/getting-started.md) covers the rest of a new
 app: the template CSS to remove, panels (`fill`, `gradient={false}`), dark mode

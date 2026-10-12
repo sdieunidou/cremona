@@ -80,6 +80,8 @@ blocks in it instead of loading `cremona.css`:
 @source "../node_modules/@cremona/blocks/dist";
 ```
 
+`tailwind.css` brings the default theme; import
+`@cremona/tokens/css/themes/<name>.css` for each other theme you offer.
 See [Your own CSS, or Tailwind](https://github.com/sdieunidou/cremona/blob/main/docs/getting-started.md#9-your-own-css-or-tailwind);
 for a page with CSS of its own (Bootstrap…), `@cremona/tokens/css/cremona.scoped.css`.
 

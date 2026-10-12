@@ -12,7 +12,7 @@ packages are built from the same sources (`pnpm build`, `prepack`):
 | `@cremona/core`, `@cremona/react` | `dist/` compiled by `tsc` (ESM + `.d.ts`) |
 | `@cremona/blocks` | one entry per block, `dist/<category>/<file>/react.{js,d.ts}`, each starting with `"use client"`, exported as `@cremona/blocks/<category>/<file>`; react, react-dom, motion and lucide-react are peer dependencies; the placeholder images in `public/media/` |
 | `@cremona/ui` | one entry per component, `dist/<name>.{js,d.ts}` (ESM + `.d.ts`, starting with `"use client"` where it holds state), exported as `@cremona/ui/<name>`; radix-ui, class-variance-authority, clsx and tailwind-merge as dependencies, react, react-dom and lucide-react as peers; the shadcn registry (`registry.json`, `r/`) |
-| `@cremona/tokens` | `css/cremona.css` and `css/cremona.scoped.css` (compiled by `pnpm build:css`, committed), `css/tailwind.css` (for hosts' Tailwind builds), `css/themes.css`, `css/fonts.css`, the fonts, `themes.json` |
+| `@cremona/tokens` | `css/cremona.css` and `css/cremona.scoped.css` (compiled by `pnpm build:css`, committed), `css/tailwind.css` (for hosts' Tailwind builds, with the default theme), `css/themes/<name>.css` (one theme each), `css/themes.css` (every theme), `css/fonts.css`, the fonts, `themes.json` |
 | `@cremona/stimulus` | JS controllers (with `.d.ts` declarations) + the generated HTML templates |
 | `@cremona/mcp` | plain ESM JS + a snapshot of the library data (`data/`) |
 
@@ -115,8 +115,9 @@ test.
 (fonts + tokens + every utility the blocks use). `pnpm build:css`
 (`packages/tokens/scripts/build-css.mjs`) compiles it with Tailwind v4 (a dev
 dependency of `@cremona/tokens`) from `packages/tokens/src/cremona.css`:
-`tailwindcss`, `css/tailwind.css` (Cremona's fonts, tokens, theme mapping,
-variants, utilities and base styles, also shipped to Tailwind hosts),
+`tailwindcss`, `css/tailwind.css` (Cremona's fonts, the default theme's tokens,
+theme mapping, variants, utilities and base styles, also shipped to Tailwind
+hosts), `src/themes.css` (the files of the other themes),
 `tw-animate-css` (the enter and exit animations of the dialog) and an `@source` on
 the blocks' sources and goldens and on the components' sources. The same run compiles
 `css/cremona.scoped.css`, the same classes confined to `.cremona` elements for
@@ -125,8 +126,11 @@ when a committed file is stale; tests check that every class a golden or a
 Stimulus template renders has a rule, that a host build of `tailwind.css`
 compiles the blocks to the rules of `cremona.css`, and that the scoped file
 reaches nothing outside `.cremona`.
-`css/themes.css` holds only the semantic token blocks (`:root`, `.dark`,
-`.theme-*:not(.dark)`, `.theme-*.dark`, `.theme-* .dark`).
+The semantic token blocks live in one file per theme: `css/themes/default.css`
+(`:root`, `.dark`) and `css/themes/<name>.css` (`.theme-<name>:not(.dark)`,
+`.theme-<name>.dark`, `.theme-<name> .dark`). `pnpm build:css` concatenates them
+into `css/themes.css`, every theme in one file; a Tailwind host imports the
+files of the themes it offers next to `tailwind.css`.
 
 ## UI components
 

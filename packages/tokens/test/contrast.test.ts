@@ -21,9 +21,12 @@ import {
 } from "./color";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const blocks = tokenBlocks(readFileSync(join(root, "css", "themes.css"), "utf8"));
 const themes: string[] = JSON.parse(readFileSync(join(root, "themes.json"), "utf8")).map(
   (t: { value: string }) => t.value,
+);
+/** the tokens of every theme, from its own file (themes.css is their concatenation) */
+const blocks = tokenBlocks(
+  themes.map((t) => readFileSync(join(root, "css", "themes", `${t}.css`), "utf8")).join("\n"),
 );
 
 const TEXT = 4.5;

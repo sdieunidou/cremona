@@ -34,7 +34,7 @@ time.
 |---|---|
 | Bootstrap, a theme, any CSS of its own | `cremona.scoped.css`, and put each template inside an element with the `cremona` class |
 | none of its own (the page is styled with Cremona's tokens) | `cremona.css`; its reset also styles the page |
-| a Tailwind CSS v4 build | `tailwind.css` inside that build, with `@source` on the copied templates: [Tailwind](getting-started.md#9-your-own-css-or-tailwind) |
+| a Tailwind CSS v4 build | `tailwind.css` inside that build, with `@source` on the copied templates and the file of each theme you offer besides the default (`themes/<name>.css`): [Tailwind](getting-started.md#9-your-own-css-or-tailwind) |
 
 With `cremona.scoped.css`, Cremona's rules apply to `.cremona` elements and
 their content only: Bootstrap keeps styling the page, and its Reboot (margins,
@@ -55,9 +55,15 @@ its rules in a cascade layer, or start your CSS with `@layer cremona, bootstrap;
 The `cremona` element takes Cremona's font, text size, line height and colours
 instead of inheriting the page's, and keeps the margins and borders you give it.
 Dark mode and themes (`dark`, `theme-<name>`) go on `<html>`, as the
-`cremona-theme` controller sets them, or on the `cremona` element. Tailwind's
-CLI does not rebase `url()`s: with `tailwind.css`, keep the `.woff2` files next
-to the compiled stylesheet.
+`cremona-theme` controller sets them, or on the `cremona` element.
+
+With `tailwind.css` and no `node_modules` (AssetMapper with
+`symfonycasts/tailwind-bundle`), copy `tailwind.css`, `fonts.css`,
+`themes/default.css` and the theme files you offer into `assets/styles/cremona/`,
+keeping their relative paths, and import the copied `tailwind.css` and theme
+files from your entry stylesheet by relative paths. Tailwind's CLI inlines them
+but does not rebase `url()`s: keep the `.woff2` files next to the compiled entry
+stylesheet, not next to `fonts.css`.
 
 ### Symfony AssetMapper
 
@@ -246,6 +252,13 @@ Mount it on `<html>`. It sets `dark`, `theme-<name>` and `color-scheme` on
 | `theme` | `default` | a theme of `@cremona/tokens` (`themes.json`): `sakura`, `zen`, … |
 | `storageKey` | `cremona-appearance` | localStorage key of the appearance; `""` turns storage off |
 | `themeStorageKey` | `cremona-theme` | localStorage key of the theme; `""` turns storage off |
+
+The controller only sets classes: a theme's tokens must be in the page's
+stylesheet. `cremona.css` and `cremona.scoped.css` hold every theme. A Tailwind
+build with `tailwind.css` holds the default theme only, plus each
+`themes/<name>.css` it imports: a host that switches themes at runtime imports
+the file of every theme it offers, or the others render with the default
+tokens.
 
 Changing a value at runtime applies it at once, for example after a Turbo morph,
 a LiveComponent render or another controller's change. Precedence: a choice

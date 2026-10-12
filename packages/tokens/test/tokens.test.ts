@@ -1,5 +1,5 @@
-/** Design tokens integrity: every theme defines the full semantic token set. */
-import { readFileSync } from "node:fs";
+/** Design tokens integrity: every theme defines the full semantic token set, in its own file. */
+import { readFileSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, it, expect } from "vitest";
@@ -88,6 +88,28 @@ describe("cremona tokens", () => {
 
   it("default dark is the neutral palette", () => {
     expect(blockFor(".dark{--background")).toContain("--background:oklch(14.5% 0 0)");
+  });
+
+  it("each theme has its own file, and themes.css is all of them in themes.json order", () => {
+    const files = readdirSync(join(root, "css", "themes")).sort();
+    expect(files).toEqual(THEMES.map((t) => `${t}.css`).sort());
+    const rules = (file: string) =>
+      readFileSync(join(root, "css", file), "utf8")
+        .replace(/^\/\*[\s\S]*?\*\/\s*/, "")
+        .trim();
+    expect(rules("themes.css"), "run `pnpm build:css`").toBe(
+      THEMES.map((t) => rules(join("themes", `${t}.css`))).join("\n\n"),
+    );
+    const own = tokenBlocks(readFileSync(join(root, "css", "themes", "default.css"), "utf8"));
+    expect([...own.keys()]).toEqual([":root", ".dark"]);
+    for (const theme of THEMES.slice(1)) {
+      const blocks = tokenBlocks(readFileSync(join(root, "css", "themes", `${theme}.css`), "utf8"));
+      expect([...blocks.keys()], theme).toEqual([
+        `.theme-${theme}:not(.dark)`,
+        `.theme-${theme}.dark`,
+        `.theme-${theme} .dark`,
+      ]);
+    }
   });
 
   it("themes.css and cremona.css define the same token blocks", () => {
