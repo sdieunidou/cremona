@@ -1,6 +1,6 @@
 {
   "name": "@cremona/stimulus",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cremona Stimulus adapter — controllers and static templates for Symfony apps.",
   "license": "MIT",
   "author": "Sébastien Dieunidou",
