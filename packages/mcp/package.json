@@ -1,6 +1,6 @@
 {
   "name": "@cremona/mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cremona MCP server — exposes the block library, design system and authoring tools to AI sessions.",
   "license": "MIT",
   "author": "Sébastien Dieunidou",

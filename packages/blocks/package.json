@@ -1,6 +1,6 @@
 {
   "name": "@cremona/blocks",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cremona visual blocks for React — 160 animated compositions (metrics, charts, AI scenes, components, kits), one entry point per block.",
   "license": "MIT",
   "author": "Sébastien Dieunidou",
