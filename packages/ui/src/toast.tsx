@@ -221,7 +221,7 @@ function Toaster({
                     type="button"
                     data-slot="toast-action"
                     onClick={action.onClick}
-                    className="inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-border bg-background px-3 text-xs font-medium transition-colors outline-none hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                    className="inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-border bg-background px-3 text-xs font-medium transition-colors hover:bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   >
                     {action.label}
                   </button>
@@ -230,7 +230,7 @@ function Toaster({
               <ToastPrimitive.Close
                 data-slot="toast-close"
                 aria-label={closeLabel}
-                className="absolute top-2 right-2 flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+                className="absolute top-2 right-2 flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               >
                 <XIcon aria-hidden="true" className="size-4" />
               </ToastPrimitive.Close>

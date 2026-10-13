@@ -60,7 +60,7 @@ function DropdownMenuGroup(props: React.ComponentProps<typeof DropdownMenuPrimit
 }
 
 const item =
-  "relative flex min-h-8 cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none select-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground";
+  "relative flex min-h-8 cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm select-none data-[highlighted]:bg-accent data-[highlighted]:text-accent-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-muted-foreground";
 
 /** An action. `variant="destructive"` marks one that deletes or discards; `inset` aligns its text with items that have an indicator. */
 function DropdownMenuItem({

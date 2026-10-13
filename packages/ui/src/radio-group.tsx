@@ -39,7 +39,7 @@ function RadioGroupItem({
       {...props}
       {...control}
       className={cn(
-        "peer relative aspect-square size-4 shrink-0 rounded-full border border-input bg-transparent text-primary shadow-xs transition-colors outline-none after:absolute after:-inset-1 after:content-[''] dark:bg-input/30",
+        "peer relative aspect-square size-4 shrink-0 rounded-full border border-input bg-transparent text-primary shadow-xs transition-colors after:absolute after:-inset-1 after:content-[''] dark:bg-input/30",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
         "disabled:cursor-not-allowed disabled:opacity-50",
         "aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",

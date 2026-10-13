@@ -53,7 +53,7 @@ function Table({ className, containerClassName, label, ...props }: TableProps) {
         aria-label={label}
         aria-labelledby={!label && hasCaption ? captionId : undefined}
         className={cn(
-          "relative w-full overflow-x-auto rounded-md outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
+          "relative w-full overflow-x-auto rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring",
           containerClassName,
         )}
       >
