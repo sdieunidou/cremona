@@ -1,6 +1,6 @@
 {
   "name": "@cremona/tokens",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cremona design tokens — themes (light/dark), palette, fonts, keyframes.",
   "license": "MIT AND OFL-1.1",
   "author": "Sébastien Dieunidou",

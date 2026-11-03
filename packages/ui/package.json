@@ -1,6 +1,6 @@
 {
   "name": "@cremona/ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Cremona UI — accessible, responsive React components on the Cremona tokens: import them from npm, or copy their source into an app with the shadcn CLI.",
   "license": "MIT",
   "author": "Sébastien Dieunidou",
