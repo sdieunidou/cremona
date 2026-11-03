@@ -69,6 +69,11 @@ jobs:
       - run: pnpm check
       - run: pnpm --filter @cremona/blocks check:package
       - run: pnpm --filter @cremona/ui check:package
+      # changeset publish tags with `git tag -m` (annotated), which needs an identity
+      # and fails silently without one
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - run: pnpm release
         env:
           PNPM_CONFIG_PROVENANCE: "true"
