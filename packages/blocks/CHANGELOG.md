@@ -1,5 +1,12 @@
 # @cremona/blocks
 
+## 0.3.0
+
+### Patch Changes
+
+- @cremona/core@0.3.0
+  - @cremona/react@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes
