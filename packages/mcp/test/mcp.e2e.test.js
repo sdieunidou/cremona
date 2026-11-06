@@ -301,6 +301,7 @@ describe("cremona MCP server", () => {
       "radio-group",
       "switch",
       "select",
+      "combobox",
       "badge",
       "alert",
       "card",
@@ -354,6 +355,20 @@ describe("cremona MCP server", () => {
     );
     expect(dialog.devDependencies).toEqual(["tw-animate-css"]);
     expect(dialog.notes).toContain("tw-animate-css");
+  });
+
+  it("returns the Stimulus combobox with the markup it enhances", async () => {
+    const combobox = textOf(
+      await client.callTool({ name: "get_controller", arguments: { name: "combobox" } }),
+    );
+    expect(combobox.source).toContain("class CremonaComboboxController");
+    expect(combobox.markup).toContain('data-controller="cremona-combobox"');
+    expect(combobox.markup).toContain("<select");
+    const theme = textOf(
+      await client.callTool({ name: "get_controller", arguments: { name: "theme" } }),
+    );
+    expect(theme.source).toContain("class CremonaThemeController");
+    expect(theme.markup).toBeUndefined();
   });
 
   it("reports an unknown component with the ones that exist", async () => {

@@ -68,7 +68,9 @@ without JavaScript; the cremona-visual controller plays the entrance. A template
 fills its container, so give it a height — the variant's \`size\` (xs h-48, sm h-64,
 md h-96 by default, lg h-[28rem], xl h-[32rem]). Blocks whose \`effects\` is
 "entrance-only" keep their loops and JS effects (canvas, pointer, sequences) in
-React only; get_block(include:["stimulus"]) says which.
+React only; get_block(include:["stimulus"]) says which. A server-rendered form
+gets the combobox from the cremona-combobox controller, which turns a native
+<select> into it: get_controller("combobox").
 
 Stylesheet, loaded once: @cremona/tokens/css/cremona.css (no Tailwind build needed). An app
 with its own Tailwind v4 build imports css/tailwind.css inside that build instead, which brings the
@@ -629,18 +631,25 @@ tool(
   "get_controller",
   {
     title: "Get a Stimulus controller",
-    description: `Get a Stimulus controller source for host apps: 'visual' = entrance animation player, 'theme' = light/dark + ${store.themes().length} themes switcher.`,
-    inputSchema: { name: z.enum(["visual", "theme"]).optional() },
+    description: `Get a Stimulus controller source for host apps: 'visual' = entrance animation player, 'theme' = light/dark + ${store.themes().length} themes switcher, 'combobox' = turns a native <select> into the filtering combobox of @cremona/ui.`,
+    inputSchema: { name: z.enum(["visual", "theme", "combobox"]).optional() },
   },
   async ({ name = "visual" }) => {
-    const file =
-      name === "theme"
-        ? join(store.REPO_ROOT, "packages", "stimulus", "src", "cremona-theme_controller.js")
-        : join(store.REPO_ROOT, "packages", "stimulus", "src", "cremona-visual_controller.js");
+    const file = join(
+      store.REPO_ROOT,
+      "packages",
+      "stimulus",
+      "src",
+      `cremona-${name}_controller.js`,
+    );
     return text({
       name,
       install: STIMULUS_INSTALL,
       register: 'import { registerCremona } from "@cremona/stimulus"; registerCremona(app);',
+      ...(name === "combobox" && {
+        markup:
+          '<label for="consultant">Consultant</label> <div data-controller="cremona-combobox" data-cremona-combobox-empty-text-value="No results"><select id="consultant" name="consultant" data-cremona-combobox-target="select"><option value="">Any</option><option value="12">Alice Martin</option></select></div> — the select stays in the form and carries the value: get_guide("stimulus").',
+      }),
       ...(name === "theme" && {
         stylesheet:
           "cremona.css and cremona.scoped.css hold every theme. With css/tailwind.css, the build has the default theme only: import css/themes/<name>.css for each theme the controller offers.",

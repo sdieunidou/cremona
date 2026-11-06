@@ -1,7 +1,7 @@
 {
   "name": "@cremona/stimulus",
   "version": "0.2.1",
-  "description": "Cremona Stimulus adapter — controllers and static templates for Symfony apps.",
+  "description": "Cremona Stimulus adapter — controllers and static templates for Symfony apps, and a combobox for their forms.",
   "license": "MIT",
   "author": "Sébastien Dieunidou",
   "homepage": "https://github.com/sdieunidou/cremona#readme",
@@ -28,6 +28,10 @@
     "./controllers/cremona-theme": {
       "types": "./src/cremona-theme_controller.d.ts",
       "default": "./src/cremona-theme_controller.js"
+    },
+    "./controllers/cremona-combobox": {
+      "types": "./src/cremona-combobox_controller.d.ts",
+      "default": "./src/cremona-combobox_controller.js"
     },
     "./templates/*": "./templates/*",
     "./package.json": "./package.json"

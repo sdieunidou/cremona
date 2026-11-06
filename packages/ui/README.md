@@ -2,7 +2,7 @@
 
 Accessible, responsive React components on the
 [Cremona](https://github.com/sdieunidou/cremona) design tokens: button, label,
-field, input, textarea, select, checkbox, radio group, switch, dialog, popover,
+field, input, textarea, select, combobox, checkbox, radio group, switch, dialog, popover,
 tooltip, dropdown menu, toast, tabs, accordion, table, card, badge and alert,
 built on Radix UI. Take them as
 source with the shadcn CLI, or import them from npm.

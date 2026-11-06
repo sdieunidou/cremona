@@ -54,8 +54,8 @@ hosts.
 ## Quick start — UI components
 
 Blocks illustrate; the controls an app is made of come from `@cremona/ui`:
-button, field, input, select, checkbox, dialog, menu, tabs, table, toast…
-(20 components), accessible and responsive, on the same tokens.
+button, field, input, select, combobox, checkbox, dialog, menu, tabs, table,
+toast… (21 components), accessible and responsive, on the same tokens.
 
 ```bash
 # copy the source into your app (the shadcn CLI)
@@ -83,15 +83,17 @@ npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus
 import { registerCremona } from "@cremona/stimulus";
 import "@cremona/tokens/css/cremona.css";
 
-registerCremona(yourStimulusApp); // cremona-visual + cremona-theme
+registerCremona(yourStimulusApp); // cremona-visual, cremona-theme, cremona-combobox
 ```
 
 Every variant ships as a static HTML template,
 `@cremona/stimulus/templates/<category>/<file>/<slug>.html`: the block's final
 React render, readable without JavaScript, whose entrance `cremona-visual`
 plays with Web Animations. A template fills a container you size; loops and
-JavaScript-driven effects stay React-only. Setup, Twig includes and the theme
-controller: [docs/stimulus.md](docs/stimulus.md).
+JavaScript-driven effects stay React-only. `cremona-combobox` turns a native
+`<select>` of a server-rendered form into the filtering combobox of
+`@cremona/ui`. Setup, Twig includes, the theme and combobox controllers:
+[docs/stimulus.md](docs/stimulus.md).
 
 ## Quick start — AI sessions
 

@@ -229,6 +229,32 @@
       ]
     },
     {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "A text input that filters a list of options as the user types, ignoring case and accents: the WAI-ARIA combobox with arrow keys, Home, End, Enter and Escape, that submits its value with a form; its list is never taller than the room it has. Labelled, described and marked invalid by its Field.",
+      "dependencies": [
+        "radix-ui",
+        "lucide-react"
+      ],
+      "devDependencies": [
+        "tw-animate-css"
+      ],
+      "registryDependencies": [
+        "@cremona/field"
+      ],
+      "docs": "The animations use the animate-in and animate-out classes of tw-animate-css, which `shadcn init` installs and imports in your CSS.",
+      "files": [
+        {
+          "path": "src/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "categories": [
+        "forms"
+      ]
+    },
+    {
       "name": "badge",
       "type": "registry:ui",
       "title": "Badge",

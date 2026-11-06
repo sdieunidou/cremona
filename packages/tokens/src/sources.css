@@ -1,5 +1,6 @@
-/* What the stylesheets compile: every class the blocks and the ui components render, in any state or variant. */
+/* What the stylesheets compile: every class the blocks, the ui components and the Stimulus controllers render, in any state or variant. */
 @source "../../blocks/src/**/{react.tsx,block.json,preview-props.json}";
 @source "../../blocks/src/**/golden/*.html";
 @source "../../core/src/**/*.ts";
 @source "../../ui/src/**/*.tsx";
+@source "../../stimulus/src/**/*_controller.js";

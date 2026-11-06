@@ -119,7 +119,8 @@ dependency of `@cremona/tokens`) from `packages/tokens/src/cremona.css`:
 theme mapping, variants, utilities and base styles, also shipped to Tailwind
 hosts), `src/themes.css` (the files of the other themes),
 `tw-animate-css` (the enter and exit animations of the dialog) and an `@source` on
-the blocks' sources and goldens and on the components' sources. The same run compiles
+the blocks' sources and goldens, on the components' sources and on the Stimulus
+controllers. The same run compiles
 `css/cremona.scoped.css`, the same classes confined to `.cremona` elements for
 pages with CSS of their own (selectors rewritten with Lightning CSS). CI fails
 when a committed file is stale; tests check that every class a golden or a

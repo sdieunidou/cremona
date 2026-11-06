@@ -1,8 +1,8 @@
 # @cremona/stimulus
 
 The [Cremona](https://github.com/sdieunidou/cremona) blocks for Symfony and
-Hotwire apps: a static HTML template of every variant of every block, and the
-Stimulus controllers that animate and theme them.
+Hotwire apps: a static HTML template of every variant of every block, the
+Stimulus controllers that animate and theme them, and a combobox for forms.
 
 ```bash
 npm i @cremona/stimulus @cremona/tokens @hotwired/stimulus
@@ -13,7 +13,7 @@ import { Application } from "@hotwired/stimulus";
 import { registerCremona } from "@cremona/stimulus";
 import "@cremona/tokens/css/cremona.css";
 
-registerCremona(Application.start()); // registers cremona-visual and cremona-theme
+registerCremona(Application.start()); // cremona-visual, cremona-theme, cremona-combobox
 ```
 
 - Templates: `@cremona/stimulus/templates/<category>/<file>/<slug>.html`, each
@@ -26,9 +26,12 @@ registerCremona(Application.start()); // registers cremona-visual and cremona-th
   marked `"effects": "entrance-only"` keep their loops and JavaScript-driven
   effects in React only (`reactOnly` lists them).
 - `cremona-theme` (on `<html>`) handles light/dark and the 9 themes.
+- `cremona-combobox`, around a native `<select>`, turns it into the filtering
+  combobox of `@cremona/ui`; the select stays in the form and carries the value.
 - The controllers are also exported one by one: `CremonaVisualController`,
-  `CremonaThemeController` (`@cremona/stimulus/controllers/cremona-visual`,
-  `…/cremona-theme`). Type declarations are included.
+  `CremonaThemeController`, `CremonaComboboxController`
+  (`@cremona/stimulus/controllers/cremona-visual`, `…/cremona-theme`,
+  `…/cremona-combobox`). Type declarations are included.
 
 Setup with Webpack Encore, Vite or AssetMapper, sizing and including templates,
 the controllers' values and the head partial that prevents a flash:

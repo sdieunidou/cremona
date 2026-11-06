@@ -134,6 +134,51 @@ test.describe("overlays", () => {
     expect(box.x + box.width).toBeLessThanOrEqual(390);
   });
 
+  test("a combobox filters as the user types, chooses with the keyboard and submits", async ({
+    page,
+  }) => {
+    await page.goto("/components/combobox");
+    const input = page.getByRole("combobox", { name: "Consultant" });
+    await input.fill("elo");
+    const list = page.getByRole("listbox", { name: "Consultant" });
+    await expect(list).toBeVisible();
+    await expect(list.getByRole("option")).toHaveText(["Élodie Bernard"]);
+    expect(
+      await overlayViolations(page, '[data-slot="combobox-content"]'),
+      "open combobox",
+    ).toEqual([]);
+    await page.keyboard.press("Enter");
+    await expect(input).toHaveValue("Élodie Bernard");
+    await expect(list).toBeHidden();
+    await expect(input).toBeFocused();
+
+    const client = page.getByRole("combobox", { name: "Client" });
+    await client.fill("glo");
+    await page.keyboard.press("Enter");
+    await page.getByRole("button", { name: "Filter" }).click();
+    await expect(page.locator("output")).toHaveText("client=globex");
+  });
+
+  test("a combobox list stays inside the screen and scrolls to the active option", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 500 });
+    await page.goto("/components/combobox");
+    const input = page.getByRole("combobox", { name: "Project" });
+    await input.scrollIntoViewIfNeeded();
+    await input.click();
+    const list = page.getByRole("listbox", { name: "Project" });
+    await expect(list).toBeVisible();
+    const box = (await list.boundingBox())!;
+    expect(box.y).toBeGreaterThanOrEqual(0);
+    expect(box.y + box.height).toBeLessThanOrEqual(500);
+    expect(box.x + box.width).toBeLessThanOrEqual(390);
+    await page.keyboard.press("End");
+    await expect(list.getByRole("option", { name: "Project 400" })).toBeInViewport();
+    const option = (await list.getByRole("option").first().boundingBox())!;
+    expect(option.height).toBeGreaterThanOrEqual(24);
+  });
+
   test("a menu opens with the keyboard, has a submenu and closes with Escape", async ({ page }) => {
     await page.goto("/components/dropdown-menu");
     const trigger = page.getByRole("button", { name: "Share" });

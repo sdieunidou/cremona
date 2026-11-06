@@ -8,11 +8,14 @@ come with the templates:
 - `cremona-visual` plays the block's entrance on top of that markup;
 - `cremona-theme` manages light/dark and the nine themes.
 
+A third one is for forms: `cremona-combobox` turns a native `<select>` into the
+[combobox](ui.md#combobox) of `@cremona/ui`.
+
 | What | Where in this repo |
 |---|---|
 | Templates, one per variant | `packages/stimulus/templates/<category>/<file>/<slug>.html` |
 | Index (labels, slugs, sizes, effects) | `packages/stimulus/templates/manifest.json` |
-| Controllers | `packages/stimulus/src/cremona-{visual,theme}_controller.js` (`index.js` exports `registerCremona`) |
+| Controllers | `packages/stimulus/src/cremona-{visual,theme,combobox}_controller.js` (`index.js` exports `registerCremona`) |
 | Stylesheet | `packages/tokens/css/cremona.scoped.css` (about 350 KB, 34 KB gzipped) or `cremona.css` (about 255 KB, 32 KB gzipped), and their `*.woff2` fonts: see [Which stylesheet](#which-stylesheet) |
 | Placeholder images | `apps/gallery/public/media/placeholders/` |
 
@@ -67,9 +70,10 @@ stylesheet, not next to `fonts.css`.
 
 ### Symfony AssetMapper
 
-1. Copy `cremona-visual_controller.js` and `cremona-theme_controller.js` into
-   `assets/controllers/`. StimulusBundle registers them as `cremona-visual` and
-   `cremona-theme` from their file names.
+1. Copy `cremona-visual_controller.js` and `cremona-theme_controller.js` (and
+   `cremona-combobox_controller.js` for forms) into `assets/controllers/`.
+   StimulusBundle registers them as `cremona-visual`, `cremona-theme` and
+   `cremona-combobox` from their file names.
 2. Copy the stylesheet ([which one](#which-stylesheet)) and its `*.woff2` files
    into `assets/styles/cremona/`. Then load it from `assets/app.js`
    (`import './styles/cremona/cremona.scoped.css';`, which AssetMapper turns
@@ -93,7 +97,7 @@ import { registerCremona } from "./vendor/cremona/index.js"; // the three files 
 export const app = startStimulusApp(
   require.context("@symfony/stimulus-bridge/lazy-controller-loader!./controllers", true, /\.[jt]sx?$/),
 );
-registerCremona(app); // cremona-visual + cremona-theme
+registerCremona(app); // cremona-visual, cremona-theme, cremona-combobox
 ```
 
 ```js
@@ -279,12 +283,69 @@ Every change dispatches `cremona-theme:changed` on `<html>`, with
 the server:
 `data-action="cremona-theme:changed@document->preferences#save"`.
 
+## cremona-combobox
+
+A text input that filters the options of a `<select>` as the user types: the
+behaviour, the keys and the classes of the React [combobox](ui.md#combobox).
+The server renders a plain `<select>`, which works as it is without JavaScript;
+the controller hides it, keeps it in the form to carry the value, and puts the
+combobox after it.
+
+```twig
+<label for="consultant">Consultant</label>
+<div data-controller="cremona-combobox"
+     data-cremona-combobox-empty-text-value="{{ 'filter.no_result'|trans }}">
+  <select id="consultant" name="consultant" data-cremona-combobox-target="select">
+    <option value="">{{ 'filter.any'|trans }}</option>
+    {% for consultant in consultants %}
+      <option value="{{ consultant.id }}" {{ consultant.id == selected ? 'selected' }}
+              data-keywords="{{ consultant.initials }}">{{ consultant.name }}</option>
+    {% endfor %}
+  </select>
+</div>
+```
+
+| Markup | |
+|---|---|
+| `data-controller="cremona-combobox"` | on an element around the select: the combobox is inserted right after the select, so give that element the width the input should have |
+| `data-cremona-combobox-target="select"` | the select; without a target, the first `<select>` inside. A `multiple` select is left as it is |
+| `<option value="">` | not listed: its text is the input's placeholder, and emptying the input chooses it |
+| `data-keywords` on an `<option>` | more words that find it (initials, a former name) |
+| `disabled` on an `<option>` or an `<optgroup>` | listed, cannot be chosen. Group labels are not shown |
+
+The input takes over what names and describes the select: its `<label>`s (by
+`aria-labelledby`; a click on one focuses the input), `aria-label`,
+`aria-labelledby`, `aria-describedby`, `aria-invalid` (or Bootstrap's
+`is-invalid` class), `required` and `disabled`. The list is named like it.
+
+| Value | Default | |
+|---|---|---|
+| `emptyText` | `No results` | shown in the list and read out when nothing matches: pass it translated |
+| `placeholder` | the text of the `""` option | the input's placeholder |
+| `size` | `default` | `default` (36 px) or `sm` (32 px) |
+
+Every choice sets the select's value and dispatches `input` and `change` on it,
+so a listener of the select keeps working, then `cremona-combobox:change` on the
+controller element, with `{ value, label }` as its detail. A change made to the
+select by another script (with a `change` event) and a form reset show in the
+input. Disconnecting removes the combobox and gives the select back as it was.
+
+The list is positioned with fixed coordinates, below the input or above it when
+there is more room there, in the top layer where the browser has the Popover
+API, so a scrolling container or a modal does not clip it. It stays inside the
+controller element in the DOM, which keeps `cremona.scoped.css` working. The
+controller builds its elements with the DOM API and sets their geometry through
+the CSSOM: no HTML string, nothing a Content Security Policy blocks. Its classes
+are in `cremona.css` and `cremona.scoped.css`; a Tailwind build sees them through
+an `@source` on the copied controller.
+
 ## TypeScript
 
 `@cremona/stimulus` ships type declarations: `registerCremona(application)`,
-both controller classes with their typed values (`triggerValue`,
-`appearanceValue: CremonaAppearance`…) and actions, and `CremonaThemeChange`,
-the detail of `cremona-theme:changed`:
+the controller classes with their typed values (`triggerValue`,
+`appearanceValue: CremonaAppearance`…) and actions, `CremonaThemeChange`,
+the detail of `cremona-theme:changed`, and `CremonaComboboxChange`, the detail of
+`cremona-combobox:change`:
 
 ```ts
 import type { CremonaThemeChange } from "@cremona/stimulus";

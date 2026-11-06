@@ -14,6 +14,7 @@ shows each of them live, with its code (`/components`).
 | `input`, `textarea` | text inputs, labelled, described and marked invalid by their `Field` |
 | `checkbox`, `radio-group`, `switch` | checked, unchecked, indeterminate; one choice among several; on / off |
 | `select` | a custom select: keyboard and type-ahead, groups, submits with a form |
+| `combobox` | a text input that filters a list of options as the user types, submits the chosen value with a form; a Stimulus controller gives a server-rendered `<select>` the same behaviour |
 | `badge`, `alert` | a short label; a message in the page (`destructive` and `warning` are announced at once) |
 | `card`, `table` | a surface with header, content and footer; a data table that scrolls sideways in its own region |
 | `tabs`, `accordion` | tabs, horizontal or vertical; sections that open and close |
@@ -70,11 +71,11 @@ One entry per component (ESM and types; the ones that hold state start with
   (`npm i -D tw-animate-css`, `@import "tw-animate-css";`, which `shadcn init`
   does); without it everything works and nothing animates.
 - **A page with CSS of its own** — load `cremona.scoped.css` and put the
-  components inside a `.cremona` element. The dialog, popover, tooltip, select
-  and menus render in a portal at the end of `<body>`, outside that element:
-  give their content a `container` inside it (`DialogContent`,
-  `PopoverContent`, `TooltipContent`, `SelectContent`, `DropdownMenuContent`
-  and `DropdownMenuSubContent`). `Toaster` renders where you mount it: mount it
+  components inside a `.cremona` element. The dialog, popover, tooltip, select,
+  combobox and menus render in a portal at the end of `<body>`, outside that
+  element: give their content a `container` inside it (`DialogContent`,
+  `PopoverContent`, `TooltipContent`, `SelectContent`, `Combobox`,
+  `DropdownMenuContent` and `DropdownMenuSubContent`). `Toaster` renders where you mount it: mount it
   inside the element.
 
 ## What every component guarantees
@@ -129,8 +130,8 @@ control, the control is described by `FieldDescription` and `FieldError` while
 they are on screen, `invalid` sets `aria-invalid` and turns the text
 destructive, `disabled` reaches the control. `FieldError` is a `role="alert"`
 and takes either children or the `errors` of a form library (each message once).
-`Input`, `Textarea`, `Checkbox`, `RadioGroupItem`, `Switch` and `SelectTrigger`
-read all of it through `useFieldControl`; a control of your own calls
+`Input`, `Textarea`, `Checkbox`, `RadioGroupItem`, `Switch`, `SelectTrigger` and
+`Combobox` read all of it through `useFieldControl`; a control of your own calls
 `useFieldControl(props)` and spreads the result after its props. A prop a
 control receives itself wins: pass an `id` to a control inside a `Field` only
 together with the same `htmlFor` on its `FieldLabel`.
@@ -138,6 +139,50 @@ together with the same `htmlFor` on its `FieldLabel`.
 A group of radio buttons is named by a `FieldSet` and its `FieldLegend` (or by
 `aria-label` / `aria-labelledby` on the `RadioGroup`); each `RadioGroupItem` sits
 in its own horizontal `Field` with a `FieldLabel`.
+
+## Combobox
+
+```tsx
+<Field>
+  <FieldLabel>Consultant</FieldLabel>
+  <Combobox
+    name="consultant"
+    placeholder="Type a name"
+    emptyText="Nobody found"
+    options={[
+      { value: "12", label: "Alice Martin" },
+      { value: "31", label: "Élodie Bernard", keywords: ["EB"] },
+      { value: "40", label: "Marc Durand", disabled: true },
+    ]}
+  />
+</Field>
+```
+
+The WAI-ARIA combobox with a listbox: the input has the role `combobox`,
+`aria-expanded`, `aria-autocomplete="list"`, and while the list is open
+`aria-controls` and `aria-activedescendant`; the list is named like the input.
+Typing opens the list, keeps the options whose label or `keywords` hold every
+word typed (case and accents ignored; `filter` replaces the rule) and highlights
+the first one.
+
+| Key | |
+|---|---|
+| Down / Up | open the list on the chosen option (Up: on the last one when nothing is chosen), then move; disabled options are skipped, the ends do not wrap. Alt + Up closes |
+| Home / End | the first / the last option while the list is open; in the text otherwise |
+| Enter | choose the highlighted option; the form is submitted only while the list is closed |
+| Escape | close the list and put back the chosen label |
+
+Leaving the input (Tab, a click elsewhere) chooses the option whose label was
+typed in full, clears the value when the input was emptied, and otherwise puts
+back the chosen label: the value is always an option's or `""`. A click chooses
+an option and keeps focus in the input. When nothing matches, `emptyText` shows
+in the list and is read out. With `name`, a hidden input submits the value;
+`value` and `onValueChange` control it. Options are 32 px tall, and the list is
+as wide as the input and never taller than 18 rem or the room on its side.
+
+**Without React** — `cremona-combobox` gives a server-rendered `<select>` the
+same behaviour and the same classes: the select stays in the form and carries
+the value ([stimulus.md](stimulus.md#cremona-combobox)).
 
 ## Dialog, popover, tooltip, menu
 

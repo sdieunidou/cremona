@@ -20,7 +20,7 @@ adapters:
 ## Real UI: `@cremona/ui`
 
 Button, label, field (label, control, help and error wired for assistive
-technology), input, textarea, checkbox, radio group, switch, select, badge,
+technology), input, textarea, checkbox, radio group, switch, select, combobox, badge,
 alert, card, table, tabs, accordion, dialog, popover, tooltip, dropdown menu and
 toast: accessible, responsive components on the same tokens. They are what an app ships for a control: **use
 one when it exists** instead of deriving a block (MCP `list_components` and
@@ -32,11 +32,11 @@ npx shadcn@latest add @cremona/button @cremona/field @cremona/input
 # or from npm: npm i @cremona/ui @cremona/tokens lucide-react — import { Button } from "@cremona/ui/button"
 ```
 
-Inside a `Field`, `Input`, `Textarea`, `Checkbox`, `RadioGroupItem`, `Switch` and
-`SelectTrigger` are labelled, described and marked invalid by it; render a
+Inside a `Field`, `Input`, `Textarea`, `Checkbox`, `RadioGroupItem`, `Switch`,
+`SelectTrigger` and `Combobox` are labelled, described and marked invalid by it; render a
 `DialogTitle` in every dialog and name every `PopoverContent`; mount `<Toaster />`
 once and call `toast()`; with `cremona.scoped.css`, give the content of a dialog,
-popover, tooltip, select or menu a `container` inside `.cremona`. Source:
+popover, tooltip, select, combobox or menu a `container` inside `.cremona`. Source:
 `packages/ui/src/<name>.tsx`, items in `packages/ui/registry.json`.
 
 ## What's inside: three scales
@@ -168,6 +168,9 @@ renders one button with one label.
    the theme before the first paint. `cremona.css` and `cremona.scoped.css` hold every
    theme; a Tailwind build with `tailwind.css` has the default one, plus each
    `css/themes/<name>.css` it imports: import the files of the themes you offer.
+6. Forms: `data-controller="cremona-combobox"` around a native `<select>` turns it
+   into the filtering combobox of `@cremona/ui`; the select stays in the form and
+   carries the value (`docs/stimulus.md`, MCP `get_controller("combobox")`).
 
 ## Creating new visuals (categories, blocks, variants)
 
