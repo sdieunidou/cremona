@@ -181,7 +181,7 @@ export function Empty({
       <motion.div
         ref={stageRef}
         className={cn(
-          "w-80 shrink-0",
+          "w-full max-w-80",
           fadeOut && "mask-b-from-60%",
           fill && !hasCopy && "self-center",
         )}
