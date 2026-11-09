@@ -37,6 +37,8 @@ const SERIES_APART_CVD = 5;
 /** charts/donut draws --primary as its fourth slice, next to chart-1..3. */
 const SERIES_FROM_PRIMARY = 8;
 const PRIMARY_FROM_DESTRUCTIVE = 8;
+/** Themes whose field borders and unchecked switch track (`bg-input`, `dark:bg-input/80`) meet WCAG 1.4.11. */
+const FIELD_BOUNDARY_THEMES = ["default"];
 
 /** [text, surface]: text as the foreground on its surface. */
 const TEXT_PAIRS = [
@@ -125,6 +127,19 @@ function budget(theme: string, mode: "light" | "dark"): string[] {
   // a theme that draws hard borders draws its fields as clearly
   if (contrast(surface("--border"), background) >= GRAPHIC)
     check("--input on --background", contrast(surface("--input"), background), GRAPHIC);
+  if (FIELD_BOUNDARY_THEMES.includes(theme)) {
+    const input = color("--input");
+    const track = mode === "dark" ? withAlpha(input, 0.8) : input;
+    for (const [name, base] of [
+      ["--background", background],
+      ["--card", card],
+      ["--muted", surface("--muted")],
+      ["--sidebar", surface("--sidebar")],
+    ] as const) {
+      check(`--input border on ${name}`, contrast(over(input, base), base), GRAPHIC);
+      check(`switch track on ${name}`, contrast(over(track, base), base), GRAPHIC);
+    }
+  }
   return failures;
 }
 

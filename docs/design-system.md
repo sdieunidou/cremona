@@ -125,7 +125,10 @@ way an sRGB display renders it and fails the build unless:
 - **primary actions don't read as destructive**: `--primary` and
   `--destructive` differ by at least 8;
 - **inputs are as visible as the theme's borders**: where `--border` reaches
-  3:1 (brutalism), so does `--input`.
+  3:1 (brutalism), so does `--input`;
+- **fields are identifiable in the default theme** (WCAG 1.4.11): `--input` as
+  a border, and as the unchecked switch track (`bg-input`, `dark:bg-input/80`),
+  reaches 3:1 on `--background`, `--card`, `--muted` and `--sidebar`.
 
 Outside the budget, by design:
 
@@ -133,8 +136,10 @@ Outside the budget, by design:
   4.5:1 — about 2.3:1 on white in light-green and sakura light, 3–4.4:1 in
   claude-plus light, tiesen dark and indigo-clean — so keep it for large text,
   labelled icons and fills with `--primary-foreground`.
-- `--border` and `--input` are soft in every theme but brutalism (1.1–2:1):
-  they separate surfaces, they don't carry information on their own.
+- `--border` is soft in every theme but brutalism (1.1–2:1): it separates
+  surfaces and doesn't carry information on its own. `--input` is as soft in
+  every theme but brutalism and default, so field borders, checkboxes, radios
+  and the switch track fall under 3:1 there.
 - Opacity-modified text (`text-muted-foreground/60`, 2.3–4:1) is for
   decoration only (line numbers, placeholder art), never for content.
 - A translucent focus halo (`ring-ring/50`) falls under 3:1 in 16 of the 18
