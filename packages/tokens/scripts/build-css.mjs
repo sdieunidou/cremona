@@ -13,7 +13,9 @@
  *     (a layered !important wins over an unlayered one), except those of the properties blocks
  *     also set inline or animate (LOOSE): normal, unlayered, one class more specific than the
  *     base styles, so inline styles and animations win over them as in cremona.css; colour
- *     utilities (GUARDED) do not apply where the element sets the same property inline;
+ *     utilities (GUARDED) do not apply where the element sets the same property inline; the
+ *     arbitrary-property classes of the Stimulus templates (`[width:416px]`) are LOOSE when the
+ *     cremona-visual controller animates their property;
  *   - `@layer cremona.defaults` after the utilities, the `--tw-*` initial values in every
  *     browser (shadow roots ignore @property), keyframes renamed `cremona-*`.
  */
@@ -22,6 +24,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Features, transform } from "lightningcss";
+import { ANIMATED, HELD } from "../../../tools/stimulus/annotate.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const tailwind = join(root, "node_modules", ".bin", "tailwindcss");
@@ -29,6 +32,16 @@ const ISLAND = "cremona";
 /** set inline (display: none, transform-origin) or animated (fades) by blocks; no page CSS
  *  sets them on the blocks' classes */
 const LOOSE = new Set(["opacity", "display", "transform-origin"]);
+/** the class of a declaration a Stimulus template carries (`[opacity:0.5]`): the cremona-visual
+ *  controller animates the properties it interpolates or holds, so an !important class would hide
+ *  the animation, as it would not an inline style */
+const ARBITRARY = /^\.\\\[([a-z-]+)\\:/;
+const animatedClass = (prelude) => {
+  const property = ARBITRARY.exec(prelude)?.[1];
+  return property !== undefined && (ANIMATED.has(property) || HELD.has(property));
+};
+const isLoose = (property, prelude) => LOOSE.has(property) || animatedClass(prelude);
+
 /** animated by block scripts through inline styles (a progress bar turning green), while page
  *  CSS has !important utilities of the same names (Bootstrap's bg-primary, text-white): they stay
  *  !important but do not apply where the element sets the property inline */
@@ -200,7 +213,7 @@ function pick(css, keep, important) {
         return inner && `${prelude}{${inner}}`;
       }
       const kept = declarations(body)
-        .filter((d) => keep(d.slice(0, d.indexOf(":")).trim()))
+        .filter((d) => keep(d.slice(0, d.indexOf(":")).trim(), prelude))
         .map((d) => {
           const marked = /\s*!important$/.test(d);
           if (important) return marked ? d : `${d}!important`;
@@ -295,13 +308,13 @@ function confine(css) {
     base: rewrite(base.important.join(""), baseSelectors, keyframes),
     utilities: [
       rewrite(
-        pick(utilities, (p) => !LOOSE.has(p) && !Object.hasOwn(GUARDED, p), true),
+        pick(utilities, (p, prelude) => !isLoose(p, prelude) && !Object.hasOwn(GUARDED, p), true),
         subject,
         keyframes,
       ),
       ...Object.keys(GUARDED).map((property) =>
         rewrite(
-          pick(utilities, (p) => p === property, true),
+          pick(utilities, (p, prelude) => p === property && !isLoose(p, prelude), true),
           (s) => [onSubject(onSubject(s, within(ISLAND)), noInline(property))],
           keyframes,
         ),
@@ -318,11 +331,7 @@ function confine(css) {
       .join(",")};`,
     ...Object.entries(out).map(([l, code]) => `@layer ${ISLAND}.${l}{${code}}`),
     rewrite(base.normal.join(""), baseSelectors, keyframes),
-    rewrite(
-      pick(utilities, (p) => LOOSE.has(p), false),
-      (s) => [onSubject(s, inIsland)],
-      keyframes,
-    ),
+    rewrite(pick(utilities, isLoose, false), (s) => [onSubject(s, inIsland)], keyframes),
     rewrite(rest.join(""), (s) => s, keyframes),
   ].join("\n");
 }

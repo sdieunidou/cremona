@@ -408,9 +408,12 @@ storage keys of `cremona-theme`, change them in the partial too. Drop the
 
 ## Content Security Policy
 
-- Templates carry inline `style` attributes for their geometry: bar heights,
-  positions, colours. Allow them with `style-src 'self' 'unsafe-inline'`, or at
-  least `style-src-attr 'unsafe-inline'`.
+- Templates carry no `style` attribute: the geometry of a visual (bar heights,
+  positions, colours) is Tailwind arbitrary-property classes such as
+  `[width:416px]`, compiled in `cremona.css` and `cremona.scoped.css`. A policy
+  with `style-src 'self'`, without `'unsafe-inline'` and without hashes, works.
+  A host with its own Tailwind build must let it scan the templates it copies
+  (the `@source` above), or those classes are missing.
 - The controllers only use Web Animations and the CSSOM, which CSP does not
   restrict.
 - The head partial is an inline script. Give it a nonce (NelmioSecurityBundle

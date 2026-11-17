@@ -10,6 +10,7 @@ import {
   buildTemplate,
   namespaceIds,
   stripResourceHints,
+  stylesToClasses,
   templatePrefix,
 } from "../../../tools/stimulus/template.mjs";
 
@@ -110,6 +111,21 @@ describe("stimulus templates", () => {
     }
   });
 
+  it("carry no style attribute, so a strict style-src accepts them", () => {
+    for (const { key, slug, html } of all) expect(html, `${key}/${slug}`).not.toMatch(/\sstyle=/);
+    expect(all.some(({ html }) => /class="[^"]*\[width:/.test(html))).toBe(true);
+  });
+
+  it("turn each inline declaration into an arbitrary-property class", () => {
+    expect(
+      stylesToClasses(
+        '<div class="a flex md:flex origin-top" style="display:none;transform-origin:50% 15%;width:calc(50% + 4px)"></div>',
+      ),
+    ).toBe(
+      '<div class="a [display:none] [transform-origin:50%_15%] [width:calc(50%_+_4px)]"></div>',
+    );
+  });
+
   it("reference placeholder media from the site root", () => {
     for (const { key, slug, html } of all)
       expect(html, `${key}/${slug}`).not.toMatch(/\.\.\/media\//);
@@ -156,7 +172,7 @@ describe("templates against the blocks (server-rendered)", () => {
         .replace(' data-controller="cremona-visual"', "")
         .replace(/ data-anim-(from|to|path)="[^"]*"/g, "");
       expect(withoutAnimation, `${key}/${v.slug}`).toBe(
-        namespaceIds(stripResourceHints(final), prefix),
+        stylesToClasses(namespaceIds(stripResourceHints(final), prefix)),
       );
       const generated = buildTemplate(renderer, {
         Component,

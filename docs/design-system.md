@@ -223,7 +223,10 @@ one, and among `!important` declarations a layered one beats an unlayered one.
       unlayered (`.flex:is(.cremona, .cremona *)`, two classes of
       specificity): blocks set these inline (`display: none`, a transform
       origin) and animate them (fades), and an `!important` class would win
-      over both. No Bootstrap utility uses their names with other values;
+      over both. No Bootstrap utility uses their names with other values.
+      The arbitrary-property classes of the Stimulus templates (`[width:416px]`)
+      follow the same rule for every property the `cremona-visual` controller
+      animates or holds (width, height, left, top, transform, filter…);
     - the `color` and `background-color` utilities do not apply where the
       element sets that property inline (`:where(:not([style*="background-color:"]))`):
       a block script animates it (a progress bar turning green).

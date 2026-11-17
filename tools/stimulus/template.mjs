@@ -3,6 +3,7 @@
  * state, ids namespaced per template, media paths made root-absolute.
  */
 import { annotate } from "./annotate.mjs";
+import { decode, encodeAttr, parseStyle } from "./markup.mjs";
 
 /** Id prefix of a template: `cr-<category>-<file>-<variant index>-`. */
 export function templatePrefix(key, slug) {
@@ -57,6 +58,72 @@ export function stripResourceHints(html) {
   return html.replace(/<link rel="preload"[^>]*\/>/g, "");
 }
 
+/** Utilities that set only `display`, whatever their variants. */
+const DISPLAY = new Set([
+  "block",
+  "inline-block",
+  "inline",
+  "flex",
+  "inline-flex",
+  "grid",
+  "inline-grid",
+  "contents",
+  "flow-root",
+  "hidden",
+  "table",
+  "inline-table",
+  "list-item",
+]);
+/** Utilities that set only a property an inline style can also set, whatever their variants. */
+const OVERRIDDEN = {
+  display: (utility) => DISPLAY.has(utility),
+  "transform-origin": (utility) => utility.startsWith("origin-"),
+};
+
+/** The utility of a class token, without its variants (`md:hover:flex` gives `flex`). */
+function utility(token) {
+  let depth = 0;
+  let cut = -1;
+  for (let i = 0; i < token.length; i++) {
+    if (token[i] === "[") depth++;
+    else if (token[i] === "]") depth--;
+    else if (token[i] === ":" && depth === 0) cut = i;
+  }
+  return token.slice(cut + 1).replace(/^[!-]+/, "");
+}
+
+/** A declaration as a Tailwind v4 arbitrary-property class: `_` is a space, `\_` an underscore. */
+function propertyClass(property, value) {
+  if (/[[\]"'\\]|!important/.test(value) || !/^[a-z]+(-[a-z]+)*$/.test(property))
+    throw new Error(`style declaration without a class form: ${property}:${value}`);
+  return `[${property}:${value.replace(/_/g, "\\_").replace(/\s+/g, "_")}]`;
+}
+
+/**
+ * Replace every inline `style` attribute with arbitrary-property classes appended to the
+ * element's classes: the markup then needs no `style-src 'unsafe-inline'`. A class that sets only
+ * a property the inline style also set (`flex` next to `display: none`) is dropped: inline won,
+ * a class would not.
+ */
+export function stylesToClasses(html) {
+  return html.replace(/<[A-Za-z][^\s>/]*(?:\s[^>]*?)?\sstyle="[^"]*"[^>]*>/g, (tag) => {
+    const attr = (name) => new RegExp(`\\s${name}="([^"]*)"`).exec(tag);
+    const declarations = parseStyle(decode(attr("style")[1]));
+    const existing = attr("class");
+    const kept = decode(existing?.[1] ?? "")
+      .split(/\s+/)
+      .filter(Boolean)
+      .filter((token) => ![...declarations.keys()].some((p) => OVERRIDDEN[p]?.(utility(token))));
+    const classes = [
+      ...kept,
+      ...[...declarations].map(([property, value]) => propertyClass(property, value)),
+    ].join(" ");
+    const named = ` class="${encodeAttr(classes)}"`;
+    if (existing) return tag.replace(/\sstyle="[^"]*"/, "").replace(/\sclass="[^"]*"/, named);
+    return tag.replace(/\sstyle="[^"]*"/, named);
+  });
+}
+
 /**
  * Build one template.
  * @param {{ render: Function, parity: object }} renderer
@@ -80,5 +147,5 @@ export function buildTemplate(renderer, { Component, props, key, slug, golden })
   );
   const initial = stripResourceHints(renderer.render(Component, initialProps, prefix));
   const result = annotate(final, initial);
-  return { ...result, final, html: namespaceIds(result.html, prefix) };
+  return { ...result, final, html: stylesToClasses(namespaceIds(result.html, prefix)) };
 }
