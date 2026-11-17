@@ -1,5 +1,13 @@
 # @cremona/blocks
 
+## 0.3.0
+
+### Patch Changes
+
+- 40248a0: Empty state: the illustration shrinks with a container narrower than 20rem instead of being cropped by the frame (`w-full max-w-80` replaces `w-80 shrink-0`), in React and in the Stimulus templates.
+- @cremona/core@0.3.0
+  - @cremona/react@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes
